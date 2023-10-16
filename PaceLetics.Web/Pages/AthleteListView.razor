@@ -1,0 +1,18 @@
+﻿@page "/athletelistview"
+@using AthleteDataAccessLibrary;
+@using CoreLibrary.Models.Athlet;
+
+@inject IAthleteData _ad;
+
+<h3>AthleteListView</h3>
+
+<DataGridView Athletes="@athletes"></DataGridView>
+
+@code {
+	private IList<AthleteModel> athletes;
+
+	protected override async Task OnInitializedAsync()
+	{
+		athletes = await _ad.GetAthletes();
+	}
+}

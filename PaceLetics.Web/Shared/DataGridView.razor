@@ -1,0 +1,31 @@
+﻿@using CoreLibrary.Models.Athlet;
+@if (Athletes == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Vdot</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var athlete in Athletes)
+			{
+				<tr>
+					<td>@athlete.Name</td>
+					<td>@athlete.Vdot</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	[Parameter]
+	public IList<AthleteModel> Athletes{ get; set; }
+
+}
