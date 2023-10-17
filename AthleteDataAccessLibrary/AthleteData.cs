@@ -30,5 +30,11 @@ namespace AthleteDataAccessLibrary
 		{
 			return _db.SaveData(_cosmosDb, _containerId, model);
 		}
+
+		public Task<AthleteModel> GetAthlete(int id) 
+		{
+			return null;
+		}
+
 	}
 }
