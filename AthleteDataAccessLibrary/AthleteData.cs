@@ -1,10 +1,11 @@
-﻿using CoreLibrary.Models.Athlet;
+﻿using AthleteDataAccessLibrary.Contracts;
+using CoreLibrary.Models.Athlet;
 using Microsoft.Azure.Cosmos;
 using System.ComponentModel;
 
 namespace AthleteDataAccessLibrary
 {
-	public class AthleteData : IAthleteData
+    public class AthleteData : IAthleteData
 	{
 		private readonly IDataAccess _db;
 		private readonly string _cosmosDb = "paceleticsdata";

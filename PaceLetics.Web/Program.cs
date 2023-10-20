@@ -1,4 +1,5 @@
 using AthleteDataAccessLibrary;
+using AthleteDataAccessLibrary.Contracts;
 using CoreLibrary.Models.Athlet;
 using MatBlazor;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -9,6 +10,7 @@ using PaceLetics.Web.Data;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 // Add services to the container.
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -30,6 +32,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
 builder.Services.AddTransient<IAthleteData, AthleteData>();
+builder.Services.AddSingleton<IAthleteService, AthleteService>();
 builder.Services.AddMatBlazor();
 var app = builder.Build();
 

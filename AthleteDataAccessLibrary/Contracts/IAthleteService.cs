@@ -1,7 +1,7 @@
 ﻿using CoreLibrary.Models.Athlet;
 
 
-namespace AthleteDataAccessLibrary
+namespace AthleteDataAccessLibrary.Contracts
 {
     /// <summary>
     /// Provides the athletemodel for the active session

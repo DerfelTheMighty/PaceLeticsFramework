@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
-using AthleteDataAccessLibrary;
+using AthleteDataAccessLibrary.Contracts;
 using CoreLibrary.Models.Athlet;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

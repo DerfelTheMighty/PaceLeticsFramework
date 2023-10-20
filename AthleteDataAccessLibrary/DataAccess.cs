@@ -1,4 +1,5 @@
-﻿using Azure;
+﻿using AthleteDataAccessLibrary.Contracts;
+using Azure;
 using CoreLibrary.Models.Athlet;
 using CoreLibrary.Models.Contracts;
 using Dapper;
@@ -11,7 +12,7 @@ using PartitionKey = Microsoft.Azure.Cosmos.PartitionKey;
 
 namespace AthleteDataAccessLibrary
 {
-	public class DataAccess : IDataAccess
+    public class DataAccess : IDataAccess
 	{
 		private readonly IConfiguration _config;
 		private readonly CosmosClient _client;
