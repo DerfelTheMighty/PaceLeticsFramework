@@ -1,10 +1,11 @@
 ﻿using CoreLibrary.Enums;
+using CoreLibrary.Models.Contracts;
 using CoreLibrary.Models.Pace;
 using CoreLibrary.Models.Race;
 
 namespace CoreLibrary.Models.Athlet
 {
-    public class AthleteModel
+    public class AthleteModel : IQueryItem
     {
 
         /// <summary>
@@ -16,6 +17,10 @@ namespace CoreLibrary.Models.Athlet
         /// </summary>
         public string? Name { get; set; }
 
+        /// <summary>
+        /// used as partition key
+        /// </summary>
+        public string? AthleteId { get; set; }
         /// <summary>
         /// Current skill level
         /// </summary>

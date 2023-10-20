@@ -1,4 +1,6 @@
 ﻿using CoreLibrary.Models.Athlet;
+using Microsoft.Azure.Cosmos;
+using System.ComponentModel;
 
 namespace AthleteDataAccessLibrary
 {
@@ -12,29 +14,28 @@ namespace AthleteDataAccessLibrary
 			_db = db;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
 		public Task<List<AthleteModel>> GetAthletes()
 		{
 			return _db.LoadData<AthleteModel, dynamic>(_cosmosDb, _containerId, new { });
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
+		
 		public Task InsertAthlete(AthleteModel model)
 		{
 			return _db.SaveData(_cosmosDb, _containerId, model);
 		}
 
-		public Task<AthleteModel> GetAthlete(int id) 
+
+		public Task<AthleteModel> GetAthlete(string id)
 		{
-			return null;
-		}
+            PartitionKey key = new("aid");
+            return _db.LoadItem<AthleteModel>(_cosmosDb, _containerId, id, key);
+        }
+
+		public Task DeleteAthlete(string id) 
+		{
+			return _db.DeleteItem<AthleteModel,string>(_cosmosDb, _containerId, id);
+        }
 
 	}
 }
