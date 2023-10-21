@@ -32,5 +32,12 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="id"></param>
         /// <returns></returns>
         Task<AthleteModel> GetAthlete(string id);
+
+        /// <summary>
+        /// Updates existing athlete model in database
+        /// </summary>
+        /// <returns></returns>
+        Task UpdateAthlete(AthleteModel model);
+
     }
 }

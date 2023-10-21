@@ -17,6 +17,7 @@
     string Name ="";
     string ID = "";
     AthleteModel Athlete;
+    Random rnd = new Random();
 
     protected async override void OnInitialized()
     {
@@ -24,6 +25,8 @@
         Name = await GetUserName();
         ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
+        Athlete.Vdot = rnd.NextDouble();
+        await AthleteData.UpdateAthlete(Athlete);
         StateHasChanged();
         base.OnInitialized();
     }

@@ -37,5 +37,10 @@ namespace AthleteDataAccessLibrary
 			return _db.DeleteItem<AthleteModel,string>(_cosmosDb, _containerId, id);
         }
 
-	}
+		public Task UpdateAthlete(AthleteModel model) 
+		{
+			return _db.UpsertItem(_cosmosDb, _containerId, model);
+		}
+
+    }
 }

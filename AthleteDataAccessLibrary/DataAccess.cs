@@ -1,14 +1,9 @@
 ﻿using AthleteDataAccessLibrary.Contracts;
-using Azure;
 using CoreLibrary.Contracts;
-using CoreLibrary.Models.Athlet;
-using Dapper;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Azure.Cosmos.Linq;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow.Schemas;
-using Microsoft.Extensions.Configuration;
+
 using PartitionKey = Microsoft.Azure.Cosmos.PartitionKey;
 
 namespace AthleteDataAccessLibrary
@@ -69,5 +64,10 @@ namespace AthleteDataAccessLibrary
 			
 		}
 
-	}
+        public async Task UpsertItem<T>(string cosmosDb, string container, T parameter)
+        {
+            var containerAccess = _client.GetContainer(cosmosDb, container);
+            await containerAccess.UpsertItemAsync<T>(parameter, PartitionKey.None);
+        }
+    }
 }

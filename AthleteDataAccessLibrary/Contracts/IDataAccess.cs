@@ -41,6 +41,17 @@ namespace AthleteDataAccessLibrary.Contracts
 
 
         /// <summary>
+        /// Insert or update existing item
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cosmosDb"></param>
+        /// <param name="containerId"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        Task UpsertItem<T>(string cosmosDb, string containerId, T parameter);
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
