@@ -16,7 +16,7 @@
 {
     string Name ="";
     string ID = "";
-    AthleteModel? Athlete;
+    AthleteModel Athlete;
 
     protected async override void OnInitialized()
     {
@@ -24,6 +24,7 @@
         Name = await GetUserName();
         ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
+        StateHasChanged();
         base.OnInitialized();
     }
 

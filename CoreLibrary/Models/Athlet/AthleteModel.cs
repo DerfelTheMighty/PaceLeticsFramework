@@ -1,5 +1,5 @@
 ﻿using CoreLibrary.Enums;
-using CoreLibrary.Models.Contracts;
+using CoreLibrary.Contracts;
 using CoreLibrary.Models.Pace;
 using CoreLibrary.Models.Race;
 

@@ -1,4 +1,4 @@
-﻿using CoreLibrary.Models.Contracts;
+﻿using CoreLibrary.Contracts;
 using Microsoft.Azure.Cosmos;
 
 namespace AthleteDataAccessLibrary.Contracts
@@ -25,7 +25,7 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="container"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task<T> LoadItem<T>(string cosmosDb, string container, string id, PartitionKey key) where T : IQueryItem;
+        Task<T> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem;
 
 
         /// <summary>

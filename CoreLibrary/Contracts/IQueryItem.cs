@@ -1,4 +1,4 @@
-﻿namespace CoreLibrary.Models.Contracts
+﻿namespace CoreLibrary.Contracts
 {
     /// <summary>
     /// Interface garauantess item to be queryiable from a database

@@ -1,11 +1,12 @@
 ﻿using AthleteDataAccessLibrary.Contracts;
 using Azure;
+using CoreLibrary.Contracts;
 using CoreLibrary.Models.Athlet;
-using CoreLibrary.Models.Contracts;
 using Dapper;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Azure.Cosmos.Linq;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow.Schemas;
 using Microsoft.Extensions.Configuration;
 using PartitionKey = Microsoft.Azure.Cosmos.PartitionKey;
@@ -14,7 +15,6 @@ namespace AthleteDataAccessLibrary
 {
     public class DataAccess : IDataAccess
 	{
-		private readonly IConfiguration _config;
 		private readonly CosmosClient _client;
 
 		public DataAccess(string connectionString)
@@ -45,10 +45,13 @@ namespace AthleteDataAccessLibrary
 			return results;
 		}
 
-		public async Task<T> LoadItem<T>(string cosmosDb, string container, string id, PartitionKey key) where T : IQueryItem
+		public async Task<T> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem
 		{
-            var containerAccess = _client.GetContainer(cosmosDb, container);
-            return containerAccess.GetItemLinqQueryable<T>(true).Where<T>(item => item.Id == id).ToArray().FirstOrDefault(); 
+            var containerAccess =  _client.GetContainer(cosmosDb, container);
+			var q = containerAccess.GetItemLinqQueryable<T>(true);
+			var iterator = q.Where<T>(item => item.Id == id).ToFeedIterator();
+			var result = await iterator.ReadNextAsync();
+			return result.FirstOrDefault();
         }
 
 

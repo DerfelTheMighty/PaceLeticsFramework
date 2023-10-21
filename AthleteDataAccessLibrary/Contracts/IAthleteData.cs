@@ -1,5 +1,5 @@
 ﻿using CoreLibrary.Models.Athlet;
-using CoreLibrary.Models.Contracts;
+using CoreLibrary.Contracts;
 
 namespace AthleteDataAccessLibrary.Contracts
 {

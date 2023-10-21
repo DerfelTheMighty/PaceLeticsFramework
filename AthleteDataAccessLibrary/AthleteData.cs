@@ -29,8 +29,7 @@ namespace AthleteDataAccessLibrary
 
 		public Task<AthleteModel> GetAthlete(string id)
 		{
-            PartitionKey key = new("aid");
-            return _db.LoadItem<AthleteModel>(_cosmosDb, _containerId, id, key);
+            return _db.LoadItem<AthleteModel>(_cosmosDb, _containerId, id);
         }
 
 		public Task DeleteAthlete(string id) 
