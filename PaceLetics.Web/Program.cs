@@ -1,15 +1,14 @@
 using AthleteDataAccessLibrary;
 using AthleteDataAccessLibrary.Contracts;
 using CoreLibrary.Models.Athlet;
-using MatBlazor;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PaceLetics.Web.Areas.Identity;
 using PaceLetics.Web.Data;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-//var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 // Add services to the container.
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -22,8 +21,13 @@ var nonSqlConnectionString = Environment.GetEnvironmentVariable("PaceLeticsDbCon
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(sqlConnectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-	.AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(
+	options => 
+	{
+		options.SignIn.RequireConfirmedAccount = true;
+		options.User.RequireUniqueEmail = true;
+		options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    } ).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
@@ -32,7 +36,7 @@ builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
 builder.Services.AddTransient<IAthleteData, AthleteData>();
 builder.Services.AddSingleton<IAthleteService, AthleteService>();
-builder.Services.AddMatBlazor();
+builder.Services.AddMudServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

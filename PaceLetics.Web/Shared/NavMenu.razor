@@ -1,4 +1,19 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<MudNavMenu>
+    <MudNavLink Href="/Home" Match="NavLinkMatch.All">Home</MudNavLink>
+    <MudNavLink Href="/counter" Match="NavLinkMatch.Prefix">Counter</MudNavLink>
+    <MudNavGroup Title="Settings" Expanded="true">
+        <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
+        <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
+    </MudNavGroup>
+    <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
+</MudNavMenu>
+
+
+
+
+
+
+@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">PaceLetics.Web</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -47,3 +62,4 @@
         collapseNavMenu = !collapseNavMenu;
     }
 }
+ *@

@@ -74,6 +74,16 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+
+            /// <summary>
+            /// This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            /// directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Benutzername")]
+            public string Name { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -130,7 +140,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                     var userId = await _userManager.GetUserIdAsync(user);
                     var athlete = new AthleteModel();
                     athlete.Id = userId;
-                    athlete.Name = user.UserName;
+                    athlete.Name = Input.Name;
                     await _athleteData.InsertAthlete(athlete);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
