@@ -9,20 +9,24 @@
 
 <PageTitle>Training Paces</PageTitle>
 
-
-
-
-
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
 
-    <MudText>
-      Die Pace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
-      Hier findest du alles über die optimalen Trainingsbereiche.
-    </MudText>
+
 
 
     <MudStack Spacing="3">
+        <MudText>
+            Die Pace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
+            Hier findest du deine optimalen Trainingsbereiche.
+        </MudText>
+
+        @if (Athlete?.Vdot < 1)
+        {
+            <MudCard>
+                <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir deine optimalen Pacebereich für dich bestimmen können.</MudAlert>
+            </MudCard>
+        }
 
         <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" />
 
@@ -59,15 +63,6 @@
 
 
 </MudContainer>
-
-@if (Athlete?.Vdot < 1)
-{
-    <MudText>Füge einen Einstufungslauf hinzu, damit wir deine individuellen Pacebereiche für dich bestimmen können.</MudText>
-}
-else
-{
-}
-
 
 @code
 {
