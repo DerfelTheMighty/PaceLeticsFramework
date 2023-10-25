@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using PaceLetics.Web.Areas.Identity;
 using PaceLetics.Web.Data;
 using MudBlazor.Services;
+using MudBlazor.Extensions;
+using MudBlazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +38,16 @@ builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
 builder.Services.AddTransient<IAthleteData, AthleteData>();
 builder.Services.AddSingleton<IAthleteService, AthleteService>();
-builder.Services.AddMudServices();
+//builder.Services.AddMudServices();
+//builder.Services.AddMudExtensions();
+builder.Services.AddMudServicesWithExtensions(c =>
+{
+    c.WithDefaultDialogOptions(ex =>
+    {
+        ex.Position = DialogPosition.BottomRight;
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,5 +73,5 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
+app.UseMudExtensions();
 app.Run();

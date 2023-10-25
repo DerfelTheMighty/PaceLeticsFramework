@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 
-<MudThemeProvider Theme="MyCustomTheme" />
+<MudThemeProvider Theme="MyCustomTheme" IsDarkMode=true/>
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -11,16 +11,14 @@
     <MudAppBar Elevation="1">
 
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-    <MudText Align="Align.Start">PaceLetics - The Team Running App</MudText>
+    <MudText Align="Align.Start">PaceLetics - Team Running</MudText>
     <LoginDisplay />
 
-
-        
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu/>
     </MudDrawer>
-    <MudMainContent>
+    <MudMainContent Style="margin-top: 24px; ">
         @Body
     </MudMainContent>
 </MudLayout>
@@ -37,24 +35,12 @@
 
     MudTheme MyCustomTheme = new MudTheme()
         {
-            Palette = new PaletteLight()
-            {
-                Primary = Colors.Blue.Accent1,
-                Secondary = Colors.Green.Accent4,
-                AppbarBackground = Colors.Indigo.Lighten1,
-            },
-            PaletteDark = new PaletteDark()
-            {
-                Primary = Colors.Blue.Lighten1
-            },
-
             LayoutProperties = new LayoutProperties()
             {
                 DrawerWidthLeft = "260px",
                 DrawerWidthRight = "300px"
             }
         };
-
 }
 
 

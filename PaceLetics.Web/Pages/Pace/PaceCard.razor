@@ -1,0 +1,65 @@
+﻿@using CoreLibrary.Constants;
+
+<MudCard>
+    <MudCardHeader>
+        @switch(PaceKey)
+    {
+        case PaceKeys.Easy:
+            <MudAvatar>
+                <MudImage Src="images/icons/epace.png"></MudImage>
+            </MudAvatar>
+            <MudText> asy Pace</MudText>
+            break;
+        case PaceKeys.Marathon:
+            <MudAvatar>
+                <MudImage Src="images/icons/mpace.png"></MudImage>
+            </MudAvatar>
+            <MudText> arathon Pace</MudText>
+            break;
+        case PaceKeys.Threshold:
+            <MudAvatar>
+                <MudImage Src="images/icons/tpace.png"></MudImage>
+            </MudAvatar>
+            <MudText> hreshold Pace</MudText>
+            break;
+        case PaceKeys.Intervall:
+            <MudAvatar>
+                <MudImage Src="images/icons/ipace.png"></MudImage>
+            </MudAvatar>
+            <MudText> ntervall Pace</MudText>
+            break;
+        case PaceKeys.Repetition:
+            <MudAvatar>
+                <MudImage Src="images/icons/rpace.png"></MudImage>
+            </MudAvatar>
+            <MudText> epetition Pace</MudText>
+            break;
+        default:
+            <MudAvatar>
+                <MudImage Src="images/icons/epace.png"></MudImage>
+                    <MudText> asy Pace</MudText>
+            </MudAvatar>
+            break;
+    }
+    </MudCardHeader>
+
+    <MudCardContent>
+        
+    </MudCardContent>
+
+    <MudCardActions>
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
+    </MudCardActions>
+
+</MudCard>
+
+
+
+
+
+@code {
+    [Parameter]
+    public string? PaceKey { get; set; }
+    [Parameter]
+    public TimeSpan Pace { get; set; }
+}

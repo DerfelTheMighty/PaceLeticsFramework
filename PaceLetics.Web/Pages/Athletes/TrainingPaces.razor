@@ -9,8 +9,65 @@
 
 <PageTitle>Training Paces</PageTitle>
 
-<h1>Hello @Athlete?.Name </h1>
-<p> Your user id is: @Athlete?.Id</p>
+
+
+
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+
+
+    <MudText>
+      Die Pace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
+      Hier findest du alles über die optimalen Trainingsbereiche.
+    </MudText>
+
+
+    <MudStack Spacing="3">
+
+        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" />
+
+        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="M Pace" />
+
+        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="T Pace" />
+
+        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="I Pace" />
+
+        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" />
+    </MudStack>
+
+
+
+<MudAvatar>
+    <MudImage Src="images/icons/epace.png"></MudImage>
+</MudAvatar>
+
+<MudAvatar>
+    <MudImage Src="images/icons/mpace.png"></MudImage>
+</MudAvatar>
+
+<MudAvatar>
+    <MudImage Src="images/icons/tpace.png"></MudImage>
+</MudAvatar>
+
+<MudAvatar>
+    <MudImage Src="images/icons/ipace.png"></MudImage>
+</MudAvatar>
+
+<MudAvatar>
+    <MudImage Src="images/icons/rpace.png"></MudImage>
+</MudAvatar>
+
+
+</MudContainer>
+
+@if (Athlete?.Vdot < 1)
+{
+    <MudText>Füge einen Einstufungslauf hinzu, damit wir deine individuellen Pacebereiche für dich bestimmen können.</MudText>
+}
+else
+{
+}
+
 
 @code
 {

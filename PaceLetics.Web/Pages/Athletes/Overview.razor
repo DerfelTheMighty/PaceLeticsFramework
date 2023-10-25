@@ -1,32 +1,48 @@
 ﻿@page "/Athletes/overview"
+@using AthleteDataAccessLibrary;
+@using AthleteDataAccessLibrary.Contracts;
+@using CoreLibrary.Models.Athlet;
+@using MudBlazor;
+
+@inject IAthleteData AthleteData
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+
+
+
+
+
+
 
 
 @code
 {
-    class Dessert
+    AthleteModel Athlete;
+
+
+    protected async override void OnInitialized()
     {
-        public int Calories { get; set; }
-        public int Carbs { get; set; }
-        public int Fat { get; set; }
-        public string Name { get; set; }
-        public int Protein { get; set; }
-    }
-
-    Dessert[] desserts = new[]
-    {
-                new Dessert() {Name = "Frozen yogurt", Calories = 159, Fat = 6, Carbs = 24, Protein = 4},
-                new Dessert() {Name = "Ice cream sandwich", Calories = 237, Fat = 9, Carbs = 37, Protein = 4},
-                new Dessert() {Name = "Eclair", Calories = 262, Fat = 16, Carbs = 24, Protein = 6},
-                new Dessert() {Name = "Cupcake", Calories = 305, Fat = 4, Carbs = 67, Protein = 4},
-                new Dessert() {Name = "Gingerbread", Calories = 356, Fat = 16, Carbs = 49, Protein = 4},
-        };
-
-
-    Dessert[] sortedData = null;
-
-    protected override void OnInitialized()
-    {
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var name = await GetUserName();
+        var id = await GetUserId();
+        Athlete = await AthleteData.GetAthlete(id);
+        StateHasChanged();
         base.OnInitialized();
-
     }
+
+    async Task<string> GetUserName()
+    {
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        return user.Identity.Name;
+    }
+
+    async Task<string> GetUserId()
+    {
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+        return userid;
+    }
+
+
 }
