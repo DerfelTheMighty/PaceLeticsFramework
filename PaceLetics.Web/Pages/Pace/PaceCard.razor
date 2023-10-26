@@ -44,7 +44,9 @@
     </MudCardHeader>
 
     <MudCardContent>
-        
+        <MudText>
+            <b>@LowerPace.ToString("mm':'ss")</b> min/km bis <b> @UpperPace.ToString("mm':'ss")</b> min/km;
+        </MudText>
     </MudCardContent>
 
     <MudCardActions>
@@ -61,5 +63,7 @@
     [Parameter]
     public string? PaceKey { get; set; }
     [Parameter]
-    public TimeSpan Pace { get; set; }
+    public TimeSpan LowerPace { get; set; }
+    [Parameter]
+    public TimeSpan UpperPace { get; set; }
 }

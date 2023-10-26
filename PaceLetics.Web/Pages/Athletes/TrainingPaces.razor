@@ -3,6 +3,8 @@
 @using AthleteDataAccessLibrary;
 @using CoreLibrary.Models.Athlet;
 @using AthleteDataAccessLibrary.Contracts;
+@using CoreLibrary.Models.Pace;
+@using MudBlazor.Extensions.Core;
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
@@ -12,63 +14,73 @@
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
 
+    @if (isLoading)
+    {
+        <MudGrid Class="d-flex justify-center">
+            <MudPaper>
+                <MudAlert Severity="Severity.Info">
+                    Einen Moment Geduld. Deine Daten werden für dich vorbereitet. 
+                </MudAlert>
+                <MudExGradientText Palette="palette">
+                    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                    </MudExGradientText>
+            </MudPaper>
+        </MudGrid>
+        
+    }
+    else
+    {
+        <MudStack Spacing="3">
+            <MudText>
+                Deine individuelle Trainingspace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
+                Hier findest du deine optimalen Trainingsbereiche.
+            </MudText>
 
+            @if (Athlete?.Vdot < 1)
+            {
+                <MudCard>
+                    <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir dein optimalen Pacebereiche für dich bestimmen können.</MudAlert>
+                </MudCard>
+            }
+            @if (Athlete == null || Athlete.PaceModel == null)
+            {
 
+            }
+            else
+            {
+                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" LowerPace="@Athlete.PaceModel.Easy" UpperPace="@Athlete.PaceModel.Easy" />
 
-    <MudStack Spacing="3">
-        <MudText>
-            Die Pace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
-            Hier findest du deine optimalen Trainingsbereiche.
-        </MudText>
+                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="M Pace" LowerPace="@Athlete.PaceModel.Marathon" UpperPace="@Athlete.PaceModel.Marathon" />
 
-        @if (Athlete?.Vdot < 1)
-        {
-            <MudCard>
-                <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir deine optimalen Pacebereich für dich bestimmen können.</MudAlert>
-            </MudCard>
-        }
+                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="T Pace" LowerPace="@Athlete.PaceModel.Threshold" UpperPace="@Athlete.PaceModel.Threshold" />
 
-        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" />
+                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="I Pace" LowerPace="@Athlete.PaceModel.Intervall" UpperPace="@Athlete.PaceModel.Intervall" />
 
-        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="M Pace" />
+                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" LowerPace="@Athlete.PaceModel.Repetition" UpperPace="@Athlete.PaceModel.Repetition" />
+            }
 
-        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="T Pace" />
-
-        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="I Pace" />
-
-        <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" />
     </MudStack>
 
-
-
-<MudAvatar>
-    <MudImage Src="images/icons/epace.png"></MudImage>
-</MudAvatar>
-
-<MudAvatar>
-    <MudImage Src="images/icons/mpace.png"></MudImage>
-</MudAvatar>
-
-<MudAvatar>
-    <MudImage Src="images/icons/tpace.png"></MudImage>
-</MudAvatar>
-
-<MudAvatar>
-    <MudImage Src="images/icons/ipace.png"></MudImage>
-</MudAvatar>
-
-<MudAvatar>
-    <MudImage Src="images/icons/rpace.png"></MudImage>
-</MudAvatar>
+    }
 
 
 </MudContainer>
 
 @code
 {
+    List<MudExColor> palette = new List<MudExColor>()
+    {
+        MudExColor.DrawerBackground, 
+        MudExColor.Error, 
+        MudExColor.DrawerBackground, 
+        MudExColor.DrawerBackground,
+        MudExColor.Error
+    };
+
+    bool isLoading = true;
     string Name ="";
     string ID = "";
-    AthleteModel Athlete;
+    AthleteModel? Athlete;
     Random rnd = new Random();
 
     protected async override void OnInitialized()
@@ -78,7 +90,10 @@
         ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
         Athlete.Vdot = rnd.NextDouble();
+        Athlete.PaceModel = new PaceModel();
+        Athlete.PaceModel.Easy = new TimeSpan(0, 5, 3);
         await AthleteData.UpdateAthlete(Athlete);
+        isLoading = false;
         StateHasChanged();
         base.OnInitialized();
     }
