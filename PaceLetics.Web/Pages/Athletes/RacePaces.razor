@@ -1,17 +1,19 @@
-﻿@page "/Athletes/trainingpaces"
+﻿@page "/Athletes/racepaces"
 
 @using AthleteDataAccessLibrary;
 @using CoreLibrary.Models.Athlet;
 @using AthleteDataAccessLibrary.Contracts;
 @using CoreLibrary.Models.Pace;
+@using CoreLibrary.Models.Race;
 @using MudBlazor.Extensions.Core;
 
+@inject RaceResultModelFactory RaceModelFactory
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 
-<PageTitle>Meine Pacebereiche</PageTitle>
+<PageTitle>Meine Laufergebnisse</PageTitle>
 
-<h1>Meine Pacebereiche</h1>
+<h1>Meine Laufergebnisse</h1>
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
@@ -32,33 +34,19 @@
     }
     else
     {
-        <MudStack Spacing="3">
+        <MudStack Spacingv="3">
             <MudAlert Severity="Severity.Info">
-                Deine individuelle Trainingspace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
-                Hier findest du eine Übersicht über deine optimalen Trainingsbereiche.
+                Hier kannst du deine Laufergebnisse eintragen. 
             </MudAlert>
 
-            @if (Athlete?.Vdot < 1)
-            {
-                <MudCard>
-                    <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir dein optimalen Pacebereiche für dich bestimmen können.</MudAlert>
-                </MudCard>
+                @foreach(var item in Athlete.RaceResults)
+                {
+                        <PaceLetics.Web.Pages.Race.RaceCard Model="@item"/>
+                }
 
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" LowerPace="@Athlete.PaceModel.Easy" UpperPace="@Athlete.PaceModel.Easy" />
-
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="M Pace" LowerPace="@Athlete.PaceModel.Marathon" UpperPace="@Athlete.PaceModel.Marathon" />
-
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="T Pace" LowerPace="@Athlete.PaceModel.Threshold" UpperPace="@Athlete.PaceModel.Threshold" />
-
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="I Pace" LowerPace="@Athlete.PaceModel.Intervall" UpperPace="@Athlete.PaceModel.Intervall" />
-
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" LowerPace="@Athlete.PaceModel.Repetition" UpperPace="@Athlete.PaceModel.Repetition" />
-            }
-
-    </MudStack>
+        </MudStack>
 
     }
-
 
 </MudContainer>
 
@@ -78,6 +66,7 @@
     string ID = "";
     AthleteModel? Athlete;
     Random rnd = new Random();
+    MudExCardList<RaceResultModel> CardList;
 
     protected async override void OnInitialized()
     {
@@ -85,9 +74,10 @@
         Name = await GetUserName();
         ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
-        Athlete.Vdot = rnd.NextDouble();
-        await AthleteData.UpdateAthlete(Athlete);
+        //await AthleteData.UpdateAthlete(Athlete);
+        Athlete.RaceResults = RaceModelFactory.CreateRaceResults();
         isLoading = false;
+        
         StateHasChanged();
         base.OnInitialized();
     }

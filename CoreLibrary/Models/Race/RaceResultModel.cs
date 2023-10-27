@@ -23,11 +23,11 @@
 		/// <summary>
 		/// Race date
 		/// </summary>
-		public DateTime? Date { get; set; }
+		public DateTime Date { get; set; }
 		/// <summary>
 		/// Time in Seconds
 		/// </summary>
-		public TimeSpan? Time { get; set; }
+		public TimeSpan Time { get; set; }
 
 		/// <summary>
 		/// overrides to string method and returns a formatted string
@@ -38,9 +38,9 @@
 			string result =
 				"ID: " + Id?.ToString() ?? "NA" + " | " +
 				"Name: " + Type?.ToString() ?? "NA" + "  | " +
-				"Date: " + Date?.ToString("yyyyMMdd") ?? "NA" +
+				"Date: " + Date.ToString("yyyyMMdd") ?? "NA" +
 				"Distance: " + DistanceM.ToString() + " m | " +
-				"Time: " + Time?.ToString(@"mm\:ss") ?? "NA" + " hh:mm:ss";
+				"Time: " + Time.ToString(@"mm\:ss") ?? "NA" + " hh:mm:ss";
 			return result;
 		}
 

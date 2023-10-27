@@ -18,7 +18,7 @@ namespace CoreLibrary.Models.Athlet
         public string? Name { get; set; }
 
         /// <summary>
-        /// used as partition key
+        /// Used as partition key
         /// </summary>
         public string? AthleteId { get; set; }
         /// <summary>
@@ -32,7 +32,7 @@ namespace CoreLibrary.Models.Athlet
         public double Vdot { get; set; }
 
         /// <summary>
-        /// list of race results
+        /// List of race results
         /// </summary>
         public List<RaceResultModel>? RaceResults { get; set; }
 
@@ -41,6 +41,15 @@ namespace CoreLibrary.Models.Athlet
         /// </summary>
         public PaceModel? PaceModel { get; set; }
 
-
+        public AthleteModel() 
+        {
+            Id = "NA";
+            Name = "NA";
+            AthleteId = "NA";
+            Level = new ExperienceLevel();
+            RaceResults = new List<RaceResultModel>();
+            Vdot = 0;
+            PaceModel= new PaceModel();
+        }
     }
 }

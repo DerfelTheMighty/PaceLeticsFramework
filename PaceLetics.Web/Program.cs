@@ -9,6 +9,7 @@ using PaceLetics.Web.Data;
 using MudBlazor.Services;
 using MudBlazor.Extensions;
 using MudBlazor;
+using CoreLibrary.Models.Race;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<AthleteModelFactory>();
+builder.Services.AddSingleton<RaceResultModelFactory>();
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
 builder.Services.AddTransient<IAthleteData, AthleteData>();
 builder.Services.AddSingleton<IAthleteService, AthleteService>();

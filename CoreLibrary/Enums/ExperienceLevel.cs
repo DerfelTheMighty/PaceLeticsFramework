@@ -1,8 +1,12 @@
-﻿namespace CoreLibrary.Enums
+﻿using System.ComponentModel;
+
+namespace CoreLibrary.Enums
 {
-	public enum ExperienceLevel
+    [DefaultValue(ExperienceLevel.None)]
+    public enum ExperienceLevel
 	{
-		Novice,
+        None,
+        Novice,
 		Intermediate,
 		Expert
 	}
