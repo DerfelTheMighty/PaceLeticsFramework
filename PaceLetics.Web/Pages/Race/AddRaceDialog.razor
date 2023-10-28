@@ -1,0 +1,51 @@
+﻿@using CoreLibrary.Constants;
+@using CoreLibrary.Models.Race
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Neuer Lauf</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField T="string" @bind-Value="@this.input" Immediate="@true" Label="Name" />
+        <MudSelect 
+        Dense="true" T="string" Label="Distanz" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)">
+            <MudSelectItem Value="@RaceKeys.D1k" />
+            <MudSelectItem Value="@RaceKeys.D3k" />
+            <MudSelectItem Value="@RaceKeys.D5k" />
+            <MudSelectItem Value="@RaceKeys.D10k" />
+            <MudSelectItem Value="@RaceKeys.D15k" />
+            <MudSelectItem Value="@RaceKeys.D21k" />
+            <MudSelectItem Value="@RaceKeys.D42k" />
+        </MudSelect>
+        <MudText>@model.DistanceM</MudText>
+        <MudDatePicker Label="Datum" Date="@model.Date"/>
+        
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Disabled="@string.IsNullOrWhiteSpace(this.input)"
+                   OnClick="@this.OK"
+                   Size="@Size.Small">
+            OK
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private string selectedDistances;
+    private IList<string> availableDistances;
+    private RaceResultModel model = new RaceResultModel();
+    private string input = string.Empty;
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; } = default!;
+
+    private void OK() => this.MudDialog.Close(DialogResult.Ok(this.input));
+
+    private void OnRaceTypeChanged(string value)
+    {
+        model.Type = value;
+        model.DistanceM = RaceDistances.Dict[value];
+        StateHasChanged();
+    }
+}

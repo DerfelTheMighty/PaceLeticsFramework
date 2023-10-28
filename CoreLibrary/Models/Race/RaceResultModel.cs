@@ -44,5 +44,13 @@
 			return result;
 		}
 
+		public RaceResultModel() 
+		{
+			Id = string.Empty;
+			Type = string.Empty;
+			Date = DateTime.Now;
+			DistanceM = 0;
+			Time = new TimeSpan(0, 0, 0);
+		}
 	}
 }

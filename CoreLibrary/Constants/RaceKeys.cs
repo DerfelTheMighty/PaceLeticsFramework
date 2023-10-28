@@ -13,7 +13,7 @@ namespace CoreLibrary.Constants
         public const string D5k = "5 km";
         public const string D10k = "10 km";
         public const string D15k = "15 km";
-        public const string D21k = "21 km";
-        public const string D42k = "42 km";
+        public const string D21k = "Halbmarathon";
+        public const string D42k = "Marathon";
     }
 }

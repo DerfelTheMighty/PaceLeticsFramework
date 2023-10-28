@@ -1,0 +1,28 @@
+﻿@using MudBlazor;
+@using MudBlazor.Extensions.Core;
+
+<MudGrid Class="d-flex justify-center">
+    <MudCard>
+        <MudAlert Severity="Severity.Info">
+            @Label
+        </MudAlert>
+        <MudExGradientText Palette="palette" Align="Align.Center">
+            |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+        </MudExGradientText>
+    </MudCard>
+</MudGrid>
+
+@code {
+
+    [Parameter]
+    public string Label { get; set; }
+
+    List<MudExColor> palette = new List<MudExColor>()
+    {
+        MudExColor.DrawerBackground,
+        MudExColor.Error,
+        MudExColor.DrawerBackground,
+        MudExColor.DrawerBackground,
+        MudExColor.Error
+    };
+}

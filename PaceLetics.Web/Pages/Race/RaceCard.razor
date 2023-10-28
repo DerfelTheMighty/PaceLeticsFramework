@@ -13,6 +13,7 @@
                     <MudImage Src="images/icons/epace.png"></MudImage>
                 </MudAvatar>
                 <MudText>@Model?.Id</MudText>
+                
                 break;
             case RaceKeys.D3k:
                 <MudAvatar>
@@ -25,37 +26,43 @@
                     <MudImage Src="images/icons/tpace.png"></MudImage>
                 </MudAvatar>
                 <MudText>@Model?.Id</MudText>
+
                 break;
             case RaceKeys.D10k:
                 <MudAvatar>
                     <MudImage Src="images/icons/ipace.png"></MudImage>
                 </MudAvatar>
                 <MudText>@Model?.Id</MudText>
+  
                 break;
             case RaceKeys.D15k:
                 <MudAvatar>
                     <MudImage Src="images/icons/rpace.png"></MudImage>
                 </MudAvatar>
                 <MudText>@Model?.Id</MudText>
+   
                 break;
             case RaceKeys.D21k:
                 <MudAvatar>
                     <MudImage Src="images/icons/rpace.png"></MudImage>
                 </MudAvatar>
                 <MudText>@Model?.Id</MudText>
+   
                 break;
             default:
                 <MudAvatar>
                     <MudImage Src="images/icons/epace.png"></MudImage>
                 </MudAvatar>
                 <MudText>@Model?.Id</MudText>
+
                 break;
-    }
+            }
+            <MudText>@Model?.Date.ToString("dd-MM-yyyy")</MudText>
     </MudExGrid>
     </MudCardHeader>
     <MudCardContent>
         <MudText>
-            <b>@Model?.Time.ToString()</b> hh:mm:ss
+            Ergebnis: <b>@Model?.Time.ToString()</b>
         </MudText>
     </MudCardContent>
 </MudCard>

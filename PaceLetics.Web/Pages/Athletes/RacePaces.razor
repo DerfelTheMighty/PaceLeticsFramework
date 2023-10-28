@@ -6,10 +6,15 @@
 @using CoreLibrary.Models.Pace;
 @using CoreLibrary.Models.Race;
 @using MudBlazor.Extensions.Core;
+@using MudBlazor;
+@using Race;
 
 @inject RaceResultModelFactory RaceModelFactory
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
+@inject IJSRuntime js;
+@inject IDialogService dialogService;
+
 
 <PageTitle>Meine Laufergebnisse</PageTitle>
 
@@ -20,17 +25,7 @@
 
     @if (isLoading)
     {
-        <MudGrid Class="d-flex justify-center">
-            <MudCard>
-                <MudAlert Severity="Severity.Info">
-                    Deine Daten werden für dich vorbereitet. 
-                </MudAlert>
-                <MudExGradientText Palette="palette" Align="Align.Center">
-                    |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-                    </MudExGradientText>
-            </MudCard>
-        </MudGrid>
-        
+        <LoadingScreen Label="Deine Daten werden geladen..."/>
     }
     else
     {
@@ -39,11 +34,13 @@
                 Hier kannst du deine Laufergebnisse eintragen. 
             </MudAlert>
 
-                @foreach(var item in Athlete.RaceResults)
-                {
-                        <PaceLetics.Web.Pages.Race.RaceCard Model="@item"/>
-                }
-
+            @foreach(var item in Athlete.RaceResults)
+            {
+                <PaceLetics.Web.Pages.Race.RaceCard Model="@item"/>
+            }
+            <MudButton OnClick="AddAthlete">
+                <MudExIcon Icon="@Icons.Material.Filled.AddRoad" Size="Size.Large" Color="MudExColor.Info" />
+            </MudButton>
         </MudStack>
 
     }
@@ -52,27 +49,18 @@
 
 @code
 {
-    List<MudExColor> palette = new List<MudExColor>()
-    {
-        MudExColor.DrawerBackground, 
-        MudExColor.Error, 
-        MudExColor.DrawerBackground, 
-        MudExColor.DrawerBackground,
-        MudExColor.Error
-    };
+    string input = string.Empty;
+
+
 
     bool isLoading = true;
-    string Name ="";
-    string ID = "";
+
     AthleteModel? Athlete;
-    Random rnd = new Random();
-    MudExCardList<RaceResultModel> CardList;
 
     protected async override void OnInitialized()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        Name = await GetUserName();
-        ID = await GetUserId();
+        var ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
         //await AthleteData.UpdateAthlete(Athlete);
         Athlete.RaceResults = RaceModelFactory.CreateRaceResults();
@@ -95,6 +83,19 @@
         var user = authstate.User;
         var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
         return userid;
+    }
+
+    private async Task AddAthlete()
+    {
+        var options = new DialogOptions
+            {
+                CloseButton = true,
+                DisableBackdropClick = false,
+                MaxWidth = MaxWidth.Small
+            };
+
+        var result = await dialogService.Show<AddRaceDialog>(string.Empty, new DialogParameters(), options).Result;
+        this.input = result.Data as string ?? string.Empty;
     }
 
 }

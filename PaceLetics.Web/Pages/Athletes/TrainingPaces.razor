@@ -18,17 +18,7 @@
 
     @if (isLoading)
     {
-        <MudGrid Class="d-flex justify-center">
-            <MudCard>
-                <MudAlert Severity="Severity.Info">
-                    Deine Daten werden für dich vorbereitet. 
-                </MudAlert>
-                <MudExGradientText Palette="palette" Align="Align.Center">
-                    |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-                    </MudExGradientText>
-            </MudCard>
-        </MudGrid>
-        
+        <LoadingScreen Label="Deine Daten werden geladen..." />        
     }
     else
     {
@@ -64,28 +54,15 @@
 
 @code
 {
-    List<MudExColor> palette = new List<MudExColor>()
-    {
-        MudExColor.DrawerBackground, 
-        MudExColor.Error, 
-        MudExColor.DrawerBackground, 
-        MudExColor.DrawerBackground,
-        MudExColor.Error
-    };
 
     bool isLoading = true;
-    string Name ="";
-    string ID = "";
     AthleteModel? Athlete;
-    Random rnd = new Random();
 
     protected async override void OnInitialized()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        Name = await GetUserName();
-        ID = await GetUserId();
+        var ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
-        Athlete.Vdot = rnd.NextDouble();
         await AthleteData.UpdateAthlete(Athlete);
         isLoading = false;
         StateHasChanged();
