@@ -35,9 +35,8 @@
             <MudText >
                 Hier kannst du deine Laufergebnisse eintragen. 
             </MudText>
-
-
-            <MudExCardList @ref="component" TData="RaceResultModel">
+            <MudPaper>
+            <MudExCardList @ref="component" TData="RaceResultModel" HoverMode="MudExCardHoverMode.CardEffect3d">
                 @foreach (var item in _samples)
                 {
                     <MudCard>
@@ -82,7 +81,6 @@
                                             </MudAvatar>
                                             break;
                                     }
-                                    <MudText>@item?.Date.ToString("dd-MM-yyyy")</MudText>
                                 </MudExGrid>
                             </CardHeaderContent>
                             <CardHeaderActions>
@@ -90,6 +88,7 @@
                             </CardHeaderActions>
                         </MudCardHeader>
                         <MudCardContent>
+                            <MudText>@item?.Date.ToString("dd-MM-yyyy")</MudText>
                             <MudText>@item?.Id</MudText>
                             <MudText>
                                 Ergebnis: <b>@item?.Time.ToString()</b>
@@ -98,6 +97,7 @@
                     </MudCard>
                 }
             </MudExCardList>
+            </MudPaper>
             <MudButton OnClick="AddAthlete">
                 <MudExIcon Icon="@Icons.Material.Filled.AddRoad" Size="Size.Large" Color="MudExColor.Info" />
             </MudButton>
