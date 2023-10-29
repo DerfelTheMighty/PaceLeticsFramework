@@ -23,17 +23,17 @@
     else
     {
         <MudStack Spacing="3">
-            <MudAlert Severity="Severity.Info">
+            <MudText>
                 Deine individuelle Trainingspace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
                 Hier findest du eine Übersicht über deine optimalen Trainingsbereiche.
-            </MudAlert>
+            </MudText>
 
             @if (Athlete?.Vdot < 1)
             {
                 <MudCard>
                     <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir dein optimalen Pacebereiche für dich bestimmen können.</MudAlert>
                 </MudCard>
-
+            }
                 <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" LowerPace="@Athlete.PaceModel.Easy" UpperPace="@Athlete.PaceModel.Easy" />
 
                 <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="M Pace" LowerPace="@Athlete.PaceModel.Marathon" UpperPace="@Athlete.PaceModel.Marathon" />
@@ -43,7 +43,7 @@
                 <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="I Pace" LowerPace="@Athlete.PaceModel.Intervall" UpperPace="@Athlete.PaceModel.Intervall" />
 
                 <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" LowerPace="@Athlete.PaceModel.Repetition" UpperPace="@Athlete.PaceModel.Repetition" />
-            }
+            
 
     </MudStack>
 

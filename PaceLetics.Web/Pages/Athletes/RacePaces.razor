@@ -8,6 +8,8 @@
 @using MudBlazor.Extensions.Core;
 @using MudBlazor;
 @using Race;
+@using CoreLibrary.Constants;
+@using CoreLibrary.Models.Race;
 
 @inject RaceResultModelFactory RaceModelFactory
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
@@ -30,17 +32,76 @@
     else
     {
         <MudStack Spacingv="3">
-            <MudAlert Severity="Severity.Info">
+            <MudText >
                 Hier kannst du deine Laufergebnisse eintragen. 
-            </MudAlert>
+            </MudText>
 
-            @foreach(var item in Athlete.RaceResults)
-            {
-                <PaceLetics.Web.Pages.Race.RaceCard Model="@item"/>
-            }
+
+            <MudExCardList @ref="component" TData="RaceResultModel">
+                @foreach (var item in _samples)
+                {
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudExGrid>
+                                    @switch (item?.Type)
+                                    {
+                                        case RaceKeys.D1k:
+                                            <MudAvatar>
+                                                <MudImage Src="images/icons/epace.png"></MudImage>
+                                            </MudAvatar>
+                                            break;
+                                        case RaceKeys.D3k:
+                                            <MudAvatar>
+                                                <MudImage Src="images/icons/mpace.png"></MudImage>
+                                            </MudAvatar>
+                                            break;
+                                        case RaceKeys.D5k:
+                                            <MudAvatar>
+                                                <MudImage Src="images/icons/tpace.png"></MudImage>
+                                            </MudAvatar>
+                                            break;
+                                        case RaceKeys.D10k:
+                                            <MudAvatar>
+                                                <MudImage Src="images/icons/ipace.png"></MudImage>
+                                            </MudAvatar>
+                                            break;
+                                        case RaceKeys.D15k:
+                                            <MudAvatar>
+                                                <MudImage Src="images/icons/rpace.png"></MudImage>
+                                            </MudAvatar>
+                                            break;
+                                        case RaceKeys.D21k:
+                                            <MudAvatar>
+                                                <MudImage Src="images/icons/rpace.png"></MudImage>
+                                            </MudAvatar>
+                                            break;
+                                        default:
+                                            <MudAvatar>
+                                                <MudImage Src="images/icons/epace.png"></MudImage>
+                                            </MudAvatar>
+                                            break;
+                                    }
+                                    <MudText>@item?.Date.ToString("dd-MM-yyyy")</MudText>
+                                </MudExGrid>
+                            </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Default" />
+                            </CardHeaderActions>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudText>@item?.Id</MudText>
+                            <MudText>
+                                Ergebnis: <b>@item?.Time.ToString()</b>
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                }
+            </MudExCardList>
             <MudButton OnClick="AddAthlete">
                 <MudExIcon Icon="@Icons.Material.Filled.AddRoad" Size="Size.Large" Color="MudExColor.Info" />
             </MudButton>
+
         </MudStack>
 
     }
@@ -49,6 +110,10 @@
 
 @code
 {
+    MudExCardList<RaceResultModel> component;
+    private IEnumerable<RaceResultModel> _selected;
+    private RaceResultModel[] _samples;
+
     string input = string.Empty;
 
 
@@ -57,6 +122,8 @@
 
     AthleteModel? Athlete;
 
+
+
     protected async override void OnInitialized()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
@@ -64,6 +131,8 @@
         Athlete = await AthleteData.GetAthlete(ID);
         //await AthleteData.UpdateAthlete(Athlete);
         Athlete.RaceResults = RaceModelFactory.CreateRaceResults();
+        _samples = Athlete.RaceResults.ToArray();
+        _selected = new[] { _samples[0] };
         isLoading = false;
         
         StateHasChanged();

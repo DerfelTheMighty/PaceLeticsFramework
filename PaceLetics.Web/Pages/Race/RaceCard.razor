@@ -5,6 +5,7 @@
 
 <MudCard>
     <MudCardHeader>
+        <CardHeaderContent>
         <MudExGrid>
         @switch(@Model?.Type)
         {
@@ -12,55 +13,47 @@
                 <MudAvatar>
                     <MudImage Src="images/icons/epace.png"></MudImage>
                 </MudAvatar>
-                <MudText>@Model?.Id</MudText>
-                
                 break;
             case RaceKeys.D3k:
                 <MudAvatar>
                     <MudImage Src="images/icons/mpace.png"></MudImage>
                 </MudAvatar>
-                <MudText>@Model?.Id</MudText>
                 break;
             case RaceKeys.D5k:
                 <MudAvatar>
                     <MudImage Src="images/icons/tpace.png"></MudImage>
                 </MudAvatar>
-                <MudText>@Model?.Id</MudText>
-
                 break;
             case RaceKeys.D10k:
                 <MudAvatar>
                     <MudImage Src="images/icons/ipace.png"></MudImage>
                 </MudAvatar>
-                <MudText>@Model?.Id</MudText>
-  
                 break;
             case RaceKeys.D15k:
                 <MudAvatar>
                     <MudImage Src="images/icons/rpace.png"></MudImage>
                 </MudAvatar>
-                <MudText>@Model?.Id</MudText>
-   
                 break;
             case RaceKeys.D21k:
                 <MudAvatar>
                     <MudImage Src="images/icons/rpace.png"></MudImage>
                 </MudAvatar>
-                <MudText>@Model?.Id</MudText>
-   
                 break;
             default:
                 <MudAvatar>
                     <MudImage Src="images/icons/epace.png"></MudImage>
                 </MudAvatar>
-                <MudText>@Model?.Id</MudText>
-
                 break;
             }
             <MudText>@Model?.Date.ToString("dd-MM-yyyy")</MudText>
-    </MudExGrid>
+        </MudExGrid>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Default" />
+        </CardHeaderActions>
     </MudCardHeader>
     <MudCardContent>
+        <MudText>@Model?.Id</MudText>
         <MudText>
             Ergebnis: <b>@Model?.Time.ToString()</b>
         </MudText>
