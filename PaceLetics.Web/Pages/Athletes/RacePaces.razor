@@ -8,8 +8,6 @@
 @using MudBlazor.Extensions.Core;
 @using MudBlazor;
 @using Race;
-@using CoreLibrary.Constants;
-@using CoreLibrary.Models.Race;
 
 @inject RaceResultModelFactory RaceModelFactory
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
@@ -18,12 +16,13 @@
 @inject IDialogService dialogService;
 
 
-<PageTitle>Meine Laufergebnisse</PageTitle>
+<PageTitle>Meine Laufdaten</PageTitle>
 
-<h1>Meine Laufergebnisse</h1>
+
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
+    <h1>Meine Laufdaten</h1>
 
     @if (isLoading)
     {
@@ -32,76 +31,24 @@
     else
     {
         <MudStack Spacingv="3">
-            <MudText >
-                Hier kannst du deine Laufergebnisse eintragen. 
+            <MudText>
+                Hier kannst du deine Laufergebnisse eintragen oder editieren.
             </MudText>
-            <MudPaper>
-            <MudExCardList @ref="component" TData="RaceResultModel" HoverMode="MudExCardHoverMode.CardEffect3d">
-                @foreach (var item in _samples)
-                {
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudExGrid>
-                                    @switch (item?.Type)
-                                    {
-                                        case RaceKeys.D1k:
-                                            <MudAvatar>
-                                                <MudImage Src="images/icons/epace.png"></MudImage>
-                                            </MudAvatar>
-                                            break;
-                                        case RaceKeys.D3k:
-                                            <MudAvatar>
-                                                <MudImage Src="images/icons/mpace.png"></MudImage>
-                                            </MudAvatar>
-                                            break;
-                                        case RaceKeys.D5k:
-                                            <MudAvatar>
-                                                <MudImage Src="images/icons/tpace.png"></MudImage>
-                                            </MudAvatar>
-                                            break;
-                                        case RaceKeys.D10k:
-                                            <MudAvatar>
-                                                <MudImage Src="images/icons/ipace.png"></MudImage>
-                                            </MudAvatar>
-                                            break;
-                                        case RaceKeys.D15k:
-                                            <MudAvatar>
-                                                <MudImage Src="images/icons/rpace.png"></MudImage>
-                                            </MudAvatar>
-                                            break;
-                                        case RaceKeys.D21k:
-                                            <MudAvatar>
-                                                <MudImage Src="images/icons/rpace.png"></MudImage>
-                                            </MudAvatar>
-                                            break;
-                                        default:
-                                            <MudAvatar>
-                                                <MudImage Src="images/icons/epace.png"></MudImage>
-                                            </MudAvatar>
-                                            break;
-                                    }
-                                </MudExGrid>
-                            </CardHeaderContent>
-                            <CardHeaderActions>
-                                <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Default" />
-                            </CardHeaderActions>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText>@item?.Date.ToString("dd-MM-yyyy")</MudText>
-                            <MudText>@item?.Id</MudText>
-                            <MudText>
-                                Ergebnis: <b>@item?.Time.ToString()</b>
-                            </MudText>
-                        </MudCardContent>
-                    </MudCard>
-                }
-            </MudExCardList>
-            </MudPaper>
+            @if(@Athlete.ActiveReferenceResult == null)
+            {
+                <MudAlert Severity="Severity.Warning">
+                    Füge ein Laufergebnis hinzu, damit wir deine optimalen Trainingsbereiche für dich ermitteln können.
+                </MudAlert>
+            }
+            else{
+            <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@Athlete.ActiveReferenceResult"/>
+            }
             <MudButton OnClick="AddAthlete">
-                <MudExIcon Icon="@Icons.Material.Filled.AddRoad" Size="Size.Large" Color="MudExColor.Info" />
+                @if (Athlete.ActiveReferenceResult == null)
+                {
+                    <MudExIcon Icon="@Icons.Material.Filled.AddRoad" Size="Size.Large" Color="MudExColor.Warning" />
+                }
             </MudButton>
-
         </MudStack>
 
     }
@@ -110,14 +57,10 @@
 
 @code
 {
-    MudExCardList<RaceResultModel> component;
     private IEnumerable<RaceResultModel> _selected;
     private RaceResultModel[] _samples;
 
     string input = string.Empty;
-
-
-
     bool isLoading = true;
 
     AthleteModel? Athlete;
@@ -129,12 +72,7 @@
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
-        //await AthleteData.UpdateAthlete(Athlete);
-        Athlete.RaceResults = RaceModelFactory.CreateRaceResults();
-        _samples = Athlete.RaceResults.ToArray();
-        _selected = new[] { _samples[0] };
         isLoading = false;
-        
         StateHasChanged();
         base.OnInitialized();
     }
@@ -163,8 +101,22 @@
                 MaxWidth = MaxWidth.Small
             };
 
-        var result = await dialogService.Show<AddRaceDialog>(string.Empty, new DialogParameters(), options).Result;
-        this.input = result.Data as string ?? string.Empty;
+        RaceResultModel res = null;
+        if (Athlete.ActiveReferenceResult != null)
+            res = Athlete.ActiveReferenceResult;
+        var parameters = new DialogParameters<AddRaceDialog> { { x => x.Model, res } };
+        var result = await dialogService.Show<AddRaceDialog>(string.Empty, parameters, options).Result;
+        if (!result.Cancelled)
+        {
+            var rrm = result.Data as RaceResultModel ?? new RaceResultModel();
+            Athlete.ActiveReferenceResult = rrm;
+            isLoading = true;
+            StateHasChanged();
+            await AthleteData.UpdateAthlete(Athlete);
+            isLoading = false;
+        }
+
+       
     }
 
 }

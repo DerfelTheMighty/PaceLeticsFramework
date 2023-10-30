@@ -6,9 +6,9 @@
         <MudText Typo="Typo.h6">Neuer Lauf</MudText>
     </TitleContent>
     <DialogContent>
-        <MudTextField T="string" @bind-Value="@this._input" Immediate="@true" Label="Name" />
+        <MudTextField T="string" @bind-Value="_id" Immediate="@true" Label="Bezeichnung" />
         <MudSelect 
-        Dense="true" T="string" Label="Distanz" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)">
+        Dense="true" T="string" Label="Distanz" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)" Value="@_type">
             <MudSelectItem Value="@RaceKeys.D1k" />
             <MudSelectItem Value="@RaceKeys.D3k" />
             <MudSelectItem Value="@RaceKeys.D5k" />
@@ -17,33 +17,65 @@
             <MudSelectItem Value="@RaceKeys.D21k" />
             <MudSelectItem Value="@RaceKeys.D42k" />
         </MudSelect>
-        <MudText>@_model.DistanceM</MudText>
-        <MudDatePicker Label="Datum" Date="@_model.Date"/>
-        
+        <MudTextField @bind-Value="_time" Mask="@_timeMask" Label="Laufzeit" HelperText="hh:mm:ss" Clearable/>
+        <MudDatePicker Label="Datum" Date="@_date"/>
     </DialogContent>
-
     <DialogActions>
-        <MudButton Disabled="@string.IsNullOrWhiteSpace(this._input)"
+        <MudButton Disabled="@string.IsNullOrWhiteSpace(this._id)"
                    OnClick="@this.OK"
                    Size="@Size.Small">
-            Hinzufügen
+            Ok
         </MudButton>
     </DialogActions>
 </MudDialog>
 
 @code {
-    private RaceResultModel _model = new RaceResultModel();
-    private string _input = string.Empty;
+
+    private string _id = string.Empty;
+    private DateTime _date = DateTime.Now;
+    private string _type = string.Empty;
+    private long _distanceM = 0;
+    private string _time = string.Empty;
+    private IMask _timeMask = new PatternMask("00:00:00");
+
+    [Parameter] 
+    public RaceResultModel Model { get; set; }
 
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; } = default!;
 
-    private void OK() => this.MudDialog.Close(DialogResult.Ok(this._input));
+    private void OK() {
+
+        Model.Id = _id;
+        Model.Date = _date;
+        var succes = TimeSpan.TryParse(_time, out var res);
+        Model.Time = res;
+        Model.Type = _type;
+        Model.DistanceM = _distanceM;
+
+        this.MudDialog.Close(DialogResult.Ok(this.Model));
+    }
 
     private void OnRaceTypeChanged(string value)
     {
-        _model.Type = value;
-        _model.DistanceM = RaceDistances.Dict[value];
+        _type = value;
+        _distanceM = RaceDistances.Dict[value];
         StateHasChanged();
+    }
+
+
+    protected async override void OnInitialized()
+    {
+        if (Model == null)
+        {
+            Model = new RaceResultModel();   
+        }
+        _id = Model.Id;
+        _type = Model.Type;
+        _date = Model.Date;
+        _time = Model.Time.ToString();
+        _distanceM = Model.DistanceM;
+        StateHasChanged();
+        base.OnInitialized();   
     }
 }

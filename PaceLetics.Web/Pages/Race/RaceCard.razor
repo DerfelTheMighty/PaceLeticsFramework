@@ -49,7 +49,7 @@
         </MudExGrid>
         </CardHeaderContent>
         <CardHeaderActions>
-            <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Default" />
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Info" OnClick="OnEditRaceCard"/>
         </CardHeaderActions>
     </MudCardHeader>
     <MudCardContent>
@@ -63,5 +63,13 @@
 @code {
     [Parameter]
     public RaceResultModel? Model { get; set; }
+
+    [Parameter]
+    public EventCallback OnEditRaceCard { get; set; }
+
+    private async Task HandleEditCard()
+    {
+        await OnEditRaceCard.InvokeAsync();
+    }
 
 }

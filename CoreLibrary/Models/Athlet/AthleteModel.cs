@@ -41,6 +41,8 @@ namespace CoreLibrary.Models.Athlet
         /// </summary>
         public PaceModel? PaceModel { get; set; }
 
+        public RaceResultModel? ActiveReferenceResult { get; set; }
+
         public AthleteModel() 
         {
             Id = "NA";
@@ -51,5 +53,7 @@ namespace CoreLibrary.Models.Athlet
             Vdot = 0;
             PaceModel= new PaceModel();
         }
+
     }
+
 }

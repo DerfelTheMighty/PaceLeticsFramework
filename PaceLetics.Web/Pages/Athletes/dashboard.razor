@@ -1,4 +1,4 @@
-﻿@page "/Athletes/overview"
+﻿@page "/Athletes/dashboard"
 @using AthleteDataAccessLibrary;
 @using AthleteDataAccessLibrary.Contracts;
 @using CoreLibrary.Models.Athlet;
@@ -7,24 +7,43 @@
 @inject IAthleteData AthleteData
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 
+<PageTitle>Dashboard</PageTitle>
 
 
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
+    <h1>Dashboard</h1>
 
-
+        @if (_isLoading)
+        {
+            <LoadingScreen Label="Deine Daten werden geladen..."/>
+        }
+        else
+        {
+            <MudStack Spacingv="3">
+                <H3>Hallo @_name</H3>
+                <MudText>
+                    Hier findest du aktuelle Neuigkeiten zum Kurs, Infos zu kommenden Trainingseinheiten und Trainingsvorschläge.
+                </MudText>
+            </MudStack>
+        }
+</MudContainer>
+    
 
 
 @code
 {
+    bool _isLoading = true;
     AthleteModel Athlete;
-
+    string _name = String.Empty;
 
     protected async override void OnInitialized()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var name = await GetUserName();
+        _name = await GetUserName();
         var id = await GetUserId();
         Athlete = await AthleteData.GetAthlete(id);
+        _isLoading = false;
         StateHasChanged();
         base.OnInitialized();
     }
