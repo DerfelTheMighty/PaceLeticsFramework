@@ -45,7 +45,7 @@
                 </MudAvatar>
                 break;
             }
-            <MudText>@Model?.Date.ToString("dd-MM-yyyy")</MudText>
+            <MudText>@Model?.Date.ToString("dd-MM-yyyy").Replace("-",".")</MudText>
         </MudExGrid>
         </CardHeaderContent>
         <CardHeaderActions>
