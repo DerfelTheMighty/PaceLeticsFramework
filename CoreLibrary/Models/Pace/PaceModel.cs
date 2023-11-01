@@ -45,5 +45,21 @@
 			return result;
 		}
 
+		/// <summary>
+		/// Returns a slowed copy of the current pace model
+		/// </summary>
+		/// <param name="factor">value between 0 and 1</param>
+		/// <returns></returns>
+		public PaceModel Reduce(double factor) 
+		{
+			PaceModel pm = new PaceModel();
+			pm.Easy = new TimeSpan(0, 0, (int)(this.Easy.TotalSeconds/(factor*factor)));
+            pm.Marathon = new TimeSpan(0, 0, (int)(this.Marathon.TotalSeconds / (factor) ));
+            pm.Threshold = new TimeSpan(0, 0, (int)(this.Threshold.TotalSeconds / factor));
+            pm.Intervall = new TimeSpan(0, 0, (int)(this.Intervall.TotalSeconds / factor));
+            pm.Repetition = new TimeSpan(0, 0, (int)(this.Repetition.TotalSeconds / factor));
+			return pm;
+        }
+
 	}
 }

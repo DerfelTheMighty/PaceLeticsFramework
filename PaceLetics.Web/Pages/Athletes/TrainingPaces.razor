@@ -11,8 +11,6 @@
 
 <PageTitle>Meine Pacebereiche</PageTitle>
 
-
-
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
 
@@ -36,21 +34,19 @@
                     <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir dein optimalen Pacebereiche für dich bestimmen können.</MudAlert>
                 </MudCard>
             }
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" LowerPace="@Athlete.PaceModel.Easy" UpperPace="@Athlete.PaceModel.Easy" />
+            <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="E Pace" LowerPace="@_lowerPace.Easy" UpperPace="@_upperPace.Easy" />
 
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="M Pace" LowerPace="@Athlete.PaceModel.Marathon" UpperPace="@Athlete.PaceModel.Marathon" />
+            <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="M Pace" LowerPace="@_lowerPace.Marathon" UpperPace="@_upperPace.Marathon" />
 
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="T Pace" LowerPace="@Athlete.PaceModel.Threshold" UpperPace="@Athlete.PaceModel.Threshold" />
+            <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="T Pace" LowerPace="@_lowerPace.Threshold" UpperPace="@_upperPace.Threshold" />
 
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="I Pace" LowerPace="@Athlete.PaceModel.Intervall" UpperPace="@Athlete.PaceModel.Intervall" />
+            <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="I Pace" LowerPace="@_lowerPace.Intervall" UpperPace="@_upperPace.Intervall" />
 
-                <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" LowerPace="@Athlete.PaceModel.Repetition" UpperPace="@Athlete.PaceModel.Repetition" />
+            <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" LowerPace="@_lowerPace.Repetition" UpperPace="@_upperPace.Repetition" />
             
-
     </MudStack>
 
     }
-
 
 </MudContainer>
 
@@ -59,6 +55,9 @@
 
     bool isLoading = true;
     AthleteModel? Athlete;
+    private PaceModel _lowerPace = new PaceModel();
+    private PaceModel _upperPace = new PaceModel();
+
 
     protected async override void OnInitialized()
     {
@@ -66,6 +65,11 @@
         var ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
         await AthleteData.UpdateAthlete(Athlete);
+        if (Athlete.PaceModel != null)
+        {
+            _upperPace = Athlete.PaceModel;
+            _lowerPace = Athlete.PaceModel.Reduce(0.975);
+        }
         isLoading = false;
         StateHasChanged();
         base.OnInitialized();

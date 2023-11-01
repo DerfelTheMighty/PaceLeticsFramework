@@ -17,6 +17,7 @@
 @inject IJSRuntime js
 @inject IDialogService dialogService
 @inject IVdotService vdotService
+@inject IPaceModelProvider pmProvider
 
 <PageTitle>Meine Laufdaten</PageTitle>
 
@@ -46,10 +47,14 @@
             @if (Athlete.ActiveReferenceResult == null)
             {
                 <MudButton OnClick="AddAthlete">
-                    <MudExIcon Icon="@Icons.Material.Filled.AddRoad" Size="Size.Large" Color="MudExColor.Warning" />
+                    <MudExIcon Icon="@Icons.Material.Filled.AddCircle" Size="Size.Large" Color="MudExColor.Warning" />
                 </MudButton>
             }
-            <VdotCard Data="@_vdotData"></VdotCard>
+            else
+            {
+                <VdotCard Data="@_vdotData"></VdotCard>
+            }
+
 
         </MudStack>
 
@@ -117,6 +122,7 @@
             Athlete.Vdot = vdotService.GetVdot(rrm);
             _vdotData[0] = Athlete.Vdot;
             _vdotData[1]= 85-Athlete.Vdot;
+            Athlete.PaceModel = pmProvider[Athlete.Vdot];
             isLoading = true;
             StateHasChanged();
             await AthleteData.UpdateAthlete(Athlete);

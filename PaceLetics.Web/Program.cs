@@ -49,6 +49,7 @@ builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionS
 builder.Services.AddTransient<IAthleteData, AthleteData>();
 builder.Services.AddSingleton<IAthleteService, AthleteService>();
 builder.Services.AddSingleton<IVdotService>(x => (new VdotTableReaderWriter()).FromJson("wwwroot/data/vdot_table.json"));
+builder.Services.AddSingleton<IPaceModelProvider>(x => (new PaceModelReaderWriter()).ReadPaceModelFromJson("wwwroot/data/pacemodel.json"));
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     // This lambda determines whether user consent for non-essential 

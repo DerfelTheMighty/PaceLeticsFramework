@@ -1,0 +1,42 @@
+﻿@page "/impressum"
+
+<h2>Impressum</h2>
+
+<p>Verantwortlich für den Inhalt dieser Webseite:</p>
+
+<strong>@ImModel.Name</strong>
+<br />
+@ImModel.Straße
+<br />
+@ImModel.PLZ @ImModel.Ort
+<br />
+Telefon: @ImModel.Telefonnummer
+<br />
+E-Mail: <a href="mailto:@ImModel.Email">@ImModel.Email</a>
+<br />
+
+@if (!string.IsNullOrEmpty(ImModel.UStID))
+{
+        <p>Umsatzsteuer-Identifikationsnummer: @ImModel.UStID</p>
+}
+
+@if (!string.IsNullOrEmpty(ImModel.RegisterEintrag))
+{
+        <p>@ImModel.RegisterEintrag</p>
+}
+
+@functions {
+    public class ImpressumModel
+    {
+        public string Name { get; set; } = "Christoph Otte";
+        public string Straße { get; set; } = "Effengrube 7";
+        public string PLZ { get; set; } = "23552";
+        public string Ort { get; set; } = "Lübeck";
+        public string Telefonnummer { get; set; } = "0162 6057269";
+        public string Email { get; set; } = "mail@caotte.de";
+        public string UStID { get; set; } = string.Empty;
+        public string RegisterEintrag { get; set; } = string.Empty;
+    }
+
+    private ImpressumModel ImModel = new ImpressumModel();
+}
