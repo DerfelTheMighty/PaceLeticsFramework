@@ -28,12 +28,22 @@
   <ItemGroup>
     <ProjectReference Include="..\AthleteDataAccessLibrary\AthleteDataAccessLibrary.csproj" />
     <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj" />
+    <ProjectReference Include="..\VdotModule\VdotModule.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Shared\Avatars\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\data\pacemodel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\data\vdot_table.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,892 @@
+{
+  "Registry": [
+    {
+      "Vdot": 30,
+      "Easy": "00:07:39",
+      "Threshold": "00:06:24",
+      "Intervall": "00:05:52",
+      "Repetition": "00:05:38",
+      "Marathon": "00:06:52"
+    },
+    {
+      "Vdot": 30.5,
+      "Easy": "00:07:33",
+      "Threshold": "00:06:19",
+      "Intervall": "00:05:48",
+      "Repetition": "00:05:32",
+      "Marathon": "00:06:47"
+    },
+    {
+      "Vdot": 31,
+      "Easy": "00:07:28",
+      "Threshold": "00:06:14",
+      "Intervall": "00:05:45",
+      "Repetition": "00:05:30",
+      "Marathon": "00:06:41"
+    },
+    {
+      "Vdot": 31.5,
+      "Easy": "00:07:22",
+      "Threshold": "00:06:10",
+      "Intervall": "00:05:40",
+      "Repetition": "00:05:25",
+      "Marathon": "00:06:36"
+    },
+    {
+      "Vdot": 32,
+      "Easy": "00:07:17",
+      "Threshold": "00:06:05",
+      "Intervall": "00:05:35",
+      "Repetition": "00:05:20",
+      "Marathon": "00:06:31"
+    },
+    {
+      "Vdot": 32.5,
+      "Easy": "00:07:12",
+      "Threshold": "00:06:01",
+      "Intervall": "00:05:30",
+      "Repetition": "00:05:15",
+      "Marathon": "00:06:27"
+    },
+    {
+      "Vdot": 33,
+      "Easy": "00:07:06",
+      "Threshold": "00:05:56",
+      "Intervall": "00:05:28",
+      "Repetition": "00:05:12",
+      "Marathon": "00:06:22"
+    },
+    {
+      "Vdot": 33.5,
+      "Easy": "00:07:02",
+      "Threshold": "00:05:52",
+      "Intervall": "00:05:22",
+      "Repetition": "00:05:08",
+      "Marathon": "00:06:17"
+    },
+    {
+      "Vdot": 34,
+      "Easy": "00:06:57",
+      "Threshold": "00:05:48",
+      "Intervall": "00:05:20",
+      "Repetition": "00:05:05",
+      "Marathon": "00:06:13"
+    },
+    {
+      "Vdot": 34.5,
+      "Easy": "00:06:52",
+      "Threshold": "00:05:44",
+      "Intervall": "00:05:15",
+      "Repetition": "00:05:00",
+      "Marathon": "00:06:08"
+    },
+    {
+      "Vdot": 35,
+      "Easy": "00:06:47",
+      "Threshold": "00:05:40",
+      "Intervall": "00:05:12",
+      "Repetition": "00:04:58",
+      "Marathon": "00:06:04"
+    },
+    {
+      "Vdot": 35.5,
+      "Easy": "00:06:43",
+      "Threshold": "00:05:36",
+      "Intervall": "00:05:08",
+      "Repetition": "00:04:52",
+      "Marathon": "00:06:00"
+    },
+    {
+      "Vdot": 36,
+      "Easy": "00:06:38",
+      "Threshold": "00:05:32",
+      "Intervall": "00:05:05",
+      "Repetition": "00:04:50",
+      "Marathon": "00:05:56"
+    },
+    {
+      "Vdot": 36.5,
+      "Easy": "00:06:34",
+      "Threshold": "00:05:29",
+      "Intervall": "00:05:02",
+      "Repetition": "00:04:48",
+      "Marathon": "00:05:52"
+    },
+    {
+      "Vdot": 37,
+      "Easy": "00:06:30",
+      "Threshold": "00:05:25",
+      "Intervall": "00:04:58",
+      "Repetition": "00:04:42",
+      "Marathon": "00:05:48"
+    },
+    {
+      "Vdot": 37.5,
+      "Easy": "00:06:26",
+      "Threshold": "00:05:22",
+      "Intervall": "00:04:55",
+      "Repetition": "00:04:40",
+      "Marathon": "00:05:44"
+    },
+    {
+      "Vdot": 38,
+      "Easy": "00:06:22",
+      "Threshold": "00:05:18",
+      "Intervall": "00:04:52",
+      "Repetition": "00:04:38",
+      "Marathon": "00:05:41"
+    },
+    {
+      "Vdot": 38.5,
+      "Easy": "00:06:18",
+      "Threshold": "00:05:15",
+      "Intervall": "00:04:50",
+      "Repetition": "00:04:35",
+      "Marathon": "00:05:37"
+    },
+    {
+      "Vdot": 39,
+      "Easy": "00:06:14",
+      "Threshold": "00:05:12",
+      "Intervall": "00:04:45",
+      "Repetition": "00:04:30",
+      "Marathon": "00:05:33"
+    },
+    {
+      "Vdot": 39.5,
+      "Easy": "00:06:10",
+      "Threshold": "00:05:09",
+      "Intervall": "00:04:42",
+      "Repetition": "00:04:28",
+      "Marathon": "00:05:30"
+    },
+    {
+      "Vdot": 40,
+      "Easy": "00:06:07",
+      "Threshold": "00:05:06",
+      "Intervall": "00:04:40",
+      "Repetition": "00:04:25",
+      "Marathon": "00:05:27"
+    },
+    {
+      "Vdot": 40.5,
+      "Easy": "00:06:03",
+      "Threshold": "00:05:03",
+      "Intervall": "00:04:38",
+      "Repetition": "00:04:22",
+      "Marathon": "00:05:23"
+    },
+    {
+      "Vdot": 41,
+      "Easy": "00:06:00",
+      "Threshold": "00:05:00",
+      "Intervall": "00:04:35",
+      "Repetition": "00:04:20",
+      "Marathon": "00:05:20"
+    },
+    {
+      "Vdot": 41.5,
+      "Easy": "00:05:56",
+      "Threshold": "00:04:57",
+      "Intervall": "00:04:32",
+      "Repetition": "00:04:18",
+      "Marathon": "00:05:17"
+    },
+    {
+      "Vdot": 42,
+      "Easy": "00:05:53",
+      "Threshold": "00:04:54",
+      "Intervall": "00:04:30",
+      "Repetition": "00:04:15",
+      "Marathon": "00:05:14"
+    },
+    {
+      "Vdot": 42.5,
+      "Easy": "00:05:50",
+      "Threshold": "00:04:51",
+      "Intervall": "00:04:28",
+      "Repetition": "00:04:12",
+      "Marathon": "00:05:11"
+    },
+    {
+      "Vdot": 43,
+      "Easy": "00:05:46",
+      "Threshold": "00:04:48",
+      "Intervall": "00:04:25",
+      "Repetition": "00:04:09",
+      "Marathon": "00:05:08"
+    },
+    {
+      "Vdot": 43.5,
+      "Easy": "00:05:43",
+      "Threshold": "00:04:46",
+      "Intervall": "00:04:22",
+      "Repetition": "00:04:07",
+      "Marathon": "00:05:05"
+    },
+    {
+      "Vdot": 44,
+      "Easy": "00:05:40",
+      "Threshold": "00:04:43",
+      "Intervall": "00:04:20",
+      "Repetition": "00:04:04",
+      "Marathon": "00:05:02"
+    },
+    {
+      "Vdot": 44.5,
+      "Easy": "00:05:37",
+      "Threshold": "00:04:40",
+      "Intervall": "00:04:18",
+      "Repetition": "00:04:02",
+      "Marathon": "00:04:59"
+    },
+    {
+      "Vdot": 45,
+      "Easy": "00:05:34",
+      "Threshold": "00:04:38",
+      "Intervall": "00:04:15",
+      "Repetition": "00:04:00",
+      "Marathon": "00:04:56"
+    },
+    {
+      "Vdot": 45.5,
+      "Easy": "00:05:31",
+      "Threshold": "00:04:35",
+      "Intervall": "00:04:12",
+      "Repetition": "00:03:58",
+      "Marathon": "00:04:53"
+    },
+    {
+      "Vdot": 46,
+      "Easy": "00:05:28",
+      "Threshold": "00:04:33",
+      "Intervall": "00:04:10",
+      "Repetition": "00:03:55",
+      "Marathon": "00:04:51"
+    },
+    {
+      "Vdot": 46.5,
+      "Easy": "00:05:25",
+      "Threshold": "00:04:31",
+      "Intervall": "00:04:08",
+      "Repetition": "00:03:53",
+      "Marathon": "00:04:48"
+    },
+    {
+      "Vdot": 47,
+      "Easy": "00:05:23",
+      "Threshold": "00:04:28",
+      "Intervall": "00:04:06",
+      "Repetition": "00:03:51",
+      "Marathon": "00:04:46"
+    },
+    {
+      "Vdot": 47.5,
+      "Easy": "00:05:20",
+      "Threshold": "00:04:26",
+      "Intervall": "00:04:04",
+      "Repetition": "00:03:49",
+      "Marathon": "00:04:43"
+    },
+    {
+      "Vdot": 48,
+      "Easy": "00:05:17",
+      "Threshold": "00:04:24",
+      "Intervall": "00:04:02",
+      "Repetition": "00:03:47",
+      "Marathon": "00:04:41"
+    },
+    {
+      "Vdot": 48.5,
+      "Easy": "00:05:15",
+      "Threshold": "00:04:22",
+      "Intervall": "00:04:00",
+      "Repetition": "00:03:45",
+      "Marathon": "00:04:38"
+    },
+    {
+      "Vdot": 49,
+      "Easy": "00:05:12",
+      "Threshold": "00:04:19",
+      "Intervall": "00:03:58",
+      "Repetition": "00:03:43",
+      "Marathon": "00:04:36"
+    },
+    {
+      "Vdot": 49.5,
+      "Easy": "00:05:09",
+      "Threshold": "00:04:17",
+      "Intervall": "00:03:56",
+      "Repetition": "00:03:41",
+      "Marathon": "00:04:33"
+    },
+    {
+      "Vdot": 50,
+      "Easy": "00:05:07",
+      "Threshold": "00:04:15",
+      "Intervall": "00:03:54",
+      "Repetition": "00:03:39",
+      "Marathon": "00:04:31"
+    },
+    {
+      "Vdot": 50.5,
+      "Easy": "00:05:05",
+      "Threshold": "00:04:13",
+      "Intervall": "00:03:52",
+      "Repetition": "00:03:37",
+      "Marathon": "00:04:29"
+    },
+    {
+      "Vdot": 51,
+      "Easy": "00:05:02",
+      "Threshold": "00:04:11",
+      "Intervall": "00:03:50",
+      "Repetition": "00:03:35",
+      "Marathon": "00:04:27"
+    },
+    {
+      "Vdot": 51.5,
+      "Easy": "00:05:00",
+      "Threshold": "00:04:09",
+      "Intervall": "00:03:48",
+      "Repetition": "00:03:33",
+      "Marathon": "00:04:24"
+    },
+    {
+      "Vdot": 52,
+      "Easy": "00:04:57",
+      "Threshold": "00:04:07",
+      "Intervall": "00:03:46",
+      "Repetition": "00:03:31",
+      "Marathon": "00:04:22"
+    },
+    {
+      "Vdot": 52.5,
+      "Easy": "00:04:55",
+      "Threshold": "00:04:05",
+      "Intervall": "00:03:45",
+      "Repetition": "00:03:30",
+      "Marathon": "00:04:20"
+    },
+    {
+      "Vdot": 53,
+      "Easy": "00:04:53",
+      "Threshold": "00:04:03",
+      "Intervall": "00:03:43",
+      "Repetition": "00:03:28",
+      "Marathon": "00:04:18"
+    },
+    {
+      "Vdot": 53.5,
+      "Easy": "00:04:51",
+      "Threshold": "00:04:02",
+      "Intervall": "00:03:41",
+      "Repetition": "00:03:26",
+      "Marathon": "00:04:16"
+    },
+    {
+      "Vdot": 54,
+      "Easy": "00:04:49",
+      "Threshold": "00:04:00",
+      "Intervall": "00:03:40",
+      "Repetition": "00:03:25",
+      "Marathon": "00:04:14"
+    },
+    {
+      "Vdot": 54.5,
+      "Easy": "00:04:46",
+      "Threshold": "00:03:58",
+      "Intervall": "00:03:38",
+      "Repetition": "00:03:23",
+      "Marathon": "00:04:12"
+    },
+    {
+      "Vdot": 55,
+      "Easy": "00:04:44",
+      "Threshold": "00:03:56",
+      "Intervall": "00:03:36",
+      "Repetition": "00:03:21",
+      "Marathon": "00:04:10"
+    },
+    {
+      "Vdot": 55.5,
+      "Easy": "00:04:42",
+      "Threshold": "00:03:55",
+      "Intervall": "00:03:35",
+      "Repetition": "00:03:20",
+      "Marathon": "00:04:08"
+    },
+    {
+      "Vdot": 56,
+      "Easy": "00:04:40",
+      "Threshold": "00:03:53",
+      "Intervall": "00:03:33",
+      "Repetition": "00:03:18",
+      "Marathon": "00:04:06"
+    },
+    {
+      "Vdot": 56.5,
+      "Easy": "00:04:38",
+      "Threshold": "00:03:51",
+      "Intervall": "00:03:32",
+      "Repetition": "00:03:17",
+      "Marathon": "00:04:04"
+    },
+    {
+      "Vdot": 57,
+      "Easy": "00:04:36",
+      "Threshold": "00:03:49",
+      "Intervall": "00:03:30",
+      "Repetition": "00:03:15",
+      "Marathon": "00:04:03"
+    },
+    {
+      "Vdot": 57.5,
+      "Easy": "00:04:34",
+      "Threshold": "00:03:48",
+      "Intervall": "00:03:29",
+      "Repetition": "00:03:14",
+      "Marathon": "00:04:01"
+    },
+    {
+      "Vdot": 58,
+      "Easy": "00:04:32",
+      "Threshold": "00:03:46",
+      "Intervall": "00:03:27",
+      "Repetition": "00:03:12",
+      "Marathon": "00:03:59"
+    },
+    {
+      "Vdot": 58.5,
+      "Easy": "00:04:30",
+      "Threshold": "00:03:45",
+      "Intervall": "00:03:26",
+      "Repetition": "00:03:11",
+      "Marathon": "00:03:57"
+    },
+    {
+      "Vdot": 59,
+      "Easy": "00:04:29",
+      "Threshold": "00:03:43",
+      "Intervall": "00:03:24",
+      "Repetition": "00:03:09",
+      "Marathon": "00:03:56"
+    },
+    {
+      "Vdot": 59.5,
+      "Easy": "00:04:27",
+      "Threshold": "00:03:42",
+      "Intervall": "00:03:23",
+      "Repetition": "00:03:08",
+      "Marathon": "00:03:54"
+    },
+    {
+      "Vdot": 60,
+      "Easy": "00:04:25",
+      "Threshold": "00:03:40",
+      "Intervall": "00:03:22",
+      "Repetition": "00:03:07",
+      "Marathon": "00:03:52"
+    },
+    {
+      "Vdot": 60.5,
+      "Easy": "00:04:23",
+      "Threshold": "00:03:39",
+      "Intervall": "00:03:20",
+      "Repetition": "00:03:06",
+      "Marathon": "00:03:51"
+    },
+    {
+      "Vdot": 61,
+      "Easy": "00:04:21",
+      "Threshold": "00:03:37",
+      "Intervall": "00:03:19",
+      "Repetition": "00:03:04",
+      "Marathon": "00:03:49"
+    },
+    {
+      "Vdot": 61.5,
+      "Easy": "00:04:20",
+      "Threshold": "00:03:36",
+      "Intervall": "00:03:18",
+      "Repetition": "00:03:03",
+      "Marathon": "00:03:47"
+    },
+    {
+      "Vdot": 62,
+      "Easy": "00:04:18",
+      "Threshold": "00:03:34",
+      "Intervall": "00:03:16",
+      "Repetition": "00:03:01",
+      "Marathon": "00:03:46"
+    },
+    {
+      "Vdot": 62.5,
+      "Easy": "00:04:16",
+      "Threshold": "00:03:33",
+      "Intervall": "00:03:15",
+      "Repetition": "00:03:00",
+      "Marathon": "00:03:44"
+    },
+    {
+      "Vdot": 63,
+      "Easy": "00:04:15",
+      "Threshold": "00:03:32",
+      "Intervall": "00:03:14",
+      "Repetition": "00:02:59",
+      "Marathon": "00:03:43"
+    },
+    {
+      "Vdot": 63.5,
+      "Easy": "00:04:13",
+      "Threshold": "00:03:30",
+      "Intervall": "00:03:13",
+      "Repetition": "00:02:58",
+      "Marathon": "00:03:41"
+    },
+    {
+      "Vdot": 64,
+      "Easy": "00:04:11",
+      "Threshold": "00:03:29",
+      "Intervall": "00:03:11",
+      "Repetition": "00:02:56",
+      "Marathon": "00:03:40"
+    },
+    {
+      "Vdot": 64.5,
+      "Easy": "00:04:10",
+      "Threshold": "00:03:28",
+      "Intervall": "00:03:10",
+      "Repetition": "00:02:55",
+      "Marathon": "00:03:38"
+    },
+    {
+      "Vdot": 65,
+      "Easy": "00:04:08",
+      "Threshold": "00:03:26",
+      "Intervall": "00:03:09",
+      "Repetition": "00:02:54",
+      "Marathon": "00:03:37"
+    },
+    {
+      "Vdot": 65.5,
+      "Easy": "00:04:07",
+      "Threshold": "00:03:25",
+      "Intervall": "00:03:08",
+      "Repetition": "00:02:53",
+      "Marathon": "00:03:36"
+    },
+    {
+      "Vdot": 66,
+      "Easy": "00:04:05",
+      "Threshold": "00:03:24",
+      "Intervall": "00:03:07",
+      "Repetition": "00:02:52",
+      "Marathon": "00:03:34"
+    },
+    {
+      "Vdot": 66.5,
+      "Easy": "00:04:04",
+      "Threshold": "00:03:23",
+      "Intervall": "00:03:06",
+      "Repetition": "00:02:51",
+      "Marathon": "00:03:33"
+    },
+    {
+      "Vdot": 67,
+      "Easy": "00:04:02",
+      "Threshold": "00:03:21",
+      "Intervall": "00:03:04",
+      "Repetition": "00:02:49",
+      "Marathon": "00:03:31"
+    },
+    {
+      "Vdot": 67.5,
+      "Easy": "00:04:01",
+      "Threshold": "00:03:20",
+      "Intervall": "00:03:04",
+      "Repetition": "00:02:48",
+      "Marathon": "00:03:30"
+    },
+    {
+      "Vdot": 68,
+      "Easy": "00:03:59",
+      "Threshold": "00:03:19",
+      "Intervall": "00:03:02",
+      "Repetition": "00:02:47",
+      "Marathon": "00:03:29"
+    },
+    {
+      "Vdot": 68.5,
+      "Easy": "00:03:58",
+      "Threshold": "00:03:18",
+      "Intervall": "00:03:01",
+      "Repetition": "00:02:46",
+      "Marathon": "00:03:27"
+    },
+    {
+      "Vdot": 69,
+      "Easy": "00:03:57",
+      "Threshold": "00:03:17",
+      "Intervall": "00:03:00",
+      "Repetition": "00:02:45",
+      "Marathon": "00:03:26"
+    },
+    {
+      "Vdot": 69.5,
+      "Easy": "00:03:55",
+      "Threshold": "00:03:15",
+      "Intervall": "00:02:59",
+      "Repetition": "00:02:44",
+      "Marathon": "00:03:25"
+    },
+    {
+      "Vdot": 70,
+      "Easy": "00:03:54",
+      "Threshold": "00:03:14",
+      "Intervall": "00:02:58",
+      "Repetition": "00:02:43",
+      "Marathon": "00:03:24"
+    },
+    {
+      "Vdot": 70.5,
+      "Easy": "00:03:53",
+      "Threshold": "00:03:13",
+      "Intervall": "00:02:57",
+      "Repetition": "00:02:42",
+      "Marathon": "00:03:22"
+    },
+    {
+      "Vdot": 71,
+      "Easy": "00:03:51",
+      "Threshold": "00:03:12",
+      "Intervall": "00:02:56",
+      "Repetition": "00:02:41",
+      "Marathon": "00:03:21"
+    },
+    {
+      "Vdot": 71.5,
+      "Easy": "00:03:50",
+      "Threshold": "00:03:11",
+      "Intervall": "00:02:55",
+      "Repetition": "00:02:40",
+      "Marathon": "00:03:20"
+    },
+    {
+      "Vdot": 72,
+      "Easy": "00:03:49",
+      "Threshold": "00:03:10",
+      "Intervall": "00:02:54",
+      "Repetition": "00:02:39",
+      "Marathon": "00:03:19"
+    },
+    {
+      "Vdot": 72.5,
+      "Easy": "00:03:47",
+      "Threshold": "00:03:09",
+      "Intervall": "00:02:53",
+      "Repetition": "00:02:38",
+      "Marathon": "00:03:18"
+    },
+    {
+      "Vdot": 73,
+      "Easy": "00:03:46",
+      "Threshold": "00:03:08",
+      "Intervall": "00:02:52",
+      "Repetition": "00:02:37",
+      "Marathon": "00:03:16"
+    },
+    {
+      "Vdot": 73.5,
+      "Easy": "00:03:45",
+      "Threshold": "00:03:07",
+      "Intervall": "00:02:51",
+      "Repetition": "00:02:36",
+      "Marathon": "00:03:15"
+    },
+    {
+      "Vdot": 74,
+      "Easy": "00:03:44",
+      "Threshold": "00:03:06",
+      "Intervall": "00:02:50",
+      "Repetition": "00:02:35",
+      "Marathon": "00:03:14"
+    },
+    {
+      "Vdot": 74.5,
+      "Easy": "00:03:42",
+      "Threshold": "00:03:05",
+      "Intervall": "00:02:49",
+      "Repetition": "00:02:34",
+      "Marathon": "00:03:13"
+    },
+    {
+      "Vdot": 75,
+      "Easy": "00:03:41",
+      "Threshold": "00:03:04",
+      "Intervall": "00:02:48",
+      "Repetition": "00:02:34",
+      "Marathon": "00:03:12"
+    },
+    {
+      "Vdot": 75.5,
+      "Easy": "00:03:40",
+      "Threshold": "00:03:03",
+      "Intervall": "00:02:48",
+      "Repetition": "00:02:32",
+      "Marathon": "00:03:11"
+    },
+    {
+      "Vdot": 76,
+      "Easy": "00:03:39",
+      "Threshold": "00:03:02",
+      "Intervall": "00:02:47",
+      "Repetition": "00:02:32",
+      "Marathon": "00:03:10"
+    },
+    {
+      "Vdot": 76.5,
+      "Easy": "00:03:38",
+      "Threshold": "00:03:01",
+      "Intervall": "00:02:46",
+      "Repetition": "00:02:31",
+      "Marathon": "00:03:09"
+    },
+    {
+      "Vdot": 77,
+      "Easy": "00:03:36",
+      "Threshold": "00:03:00",
+      "Intervall": "00:02:45",
+      "Repetition": "00:02:30",
+      "Marathon": "00:03:08"
+    },
+    {
+      "Vdot": 77.5,
+      "Easy": "00:03:35",
+      "Threshold": "00:02:59",
+      "Intervall": "00:02:44",
+      "Repetition": "00:02:29",
+      "Marathon": "00:03:07"
+    },
+    {
+      "Vdot": 78,
+      "Easy": "00:03:34",
+      "Threshold": "00:02:58",
+      "Intervall": "00:02:43",
+      "Repetition": "00:02:28",
+      "Marathon": "00:03:06"
+    },
+    {
+      "Vdot": 78.5,
+      "Easy": "00:03:33",
+      "Threshold": "00:02:57",
+      "Intervall": "00:02:42",
+      "Repetition": "00:02:28",
+      "Marathon": "00:03:05"
+    },
+    {
+      "Vdot": 79,
+      "Easy": "00:03:32",
+      "Threshold": "00:02:56",
+      "Intervall": "00:02:41",
+      "Repetition": "00:02:26",
+      "Marathon": "00:03:04"
+    },
+    {
+      "Vdot": 79.5,
+      "Easy": "00:03:31",
+      "Threshold": "00:02:55",
+      "Intervall": "00:02:41",
+      "Repetition": "00:02:26",
+      "Marathon": "00:03:03"
+    },
+    {
+      "Vdot": 80,
+      "Easy": "00:03:30",
+      "Threshold": "00:02:54",
+      "Intervall": "00:02:40",
+      "Repetition": "00:02:25",
+      "Marathon": "00:03:02"
+    },
+    {
+      "Vdot": 80.5,
+      "Easy": "00:03:29",
+      "Threshold": "00:02:54",
+      "Intervall": "00:02:39",
+      "Repetition": "00:02:24",
+      "Marathon": "00:03:01"
+    },
+    {
+      "Vdot": 81,
+      "Easy": "00:03:28",
+      "Threshold": "00:02:53",
+      "Intervall": "00:02:38",
+      "Repetition": "00:02:23",
+      "Marathon": "00:03:00"
+    },
+    {
+      "Vdot": 81.5,
+      "Easy": "00:03:27",
+      "Threshold": "00:02:52",
+      "Intervall": "00:02:38",
+      "Repetition": "00:02:22",
+      "Marathon": "00:02:59"
+    },
+    {
+      "Vdot": 82,
+      "Easy": "00:03:26",
+      "Threshold": "00:02:51",
+      "Intervall": "00:02:37",
+      "Repetition": "00:02:22",
+      "Marathon": "00:02:58"
+    },
+    {
+      "Vdot": 82.5,
+      "Easy": "00:03:25",
+      "Threshold": "00:02:50",
+      "Intervall": "00:02:36",
+      "Repetition": "00:02:21",
+      "Marathon": "00:02:57"
+    },
+    {
+      "Vdot": 83,
+      "Easy": "00:03:24",
+      "Threshold": "00:02:49",
+      "Intervall": "00:02:35",
+      "Repetition": "00:02:20",
+      "Marathon": "00:02:56"
+    },
+    {
+      "Vdot": 83.5,
+      "Easy": "00:03:23",
+      "Threshold": "00:02:49",
+      "Intervall": "00:02:34",
+      "Repetition": "00:02:19",
+      "Marathon": "00:02:55"
+    },
+    {
+      "Vdot": 84,
+      "Easy": "00:03:22",
+      "Threshold": "00:02:48",
+      "Intervall": "00:02:34",
+      "Repetition": "00:02:19",
+      "Marathon": "00:02:54"
+    },
+    {
+      "Vdot": 84.5,
+      "Easy": "00:03:21",
+      "Threshold": "00:02:47",
+      "Intervall": "00:02:33",
+      "Repetition": "00:02:18",
+      "Marathon": "00:02:53"
+    },
+    {
+      "Vdot": 85,
+      "Easy": "00:03:20",
+      "Threshold": "00:02:46",
+      "Intervall": "00:02:32",
+      "Repetition": "00:02:17",
+      "Marathon": "00:02:52"
+    }
+  ]
+}

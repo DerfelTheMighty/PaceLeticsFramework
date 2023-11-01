@@ -12,14 +12,14 @@
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
-    <h1>Dashboard</h1>
-
+   
         @if (_isLoading)
         {
             <LoadingScreen Label="Deine Daten werden geladen..."/>
         }
         else
         {
+            <h1>Dashboard</h1>
             <MudStack Spacingv="3">
                 <H3>Hallo @_name</H3>
                 <MudText>

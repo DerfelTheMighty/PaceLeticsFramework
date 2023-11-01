@@ -7,22 +7,20 @@
 @using CoreLibrary.Models.Race;
 @using MudBlazor.Extensions.Core;
 @using MudBlazor;
+@using PaceLetics.Web.Pages.Vdot
 @using Race;
+@using VdotModule.Contracts;
 
 @inject RaceResultModelFactory RaceModelFactory
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
-@inject IJSRuntime js;
-@inject IDialogService dialogService;
-
+@inject IJSRuntime js
+@inject IDialogService dialogService
+@inject IVdotService vdotService
 
 <PageTitle>Meine Laufdaten</PageTitle>
 
-
-
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
-
-    <h1>Meine Laufdaten</h1>
 
     @if (isLoading)
     {
@@ -30,6 +28,8 @@
     }
     else
     {
+        <h1>Meine Laufdaten</h1>
+
         <MudStack Spacingv="3">
             <MudText>
                 Hier kannst du deine Laufergebnisse eintragen oder editieren.
@@ -41,14 +41,16 @@
                 </MudAlert>
             }
             else{
-            <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@Athlete.ActiveReferenceResult"/>
+                <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@Athlete.ActiveReferenceResult"/>
             }
-            <MudButton OnClick="AddAthlete">
-                @if (Athlete.ActiveReferenceResult == null)
-                {
+            @if (Athlete.ActiveReferenceResult == null)
+            {
+                <MudButton OnClick="AddAthlete">
                     <MudExIcon Icon="@Icons.Material.Filled.AddRoad" Size="Size.Large" Color="MudExColor.Warning" />
-                }
-            </MudButton>
+                </MudButton>
+            }
+            <VdotCard Data="@_vdotData"></VdotCard>
+
         </MudStack>
 
     }
@@ -64,7 +66,7 @@
     bool isLoading = true;
 
     AthleteModel? Athlete;
-
+    private double[] _vdotData { get; set; } = { 0, 0 };
 
 
     protected async override void OnInitialized()
@@ -72,6 +74,8 @@
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var ID = await GetUserId();
         Athlete = await AthleteData.GetAthlete(ID);
+        _vdotData[0] = Athlete.Vdot;
+        _vdotData[1] = 85 - Athlete.Vdot;
         isLoading = false;
         StateHasChanged();
         base.OnInitialized();
@@ -110,13 +114,13 @@
         {
             var rrm = result.Data as RaceResultModel ?? new RaceResultModel();
             Athlete.ActiveReferenceResult = rrm;
+            Athlete.Vdot = vdotService.GetVdot(rrm);
+            _vdotData[0] = Athlete.Vdot;
+            _vdotData[1]= 85-Athlete.Vdot;
             isLoading = true;
             StateHasChanged();
             await AthleteData.UpdateAthlete(Athlete);
             isLoading = false;
         }
-
-       
     }
-
 }
