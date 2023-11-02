@@ -1,4 +1,5 @@
-﻿@page "/Athletes/racepaces"
+﻿
+@page "/Athletes/racepaces"
 
 @using AthleteDataAccessLibrary;
 @using CoreLibrary.Models.Athlet;
@@ -11,7 +12,6 @@
 @using Race;
 @using VdotModule.Contracts;
 
-@inject RaceResultModelFactory RaceModelFactory
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 @inject IJSRuntime js
@@ -23,7 +23,7 @@
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
 
-    @if (isLoading)
+    @if (_isLoading)
     {
         <LoadingScreen Label="Deine Daten werden geladen..."/>
     }
@@ -35,42 +35,31 @@
             <MudText>
                 Hier kannst du deine Laufergebnisse eintragen oder editieren.
             </MudText>
-            @if(@Athlete.ActiveReferenceResult == null)
+            @if(@_athlete.ActiveReferenceResult == null)
             {
                 <MudAlert Severity="Severity.Warning">
                     Füge ein Laufergebnis hinzu, damit wir deine optimalen Trainingsbereiche für dich ermitteln können.
                 </MudAlert>
-            }
-            else{
-                <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@Athlete.ActiveReferenceResult"/>
-            }
-            @if (Athlete.ActiveReferenceResult == null)
-            {
                 <MudButton OnClick="AddAthlete">
                     <MudExIcon Icon="@Icons.Material.Filled.AddCircle" Size="Size.Large" Color="MudExColor.Warning" />
                 </MudButton>
             }
-            else
-            {
+            else{
+                <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult"/>
                 <VdotCard Data="@_vdotData"></VdotCard>
             }
 
-
         </MudStack>
-
     }
 
 </MudContainer>
 
 @code
 {
-    private IEnumerable<RaceResultModel> _selected;
-    private RaceResultModel[] _samples;
+    private string _input = string.Empty;
+    private bool _isLoading = true;
 
-    string input = string.Empty;
-    bool isLoading = true;
-
-    AthleteModel? Athlete;
+    private AthleteModel _athlete = new AthleteModel();
     private double[] _vdotData { get; set; } = { 0, 0 };
 
 
@@ -78,10 +67,10 @@
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var ID = await GetUserId();
-        Athlete = await AthleteData.GetAthlete(ID);
-        _vdotData[0] = Athlete.Vdot;
-        _vdotData[1] = 85 - Athlete.Vdot;
-        isLoading = false;
+        _athlete = await AthleteData.GetAthlete(ID);
+        _vdotData[0] = _athlete.Vdot;
+        _vdotData[1] = 85 - _athlete.Vdot;
+        _isLoading = false;
         StateHasChanged();
         base.OnInitialized();
     }
@@ -111,22 +100,22 @@
             };
 
         RaceResultModel res = null;
-        if (Athlete.ActiveReferenceResult != null)
-            res = Athlete.ActiveReferenceResult;
+        if (_athlete.ActiveReferenceResult != null)
+            res = _athlete.ActiveReferenceResult;
         var parameters = new DialogParameters<AddRaceDialog> { { x => x.Model, res } };
         var result = await dialogService.Show<AddRaceDialog>(string.Empty, parameters, options).Result;
         if (!result.Cancelled)
         {
             var rrm = result.Data as RaceResultModel ?? new RaceResultModel();
-            Athlete.ActiveReferenceResult = rrm;
-            Athlete.Vdot = vdotService.GetVdot(rrm);
-            _vdotData[0] = Athlete.Vdot;
-            _vdotData[1]= 85-Athlete.Vdot;
-            Athlete.PaceModel = pmProvider[Athlete.Vdot];
-            isLoading = true;
+            _athlete.ActiveReferenceResult = rrm;
+            _athlete.Vdot = vdotService.GetVdot(rrm);
+            _vdotData[0] = _athlete.Vdot;
+            _vdotData[1]= 85-_athlete.Vdot;
+            _athlete.PaceModel = pmProvider[_athlete.Vdot];
+            _isLoading = true;
             StateHasChanged();
-            await AthleteData.UpdateAthlete(Athlete);
-            isLoading = false;
+            await AthleteData.UpdateAthlete(_athlete);
+            _isLoading = false;
         }
     }
 }

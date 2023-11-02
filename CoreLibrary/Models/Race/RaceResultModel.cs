@@ -1,4 +1,5 @@
-﻿namespace CoreLibrary.Models.Race
+﻿
+namespace CoreLibrary.Models.Race
 {
 	/// <summary>
 	/// Reference performance consists of a distance, a reference time and a target pace
@@ -8,12 +9,12 @@
 		/// <summary>
 		/// Id or name of the event
 		/// </summary>
-		public string? Id { get; set; }
+		public string Id { get; set; }
 
 		/// <summary>
 		/// Race Type
 		/// </summary>
-		public string? Type { get; set; }
+		public string Type { get; set; }
 
 		/// <summary>
 		/// Reference Distance
@@ -29,28 +30,30 @@
 		/// </summary>
 		public TimeSpan Time { get; set; }
 
-		/// <summary>
-		/// overrides to string method and returns a formatted string
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
+		
+        public RaceResultModel()
+        {
+            Id = string.Empty;
+            Type = string.Empty;
+            Date = DateTime.Now;
+            DistanceM = 0;
+            Time = new TimeSpan(0, 0, 0);
+        }
+
+        /// <summary>
+        /// overrides to string method and returns a formatted string
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
 		{
 			string result =
-				"ID: " + Id?.ToString() ?? "NA" + " | " +
-				"Name: " + Type?.ToString() ?? "NA" + "  | " +
-				"Date: " + Date.ToString("yyyyMMdd") ?? "NA" +
-				"Distance: " + DistanceM.ToString() + " m | " +
-				"Time: " + Time.ToString(@"mm\:ss") ?? "NA" + " hh:mm:ss";
+				"ID: " + Id + " | " +
+				"Name: " + Type + "  | " +
+				"Date: " + Date.ToString("yyyyMMdd")  +
+				"Distance: " + DistanceM + " m | " +
+				"Time: " + Time.ToString(@"hh\\:mm\\:ss");
 			return result;
 		}
 
-		public RaceResultModel() 
-		{
-			Id = string.Empty;
-			Type = string.Empty;
-			Date = DateTime.Now;
-			DistanceM = 0;
-			Time = new TimeSpan(0, 0, 0);
-		}
 	}
 }

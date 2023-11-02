@@ -7,45 +7,10 @@
     <MudCardHeader>
         <CardHeaderContent>
         <MudExGrid>
-        @switch(@Model?.Type)
-        {
-            case RaceKeys.D1k:
-                <MudAvatar>
-                    <MudImage Src="images/icons/epace.png"></MudImage>
-                </MudAvatar>
-                break;
-            case RaceKeys.D3k:
-                <MudAvatar>
-                    <MudImage Src="images/icons/mpace.png"></MudImage>
-                </MudAvatar>
-                break;
-            case RaceKeys.D5k:
-                <MudAvatar>
-                    <MudImage Src="images/icons/tpace.png"></MudImage>
-                </MudAvatar>
-                break;
-            case RaceKeys.D10k:
-                <MudAvatar>
-                    <MudImage Src="images/icons/ipace.png"></MudImage>
-                </MudAvatar>
-                break;
-            case RaceKeys.D15k:
-                <MudAvatar>
-                    <MudImage Src="images/icons/rpace.png"></MudImage>
-                </MudAvatar>
-                break;
-            case RaceKeys.D21k:
-                <MudAvatar>
-                    <MudImage Src="images/icons/rpace.png"></MudImage>
-                </MudAvatar>
-                break;
-            default:
-                <MudAvatar>
-                    <MudImage Src="images/icons/epace.png"></MudImage>
-                </MudAvatar>
-                break;
-            }
-            <MudText>@Model?.Date.ToString("dd-MM-yyyy").Replace("-",".")</MudText>
+            <MudAvatar>
+                <MudImage Src="@GetImagePath(Model?.Type)"></MudImage>
+            </MudAvatar>
+        <MudText>@Model?.Date.ToString("dd-MM-yyyy").Replace("-",".")</MudText>
         </MudExGrid>
         </CardHeaderContent>
         <CardHeaderActions>
@@ -70,6 +35,22 @@
     private async Task HandleEditCard()
     {
         await OnEditRaceCard.InvokeAsync();
+    }
+
+    private string GetImagePath(string type)
+    {
+        var imagePath = "images/icons/epace.png"; // default image
+        switch (type)
+        {
+            case RaceKeys.D1k: imagePath = "images/icons/epace.png"; break;
+            case RaceKeys.D3k: imagePath = "images/icons/mpace.png"; break;
+            case RaceKeys.D5k: imagePath = "images/icons/tpace.png"; break;
+            case RaceKeys.D10k: imagePath = "images/icons/ipace.png"; break;
+            case RaceKeys.D15k: imagePath = "images/icons/ipace.png"; break;
+            case RaceKeys.D21k: imagePath = "images/icons/rpace.png"; break;
+            default: imagePath = "images/icons/rpace.png"; break;
+        }
+        return imagePath;
     }
 
 }
