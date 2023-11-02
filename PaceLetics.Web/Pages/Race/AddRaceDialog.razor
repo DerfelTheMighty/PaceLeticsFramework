@@ -24,7 +24,7 @@
             <MudSelectItem Value="@RaceKeys.D42k" />
         </MudSelect>
         <MudTextField @bind-Value="_time" Label="Laufzeit" HelperText="hh:mm:ss" Clearable/>
-        <MudDatePicker Label="Datum" @bind-Date="_date"/>
+        <MudDatePicker Label="Datum" @bind-Date="_date" PickerVariant="PickerVariant.Dialog" DisableToolbar="true" />
     </DialogContent>
     <DialogActions>
         <MudButton Disabled="@string.IsNullOrWhiteSpace(this._id)"
