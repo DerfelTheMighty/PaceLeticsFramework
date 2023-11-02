@@ -30,6 +30,10 @@
                 Hier findest du eine Übersicht.
             </MudText>
 
+            <MudPaper Class="pa-4">
+                <PaceLetics.Web.Pages.Pace.PaceInfo/>
+            </MudPaper>
+
             @if (_athlete?.Vdot < 1)
             {
                 <MudCard>
@@ -46,8 +50,10 @@
 
             <PaceLetics.Web.Pages.Pace.PaceCard PaceKey="R Pace" LowerPace="@_lowerPace.Repetition" UpperPace="@_upperPace.Repetition" />
             
+            
+            <MudSpacer></MudSpacer>
     </MudStack>
-
+     
     }
 
 </MudContainer>

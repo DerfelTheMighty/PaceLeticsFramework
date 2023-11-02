@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLibrary", "CoreLibrary\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaceLetics.Web", "PaceLetics.Web\PaceLetics.Web.csproj", "{F1E0BF2F-444E-48AA-B3DD-B9B5E270FBE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VdotModule", "VdotModule\VdotModule.csproj", "{DA14A985-38E0-4C19-A0CF-8C4EEC92362C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VdotModule", "VdotModule\VdotModule.csproj", "{DA14A985-38E0-4C19-A0CF-8C4EEC92362C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
