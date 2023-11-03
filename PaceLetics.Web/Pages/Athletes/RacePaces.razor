@@ -33,21 +33,33 @@
 
         <MudStack Spacingv="3">
             <MudText>
-                Hier kannst du deine Laufergebnisse eintragen oder editieren.
+                Hier kannst du einen neuen Einstufungslauf eintragen oder den vorhandenen editieren.
             </MudText>
             @if(@_athlete.ActiveReferenceResult == null)
             {
                 <MudAlert Severity="Severity.Warning">
-                    Füge ein Laufergebnis hinzu, damit wir deine optimalen Trainingsbereiche für dich ermitteln können.
+                    Füge einen aktuellen Einstufungslauf hinzu, damit wir deine Trainingsbereiche für dich ermitteln können.
                 </MudAlert>
                 <MudButton OnClick="AddAthlete">
                     <MudExIcon Icon="@Icons.Material.Filled.AddCircle" Size="Size.Large" Color="MudExColor.Warning" />
                 </MudButton>
             }
-            else{
-                <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult"/>
+            else
+            {
+                <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
+                @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
+                {
+                    <MudAlert Severity="Severity.Info">
+                        Dein Einstufungslauf liegt schon mehr als 6 Monate zurück. Für ein optimales Training solltest du einen aktuelleren Referenzlauf verwenden.
+                    </MudAlert>
+                }
+
+                
                 <VdotCard Data="@_vdotData"></VdotCard>
             }
+                
+                
+        }
 
         </MudStack>
     }
