@@ -50,7 +50,7 @@
     </MudCardContent>
 
     <MudCardActions>
-        <MudButton Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
+        <MudButton OnClick="@OnShowMoreInfoClickAsnyc" Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
     </MudCardActions>
 
 </MudCard>
@@ -66,4 +66,12 @@
     public TimeSpan LowerPace { get; set; }
     [Parameter]
     public TimeSpan UpperPace { get; set; }
+    [Parameter]
+    public EventCallback<string> ShowMoreInfoEvent { get; set; }
+
+    private async Task OnShowMoreInfoClickAsnyc()
+    {
+        await ShowMoreInfoEvent.InvokeAsync(PaceKey);
+    }
+
 }

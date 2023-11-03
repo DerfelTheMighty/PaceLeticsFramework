@@ -1,11 +1,12 @@
-﻿<MudCarousel Class="mud-width-full" Style="height:450px;" ShowArrows="@_arrows" ShowBullets="@_bullets" EnableSwipeGesture="@_enableSwipeGesture" AutoCycle="false" TData="object" >
+﻿@using CoreLibrary.Constants;
+<MudCarousel SelectedIndex="@SelectedIndex" Class="mud-width-full" Style="height:450px;" ShowArrows="@_arrows" ShowBullets="@_bullets" EnableSwipeGesture="@_enableSwipeGesture" AutoCycle="false" TData="object">
     <MudCarouselItem Transition="_transition" Color="@Color.Transparent" >
         <div class="d-flex" style="height:100%">
             <MudStack AlignItems="AlignItems.Center" >
                 <MudImage Src="images/icons/epace.png" Height="50" Width="50"/>
                 <MudText>
                     Das Laufen mit der E-Pace trainiert deine Grundlagenausdauer. Hier läufst du deutlich im aeroben Bereich. Die meisten Kilometer pro Woche sollten so gelaufen werden. 
-                    Die hier angegebene E-Pace kennzeichnet dabei den oberen Bereich der Grundlagenausdauert. Du kannst auch gerne langsamer laufen, wenn du z.B. mit einer Gruppe unterwegs bist. 
+                    Die hier angegebene E-Pace kennzeichnet dabei den oberen Bereich der Grundlagenausdauer. Du kannst auch gerne langsamer laufen, wenn du z.B. mit einer Gruppe unterwegs bist. 
                     Das schadet dem Training im aeroben Bereich nicht.
                 </MudText>
             </MudStack>
@@ -64,9 +65,15 @@
 </MudCarousel>
 
 @code {
+    private MudCarousel<object> _carousel;
     private bool _arrows = true;
     private bool _bullets = true;
     private bool _enableSwipeGesture = true;
     private bool _autocycle = false;
     private Transition _transition = Transition.Slide;
+
+
+    [Parameter]
+    public int SelectedIndex { get; set; }
+
 }

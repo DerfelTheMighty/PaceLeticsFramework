@@ -110,7 +110,7 @@
             _athlete.ActiveReferenceResult = rrm;
             _athlete.Vdot = vdotService.GetVdot(rrm);
             _vdotData[0] = _athlete.Vdot;
-            _vdotData[1]= 85-_athlete.Vdot;
+            _vdotData[1]= 85-_athlete.Vdot; //ToDo: magic number entfernen
             _athlete.PaceModel = pmProvider[_athlete.Vdot];
             _isLoading = true;
             StateHasChanged();
