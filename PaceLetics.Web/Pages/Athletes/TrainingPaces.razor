@@ -6,6 +6,7 @@
 @using AthleteDataAccessLibrary.Contracts;
 @using CoreLibrary.Models.Pace;
 @using MudBlazor.Extensions.Core;
+@using PaceLetics.Components.Pace
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
@@ -33,7 +34,7 @@
                 Hier findest du eine Übersicht.
             </MudText>
             <MudPaper Class="pa-4">
-                <PaceLetics.Web.Pages.Pace.PaceInfo SelectedIndex="@_selectedPaceItem"/>
+                <PaceInfo SelectedIndex="@_selectedPaceItem"/>
             </MudPaper>
 
             @if (_athlete?.Vdot < 1)
@@ -42,15 +43,15 @@
                     <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir deine optimale Trainingspace für dich bestimmen können.</MudAlert>
                 </MudCard>
             }
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="E Pace" LowerPace="@_lowerPace.Easy" UpperPace="@_upperPace.Easy" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="E Pace" LowerPace="@_lowerPace.Easy" UpperPace="@_upperPace.Easy" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="M Pace" LowerPace="@_lowerPace.Marathon" UpperPace="@_upperPace.Marathon" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="M Pace" LowerPace="@_lowerPace.Marathon" UpperPace="@_upperPace.Marathon" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="T Pace" LowerPace="@_lowerPace.Threshold" UpperPace="@_upperPace.Threshold" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="T Pace" LowerPace="@_lowerPace.Threshold" UpperPace="@_upperPace.Threshold" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="I Pace" LowerPace="@_lowerPace.Intervall" UpperPace="@_upperPace.Intervall" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="I Pace" LowerPace="@_lowerPace.Intervall" UpperPace="@_upperPace.Intervall" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="R Pace" LowerPace="@_lowerPace.Repetition" UpperPace="@_upperPace.Repetition" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="R Pace" LowerPace="@_lowerPace.Repetition" UpperPace="@_upperPace.Repetition" />
             
             
             <MudSpacer></MudSpacer>

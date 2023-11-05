@@ -7,9 +7,9 @@
 @using CoreLibrary.Models.Race;
 @using MudBlazor.Extensions.Core;
 @using MudBlazor;
-@using PaceLetics.Web.Pages.Vdot
-@using Race;
 @using VdotModule.Contracts;
+@using PaceLetics.Components.Race
+@using PaceLetics.Components.Vdot
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
@@ -45,7 +45,7 @@
             }
             else
             {
-                <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
+                <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
                 @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
                 {
                     <MudAlert Severity="Severity.Info">

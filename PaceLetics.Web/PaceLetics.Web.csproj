@@ -28,13 +28,13 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
     <PackageReference Include="MudBlazor" Version="6.11.0" />
-    <PackageReference Include="MudBlazor.Extensions" Version="1.7.75" />
-    <PackageReference Include="Radzen.Blazor" Version="4.17.1" />
+    <PackageReference Include="MudBlazor.Extensions" Version="1.7.76" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AthleteDataAccessLibrary\AthleteDataAccessLibrary.csproj" />
     <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj" />
+    <ProjectReference Include="..\PaceLetics.Components\PaceLetics.Components.csproj" />
     <ProjectReference Include="..\VdotModule\VdotModule.csproj" />
   </ItemGroup>
 

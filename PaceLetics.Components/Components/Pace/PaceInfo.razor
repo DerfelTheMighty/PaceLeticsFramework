@@ -1,9 +1,13 @@
 ﻿@using CoreLibrary.Constants;
+
+
+@namespace PaceLetics.Components.Pace
+
 <MudCarousel SelectedIndex="@SelectedIndex" Class="mud-width-full" Style="height:450px;" ShowArrows="@_arrows" ShowBullets="@_bullets" EnableSwipeGesture="@_enableSwipeGesture" AutoCycle="false" TData="object">
     <MudCarouselItem Transition="_transition" Color="@Color.Transparent" >
         <div class="d-flex" style="height:100%">
             <MudStack AlignItems="AlignItems.Center" >
-                <MudImage Src="images/icons/epace.png" Height="50" Width="50"/>
+                <MudImage Src="_content/PaceLetics.Components/images/icons/epace.png" Height="50" Width="50"/>
                 <MudText>
                     Das Laufen mit der E-Pace trainiert deine Grundlagenausdauer. Hier läufst du deutlich im aeroben Bereich. Die meisten Kilometer pro Woche sollten so gelaufen werden. 
                     Die hier angegebene E-Pace kennzeichnet dabei den oberen Bereich der Grundlagenausdauer. Du kannst auch gerne langsamer laufen, wenn du z.B. mit einer Gruppe unterwegs bist. 
@@ -15,7 +19,7 @@
     <MudCarouselItem Transition="_transition" Color="@Color.Transparent">
         <div class="d-flex" style="height:100%" >
             <MudStack AlignItems="AlignItems.Center">
-                <MudImage Src="images/icons/mpace.png" Height="50" Width="50" />
+                <MudImage Src="_content/PaceLetics.Components/images/icons/mpace.png" Height="50" Width="50" />
                 <MudText>
                     In der M-Pace würdest du im Idealfall einen Marathonlauf antreten (Training vorausgesetzt). Hier kommst du über längere Zeit in einen angenehmen Flow, z.B. wenn man motivierende Musik hört oder sich Ärger von der Seele läuft. 
                     Für effektives und schonendes Training der Grundlagenausdauer ist das aber zu schnell. Die Energiebereitstellung ist noch überwiegend aerob, aber der Verbrauch an Kohlenhydraten ist erhöht. 
@@ -27,7 +31,7 @@
     <MudCarouselItem Transition="_transition" Color="Color.Transparent">
         <div class="d-flex" style="height:100%">
             <MudStack AlignItems="AlignItems.Center">
-                <MudImage Src="images/icons/tpace.png" Height="50" Width="50" />
+                <MudImage Src="_content/PaceLetics.Components/images/icons/tpace.png" Height="50" Width="50" />
                 <MudText>
                     Bei einem Wettkampf über 10km kannst du dich an der T-Pace orientieren. Die 10km würde man nur etwas schneller laufen.
                     Bei diesem Tempo müssen anaerobe Stoffwechselwege in hohem Maße zur Energiebereitstellung beitragen. Das verbraucht sehr viele Kohlenhydrate. 
@@ -40,7 +44,7 @@
     <MudCarouselItem Transition="_transition" Color="Color.Transparent">
         <div class="d-flex" style="height:100%">
             <MudStack AlignItems="AlignItems.Center">
-                <MudImage Src="images/icons/ipace.png" Height="50" Width="50" />
+                <MudImage Src="_content/PaceLetics.Components/images/icons/ipace.png" Height="50" Width="50" />
                 <MudText>
                     Die I-Pace liegt jenseits der aerob-anaeroben Schwelle. Intervalle in der I-Pace läuft man z.B. um diese Schwelle zu verschieben oder die maximale Sauerstoffaufnahme zu erhöhen. 
                     Intervalle in der I-Pace haben klassischerweise nur kurze Pausen, sodass zwischen den Intervallen keine vollständige Regeneration stattfindet. 
@@ -52,7 +56,7 @@
     <MudCarouselItem Transition="_transition" Color="Color.Transparent" >
         <div class="d-flex" style="height:100%">
             <MudStack AlignItems="AlignItems.Center">
-                <MudImage Src="images/icons/rpace.png" Height="50" Width="50" />
+                <MudImage Src="_content/PaceLetics.Components/images/icons/rpace.png" Height="50" Width="50" />
                 <MudText>
                     Die R-Pace ist sehr schnell und bringt dich koordinativ und kraftmäßig an den Rand deiner Fähigkeiten. 
                     Es werden Bewegungsspielräume exploriert, die sonst nicht genutzt werden. Die Intervalle sind kurz und die Pausen sind lang.
