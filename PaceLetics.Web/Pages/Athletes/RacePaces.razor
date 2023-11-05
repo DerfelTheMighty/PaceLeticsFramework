@@ -1,5 +1,4 @@
-﻿
-@page "/Athletes/racepaces"
+﻿@page "/Athletes/racepaces"
 
 @using AthleteDataAccessLibrary;
 @using CoreLibrary.Models.Athlet;
@@ -78,28 +77,15 @@
     protected async override void OnInitialized()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var ID = await GetUserId();
+        var user = authstate.User;
+
+        var ID = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
         _athlete = await AthleteData.GetAthlete(ID);
         _vdotData[0] = _athlete.Vdot;
         _vdotData[1] = 85 - _athlete.Vdot;
         _isLoading = false;
         StateHasChanged();
         base.OnInitialized();
-    }
-
-    async Task<string> GetUserName()
-    {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        return user.Identity.Name;
-    }
-
-    async Task<string> GetUserId()
-    {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-        return userid;
     }
 
     private async Task AddAthlete()
