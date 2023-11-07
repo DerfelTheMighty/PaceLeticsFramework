@@ -1,6 +1,4 @@
 ﻿using CoreLibrary.Contracts;
-using Microsoft.Azure.Cosmos;
-
 namespace AthleteDataAccessLibrary.Contracts
 {
     public interface IDataAccess

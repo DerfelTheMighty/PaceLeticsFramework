@@ -1,5 +1,4 @@
-﻿
-@page "/Athletes/racepaces"
+﻿@page "/Athletes/racepaces"
 
 @using AthleteDataAccessLibrary;
 @using CoreLibrary.Models.Athlet;
@@ -8,9 +7,9 @@
 @using CoreLibrary.Models.Race;
 @using MudBlazor.Extensions.Core;
 @using MudBlazor;
-@using PaceLetics.Web.Pages.Vdot
-@using Race;
 @using VdotModule.Contracts;
+@using PaceLetics.Components.Race
+@using PaceLetics.Components.Vdot
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
@@ -21,7 +20,7 @@
 
 <PageTitle>Meine Laufdaten</PageTitle>
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
@@ -33,89 +32,37 @@
 
         <MudStack Spacingv="3">
             <MudText>
-                Hier kannst du deine Laufergebnisse eintragen oder editieren.
+                Hier kannst du einen neuen Einstufungslauf eintragen oder den vorhandenen editieren.
             </MudText>
             @if(@_athlete.ActiveReferenceResult == null)
             {
                 <MudAlert Severity="Severity.Warning">
-                    Füge ein Laufergebnis hinzu, damit wir deine optimalen Trainingsbereiche für dich ermitteln können.
+                    Füge einen aktuellen Einstufungslauf hinzu, damit wir deine Trainingsbereiche für dich ermitteln können.
                 </MudAlert>
                 <MudButton OnClick="AddAthlete">
                     <MudExIcon Icon="@Icons.Material.Filled.AddCircle" Size="Size.Large" Color="MudExColor.Warning" />
                 </MudButton>
             }
-            else{
-                <PaceLetics.Web.Pages.Race.RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult"/>
+            else
+            {
+                <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
+                @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
+                {
+                    <MudAlert Severity="Severity.Info">
+                        Dein Einstufungslauf liegt schon mehr als 6 Monate zurück. Für ein optimales Training solltest du einen aktuelleren Referenzlauf verwenden.
+                    </MudAlert>
+                }
+
+                
                 <VdotCard Data="@_vdotData"></VdotCard>
             }
+                
+                
+        
 
         </MudStack>
     }
 
 </MudContainer>
 
-@code
-{
-    private string _input = string.Empty;
-    private bool _isLoading = true;
 
-    private AthleteModel _athlete = new AthleteModel();
-    private double[] _vdotData { get; set; } = { 0, 0 };
-
-
-    protected async override void OnInitialized()
-    {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var ID = await GetUserId();
-        _athlete = await AthleteData.GetAthlete(ID);
-        _vdotData[0] = _athlete.Vdot;
-        _vdotData[1] = 85 - _athlete.Vdot;
-        _isLoading = false;
-        StateHasChanged();
-        base.OnInitialized();
-    }
-
-    async Task<string> GetUserName()
-    {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        return user.Identity.Name;
-    }
-
-    async Task<string> GetUserId()
-    {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-        return userid;
-    }
-
-    private async Task AddAthlete()
-    {
-        var options = new DialogOptions
-            {
-                CloseButton = true,
-                DisableBackdropClick = false,
-                MaxWidth = MaxWidth.Small
-            };
-
-        RaceResultModel res = null;
-        if (_athlete.ActiveReferenceResult != null)
-            res = _athlete.ActiveReferenceResult;
-        var parameters = new DialogParameters<AddRaceDialog> { { x => x.Model, res } };
-        var result = await dialogService.Show<AddRaceDialog>(string.Empty, parameters, options).Result;
-        if (!result.Cancelled)
-        {
-            var rrm = result.Data as RaceResultModel ?? new RaceResultModel();
-            _athlete.ActiveReferenceResult = rrm;
-            _athlete.Vdot = vdotService.GetVdot(rrm);
-            _vdotData[0] = _athlete.Vdot;
-            _vdotData[1]= 85-_athlete.Vdot; //ToDo: magic number entfernen
-            _athlete.PaceModel = pmProvider[_athlete.Vdot];
-            _isLoading = true;
-            StateHasChanged();
-            await AthleteData.UpdateAthlete(_athlete);
-            _isLoading = false;
-        }
-    }
-}

@@ -11,23 +11,22 @@
 <PageTitle>Dashboard</PageTitle>
 
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
    
-        @if (_isLoading)
-        {
-            <LoadingScreen Label="Deine Daten werden geladen..."/>
-        }
-        else
-        {
-            <h1>Dashboard</h1>
-            <MudStack Spacingv="3">
-                <H3>Hallo @_name</H3>
-                <MudText>
-                    Hier findest du in Zukunft aktuelle Neuigkeiten zum Kurs, Infos zu kommenden Trainingseinheiten und Trainingsvorschläge.
-                </MudText>
-            </MudStack>
-        }
+    @if (_isLoading){
+        <LoadingScreen Label="Deine Daten werden geladen..."/>
+    }
+    else
+    {
+        <h1>Dashboard</h1>
+        <MudStack Spacingv="3">
+            <h3>Hallo @_name</h3>
+            <MudText>
+                Hier findest du in Zukunft aktuelle Neuigkeiten zum Kurs, Infos zu kommenden Trainingseinheiten und Trainingsvorschläge.
+            </MudText>
+        </MudStack>
+    }
 </MudContainer>
     
 
@@ -41,28 +40,13 @@
     protected async override void OnInitialized()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        _name = await GetUserName();
-        var id = await GetUserId();
+        var user = authstate.User;
+        var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+        _name = user.Identity.Name;
         Athlete = await AthleteData.GetAthlete(id);
         _isLoading = false;
         StateHasChanged();
         base.OnInitialized();
     }
-
-    async Task<string> GetUserName()
-    {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        return user.Identity.Name;
-    }
-
-    async Task<string> GetUserId()
-    {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        var userid = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-        return userid;
-    }
-
 
 }

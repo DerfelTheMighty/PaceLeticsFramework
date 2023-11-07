@@ -6,6 +6,7 @@
 @using AthleteDataAccessLibrary.Contracts;
 @using CoreLibrary.Models.Pace;
 @using MudBlazor.Extensions.Core;
+@using PaceLetics.Components.Pace
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
@@ -16,7 +17,7 @@
 
 <PageTitle>Meine Pacebereiche</PageTitle>
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
 
     @if (_isLoading)
@@ -27,13 +28,13 @@
     {
         <h1>Meine Pacebereiche</h1>
 
-        <MudStack Spacing="3">
+        <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
             <MudText>
                 Deine individuelle Trainingspace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
                 Hier findest du eine Übersicht.
             </MudText>
             <MudPaper Class="pa-4">
-                <PaceLetics.Web.Pages.Pace.PaceInfo SelectedIndex="@_selectedPaceItem"/>
+                <PaceInfo SelectedIndex="@_selectedPaceItem"/>
             </MudPaper>
 
             @if (_athlete?.Vdot < 1)
@@ -42,15 +43,16 @@
                     <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir deine optimale Trainingspace für dich bestimmen können.</MudAlert>
                 </MudCard>
             }
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="E Pace" LowerPace="@_lowerPace.Easy" UpperPace="@_upperPace.Easy" />
+ 
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="E Pace" LowerPace="@_lowerPace.Easy" UpperPace="@_upperPace.Easy" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="M Pace" LowerPace="@_lowerPace.Marathon" UpperPace="@_upperPace.Marathon" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="M Pace" LowerPace="@_lowerPace.Marathon" UpperPace="@_upperPace.Marathon" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="T Pace" LowerPace="@_lowerPace.Threshold" UpperPace="@_upperPace.Threshold" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="T Pace" LowerPace="@_lowerPace.Threshold" UpperPace="@_upperPace.Threshold" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="I Pace" LowerPace="@_lowerPace.Intervall" UpperPace="@_upperPace.Intervall" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="I Pace" LowerPace="@_lowerPace.Intervall" UpperPace="@_upperPace.Intervall" />
 
-            <PaceLetics.Web.Pages.Pace.PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="R Pace" LowerPace="@_lowerPace.Repetition" UpperPace="@_upperPace.Repetition" />
+            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="R Pace" LowerPace="@_lowerPace.Repetition" UpperPace="@_upperPace.Repetition" />
             
             
             <MudSpacer></MudSpacer>
@@ -60,66 +62,3 @@
 
 </MudContainer>
 
-@code
-{
-
-    private bool _isLoading = true;
-    private AthleteModel? _athlete;
-    private PaceModel _lowerPace = new PaceModel();
-    private PaceModel _upperPace = new PaceModel();
-    private int _selectedPaceItem;
-    private ElementReference _paceinforef;
-
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-            var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-
-            if (!string.IsNullOrEmpty(userID))
-            {
-                _athlete = await AthleteData.GetAthlete(userID);
-
-                if (_athlete?.PaceModel != null)
-                {
-                    _upperPace = _athlete.PaceModel;
-                    _lowerPace = _athlete.PaceModel.Reduce(0.975);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            var errorMessage = "$Es gab ein Problem beim Laden Ihrer Daten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.";
-            IMudExDialogReference<MudExMessageDialog>? dlg = await dialogService.ShowInformationAsync("Achtung", errorMessage, Icons.Material.Filled.Error, false, true);
-        }
-        finally
-        {
-            _isLoading = false;
-        }
-    }
-
-    private async Task OnShowMoreInfo(string key)
-    {
-        var item = GetInfoItem(key);
-        _selectedPaceItem = item;
-        StateHasChanged();
-        await JSRuntime.InvokeVoidAsync("scrollToTop");
-    }
-
-    private int GetInfoItem(string type)
-    {
-        int infoItem = 0;
-        switch (type)
-        {
-            case PaceKeys.Easy: infoItem = 0; break;
-            case PaceKeys.Marathon: infoItem = 1; break;
-            case PaceKeys.Threshold: infoItem = 2; break;
-            case PaceKeys.Intervall: infoItem = 3; break;
-            case PaceKeys.Repetition: infoItem = 4; break;
-            default: infoItem = 0; break;
-        }
-        return infoItem;
-    }
-
-}

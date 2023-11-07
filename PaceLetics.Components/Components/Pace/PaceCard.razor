@@ -1,42 +1,44 @@
 ﻿@using CoreLibrary.Constants;
 
+@namespace PaceLetics.Components.Pace
+
 <MudCard>
     <MudCardHeader>
         @switch(PaceKey)
     {
         case PaceKeys.Easy:
             <MudAvatar>
-                <MudImage Src="images/icons/epace.png"></MudImage>
+                <MudImage Src="_content/PaceLetics.Components/images/icons/epace.png" ></MudImage>
             </MudAvatar>
             <MudText> asy Pace</MudText>
             break;
         case PaceKeys.Marathon:
             <MudAvatar>
-                <MudImage Src="images/icons/mpace.png"></MudImage>
+                <MudImage Src="_content/PaceLetics.Components/images/icons/mpace.png"></MudImage>
             </MudAvatar>
             <MudText> arathon Pace</MudText>
             break;
         case PaceKeys.Threshold:
             <MudAvatar>
-                <MudImage Src="images/icons/tpace.png"></MudImage>
+                <MudImage Src="_content/PaceLetics.Components/images/icons/tpace.png"></MudImage>
             </MudAvatar>
             <MudText> hreshold Pace</MudText>
             break;
         case PaceKeys.Intervall:
             <MudAvatar>
-                <MudImage Src="images/icons/ipace.png"></MudImage>
+                <MudImage Src="_content/PaceLetics.Components/images/icons/ipace.png" ></MudImage>
             </MudAvatar>
             <MudText> ntervall Pace</MudText>
             break;
         case PaceKeys.Repetition:
             <MudAvatar>
-                <MudImage Src="images/icons/rpace.png"></MudImage>
+                <MudImage Src="_content/PaceLetics.Components/images/icons/rpace.png"></MudImage>
             </MudAvatar>
             <MudText> epetition Pace</MudText>
             break;
         default:
             <MudAvatar>
-                <MudImage Src="images/icons/epace.png"></MudImage>
+                <MudImage Src="_content/PaceLetics.Components/images/icons/epace.png"></MudImage>
                     <MudText> asy Pace</MudText>
             </MudAvatar>
             break;
@@ -59,19 +61,4 @@
 
 
 
-@code {
-    [Parameter]
-    public string? PaceKey { get; set; }
-    [Parameter]
-    public TimeSpan LowerPace { get; set; }
-    [Parameter]
-    public TimeSpan UpperPace { get; set; }
-    [Parameter]
-    public EventCallback<string> ShowMoreInfoEvent { get; set; }
 
-    private async Task OnShowMoreInfoClickAsnyc()
-    {
-        await ShowMoreInfoEvent.InvokeAsync(PaceKey);
-    }
-
-}

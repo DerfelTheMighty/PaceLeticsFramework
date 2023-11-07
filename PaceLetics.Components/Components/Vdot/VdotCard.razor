@@ -2,6 +2,7 @@
 @using CoreLibrary.Models.Race;
 @using MudBlazor;
 
+@namespace PaceLetics.Components.Vdot
 
 <MudCard>
 
@@ -17,10 +18,4 @@
     </MudText>
 </MudCard>
 
-@code {
-    private int _index = -1; //default value cannot be 0 -> first selectedindex is 0.
 
-    [Parameter]
-    public double[] Data { get; set; } = { 0, 0 };
-
-}

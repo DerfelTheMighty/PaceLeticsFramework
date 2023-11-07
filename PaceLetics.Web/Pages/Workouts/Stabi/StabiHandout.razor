@@ -1,0 +1,56 @@
+﻿@page "/Workouts/Stabi/stabihandout"
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
+    <MudStack AlignItems="AlignItems.Stretch">
+        <MudCarousel Class="mud-width-full" Style="height:600px;" ShowArrows="@_showArrows" ShowBullets="@_showBullets" EnableSwipeGesture="@_enableSwipeGesture" AutoCycle="false" TData="object">
+            <MudCarouselItem Transition="@_transition" Color="Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <GluteBridge />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="@_transition" Color="Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <Quadruped />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="@_transition" Color="Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <PlankPushUp />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="@_transition" Color="Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <SidePlank />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="@_transition" Color="Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <PlankDip />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="@_transition" Color="@Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <Deadlift />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="@_transition" Color="@Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <Superwoman />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="@_transition" Color="@Color.Surface">
+                <div class="d-flex" style="height:100%">
+                    <MountainClimber />
+                </div>
+            </MudCarouselItem>
+        </MudCarousel>
+
+    </MudStack>
+</MudContainer>
+
+@code {
+    private Transition _transition = Transition.Slide;
+    private bool _showArrows = true;
+    private bool _showBullets = true;
+    private bool _enableSwipeGesture = true;
+}
