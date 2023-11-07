@@ -14,39 +14,10 @@
         <MudText>
             Hier findest du eine stetig wachsende Auswahl an verschiedenen Workouts.
         </MudText>
-        <MudGrid>
-            <MudItem xs="6" sm="6">
-                <PaceLetics.Web.Pages.Workouts.Stabi.StabiPreview />
-            </MudItem>
-            <MudItem xs="6" sm="6">
-                <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="4">
-                <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-            </MudItem>
-            <MudItem xs="12" sm="6">
-                <MudGrid>
-                    <MudItem xs="12">
-                        <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                    </MudItem>
-                    <MudItem xs="12">
-                        <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                    </MudItem>
-                </MudGrid>
-            </MudItem>
-            <MudItem xs="12" sm="6">
-                <MudPaper Elevation="2" Class="pa-4" Style="height: 100%"></MudPaper>
-            </MudItem>
-            <MudItem xs="12" sm="6" md="4">
-                <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-            </MudItem>
-            <MudItem xs="12" sm="6" md="4">
-                <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="4">
-                <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-            </MudItem>
-        </MudGrid>
+        <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
+            <PaceLetics.Web.Pages.Workouts.Stabi.StabiPreview />
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+        </MudStack>
         
         
     }
