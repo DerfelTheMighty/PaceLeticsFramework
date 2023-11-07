@@ -1,7 +1,5 @@
 ﻿using AthleteDataAccessLibrary.Contracts;
 using CoreLibrary.Models.Athlet;
-using Microsoft.Azure.Cosmos;
-using System.ComponentModel;
 
 namespace AthleteDataAccessLibrary
 {
