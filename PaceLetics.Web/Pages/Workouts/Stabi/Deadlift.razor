@@ -3,9 +3,41 @@
 
     <MudPaper Elevation="2" Class="pa-4" >
         <MudImage Fluid="true" Src="images/workouts/stabi/one_leg_deadlift.png" Alt="One Leg Deadlift" Class="rounded-lg" />
+        <MudText>
+
+        </MudText>
+        <MudSimpleTable Style="overflow-x: auto;">
+            <thead>
+                <tr>
+                    @foreach (var h in _headings)
+                    {
+                        <th>@h</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in _rows)
+                {
+                    <tr>
+                        @foreach (var x in row.Split())
+                        {
+                            <td>@x</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </MudSimpleTable>
+
     </MudPaper>
 
 </MudStack>
+
 @code {
+    string[] _headings = { "Level", "Ausführung", "Wiederholungen"};
+    string[] _rows = {
+        @"Leicht Standard 5",
+        @"Fortgeschritten Standard 10",
+        @"Schwer Gestreckt 10",
+        @"Episch Gestreckt 15"};
 
 }
