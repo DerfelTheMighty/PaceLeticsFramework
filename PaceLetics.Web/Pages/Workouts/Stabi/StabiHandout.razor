@@ -2,11 +2,9 @@
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
     <MudStack AlignItems="AlignItems.Stretch">
-        <MudCarousel Class="mud-width-full" Style="height:800px;" ShowArrows="@_showArrows" ShowBullets="@_showBullets" EnableSwipeGesture="@_enableSwipeGesture" AutoCycle="false" TData="object">
+        <MudCarousel Class="mud-width-full" Style="height:400px;" ShowArrows="@_showArrows" ShowBullets="@_showBullets" EnableSwipeGesture="@_enableSwipeGesture" AutoCycle="false" TData="object">
             <MudCarouselItem Transition="@_transition" Color="Color.Surface">
-                <div class="d-flex" style="height:100%">
-                    <GluteBridge />
-                </div>
+                <GluteBridge />
             </MudCarouselItem>
             <MudCarouselItem Transition="@_transition" Color="Color.Surface">
                 <div class="d-flex" style="height:100%">
