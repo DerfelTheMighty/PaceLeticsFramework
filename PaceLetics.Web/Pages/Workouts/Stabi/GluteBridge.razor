@@ -1,40 +1,16 @@
 ﻿
 <MudStack>
-    <h3>Glute Bridge</h3>
-
     <MudPaper Elevation="2" Class="pa-4" >
-        <MudImage Fluid="true" Src="images/workouts/stabi/Glute_Bridge.png" Alt="Glute Bridge" Class="rounded-lg" />
+        <MudImage Fluid="true" Src="images/workouts/stabi/glute_bridge.png" Alt="Glute Bridge" Class="rounded-lg" />
     </MudPaper>
-    <MudSimpleTable Style="overflow-x: auto;">
-        <thead>
-            <tr>
-                @foreach (var h in _headings)
-                {
-                    <th>@h</th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var row in _rows)
-            {
-                <tr>
-                    @foreach (var x in row.Split(";"))
-                    {
-                        <td>@x</td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </MudSimpleTable>
+    <MudOverlay Visible="true" DarkBackground="false" Absolute="true" >
+
+    </MudOverlay>
+
 
 </MudStack>
 
 
 @code {
-    string[] _headings = { "Level", "Ausführung", "Dauer in Sekunden" };
-    string[] _rows = {
-        @"Leicht;Beidbeinig;30",
-        @"Fortgeschritten;Einbeinig;15 je Seite",
-        @"Schwer;Einbeinig;30 je Seite",
-        @"Episch;Einbeinig mit Absenken;30 je Seite"};
+
 }
