@@ -36,6 +36,7 @@
     <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj" />
     <ProjectReference Include="..\PaceLetics.Components\PaceLetics.Components.csproj" />
     <ProjectReference Include="..\VdotModule\VdotModule.csproj" />
+    <ProjectReference Include="..\WorkoutModule\WorkoutModule.csproj" />
   </ItemGroup>
 
   <ItemGroup>

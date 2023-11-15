@@ -1,5 +1,8 @@
 ﻿@page "/Workouts/Stabi/stabihandout"
 
+
+@using WorkoutModule.Logic;
+
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
     <MudStack AlignItems="AlignItems.Stretch">
         <MudCarousel Class="mud-width-full" Style="height:400px;" ShowArrows="@_showArrows" ShowBullets="@_showBullets" EnableSwipeGesture="@_enableSwipeGesture" AutoCycle="false" TData="object">
@@ -42,6 +45,9 @@
                 </div>
             </MudCarouselItem>
         </MudCarousel>
+    <MudText>
+
+    </MudText>
 
     </MudStack>
 </MudContainer>
@@ -51,4 +57,18 @@
     private bool _showArrows = true;
     private bool _showBullets = true;
     private bool _enableSwipeGesture = true;
+    
+
+    protected override Task OnInitializedAsync()
+    {
+
+        return base.OnInitializedAsync();
+    }
+    private async void OnProgressUpdateEvent(int progress)
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+}
+
+
 }
