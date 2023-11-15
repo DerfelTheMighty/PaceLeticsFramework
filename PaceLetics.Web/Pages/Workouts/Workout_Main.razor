@@ -1,5 +1,8 @@
 ﻿@page "/Workouts/workout_main"
-
+@using WorkoutModule.Contracts;
+@using WorkoutModule.Logic;
+@using WorkoutModule.Services;
+@using WorkoutModule.Models;
 
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
@@ -17,6 +20,7 @@
         <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
             <PaceLetics.Web.Pages.Workouts.Stabi.StabiPreview />
             <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            <PaceLetics.Components.Components.Workout.ExerciseView ExerciseInfo="@_currentExercise"/>
         </MudStack>
         
         
@@ -27,4 +31,26 @@
 
 @code {
     private bool _isLoading;
+    WorkoutDefinition def = (new DefinitionFactory()).CreateStabiHandoutExample();
+    IExerciseProvider prov = new ExerciseProvider();
+    Workout _workout;
+    IExerciseInfo _currentExercise;
+
+    protected override void OnInitialized()
+    {
+        _workout = new Workout(def, prov);
+        _workout.ElementStartEvent += OnExStart;
+        _workout.Start();
+    }
+
+
+    private async void OnExStart(IWorkoutElement el)
+    {
+        if (el.Type == WorkoutModule.Enums.WorkoutElement.Exercise)
+            InvokeAsync(() =>
+            {
+                _currentExercise = el as IExerciseInfo;
+                StateHasChanged();
+            });
+    }
 }

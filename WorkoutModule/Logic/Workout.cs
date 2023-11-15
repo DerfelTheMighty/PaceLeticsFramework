@@ -195,7 +195,7 @@ namespace WorkoutModule.Logic
         private void FinishWorkout()
         {
             State = WorkoutState.Finished;
-            WorkoutFinishedEvent.Invoke();
+            WorkoutFinishedEvent?.Invoke();
             CurrentElement = 0;
             CurrentExercise = 0;
         }
@@ -207,11 +207,11 @@ namespace WorkoutModule.Logic
             _workoutElements[_currentElement].FinishedEvent -= OnElementFinished;
             if (_workoutElements[_currentElement].Type == WorkoutElement.Exercise)
                 CurrentExercise++;
-            ElementFinishedEvent.Invoke(_workoutElements[_currentElement]);
+            ElementFinishedEvent?.Invoke(_workoutElements[_currentElement]);
             CurrentElement++;
             ProcessTimeSlot();
         }
-
+        
         #endregion
     }
 

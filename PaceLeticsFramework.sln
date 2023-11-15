@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VdotModule", "VdotModule\Vd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaceLetics.Components", "PaceLetics.Components\PaceLetics.Components.csproj", "{E3E5846E-E6B4-4C0D-BAA2-3AA7EDDC4C21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutModule", "WorkoutModule\WorkoutModule.csproj", "{ABB96D34-FB7F-4E88-BDD6-0C550DD77886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkoutModule", "WorkoutModule\WorkoutModule.csproj", "{ABB96D34-FB7F-4E88-BDD6-0C550DD77886}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
