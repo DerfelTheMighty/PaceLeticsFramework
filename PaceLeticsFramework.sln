@@ -15,10 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaceLetics.Components", "Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutModule", "WorkoutModule\WorkoutModule.csproj", "{ABB96D34-FB7F-4E88-BDD6-0C550DD77886}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{4987A608-4CD4-40BF-BD90-B7CFA98D2C86}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutTest", "WorkoutTest\WorkoutTest.csproj", "{415C56A4-214D-49E2-8A12-B2A15FA521D0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,16 +45,9 @@ Global
 		{ABB96D34-FB7F-4E88-BDD6-0C550DD77886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABB96D34-FB7F-4E88-BDD6-0C550DD77886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABB96D34-FB7F-4E88-BDD6-0C550DD77886}.Release|Any CPU.Build.0 = Release|Any CPU
-		{415C56A4-214D-49E2-8A12-B2A15FA521D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{415C56A4-214D-49E2-8A12-B2A15FA521D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{415C56A4-214D-49E2-8A12-B2A15FA521D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{415C56A4-214D-49E2-8A12-B2A15FA521D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{415C56A4-214D-49E2-8A12-B2A15FA521D0} = {4987A608-4CD4-40BF-BD90-B7CFA98D2C86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB41B04B-BBEA-4D6E-A335-3A03B73E1896}
