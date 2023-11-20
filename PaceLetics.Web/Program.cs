@@ -10,6 +10,8 @@ using MudBlazor.Extensions;
 using MudBlazor;
 using VdotModule.Contracts;
 using VdotModule.Services;
+using WorkoutModule.Contracts;
+using WorkoutModule.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+builder.Services.AddSingleton<IExerciseProvider, ExerciseProvider>();
+builder.Services.AddSingleton<IWorkoutProvider, WorkoutProvider>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
 builder.Services.AddTransient<IAthleteData, AthleteData>();

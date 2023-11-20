@@ -4,6 +4,7 @@
 @using WorkoutModule.Services;
 @using WorkoutModule.Models;
 
+@inject IWorkoutProvider woProvider;
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
@@ -18,9 +19,8 @@
             Hier findest du eine stetig wachsende Auswahl an verschiedenen Workouts.
         </MudText>
         <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
-            <PaceLetics.Web.Pages.Workouts.Stabi.StabiPreview />
+            <PaceLetics.Components.Components.Workout.WorkoutView Workout="@_prev"></PaceLetics.Components.Components.Workout.WorkoutView>
             <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-            <PaceLetics.Components.Components.Workout.ExerciseView ExerciseInfo="@_currentExercise"/>
         </MudStack>
         
         
@@ -30,27 +30,30 @@
 
 
 @code {
-    private bool _isLoading;
-    WorkoutDefinition def = (new DefinitionFactory()).CreateStabiHandoutExample();
-    IExerciseProvider prov = new ExerciseProvider();
-    Workout _workout;
-    IExerciseInfo _currentExercise;
+    bool _isLoading;
+    List<string> _workouts;
+    List<WorkoutPreview> _workoutPrevs;
+    WorkoutPreview _prev;
 
     protected override void OnInitialized()
     {
-        _workout = new Workout(def, prov);
-        _workout.ElementStartEvent += OnExStart;
-        _workout.Start();
+        _workoutPrevs = new List<WorkoutPreview>();
+        _workouts = woProvider.GetWorkoutIds();
+        foreach (var wo in _workouts)
+        {
+            _workoutPrevs.Add(woProvider.GetWorkoutPreview(wo));
+        }
+        _prev = _workoutPrevs[0];
     }
 
 
     private async void OnExStart(IWorkoutElement el)
     {
-        if (el.Type == WorkoutModule.Enums.WorkoutElement.Exercise)
-            InvokeAsync(() =>
-            {
-                _currentExercise = el as IExerciseInfo;
-                StateHasChanged();
-            });
+        //if (el.Type == WorkoutModule.Enums.WorkoutElement.Exercise)
+            //InvokeAsync(() =>
+            //{
+            //    _currentExercise = el as IExerciseInfo;
+            //    StateHasChanged();
+            //});
     }
 }

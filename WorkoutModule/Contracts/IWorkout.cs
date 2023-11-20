@@ -16,6 +16,10 @@ namespace WorkoutModule.Contracts
         /// Short description of the workout
         /// </summary>
         string Description { get; }
+
+        // Preview image location
+        string Imagefile { get; }
+
         /// <summary>
         /// List containing all exercises in the workout
         /// </summary>

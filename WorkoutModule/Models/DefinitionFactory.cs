@@ -8,9 +8,11 @@ namespace WorkoutModule.Models
         {
             List<ExerciseDefinition> lst = new List<ExerciseDefinition>();
 
+            #region glute bridge
+
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge Easy",
+                Id = "Glute Bridge",
                 Description = "Übung für Hüftstreckung, Stabilität und Abruck",
                 Execution = new List<string>()
                 {
@@ -26,7 +28,7 @@ namespace WorkoutModule.Models
             }); 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge Moderate",
+                Id = "Glute Bridge",
                 Description = "Übung für Hüftstreckung, Stabilität und Abruck",
                 Execution = new List<string>()
                 {
@@ -43,7 +45,7 @@ namespace WorkoutModule.Models
             });
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge Advanced",
+                Id = "Glute Bridge",
                 Description = "Übung für Hüftstreckung, Stabilität und Abruck",
                 Execution = new List<string>()
                 {
@@ -61,7 +63,7 @@ namespace WorkoutModule.Models
             });
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge Epic",
+                Id = "Glute Bridge",
                 Description = "Übung für Hüftstreckung, -Stabilität und Abruck",
                 Execution = new List<string>()
                 {
@@ -79,9 +81,13 @@ namespace WorkoutModule.Models
                 Level = Level.Epic
             });
 
+            #endregion
+
+            #region quadruped
+
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped Easy",
+                Id = "Quadruped",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -99,7 +105,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped Moderate",
+                Id = "Quadruped",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -118,7 +124,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped Advanced",
+                Id = "Quadruped",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -136,7 +142,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped Epic",
+                Id = "Quadruped",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -152,30 +158,550 @@ namespace WorkoutModule.Models
                 Level = Level.Epic
             });
 
+            #endregion
+
+            #region plank push up
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Push Up",
+                Description = "Effektive übung für den ganzen Rumpf",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Unterarmstütz (Plank) und spanne Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Setze, erst rechts, dann links, die Handfläche auf und drücke dich hoch in die Liegestützposition!",
+                    "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+                    "Wechsle die Reihenfolge beim Seitenwechsel!"
+                },
+                Duration = 30,
+                ImageFile = "plank_push_up_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Easy
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Pank Push Up",
+                Description = "Effektive übung für den ganzen Rumpf",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Unterarmstütz (Plank) und spanne Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Setze, erst rechts, dann links, die Handfläche auf und drücke dich hoch in die Liegestützposition!",
+                    "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+                    "Wechsle die Reihenfolge beim Seitenwechsel!"
+                },
+                Duration = 60,
+                ImageFile = "plank_push_up_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Moderate
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Push Up",
+                Description = "Effektive übung für den ganzen Rumpf",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Unterarmstütz (Plank) und spanne Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Setze, erst rechts, dann links, die Handfläche auf und drücke dich hoch in die Liegestützposition!",
+                    "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+                    "Wechsle die Reihenfolge beim Seitenwechsel!"
+                },
+                Duration = 30,
+                ImageFile = "plank_push_up_single_leg.png",
+                SwitchLeftRight = false,
+                Level = Level.Advanced
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Push Up",
+                Description = "Effektive übung für den ganzen Rumpf",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Unterarmstütz (Plank) und spanne Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Hebe das rechte Bein vom Boden ab.",
+                    "Setze, erst rechts, dann links, die Handfläche auf und drücke dich hoch in die Liegestützposition!",
+                    "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+                    "Wechsle die Reihenfolge und das Standbein beim Seitenwechsel!"
+                },
+                Duration = 60,
+                ImageFile = "plank_push_up_single_leg.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            #endregion
+
+            #region side plank
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Side Plank",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 30,
+                ImageFile = "side_plank_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Easy
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Side Plank",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "side_plank_dip.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Moderate
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Side Plank",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Wechsle anschließend die Seite!"
+                    
+                },
+                Duration = 30,
+                ImageFile = "side_plank_single_leg.png",
+                SwitchLeftRight = true,
+                Level = Level.Advanced
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Side Plank",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "side_plank_single_leg_dip.png",
+                SwitchLeftRight = true,
+                Level = Level.Epic
+            });
+
+
+            #endregion
+
+            #region Plank dip
+
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Dip",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 30,
+                ImageFile = "plank_dip_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Easy
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Dip",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "plank_dip_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Moderate
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Dip",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Wechsle anschließend die Seite!"
+
+                },
+                Duration = 30,
+                ImageFile = "plank_dip_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Advanced
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Dip",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "plank_dip_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Epic
+            });
+
+            #endregion
+
+            #region one leg deadlift
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "One Leg Deadlift",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 30,
+                ImageFile = "one_leg_deadlift_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Easy
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "One Leg Deadlift",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "one_leg_deadlift_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Moderate
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "One Leg Deadlift",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Wechsle anschließend die Seite!"
+
+                },
+                Duration = 30,
+                ImageFile = "one_leg_deadlift_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Advanced
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "One Leg Deadlift",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "one_leg_deadlift_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Epic
+            });
+
+            #endregion
+
+            #region superwoman
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Superwoman",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 30,
+                ImageFile = "superwoman_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Easy
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Superwoman",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "superwoman_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Moderate
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Superwoman",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Wechsle anschließend die Seite!"
+
+                },
+                Duration = 30,
+                ImageFile = "superwoman_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Advanced
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Superwoman",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "superwoman_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Epic
+            });
+
+            #endregion
+
+            #region mountain climber
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Mountain Climber",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 30,
+                ImageFile = "mountain_climber_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Easy
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Mountain Climber",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "mountain_climber_base.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Moderate
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Mountain Climber",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Wechsle anschließend die Seite!"
+
+                },
+                Duration = 30,
+                ImageFile = "mountain_climber_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Advanced
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Mountain Climber",
+                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Execution = new List<string>()
+                {
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
+                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 60,
+                ImageFile = "mountain_climber_base.png",
+                SwitchLeftRight = true,
+                Level = Level.Epic
+            });
+
+            #endregion
+
+
             return lst;
-
-
         }
 
 
-        public WorkoutDefinition CreateStabiHandoutExample() 
+        public List<WorkoutDefinition> CreateWorkoutExamples() 
         {
-            WorkoutDefinition workoutDef = new WorkoutDefinition()
+            List<WorkoutDefinition> lst = new List<WorkoutDefinition>();
+            lst.Add(new WorkoutDefinition()
             {
-                Id = "Stabi Handout Easy",
-                Description = "Basisprogramm für den Rumpf",
+                Id = "Stabi Handout",
+                Description = "Unser Einstiegsprogramm für den Rumpf",
                 SwitchTime = 5,
                 PreparationTime = 10,
                 RestTime = 10,
                 Level = Enums.Level.Easy,
                 Exercises= new List<string>() 
                 {
-                    "Glute Bridge Easy",
-                    "Quadruped Easy"
+                    "Glute Bridge",
+                    "Quadruped",
+                    "Plank Push Up",
+                    "Side Plank",
+                    "Plank Dip",
+                    "One Leg Deadlift",
+                    "Superwoman",
+                    "Mountain Climber"
                 }
-            };
+            });
+            lst.Add(new WorkoutDefinition()
+            {
+                Id = "Stabi Handout",
+                Description = "Das solide Basisprogramm für den Rumpf",
+                SwitchTime = 5,
+                PreparationTime = 10,
+                RestTime = 10,
+                Level = Enums.Level.Moderate,
+                Exercises = new List<string>()
+                {
+                    "Glute Bridge",
+                    "Quadruped",
+                    "Plank Push Up"
+                }
+            });
+            lst.Add(new WorkoutDefinition()
+            {
+                Id = "Stabi Handout",
+                Description = "Ambitioniertes Rumpftraining für ambitionierte Läufer:innen",
+                SwitchTime = 5,
+                PreparationTime = 10,
+                RestTime = 10,
+                Level = Enums.Level.Advanced,
+                Exercises = new List<string>()
+                {
+                    "Glute Bridge" , "Quadruped" , "Plank Push Up"
+                }
+            });
 
-            return workoutDef;
+            lst.Add(new WorkoutDefinition()
+            {
+                Id = "Stabi Handout",
+                Description = "Rumpftraining aus der Hölle",
+                SwitchTime = 5,
+                PreparationTime = 10,
+                RestTime = 10,
+                Level = Enums.Level.Epic,
+                Exercises = new List<string>()
+                {
+                    "Glute Bridge" , "Quadruped" , "Plank Push Up"
+                }
+            });
+            return lst;
 
         }
 

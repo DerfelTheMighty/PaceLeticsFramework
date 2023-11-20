@@ -9,7 +9,6 @@ namespace WorkoutModule.Logic
     {
         private int _currentElement;
         private int _currentExercise;
-
         private List<IWorkoutElement> _workoutElements;
 
 
@@ -29,6 +28,9 @@ namespace WorkoutModule.Logic
         /// Short description of the workout
         /// </summary>
         public string Description { get; }
+
+
+        public string Imagefile { get; }
 
         /// <summary>
         /// Difficulty level of the exercise
@@ -114,7 +116,7 @@ namespace WorkoutModule.Logic
             _workoutElements.Add(new Rest(PreparationTime, WorkoutElement.Preparation));
             foreach (var ex in definition.Exercises)
             {
-                _workoutElements.Add(provider.GetExercise(ex));
+                _workoutElements.Add(provider.GetExercise(ex, Level));
                 _workoutElements.Add(new Rest(RestTime, WorkoutElement.Rest));
             }
             _workoutElements.RemoveAt(_workoutElements.Count - 1);
@@ -211,7 +213,7 @@ namespace WorkoutModule.Logic
             CurrentElement++;
             ProcessTimeSlot();
         }
-        
+
         #endregion
     }
 

@@ -87,6 +87,7 @@ namespace WorkoutModule.Logic
             }
         }
 
+
         #endregion
 
         #region Events

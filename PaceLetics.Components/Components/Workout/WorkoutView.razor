@@ -1,0 +1,70 @@
+﻿@using WorkoutModule.Enums;
+@using WorkoutModule.Models
+
+<MudCard Elevation="1" Outlined=true>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudStack Row="true" Spacing="10">
+                    <MudText Typo="Typo.h3" Color="Color.Primary">@Workout.Id</MudText>
+                    <MudAvatar Size="Size.Large" Color="@GetCardColor(Workout.Level)">
+                     @Workout.Level.ToString()
+                    </MudAvatar>
+                    
+                </MudStack>
+            </CardHeaderContent>
+        </MudCardHeader>
+    <MudCardContent>
+
+        <MudStack AlignItems="AlignItems.Center" >
+        <MudText Typo="Typo.body1">@Workout.Description</MudText>
+        <MudCarousel  AutoCycleTime="_cycleTime" TData="object" Class="mud-width-full" Style="height:200px;" ShowArrows="false" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="true">
+
+            @foreach(var item in Workout.Exercises)
+            {
+                <MudCarouselItem Transition=Transition.Slide >
+                    <div class="d-flex" style="height:100%">
+                        <MudImage Fluid="true" Src="@GetImagePath(item.Imagefile)" Alt="@item.Id" Class="rounded-lg" />
+                    </div>
+                </MudCarouselItem>
+            }
+        </MudCarousel>
+        </MudStack>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Href="/Workouts/stabi/stabihandout" Variant="Variant.Text" Color="Color.Primary">Öffnen</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+
+    [Parameter]
+    public WorkoutPreview Workout { get; set; }
+
+    private TimeSpan _cycleTime = new TimeSpan(0, 0, 1);
+    private Color GetCardColor(Level level)
+    {
+        switch (level)
+        {
+            case Level.Easy:
+                return Color.Info;
+            case Level.Moderate:
+                return Color.Success;
+            case Level.Advanced:
+                return Color.Warning;
+            case Level.Epic:
+                return Color.Error;
+            default:
+                return Color.Info;
+        }
+    }
+
+
+
+
+    private string GetImagePath(string imagefile)
+    {
+        int a = 0;
+        return "images/exercises/" + imagefile;
+    }
+}

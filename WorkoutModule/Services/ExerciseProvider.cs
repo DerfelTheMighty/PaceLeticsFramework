@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkoutModule.Contracts;
+﻿using WorkoutModule.Contracts;
+using WorkoutModule.Enums;
 using WorkoutModule.Logic;
 using WorkoutModule.Models;
 
@@ -12,11 +8,13 @@ namespace WorkoutModule.Services
     public class ExerciseProvider : IExerciseProvider
     {
 
-
         private List<Exercise> _exercises;
+
+        private List<ExercisePreview> _previews;
         public ExerciseProvider()
         {
             _exercises = new List<Exercise>();
+            _previews = new List<ExercisePreview>();
             DefinitionFactory defFactory = new DefinitionFactory();
 
             var exercisDefs = defFactory.CreateExerciseExamples();
@@ -24,6 +22,7 @@ namespace WorkoutModule.Services
             foreach (var def in exercisDefs)
             {
                 _exercises.Add(new Exercise(def));
+                _previews.Add(new ExercisePreview(def));    
             }
         }
 
@@ -33,10 +32,16 @@ namespace WorkoutModule.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Exercise GetExercise(string id)
+        public Exercise GetExercise(string id, Level lvl)
         {
-            return _exercises.Find(x => x.Id == id);
+            return _exercises.Find(x => x.Id == id && x.Level == lvl);
         }
+
+        public ExercisePreview GetExercisePreview(string id, Level lvl) 
+        {
+            return _previews.Find(x => x.Id == id && x.Level == lvl);
+        }
+
 
         /// <summary>
         /// Returns a list of all availabe exercises by id
