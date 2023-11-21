@@ -2,11 +2,11 @@
 @using WorkoutModule.Contracts;
 
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
 @if (Workout != null)
 {
-		<MudCarousel TData="object" AutoCycle="false" Class="mud-width-full" Style="height:500px;" ShowArrows="true" EnableSwipeGesture="true">
+	<MudPaper Class="pa-4">
+		<MudCarousel TData="object" AutoCycle="false" Class="mud-width-half" Style="height:500px;" ShowArrows="true" EnableSwipeGesture="true" ShowBullets="false">
 			@foreach(var item in Workout.Exercises)
 			{
 				<MudCarouselItem>
@@ -14,9 +14,9 @@
 				</MudCarouselItem>
 			}
 		</MudCarousel>
+	</MudPaper>
 }
 
-</MudContainer>
 @code {
 
 	[Parameter]

@@ -3,7 +3,10 @@
 @using PaceLetics.Components.Components.Workout;
 @inject IWorkoutProvider woProvider
 
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.ExtraSmall">
 <WorkoutView Workout="@_workout"></WorkoutView>
+</MudContainer>
 
 @code {
 

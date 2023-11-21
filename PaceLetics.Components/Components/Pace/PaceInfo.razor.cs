@@ -8,7 +8,7 @@ namespace PaceLetics.Components.Pace
     {
         private MudCarousel<object> _carousel;
         private bool _arrows = true;
-        private bool _bullets = true;
+        private bool _bullets = false;
         private bool _enableSwipeGesture = true;
         private bool _autocycle = false;
         private Transition _transition = Transition.Slide;
