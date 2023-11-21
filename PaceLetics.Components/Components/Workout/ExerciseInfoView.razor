@@ -52,9 +52,9 @@
         <MudCard Elevation="1" Outlined=true>
             <MudCardHeader>
                 <CardHeaderContent>
-                    <MudStack Row="true" Spacing="10">
-                        <MudText Color=@GetCardColor(Exercise.Level) Typo="Typo.h4">@Exercise.Name</MudText>
-                        <MudAvatar Style="@GetFontSize(Exercise.Level)" Size="Size.Large" Color="@GetCardColor(Exercise.Level)">
+                    <MudStack Row="true" Spacing="5">
+                        <MudText Color=@GetCardColor(Exercise.Level) Typo="Typo.h5">@Exercise.Name</MudText>
+                        <MudAvatar Style="@GetFontSize(Exercise.Level)" Size="Size.Medium" Color="@GetCardColor(Exercise.Level)">
                             @Exercise.Level.ToString()
                         </MudAvatar>
                     </MudStack>

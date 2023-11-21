@@ -502,7 +502,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Superwomand",
+                Name = "Superwoman",
                 Id = "Superwoman Easy",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
@@ -521,7 +521,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Superwomand",
+                Name = "Superwoman",
                 Id = "Superwoman Moderate",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
@@ -541,7 +541,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Superwomand",
+                Name = "Superwoman",
                 Id = "Superwoman Advanced",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
@@ -561,7 +561,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Superwomand",
+                Name = "Superwoman",
                 Id = "Superwoman Epic",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
