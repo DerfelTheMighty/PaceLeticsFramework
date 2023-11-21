@@ -6,9 +6,12 @@ namespace WorkoutModule.Models
 	public class WorkoutPreview
 	{
 
+
 		private List<ExercisePreview> _exercises;
 
 		public IReadOnlyCollection<ExercisePreview> Exercises { get => _exercises.AsReadOnly(); }
+
+		public string Name { get; }
 
 		public string Id { get; }
 
@@ -20,6 +23,7 @@ namespace WorkoutModule.Models
 
 		public WorkoutPreview(WorkoutDefinition def, IExerciseProvider provider) 
 		{
+			Name = def.Name ?? string.Empty;
 			Id = def.Id ?? string.Empty;
 			Description = def.Description ?? string.Empty;
 			Level = def.Level;

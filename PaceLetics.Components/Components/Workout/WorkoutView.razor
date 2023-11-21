@@ -5,11 +5,10 @@
         <MudCardHeader>
             <CardHeaderContent>
                 <MudStack Row="true" Spacing="10">
-                    <MudText Typo="Typo.h3" Color="Color.Primary">@Workout.Id</MudText>
-                    <MudAvatar Size="Size.Large" Color="@GetCardColor(Workout.Level)">
+                    <MudText Color=@GetCardColor(Workout.Level) Typo="Typo.h3" >@Workout.Name</MudText>
+                    <MudAvatar Style="@GetFontSize(Workout.Level)" Size="Size.Large" Color="@GetCardColor(Workout.Level)">
                      @Workout.Level.ToString()
                     </MudAvatar>
-                    
                 </MudStack>
             </CardHeaderContent>
         </MudCardHeader>
@@ -59,6 +58,39 @@
         }
     }
 
+    private string GetFontSize(Level level)
+    {
+        switch (level)
+        {
+            case Level.Easy:
+                return "font-size:1.5rem;";
+            case Level.Moderate:
+                return "font-size:.75rem;";
+            case Level.Advanced:
+                return "font-size:.75rem;";
+            case Level.Epic:
+                return "font-size:1.5rem;";
+            default:
+                return "font-size:1.5rem;";
+        }
+    }
+
+    private string GetOutlineColor(Level level)
+    {
+        switch (level)
+        {
+            case Level.Easy:
+                return "outline-color:mud-palette-info;outline-width:thick";
+            case Level.Moderate:
+                return "outline-color:--mud-palette-success;";
+            case Level.Advanced:
+                return "outline-color:--mud-palette-warning;";
+            case Level.Epic:
+                return "outline-color:--mud-palette-error;";
+            default:
+                return "outline-color:--mud-palette-info;";
+        }
+    }
 
 
 

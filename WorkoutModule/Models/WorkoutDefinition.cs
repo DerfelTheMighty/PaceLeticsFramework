@@ -9,6 +9,8 @@ namespace WorkoutModule.Models
     /// </summary>
     public class WorkoutDefinition
     {
+        // Name of the workout
+        public string? Name { get; set; }
 
         /// <summary>
         /// Unique identifier of the workout

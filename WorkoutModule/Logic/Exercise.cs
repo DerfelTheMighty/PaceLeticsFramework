@@ -20,6 +20,12 @@ namespace WorkoutModule.Logic
         /// </summary>
         public WorkoutElement Type { get; }
 
+
+        /// <summary>
+        /// public name of the workout
+        /// </summary>
+        public string Name { get; }
+
         /// <summary>
         /// Name of the exercise
         /// </summary>
@@ -109,6 +115,7 @@ namespace WorkoutModule.Logic
 
         public Exercise(ExerciseDefinition definition)
         {
+            Name = definition.Name ?? string.Empty;
             Id = definition.Id ?? string.Empty;
             Description = definition.Description ?? string.Empty;
             Execution = definition.Execution ?? new List<string>() { string.Empty};

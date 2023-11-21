@@ -12,8 +12,9 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge",
-                Description = "Übung für Hüftstreckung, Stabilität und Abruck",
+                Id = "Glute Bridge Easy",
+                Name = "Glute Bridge",
+                Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Lege dich auf den Rücken und stelle die Beine an!",
@@ -28,8 +29,9 @@ namespace WorkoutModule.Models
             }); 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge",
-                Description = "Übung für Hüftstreckung, Stabilität und Abruck",
+                Id = "Glute Bridge Moderate",
+                Name = "Glute Bridge",
+                Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Lege dich auf den Rücken und stelle die Beine an!",
@@ -45,8 +47,9 @@ namespace WorkoutModule.Models
             });
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge",
-                Description = "Übung für Hüftstreckung, Stabilität und Abruck",
+                Id = "Glute Bridge Advanced",
+                Name = "Glute Bridge",
+                Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Lege dich auf den Rücken und stelle die Beine an",
@@ -63,7 +66,8 @@ namespace WorkoutModule.Models
             });
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Glute Bridge",
+                Id = "Glute Bridge Epic",
+                Name = "Glute Bridge",
                 Description = "Übung für Hüftstreckung, -Stabilität und Abruck",
                 Execution = new List<string>()
                 {
@@ -87,7 +91,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped",
+                Name = "Quadruped",
+                Id = "Quadruped Easy",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -105,7 +110,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped",
+                Name = "Quadruped",
+                Id = "Quadruped Moderate",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -124,7 +130,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped",
+                Name = "Quadruped",
+                Id = "Quadruped Advanced",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -142,7 +149,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Quadruped",
+                Name = "Quadruped",
+                Id = "Quadruped Epic",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
                 {
@@ -164,7 +172,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Plank Push Up",
+                Name = "Plank push Up",
+                Id = "Plank Push Up Easy",
                 Description = "Effektive übung für den ganzen Rumpf",
                 Execution = new List<string>()
                 {
@@ -182,7 +191,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Pank Push Up",
+                Name = "Plank push Up",
+                Id = "Plank Push Up Moderate",
                 Description = "Effektive übung für den ganzen Rumpf",
                 Execution = new List<string>()
                 {
@@ -200,7 +210,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Plank Push Up",
+                Name = "Plank push Up",
+                Id = "Plank Push Up Advanced",
                 Description = "Effektive übung für den ganzen Rumpf",
                 Execution = new List<string>()
                 {
@@ -217,7 +228,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Plank Push Up",
+                Name = "Plank push Up",
+                Id = "Plank Push Up Epic",
                 Description = "Effektive übung für den ganzen Rumpf",
                 Execution = new List<string>()
                 {
@@ -239,7 +251,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Side Plank",
+                Name = "Side Plank",
+                Id = "Side Plank Easy",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -257,7 +270,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Side Plank",
+                Name = "Side Plank",
+                Id = "Side Plank Moderate",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -276,7 +290,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Side Plank",
+                Name = "Side Plank",
+                Id = "Side Plank Advanced",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -295,7 +310,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Side Plank",
+                Name = "Side Plank",
+                Id = "Side Plank Epic",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -320,8 +336,9 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Plank Dip",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Name = "Plank Dip",
+                Id = "Plank Dip Easy",
+                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
@@ -338,8 +355,9 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Plank Dip",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Name = "Plank Dip",
+                Id = "Plank Dip Moderate",
+                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
@@ -357,8 +375,9 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Plank Dip",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Name = "Plank Dip",
+                Id = "Plank Dip Advanced",
+                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
@@ -376,8 +395,9 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Plank Dip",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Name = "Plank Dip",
+                Id = "Plank Dip Epic",
+                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
@@ -399,7 +419,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "One Leg Deadlift",
+                Name = "One Leg Deadlift",
+                Id = "One Leg Deadlift Easy",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -417,7 +438,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "One Leg Deadlift",
+                Name = "One Leg Deadlift",
+                Id = "One Leg Deadlift Moderate",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -436,7 +458,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "One Leg Deadlift",
+                Name = "One Leg Deadlift",
+                Id = "One Leg Deadlift Advanced",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -455,7 +478,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "One Leg Deadlift",
+                Name = "One Leg Deadlift",
+                Id = "One Leg Deadlift Epic",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -478,7 +502,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Superwoman",
+                Name = "Superwomand",
+                Id = "Superwoman Easy",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -496,7 +521,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Superwoman",
+                Name = "Superwomand",
+                Id = "Superwoman Moderate",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -515,7 +541,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Superwoman",
+                Name = "Superwomand",
+                Id = "Superwoman Advanced",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -534,7 +561,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Superwoman",
+                Name = "Superwomand",
+                Id = "Superwoman Epic",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -556,7 +584,8 @@ namespace WorkoutModule.Models
             #region mountain climber
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Mountain Climber",
+                Name = "Mountain Climber",
+                Id = "Mountain Climber Easy",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -574,7 +603,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Mountain Climber",
+                Name = "Mountain Climber",
+                Id = "Mountain Climber Moderate",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -593,7 +623,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Mountain Climber",
+                Name = "Mountain Climber",
+                Id = "Mountain Climber Advanced",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -612,7 +643,8 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Id = "Mountain Climber",
+                Name = "Mountain Climber",
+                Id = "Mountain Climber Epic",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
@@ -641,7 +673,8 @@ namespace WorkoutModule.Models
             List<WorkoutDefinition> lst = new List<WorkoutDefinition>();
             lst.Add(new WorkoutDefinition()
             {
-                Id = "Stabi Handout",
+                Name = "Stabi Handout",
+                Id = "Stabi Handout Easy",
                 Description = "Unser Einstiegsprogramm für den Rumpf",
                 SwitchTime = 5,
                 PreparationTime = 10,
@@ -649,19 +682,20 @@ namespace WorkoutModule.Models
                 Level = Enums.Level.Easy,
                 Exercises= new List<string>() 
                 {
-                    "Glute Bridge",
-                    "Quadruped",
-                    "Plank Push Up",
-                    "Side Plank",
-                    "Plank Dip",
-                    "One Leg Deadlift",
-                    "Superwoman",
-                    "Mountain Climber"
+                    "Glute Bridge Easy",
+                    "Quadruped Easy",
+                    "Plank Push Up Easy",
+                    "Side Plank Easy",
+                    "Plank Dip Easy",
+                    "One Leg Deadlift Easy",
+                    "Superwoman Easy",
+                    "Mountain Climber Easy"
                 }
             });
             lst.Add(new WorkoutDefinition()
             {
-                Id = "Stabi Handout",
+                Name = "Stabi Handout",
+                Id = "Stabi Handout Moderate",
                 Description = "Das solide Basisprogramm für den Rumpf",
                 SwitchTime = 5,
                 PreparationTime = 10,
@@ -669,14 +703,20 @@ namespace WorkoutModule.Models
                 Level = Enums.Level.Moderate,
                 Exercises = new List<string>()
                 {
-                    "Glute Bridge",
-                    "Quadruped",
-                    "Plank Push Up"
+                    "Glute Bridge Moderate",
+                    "Quadruped Moderate",
+                    "Plank Push Up Moderate",
+                    "Side Plank Moderate",
+                    "Plank Dip Moderate",
+                    "One Leg Deadlift Moderate",
+                    "Superwoman Moderate",
+                    "Mountain Climber Moderate"
                 }
             });
             lst.Add(new WorkoutDefinition()
             {
-                Id = "Stabi Handout",
+                Name = "Stabi Handout",
+                Id = "Stabi Handout Advanced",
                 Description = "Ambitioniertes Rumpftraining für ambitionierte Läufer:innen",
                 SwitchTime = 5,
                 PreparationTime = 10,
@@ -684,13 +724,21 @@ namespace WorkoutModule.Models
                 Level = Enums.Level.Advanced,
                 Exercises = new List<string>()
                 {
-                    "Glute Bridge" , "Quadruped" , "Plank Push Up"
+                    "Glute Bridge Advanced",
+                    "Quadruped Advanced",
+                    "Plank Push Up Advanced",
+                    "Side Plank Advanced",
+                    "Plank Dip Advanced",
+                    "One Leg Deadlift Advanced",
+                    "Superwoman Advanced",
+                    "Mountain Climber Advanced"
                 }
             });
 
             lst.Add(new WorkoutDefinition()
             {
-                Id = "Stabi Handout",
+                Name = "Stabi Handout",
+                Id = "Stabi Handout Epic",
                 Description = "Rumpftraining aus der Hölle",
                 SwitchTime = 5,
                 PreparationTime = 10,
@@ -698,8 +746,14 @@ namespace WorkoutModule.Models
                 Level = Enums.Level.Epic,
                 Exercises = new List<string>()
                 {
-                    "Glute Bridge" , "Quadruped" , "Plank Push Up"
-                }
+                    "Glute Bridge Epic",
+                    "Quadruped Epic",
+                    "Plank Push Up Epic",
+                    "Side Plank Epic",
+                    "Plank Dip Epic",
+                    "One Leg Deadlift Epic",
+                    "Superwoman Epic",
+                    "Mountain Climber Epic" }
             });
             return lst;
 

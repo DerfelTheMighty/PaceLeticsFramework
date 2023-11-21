@@ -8,6 +8,8 @@ namespace WorkoutModule.Models
     /// </summary>
     public class ExerciseDefinition
     {
+        // Public name of the exercise
+        public string? Name { get; set; }
         /// <summary>
         /// Unique id of the exersice
         /// </summary>

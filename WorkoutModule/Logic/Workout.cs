@@ -19,6 +19,8 @@ namespace WorkoutModule.Logic
         /// </summary>
         public List<IExerciseInfo> Exercises { get; }
 
+        public string Name { get; }
+
         /// <summary>
         /// Unique id of the workout
         /// </summary>
@@ -105,6 +107,7 @@ namespace WorkoutModule.Logic
         /// <param name="provider"></param>
         public Workout(WorkoutDefinition definition, IExerciseProvider provider)
         {
+            Name = definition.Name ?? string.Empty;
             Id = definition.Id ?? string.Empty;
             Description = definition.Description ?? string.Empty;
             Level = definition.Level;

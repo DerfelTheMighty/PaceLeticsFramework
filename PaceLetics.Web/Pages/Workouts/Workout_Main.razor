@@ -19,8 +19,9 @@
             Hier findest du eine stetig wachsende Auswahl an verschiedenen Workouts.
         </MudText>
         <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
-            <PaceLetics.Components.Components.Workout.WorkoutView Workout="@_prev"></PaceLetics.Components.Components.Workout.WorkoutView>
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            @foreach(var item in _workoutPrevs){
+            <PaceLetics.Components.Components.Workout.WorkoutView Workout="@item"></PaceLetics.Components.Components.Workout.WorkoutView>
+            }
         </MudStack>
         
         
@@ -33,7 +34,7 @@
     bool _isLoading;
     List<string> _workouts;
     List<WorkoutPreview> _workoutPrevs;
-    WorkoutPreview _prev;
+
 
     protected override void OnInitialized()
     {
@@ -43,7 +44,6 @@
         {
             _workoutPrevs.Add(woProvider.GetWorkoutPreview(wo));
         }
-        _prev = _workoutPrevs[0];
     }
 
 
