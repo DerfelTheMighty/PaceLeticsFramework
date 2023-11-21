@@ -4,8 +4,13 @@ namespace WorkoutModule.Contracts
 {
     public interface IExerciseInfo
     {
+
         /// <summary>
-        /// Name of the exercise
+        /// public name of the exercise
+        /// </summary>
+        string Name { get; }
+        /// <summary>
+        /// Unique Id the exercise
         /// </summary>
         string Id { get; }
 

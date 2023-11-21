@@ -1,4 +1,4 @@
-﻿@page "/Workouts/workout_main"
+﻿@page "/Workouts/workoutarea"
 @using WorkoutModule.Contracts;
 @using WorkoutModule.Logic;
 @using WorkoutModule.Services;
@@ -20,7 +20,7 @@
         </MudText>
         <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
             @foreach(var item in _workoutPrevs){
-            <PaceLetics.Components.Components.Workout.WorkoutView Workout="@item"></PaceLetics.Components.Components.Workout.WorkoutView>
+                <PaceLetics.Components.Components.Workout.WorkoutPreviewElement Workout="@item"/>
             }
         </MudStack>
         

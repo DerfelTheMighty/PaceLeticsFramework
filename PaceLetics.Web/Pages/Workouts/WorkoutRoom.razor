@@ -1,0 +1,19 @@
+﻿@page "/Workouts/workoutroom"
+@using WorkoutModule.Contracts;
+@using PaceLetics.Components.Components.Workout;
+@inject IWorkoutProvider woProvider
+
+<WorkoutView Workout="@_workout"></WorkoutView>
+
+@code {
+
+	private IWorkout _workout;
+
+	protected override void OnInitialized()
+	{
+		_workout = woProvider.GetActiveWorkout();
+		
+		base.OnInitialized();
+	}
+
+}

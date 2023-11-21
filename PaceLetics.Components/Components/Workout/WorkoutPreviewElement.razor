@@ -1,0 +1,113 @@
+﻿@using WorkoutModule.Enums;
+@using WorkoutModule.Models
+@using WorkoutModule.Contracts;
+
+@inject IWorkoutProvider woProvider;
+@inject NavigationManager NavigationManager
+
+
+<MudCard Elevation="1" Outlined=true>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudStack Row="true" Spacing="10">
+                    <MudText Color=@GetCardColor(Workout.Level) Typo="Typo.h3" >@Workout.Name</MudText>
+                    <MudAvatar Style="@GetFontSize(Workout.Level)" Size="Size.Large" Color="@GetCardColor(Workout.Level)">
+                     @Workout.Level.ToString()
+                    </MudAvatar>
+                </MudStack>
+            </CardHeaderContent>
+        </MudCardHeader>
+    <MudCardContent>
+
+        <MudStack AlignItems="AlignItems.Center" >
+        <MudText Typo="Typo.body1">@Workout.Description</MudText>
+        <MudCarousel  AutoCycleTime="_cycleTime" TData="object" Class="mud-width-full" Style="height:200px;" ShowArrows="false" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="true">
+
+            @foreach(var item in Workout.Exercises)
+            {
+                <MudCarouselItem Transition=Transition.Slide >
+                    <div class="d-flex" style="height:100%">
+                        <MudImage Fluid="true" Src="@GetImagePath(item.Imagefile)" Alt="@item.Id" Class="rounded-lg" />
+                    </div>
+                </MudCarouselItem>
+            }
+        </MudCarousel>
+        </MudStack>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton OnClick="@OpenWorkout" Variant="Variant.Text" Color="Color.Primary">Öffnen</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+
+    [Parameter]
+    public WorkoutPreview Workout { get; set; }
+
+    private TimeSpan _cycleTime = new TimeSpan(0, 0, 1);
+    private Color GetCardColor(Level level)
+    {
+        switch (level)
+        {
+            case Level.Easy:
+                return Color.Info;
+            case Level.Moderate:
+                return Color.Success;
+            case Level.Advanced:
+                return Color.Warning;
+            case Level.Epic:
+                return Color.Error;
+            default:
+                return Color.Info;
+        }
+    }
+
+    private string GetFontSize(Level level)
+    {
+        switch (level)
+        {
+            case Level.Easy:
+                return "font-size:1.5rem;";
+            case Level.Moderate:
+                return "font-size:.75rem;";
+            case Level.Advanced:
+                return "font-size:.75rem;";
+            case Level.Epic:
+                return "font-size:1.5rem;";
+            default:
+                return "font-size:1.5rem;";
+        }
+    }
+
+    private string GetOutlineColor(Level level)
+    {
+        switch (level)
+        {
+            case Level.Easy:
+                return "outline-color:mud-palette-info;outline-width:thick";
+            case Level.Moderate:
+                return "outline-color:--mud-palette-success;";
+            case Level.Advanced:
+                return "outline-color:--mud-palette-warning;";
+            case Level.Epic:
+                return "outline-color:--mud-palette-error;";
+            default:
+                return "outline-color:--mud-palette-info;";
+        }
+    }
+
+
+
+    private string GetImagePath(string imagefile)
+    {
+        return "images/exercises/" + imagefile;
+    }
+
+    private void OpenWorkout()
+    {
+        woProvider.SetActiveWorkout(Workout.Id);
+        NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
+    }
+
+}
