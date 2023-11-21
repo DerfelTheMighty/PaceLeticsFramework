@@ -33,15 +33,15 @@
         switch (level)
         {
             case Level.Easy:
-                return "font-size:1.5rem;";
+                return "font-size:1.0rem;";
             case Level.Moderate:
-                return "font-size:.75rem;";
+                return "font-size:.5rem;";
             case Level.Advanced:
-                return "font-size:.75rem;";
+                return "font-size:.5rem;";
             case Level.Epic:
-                return "font-size:1.5rem;";
+                return "font-size:1.0rem;";
             default:
-                return "font-size:1.5rem;";
+                return "font-size:1.0rem;";
         }
     }
 
@@ -66,27 +66,23 @@
                     <div class="d-flex" style="height:100%">
                         <MudImage Fluid="true" Src="@GetImagePath(Exercise.ImageFilename)" Alt="@Exercise.Id" Class="rounded-lg" />
                     </div>
+                <MudList Dense="true" DisablePadding="true">
+                    <MudListItem><b>Dauer:</b> @Exercise.Duration Sekunden</MudListItem>
+                    <MudListItem><b>Seitenwechsel:</b> @(Exercise.SwitchLeftRight ? "ja" : "Nein")</MudListItem>
+                    @if (Exercise.Execution != null && Exercise.Execution.Any())
+                    {
+                        @foreach (var step in Exercise.Execution)
+                        {
+                            <MudListItem Icon="@Icons.Material.Filled.LabelImportant">@step</MudListItem>
+                        }
+                    }
+                </MudList>
                 </MudStack>
             </MudCardContent>
             
         </MudCard>
-
-            @if (Exercise.Execution != null && Exercise.Execution.Any())
-            {
-            <MudExpansionPanels>
-                <MudExpansionPanel Title="Execution Steps">
-                    <MudList>
-                        <MudListItem><b>Duration:</b> @Exercise.Duration seconds</MudListItem>
-                        <MudListItem><b>Switch Left/Right:</b> @(Exercise.SwitchLeftRight ? "Yes" : "No")</MudListItem>
-                        @foreach (var step in Exercise.Execution)
-                        {
-                            <MudListItem>@step</MudListItem>
-                        }
-                    </MudList>
-                </MudExpansionPanel>
-            </MudExpansionPanels>
-        }
-}
+        
+    }
 else
 {
     <MudText Color="Color.Error">Exercise information is not available.</MudText>

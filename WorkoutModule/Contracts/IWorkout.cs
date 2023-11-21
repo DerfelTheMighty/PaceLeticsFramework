@@ -21,6 +21,11 @@ namespace WorkoutModule.Contracts
         string Imagefile { get; }
 
         /// <summary>
+        /// Public name 
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// List containing all exercises in the workout
         /// </summary>
         List<IExerciseInfo> Exercises { get; }

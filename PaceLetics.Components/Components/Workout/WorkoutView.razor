@@ -6,7 +6,8 @@
 @if (Workout != null)
 {
 	<MudPaper Class="pa-4">
-		<MudCarousel TData="object" AutoCycle="false" Class="mud-width-half" Style="height:500px;" ShowArrows="true" EnableSwipeGesture="true" ShowBullets="false">
+		<MudText Typo="Typo.h4"> @Workout.Name</MudText>
+		<MudCarousel TData="object" AutoCycle="false" Class="mud-width-full" Style="height:800px;" ShowArrows="true" EnableSwipeGesture="true" ShowBullets="false">
 			@foreach(var item in Workout.Exercises)
 			{
 				<MudCarouselItem>
