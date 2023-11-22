@@ -28,7 +28,7 @@ namespace PaceLetics.Components.Components.Workout
         private ExerciseState _exerciseState;
         private WorkoutElements _elementType;
 
-        protected override void OnInitialized()
+		protected override void OnInitialized()
         {
             _data = new double[2];
             Workout.ElementFinishedEvent += OnElementFinished;

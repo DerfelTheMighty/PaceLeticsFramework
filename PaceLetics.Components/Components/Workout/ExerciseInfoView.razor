@@ -1,10 +1,13 @@
 ﻿@using WorkoutModule.Contracts
 @using MudBlazor
 @using WorkoutModule.Enums;
-
+@using MudBlazor.Extensions.Components.ObjectEdit.Options
+@using MudBlazor.Extensions;
 @code {
     [Parameter]
     public IExerciseInfo Exercise { get; set; }
+    
+    
 
     private string GetImagePath(string imagefile)
     {
@@ -49,6 +52,7 @@
 
 @if (Exercise != null)
 {
+
         <MudCard Elevation="1" Outlined=true>
             <MudCardHeader>
                 <CardHeaderContent>
@@ -77,7 +81,10 @@
                         }
                     }
                 </MudList>
+
                 </MudStack>
+
+
             </MudCardContent>
             
         </MudCard> 
