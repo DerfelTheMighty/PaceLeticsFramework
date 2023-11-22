@@ -14,73 +14,65 @@
 				{
 					<MudCarouselItem>
 						<ExerciseInfoView Exercise="item"></ExerciseInfoView>
-						<MudOverlay DarkBackground="true" Visible="true" Absolute="true">
-				<MudStack Justify="Justify.FlexStart" >
-
-				@if (_elementType == WorkoutElements.Preparation)
-				{
-					<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#1F51FF", "0bba83ff" } })" ChartType="ChartType.Donut" Width="300px" Height="300px" @bind-SelectedIndex="_index" InputData="@_data">
-						<CustomGraphics>
-							<text class="donut-inner-text" x="47%" y="50%" 
-							dominant-baseline="middle" text-anchor="middle" fill="white" 
-							font-family="Helvetica" font-size="5">@_timeRemaining</text>
-						</CustomGraphics>
-					</MudChart>
-				}
-
-				else if (_elementType == WorkoutElements.Exercise && _exerciseState == ExerciseState.Running)
-				{
-					<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#FF3131", "0bba83ff" } })" ChartType="ChartType.Donut" Width="300px" Height="300px" @bind-SelectedIndex="_index" InputData="@_data">
-						<CustomGraphics>
-							<text class="donut-inner-text" x="47%" y="50%"
-							dominant-baseline="middle" text-anchor="middle" 
-							fill="white" font-family="Helvetica" font-size="5">@_timeRemaining</text>
-						</CustomGraphics>
-					</MudChart>
-				}
-				else if (_elementType == WorkoutElements.Exercise && _exerciseState == ExerciseState.Switch)
-				{
-
-					<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#FF1493", "0bba83ff" } })" ChartType="ChartType.Donut" Width="300px" Height="300px" @bind-SelectedIndex="_index" InputData="@_data">
-						<CustomGraphics>
-							<text class="donut-inner-text" x="47%" y="50%" 
-							dominant-baseline="middle" text-anchor="middle" 
-							fill="white" font-family="Helvetica" font-size="5">@_timeRemaining</text>
-						</CustomGraphics>
-					</MudChart>
-				}
-				else if (_elementType == WorkoutElements.Rest && _exerciseState == ExerciseState.Running)
-				{
-
-					<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#39FF14", "0bba83ff" } })" ChartType="ChartType.Donut" Width="300px" Height="300px" @bind-SelectedIndex="_index" InputData="@_data">
-						<CustomGraphics>
-							<text class="donut-inner-text" x="47%" y="50%" 
-							dominant-baseline="middle" text-anchor="middle" 
-							fill="white" font-family="Helvetica" font-size="5">@_timeRemaining</text>
-						</CustomGraphics>
-					</MudChart>
-				}
-
-			</MudStack>
-			</MudOverlay>
-
-
 					</MudCarouselItem>	
-
 				}
 			</MudCarousel>
 			
 		</MudPaper>
 		
-
-
 		<MudExpansionPanels>
 			<MudExpansionPanel Text="Steuerung Anzeigen" MaxHeight="250">
+			<MudGrid>
+				<MudItem>
+					@if (_elementType == WorkoutElements.Preparation)
+					{
+						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#1F51FF", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
+							<CustomGraphics>
+								<text class="donut-inner-text" x="47%" y="50%"
+							  dominant-baseline="middle" text-anchor="middle" fill="white"
+							  font-family="Helvetica" font-size="20">@_timeRemaining</text>
+							</CustomGraphics>
+						</MudChart>
+					}
 
+					else if (_elementType == WorkoutElements.Exercise && _exerciseState == ExerciseState.Running)
+					{
+						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#FF3131", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
+							<CustomGraphics>
+								<text class="donut-inner-text" x="47%" y="50%"
+							  dominant-baseline="middle" text-anchor="middle"
+							  fill="white" font-family="Helvetica" font-size="20">@_timeRemaining</text>
+							</CustomGraphics>
+						</MudChart>
+					}
+					else if (_elementType == WorkoutElements.Exercise && _exerciseState == ExerciseState.Switch)
+					{
+
+						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#FF1493", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
+							<CustomGraphics>
+								<text class="donut-inner-text" x="47%" y="50%"
+							  dominant-baseline="middle" text-anchor="middle"
+							  fill="white" font-family="Helvetica" font-size="20">@_timeRemaining</text>
+							</CustomGraphics>
+						</MudChart>
+					}
+					else if (_elementType == WorkoutElements.Rest && _exerciseState == ExerciseState.Running)
+					{
+
+						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#39FF14", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
+							<CustomGraphics>
+								<text class="donut-inner-text" x="47%" y="50%"
+							  dominant-baseline="middle" text-anchor="middle"
+							  fill="white" font-family="Helvetica" font-size="20">@_timeRemaining</text>
+							</CustomGraphics>
+						</MudChart>
+					}
+				</MudItem>
+			</MudGrid>
 			
 
 
-		</MudExpansionPanel>
+		 </MudExpansionPanel>
 		</MudExpansionPanels>
 
 	
