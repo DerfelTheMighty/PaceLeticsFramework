@@ -19,6 +19,14 @@ namespace WorkoutModule.Logic
         /// </summary>
         public List<IExerciseInfo> Exercises { get; }
 
+        public IReadOnlyCollection<IWorkoutElement> Elements 
+        {
+            get 
+            {
+                return _workoutElements.AsReadOnly();
+            }
+        }
+
         public string Name { get; }
 
         /// <summary>
@@ -116,14 +124,14 @@ namespace WorkoutModule.Logic
             State = WorkoutState.Stop;
             _currentElement = 0;
             _workoutElements = new List<IWorkoutElement>();
-            _workoutElements.Add(new Rest(PreparationTime, WorkoutElement.Preparation));
+            _workoutElements.Add(new Rest(PreparationTime, WorkoutElements.Preparation));
             foreach (var ex in definition.Exercises)
             {
                 _workoutElements.Add(provider.GetExercise(ex, Level));
-                _workoutElements.Add(new Rest(RestTime, WorkoutElement.Rest));
+                _workoutElements.Add(new Rest(RestTime, WorkoutElements.Rest));
             }
             _workoutElements.RemoveAt(_workoutElements.Count - 1);
-            Exercises = _workoutElements.Where(x => x.Type == WorkoutElement.Exercise).Cast<IExerciseInfo>().ToList();
+            Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
         }
 
         #region public methods
@@ -210,7 +218,7 @@ namespace WorkoutModule.Logic
         private void OnElementFinished()
         {
             _workoutElements[_currentElement].FinishedEvent -= OnElementFinished;
-            if (_workoutElements[_currentElement].Type == WorkoutElement.Exercise)
+            if (_workoutElements[_currentElement].Type == WorkoutElements.Exercise)
                 CurrentExercise++;
             ElementFinishedEvent?.Invoke(_workoutElements[_currentElement]);
             CurrentElement++;

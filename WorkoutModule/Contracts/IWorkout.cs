@@ -26,9 +26,14 @@ namespace WorkoutModule.Contracts
         string Name { get; }
 
         /// <summary>
-        /// List containing all exercises in the workout
+        /// 
         /// </summary>
-        List<IExerciseInfo> Exercises { get; }
+		IReadOnlyCollection<IWorkoutElement> Elements { get; }
+
+		/// <summary>
+		/// List containing all exercises in the workout
+		/// </summary>
+		List<IExerciseInfo> Exercises { get; }
         /// <summary>
         /// Unique id of the workout
         /// </summary>

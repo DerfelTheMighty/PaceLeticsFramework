@@ -44,6 +44,9 @@ namespace WorkoutModule.Contracts
         /// </summary>
         bool SwitchLeftRight { get; }
 
+		public int SlotDuration { get; }
+
+		int SwitchTime { get; }
         /// <summary>
         /// Remaining time in seconds
         /// </summary>

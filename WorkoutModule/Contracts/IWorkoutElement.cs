@@ -7,7 +7,7 @@ namespace WorkoutModule.Contracts
         /// <summary>
         /// Defines the tyoe of workout element to simplify casting to the correct interface
         /// </summary>
-        WorkoutElement Type { get; }
+        WorkoutElements Type { get; }
         /// <summary>
         /// Current activity state of the exercise
         /// </summary>
@@ -20,6 +20,9 @@ namespace WorkoutModule.Contracts
         /// Remaining time in seconds
         /// </summary>
         int TimeRemaining { get; }
+
+        int SlotDuration { get; }
+
 
         /// <summary>
         ///  Event indicates the exercise completion

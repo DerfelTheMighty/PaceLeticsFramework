@@ -12,13 +12,14 @@ namespace WorkoutModule.Logic
         private int _timeRemaining;
         private Timeslot[] _timeslot;
         private int _currentTimeSlot;
+        private int _slotDuration;
 
         #region Public properties
 
         /// <summary>
         /// Defines the tyoe of workout element to simplify casting to the correct interface
         /// </summary>
-        public WorkoutElement Type { get; }
+        public WorkoutElements Type { get; }
 
 
         /// <summary>
@@ -61,6 +62,8 @@ namespace WorkoutModule.Logic
         /// </summary>
         public bool SwitchLeftRight { get;  }
 
+        public int SwitchTime { get; }
+
         /// <summary>
         /// Remaining time in seconds
         /// </summary>
@@ -76,11 +79,26 @@ namespace WorkoutModule.Logic
                 }
             }
         }
+		/// <summary>
+		/// Remaining time in seconds
+		/// </summary>
+		public int SlotDuration
+		{
+			get => _slotDuration;
+			private set
+			{
+				if (_slotDuration != value)
+				{
+					_slotDuration = value;
+				}
+			}
+		}
 
-        /// <summary>
-        /// Current activity state of the exercise
-        /// </summary>
-        public ExerciseState State 
+
+		/// <summary>
+		/// Current activity state of the exercise
+		/// </summary>
+		public ExerciseState State 
         { 
             get => _state;
             private set 
@@ -122,8 +140,9 @@ namespace WorkoutModule.Logic
             ImageFilename = definition.ImageFile ?? string.Empty;
             Level = definition.Level;
             SwitchLeftRight = definition.SwitchLeftRight;
+            SwitchTime = definition.SwitchTime;
             Duration = definition.Duration;
-            Type = WorkoutElement.Exercise;
+            Type = WorkoutElements.Exercise;
             if (SwitchLeftRight)
             {
                 _timeslot = new Timeslot[]
@@ -146,7 +165,8 @@ namespace WorkoutModule.Logic
             _timer = new System.Timers.Timer(1000); 
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = true;
-            TimeRemaining = _timeslot[0].Duration;
+            TimeRemaining = SlotDuration = _timeslot[0].Duration;
+            
         }
 
 
@@ -205,8 +225,8 @@ namespace WorkoutModule.Logic
             if (_currentTimeSlot < _timeslot.Length)
             {
                 State = _timeslot[_currentTimeSlot].ExerciseState;
-                TimeRemaining = _timeslot[_currentTimeSlot].Duration;
-                _timer.Start();
+                TimeRemaining = SlotDuration = _timeslot[_currentTimeSlot].Duration;
+				_timer.Start();
             }
             else
                 FinishExercise();
@@ -216,7 +236,7 @@ namespace WorkoutModule.Logic
         {
             State = ExerciseState.Stop;
             FinishedEvent?.Invoke();
-            TimeRemaining = _timeslot[0].Duration;
+            TimeRemaining = SlotDuration = _timeslot[0].Duration;
             _currentTimeSlot = 0;
         }
 

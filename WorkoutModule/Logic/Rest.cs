@@ -14,7 +14,7 @@ namespace WorkoutModule.Logic
         /// <summary>
         /// Defines the tyoe of workout element to simplify casting to the correct interface
         /// </summary>
-        public WorkoutElement Type { get; }
+        public WorkoutElements Type { get; }
 
         /// <summary>
         /// Current activity state of the exercise
@@ -37,6 +37,7 @@ namespace WorkoutModule.Logic
         /// </summary>
         public int Duration { get; }
 
+        public int SlotDuration { get;  }
 
         /// <summary>
         /// Remaining time in seconds
@@ -68,7 +69,7 @@ namespace WorkoutModule.Logic
         // Event is executed whenever the exercise state changes
         public Action<ExerciseState> StateChangedEvent { get; set; }
 
-        public Rest(int duration, WorkoutElement type) 
+        public Rest(int duration, WorkoutElements type) 
         {
             Duration = duration;
             Type = type;
@@ -77,6 +78,7 @@ namespace WorkoutModule.Logic
             _timer.AutoReset = true;
             State = ExerciseState.Stop;
             TimeRemaining = Duration;
+            SlotDuration = Duration;
         }
 
 

@@ -1,7 +1,7 @@
 ﻿
 namespace WorkoutModule.Enums
 {
-    public enum WorkoutElement
+    public enum WorkoutElements
     {
         Preparation,
         Exercise,
