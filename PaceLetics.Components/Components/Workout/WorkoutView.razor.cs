@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Extensions;
-using MudBlazor.Extensions.Components;
-using MudBlazor.Extensions.Components.ObjectEdit;
 using MudBlazor;
+using MudBlazor.Extensions.Components;
+using MudBlazor.Extensions.Core;
+using MudBlazor.Extensions;
 using WorkoutModule.Contracts;
 using WorkoutModule.Enums;
-using MudBlazor.Extensions.Core;
+
 
 
 namespace PaceLetics.Components.Components.Workout
@@ -27,6 +22,7 @@ namespace PaceLetics.Components.Components.Workout
         private double[] _data;
         private ExerciseState _exerciseState;
         private WorkoutElements _elementType;
+        private string _instruction;
 
 		protected override void OnInitialized()
         {
@@ -34,25 +30,101 @@ namespace PaceLetics.Components.Components.Workout
             Workout.ElementFinishedEvent += OnElementFinished;
             Workout.WorkoutFinishedEvent += OnWorkoutFinished;
             Workout.ElementStartEvent += OnElementStart;
-            StartWorkout();
             base.OnInitialized();
         }
+
+        private string [] GetChartPalette(WorkoutElements el, ExerciseState state) 
+        {
+            var palette = new string[] { "", "" };
+
+            if (_elementType == WorkoutElements.Preparation)
+            {
+				palette = new[] { "#20d2f4", "0bba83ff" };
+			}
+            else if (_elementType == WorkoutElements.Exercise)
+            {
+                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                    palette = new[] { "#808080", "0bba83ff" };
+                else if (_exerciseState == ExerciseState.Switch)
+                    palette = new[] { "#FF44CC", "0bba83ff" };
+                else
+                    palette = new[] { "#FF5E00", "0bba83ff" };
+			}
+            else if (_elementType == WorkoutElements.Rest) 
+            {
+                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                    palette = new[] { "#808080", "0bba83ff" };
+                else 
+					palette = new[] { "#7FFF00", "0bba83ff" };
+			}
+			return palette;
+		}
+
+        private string GetInstruction(WorkoutElements el, ExerciseState state) 
+        {
+            string result = string.Empty;
+            if (_elementType == WorkoutElements.Preparation) 
+            {
+                result = "Bereit machen!";
+            }
+			else if (_elementType == WorkoutElements.Exercise)
+			{
+                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                    result = "Pausiert!";
+                else if (_exerciseState == ExerciseState.Switch)
+                    result = "Seitenwechsel!";
+                else
+                    result = "Los gehts!";
+			}
+			else if (_elementType == WorkoutElements.Rest)
+			{
+                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                    result = "Pausiert!";
+                else
+                    result = "Erhohlungspause!";
+			}
+			return result;
+		}
+
 
         private void StartWorkout()
         {
             Workout.Start();
         }
+        private void StopWorkout() 
+        {
+            Workout.Stop();
+        }
+        private void ResetWorkout() 
+        {
+            Workout.Reset();
+        }
 
-        private void OnElementFinished(IWorkoutElement el)
+		private void OnToggleChanged(bool isToggled)
+		{
+			if (isToggled)
+			{
+				StartWorkout();
+			}
+			else
+			{
+				StopWorkout(); 
+			}
+		}
+
+		private void OnElementFinished(IWorkoutElement el)
         {
             el.ProgressChangedEvent -= OnProgressChanged;
         }
-
-        private void OnWorkoutFinished()
+        private async void OnWorkoutFinished()
         {
+            await InvokeAsync(() =>
+            {
+                var options = new DialogOptions { CloseOnEscapeKey = true };
+                dialogService.Show<WorkoutFinishedDialog>("Herzlichen Glückwünsch! Du hast das Workout erfolgreich abgeschlossen!", options);
+            });
         }
-
-        private async void OnElementStart(IWorkoutElement el)
+		private async void OnElementStart(IWorkoutElement el)
         {
             el.ProgressChangedEvent += OnProgressChanged;
 
@@ -61,11 +133,11 @@ namespace PaceLetics.Components.Components.Workout
             {
 				_currentExercise = Workout.CurrentExercise;
 				_elementType = el.Type;
-                StateHasChanged();
+				_instruction = GetInstruction(_elementType, _exerciseState);
+				StateHasChanged();
 			});
 
 		}
-
         private async void OnProgressChanged(int remaining)
         {
             await InvokeAsync(() =>
@@ -76,15 +148,19 @@ namespace PaceLetics.Components.Components.Workout
                 StateHasChanged();
             });
         }
-
         private async void OnElementStateChanged(ExerciseState state) 
         {
 			await InvokeAsync(() =>
 			{
                 _exerciseState = state;
+                _instruction = GetInstruction(_elementType, _exerciseState);
 				StateHasChanged();
 			});
 		}
+
+
+
+
 
 	}
 }

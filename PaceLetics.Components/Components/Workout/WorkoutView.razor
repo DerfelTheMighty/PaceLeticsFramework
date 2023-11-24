@@ -9,7 +9,7 @@
 
 		<MudPaper Class="pa-4">
 			<MudText Typo="Typo.h4"> @Workout.Name</MudText>
-			<MudCarousel TData="object" AutoCycle="false" Class="mud-width-full" Style="height:600px;" ShowArrows="true" EnableSwipeGesture="true" ShowBullets="false" SelectedIndex="@_currentExercise">
+			<MudCarousel TData="object" AutoCycle="false" Class="mud-width-full" Style="height:800px;" ShowArrows="true" EnableSwipeGesture="true" ShowBullets="false" SelectedIndex="@_currentExercise">
 				@foreach (var item in Workout.Exercises)
 				{
 					<MudCarouselItem>
@@ -21,54 +21,28 @@
 		</MudPaper>
 		
 		<MudExpansionPanels>
-			<MudExpansionPanel Text="Steuerung Anzeigen" MaxHeight="250">
-			<MudGrid>
+			<MudExpansionPanel Text="Steuerung Anzeigen" MaxHeight="350" >
+			<MudStack Justify="Justify.Center" Spacing="10">
+				<MudText Typo="Typo.h6" Align="Align.Center">@_instruction</MudText>
+				<MudGrid Justify="Justify.Center" Style="align-items: center;">
+				<MudButtonGroup Color="Color.Primary">
+					<MudToggleIconButton Icon="@Icons.Material.Filled.PlayArrow" Size=Size.Large Color="@Color.Success" ToggledChanged="@OnToggleChanged"
+									 ToggledIcon="@Icons.Material.Filled.Pause" ToggledColor="@Color.Warning"/>
+					<MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="@Color.Info" OnClick="@ResetWorkout"></MudIconButton>
+				</MudButtonGroup>
 				<MudItem>
-					@if (_elementType == WorkoutElements.Preparation)
-					{
-						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#1F51FF", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
-							<CustomGraphics>
-								<text class="donut-inner-text" x="47%" y="50%"
-							  dominant-baseline="middle" text-anchor="middle" fill="white"
-							  font-family="Helvetica" font-size="20">@_timeRemaining</text>
-							</CustomGraphics>
-						</MudChart>
-					}
 
-					else if (_elementType == WorkoutElements.Exercise && _exerciseState == ExerciseState.Running)
-					{
-						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#FF3131", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
-							<CustomGraphics>
-								<text class="donut-inner-text" x="47%" y="50%"
+					<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = GetChartPalette(_elementType, _exerciseState) })" 
+					ChartType="ChartType.Donut" Width="75px" Height="75px" @bind-SelectedIndex="_index" InputData="@_data">
+						<CustomGraphics>
+							<text class="donut-inner-text" x="48%" y="52%"
 							  dominant-baseline="middle" text-anchor="middle"
-							  fill="white" font-family="Helvetica" font-size="20">@_timeRemaining</text>
-							</CustomGraphics>
-						</MudChart>
-					}
-					else if (_elementType == WorkoutElements.Exercise && _exerciseState == ExerciseState.Switch)
-					{
-
-						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#FF1493", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
-							<CustomGraphics>
-								<text class="donut-inner-text" x="47%" y="50%"
-							  dominant-baseline="middle" text-anchor="middle"
-							  fill="white" font-family="Helvetica" font-size="20">@_timeRemaining</text>
-							</CustomGraphics>
-						</MudChart>
-					}
-					else if (_elementType == WorkoutElements.Rest && _exerciseState == ExerciseState.Running)
-					{
-
-						<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = new[] { "#39FF14", "0bba83ff" } })" ChartType="ChartType.Donut" Width="50px" Height="50px" @bind-SelectedIndex="_index" InputData="@_data">
-							<CustomGraphics>
-								<text class="donut-inner-text" x="47%" y="50%"
-							  dominant-baseline="middle" text-anchor="middle"
-							  fill="white" font-family="Helvetica" font-size="20">@_timeRemaining</text>
-							</CustomGraphics>
-						</MudChart>
-					}
+							  fill="white" font-family="Helvetica" font-size="18">@_timeRemaining</text>
+						</CustomGraphics>
+					</MudChart>
 				</MudItem>
-			</MudGrid>
+				</MudGrid>
+			</MudStack>
 			
 
 
