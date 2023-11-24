@@ -23,9 +23,21 @@ namespace PaceLetics.Components.Components.Workout
         private ExerciseState _exerciseState;
         private WorkoutElements _elementType;
         private string _instruction;
+        public bool IsControlExpanded { get; set; }
+        public string ControlText 
+        {
+            get 
+            {
+                if (IsControlExpanded)
+                    return "Workoutsteuerung ausblenden";
+                else
+                    return "Workoutsteuerung einblenden";
+            }
+        }
 
 		protected override void OnInitialized()
         {
+            IsControlExpanded = true;
             _data = new double[2];
             Workout.ElementFinishedEvent += OnElementFinished;
             Workout.WorkoutFinishedEvent += OnWorkoutFinished;
@@ -65,12 +77,12 @@ namespace PaceLetics.Components.Components.Workout
             string result = string.Empty;
             if (_elementType == WorkoutElements.Preparation) 
             {
-                result = "Bereit machen!";
+                result = "Halte dich bereit!";
             }
 			else if (_elementType == WorkoutElements.Exercise)
 			{
                 if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
-                    result = "Pausiert!";
+                    result = "Workout pausiert!";
                 else if (_exerciseState == ExerciseState.Switch)
                     result = "Seitenwechsel!";
                 else
@@ -79,15 +91,32 @@ namespace PaceLetics.Components.Components.Workout
 			else if (_elementType == WorkoutElements.Rest)
 			{
                 if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
-                    result = "Pausiert!";
+                    result = "Workout pausiert!";
                 else
-                    result = "Erhohlungspause!";
+                    result = "Kurze Erholung!";
 			}
 			return result;
 		}
 
+		private Color GetCardColor(Level level)
+		{
+			switch (level)
+			{
+				case Level.Easy:
+					return Color.Info;
+				case Level.Moderate:
+					return Color.Success;
+				case Level.Advanced:
+					return Color.Warning;
+				case Level.Epic:
+					return Color.Error;
+				default:
+					return Color.Info;
+			}
+		}
 
-        private void StartWorkout()
+
+		private void StartWorkout()
         {
             Workout.Start();
         }
