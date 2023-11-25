@@ -7,7 +7,7 @@
 			<MudStack Justify="Justify.Center" Spacing="10">
 				<MudGrid Justify="Justify.Center" Style="align-items: center;">
 					<MudGrid Justify="Justify.Center" Style="align-items: center;">
-						<MudItem>
+						<MudItem xs="5">
 							<MudButtonGroup Color="Color.Primary" Size="Size.Large">
 								<MudToggleIconButton @bind-Toggled="@IsToggled" Icon="@Icons.Material.Filled.PlayArrow" Size=Size.Large Color="@Color.Success"
 									 ToggledIcon="@Icons.Material.Filled.Pause" ToggledColor="@Color.Warning" />
@@ -15,11 +15,11 @@
 							</MudButtonGroup>
 						</MudItem>
 						<MudSpacer />
-						<MudItem>
-							<MudText Align="Align.Center" Typo="Typo.h5">@_instruction</MudText>
+						<MudItem xs="5">
+							<MudText Align="Align.Center" Typo="Typo.h6">@_instruction</MudText>
 						</MudItem>
 						<MudSpacer/>
-						<MudItem>
+						<MudItem xs="5">
 							<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = GetChartPalette(_elementType, _exerciseState) })"
 									  ChartType="ChartType.Donut" Width="75px" Height="75px" @bind-SelectedIndex="_index" InputData="@_data">
 									  <CustomGraphics>
