@@ -1,0 +1,38 @@
+﻿@using WorkoutModule.Contracts;
+@using WorkoutModule.Enums;
+
+<MudPaper>
+	<MudExpansionPanels>
+		<MudExpansionPanel Text="Workoutsteuerung" MaxHeight="350" IsInitiallyExpanded="true">
+			<MudStack Justify="Justify.Center" Spacing="10">
+				<MudGrid Justify="Justify.Center" Style="align-items: center;">
+					<MudGrid Justify="Justify.Center" Style="align-items: center;">
+						<MudItem>
+							<MudButtonGroup Color="Color.Primary" Size="Size.Large">
+								<MudToggleIconButton @bind-Toggled="@IsToggled" Icon="@Icons.Material.Filled.PlayArrow" Size=Size.Large Color="@Color.Success"
+									 ToggledIcon="@Icons.Material.Filled.Pause" ToggledColor="@Color.Warning" />
+								<MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="@Color.Info" OnClick="@ResetWorkout"></MudIconButton>
+							</MudButtonGroup>
+						</MudItem>
+						<MudSpacer />
+						<MudItem>
+							<MudText Align="Align.Center" Typo="Typo.h5">@_instruction</MudText>
+						</MudItem>
+						<MudSpacer/>
+						<MudItem>
+							<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = GetChartPalette(_elementType, _exerciseState) })"
+									  ChartType="ChartType.Donut" Width="75px" Height="75px" @bind-SelectedIndex="_index" InputData="@_data">
+									  <CustomGraphics>
+									<text class="donut-inner-text" x="48%" y="52%"
+										  dominant-baseline="middle" text-anchor="middle"
+										  fill="white" font-family="Helvetica" font-size="18">@_timeRemaining</text>
+								</CustomGraphics>
+							</MudChart>
+						</MudItem>
+					</MudGrid>
+				</MudGrid>
+			</MudStack>
+		</MudExpansionPanel>
+	</MudExpansionPanels>
+</MudPaper>
+

@@ -1,11 +1,24 @@
 ﻿@page "/Workouts/workoutroom"
 @using WorkoutModule.Contracts;
 @using PaceLetics.Components.Components.Workout;
+@using WorkoutModule.Enums;
 @inject IWorkoutProvider woProvider
-
+@inject IDialogService dialogService
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
-<WorkoutView Workout="@_workout"></WorkoutView>
+
+	<h1> @_workout.Name</h1>
+	<MudText>Swipe in Ruhe durch die einzelnen Übungen. Mache dich mit der Reihenfolge und der Ausführung vertraut. Starte das Workout, sobald du bereit bist!</MudText>
+
+	<MudStack Spacingv="3">
+		<WorkoutControl Workout="@_workout" />
+		<WorkoutView Workout="@_workout"></WorkoutView>
+	</MudStack>
+
+	
+	
+	
+	
 </MudContainer>
 
 @code {
@@ -15,8 +28,34 @@
 	protected override void OnInitialized()
 	{
 		_workout = woProvider.GetActiveWorkout();
-		
+		_workout.WorkoutFinishedEvent += OnWorkoutFinished;
 		base.OnInitialized();
+	}
+
+	private Color GetCardColor(Level level)
+	{
+		switch (level)
+		{
+			case Level.Easy:
+				return Color.Info;
+			case Level.Moderate:
+				return Color.Success;
+			case Level.Advanced:
+				return Color.Warning;
+			case Level.Epic:
+				return Color.Error;
+			default:
+				return Color.Info;
+		}
+	}
+
+	private async void OnWorkoutFinished()
+	{
+		await InvokeAsync(() =>
+		{
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			dialogService.Show<WorkoutFinishedDialog>("Herzlichen Glückwünsch! Du hast das Workout erfolgreich abgeschlossen!", options);
+		});
 	}
 
 }
