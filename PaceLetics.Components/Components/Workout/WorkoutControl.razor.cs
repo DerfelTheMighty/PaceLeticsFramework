@@ -1,4 +1,6 @@
+using BlazorJS;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using WorkoutModule.Contracts;
 using WorkoutModule.Enums;
 
@@ -86,10 +88,11 @@ namespace PaceLetics.Components.Components.Workout
             });
         }
 
-        private void OnElementFinished(IWorkoutElement el)
+        private async void OnElementFinished(IWorkoutElement el)
         {
             el.ProgressChangedEvent -= OnProgressChanged;
-        }
+			await JSRuntime.InvokeVoidAsync("PlaySound");
+		}
         
         private void OnWorkoutFinished() 
         {
@@ -110,23 +113,23 @@ namespace PaceLetics.Components.Components.Workout
             {
                 if (_elementType == WorkoutElements.Preparation)
                 {
-                    result = "Halte dich bereit!";
+                    result = "Bereit machen!";
                 }
                 else if (_elementType == WorkoutElements.Exercise)
                 {
                     if (_exerciseState == ExerciseState.Pause)
-                        result = "Workout pausiert!";
+                        result = "Angehalten!";
                     else if (_exerciseState == ExerciseState.Switch)
                         result = "Seitenwechsel!";
                     else
-                        result = "Los gehts!";
+                        result = "Ausführung!";
                 }
                 else if (_elementType == WorkoutElements.Rest)
                 {
                     if (_exerciseState == ExerciseState.Pause)
-                        result = "Workout pausiert!";
+                        result = "Angehalten!";
                     else
-                        result = "Kurze Erholung!";
+                        result = "Übungspause!";
                 }
             }
             else if (Workout.State == WorkoutState.Finished || Workout.State == WorkoutState.Stop)

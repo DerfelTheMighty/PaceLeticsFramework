@@ -1,6 +1,10 @@
-﻿@using WorkoutModule.Contracts;
+﻿@using Microsoft.JSInterop;
+@using WorkoutModule.Contracts;
 @using WorkoutModule.Enums;
 
+@inject IJSRuntime JSRuntime
+
+<audio id="sound" src="/media/ding_1.wav" />
 <MudPaper>
 	<MudExpansionPanels>
 		<MudExpansionPanel Text="Workoutsteuerung" MaxHeight="350" IsInitiallyExpanded="true">
