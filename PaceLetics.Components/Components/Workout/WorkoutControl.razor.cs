@@ -1,6 +1,9 @@
 using BlazorJS;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
+using MudBlazor.Extensions.Components;
+using MudBlazor.Extensions.Core;
 using WorkoutModule.Contracts;
 using WorkoutModule.Enums;
 
@@ -14,7 +17,8 @@ namespace PaceLetics.Components.Components.Workout
         private WorkoutElements _elementType;
         private bool _isToggled;
         private string _instruction;
-
+        private MudExGradientText _grdText;
+        private List<MudExColor> _color;
         private double[] _data;
         [Parameter]
         public IWorkout? Workout { get; set; }
@@ -165,6 +169,38 @@ namespace PaceLetics.Components.Components.Workout
 
             return palette;
         }
+
+
+        private List<MudExColor> GetGradTextPallette(WorkoutElements el, ExerciseState state)
+        {
+            List<MudExColor> color = new List<MudExColor> { MudExColor.Info, MudExColor.Dark };
+            if (_elementType == WorkoutElements.Preparation)
+            {
+                color = new List<MudExColor> { MudExColor.Info, MudExColor.Dark };
+            }
+            else if (_elementType == WorkoutElements.Exercise)
+            {
+                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                    color = new List<MudExColor> { MudExColor.Surface, MudExColor.Dark };
+                else if (_exerciseState == ExerciseState.Switch)
+                    color = new List<MudExColor> { MudExColor.Primary, MudExColor.Dark };
+                else
+                    color = new List<MudExColor> { MudExColor.Error, MudExColor.Dark };
+            }
+            else if (_elementType == WorkoutElements.Rest)
+            {
+                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                    color = new List<MudExColor> { MudExColor.Surface, MudExColor.Dark };
+                else
+                    color = new List<MudExColor> { MudExColor.Success, MudExColor.Dark };
+
+
+            }
+
+
+            return color;
+        }
+
 
         protected override void OnInitialized()
         {

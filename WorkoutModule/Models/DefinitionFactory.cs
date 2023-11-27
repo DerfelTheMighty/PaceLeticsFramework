@@ -34,8 +34,7 @@ namespace WorkoutModule.Models
                 Description = "Übung für Hüftstreckung, Hüftstabilität und Abdruck",
                 Execution = new List<string>()
                 {
-                    "Lege dich auf den Rücken und stelle die Beine an!",
-                    "Drücke mit den Fußsohlen gegen den Boden!",
+                    "Gehe in die Glute Bridge!",
                     "Spanne deine Gesäßmuskulatur an und strecke so die Hüfte nach oben!",
                     "Setze Bauch- und Gesäßmuskulatur ein, um Streckung zu halten!",
                     "Hebe die Füße abwechselnd kurz vom Boden ab!"
@@ -52,8 +51,7 @@ namespace WorkoutModule.Models
                 Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
                 Execution = new List<string>()
                 {
-                    "Lege dich auf den Rücken und stelle die Beine an",
-                    "Drücke mit den Fußsohlen gegen den Boden",
+                    "Gehe in die Glute Bridge!",
                     "Spanne deine Gesäßmuskulatur an und strecke so die Hüfte nach oben",
                     "Setze Bauch- und Gesäßmuskulatur ein, um Streckung zu halten",
                     "Strecke ein Bein aus und halte dabei die Hüftstreckung"
@@ -67,19 +65,18 @@ namespace WorkoutModule.Models
             lst.Add(new ExerciseDefinition()
             {
                 Id = "Glute Bridge Epic",
-                Name = "Glute Bridge",
+                Name = "Glute Bridge Straight Leg Dip",
                 Description = "Übung für Hüftstreckung, -Stabilität und Abruck",
                 Execution = new List<string>()
                 {
-                    "Lege dich auf den Rücken und stelle die Beine an",
-                    "Drücke mit den Fußsohlen gegen den Boden",
-                    "Spanne deine Gesäßmuskulatur an und strecke so die Hüfte nach oben",
-                    "Setze Bauch- und Gesäßmuskulatur ein, um Streckung zu halten",
-                    "Strecke ein Bein aus und halte dabei die Hüftstreckung"
+                    "Gehe in die Straight Leg Glute Bridge!",
+                    "Strecke ein Bein aus und halte dabei die Hüftstreckung",
+                    "Senke die Hüfte bis kurz über dem Boden ab und hebe sie wieder an!",
+                    "Setze Bauch- und Gesäßmuskulatur ein!"
 
                 },
-                Duration = 30,
-                ImageFile = "glute_bridge_single_raise.png",
+                Duration = 60,
+                ImageFile = "glute_bridge_straight_leg_dip.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Epic
