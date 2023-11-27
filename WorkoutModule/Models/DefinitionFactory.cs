@@ -14,7 +14,7 @@ namespace WorkoutModule.Models
             {
                 Id = "Glute Bridge Easy",
                 Name = "Glute Bridge",
-                Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
+                Description = "Übung für Hüftstreckung, Hüftstabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Lege dich auf den Rücken und stelle die Beine an!",
@@ -22,7 +22,7 @@ namespace WorkoutModule.Models
                     "Spanne deine Gesäßmuskulatur an und strecke so die Hüfte nach oben!",
                     "Setze Bauch- und Gesäßmuskulatur ein, um Streckung zu halten!"
                 },
-                Duration = 10,
+                Duration = 30,
                 ImageFile = "glute_bridge_base.png",
                 SwitchLeftRight = false,
                 Level = Level.Easy
@@ -30,8 +30,8 @@ namespace WorkoutModule.Models
             lst.Add(new ExerciseDefinition()
             {
                 Id = "Glute Bridge Moderate",
-                Name = "Glute Bridge",
-                Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
+                Name = "Walking Glute Bridge",
+                Description = "Übung für Hüftstreckung, Hüftstabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Lege dich auf den Rücken und stelle die Beine an!",
@@ -41,14 +41,14 @@ namespace WorkoutModule.Models
                     "Hebe die Füße abwechselnd kurz vom Boden ab!"
                 },
                 Duration = 60,
-                ImageFile = "glute_bridge_marching.png",
+                ImageFile = "glute_bridge_waddle.gif",
                 SwitchLeftRight = false,
                 Level = Level.Moderate
             });
             lst.Add(new ExerciseDefinition()
             {
                 Id = "Glute Bridge Advanced",
-                Name = "Glute Bridge",
+                Name = "Straight Leg Glute Bridge",
                 Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
                 Execution = new List<string>()
                 {
@@ -59,7 +59,7 @@ namespace WorkoutModule.Models
                     "Strecke ein Bein aus und halte dabei die Hüftstreckung"
                 },
                 Duration = 30,
-                ImageFile = "glute_bridge_single.png",
+                ImageFile = "glute_bridge_straight_leg.png",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Advanced

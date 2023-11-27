@@ -18,10 +18,9 @@
             </CardHeaderContent>
         </MudCardHeader>
     <MudCardContent>
-
         <MudStack AlignItems="AlignItems.Center" >
         <MudText Typo="Typo.body1">@Workout.Description</MudText>
-        <MudCarousel  AutoCycleTime="_cycleTime" TData="object" Class="mud-width-full" Style="height:200px;" ShowArrows="false" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="true">
+        <MudCarousel  AutoCycleTime="_cycleTime" TData="object" Class="mud-width-full" Style="height:300px;" ShowArrows="false" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="true">
 
             @foreach(var item in Workout.Exercises)
             {
@@ -109,5 +108,11 @@
         woProvider.SetActiveWorkout(Workout.Id);
         NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
     }
-
+    protected override void OnInitialized()
+    {
+        Random random = new Random();
+        int ms =  Convert.ToInt32(Math.Abs(1000.0 * random.NextDouble()));
+        _cycleTime = new TimeSpan(0, 0, 0, 1, ms);
+        base.OnInitialized();
+    }
 }
