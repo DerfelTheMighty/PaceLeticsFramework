@@ -98,7 +98,7 @@ namespace WorkoutModule.Models
                     "Spanne Gesäß- und Bauchmuskulatur bewußt an!",
                     "Achte darauf, kein Hohlkreuz zu bilden!",
                 },
-                Duration = 10,
+                Duration = 30,
                 ImageFile = "quadruped_base.png",
                 SwitchLeftRight = true,
                 SwitchTime=5,
@@ -107,7 +107,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Quadruped",
+                Name = "Quadruped Crunsh",
                 Id = "Quadruped Moderate",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
@@ -118,8 +118,8 @@ namespace WorkoutModule.Models
                     "Achte darauf, kein Hohlkreuz zu bilden!",
                     "Führe Ellenbogen und Knie unter dem Oberkörper zusammen und Strecke sie wieder aus!"
                 },
-                Duration = 60,
-                ImageFile = "quadruped_stretch.png",
+                Duration = 45,
+                ImageFile = "quadruped_crunsh.gif",
                 SwitchLeftRight = true,
                 SwitchTime=5,
                 Level = Level.Moderate
@@ -127,7 +127,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Quadruped",
+                Name = "Quadruped Crawl",
                 Id = "Quadruped Advanced",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
@@ -146,7 +146,7 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Quadruped",
+                Name = "Quadruped Crawl Crunsh",
                 Id = "Quadruped Epic",
                 Description = "Übung für Körperspannung und Hüftstabilität",
                 Execution = new List<string>()
@@ -157,9 +157,9 @@ namespace WorkoutModule.Models
                     "Achte darauf, kein Hohlkreuz zu bilden!",
                     "Strecke abwechselnd die gegenüberliegenden Gliedmaßen aus!"
                 },
-                Duration = 60,
-                ImageFile = "quadruped_crawl_stretch.png",
-                SwitchLeftRight = false,
+                Duration = 45,
+                ImageFile = "quadruped_crawl_crunsh.gif",
+                SwitchLeftRight = true,
                 Level = Level.Epic
             });
 
