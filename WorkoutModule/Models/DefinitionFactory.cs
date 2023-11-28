@@ -1,4 +1,7 @@
-﻿using WorkoutModule.Enums;
+﻿using System.Numerics;
+using System.Reflection.Metadata;
+using System.Runtime.ConstrainedExecution;
+using WorkoutModule.Enums;
 namespace WorkoutModule.Models
 {
     public class DefinitionFactory
@@ -586,13 +589,13 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Gehe in die Liegestützposition!",
+                    "Halte den Kopf in einer Linie mit dem Rücken, Blickrichtung zum Boden!",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Wechsle anschließend die Seite!"
+                    "Führe abwechselnd die Knie langsam in Richtung der gleichseitigen Ellenbogen!"
                 },
                 Duration = 30,
-                ImageFile = "mountain_climber_base.png",
+                ImageFile = "mountain_climber_same.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Easy
@@ -600,19 +603,18 @@ namespace WorkoutModule.Models
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Mountain Climber",
+                Name = "Crossover Mountain Climber",
                 Id = "Mountain Climber Moderate",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Gehe in die Liegestützposition!",
+                    "Halte den Kopf in einer Linie mit dem Rücken, Blickrichtung zum Boden!",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Führe abwechselnd die Knie langsam in Richtung der gleichseitigen Ellenbogen!"
                 },
-                Duration = 60,
-                ImageFile = "mountain_climber_base.png",
+                Duration = 30,
+                ImageFile = "mountain_climber_crossover.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Moderate
@@ -625,35 +627,32 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Gehe in die Liegestützposition!",
+                    "Halte den Kopf in einer Linie mit dem Rücken, Blickrichtung zum Boden!",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Wechsle anschließend die Seite!"
+                    "Führe abwechselnd die Knie langsam in Richtung der gegenüberliegenden Ellenbogen!"
 
                 },
-                Duration = 30,
-                ImageFile = "mountain_climber_base.png",
+                Duration = 60,
+                ImageFile = "mountain_climber_same.gif",
                 SwitchLeftRight = true,
                 Level = Level.Advanced
             });
 
             lst.Add(new ExerciseDefinition()
             {
-                Name = "Mountain Climber",
+                Name = "Fast Crossover Mountain Climber",
                 Id = "Mountain Climber Epic",
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Gehe in die Liegestützposition!",
+                    "Halte den Kopf in einer Linie mit dem Rücken, Blickrichtung zum Boden!",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Führe abwechselnd das Knie schnell in Richtung des gegenüberliegenden Ellenbogen!"
                 },
                 Duration = 60,
-                ImageFile = "mountain_climber_base.png",
+                ImageFile = "mountain_climber_crossover.gif",
                 SwitchLeftRight = true,
                 Level = Level.Epic
             });
