@@ -1,6 +1,9 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Runtime.ConstrainedExecution;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using WorkoutModule.Enums;
 namespace WorkoutModule.Models
 {
@@ -17,7 +20,7 @@ namespace WorkoutModule.Models
             {
                 Id = "Glute Bridge Easy",
                 Name = "Glute Bridge",
-                Description = "Übung für Hüftstreckung, Hüftstabilität und Abdruck",
+                Description = "Statische Übung für Hüftstreckung, Hüftstabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Lege dich auf den Rücken und stelle die Beine an!",
@@ -34,7 +37,7 @@ namespace WorkoutModule.Models
             {
                 Id = "Glute Bridge Moderate",
                 Name = "Walking Glute Bridge",
-                Description = "Übung für Hüftstreckung, Hüftstabilität und Abdruck",
+                Description = "Dynamische Übung für Hüftstreckung, Hüftstabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Gehe in die Glute Bridge!",
@@ -51,7 +54,7 @@ namespace WorkoutModule.Models
             {
                 Id = "Glute Bridge Advanced",
                 Name = "Straight Leg Glute Bridge",
-                Description = "Übung für Hüftstreckung, Stabilität und Abdruck",
+                Description = "Anspruchsvolle statische Übung für Hüftstreckung, Stabilität und Abdruck",
                 Execution = new List<string>()
                 {
                     "Gehe in die Glute Bridge!",
@@ -69,7 +72,7 @@ namespace WorkoutModule.Models
             {
                 Id = "Glute Bridge Epic",
                 Name = "Glute Bridge Straight Leg Dip",
-                Description = "Übung für Hüftstreckung, -Stabilität und Abruck",
+                Description = "Anspruchsvolle dynamische Übung für Hüftstreckung, -Stabilität und Abruck",
                 Execution = new List<string>()
                 {
                     "Gehe in die Straight Leg Glute Bridge!",
@@ -93,7 +96,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Quadruped",
                 Id = "Quadruped Easy",
-                Description = "Übung für Körperspannung und Hüftstabilität",
+                Description = "Statische Übung für Rumpfstabilität und Kräftigung des unteren Rückens.",
                 Execution = new List<string>()
                 {
                     "Gehe in den Vierfüßlerstand mit Oberkörper und Kopf auf einer Linie!",
@@ -112,7 +115,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Quadruped Crunsh",
                 Id = "Quadruped Moderate",
-                Description = "Übung für Körperspannung und Hüftstabilität",
+                Description = "Dynamische Übung für Rumpfstabilität und funktionale Kräftigung des unteren Rückens.",
                 Execution = new List<string>()
                 {
                     "Gehe in den Vierfüßlerstand mit Oberkörper und Kopf auf einer Linie!",
@@ -132,7 +135,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Quadruped Crawl",
                 Id = "Quadruped Advanced",
-                Description = "Übung für Körperspannung und Hüftstabilität",
+                Description = "Anspruchsvolle Übung für Rumpfstabilität, Bauchmuskulatur und den unteren Rücken.",
                 Execution = new List<string>()
                 {
                     "Gehe in den Vierfüßlerstand mit Oberkörper und Kopf auf einer Linie!",
@@ -151,7 +154,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Quadruped Crawl Crunsh",
                 Id = "Quadruped Epic",
-                Description = "Übung für Körperspannung und Hüftstabilität",
+                Description = "Anspruchsvolle Übung zur Kraftigung und Koordination im gesamten Rumpf.",
                 Execution = new List<string>()
                 {
                     "Gehe in den Vierfüßlerstand mit Oberkörper und Kopf auf einer Linie!",
@@ -421,16 +424,16 @@ namespace WorkoutModule.Models
             {
                 Name = "One Leg Deadlift",
                 Id = "One Leg Deadlift Easy",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Balance und Rumpf- und Hüftstabilität!",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Wechsle anschließend die Seite!"
+                    "Starte stehend, spanne Gesäß-, Bauch- und Rückenmuskulatur an; Oberkörper bildet eine gerade Linie!",
+                    "Gewicht auf ein Bein verlagern, während das andere Bein nach hinten gestreckt wird!",
+                    "Kippe den Oberkörper nach vorne, sodass er parallel zum Boden ist, Arme hängen Richtung boden!",
+                    "Führe die Übung langsam und kontrolliert aus, um Gleichgewicht und Stabilität zu wahren!",
                 },
                 Duration = 30,
-                ImageFile = "one_leg_deadlift_base.png",
+                ImageFile = "one_leg_deadlift_hang.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Easy
@@ -440,17 +443,16 @@ namespace WorkoutModule.Models
             {
                 Name = "One Leg Deadlift",
                 Id = "One Leg Deadlift Moderate",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Balance und Rumpf- und Hüftstabilität!",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Starte stehend, spanne Gesäß-, Bauch- und Rückenmuskulatur an; Oberkörper bildet eine gerade Linie!",
+                    "Gewicht auf ein Bein verlagern, während das andere Bein nach hinten gestreckt wird!",
+                    "Kippe den Oberkörper nach vorne, sodass er parallel zum Boden ist, Arme bleiben durchgängig gestreckt!",
+                    "Führe die Übung langsam und kontrolliert aus, um Gleichgewicht und Stabilität zu wahren!",
                 },
-                Duration = 60,
-                ImageFile = "one_leg_deadlift_base.png",
+                Duration = 45,
+                ImageFile = "one_leg_deadlift_hang.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Moderate
@@ -460,18 +462,17 @@ namespace WorkoutModule.Models
             {
                 Name = "One Leg Deadlift",
                 Id = "One Leg Deadlift Advanced",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Balance und Rumpf- und Hüftstabilität!",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Wechsle anschließend die Seite!"
+                    "Starte stehend, Arme nach oben, spanne Gesäß-, Bauch- und Rückenmuskulatur an; Körper bildet eine gerade Linie!",
+                    "Gewicht auf ein Bein verlagern, während das andere Bein nach hinten gestreckt wird!",
+                    "Kippe den Oberkörper nach vorne, sodass er parallel zum Boden ist, Arme bleiben durchgängig gestreckt!",
+                    "Führe die Übung langsam und kontrolliert aus, um Gleichgewicht und Stabilität zu wahren!",
 
                 },
-                Duration = 30,
-                ImageFile = "one_leg_deadlift_base.png",
+                Duration = 60,
+                ImageFile = "one_leg_deadlift_straight.gif",
                 SwitchLeftRight = true,
                 Level = Level.Advanced
             });
@@ -480,18 +481,16 @@ namespace WorkoutModule.Models
             {
                 Name = "One Leg Deadlift",
                 Id = "One Leg Deadlift Epic",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Balance und Rumpf- und Hüftstabilität!",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Starte stehend, Arme nach oben, spanne Gesäß-, Bauch- und Rückenmuskulatur an; Körper bildet eine gerade Linie!",
+                    "Gewicht auf ein Bein verlagern, während das andere Bein nach hinten gestreckt wird!",
+                    "Kippe den Oberkörper nach vorne, sodass er parallel zum Boden ist, Arme bleiben durchgängig gestreckt!",
+                    "Führe die Übung langsam und kontrolliert aus, um Gleichgewicht und Stabilität zu wahren.",
                 },
-                Duration = 60,
-                ImageFile = "one_leg_deadlift_base.png",
+                Duration = 90,
+                ImageFile = "one_leg_deadlift_straight.gif",
                 SwitchLeftRight = true,
                 Level = Level.Epic
             });
@@ -586,7 +585,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Mountain Climber",
                 Id = "Mountain Climber Easy",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Kraft und Koordination im gesamten Rumpf.",
                 Execution = new List<string>()
                 {
                     "Gehe in die Liegestützposition!",
@@ -605,7 +604,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Crossover Mountain Climber",
                 Id = "Mountain Climber Moderate",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Kraft und Koordination im gesamten Rumpf.",
                 Execution = new List<string>()
                 {
                     "Gehe in die Liegestützposition!",
@@ -624,7 +623,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Mountain Climber",
                 Id = "Mountain Climber Advanced",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Kraft und Koordination im gesamten Rumpf.",
                 Execution = new List<string>()
                 {
                     "Gehe in die Liegestützposition!",
@@ -643,7 +642,7 @@ namespace WorkoutModule.Models
             {
                 Name = "Fast Crossover Mountain Climber",
                 Id = "Mountain Climber Epic",
-                Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Effektive Übung für Kraft und Koordination im gesamten Rumpf.",
                 Execution = new List<string>()
                 {
                     "Gehe in die Liegestützposition!",
