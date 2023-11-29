@@ -257,7 +257,7 @@ namespace WorkoutModule.Models
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
                     "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
+                    "Nach Abschluss, wechsle zur anderen Seite."
                 },
                 Duration = 20,
                 ImageFile = "side_plank_base.png",
@@ -276,8 +276,8 @@ namespace WorkoutModule.Models
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
                     "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben. Halte die Grundposition stabil!",
-                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
+                    "Bewege deine Hüfte kontrolliert auf und ab. Halte die Grundposition stabil!",
+                    "Nach Abschluss, wechsle zur anderen Seite."
                 },
                 Duration = 30,
                 ImageFile = "side_plank_dip.gif",
@@ -295,9 +295,8 @@ namespace WorkoutModule.Models
                 {
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
                     "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
                     "Hebe das obere Bein vom Boden ab und halte es oben!",
-                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
+                    "Nach Abschluss, wechsle zur anderen Seite."
 
                 },
                 Duration = 30,
@@ -315,9 +314,8 @@ namespace WorkoutModule.Models
                 {
                     "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
                     "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
                     "Hebe das obere Bein und bewege die Hüfte kontrolliert auf und ab, halte die Grundposition stabil!",
-                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
+                    "Nach Abschluss, wechsle zur anderen Seite."
                 },
                 Duration = 45,
                 ImageFile = "side_plank_leg_raise_dip.gif",
@@ -335,17 +333,17 @@ namespace WorkoutModule.Models
             {
                 Name = "Plank Dip",
                 Id = "Plank Dip Easy",
-                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Statische Übung für Stabilität im Rumpf.",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Wechsle anschließend die Seite!"
+                    "Gehe in den Unterarmstütz (Plank) mit Gewicht auf den Unterarmen und Fußballen.",
+                    "Spanne dabei Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Achte darauf, den Kopf in Verlängerung der Wirbelsäule zu halten, lass ihn nicht hängen!",
+                    "Arbeite mit deiner Gesäß- und Bauchmuskulatur, um die Position stabil zu halten."
                 },
                 Duration = 30,
-                ImageFile = "plank_dip_base.png",
-                SwitchLeftRight = true,
+                ImageFile = "plank_base.png",
+                SwitchLeftRight = false,
                 SwitchTime = 5,
                 Level = Level.Easy
             });
@@ -354,18 +352,17 @@ namespace WorkoutModule.Models
             {
                 Name = "Plank Dip",
                 Id = "Plank Dip Moderate",
-                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Statische Übung für Stabilität im Rumpf.",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Gehe in den Unterarmstütz (Plank) mit Gewicht auf den Unterarmen und Fußballen.",
+                    "Spanne dabei Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Achte darauf, den Kopf in Verlängerung der Wirbelsäule zu halten, lass ihn nicht hängen!",
+                    "Arbeite mit deiner Gesäß- und Bauchmuskulatur, um die Position stabil zu halten."
                 },
                 Duration = 60,
-                ImageFile = "plank_dip_base.png",
-                SwitchLeftRight = true,
+                ImageFile = "plank_base.png",
+                SwitchLeftRight = false,
                 SwitchTime = 5,
                 Level = Level.Moderate
             });
@@ -374,19 +371,17 @@ namespace WorkoutModule.Models
             {
                 Name = "Plank Dip",
                 Id = "Plank Dip Advanced",
-                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Dymische Übung für Stabilität und Kraft im Rumpf.",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Wechsle anschließend die Seite!"
-
+                    "Gehe in den Unterarmstütz (Plank). Spanne dabei Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Achte darauf, den Kopf in Verlängerung der Wirbelsäule zu halten, lass ihn nicht hängen!",
+                    "Arbeite mit deiner Gesäß- und Bauchmuskulatur, um die Position stabil zu halten.",
+                    "Tippe mit der Hüfte abwechselnd nach links und rechts sanft in Richtung Boden."
                 },
-                Duration = 30,
-                ImageFile = "plank_dip_base.png",
-                SwitchLeftRight = true,
+                Duration = 60,
+                ImageFile = "plank_dip.gif",
+                SwitchLeftRight = false,
                 Level = Level.Advanced
             });
 
@@ -394,19 +389,17 @@ namespace WorkoutModule.Models
             {
                 Name = "Plank Dip",
                 Id = "Plank Dip Epic",
-                Description = "Effektive Übung für die Beinachse und die seitliche Rumpfmuskulatur",
+                Description = "Dymische Übung für Stabilität und Kraft im Rumpf.",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Gehe in den Unterarmstütz (Plank). Spanne dabei Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Achte darauf, den Kopf in Verlängerung der Wirbelsäule zu halten, lass ihn nicht hängen!",
+                    "Arbeite mit deiner Gesäß- und Bauchmuskulatur, um die Position stabil zu halten.",
+                    "Tippe mit der Hüfte abwechselnd nach links und rechts sanft in Richtung Boden."
                 },
-                Duration = 60,
-                ImageFile = "plank_dip_base.png",
-                SwitchLeftRight = true,
+                Duration = 90,
+                ImageFile = "plank_dip.gif",
+                SwitchLeftRight = false,
                 Level = Level.Epic
             });
 
@@ -668,9 +661,9 @@ namespace WorkoutModule.Models
                 {
                     "Glute Bridge Easy",
                     "Quadruped Easy",
-                    "Plank Push Up Easy",
-                    "Side Plank Easy",
                     "Plank Dip Easy",
+                    "Side Plank Easy",
+                    "Plank Push Up Easy",
                     "One Leg Deadlift Easy",
                     "Superwoman Easy",
                     "Mountain Climber Easy"
@@ -689,9 +682,9 @@ namespace WorkoutModule.Models
                 {
                     "Glute Bridge Moderate",
                     "Quadruped Moderate",
-                    "Plank Push Up Moderate",
-                    "Side Plank Moderate",
                     "Plank Dip Moderate",
+                    "Side Plank Moderate",
+                    "Plank Push Up Moderate",
                     "One Leg Deadlift Moderate",
                     "Superwoman Moderate",
                     "Mountain Climber Moderate"
@@ -710,9 +703,9 @@ namespace WorkoutModule.Models
                 {
                     "Glute Bridge Advanced",
                     "Quadruped Advanced",
-                    "Plank Push Up Advanced",
-                    "Side Plank Advanced",
                     "Plank Dip Advanced",
+                    "Side Plank Advanced",
+                    "Plank Push Up Advanced",
                     "One Leg Deadlift Advanced",
                     "Superwoman Advanced",
                     "Mountain Climber Advanced"
@@ -732,9 +725,9 @@ namespace WorkoutModule.Models
                 {
                     "Glute Bridge Epic",
                     "Quadruped Epic",
-                    "Plank Push Up Epic",
-                    "Side Plank Epic",
                     "Plank Dip Epic",
+                    "Side Plank Epic",
+                    "Plank Push Up Epic",
                     "One Leg Deadlift Epic",
                     "Superwoman Epic",
                     "Mountain Climber Epic" }
