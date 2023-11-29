@@ -254,12 +254,12 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Wechsle anschließend die Seite!"
+                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
                 },
-                Duration = 30,
+                Duration = 20,
                 ImageFile = "side_plank_base.png",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
@@ -273,14 +273,14 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben. Halte die Grundposition stabil!",
+                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
                 },
-                Duration = 60,
-                ImageFile = "side_plank_dip.png",
+                Duration = 30,
+                ImageFile = "side_plank_dip.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Moderate
@@ -293,15 +293,15 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Wechsle anschließend die Seite!"
-                    
+                    "Hebe das obere Bein vom Boden ab und halte es oben!",
+                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
+
                 },
                 Duration = 30,
-                ImageFile = "side_plank_single_leg.png",
+                ImageFile = "side_plank_leg_raise.png",
                 SwitchLeftRight = true,
                 Level = Level.Advanced
             });
@@ -313,15 +313,14 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante.",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Hebe das obere Bein und bewege die Hüfte kontrolliert auf und ab, halte die Grundposition stabil!",
+                    "Nach Abschluss der Übung auf einer Seite, wechsle zur anderen Seite."
                 },
-                Duration = 60,
-                ImageFile = "side_plank_single_leg_dip.png",
+                Duration = 45,
+                ImageFile = "side_plank_leg_raise_dip.gif",
                 SwitchLeftRight = true,
                 Level = Level.Epic
             });
