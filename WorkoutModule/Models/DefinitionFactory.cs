@@ -518,7 +518,7 @@ namespace WorkoutModule.Models
                     "Hebe wechselseit diagonal jeweils einen Arm und ein Bein etwas höher."
                 },
                 Duration = 30,
-                ImageFile = "superwoman_base.paddle",
+                ImageFile = "superwoman_paddle.gif",
                 SwitchLeftRight = false,
                 SwitchTime = 5,
                 Level = Level.Moderate
