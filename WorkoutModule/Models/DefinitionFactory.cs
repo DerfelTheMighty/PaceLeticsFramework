@@ -1,10 +1,4 @@
-﻿using System;
-using System.Numerics;
-using System.Reflection.Metadata;
-using System.Runtime.ConstrainedExecution;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using WorkoutModule.Enums;
+﻿using WorkoutModule.Enums;
 namespace WorkoutModule.Models
 {
     public class DefinitionFactory
@@ -185,8 +179,8 @@ namespace WorkoutModule.Models
                     "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
                     "Wechsle die Reihenfolge beim Seitenwechsel!"
                 },
-                Duration = 30,
-                ImageFile = "plank_push_up_base.png",
+                Duration = 15,
+                ImageFile = "plank_push_up_base.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Easy
@@ -204,8 +198,8 @@ namespace WorkoutModule.Models
                     "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
                     "Wechsle die Reihenfolge beim Seitenwechsel!"
                 },
-                Duration = 60,
-                ImageFile = "plank_push_up_base.png",
+                Duration = 30,
+                ImageFile = "plank_push_up_base.gif",
                 SwitchLeftRight = true,
                 SwitchTime = 5,
                 Level = Level.Moderate
@@ -219,13 +213,14 @@ namespace WorkoutModule.Models
                 Execution = new List<string>()
                 {
                     "Gehe in den Unterarmstütz (Plank) und spanne Gesäß- und Bauchmuskulatur bewußt an!",
+                    "Hebe das linke Bein vom Boden ab!",
                     "Setze, erst rechts, dann links, die Handfläche auf und drücke dich hoch in die Liegestützposition!",
                     "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
                     "Wechsle die Reihenfolge beim Seitenwechsel!"
                 },
                 Duration = 30,
-                ImageFile = "plank_push_up_single_leg.png",
-                SwitchLeftRight = false,
+                ImageFile = "plank_push_up_leg_lift.gif",
+                SwitchLeftRight = true,
                 Level = Level.Advanced
             });
 
@@ -237,14 +232,14 @@ namespace WorkoutModule.Models
                 Execution = new List<string>()
                 {
                     "Gehe in den Unterarmstütz (Plank) und spanne Gesäß- und Bauchmuskulatur bewußt an!",
-                    "Hebe das rechte Bein vom Boden ab.",
+                    "Hebe das linke Bein vom Boden ab!",
                     "Setze, erst rechts, dann links, die Handfläche auf und drücke dich hoch in die Liegestützposition!",
                     "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
                     "Wechsle die Reihenfolge und das Standbein beim Seitenwechsel!"
                 },
-                Duration = 60,
-                ImageFile = "plank_push_up_single_leg.png",
-                SwitchLeftRight = false,
+                Duration = 40,
+                ImageFile = "plank_push_up_leg_lift.gif",
+                SwitchLeftRight = true,
                 Level = Level.Epic
             });
 
