@@ -500,14 +500,14 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
+                    "Lege dich flach auf den Bauch, Arme nach oben gestreckt. Der ganze Körper bildet eine Linie.",
+                    "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
                     "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Wechsle anschließend die Seite!"
+                    "Arbeite bewusst mit deiner Gesäß- und Bauchmuskulatur, während du die Position hältst!"
                 },
                 Duration = 30,
                 ImageFile = "superwoman_base.png",
-                SwitchLeftRight = true,
+                SwitchLeftRight = false,
                 SwitchTime = 5,
                 Level = Level.Easy
             });
@@ -519,15 +519,14 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Lege dich flach auf den Bauch, Arme nach oben gestreckt.",
+                    "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
+                    "Arbeite bewusst mit deiner Gesäß- und Bauchmuskulatur! Der ganze Körper bildet eine Linie!",
+                    "Hebe wechselseit diagonal jeweils einen Arm und ein Bein etwas höher."
                 },
-                Duration = 60,
-                ImageFile = "superwoman_base.png",
-                SwitchLeftRight = true,
+                Duration = 30,
+                ImageFile = "superwoman_base.paddle",
+                SwitchLeftRight = false,
                 SwitchTime = 5,
                 Level = Level.Moderate
             });
@@ -539,16 +538,14 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Wechsle anschließend die Seite!"
-
+                    "Lege dich flach auf den Bauch, Arme nach oben gestreckt.",
+                    "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
+                    "Arbeite bewusst mit deiner Gesäß- und Bauchmuskulatur! Der ganze Körper bildet eine Linie!",
+                    "Hebe wechselseit diagonal jeweils einen Arm und ein Bein etwas höher."
                 },
-                Duration = 30,
-                ImageFile = "superwoman_base.png",
-                SwitchLeftRight = true,
+                Duration = 60,
+                ImageFile = "superwoman_paddle.gif",
+                SwitchLeftRight = false,
                 Level = Level.Advanced
             });
 
@@ -559,16 +556,14 @@ namespace WorkoutModule.Models
                 Description = "Effektive übung für die Beinachse und die seitliche Rumpfmuskulatur",
                 Execution = new List<string>()
                 {
-                    "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter!",
-                    "Hebe deine Körpermitte vom Boden ab und stütze dich dabei auf Ellenbogen und Fußkante!",
-                    "Achte darauf, dass der Körper eine gerade Linie bildet!",
-                    "Hebe das oberes Bein vom Boden ab und halte es oben.",
-                    "Senke und hebe deine Hüfte kontrolliert nach unten und oben! Halte die Grundposition stabil!",
-                    "Wechsle anschließend die Seite!"
+                    "Lege dich flach auf den Bauch, Arme nach oben gestreckt.",
+                    "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
+                    "Arbeite bewusst mit deiner Gesäß- und Bauchmuskulatur! Der ganze Körper bildet eine Linie!",
+                    "Hebe wechselseit diagonal jeweils einen Arm und ein Bein etwas höher."
                 },
-                Duration = 60,
-                ImageFile = "superwoman_base.png",
-                SwitchLeftRight = true,
+                Duration = 90,
+                ImageFile = "superwoman_paddle.gif",
+                SwitchLeftRight = false,
                 Level = Level.Epic
             });
 
