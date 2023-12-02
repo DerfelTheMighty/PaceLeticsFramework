@@ -15,6 +15,7 @@ namespace PaceLetics.Components.Components.Workout
         private int _index = -1;
         private ExerciseState _exerciseState;
         private WorkoutElements _elementType;
+        private ExerciseState _lastState;
         private bool _isToggled;
         private string _instruction;
         private MudExGradientText _grdText;
@@ -66,6 +67,8 @@ namespace PaceLetics.Components.Components.Workout
                 _timeRemaining = remaining;
                 _data[0] = (double)(Workout.Elements.ElementAt(Workout.CurrentElement).SlotDuration - _timeRemaining);
                 _data[1] = _timeRemaining;
+                if(remaining==3)
+                    JSRuntime.InvokeVoidAsync("PlayTimer");
                 StateHasChanged();
             });
         }
@@ -76,7 +79,7 @@ namespace PaceLetics.Components.Components.Workout
             el.StateChangedEvent += OnElementStateChanged;
             await InvokeAsync(() =>
             {
-				_instruction = GetInstruction(_elementType, _exerciseState);
+				_instruction = GetInstruction(_elementType, _exerciseState, Workout.State);
 				_elementType = el.Type;
                 StateHasChanged();
             });
@@ -86,16 +89,20 @@ namespace PaceLetics.Components.Components.Workout
         {
             await InvokeAsync(() =>
             {
+                _lastState = _exerciseState;
                 _exerciseState = state;
-				_instruction = GetInstruction(_elementType, _exerciseState);
-				StateHasChanged();
+
+				_instruction = GetInstruction(_elementType, _exerciseState, Workout.State);
+                if (GetBeep(_lastState, _exerciseState))
+                    JSRuntime.InvokeVoidAsync("PlayDing_1");
+                StateHasChanged();
             });
         }
 
         private async void OnElementFinished(IWorkoutElement el)
         {
             el.ProgressChangedEvent -= OnProgressChanged;
-			await JSRuntime.InvokeVoidAsync("PlaySound");
+			await JSRuntime.InvokeVoidAsync("PlayDing_1");
 		}
         
         private void OnWorkoutFinished() 
@@ -104,64 +111,63 @@ namespace PaceLetics.Components.Components.Workout
             {
 				_isToggled = false;
                 Workout.Reset();
+                JSRuntime.InvokeVoidAsync("PlayDing_3");
                 StateHasChanged();
-			});
-            
-
+            });
         }
 
-		private string GetInstruction(WorkoutElements el, ExerciseState state)
+		private static string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
 		{
 			string result = string.Empty;
-            if (Workout.State == WorkoutState.Running || Workout.State == WorkoutState.Pause)
+            if (wState == WorkoutState.Running || wState == WorkoutState.Pause)
             {
-                if (_elementType == WorkoutElements.Preparation)
+                if (el == WorkoutElements.Preparation)
                 {
                     result = "Bereit machen!";
                 }
-                else if (_elementType == WorkoutElements.Exercise)
+                else if (el == WorkoutElements.Exercise)
                 {
-                    if (_exerciseState == ExerciseState.Pause)
+                    if (eState == ExerciseState.Pause)
                         result = "Angehalten!";
-                    else if (_exerciseState == ExerciseState.Switch)
+                    else if (eState == ExerciseState.Switch)
                         result = "Seitenwechsel!";
                     else
                         result = "Ausführung!";
                 }
-                else if (_elementType == WorkoutElements.Rest)
+                else if (el == WorkoutElements.Rest)
                 {
-                    if (_exerciseState == ExerciseState.Pause)
+                    if (eState == ExerciseState.Pause)
                         result = "Angehalten!";
                     else
                         result = "Übungspause!";
                 }
             }
-            else if (Workout.State == WorkoutState.Finished || Workout.State == WorkoutState.Stop)
+            else if (wState == WorkoutState.Finished || wState == WorkoutState.Stop)
                 result = string.Empty;
 
 
 			return result;
 		}
 
-		private string[] GetChartPalette(WorkoutElements el, ExerciseState state)
+		private static string[] GetChartPalette(WorkoutElements el, ExerciseState state)
         {
             var palette = new string[]{"", ""};
-            if (_elementType == WorkoutElements.Preparation)
+            if (el == WorkoutElements.Preparation)
             {
                 palette = new[]{"#20d2f4", "0bba83ff"};
             }
-            else if (_elementType == WorkoutElements.Exercise)
+            else if (el == WorkoutElements.Exercise)
             {
-                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                if (state == ExerciseState.Pause || state == ExerciseState.Stop)
                     palette = new[]{"#808080", "0bba83ff"};
-                else if (_exerciseState == ExerciseState.Switch)
+                else if (state == ExerciseState.Switch)
                     palette = new[]{"#FF44CC", "0bba83ff"};
                 else
                     palette = new[]{"#FF5E00", "0bba83ff"};
             }
-            else if (_elementType == WorkoutElements.Rest)
+            else if (el == WorkoutElements.Rest)
             {
-                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                if (state == ExerciseState.Pause || state == ExerciseState.Stop)
                     palette = new[]{"#808080", "0bba83ff"};
                 else
                     palette = new[]{"#7FFF00", "0bba83ff"};
@@ -170,26 +176,25 @@ namespace PaceLetics.Components.Components.Workout
             return palette;
         }
 
-
-        private List<MudExColor> GetGradTextPallette(WorkoutElements el, ExerciseState state)
+        private static List<MudExColor> GetGradTextPallette(WorkoutElements el, ExerciseState state)
         {
             List<MudExColor> color = new List<MudExColor> { MudExColor.Info, MudExColor.Dark };
-            if (_elementType == WorkoutElements.Preparation)
+            if (el == WorkoutElements.Preparation)
             {
                 color = new List<MudExColor> { MudExColor.Info, MudExColor.Dark };
             }
-            else if (_elementType == WorkoutElements.Exercise)
+            else if (el == WorkoutElements.Exercise)
             {
-                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                if (state == ExerciseState.Pause || state == ExerciseState.Stop)
                     color = new List<MudExColor> { MudExColor.Surface, MudExColor.Dark };
-                else if (_exerciseState == ExerciseState.Switch)
+                else if (state == ExerciseState.Switch)
                     color = new List<MudExColor> { MudExColor.Primary, MudExColor.Dark };
                 else
                     color = new List<MudExColor> { MudExColor.Error, MudExColor.Dark };
             }
-            else if (_elementType == WorkoutElements.Rest)
+            else if (el == WorkoutElements.Rest)
             {
-                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                if (state == ExerciseState.Pause || state == ExerciseState.Stop)
                     color = new List<MudExColor> { MudExColor.Surface, MudExColor.Dark };
                 else
                     color = new List<MudExColor> { MudExColor.Success, MudExColor.Dark };
@@ -199,6 +204,14 @@ namespace PaceLetics.Components.Components.Workout
 
 
             return color;
+        }
+
+        private static bool GetBeep(ExerciseState lastState, ExerciseState state) 
+        {
+            if (state == ExerciseState.Switch || lastState == ExerciseState.Switch)
+                return true;
+            else
+                return false;
         }
 
 
