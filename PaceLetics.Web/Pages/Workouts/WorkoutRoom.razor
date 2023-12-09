@@ -4,7 +4,7 @@
 @using WorkoutModule.Enums;
 @inject IWorkoutProvider woProvider
 @inject IDialogService dialogService
-
+@inject NavigationManager navManager;
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
 	<h1> @_workout.Name</h1>
@@ -29,6 +29,7 @@
 	{
 		_workout = woProvider.GetActiveWorkout();
 		_workout.WorkoutFinishedEvent += OnWorkoutFinished;
+		navManager.RegisterLocationChangingHandler(LocationChangingHandler);
 		base.OnInitialized();
 	}
 
@@ -56,6 +57,14 @@
 			var options = new DialogOptions { CloseOnEscapeKey = true };
 			dialogService.Show<WorkoutFinishedDialog>("Herzlichen Glückwünsch! Du hast das Workout erfolgreich abgeschlossen!", options);
 		});
+	}
+
+	private ValueTask LocationChangingHandler(LocationChangingContext arg)
+	{
+		int a= 0;
+		_workout.Stop();
+		_workout.Reset();
+		return ValueTask.CompletedTask;
 	}
 
 }
