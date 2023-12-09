@@ -66,7 +66,11 @@ namespace WorkoutModule.Contracts
         /// Event is fired when the execution of a new workout element start
         /// </summary>
         Action<IWorkoutElement> ElementStartEvent { get; set; }
-        
+        /// <summary>
+        /// Event is fired when the worokout start
+        /// </summary>
+        Action WorkoutStartEvent { get; set; }
+
         /// <summary>
         /// Resets the currently paused workout and the currently paused workout element
         /// </summary>

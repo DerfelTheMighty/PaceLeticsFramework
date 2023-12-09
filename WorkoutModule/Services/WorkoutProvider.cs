@@ -1,6 +1,4 @@
-﻿
-
-using WorkoutModule.Contracts;
+﻿using WorkoutModule.Contracts;
 using WorkoutModule.Logic;
 using WorkoutModule.Models;
 
@@ -12,6 +10,8 @@ namespace WorkoutModule.Services
         private List<WorkoutPreview> _previews;
         private IExerciseProvider _provider;
         private IWorkout _activeWorkout;
+
+
         public WorkoutProvider(IExerciseProvider provider) 
         {
             _provider = provider;
@@ -41,12 +41,11 @@ namespace WorkoutModule.Services
             return _previews.Find(x => x.Id == id);
         }
 
-        public void SetActiveWorkout(string id) 
+        public void SetActiveWorkout(string id, int sets, int rounds) 
         {
             var def = _workouts.Find(x => x.Id == id);
             if(def !=null)
-                _activeWorkout = new Workout(def, _provider);
-                
+                _activeWorkout = new Workout(def, _provider, sets, rounds); 
         }
 
         public IWorkout GetActiveWorkout() 

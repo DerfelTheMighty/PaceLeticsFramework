@@ -43,8 +43,9 @@ namespace WorkoutModule.Models
         /// List of exercises in the workout
         /// </summary>
         public List<string>? Exercises { get; set; }
-        
 
+
+        
     }
 
 }

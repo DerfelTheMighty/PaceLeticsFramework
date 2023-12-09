@@ -13,6 +13,8 @@ namespace PaceLetics.Components.Components.Workout
         [Parameter]
         public IWorkout Workout { get; set; }
 
+
+        private bool _allowSlide;
         private int _currentExercise;
         private double _prgs;
         private int _toggled;
@@ -35,14 +37,15 @@ namespace PaceLetics.Components.Components.Workout
 		protected override void OnInitialized()
         {
             IsControlExpanded = true;
-
+            _allowSlide = true;
             Workout.ElementFinishedEvent += OnElementFinished;
-            
+            Workout.WorkoutFinishedEvent += OnWorkoutFinished;
             Workout.ElementStartEvent += OnElementStart;
+            Workout.WorkoutStartEvent += OnWorkoutStart;
             base.OnInitialized();
         }
 
-       
+        
 
 
 		private void OnElementFinished(IWorkoutElement el)
@@ -52,13 +55,11 @@ namespace PaceLetics.Components.Components.Workout
 
 		private async void OnElementStart(IWorkoutElement el)
         {
-
             el.StateChangedEvent += OnElementStateChanged;
             await InvokeAsync(() =>
             {
 				_currentExercise = Workout.CurrentExercise;
-				_elementType = el.Type;
-				
+				_elementType = el.Type;		
 				StateHasChanged();
 			});
 		}
@@ -68,13 +69,33 @@ namespace PaceLetics.Components.Components.Workout
 			await InvokeAsync(() =>
 			{
                 _exerciseState = state;
+                if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
+                {
+                    _allowSlide = true;
+                }
+                else 
+                {
+                    _allowSlide = false;
+                }
 				StateHasChanged();
 			});
 		}
 
+        private async void OnWorkoutFinished() 
+        {
+            await InvokeAsync(() =>
+            {
+                _allowSlide = true;
+            });
+        }
 
-
-
+        private async void OnWorkoutStart() 
+        {
+            await InvokeAsync(() =>
+            {
+                _allowSlide = false;
+            });
+        }
 
 	}
 }

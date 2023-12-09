@@ -1,7 +1,6 @@
-using BlazorJS;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using MudBlazor;
 using MudBlazor.Extensions.Components;
 using MudBlazor.Extensions.Core;
 using WorkoutModule.Contracts;

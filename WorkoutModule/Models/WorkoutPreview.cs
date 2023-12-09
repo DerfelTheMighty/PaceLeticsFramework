@@ -21,6 +21,7 @@ namespace WorkoutModule.Models
 
 		public int Count { get; }
 
+
 		public WorkoutPreview(WorkoutDefinition def, IExerciseProvider provider) 
 		{
 			Name = def.Name ?? string.Empty;

@@ -5,7 +5,6 @@
 @inject IWorkoutProvider woProvider;
 @inject NavigationManager NavigationManager
 
-
 <MudCard Elevation="1" Outlined=false>
         <MudCardHeader>
             <CardHeaderContent>
@@ -33,9 +32,18 @@
         </MudCarousel>
         </MudStack>
     </MudCardContent>
-    <MudCardActions>
-        <MudButton OnClick="@OpenWorkout" Variant="Variant.Text" Color="Color.Primary">Öffnen</MudButton>
-        <MudButton Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
+    <MudCardActions >
+        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Row="true" Spacing="10">
+                       
+        <MudStack>
+            <MudNumericField Label="Wdh. pro Übung:" @bind-Value="@_sets" Min="1" Max="10"/>
+            <MudNumericField Label="Rundenzahl:" @bind-Value="@_rounds" Min="1" Max="10"/>
+        </MudStack>
+        <MudStack>
+            <MudButton OnClick="@OpenWorkout" Variant="Variant.Text" Color="Color.Primary">Öffnen</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
+            </MudStack>
+        </MudStack>
     </MudCardActions>
 </MudCard>
 
@@ -44,7 +52,12 @@
     [Parameter]
     public WorkoutPreview Workout { get; set; }
 
-    private TimeSpan _cycleTime = new TimeSpan(0, 0, 1);
+    private TimeSpan _cycleTime = new TimeSpan(0, 0, 5);
+
+    private int _sets = 1;
+    private int _rounds =1;
+
+
     private Color GetCardColor(Level level)
     {
         switch (level)
@@ -105,14 +118,14 @@
 
     private void OpenWorkout()
     {
-        woProvider.SetActiveWorkout(Workout.Id);
+        woProvider.SetActiveWorkout(Workout.Id, _sets, _rounds);
         NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
     }
     protected override void OnInitialized()
     {
         Random random = new Random();
-        int ms =  Convert.ToInt32(Math.Abs(1000.0 * random.NextDouble()));
-        _cycleTime = new TimeSpan(0, 0, 0, 1, ms);
+        int ms =  Convert.ToInt32(Math.Abs( 4*(random.NextDouble()-0.5)));
+        _cycleTime = new TimeSpan(0, 0, 0, 5 + ms);
         base.OnInitialized();
     }
 }

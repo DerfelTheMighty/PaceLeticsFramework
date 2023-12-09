@@ -16,15 +16,20 @@
     {
         <h1>Workout Area</h1>
         <MudText>
-            Hier findest du eine stetig wachsende Auswahl an verschiedenen Workouts.
+            Willkommen in deiner Workoutarea! Hier findest du eine stetig wachsende Auswahl an verschiedenen Workout. 
+            Leg los und betrete einen der Workoutrooms.
+            
         </MudText>
+        
         <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
+            <MudAlert Severity="Severity.Normal">
+                Du kannst nun selbst festlegen, wie oft sich die einzelnen Übungen oder das ganze Workout wiederholen sollen.
+            </MudAlert>
             @foreach(var item in _workoutPrevs){
                 <PaceLetics.Components.Components.Workout.WorkoutPreviewElement Workout="@item"/>
             }
         </MudStack>
-        
-        
+       
     }
  </MudContainer>
 

@@ -106,7 +106,12 @@ namespace WorkoutModule.Logic
         /// Event is fired when the execution of a new workout element start
         /// </summary>
         public Action<IWorkoutElement> ElementStartEvent { get; set; }
+        /// <summary>
+        /// Event is fired when the workout is started
+        /// </summary>
+        public Action WorkoutStartEvent { get; set; }
         #endregion
+
 
         /// <summary>
         /// 
@@ -134,6 +139,33 @@ namespace WorkoutModule.Logic
             Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
         }
 
+        public Workout(WorkoutDefinition definition, IExerciseProvider provider, int sets, int rounds)
+        {
+            Name = definition.Name ?? string.Empty;
+            Id = definition.Id ?? string.Empty;
+            Description = definition.Description ?? string.Empty;
+            Level = definition.Level;
+            PreparationTime = definition.PreparationTime;
+            RestTime = definition.RestTime;
+            State = WorkoutState.Stop;
+            _currentElement = 0;
+            _workoutElements = new List<IWorkoutElement>();
+            _workoutElements.Add(new Rest(PreparationTime, WorkoutElements.Preparation));
+            for (int j = 0; j < rounds; j++)
+            {
+                foreach (var ex in definition.Exercises)
+                {
+                    for (int i = 0; i < sets; i++)
+                    {
+                        _workoutElements.Add(provider.GetExercise(ex, Level));
+                        _workoutElements.Add(new Rest(RestTime, WorkoutElements.Rest));
+                    }
+                }
+            }
+            _workoutElements.RemoveAt(_workoutElements.Count - 1);
+            Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
+        }
+
         #region public methods
 
         /// <summary>
@@ -145,6 +177,7 @@ namespace WorkoutModule.Logic
             if (State == WorkoutState.Stop || State == WorkoutState.Finished)
             {
                 State = WorkoutState.Running;
+                WorkoutStartEvent.Invoke();
                 ProcessTimeSlot();
             }
             else if (State == WorkoutState.Pause)
