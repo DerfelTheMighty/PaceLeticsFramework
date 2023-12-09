@@ -131,14 +131,14 @@ namespace PaceLetics.Components.Components.Workout
                     else if (eState == ExerciseState.Switch)
                         result = "Seitenwechsel!";
                     else
-                        result = "Ausführung!";
+                        result = "AusfÃ¼hrung!";
                 }
                 else if (el == WorkoutElements.Rest)
                 {
                     if (eState == ExerciseState.Pause)
                         result = "Angehalten!";
                     else
-                        result = "Übungspause!";
+                        result = "Ãœbungspause!";
                 }
             }
             else if (wState == WorkoutState.Finished || wState == WorkoutState.Stop)
