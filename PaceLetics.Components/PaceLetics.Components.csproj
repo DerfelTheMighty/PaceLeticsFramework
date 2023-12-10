@@ -7,13 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MudBlazor" Version="6.11.0" />
+    <PackageReference Include="MudBlazor" Version="6.11.1" />
     <PackageReference Include="MudBlazor.Extensions" Version="1.7.76" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj" />
-    <ProjectReference Include="..\WorkoutModule\WorkoutModule.csproj" />
   </ItemGroup>
 
 
@@ -23,45 +18,7 @@
 
 
   <ItemGroup>
-    <Folder Include="Components\Athlete\" />
-    <Folder Include="Components\Excercise\" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Content Update="wwwroot\images\icons\epace.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\icon_10k.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\icon_15k.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\icon_1k.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\icon_21k.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\icon_3k.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\icon_5k.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\ipace.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\mpace.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\rpace.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\images\icons\tpace.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="Components\" />
   </ItemGroup>
 
 </Project>

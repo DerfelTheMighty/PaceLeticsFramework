@@ -1,9 +1,9 @@
 ﻿using AthleteDataAccessLibrary.Contracts;
-using CoreLibrary.Contracts;
+
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Azure.Cosmos.Linq;
-
+using PaceLetics.CoreModule.Infrastructure.Interfaces;
 using PartitionKey = Microsoft.Azure.Cosmos.PartitionKey;
 
 namespace AthleteDataAccessLibrary

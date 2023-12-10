@@ -3,11 +3,10 @@ using Microsoft.JSInterop;
 using MudBlazor;
 using MudBlazor.Extensions;
 using MudBlazor.Extensions.Components;
-using CoreLibrary.Constants;
-using CoreLibrary.Models.Athlet;
-using CoreLibrary.Models.Pace;
 using MudBlazor.Extensions.Core;
-
+using PaceLetics.AthleteModule.CodeBase.Models;
+using PaceLetics.CoreModule.Infrastructure.Constants;
+using PaceLetics.VdotModule.CodeBase.Models;
 
 namespace PaceLetics.Web.Pages.Athletes
 {

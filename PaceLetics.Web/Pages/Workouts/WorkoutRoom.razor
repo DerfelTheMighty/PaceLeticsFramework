@@ -1,7 +1,8 @@
 ﻿@page "/Workouts/workoutroom"
-@using WorkoutModule.Contracts;
-@using PaceLetics.Components.Components.Workout;
-@using WorkoutModule.Enums;
+@using PaceLetics.WorkoutModule.CodeBase.Enums;
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+@using PaceLetics.WorkoutModule.Components
+
 @inject IWorkoutProvider woProvider
 @inject IDialogService dialogService
 @inject NavigationManager navManager;

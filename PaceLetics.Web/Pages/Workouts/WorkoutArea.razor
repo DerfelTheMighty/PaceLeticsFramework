@@ -1,8 +1,6 @@
 ﻿@page "/Workouts/workoutarea"
-@using WorkoutModule.Contracts;
-@using WorkoutModule.Logic;
-@using WorkoutModule.Services;
-@using WorkoutModule.Models;
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+@using PaceLetics.WorkoutModule.CodeBase.Models;
 
 @inject IWorkoutProvider woProvider;
 
@@ -26,7 +24,7 @@
                 Du kannst nun selbst festlegen, wie oft sich die einzelnen Übungen oder das ganze Workout wiederholen sollen.
             </MudAlert>
             @foreach(var item in _workoutPrevs){
-                <PaceLetics.Components.Components.Workout.WorkoutPreviewElement Workout="@item"/>
+                <PaceLetics.WorkoutModule.Components.WorkoutPreviewElement Workout="@item"/>
             }
         </MudStack>
        

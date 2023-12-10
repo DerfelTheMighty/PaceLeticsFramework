@@ -1,0 +1,39 @@
+﻿
+@using MudBlazor.Extensions.Core;
+@using System;
+@using System.Text.RegularExpressions;
+@using MudBlazor;
+@using PaceLetics.CoreModule.Infrastructure.Constants;
+
+@namespace PaceLetics.VdotModule.Components
+
+@inject IDialogService dialogService
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Neuer Lauf</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField T="string" @bind-Value="_id" Immediate="@true" Label="Bezeichnung" />
+        <MudSelect Dense="true" T="string" Label="Distanz" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)" Value="@_type">
+            <MudSelectItem Value="@RaceKeys.D1k" />
+            <MudSelectItem Value="@RaceKeys.D3k" />
+            <MudSelectItem Value="@RaceKeys.D5k" />
+            <MudSelectItem Value="@RaceKeys.D10k" />
+            <MudSelectItem Value="@RaceKeys.D15k" />
+            <MudSelectItem Value="@RaceKeys.D21k" />
+            <MudSelectItem Value="@RaceKeys.D42k" />
+        </MudSelect>
+        <MudTextField @bind-Value="_time" Label="Laufzeit" HelperText="hh:mm:ss" Clearable/>
+        <MudDatePicker Label="Datum" @bind-Date="_date" PickerVariant="PickerVariant.Dialog" DisableToolbar="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Disabled="@string.IsNullOrWhiteSpace(this._id)"
+                   OnClick="@this.OK"
+                   Size="@Size.Small">
+            Ok
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+

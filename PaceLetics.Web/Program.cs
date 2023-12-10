@@ -1,6 +1,6 @@
 using AthleteDataAccessLibrary;
 using AthleteDataAccessLibrary.Contracts;
-using CoreLibrary.Models.Athlet;
+
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +8,11 @@ using PaceLetics.Web.Areas.Identity;
 using PaceLetics.Web.Data;
 using MudBlazor.Extensions;
 using MudBlazor;
-using VdotModule.Contracts;
-using VdotModule.Services;
-using WorkoutModule.Contracts;
-using WorkoutModule.Services;
+using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+using PaceLetics.VdotModule.CodeBase.Interfaces;
+using PaceLetics.WorkoutModule.CodeBase.Services;
+using PaceLetics.VdotModule.CodeBase.Services;
+using PaceLetics.AthleteModule.CodeBase.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

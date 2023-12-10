@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj" />
+    <ProjectReference Include="..\PaceLetics.AthleteModule.CodeBase\PaceLetics.AthleteModule.CodeBase.csproj" />
   </ItemGroup>
 
 </Project>
