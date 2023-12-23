@@ -33,7 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaceLetics.WorkoutModule.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaceLetics.WorkoutModule.Components", "PaceLetics.WorkoutModule.Components\PaceLetics.WorkoutModule.Components.csproj", "{C053D80F-F374-4566-A30B-87C854F34D56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaceLetics.VdotModule.Components", "PaceLetics.VdotModule.Components\PaceLetics.VdotModule.Components.csproj", "{219CD582-5A27-40A7-A49D-FE4260122398}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaceLetics.VdotModule.Components", "PaceLetics.VdotModule.Components\PaceLetics.VdotModule.Components.csproj", "{219CD582-5A27-40A7-A49D-FE4260122398}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestModule", "TestModule", "{C3057EC6-5DD6-4F3F-8D18-35E070BC04B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelTests", "ModelTests\ModelTests.csproj", "{32853CD1-4D7B-4E00-AF51-DDECC9F8432D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +89,10 @@ Global
 		{219CD582-5A27-40A7-A49D-FE4260122398}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{219CD582-5A27-40A7-A49D-FE4260122398}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{219CD582-5A27-40A7-A49D-FE4260122398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32853CD1-4D7B-4E00-AF51-DDECC9F8432D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32853CD1-4D7B-4E00-AF51-DDECC9F8432D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32853CD1-4D7B-4E00-AF51-DDECC9F8432D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32853CD1-4D7B-4E00-AF51-DDECC9F8432D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +107,7 @@ Global
 		{8415B0B6-CA20-42B0-8FFD-41828F2B2C1F} = {9680D45C-8DFF-4AE6-9EF5-718FB473231E}
 		{C053D80F-F374-4566-A30B-87C854F34D56} = {9680D45C-8DFF-4AE6-9EF5-718FB473231E}
 		{219CD582-5A27-40A7-A49D-FE4260122398} = {59602236-D33B-45C0-94A8-68466959DC17}
+		{32853CD1-4D7B-4E00-AF51-DDECC9F8432D} = {C3057EC6-5DD6-4F3F-8D18-35E070BC04B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB41B04B-BBEA-4D6E-A335-3A03B73E1896}

@@ -1,4 +1,6 @@
-﻿namespace PaceLetics.VdotModule.CodeBase.Models
+﻿using PaceLetics.CoreModule.Infrastructure.Constants;
+
+namespace PaceLetics.VdotModule.CodeBase.Models
 {
 	public class PaceModel
 	{
@@ -43,6 +45,26 @@
 							"Repetition: " + Repetition.ToString(@"mm\:ss");
 
 			return result;
+		}
+
+		public TimeSpan GetPace(string paceKey) 
+		{
+			switch (paceKey) 
+			{
+				case PaceKeys.Easy:
+					return Easy;
+				case PaceKeys.Marathon:
+					return Marathon;
+				case PaceKeys.Threshold:
+					return Threshold;
+				case PaceKeys.Intervall:
+                    return Intervall;
+				case PaceKeys.Repetition:
+                    return Repetition;
+				default:
+					return Easy;
+			}
+
 		}
 
 		/// <summary>

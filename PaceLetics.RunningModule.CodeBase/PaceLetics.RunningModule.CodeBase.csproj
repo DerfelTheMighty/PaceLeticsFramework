@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
+    <ProjectReference Include="..\PaceLetics.VdotModule.CodeBase\PaceLetics.VdotModule.CodeBase.csproj" />
+  </ItemGroup>
+
 </Project>
