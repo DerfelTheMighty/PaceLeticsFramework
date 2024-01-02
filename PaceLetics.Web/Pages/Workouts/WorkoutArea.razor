@@ -1,0 +1,62 @@
+﻿@page "/Workouts/workoutarea"
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+@using PaceLetics.WorkoutModule.CodeBase.Models;
+
+@inject IWorkoutProvider woProvider;
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
+
+    @if (_isLoading)
+    {
+        <LoadingScreen Label="Deine Daten werden geladen..."/>
+    }
+    else
+    {
+        <h1>Workout Area</h1>
+        <MudText>
+            Willkommen in deiner Workoutarea! Hier findest du eine stetig wachsende Auswahl an verschiedenen Workout. 
+            Leg los und betrete einen der Workoutrooms.
+            
+        </MudText>
+        
+        <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
+            <MudAlert Severity="Severity.Normal">
+                Du kannst nun selbst festlegen, wie oft sich die einzelnen Übungen oder das ganze Workout wiederholen sollen.
+            </MudAlert>
+            @foreach(var item in _workoutPrevs){
+                <PaceLetics.WorkoutModule.Components.WorkoutPreviewElement Workout="@item"/>
+            }
+        </MudStack>
+       
+    }
+ </MudContainer>
+
+
+
+@code {
+    bool _isLoading;
+    List<string> _workouts;
+    List<WorkoutPreview> _workoutPrevs;
+
+
+    protected override void OnInitialized()
+    {
+        _workoutPrevs = new List<WorkoutPreview>();
+        _workouts = woProvider.GetWorkoutIds();
+        foreach (var wo in _workouts)
+        {
+            _workoutPrevs.Add(woProvider.GetWorkoutPreview(wo));
+        }
+    }
+
+
+    private async void OnExStart(IWorkoutElement el)
+    {
+        //if (el.Type == WorkoutModule.Enums.WorkoutElement.Exercise)
+            //InvokeAsync(() =>
+            //{
+            //    _currentExercise = el as IExerciseInfo;
+            //    StateHasChanged();
+            //});
+    }
+}

@@ -1,8 +1,8 @@
-using CoreLibrary.Models.Athlet;
-using CoreLibrary.Models.Race;
-using MudBlazor;
-using PaceLetics.Components.Race;
 
+using MudBlazor;
+using PaceLetics.AthleteModule.CodeBase.Models;
+using PaceLetics.VdotModule.CodeBase.Models;
+using PaceLetics.VdotModule.Components;
 
 namespace PaceLetics.Web.Pages.Athletes
 {

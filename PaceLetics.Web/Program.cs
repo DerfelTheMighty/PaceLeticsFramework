@@ -1,6 +1,6 @@
 using AthleteDataAccessLibrary;
 using AthleteDataAccessLibrary.Contracts;
-using CoreLibrary.Models.Athlet;
+
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +8,11 @@ using PaceLetics.Web.Areas.Identity;
 using PaceLetics.Web.Data;
 using MudBlazor.Extensions;
 using MudBlazor;
-using VdotModule.Contracts;
-using VdotModule.Services;
+using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+using PaceLetics.VdotModule.CodeBase.Interfaces;
+using PaceLetics.WorkoutModule.CodeBase.Services;
+using PaceLetics.VdotModule.CodeBase.Services;
+using PaceLetics.AthleteModule.CodeBase.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +41,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+builder.Services.AddSingleton<IExerciseProvider, ExerciseProvider>();
+builder.Services.AddSingleton<IWorkoutProvider, WorkoutProvider>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
 builder.Services.AddTransient<IAthleteData, AthleteData>();

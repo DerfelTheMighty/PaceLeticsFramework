@@ -1,0 +1,27 @@
+﻿
+@using MudBlazor;
+
+@namespace PaceLetics.VdotModule.Components
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudExGrid>
+                <MudAvatar>
+                    <MudImage Src="@GetImagePath(Model?.Type)"></MudImage>
+                </MudAvatar>
+                <MudText>@Model?.Date.ToString("dd-MM-yyyy").Replace("-",".")</MudText>
+            </MudExGrid>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Info" OnClick="OnEditRaceCard"/>
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>@Model?.Id</MudText>
+        <MudText>
+            Ergebnis: <b>@Model?.Time.ToString()</b>
+        </MudText>
+    </MudCardContent>
+</MudCard>
+

@@ -1,4 +1,6 @@
-﻿using CoreLibrary.Contracts;
+﻿
+using PaceLetics.CoreModule.Infrastructure.Interfaces;
+
 namespace AthleteDataAccessLibrary.Contracts
 {
     public interface IDataAccess

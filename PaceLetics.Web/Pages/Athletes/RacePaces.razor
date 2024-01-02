@@ -1,15 +1,11 @@
 ﻿@page "/Athletes/racepaces"
 
 @using AthleteDataAccessLibrary;
-@using CoreLibrary.Models.Athlet;
 @using AthleteDataAccessLibrary.Contracts;
-@using CoreLibrary.Models.Pace;
-@using CoreLibrary.Models.Race;
 @using MudBlazor.Extensions.Core;
 @using MudBlazor;
-@using VdotModule.Contracts;
-@using PaceLetics.Components.Race
-@using PaceLetics.Components.Vdot
+@using PaceLetics.VdotModule.CodeBase.Interfaces;
+@using PaceLetics.VdotModule.Components;
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
