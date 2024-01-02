@@ -45,6 +45,12 @@
         var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
         _name = user.Identity.Name;
         Athlete = await AthleteData.GetAthlete(id);
+        if (Athlete.AthleteId == null)
+        {
+            Athlete.AthleteId = Guid.NewGuid().ToString();
+            await AthleteData.UpdateAthlete(Athlete);
+        }
+
         _isLoading = false;
         StateHasChanged();
         base.OnInitialized();

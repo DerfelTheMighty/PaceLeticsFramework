@@ -6,13 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <SupportedPlatform Include="browser" />
+    <PackageReference Include="MudBlazor" Version="6.11.2" />
+    <PackageReference Include="MudBlazor.Extensions" Version="1.7.79" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.1" />
+    <ProjectReference Include="..\PaceLetics.RunningModule.CodeBase\PaceLetics.RunningModule.CodeBase.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
   </ItemGroup>
 
 </Project>

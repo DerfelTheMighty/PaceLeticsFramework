@@ -1,12 +1,15 @@
-﻿using PaceLetics.CoreModule.Infrastructure.Enums;
+﻿using PaceLetics.RunningModule.CodeBase.Enums;
 
 namespace PaceLetics.RunningModule.CodeBase.Models
 {
     public class IntervallTrainingDefinition
     {
+        
         public string Id { get; set; }
 
         public string Name { get; set; }
+
+        public TrainingType Type { get; }
 
         public List<int> Distances { get; set; }
 
@@ -17,7 +20,6 @@ namespace PaceLetics.RunningModule.CodeBase.Models
         public int Sets { get; set; }
 
         public int SetRecovery { get; set; }
-
 
         public IntervallTrainingDefinition() 
         {

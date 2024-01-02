@@ -1,8 +1,9 @@
-﻿using System.Text;
+﻿using PaceLetics.RunningModule.CodeBase.Interfaces;
+using System.Text;
 
 namespace PaceLetics.RunningModule.CodeBase.Models
 {
-    public class IntervallTraining
+    public class IntervallTraining : IRun
     {
         /// <summary>
         /// Unique id of the intervall trainings
@@ -49,11 +50,14 @@ namespace PaceLetics.RunningModule.CodeBase.Models
         /// Recovery between sets
         /// </summary>
         public int SetRecovery { get; }
-        
-        public IntervallTraining(string id, string mame, List<int> distances, List<int> recovery, List<TimeSpan> pace, int sets, int setRecovery) 
+
+		public TrainingType Type { get; } 
+
+		public IntervallTraining(string id, string mame, TrainingType type, List<int> distances, List<int> recovery, List<TimeSpan> pace, int sets, int setRecovery) 
         {
             Id = id;
             Name = mame;
+            Type = type;
             Distances = distances;
             Recovery = recovery;
             Paces = pace;
