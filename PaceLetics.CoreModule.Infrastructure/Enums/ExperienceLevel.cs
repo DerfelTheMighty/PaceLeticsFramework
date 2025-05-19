@@ -10,4 +10,19 @@ namespace PaceLetics.CoreModule.Infrastructure.Enums
 		Intermediate,
 		Expert
 	}
+
+    [DefaultValue(Gender.None)]
+    public enum Gender 
+    {
+        None,
+        m,
+        w,
+        d
+    }
+
+    public enum TechniqueScore 
+    {
+
+    }
+
 }
