@@ -37,6 +37,9 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
         /// </summary>
         public List<RaceResultModel>? RaceResults { get; set; }
 
+
+
+
         /// <summary>
         /// Active pacemodel
         /// </summary>
@@ -55,6 +58,7 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
             PaceModel= new PaceModel();
         }
 
+        
     }
 
 }

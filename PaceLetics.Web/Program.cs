@@ -13,6 +13,8 @@ using PaceLetics.VdotModule.CodeBase.Interfaces;
 using PaceLetics.WorkoutModule.CodeBase.Services;
 using PaceLetics.VdotModule.CodeBase.Services;
 using PaceLetics.AthleteModule.CodeBase.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using PaceLetics.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +34,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(
 	options => 
 	{
-		options.SignIn.RequireConfirmedAccount = false;
-		options.SignIn.RequireConfirmedEmail = false;
+		options.SignIn.RequireConfirmedAccount = true;
+		options.SignIn.RequireConfirmedEmail = true;
 		options.Password.RequireNonAlphanumeric = false;
 		options.User.RequireUniqueEmail = true;
 		options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
@@ -58,6 +60,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 
 
 //builder.Services.AddMudServices();
