@@ -1,6 +1,4 @@
-﻿using PaceLetics.CoreModule.Infrastructure.Enums;
-
-namespace PaceLetics.RunningModule.CodeBase.Models
+﻿namespace PaceLetics.RunningModule.CodeBase.Models
 {
     public class IntervallTrainingDefinition
     {

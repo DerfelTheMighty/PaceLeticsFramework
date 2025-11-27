@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Mail-Bestätigung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2em auto;
+            padding: 2em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            margin-top: 1em;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .footer {
+            margin-top: 2em;
+            font-size: 0.85em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Willkommen bei PaceLetics!</h2>
+        <p>Vielen Dank für deine Registrierung. Um deinen Account zu aktivieren, bestätige bitte deine E-Mail-Adresse durch Klick auf den folgenden Button:</p>
+
+        <p><a href="{{CONFIRMATION_LINK}}" class="btn">E-Mail bestätigen</a></p>
+
+        <p>Falls der Button nicht funktioniert, kannst du auch folgenden Link manuell in deinem Browser öffnen:</p>
+        <p><a href="{{CONFIRMATION_LINK}}">{{CONFIRMATION_LINK}}</a></p>
+
+        <div class="footer">
+            <p>Diese E-Mail wurde automatisch generiert. Bitte nicht direkt darauf antworten.</p>
+        </div>
+    </div>
+</body>
+</html>
