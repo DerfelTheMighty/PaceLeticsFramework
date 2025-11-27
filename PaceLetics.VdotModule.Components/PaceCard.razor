@@ -1,65 +1,39 @@
-﻿
-@namespace PaceLetics.VdotModule.Components
-@using PaceLetics.CoreModule.Infrastructure.Constants;
+﻿@using PaceLetics.CoreModule.Infrastructure.Constants
 
-<MudCard>
-    <MudCardHeader>
-        @switch(PaceKey)
-    {
-        case PaceKeys.Easy:
-            <MudAvatar>
-                <MudImage Src="/images/icons/epace.png" ></MudImage>
-            </MudAvatar>
-            <MudText> asy Pace</MudText>
-            break;
-        case PaceKeys.Marathon:
-            <MudAvatar>
-                <MudImage Src="/images/icons/mpace.png"></MudImage>
-            </MudAvatar>
-            <MudText> arathon Pace</MudText>
-            break;
-        case PaceKeys.Threshold:
-            <MudAvatar>
-                    <MudImage Src="/images/icons/tpace.png"></MudImage>
-            </MudAvatar>
-            <MudText> hreshold Pace</MudText>
-            break;
-        case PaceKeys.Intervall:
-            <MudAvatar>
-                    <MudImage Src="/images/icons/ipace.png"></MudImage>
-            </MudAvatar>
-            <MudText> ntervall Pace</MudText>
-            break;
-        case PaceKeys.Repetition:
-            <MudAvatar>
-                    <MudImage Src="/images/icons/rpace.png"></MudImage>
-            </MudAvatar>
-            <MudText> epetition Pace</MudText>
-            break;
-        default:
-            <MudAvatar>
-                    <MudImage Src="/images/icons/epace.png"></MudImage>
-                    
-            </MudAvatar>
-            <MudText> asy Pace</MudText>
-            break;
-    }
-    </MudCardHeader>
+<MudCard Class="pa-3 rounded-lg mb-2" Elevation="1">
+    <MudStack Direction="Row" AlignItems="AlignItems.Center" JustifyContent="Space-between">
 
-    <MudCardContent>
-        <MudText>
-            <b>@UpperPace.ToString("mm':'ss")</b> min/km bis <b> @LowerPace.ToString("mm':'ss")</b> min/km;
-        </MudText>
-    </MudCardContent>
+        <MudStack Spacing="0">
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                @PaceKey
+            </MudText>
 
-    <MudCardActions>
-        <MudButton OnClick="@OnShowMoreInfoClickAsnyc" Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
-    </MudCardActions>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                @UpperPace.ToString("mm':'ss") – @LowerPace.ToString("mm':'ss") min/km
+            </MudText>
 
+            <MudText Link="true" Color="Color.Primary"
+                     Class="cursor-pointer mt-1"
+                     OnClick="@OnShowMoreInfoClickAsnyc">
+                Mehr Infos →
+            </MudText>
+        </MudStack>
+
+        <MudAvatar Size="Size.Large">
+            <MudImage Src="@GetIcon()"></MudImage>
+        </MudAvatar>
+
+    </MudStack>
 </MudCard>
 
-
-
-
-
-
+@code {
+    private string GetIcon() => PaceKey switch
+    {
+        PaceKeys.Easy => "/images/icons/epace.png",
+        PaceKeys.Marathon => "/images/icons/mpace.png",
+        PaceKeys.Threshold => "/images/icons/tpace.png",
+        PaceKeys.Intervall => "/images/icons/ipace.png",
+        PaceKeys.Repetition => "/images/icons/rpace.png",
+        _ => "/images/icons/epace.png"
+    };
+}

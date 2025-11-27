@@ -1,63 +1,60 @@
 ﻿@page "/Athletes/trainingpaces"
 
-@using AthleteDataAccessLibrary;
-
-@using AthleteDataAccessLibrary.Contracts;
-
-@using MudBlazor.Extensions.Core;
+@using AthleteDataAccessLibrary
+@using AthleteDataAccessLibrary.Contracts
+@using MudBlazor
 @using PaceLetics.VdotModule.Components
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 @inject IDialogService dialogService
 @inject IJSRuntime JSRuntime
-@inject NavigationManager NavigationManager
-
 
 <PageTitle>Meine Pacebereiche</PageTitle>
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
-
     @if (_isLoading)
     {
-        <LoadingScreen Label="Deine Daten werden geladen..." />        
+        <LoadingScreen Label="Deine Daten werden geladen..." />
     }
     else
     {
-        <h1>Meine Pacebereiche</h1>
+        
+        <MudPaper Class="pa-5 rounded-xl mb-6" Elevation="2">
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.h4" Class="fw-bold">
+                    Meine Pacebereiche
+                </MudText>
 
-        <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
-            <MudText>
-                Deine individuelle Trainingspace ist das wichtigste Steuerungsinstrument für dein Lauftraining.
-                Hier findest du eine Übersicht.
-            </MudText>
-            <MudPaper Class="pa-4">
-                <PaceInfo SelectedIndex="@_selectedPaceItem"/>
-            </MudPaper>
+                <MudText Typo="Typo.body1">
+                    Deine berechneten Trainingsbereiche im Überblick.
+                </MudText>
+            </MudStack>
+        </MudPaper>
+
+        <MudStack Spacing="3">
 
             @if (_athlete?.Vdot < 1)
             {
-                <MudCard>
-                    <MudAlert Severity="Severity.Warning">Füge einen Einstufungslauf hinzu, damit wir deine optimale Trainingspace für dich bestimmen können.</MudAlert>
-                </MudCard>
+                <MudAlert Severity="Severity.Warning">
+                    Füge einen Einstufungslauf hinzu, damit wir deine optimale Trainingspace bestimmen können.
+                </MudAlert>
             }
- 
-            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="E Pace" LowerPace="@_lowerPace.Easy" UpperPace="@_upperPace.Easy" />
 
-            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="M Pace" LowerPace="@_lowerPace.Marathon" UpperPace="@_upperPace.Marathon" />
+           
+            <PaceInfo EPaceLow="@_lowerPace.Easy"
+                      EPaceHigh="@_upperPace.Easy"
+                      MPaceLow="@_lowerPace.Marathon"
+                      MPaceHigh="@_upperPace.Marathon"
+                      TPaceLow="@_lowerPace.Threshold"
+                      TPaceHigh="@_upperPace.Threshold"
+                      IPaceLow="@_lowerPace.Intervall"
+                      IPaceHigh="@_upperPace.Intervall"
+                      RPaceLow="@_lowerPace.Repetition"
+                      RPaceHigh="@_upperPace.Repetition" />
 
-            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="T Pace" LowerPace="@_lowerPace.Threshold" UpperPace="@_upperPace.Threshold" />
-
-            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="I Pace" LowerPace="@_lowerPace.Intervall" UpperPace="@_upperPace.Intervall" />
-
-            <PaceCard ShowMoreInfoEvent="@OnShowMoreInfo" PaceKey="R Pace" LowerPace="@_lowerPace.Repetition" UpperPace="@_upperPace.Repetition" />
-            
-            
-            <MudSpacer></MudSpacer>
-    </MudStack>
-     
+        </MudStack>
     }
 
 </MudContainer>
-
