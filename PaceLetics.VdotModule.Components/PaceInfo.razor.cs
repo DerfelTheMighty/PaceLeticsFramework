@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+ï»¿using Microsoft.AspNetCore.Components;
 
 
 namespace PaceLetics.VdotModule.Components
@@ -59,25 +59,21 @@ namespace PaceLetics.VdotModule.Components
 
  
         private string EText = @"Die E-Pace bildet das Fundament deiner aeroben Ausdauer. 
-Sie liegt deutlich unter der Schwelle und wird zu einem großen Teil über den Fettstoffwechsel getragen. 
+Sie liegt deutlich unter der Schwelle und wird zu einem groÃŸen Teil Ã¼ber den Fettstoffwechsel getragen. 
 Die meisten deiner Wochenkilometer sollten in diesem Tempo stattfinden. 
 Die angegebene Geschwindigkeit beschreibt den oberen GA1-Bereich.";
 
         private string MText = @"Die M-Pace entspricht deinem realistischen Marathonrenntempo. 
-Sie ist überwiegend aerob, aber kohlenhydratintensiver als E-Pace. 
-Viele empfinden hier einen angenehmen Flow. 
-Für reines Grundlagentraining ist sie aber viel zu schnell.";
+Sie ist Ã¼berwiegend aerob, aber kohlenhydratintensiver als E-Pace. 
+Viele empfinden hier einen angenehmen Flow. FÃ¼r reines Grundlagentraining ist sie aber viel zu schnell.";
 
         private string TText = @"Die T-Pace liegt nahe deinem 10-km-Tempo und verbindet hohe aerobe und anaerobe Anteile. 
-Dieses Tempo kannst du ungefähr eine Stunde halten. 
-Fortgeschrittene nutzen es für längere Intervalle, Einsteigende auch für kürzere Abschnitte.";
+Dieses Tempo kannst du ungefÃ¤hr eine Stunde halten. Fortgeschrittene nutzen es fÃ¼r lÃ¤ngere Intervalle, Einsteigende auch fÃ¼r kÃ¼rzere Abschnitte.";
 
         private string IText = @"Die I-Pace liegt deutlich oberhalb der Schwelle und setzt starke Reize auf deine VO2max. 
-Intervalle sind kurz, die Pausen zu kurz für eine komplette Erholung.";
+Intervalle sind kurz, die Pausen zu kurz fÃ¼r eine komplette Erholung.";
 
         private string RText = @"Die R-Pace ist sehr schnell und technisch anspruchsvoll. 
-Sie verbessert Laufökonomie, Kraft und Koordination. 
-Intervalle sind kurz, Pausen lang. 
-Vor allem für erfahrene Läufer:innen geeignet.";
+Sie verbessert LaufÃ¶konomie, Kraft und Koordination. Intervalle sind kurz, Pausen lang. Vor allem fÃ¼r erfahrene LÃ¤ufer:innen geeignet.";
     }
 }
