@@ -1,11 +1,11 @@
-﻿using PaceLetics.VdotModule.CodeBase.Interfaces;
-using PaceLetics.VdotModule.CodeBase.Models;
+﻿using PaceLetics.CoreModule.Infrastructure.Interfaces;
+using PaceLetics.CoreModule.Infrastructure.Models.Vdot;
 using System.Data;
 using System.Text;
 using System.Text.Json.Serialization;
 
 
-namespace PaceLetics.VdotModule.CodeBase.Services
+namespace PaceLetics.CoreModule.Infrastructure.Services
 {
     /// <summary>
     /// Provides pace models for a given vdot value

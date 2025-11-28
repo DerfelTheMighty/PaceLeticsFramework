@@ -1,6 +1,6 @@
 ﻿using PaceLetics.CoreModule.Infrastructure.Constants;
 
-namespace PaceLetics.VdotModule.CodeBase.Models
+namespace PaceLetics.CoreModule.Infrastructure.Models.Vdot
 {
 	public class PaceModel
 	{

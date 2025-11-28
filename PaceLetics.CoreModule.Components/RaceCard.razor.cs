@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
+
 
 using Microsoft.AspNetCore.Components;
-
 using PaceLetics.CoreModule.Infrastructure.Constants;
-using PaceLetics.VdotModule.CodeBase.Models;
+using PaceLetics.CoreModule.Infrastructure.Models.Vdot;
 
-namespace PaceLetics.VdotModule.Components
+
+
+namespace PaceLetics.CoreModule.Components
 {
     public partial class RaceCard
     {

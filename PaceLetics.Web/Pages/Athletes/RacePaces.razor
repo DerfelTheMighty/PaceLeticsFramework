@@ -2,10 +2,15 @@
 
 @using AthleteDataAccessLibrary;
 @using AthleteDataAccessLibrary.Contracts;
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.JSInterop
+@using MudBlazor.Extensions.Components
 @using MudBlazor.Extensions.Core;
 @using MudBlazor;
-@using PaceLetics.VdotModule.CodeBase.Interfaces;
-@using PaceLetics.VdotModule.Components;
+@using PaceLetics.CoreModule.Components
+@using PaceLetics.CoreModule.Infrastructure.Interfaces
+@using PaceLetics.VdotModule.CodeBase.Interfaces
+
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData

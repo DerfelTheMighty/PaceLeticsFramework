@@ -1,5 +1,5 @@
 ﻿using AthleteDataAccessLibrary.Contracts;
-using PaceLetics.AthleteModule.CodeBase.Models;
+using PaceLetics.CoreModule.Infrastructure.Models.Athlete;
 
 namespace AthleteDataAccessLibrary
 {

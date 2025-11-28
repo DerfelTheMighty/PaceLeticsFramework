@@ -2,9 +2,10 @@
 @page "/Athletes/dashboard"
 @using AthleteDataAccessLibrary;
 @using AthleteDataAccessLibrary.Contracts;
-
+@using Microsoft.AspNetCore.Components.Authorization
 @using MudBlazor;
-@using PaceLetics.AthleteModule.CodeBase.Models;
+
+@using PaceLetics.CoreModule.Infrastructure.Models.Athlete;
 
 @inject IAthleteData AthleteData
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
@@ -49,5 +50,4 @@
         StateHasChanged();
         base.OnInitialized();
     }
-
 }

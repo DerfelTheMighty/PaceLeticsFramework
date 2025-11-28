@@ -1,8 +1,8 @@
 ﻿using PaceLetics.CoreModule.Infrastructure.Enums;
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
-using PaceLetics.VdotModule.CodeBase.Models;
+using PaceLetics.CoreModule.Infrastructure.Models.Vdot;
 
-namespace PaceLetics.AthleteModule.CodeBase.Models
+namespace PaceLetics.CoreModule.Infrastructure.Models.Athlete
 {
     public class AthleteModel : IQueryItem
     {
@@ -45,7 +45,7 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
 
         public RaceResultModel? ActiveReferenceResult { get; set; }
 
-        public AthleteModel() 
+        public AthleteModel()
         {
             Id = "NA";
             Name = "NA";
@@ -53,10 +53,10 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
             Level = new ExperienceLevel();
             RaceResults = new List<RaceResultModel>();
             Vdot = 0;
-            PaceModel= new PaceModel();
+            PaceModel = new PaceModel();
         }
 
-        
+
     }
 
 }

@@ -1,11 +1,10 @@
-﻿
-using PaceLetics.CoreModule.Infrastructure.Converter;
+﻿using PaceLetics.CoreModule.Infrastructure.Converter;
 using PaceLetics.VdotModule.CodeBase.Interfaces;
 using System.Data;
 using System.Text;
 
 
-namespace PaceLetics.VdotModule.CodeBase.Models
+namespace PaceLetics.CoreModule.Infrastructure.Models.Vdot
 {
     public class VdotTable : IVdotService
     {
