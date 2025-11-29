@@ -19,8 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using PaceLetics.CoreModule.Infrastructure.Models.Athlete;
-
+using PaceLetics.AthleteModule.CodeBase.Models;
 
 namespace PaceLetics.Web.Areas.Identity.Pages.Account
 {

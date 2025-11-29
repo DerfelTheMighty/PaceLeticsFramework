@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace PaceLetics.CoreModule.Components
+namespace PaceLetics.VdotModule.Components
 {
     public partial class VdotCard
     {

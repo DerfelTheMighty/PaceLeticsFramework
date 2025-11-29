@@ -1,4 +1,7 @@
-﻿using PaceLetics.CoreModule.Infrastructure.Models.Vdot;
+﻿
+
+
+using PaceLetics.VdotModule.CodeBase.Models;
 
 namespace PaceLetics.VdotModule.CodeBase.Interfaces
 {

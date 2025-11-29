@@ -33,8 +33,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AthleteDataAccessLibrary\AthleteDataAccessLibrary.csproj" />
-    <ProjectReference Include="..\PaceLetics.CoreModule.Components\PaceLetics.CoreModule.Components.csproj" />
     <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
+    <ProjectReference Include="..\PaceLetics.VdotModule.Components\PaceLetics.VdotModule.Components.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.CodeBase\PaceLetics.WorkoutModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.Components\PaceLetics.WorkoutModule.Components.csproj" />
   </ItemGroup>

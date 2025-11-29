@@ -1,6 +1,9 @@
-﻿using PaceLetics.CoreModule.Infrastructure.Constants;
+﻿
 
-namespace PaceLetics.CoreModule.Infrastructure.Models.Vdot
+
+using PaceLetics.CoreModule.Infrastructure.Constants;
+
+namespace PaceLetics.VdotModule.CodeBase.Models
 {
     public class RaceResultModelFactory
     {

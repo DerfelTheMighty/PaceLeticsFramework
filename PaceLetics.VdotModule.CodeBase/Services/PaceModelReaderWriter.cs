@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 
 
-namespace PaceLetics.CoreModule.Infrastructure.Services
+namespace PaceLetics.VdotModule.CodeBase.Services
 {
     /// <summary>
     /// Handles the reading and writing of pace model provider

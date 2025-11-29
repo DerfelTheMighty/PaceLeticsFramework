@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -12,17 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\images\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.8" />
-    <PackageReference Include="MudBlazor" Version="6.11.1" />
-    <PackageReference Include="MudBlazor.Extensions" Version="1.7.76" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

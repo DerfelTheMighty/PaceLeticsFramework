@@ -1,5 +1,5 @@
 ﻿
-namespace PaceLetics.CoreModule.Infrastructure.Models.Vdot
+namespace PaceLetics.VdotModule.CodeBase.Models
 {
 	/// <summary>
 	/// Reference performance consists of a distance, a reference time and a target pace
