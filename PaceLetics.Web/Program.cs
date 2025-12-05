@@ -98,5 +98,5 @@ app.UseCookiePolicy();
 app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-app.UseMudExtensions();
+
 app.Run();

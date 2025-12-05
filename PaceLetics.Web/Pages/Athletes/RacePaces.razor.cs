@@ -27,13 +27,13 @@ namespace PaceLetics.Web.Pages.Athletes
 
         private async Task AddAthlete()
         {
-            var options = new DialogOptions{CloseButton = true, DisableBackdropClick = false, MaxWidth = MaxWidth.Small};
+            var options = new DialogOptions{CloseButton = true, MaxWidth = MaxWidth.Small};
             RaceResultModel res = null;
             if (_athlete.ActiveReferenceResult != null)
                 res = _athlete.ActiveReferenceResult;
             var parameters = new DialogParameters<AddRaceDialog>{{x => x.Model, res}};
             var result = await dialogService.Show<AddRaceDialog>(string.Empty, parameters, options).Result;
-            if (!result.Cancelled)
+            if (!result.Canceled)
             {
                 var rrm = result.Data as RaceResultModel ?? new RaceResultModel();
                 _athlete.ActiveReferenceResult = rrm;

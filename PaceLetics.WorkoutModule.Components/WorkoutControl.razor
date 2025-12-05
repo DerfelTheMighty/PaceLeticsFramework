@@ -30,7 +30,7 @@
 						</MudItem>
 						<MudSpacer/>
 						<MudItem xs="5">
-							<MudChart ChartOptions="@(new() { DisableLegend = true, ChartPalette = GetChartPalette(_elementType, _exerciseState) })"
+							<MudChart ChartOptions="@(new() { ChartPalette = GetChartPalette(_elementType, _exerciseState) })"
 									  ChartType="ChartType.Donut" Width="75px" Height="75px" @bind-SelectedIndex="_index" InputData="@_data">
 									  <CustomGraphics>
 									<text class="donut-inner-text" x="48%" y="52%"

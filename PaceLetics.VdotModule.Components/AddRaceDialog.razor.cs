@@ -12,6 +12,7 @@ using PaceLetics.CoreModule.Infrastructure.Constants;
 using MudBlazor.Extensions.Core;
 using MudBlazor.Extensions.Components;
 using MudBlazor.Extensions;
+using MudBlazor;
 
 namespace PaceLetics.VdotModule.Components
 {
@@ -28,7 +29,7 @@ namespace PaceLetics.VdotModule.Components
         public RaceResultModel Model { get; set; }
 
         [CascadingParameter]
-        private MudDialogInstance MudDialog { get; set; } = default !;
+        private IMudDialogInstance MudDialog { get; set; } = default !;
         private void OK()
         {
             bool isValidTime = _timePattern.IsMatch(_time);

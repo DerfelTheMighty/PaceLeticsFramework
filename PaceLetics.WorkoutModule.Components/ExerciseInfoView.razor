@@ -74,17 +74,21 @@
                     <div class="d-flex" style="height:100%">
                         <MudImage Fluid="true" Src="@GetImagePath(Exercise.ImageFilename)" Alt="@Exercise.Id" Class="rounded-lg" />
                     </div>
-                <MudList Dense="true" DisablePadding="true">
-                    <MudListItem><b>Dauer:</b> @Exercise.Duration Sekunden</MudListItem>
-                    <MudListItem><b>Seitenwechsel:</b> @(Exercise.SwitchLeftRight ? "ja" : "Nein")</MudListItem>
-                    @if (Exercise.Execution != null && Exercise.Execution.Any())
-                    {
-                        @foreach (var step in Exercise.Execution)
+                    <MudStack Spacing="1">
+                        <MudText><b>Dauer:</b> @Exercise.Duration Sekunden</MudText>
+                        <MudText><b>Seitenwechsel:</b> @(Exercise.SwitchLeftRight ? "ja" : "nein")</MudText>
+
+                        @if (Exercise.Execution is not null)
                         {
-                            <MudListItem Icon="@Icons.Material.Filled.LabelImportant">@step</MudListItem>
+                            @foreach (var step in Exercise.Execution)
+                            {
+                                <MudStack Direction="Row" AlignItems="AlignItems.Center" Spacing="1">
+                                    <MudIcon Icon="@Icons.Material.Filled.LabelImportant" />
+                                    <MudText>@step</MudText>
+                                </MudStack>
+                            }
                         }
-                    }
-                </MudList>
+                    </MudStack>
 
                 </MudStack>
 

@@ -1,5 +1,6 @@
 ﻿@using MudBlazor
 
+
 @namespace PaceLetics.WorkoutModule.Components
 
 <MudDialog>
@@ -14,7 +15,7 @@
     </DialogActions>
 </MudDialog>
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; }
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
 }
