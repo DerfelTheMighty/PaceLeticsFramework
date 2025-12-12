@@ -1,28 +1,35 @@
 ﻿@inherits LayoutComponentBase
+@using MudBlazor
 
-
-<MudThemeProvider Theme="MyCustomTheme" IsDarkMode=true/>
+<MudThemeProvider Theme="MyCustomTheme" IsDarkMode="true" />
 <MudDialogProvider />
 <MudSnackbarProvider />
+<MudPopoverProvider />   @* <-- NEU: wichtig für Select/Dialog/Tooltip etc. *@
 
 <PageTitle>PaceLetics</PageTitle>
 
 <MudLayout>
     <MudAppBar Elevation="1">
 
-    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-    <MudText Align="Align.Start">PaceLetics - Team Running</MudText>
-    <LoginDisplay />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                       Color="Color.Inherit"
+                       Edge="Edge.Start"
+                       OnClick="@((e) => DrawerToggle())" />
+        <MudText Align="Align.Start">PaceLetics - Team Running</MudText>
+        <LoginDisplay />
 
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu/>
+
+    <MudDrawer @bind-Open="@_drawerOpen"
+               ClipMode="DrawerClipMode.Always"
+               Elevation="2">
+        <NavMenu />
     </MudDrawer>
-    <MudMainContent Style="margin-top: 24px; ">
+
+    <MudMainContent Style="margin-top: 24px;">
         @Body
     </MudMainContent>
 </MudLayout>
-
 
 @code {
     bool _drawerOpen = false;
@@ -32,32 +39,12 @@
         _drawerOpen = !_drawerOpen;
     }
 
-
-    MudTheme MyCustomTheme = new MudTheme()
+    MudTheme MyCustomTheme = new()
+    {
+        LayoutProperties = new LayoutProperties()
         {
-            LayoutProperties = new LayoutProperties()
-            {
-                DrawerWidthLeft = "260px",
-                DrawerWidthRight = "300px"
-            }
-        };
+            DrawerWidthLeft = "260px",
+            DrawerWidthRight = "300px"
+        }
+    };
 }
-
-
-@* <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
- *@
