@@ -34,8 +34,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(
 	options => 
 	{
-		options.SignIn.RequireConfirmedAccount = true;
-		options.SignIn.RequireConfirmedEmail = true;
+		options.SignIn.RequireConfirmedAccount = false;
+		options.SignIn.RequireConfirmedEmail = false;
 		options.Password.RequireNonAlphanumeric = false;
 		options.User.RequireUniqueEmail = true;
 		options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
