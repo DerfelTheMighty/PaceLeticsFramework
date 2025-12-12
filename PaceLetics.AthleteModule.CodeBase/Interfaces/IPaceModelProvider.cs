@@ -1,6 +1,6 @@
-﻿using PaceLetics.VdotModule.CodeBase.Models;
+﻿using PaceLetics.CoreModule.Infrastructure.Models;
 
-namespace PaceLetics.VdotModule.CodeBase.Interfaces
+namespace PaceLetics.AthleteModule.CodeBase.Interfaces
 {
     public interface IPaceModelProvider
     {

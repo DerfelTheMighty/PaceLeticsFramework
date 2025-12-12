@@ -1,20 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-
-using System;
 using System.Text.RegularExpressions;
 using MudBlazor;
-using PaceLetics.VdotModule.CodeBase.Models;
 using PaceLetics.CoreModule.Infrastructure.Constants;
 using MudBlazor.Extensions.Core;
 using MudBlazor.Extensions.Components;
 using MudBlazor.Extensions;
-using MudBlazor;
+using PaceLetics.CoreModule.Infrastructure.Models;
 
-namespace PaceLetics.VdotModule.Components
+
+namespace PaceLetics.AthleteModule.Components
 {
     public partial class AddRaceDialog
     {

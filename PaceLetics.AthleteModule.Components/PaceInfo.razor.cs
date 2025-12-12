@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 
 
-namespace PaceLetics.VdotModule.Components
+namespace PaceLetics.AthleteModule.Components
 {
     public partial class PaceInfo
     {

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.1" />
+    <PackageReference Include="MudBlazor" Version="8.15.0" />
+    <PackageReference Include="MudBlazor.Extensions" Version="8.15.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PaceLetics.AthleteModule.CodeBase\PaceLetics.AthleteModule.CodeBase.csproj" />
+    <ProjectReference Include="..\PaceLetics.CoreModule.Components\PaceLetics.CoreModule.Components.csproj" />
+    <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

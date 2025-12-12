@@ -1,11 +1,11 @@
 ﻿
 using Newtonsoft.Json;
 using PaceLetics.CoreModule.Infrastructure.Converter;
-using PaceLetics.VdotModule.CodeBase.Models;
 using System.Data;
 using System.Globalization;
+using PaceLetics.CoreModule.Infrastructure.Models;
 
-namespace PaceLetics.VdotModule.CodeBase.Services
+namespace PaceLetics.AthleteModule.CodeBase.Services
 {
     public class VdotTableReaderWriter
     {

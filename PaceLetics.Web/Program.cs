@@ -9,12 +9,13 @@ using PaceLetics.Web.Data;
 using MudBlazor.Extensions;
 using MudBlazor;
 using PaceLetics.WorkoutModule.CodeBase.Interfaces;
-using PaceLetics.VdotModule.CodeBase.Interfaces;
 using PaceLetics.WorkoutModule.CodeBase.Services;
-using PaceLetics.VdotModule.CodeBase.Services;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PaceLetics.Web.Services;
+using PaceLetics.AthleteModule.CodeBase.Services;
+using PaceLetics.AthleteModule.CodeBase.Interfaces;
+using PaceLetics.CoreModule.Infrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

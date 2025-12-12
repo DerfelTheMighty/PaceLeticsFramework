@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Globalization;
-using PaceLetics.VdotModule.CodeBase.Models;
+using PaceLetics.CoreModule.Infrastructure.Models;
 
 namespace Paceletics.Domain.Training
 {

@@ -1,7 +1,8 @@
 using MudBlazor;
 using MudBlazor.Extensions;
 using PaceLetics.AthleteModule.CodeBase.Models;
-using PaceLetics.VdotModule.CodeBase.Models;
+using PaceLetics.CoreModule.Infrastructure.Models;
+
 
 namespace PaceLetics.Web.Pages.Athletes
 {

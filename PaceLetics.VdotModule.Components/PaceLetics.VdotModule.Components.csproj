@@ -11,10 +11,6 @@
     <PackageReference Include="MudBlazor.Extensions" Version="8.15.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\PaceLetics.VdotModule.CodeBase\PaceLetics.VdotModule.CodeBase.csproj" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
