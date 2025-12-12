@@ -1,0 +1,22 @@
+﻿[
+  {
+    "id": "R-200-3x5",
+    "name": "3 x (5 x 200m R-Pace)",
+    "distances": [ 200, 200, 200, 200, 200 ],
+    "recovery": [ 200, 200, 200, 200, 200 ],
+    "paceKeys": [ "R Pace" ],
+    "sets": 3,
+    "setRecovery": 400,
+    "date": "2026-01-10"
+  },
+  {
+    "id": "I-800-6x",
+    "name": "6 x 800m I-Pace",
+    "distances": [ 800, 800, 800, 800, 800, 800 ],
+    "recovery": [ 400, 400, 400, 400, 400, 400 ],
+    "paceKeys": [ "I Pace" ],
+    "sets": 1,
+    "setRecovery": 0,
+    "date": "2026-01-08"
+  }
+]

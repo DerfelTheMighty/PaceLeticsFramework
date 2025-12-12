@@ -7,8 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="8.15.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
     <ProjectReference Include="..\PaceLetics.VdotModule.CodeBase\PaceLetics.VdotModule.CodeBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="res\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

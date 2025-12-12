@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\data\intervalls.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Communication.Email" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
@@ -34,6 +38,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AthleteDataAccessLibrary\AthleteDataAccessLibrary.csproj" />
     <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
+    <ProjectReference Include="..\PaceLetics.RunningModule.CodeBase\PaceLetics.RunningModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.VdotModule.Components\PaceLetics.VdotModule.Components.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.CodeBase\PaceLetics.WorkoutModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.Components\PaceLetics.WorkoutModule.Components.csproj" />
@@ -88,6 +93,12 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\EmailTemplates\ConfirmationEmailTemplate.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\data\intervalls.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>	
 	
 </Project>

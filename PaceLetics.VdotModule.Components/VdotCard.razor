@@ -3,18 +3,50 @@
 
 @namespace PaceLetics.VdotModule.Components
 
-<MudCard>
+<MudCard Class="d-flex flex-column align-center pa-4" Style="text-align:center;">
 
-    <MudChart ChartOptions="@(new() { ChartPalette = new[] { "#0bba83ff", "0bba83ff" } })" ChartType="ChartType.Donut" Width="300px" Height="300px" @bind-SelectedIndex="_index" InputData="@Data">
-        <CustomGraphics>
-            <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Helvetica" font-size="2">Deine Vdot</text>
-            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Helvetica" font-size="5">@Data[0]</text>
-        </CustomGraphics>
-    </MudChart>
+    <div class="d-flex justify-center">
+        <MudChart ChartOptions="@(new()
+                  {
+                      ChartPalette = new[] { "#0bba83ff", "0bba83ff" },
+                  })"
+                  ChartType="ChartType.Donut"
+                  Width="260px"
+                  Height="260px"
+                  @bind-SelectedIndex="_index"
+                  InputData="@Data">
 
-    <MudText Align="Align.Center">
-        Super! Aus dem Referenzlauf können wir deine individuelle Vdot bestimmen. Das ist ein Surrogat für deine aktuellen läuferischen Fähigkeiten.
+            <CustomGraphics>
+                <!-- Titel -->
+                <text x="50%"
+                      y="42%"
+                      text-anchor="middle"
+                      fill="#ffffffcc"
+                      font-family="Helvetica"
+                      font-size="16"
+                      font-weight="500">
+                    Deine VDOT
+                </text>
+
+                <!-- GROßER Zahlenwert -->
+                <text x="50%"
+                      y="60%"
+                      text-anchor="middle"
+                      fill="white"
+                      font-family="Helvetica"
+                      font-size="48">
+                    @Data[0]
+                </text>
+            </CustomGraphics>
+
+        </MudChart>
+    </div>
+
+    <MudText Align="Align.Center" Class="mt-4">
+        Super! Aus dem Referenzlauf können wir deine individuelle VDOT bestimmen.
+        Das ist ein Surrogat für deine aktuellen läuferischen Fähigkeiten.
     </MudText>
 </MudCard>
+
 
 
