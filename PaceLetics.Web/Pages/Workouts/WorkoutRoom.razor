@@ -1,70 +1,54 @@
 ﻿@page "/Workouts/workoutroom"
-@using PaceLetics.WorkoutModule.CodeBase.Enums;
-@using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+@using PaceLetics.WorkoutModule.CodeBase.Enums
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
 @using PaceLetics.WorkoutModule.Components
 
 @inject IWorkoutProvider woProvider
 @inject IDialogService dialogService
-@inject NavigationManager navManager;
+@inject NavigationManager navManager
+
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
-	<h1> @_workout.Name</h1>
-	<MudText>Swipe in Ruhe durch die einzelnen Übungen. Mache dich mit der Reihenfolge und der Ausführung vertraut. Starte das Workout, sobald du bereit bist!</MudText>
+    @if (_workout is null)
+    {
+        <MudText>Kein Workout geladen.</MudText>
+    }
+    else
+    {
+        @* FOCUS VIEW (immer), aber ohne Text wenn nicht Stop *@
+        <MudStack Spacing="3">
+            <WorkoutView Workout="@_workout" />
+        </MudStack>
+    }
 
-	<MudStack Spacingv="3">
-		<WorkoutControl Workout="@_workout" />
-		<WorkoutView Workout="@_workout"></WorkoutView>
-	</MudStack>
-
-	
-	
-	
-	
 </MudContainer>
 
 @code {
+    private IWorkout? _workout;
 
-	private IWorkout _workout;
+    protected override void OnInitialized()
+    {
+        _workout = woProvider.GetActiveWorkout();
+        _workout.WorkoutFinishedEvent += OnWorkoutFinished;
+        navManager.RegisterLocationChangingHandler(LocationChangingHandler);
+        base.OnInitialized();
+    }
 
-	protected override void OnInitialized()
-	{
-		_workout = woProvider.GetActiveWorkout();
-		_workout.WorkoutFinishedEvent += OnWorkoutFinished;
-		navManager.RegisterLocationChangingHandler(LocationChangingHandler);
-		base.OnInitialized();
-	}
+    private async void OnWorkoutFinished()
+    {
+        await InvokeAsync(() =>
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true };
+            dialogService.Show<WorkoutFinishedDialog>(
+                "Herzlichen Glückwünsch! Du hast das Workout erfolgreich abgeschlossen!",
+                options);
+        });
+    }
 
-	private Color GetCardColor(Level level)
-	{
-		switch (level)
-		{
-			case Level.Easy:
-				return Color.Info;
-			case Level.Moderate:
-				return Color.Success;
-			case Level.Advanced:
-				return Color.Warning;
-			case Level.Epic:
-				return Color.Error;
-			default:
-				return Color.Info;
-		}
-	}
-
-	private async void OnWorkoutFinished()
-	{
-		await InvokeAsync(() =>
-		{
-			var options = new DialogOptions { CloseOnEscapeKey = true };
-			dialogService.Show<WorkoutFinishedDialog>("Herzlichen Glückwünsch! Du hast das Workout erfolgreich abgeschlossen!", options);
-		});
-	}
-
-	private ValueTask LocationChangingHandler(LocationChangingContext arg)
-	{
-		_workout.Stop();
-		_workout.Reset();
-		return ValueTask.CompletedTask;
-	}
-
+    private ValueTask LocationChangingHandler(LocationChangingContext arg)
+    {
+        _workout?.Stop();
+        _workout?.Reset();
+        return ValueTask.CompletedTask;
+    }
 }

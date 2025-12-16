@@ -1,0 +1,261 @@
+﻿@using Microsoft.JSInterop
+@using MudBlazor
+@using PaceLetics.WorkoutModule.CodeBase.Enums
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
+
+<MudPaper Elevation="2" Class="px-3 py-2 d-flex align-center justify-space-between">
+
+    <div class="d-flex align-center" style="gap:8px">
+        <MudToggleIconButton @bind-Toggled="IsToggled"
+                             Icon="@Icons.Material.Filled.PlayArrow"
+                             ToggledIcon="@Icons.Material.Filled.Pause"
+                             Color="Color.Success"
+                             ToggledColor="Color.Warning" />
+        <MudIconButton Icon="@Icons.Material.Filled.Refresh"
+                       OnClick="ResetWorkout"
+                       Color="Color.Inherit" />
+    </div>
+
+    <div class="d-flex flex-column" style="min-width:0; text-align:center;">
+        <MudText Typo="Typo.subtitle2">@_instruction</MudText>
+    </div>
+
+    <div class="d-flex align-center" style="gap:10px">
+        <MudText Typo="Typo.h4" Style="min-width:72px; text-align:right;">
+            @_timeRemaining
+        </MudText>
+        <MudIconButton Icon="@Icons.Material.Filled.ExpandLess"
+                       OnClick="@OnOpenSheet" />
+    </div>
+
+</MudPaper>
+
+@code {
+
+
+    // ===== UI state =====
+    protected int _timeRemaining;
+    protected ExerciseState _exerciseState;
+    protected ExerciseState _lastState;
+    protected WorkoutElements _elementType;
+    protected string _instruction = string.Empty;
+
+    private bool _isToggled;
+
+    private IWorkout? _subscribedWorkout;
+
+    [Inject] protected IJSRuntime JSRuntime { get; set; } = default!;
+
+    [Parameter] public IWorkout? Workout { get; set; }
+    [Parameter] public EventCallback OnOpenSheet { get; set; } // Button in TopBar
+
+    public bool IsToggled
+    {
+        get => _isToggled;
+        set
+        {
+            if (_isToggled == value) return;
+
+            _isToggled = value;
+
+            // Start/Stop auf Workout auslösen
+            if (_isToggled) StartWorkout();
+            else StopWorkout();
+
+            // UI aktualisieren
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void StopWorkout() => Workout?.Stop();
+    private void StartWorkout() => Workout?.Start();
+    private void ResetWorkout() => Workout?.Reset();
+
+    protected override void OnInitialized()
+    {
+        _timeRemaining = 0;
+        _exerciseState = ExerciseState.Stop;
+        _lastState = ExerciseState.Stop;
+        _elementType = default;
+        _instruction = string.Empty;
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        // Wenn der Parent ein neues Workout reinreicht -> altes sauber abklemmen
+        if (!ReferenceEquals(_subscribedWorkout, Workout))
+        {
+            UnsubscribeFromWorkout(_subscribedWorkout);
+            SubscribeToWorkout(Workout);
+            _subscribedWorkout = Workout;
+
+            ResetUiState();
+        }
+
+        base.OnParametersSet();
+    }
+
+    private void ResetUiState()
+    {
+        _timeRemaining = 0;
+        _exerciseState = ExerciseState.Stop;
+        _lastState = ExerciseState.Stop;
+        _elementType = default;
+        _instruction = string.Empty;
+        _isToggled = false;
+    }
+
+    private void SubscribeToWorkout(IWorkout? w)
+    {
+        if (w is null) return;
+
+        w.ElementFinishedEvent += OnElementFinished;
+        w.ElementStartEvent += OnElementStart;
+        w.WorkoutFinishedEvent += OnWorkoutFinished;
+    }
+
+    private void UnsubscribeFromWorkout(IWorkout? w)
+    {
+        if (w is null) return;
+
+        w.ElementFinishedEvent -= OnElementFinished;
+        w.ElementStartEvent -= OnElementStart;
+        w.WorkoutFinishedEvent -= OnWorkoutFinished;
+
+        // Falls gerade ein Element aktiv war, sicherheitshalber dessen Events lösen
+        try
+        {
+            if (w.Elements != null && w.CurrentElement >= 0 && w.CurrentElement < w.Elements.Count)
+            {
+                var el = w.Elements.ElementAtOrDefault(w.CurrentElement);
+                if (el is not null)
+                {
+                    el.ProgressChangedEvent -= OnProgressChanged;
+                    el.StateChangedEvent -= OnElementStateChanged;
+                }
+                el.ProgressChangedEvent -= OnProgressChanged;
+                el.StateChangedEvent -= OnElementStateChanged;
+            }
+        }
+        catch
+        {
+            // UI cleanup soll nie crashen
+        }
+    }
+
+    public void Dispose()
+    {
+        UnsubscribeFromWorkout(_subscribedWorkout);
+        _subscribedWorkout = null;
+    }
+
+    // ===== Workout event handlers =====
+
+    private async void OnProgressChanged(int remaining)
+    {
+        await InvokeAsync(() =>
+        {
+            _timeRemaining = remaining;
+
+            // Countdown Beep (wie bei dir)
+            if (remaining == 3)
+                JSRuntime.InvokeVoidAsync("PlayTimer");
+
+            StateHasChanged();
+        });
+    }
+
+    private async void OnElementStart(IWorkoutElement el)
+    {
+        // erst Typ übernehmen, dann Instruction berechnen
+        _elementType = el.Type;
+
+        el.ProgressChangedEvent += OnProgressChanged;
+        el.StateChangedEvent += OnElementStateChanged;
+
+        await InvokeAsync(() =>
+        {
+            _instruction = GetInstruction(_elementType, _exerciseState, Workout?.State ?? WorkoutState.Stop);
+            StateHasChanged();
+        });
+    }
+
+    private async void OnElementStateChanged(ExerciseState state)
+    {
+        await InvokeAsync(() =>
+        {
+            _lastState = _exerciseState;
+            _exerciseState = state;
+
+            _instruction = GetInstruction(_elementType, _exerciseState, Workout?.State ?? WorkoutState.Stop);
+
+            if (GetBeep(_lastState, _exerciseState))
+                JSRuntime.InvokeVoidAsync("PlayDing_1");
+
+            StateHasChanged();
+        });
+    }
+
+    private async void OnElementFinished(IWorkoutElement el)
+    {
+        el.ProgressChangedEvent -= OnProgressChanged;
+        el.StateChangedEvent -= OnElementStateChanged;
+
+        await JSRuntime.InvokeVoidAsync("PlayDing_1");
+    }
+
+    private void OnWorkoutFinished()
+    {
+        InvokeAsync(() =>
+        {
+            _isToggled = false;
+            Workout?.Reset(); // wie bei dir (wenn du das im Flow willst)
+            JSRuntime.InvokeVoidAsync("PlayDing_3");
+            StateHasChanged();
+        });
+    }
+
+    // ===== Helpers (aus deinem WorkoutControl übernommen) =====
+
+    protected static string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
+    {
+        string result = string.Empty;
+
+        if (wState == WorkoutState.Running || wState == WorkoutState.Pause)
+        {
+            if (el == WorkoutElements.Preparation)
+            {
+                result = "Bereit machen!";
+            }
+            else if (el == WorkoutElements.Exercise)
+            {
+                if (eState == ExerciseState.Pause)
+                    result = "Angehalten!";
+                else if (eState == ExerciseState.Switch)
+                    result = "Seitenwechsel!";
+                else
+                    result = "Ausführung!";
+            }
+            else if (el == WorkoutElements.Rest)
+            {
+                if (eState == ExerciseState.Pause)
+                    result = "Angehalten!";
+                else
+                    result = "Übungspause!";
+            }
+        }
+        else if (wState == WorkoutState.Finished || wState == WorkoutState.Stop)
+        {
+            result = string.Empty;
+        }
+
+        return result;
+    }
+
+    protected static bool GetBeep(ExerciseState lastState, ExerciseState state)
+    {
+        return state == ExerciseState.Switch || lastState == ExerciseState.Switch;
+    }
+
+}

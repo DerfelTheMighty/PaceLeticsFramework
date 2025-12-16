@@ -5,14 +5,26 @@ function scrollToTop() {
 }
 
 
-window.PlayDing_1 = function () {
-    document.getElementById('ding_1').play();
-}
+window.PlayDing_1 = () => {
+    const el = document.getElementById("ding1");
+    if (!el) return;              // <-- wichtig
+    el.currentTime = 0;
+    const p = el.play();
+    if (p && typeof p.catch === "function") p.catch(() => { });
+};
 
-window.PlayTimer = function () {
-    document.getElementById('timer').play();
-}
+window.PlayDing_3 = () => {
+    const el = document.getElementById("ding3");
+    if (!el) return;
+    el.currentTime = 0;
+    const p = el.play();
+    if (p && typeof p.catch === "function") p.catch(() => { });
+};
 
-window.PlayDing_3 = function () {
-    document.getElementById('ding_3').play();
-}
+window.PlayTimer = () => {
+    const el = document.getElementById("timer");
+    if (!el) return;
+    el.currentTime = 0;
+    const p = el.play();
+    if (p && typeof p.catch === "function") p.catch(() => { });
+};

@@ -94,5 +94,30 @@ namespace PaceLetics.WorkoutModule.Components
             });
         }
 
-	}
+
+        private bool _sheetOpen;
+
+        private Task CloseSheet()
+        {
+            _sheetOpen = false;
+            return Task.CompletedTask;
+        }
+
+        private Task OpenSheet()
+        {
+            _sheetOpen = true;
+            return Task.CompletedTask;
+        }
+
+        private void OnSelectIndex(int idx)
+        {
+            if (!_allowSlide) return;    // Running => keine Navigation
+            if (Workout?.Exercises is null) return;
+            if (idx < 0 || idx >= Workout.Exercises.Count) return;
+
+            _currentExercise = idx;
+            StateHasChanged();
+        }
+
+    }
 }

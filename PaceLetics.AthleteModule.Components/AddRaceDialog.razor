@@ -28,12 +28,8 @@
         <MudDatePicker Label="Datum" @bind-Date="_date" PickerVariant="PickerVariant.Dialog" DisableToolbar="true" />
     </DialogContent>
     <DialogActions>
-        <MudButton Disabled="@string.IsNullOrWhiteSpace(this._id)"
-                   OnClick="@this.OK"
-                   Size="@Size.Small">
+        <MudButton Disabled="@string.IsNullOrWhiteSpace(this._id)" OnClick="@this.OK" Size="@Size.Small">
             Ok
         </MudButton>
     </DialogActions>
 </MudDialog>
-
-

@@ -1,0 +1,109 @@
+﻿@using System.Linq
+@using MudBlazor
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
+
+<MudPaper Style="height:100%; display:flex; flex-direction:column; border-top-left-radius:18px; border-top-right-radius:18px;">
+
+    <!-- Sticky Header (immer sichtbar) -->
+    <div style="
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--mud-palette-surface);
+        padding: 12px;
+        border-top-left-radius:18px;
+        border-top-right-radius:18px;
+    ">
+        <div class="d-flex align-center justify-space-between">
+            <div style="width:48px"></div>
+            <div style="width:56px; height:6px; border-radius:999px; opacity:.35; background: currentColor;"></div>
+            <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@OnClose" />
+        </div>
+    </div>
+
+    <!-- Scrollbarer Content -->
+    <div style="flex:1; overflow-y:auto; padding: 12px;">
+        <MudTabs Rounded="true">
+
+            <MudTabPanel Text="Details">
+                @{
+                    var ex = Workout?.Exercises?.ElementAtOrDefault(CurrentIndex);
+                }
+                @if (ex is null)
+                {
+                    <MudText>Keine Übung.</MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h5">@ex.Name</MudText>
+                    <MudText Typo="Typo.body2" Class="mt-2">@ex.Description</MudText>
+
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">Ausführung</MudText>
+
+                    @if (ex.Execution is null || ex.Execution.Count == 0)
+                    {
+                        <MudText Typo="Typo.body2" Style="opacity:.75">Keine Schritte hinterlegt.</MudText>
+                    }
+                    else
+                    {
+                        <MudList T="string" Dense="true">
+                            @foreach (var step in ex.Execution)
+                            {
+                                <MudListItem T="string">
+                                    <MudText Typo="Typo.body2">• @step</MudText>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                }
+            </MudTabPanel>
+
+            <MudTabPanel Text="Ablauf">
+                <MudText Typo="Typo.caption" Class="mb-2" Style="opacity:.8">
+                    @(AllowBrowse ? "Tippe zum Vorschauen." : "Während Running nur Ansicht (kein Springen).")
+                </MudText>
+
+                <MudList T="IExerciseInfo" Dense="true">
+                    @for (int i = 0; i < (Workout?.Exercises?.Count ?? 0); i++)
+                    {
+                        var idx = i;
+                        var ex = Workout!.Exercises[idx];
+                        var isCurrent = idx == CurrentIndex;
+
+                        <MudListItem T="IExerciseInfo"
+                                     Disabled="@(!AllowBrowse)"
+                                     OnClick="@(() => SelectIndex(idx))"
+                                     Class="@(isCurrent ? "mud-theme-primary" : "")">
+
+                            <MudText Typo="Typo.body2">@($"{idx + 1}. {ex.Name}")</MudText>
+
+                            @if (isCurrent)
+                            {
+                                <MudChip Size="Size.Small" Color="Color.Primary" Variant="Variant.Filled" Class="ml-2">
+                                    Jetzt
+                                </MudChip>
+                            }
+                        </MudListItem>
+                    }
+                </MudList>
+            </MudTabPanel>
+
+        </MudTabs>
+    </div>
+
+</MudPaper>
+
+@code {
+    [Parameter] public IWorkout? Workout { get; set; }
+    [Parameter] public int CurrentIndex { get; set; }
+
+    [Parameter] public bool AllowBrowse { get; set; }
+    [Parameter] public EventCallback<int> OnSelectIndex { get; set; }
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private Task SelectIndex(int i)
+        => AllowBrowse ? OnSelectIndex.InvokeAsync(i) : Task.CompletedTask;
+}

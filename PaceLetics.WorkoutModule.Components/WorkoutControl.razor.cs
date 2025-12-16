@@ -8,7 +8,7 @@ using MudBlazor.Extensions.Core;
 
 namespace PaceLetics.WorkoutModule.Components
 {
-    public partial class WorkoutControl
+    public partial class WorkoutControl : IDisposable
     {
         private int _timeRemaining;
         private int _index = -1;
@@ -16,47 +16,111 @@ namespace PaceLetics.WorkoutModule.Components
         private WorkoutElements _elementType;
         private ExerciseState _lastState;
         private bool _isToggled;
-        private string _instruction;
+        private string _instruction = string.Empty;
         private MudExGradientText _grdText;
         private List<MudExColor> _color;
         private double[] _data;
+
+        private IWorkout? _subscribedWorkout;
+
         [Parameter]
         public IWorkout? Workout { get; set; }
 
         public bool IsToggled
         {
             get => _isToggled;
-            set{
+            set
+            {
                 if (_isToggled != value)
                 {
-					if (_isToggled)
-					{
-						StopWorkout();
-						_isToggled = value;
-					}
-					else
-					{
-						StartWorkout();
-						
+                    if (_isToggled)
+                    {
+                        StopWorkout();
                         _isToggled = value;
-					}
-				}
+                    }
+                    else
+                    {
+                        StartWorkout();
+                        _isToggled = value;
+                    }
+                }
             }
         }
 
-        private void StopWorkout()
+        private void StopWorkout() => Workout?.Stop();
+        private void StartWorkout() => Workout?.Start();
+        private void ResetWorkout() => Workout?.Reset();
+
+        protected override void OnInitialized()
         {
-            Workout?.Stop();
+            _data = new double[2];
+            base.OnInitialized();
         }
 
-        private void StartWorkout()
+        protected override void OnParametersSet()
         {
-            Workout?.Start();
+            // Wenn der Parent ein neues Workout reinreicht -> altes sauber abklemmen
+            if (!ReferenceEquals(_subscribedWorkout, Workout))
+            {
+                UnsubscribeFromWorkout(_subscribedWorkout);
+                SubscribeToWorkout(Workout);
+                _subscribedWorkout = Workout;
+
+                // Optional: UI-Status zurücksetzen, damit du keine "alten" Anzeigezustände siehst
+                _timeRemaining = 0;
+                _exerciseState = ExerciseState.Stop;
+                _lastState = ExerciseState.Stop;
+                _elementType = default;
+                _instruction = string.Empty;
+                _data[0] = 0;
+                _data[1] = 0;
+                _isToggled = false;
+            }
+
+            base.OnParametersSet();
         }
 
-        private void ResetWorkout()
+        private void SubscribeToWorkout(IWorkout? w)
         {
-            Workout?.Reset();
+            if (w is null) return;
+
+            w.ElementFinishedEvent += OnElementFinished;
+            w.ElementStartEvent += OnElementStart;
+            w.WorkoutFinishedEvent += OnWorkoutFinished;
+        }
+
+        private void UnsubscribeFromWorkout(IWorkout? w)
+        {
+            if (w is null) return;
+
+            w.ElementFinishedEvent -= OnElementFinished;
+            w.ElementStartEvent -= OnElementStart;
+            w.WorkoutFinishedEvent -= OnWorkoutFinished;
+
+            // Falls gerade ein Element aktiv war, sicherheitshalber dessen Events lösen
+            try
+            {
+                if (w.Elements != null && w.CurrentElement >= 0 && w.CurrentElement < w.Elements.Count)
+                {
+                    var el = w.Elements.ElementAt(w.CurrentElement);
+                    el.ProgressChangedEvent -= OnProgressChanged;
+                    el.StateChangedEvent -= OnElementStateChanged;
+                }
+            }
+            catch
+            {
+                // bewusst ignorieren: UI cleanup soll nie crashen
+            }
+
+            // Option B: Workout besitzt Timer -> hier zentral entsorgen,
+            // sobald es für diese Komponente "weg" ist.
+            (w as IDisposable)?.Dispose();
+        }
+
+        public void Dispose()
+        {
+            UnsubscribeFromWorkout(_subscribedWorkout);
+            _subscribedWorkout = null;
         }
 
         private async void OnProgressChanged(int remaining)
@@ -64,24 +128,38 @@ namespace PaceLetics.WorkoutModule.Components
             await InvokeAsync(() =>
             {
                 _timeRemaining = remaining;
-                _data[0] = (double)(Workout.Elements.ElementAt(Workout.CurrentElement).SlotDuration - _timeRemaining);
-                _data[1] = _timeRemaining;
-                if(remaining==3)
+
+                // Achtung: _elementType muss schon gesetzt sein, sonst ist SlotDuration ggf. falsch.
+                var current = Workout?.Elements?.ElementAtOrDefault(Workout.CurrentElement);
+                if (current != null)
+                {
+                    _data[0] = (double)(current.SlotDuration - _timeRemaining);
+                    _data[1] = _timeRemaining;
+                }
+                else
+                {
+                    _data[0] = 0;
+                    _data[1] = 0;
+                }
+
+                if (remaining == 3)
                     JSRuntime.InvokeVoidAsync("PlayTimer");
+
                 StateHasChanged();
             });
         }
 
-
-
-		private async void OnElementStart(IWorkoutElement el)
+        private async void OnElementStart(IWorkoutElement el)
         {
+            // erst Typ übernehmen, dann Instruction berechnen
+            _elementType = el.Type;
+
             el.ProgressChangedEvent += OnProgressChanged;
             el.StateChangedEvent += OnElementStateChanged;
+
             await InvokeAsync(() =>
             {
-				_instruction = GetInstruction(_elementType, _exerciseState, Workout.State);
-				_elementType = el.Type;
+                _instruction = GetInstruction(_elementType, _exerciseState, Workout?.State ?? WorkoutState.Stop);
                 StateHasChanged();
             });
         }
@@ -93,33 +171,43 @@ namespace PaceLetics.WorkoutModule.Components
                 _lastState = _exerciseState;
                 _exerciseState = state;
 
-				_instruction = GetInstruction(_elementType, _exerciseState, Workout.State);
+                _instruction = GetInstruction(_elementType, _exerciseState, Workout?.State ?? WorkoutState.Stop);
+
                 if (GetBeep(_lastState, _exerciseState))
                     JSRuntime.InvokeVoidAsync("PlayDing_1");
+
                 StateHasChanged();
             });
         }
 
         private async void OnElementFinished(IWorkoutElement el)
         {
+            // WICHTIG: beide Events lösen (StateChanged fehlte vorher)
             el.ProgressChangedEvent -= OnProgressChanged;
-			await JSRuntime.InvokeVoidAsync("PlayDing_1");
-		}
-        
-        private void OnWorkoutFinished() 
+            el.StateChangedEvent -= OnElementStateChanged;
+
+            await JSRuntime.InvokeVoidAsync("PlayDing_1");
+        }
+
+        private void OnWorkoutFinished()
         {
-            InvokeAsync(() => 
+            InvokeAsync(() =>
             {
-				_isToggled = false;
-                Workout.Reset();
+                _isToggled = false;
+
+                // Achtung: Reset ist ok, aber wenn du im Parent nach WorkoutFinished ein neues Workout setzt,
+                // übernimmt OnParametersSet das Umschalten & Cleanup.
+                Workout?.Reset();
+
                 JSRuntime.InvokeVoidAsync("PlayDing_3");
                 StateHasChanged();
             });
         }
 
-		private static string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
-		{
-			string result = string.Empty;
+        private static string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
+        {
+            string result = string.Empty;
+
             if (wState == WorkoutState.Running || wState == WorkoutState.Pause)
             {
                 if (el == WorkoutElements.Preparation)
@@ -144,34 +232,36 @@ namespace PaceLetics.WorkoutModule.Components
                 }
             }
             else if (wState == WorkoutState.Finished || wState == WorkoutState.Stop)
+            {
                 result = string.Empty;
+            }
 
+            return result;
+        }
 
-			return result;
-		}
-
-		private static string[] GetChartPalette(WorkoutElements el, ExerciseState state)
+        private static string[] GetChartPalette(WorkoutElements el, ExerciseState state)
         {
-            var palette = new string[]{"", ""};
+            var palette = new[] { "", "" };
+
             if (el == WorkoutElements.Preparation)
             {
-                palette = new[]{"#20d2f4", "0bba83ff"};
+                palette = new[] { "#20d2f4", "0bba83ff" };
             }
             else if (el == WorkoutElements.Exercise)
             {
                 if (state == ExerciseState.Pause || state == ExerciseState.Stop)
-                    palette = new[]{"#808080", "0bba83ff"};
+                    palette = new[] { "#808080", "0bba83ff" };
                 else if (state == ExerciseState.Switch)
-                    palette = new[]{"#FF44CC", "0bba83ff"};
+                    palette = new[] { "#FF44CC", "0bba83ff" };
                 else
-                    palette = new[]{"#FF5E00", "0bba83ff"};
+                    palette = new[] { "#FF5E00", "0bba83ff" };
             }
             else if (el == WorkoutElements.Rest)
             {
                 if (state == ExerciseState.Pause || state == ExerciseState.Stop)
-                    palette = new[]{"#808080", "0bba83ff"};
+                    palette = new[] { "#808080", "0bba83ff" };
                 else
-                    palette = new[]{"#7FFF00", "0bba83ff"};
+                    palette = new[] { "#7FFF00", "0bba83ff" };
             }
 
             return palette;
@@ -179,50 +269,55 @@ namespace PaceLetics.WorkoutModule.Components
 
         private static List<MudExColor> GetGradTextPallette(WorkoutElements el, ExerciseState state)
         {
-            List<MudExColor> color = new List<MudExColor> { MudExColor.Info, MudExColor.Dark };
+            List<MudExColor> color = new() { MudExColor.Info, MudExColor.Dark };
+
             if (el == WorkoutElements.Preparation)
             {
-                color = new List<MudExColor> { MudExColor.Info, MudExColor.Dark };
+                color = new() { MudExColor.Info, MudExColor.Dark };
             }
             else if (el == WorkoutElements.Exercise)
             {
                 if (state == ExerciseState.Pause || state == ExerciseState.Stop)
-                    color = new List<MudExColor> { MudExColor.Surface, MudExColor.Dark };
+                    color = new() { MudExColor.Surface, MudExColor.Dark };
                 else if (state == ExerciseState.Switch)
-                    color = new List<MudExColor> { MudExColor.Primary, MudExColor.Dark };
+                    color = new() { MudExColor.Primary, MudExColor.Dark };
                 else
-                    color = new List<MudExColor> { MudExColor.Error, MudExColor.Dark };
+                    color = new() { MudExColor.Error, MudExColor.Dark };
             }
             else if (el == WorkoutElements.Rest)
             {
                 if (state == ExerciseState.Pause || state == ExerciseState.Stop)
-                    color = new List<MudExColor> { MudExColor.Surface, MudExColor.Dark };
+                    color = new() { MudExColor.Surface, MudExColor.Dark };
                 else
-                    color = new List<MudExColor> { MudExColor.Success, MudExColor.Dark };
-
-
+                    color = new() { MudExColor.Success, MudExColor.Dark };
             }
-
 
             return color;
         }
 
-        private static bool GetBeep(ExerciseState lastState, ExerciseState state) 
+        private static bool GetBeep(ExerciseState lastState, ExerciseState state)
         {
             if (state == ExerciseState.Switch || lastState == ExerciseState.Switch)
                 return true;
             else
                 return false;
         }
+    }
 
-
-        protected override void OnInitialized()
+    internal static class EnumerableExtensions
+    {
+        public static T? ElementAtOrDefault<T>(this IEnumerable<T> source, int index)
         {
-            _data = new double[2];
-            Workout.ElementFinishedEvent += OnElementFinished;
-            Workout.ElementStartEvent += OnElementStart;
-            Workout.WorkoutFinishedEvent += OnWorkoutFinished;
-            base.OnInitialized();
+            if (source == null) return default;
+            if (index < 0) return default;
+
+            using var e = source.GetEnumerator();
+            for (int i = 0; i <= index; i++)
+            {
+                if (!e.MoveNext())
+                    return default;
+            }
+            return e.Current;
         }
     }
 }

@@ -62,10 +62,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Interfaces
         /// <summary>
         /// Event is executed each second
         /// </summary>
-        Action<int> ProgressChangedEvent { get; set; }
+        event Action<int> ProgressChangedEvent;
 
         // Event is execute whenever the exercise state changes
-        Action<ExerciseState> StateChangedEvent { get; set; }
+        event Action<ExerciseState> StateChangedEvent;
 
     }
 

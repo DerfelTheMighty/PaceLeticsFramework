@@ -59,19 +59,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Interfaces
         /// <summary>
         /// Event is fired when all workout elements are done
         /// </summary>
-        Action WorkoutFinishedEvent { get; set; }
-        /// <summary>
-        /// Event is fired whenever a workout element is finished or cancelled
-        /// </summary>
-        Action<IWorkoutElement> ElementFinishedEvent { get; set; }
-        /// <summary>
-        /// Event is fired when the execution of a new workout element start
-        /// </summary>
-        Action<IWorkoutElement> ElementStartEvent { get; set; }
-        /// <summary>
-        /// Event is fired when the worokout start
-        /// </summary>
-        Action WorkoutStartEvent { get; set; }
+        event Action WorkoutFinishedEvent;
+        event Action<IWorkoutElement> ElementFinishedEvent;
+        event Action<IWorkoutElement> ElementStartEvent;
+        event Action WorkoutStartEvent;
 
         /// <summary>
         /// Resets the currently paused workout and the currently paused workout element

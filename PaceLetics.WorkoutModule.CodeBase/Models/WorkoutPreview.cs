@@ -31,11 +31,9 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
 			Description = def.Description ?? string.Empty;
 			Level = def.Level;
 			_exercises = new List<ExercisePreview>();
-			foreach (var id in def.Exercises) 
-			{
-				_exercises.Add(provider.GetExercisePreview(id, Level));
-			}
-			Count = _exercises?.Count() ?? 0;
+            foreach (var id in def.Exercises ?? Enumerable.Empty<string>())
+                _exercises.Add(provider.GetExercisePreview(id, Level));
+            Count = _exercises?.Count() ?? 0;
 		}
 	}
 }

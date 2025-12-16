@@ -39,14 +39,14 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
         /// <summary>
         /// Switch time for left/right switch exercises
         /// </summary>
-        public int SwitchTime { get; set; } 
+        public int SwitchTime { get; set; }
         /// <summary>
         /// List of exercises in the workout
         /// </summary>
-        public List<string>? Exercises { get; set; }
+        public List<string> Exercises { get; set; } = new();
 
 
-        
+
     }
 
 }

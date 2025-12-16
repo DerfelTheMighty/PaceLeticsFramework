@@ -26,18 +26,9 @@ namespace PaceLetics.WorkoutModule.CodeBase.Interfaces
         int SlotDuration { get; }
 
 
-        /// <summary>
-        ///  Event indicates the exercise completion
-        /// </summary>
-        Action FinishedEvent { get; set; }
-
-        /// <summary>
-        /// Event is executed each second
-        /// </summary>
-        Action<int> ProgressChangedEvent { get; set; }
-
-        // Event is executed whenever the exercise state changes
-        Action<ExerciseState> StateChangedEvent { get; set; }
+        event Action FinishedEvent;
+        event Action<int> ProgressChangedEvent;
+        event Action<ExerciseState> StateChangedEvent;
 
         /// <summary>
         /// Start a new execise execution or resumes a paused execution

@@ -1,34 +1,63 @@
-﻿@using MudBlazor;
-@using PaceLetics.WorkoutModule.CodeBase.Models
-@using PaceLetics.WorkoutModule.CodeBase.Logic
+﻿@using MudBlazor
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
 
-@namespace PaceLetics.WorkoutModule.Components
-
-@inject IDialogService dialogService
-
-@if (Workout != null)
+@if (Workout is null)
 {
-	<MudPaper>
-			
-		<MudCarousel TData="object" AutoCycle="false" 
-			Class="mud-width-full" Style="height:850px;" 
-			ShowArrows="@_allowSlide" EnableSwipeGesture="@_allowSlide" 
-			ShowBullets="false" SelectedIndex="@_currentExercise">
-			@foreach (var item in Workout.Exercises)
-			{
-				<MudCarouselItem>
-					<ExerciseInfoView Exercise="item"></ExerciseInfoView>
-				</MudCarouselItem>	
-			}
-		</MudCarousel>
-			
-	</MudPaper>
-		
+    <MudText>Kein Workout geladen.</MudText>
+}
+else
+{
+    <div class="pl-workout-focus">
 
+        <!-- Sticky Top -->
+        <div class="pl-topbar">
+            <WorkoutTopBar Workout="Workout" OnOpenSheet="@(()=> _sheetOpen = true)" />
+        </div>
 
-	
+        <!-- Now -->
+        <div class="pl-now">
+            <WorkoutNow Exercise="Workout.Exercises[_currentExercise]"
+                        OnOpenDetails="@(()=> _sheetOpen = true)" />
+        </div>
 
+        <!-- Bottom Sheet -->
+        <MudDrawer @bind-Open="_sheetOpen"
+                   Anchor="Anchor.Bottom"
+                   Variant="DrawerVariant.Temporary"
+                   Elevation="10"
+                   Class="pl-sheet"
+                   ClipMode="DrawerClipMode.Never"
+                   Overlay="true">
+            <WorkoutBottomSheet Workout="Workout"
+                                CurrentIndex="_currentExercise"
+                                AllowBrowse="@_allowSlide"
+                                OnClose="@CloseSheet"
+                                OnSelectIndex="OnSelectIndex" />
+        </MudDrawer>
 
+    </div>
 }
 
-
+<style>
+.pl-workout-focus{
+    height: calc(100vh - 64px); /* ggf. AppBar-Höhe anpassen */
+    display:flex;
+    flex-direction:column;
+}
+.pl-topbar{
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+.pl-now{
+    flex: 1;
+    overflow-y: auto;   
+    overflow-x: hidden;
+    padding: 12px;
+}
+.pl-sheet{
+    height: 72vh;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+</style>

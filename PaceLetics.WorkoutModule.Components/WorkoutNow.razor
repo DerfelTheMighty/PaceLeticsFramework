@@ -1,0 +1,39 @@
+﻿@using MudBlazor
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
+
+<MudPaper Elevation="1" Class="pa-4" Style="height:100%; border-radius:16px;">
+    <!-- Header -->
+    <div class="d-flex align-center justify-space-between">
+        <MudText Typo="Typo.h3">@Exercise?.Name</MudText>
+        <MudChip T="CodeBase.Enums.Level" Color="Color.Info" Variant="Variant.Filled">@Exercise?.Level</MudChip>
+    </div>
+
+    <!-- Bild groß -->
+    <div style="height:260px; max-width:520px; margin:16px auto; display:flex; align-items:center; justify-content:center;">
+        <MudImage Src="@GetImagePath(Exercise?.ImageFilename)"
+                  Alt="@Exercise?.Name"
+                  Style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block;" />
+    </div>
+
+    <!-- Description -->
+    <MudText Typo="Typo.body1" Align="Align.Center" Style="opacity:.85">
+        @Exercise?.Description
+    </MudText>
+
+    <!-- CTA unten -->
+    <div class="d-flex justify-center mt-4">
+        <MudButton Variant="Variant.Text" OnClick="@OnOpenDetails" Style="letter-spacing:.08em;">
+            DETAILS &amp; ABLAUF
+        </MudButton>
+    </div>
+</MudPaper>
+
+@code {
+    [Parameter] public IExerciseInfo? Exercise { get; set; }
+    [Parameter] public EventCallback OnOpenDetails { get; set; }
+    
+    private string GetImagePath(string imagefile)
+    {
+        return "images/exercises/" + imagefile;
+    }
+}

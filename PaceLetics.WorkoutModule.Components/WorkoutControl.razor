@@ -1,48 +1,100 @@
-@using Microsoft.JSInterop;
-@using PaceLetics.WorkoutModule.CodeBase.Enums;
-@using PaceLetics.WorkoutModule.CodeBase.Interfaces;
-@using MudBlazor;
-@using MudBlazor.Extensions.Components;
+@using Microsoft.JSInterop
+@using PaceLetics.WorkoutModule.CodeBase.Enums
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
+@using MudBlazor
+@using MudBlazor.Extensions.Components
 
 @inject IJSRuntime JSRuntime
 
-<audio id="ding_1" src="/media/ding_1.wav" />
-<audio id="timer" src="/media/timer.wav" />
-<audio id="ding_3" src="/media/ding_2.wav" />
+<audio id="ding_1" src="/media/ding_1.wav"></audio>
+<audio id="timer"  src="/media/timer.wav"></audio>
+<audio id="ding_3" src="/media/ding_2.wav"></audio>
 
-<MudPaper>
-	<MudExpansionPanels>
-		<MudExpansionPanel Text="Workoutsteuerung" MaxHeight="350" IsInitiallyExpanded="true">
-			<MudStack Justify="Justify.Center" Spacing="10">
-				<MudGrid Justify="Justify.Center" Style="align-items: center;">
-					<MudGrid Justify="Justify.Center" Style="align-items: center;">
-						<MudItem xs="5">
-							<MudButtonGroup Color="Color.Primary" Size="Size.Large">
-								<MudToggleIconButton @bind-Toggled="@IsToggled" Icon="@Icons.Material.Filled.PlayArrow" Size=Size.Large Color="@Color.Success"
-									 ToggledIcon="@Icons.Material.Filled.Pause" ToggledColor="@Color.Warning" />
-								<MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="@Color.Info" OnClick="@ResetWorkout"></MudIconButton>
-							</MudButtonGroup>
-						</MudItem>
-						<MudSpacer />
-						<MudItem xs="5">
-							<MudText Align="Align.Center" Typo="Typo.h6">@_instruction</MudText>
-							<MudExGradientText Align="Align.Center" Typo="Typo.h6" Palette="@GetGradTextPallette(_elementType, _exerciseState)"></MudExGradientText>
-						</MudItem>
-						<MudSpacer/>
-						<MudItem xs="5">
-							<MudChart ChartOptions="@(new() { ChartPalette = GetChartPalette(_elementType, _exerciseState) })"
-									  ChartType="ChartType.Donut" Width="75px" Height="75px" @bind-SelectedIndex="_index" InputData="@_data">
-									  <CustomGraphics>
-									<text class="donut-inner-text" x="48%" y="52%"
-										  dominant-baseline="middle" text-anchor="middle"
-										  fill="white" font-family="Helvetica" font-size="18">@_timeRemaining</text>
-								</CustomGraphics>
-							</MudChart>
-						</MudItem>
-					</MudGrid>
-				</MudGrid>
-			</MudStack>
-		</MudExpansionPanel>
-	</MudExpansionPanels>
+<MudPaper Class="pa-4" Elevation="1" Rounded="true">
+    <MudExpansionPanels Dense="true" Class="workout-panels">
+        <MudExpansionPanel Text="Workoutsteuerung" MaxHeight="360" IsInitiallyExpanded="true">
+
+            <MudStack Spacing="3">
+
+                <MudGrid AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="workout-grid">
+
+                    <!-- Left: Controls -->
+                    <MudItem xs="12" sm="4" Class="d-flex justify-center justify-sm-start">
+                        <MudButtonGroup Size="Size.Large" Variant="Variant.Filled" DisableElevation="true">
+                            <MudToggleIconButton
+                                @bind-Toggled="@IsToggled"
+                                Icon="@Icons.Material.Filled.PlayArrow"
+                                ToggledIcon="@Icons.Material.Filled.Pause"
+                                Color="@Color.Success"
+                                ToggledColor="@Color.Warning"
+                                Size="Size.Large" />
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Refresh"
+                                Color="@Color.Info"
+                                Size="Size.Large"
+                                OnClick="@ResetWorkout" />
+                        </MudButtonGroup>
+                    </MudItem>
+
+                    <!-- Middle: Instruction -->
+                    <MudItem xs="12" sm="5" Class="text-center">
+                        <MudText Typo="Typo.h6" Class="mb-1">@_instruction</MudText>
+
+                        <MudExGradientText
+                            Align="Align.Center"
+                            Typo="Typo.subtitle2"
+                            Palette="@GetGradTextPallette(_elementType, _exerciseState)">
+                            @_elementType
+                        </MudExGradientText>
+                    </MudItem>
+
+                    <!-- Right: Donut Timer -->
+                    <MudItem xs="12" sm="3" Class="d-flex justify-center justify-sm-end">
+                        <MudChart
+                            Class="workout-donut"
+                            ChartOptions="@(new() { ChartPalette = GetChartPalette(_elementType, _exerciseState) })"
+                            ChartType="ChartType.Donut"
+                            Width="92px"
+                            Height="92px"
+                            @bind-SelectedIndex="_index"
+                            InputData="@_data">
+
+                            <CustomGraphics>
+                                <text class="donut-inner-text"
+                                      x="50%" y="52%"
+                                      dominant-baseline="middle"
+                                      text-anchor="middle"
+                                      fill="white"
+                                      font-family="Helvetica"
+                                      font-size="20">
+                                    @_timeRemaining
+                                </text>
+                            </CustomGraphics>
+                        </MudChart>
+                    </MudItem>
+
+                </MudGrid>
+
+                <!-- Optional: small hint row / status chips -->
+                <MudStack Direction="Row" Spacing="1" Justify="Justify.Center" Class="mt-1">
+                    <MudChip T="WorkoutState" Size="Size.Small" Variant="Variant.Outlined">@Workout?.State</MudChip>
+                    <MudChip T="ExerciseState" Size="Size.Small" Variant="Variant.Outlined">@_exerciseState</MudChip>
+                </MudStack>
+
+            </MudStack>
+
+        </MudExpansionPanel>
+    </MudExpansionPanels>
 </MudPaper>
 
+<style>
+    .workout-grid {
+        gap: 8px;
+    }
+
+    /* Make donut text crisp and centered */
+    .workout-donut .donut-inner-text {
+        font-weight: 700;
+    }
+
+</style>

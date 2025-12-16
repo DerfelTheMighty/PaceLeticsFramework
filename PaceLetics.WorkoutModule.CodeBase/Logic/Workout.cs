@@ -3,15 +3,14 @@ using PaceLetics.WorkoutModule.CodeBase.Interfaces;
 using PaceLetics.WorkoutModule.CodeBase.Models;
 using System.Runtime.CompilerServices;
 
-
 namespace PaceLetics.WorkoutModule.CodeBase.Logic
 {
-    public class Workout : IWorkout
+    public class Workout : IWorkout, IDisposable
     {
         private int _currentElement;
         private int _currentExercise;
         private List<IWorkoutElement> _workoutElements;
-
+        private bool _disposed;
 
         #region public properties
 
@@ -20,9 +19,9 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
         /// </summary>
         public List<IExerciseInfo> Exercises { get; }
 
-        public IReadOnlyCollection<IWorkoutElement> Elements 
+        public IReadOnlyCollection<IWorkoutElement> Elements
         {
-            get 
+            get
             {
                 return _workoutElements.AsReadOnly();
             }
@@ -40,7 +39,6 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
         /// </summary>
         public string Description { get; }
 
-
         public string Imagefile { get; }
 
         /// <summary>
@@ -52,6 +50,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
         /// Time before the first exercise starts
         /// </summary>
         public int PreparationTime { get; }
+
         /// <summary>
         /// Rest time between two exercises
         /// </summary>
@@ -71,6 +70,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
                 }
             }
         }
+
         /// <summary>
         /// The list element containing the currently active exercise
         /// </summary>
@@ -93,26 +93,45 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
 
         #endregion
 
-
         #region Events
+
         /// <summary>
         /// Event is fired when all workout elements are done
         /// </summary>
-        public Action WorkoutFinishedEvent { get; set; }
+        public event Action? WorkoutFinishedEvent;
+
         /// <summary>
         /// Event is fired whenever a workout element is finished or cancelled
         /// </summary>
-        public Action<IWorkoutElement> ElementFinishedEvent { get; set; }
+        public event Action<IWorkoutElement>? ElementFinishedEvent;
+
         /// <summary>
         /// Event is fired when the execution of a new workout element start
         /// </summary>
-        public Action<IWorkoutElement> ElementStartEvent { get; set; }
+        public event Action<IWorkoutElement>? ElementStartEvent;
+
         /// <summary>
         /// Event is fired when the workout is started
         /// </summary>
-        public Action WorkoutStartEvent { get; set; }
+        public event Action? WorkoutStartEvent;
+
         #endregion
 
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            // Ensure we don't keep this Workout alive via element event subscriptions.
+            foreach (var e in _workoutElements)
+                e.FinishedEvent -= OnElementFinished;
+
+            // Stop / dispose timers owned by elements.
+            foreach (var e in _workoutElements)
+                (e as IDisposable)?.Dispose();
+
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// 
@@ -129,13 +148,16 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
             RestTime = definition.RestTime;
             State = WorkoutState.Stop;
             _currentElement = 0;
+
             _workoutElements = new List<IWorkoutElement>();
             _workoutElements.Add(new Rest(PreparationTime, WorkoutElements.Preparation));
+
             foreach (var ex in definition.Exercises)
             {
                 _workoutElements.Add(provider.GetExercise(ex, Level));
                 _workoutElements.Add(new Rest(RestTime, WorkoutElements.Rest));
             }
+
             _workoutElements.RemoveAt(_workoutElements.Count - 1);
             Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
         }
@@ -150,8 +172,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
             RestTime = definition.RestTime;
             State = WorkoutState.Stop;
             _currentElement = 0;
+
             _workoutElements = new List<IWorkoutElement>();
             _workoutElements.Add(new Rest(PreparationTime, WorkoutElements.Preparation));
+
             for (int j = 0; j < rounds; j++)
             {
                 foreach (var ex in definition.Exercises)
@@ -163,6 +187,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
                     }
                 }
             }
+
             _workoutElements.RemoveAt(_workoutElements.Count - 1);
             Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
         }
@@ -174,11 +199,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
         /// </summary>
         public void Start()
         {
-
             if (State == WorkoutState.Stop || State == WorkoutState.Finished)
             {
                 State = WorkoutState.Running;
-                WorkoutStartEvent.Invoke();
+                WorkoutStartEvent?.Invoke();
                 ProcessTimeSlot();
             }
             else if (State == WorkoutState.Pause)
@@ -186,9 +210,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
                 State = WorkoutState.Running;
                 _workoutElements[_currentElement].Start();
             }
-
         }
-
 
         /// <summary>
         /// Pauses the workout by halting the currently active workout element
@@ -200,7 +222,6 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
                 State = WorkoutState.Pause;
                 _workoutElements[_currentElement].Stop();
             }
-
         }
 
         /// <summary>
@@ -213,7 +234,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
                 State = WorkoutState.Stop;
                 _workoutElements[_currentElement].Reset();
                 _workoutElements[_currentElement].FinishedEvent -= OnElementFinished;
-                ElementFinishedEvent.Invoke(_workoutElements[_currentElement]);
+                ElementFinishedEvent?.Invoke(_workoutElements[_currentElement]);
                 CurrentElement = 0;
                 CurrentExercise = 0;
             }
@@ -221,12 +242,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
 
         #endregion
 
-
         #region Private methos
 
         private void ProcessTimeSlot()
         {
-
             if (_currentElement < _workoutElements.Count)
             {
                 _workoutElements[_currentElement].FinishedEvent += OnElementFinished;
@@ -247,13 +266,13 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
             CurrentExercise = 0;
         }
 
-
-
         private void OnElementFinished()
         {
             _workoutElements[_currentElement].FinishedEvent -= OnElementFinished;
+
             if (_workoutElements[_currentElement].Type == WorkoutElements.Exercise)
                 CurrentExercise++;
+
             ElementFinishedEvent?.Invoke(_workoutElements[_currentElement]);
             CurrentElement++;
             ProcessTimeSlot();
@@ -261,5 +280,4 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
 
         #endregion
     }
-
 }
