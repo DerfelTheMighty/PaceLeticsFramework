@@ -12,23 +12,33 @@
 <PageTitle>Dashboard</PageTitle>
 
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
-   
-    @if (_isLoading){
-        <LoadingScreen Label="Deine Daten werden geladen..."/>
+    @if (_isLoading)
+    {
+        <LoadingScreen Label="Deine Daten werden geladen..." />
     }
     else
     {
-        <h1>Dashboard</h1>
-        <MudStack Spacingv="3">
-            <h3>Hallo @_name</h3>
-            <MudText>
-                Hier findest du in Zukunft aktuelle Neuigkeiten zum Kurs, Infos zu kommenden Trainingseinheiten und Trainingsvorschläge.
+        <PageHeader Title="Dashboard"
+                    Subtitle="Willkommen bei PaceLetics" />
+
+        <MudDivider Class="my-4" />
+
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">
+                Hallo @_name
+            </MudText>
+
+            <MudText Typo="Typo.body1" Style="opacity:.8;">
+                Hier findest du in Zukunft aktuelle Neuigkeiten zum Kurs,
+                Infos zu kommenden Trainingseinheiten und Trainingsvorschläge.
             </MudText>
         </MudStack>
     }
+
 </MudContainer>
+
     
 
 

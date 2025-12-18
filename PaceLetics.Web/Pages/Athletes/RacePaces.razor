@@ -15,51 +15,55 @@
 @inject IVdotService vdotService
 @inject IPaceModelProvider pmProvider
 
-<PageTitle>Meine Laufdaten</PageTitle>
+<PageTitle>Deine Laufdaten</PageTitle>
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
-        <LoadingScreen Label="Deine Daten werden geladen..."/>
+        <LoadingScreen Label="Deine Daten werden geladen..." />
     }
     else
     {
-        <h1>Meine Laufdaten</h1>
+        <PageHeader Title="Deine Laufdaten"
+                    Subtitle="Hier kannst du einen neuen Einstufungslauf eintragen oder den vorhandenen editieren." />
 
-        <MudStack Spacingv="3">
-            <MudText>
-                Hier kannst du einen neuen Einstufungslauf eintragen oder den vorhandenen editieren.
-            </MudText>
-            @if(@_athlete.ActiveReferenceResult == null)
+        <MudDivider Class="my-4" />
+
+        <MudStack Spacing="3">
+
+            @if (_athlete?.ActiveReferenceResult is null)
             {
-                <MudAlert Severity="Severity.Warning">
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
                     Füge einen aktuellen Einstufungslauf hinzu, damit wir deine Trainingsbereiche für dich ermitteln können.
                 </MudAlert>
-                <MudButton OnClick="AddAthlete">
-                    <MudExIcon Icon="@Icons.Material.Filled.AddCircle" Size="Size.Large" Color="MudExColor.Warning" />
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Warning"
+                           StartIcon="@Icons.Material.Filled.AddCircle"
+                           OnClick="AddAthlete">
+                    Einstufungslauf hinzufügen
                 </MudButton>
             }
             else
             {
                 <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
+
                 @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
                 {
-                    <MudAlert Severity="Severity.Info">
-                        Dein Einstufungslauf liegt schon mehr als 6 Monate zurück. Für ein optimales Training solltest du einen aktuelleren Referenzlauf verwenden.
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        Dein Einstufungslauf liegt schon mehr als 6 Monate zurück. Für ein optimales Training
+                        solltest du einen aktuelleren Referenzlauf verwenden.
                     </MudAlert>
                 }
 
-                
-                <VdotCard Data="@_vdotData"></VdotCard>
+                <VdotCard Data="@_vdotData" />
             }
-                
-                
-        
 
         </MudStack>
     }
 
 </MudContainer>
+
 
 

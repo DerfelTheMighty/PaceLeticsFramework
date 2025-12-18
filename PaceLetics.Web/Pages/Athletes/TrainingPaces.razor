@@ -11,39 +11,28 @@
 @inject IDialogService dialogService
 @inject IJSRuntime JSRuntime
 
-<PageTitle>Meine Pacebereiche</PageTitle>
+<PageTitle>Deine Pacebereiche</PageTitle>
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
-
+<MudContainer Class="pt-6 px-8 pb-8" MaxWidth="MaxWidth.Small">
     @if (_isLoading)
     {
         <LoadingScreen Label="Deine Daten werden geladen..." />
     }
     else
     {
-        
-        <MudPaper Class="pa-5 rounded-xl mb-6" Elevation="2">
-            <MudStack Spacing="1">
-                <MudText Typo="Typo.h4" Class="fw-bold">
-                    Meine Pacebereiche
-                </MudText>
+        <PageHeader Title="Deine Pacebereiche"
+                    Subtitle="Hier findest du deine optimalen Trainingspacebereiche basierend auf deinem VDOT-Wert." />
 
-                <MudText Typo="Typo.body1">
-                    Deine berechneten Trainingsbereiche im Überblick.
-                </MudText>
-            </MudStack>
-        </MudPaper>
+        <MudDivider Class="my-4" />
 
         <MudStack Spacing="3">
-
             @if (_athlete?.Vdot < 1)
             {
-                <MudAlert Severity="Severity.Warning">
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
                     Füge einen Einstufungslauf hinzu, damit wir deine optimale Trainingspace bestimmen können.
                 </MudAlert>
             }
 
-           
             <PaceInfo EPaceLow="@_lowerPace.Easy"
                       EPaceHigh="@_upperPace.Easy"
                       MPaceLow="@_lowerPace.Marathon"
@@ -54,8 +43,6 @@
                       IPaceHigh="@_upperPace.Intervall"
                       RPaceLow="@_lowerPace.Repetition"
                       RPaceHigh="@_upperPace.Repetition" />
-
         </MudStack>
     }
-
 </MudContainer>

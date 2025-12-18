@@ -1,0 +1,44 @@
+﻿@using MudBlazor
+
+<MudStack Class="pl-pageheader"
+          Row="true"
+          AlignItems="AlignItems.Center"
+          Justify="Justify.SpaceBetween"
+          Spacing="2">
+
+    <MudStack Spacing="0">
+        <MudText Typo="Typo.h5">@Title</MudText>
+
+        @if (!string.IsNullOrWhiteSpace(Subtitle))
+        {
+            <MudText Typo="Typo.subtitle2"
+                     Style="opacity:.65;">
+                @Subtitle
+            </MudText>
+        }
+    </MudStack>
+
+
+    @if (Actions is not null)
+    {
+        <MudStack Row="true"
+                  Spacing="1"
+                  AlignItems="AlignItems.Center"
+                  Wrap="Wrap.Wrap">
+            @Actions
+        </MudStack>
+    }
+
+</MudStack>
+
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+}

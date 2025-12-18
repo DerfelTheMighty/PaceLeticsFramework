@@ -12,9 +12,9 @@
 @inject IAthleteData AthleteData
 @inject IDialogService DialogService
 
-<PageTitle>Mein nächstes Intervalltraining</PageTitle>
+<PageTitle>Dein nächstes Intervalltraining</PageTitle>
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Medium">
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
@@ -22,17 +22,10 @@
     }
     else
     {
-        <MudPaper Class="pa-5 rounded-xl mb-6" Elevation="2">
-            <MudStack Spacing="1">
-                <MudText Typo="Typo.h4" Class="fw-bold">
-                    Mein nächstes Intervalltraining
-                </MudText>
+        <PageHeader Title="Dein nächstes Intervalltraining"
+                    Subtitle="Diese Einheit ist anhand deines aktuellen Pace-Modells berechnet.." />
 
-                <MudText Typo="Typo.body1">
-                    Diese Einheit ist anhand deines aktuellen Pace-Modells berechnet.
-                </MudText>
-            </MudStack>
-        </MudPaper>
+        <MudDivider Class="my-4" />
 
         <MudStack Spacing="3">
 

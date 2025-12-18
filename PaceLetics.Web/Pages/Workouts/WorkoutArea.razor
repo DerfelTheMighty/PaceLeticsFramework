@@ -4,32 +4,47 @@
 
 @inject IWorkoutProvider woProvider;
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
+<PageTitle>Deine Workout Area</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
-        <LoadingScreen Label="Deine Daten werden geladen..."/>
+        <LoadingScreen Label="Deine Daten werden geladen..." />
     }
     else
     {
-        <h1>Workout Area</h1>
-        <MudText>
-            Willkommen in deiner Workoutarea! Hier findest du eine stetig wachsende Auswahl an verschiedenen Workout. 
-            Leg los und betrete einen der Workoutrooms.
-            
-        </MudText>
-        
+        <PageHeader Title="Workout Area"
+                    Subtitle="Wähle ein Workout und leg los." />
+
+        <MudDivider Class="my-4" />
+
         <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
-            <MudAlert Severity="Severity.Normal">
-                Du kannst nun selbst festlegen, wie oft sich die einzelnen Übungen oder das ganze Workout wiederholen sollen.
-            </MudAlert>
-            @foreach(var item in _workoutPrevs){
-                <PaceLetics.WorkoutModule.Components.WorkoutPreviewElement Workout="@item"/>
+
+            <MudText Typo="Typo.body1" Style="opacity:.8;">
+                Willkommen in deiner Workoutarea! Hier findest du eine stetig wachsende Auswahl an verschiedenen Workouts.
+                Leg los und starte ein Workout.
+            </MudText>
+
+            @if (_workoutPrevs is null || !_workoutPrevs.Any())
+            {
+                <MudText Typo="Typo.body2" Style="opacity:.7;">
+                    Noch keine Workouts verfügbar.
+                </MudText>
             }
+            else
+            {
+                @foreach (var item in _workoutPrevs)
+                {
+                    <PaceLetics.WorkoutModule.Components.WorkoutPreviewElement Workout="@item" />
+                }
+            }
+
         </MudStack>
-       
     }
- </MudContainer>
+
+</MudContainer>
+
 
 
 

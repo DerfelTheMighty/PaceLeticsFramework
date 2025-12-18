@@ -58,11 +58,9 @@
 
             _isToggled = value;
 
-            // Start/Stop auf Workout auslösen
             if (_isToggled) StartWorkout();
             else StopWorkout();
 
-            // UI aktualisieren
             InvokeAsync(StateHasChanged);
         }
     }
@@ -83,7 +81,6 @@
 
     protected override void OnParametersSet()
     {
-        // Wenn der Parent ein neues Workout reinreicht -> altes sauber abklemmen
         if (!ReferenceEquals(_subscribedWorkout, Workout))
         {
             UnsubscribeFromWorkout(_subscribedWorkout);
@@ -123,7 +120,6 @@
         w.ElementStartEvent -= OnElementStart;
         w.WorkoutFinishedEvent -= OnWorkoutFinished;
 
-        // Falls gerade ein Element aktiv war, sicherheitshalber dessen Events lösen
         try
         {
             if (w.Elements != null && w.CurrentElement >= 0 && w.CurrentElement < w.Elements.Count)
@@ -140,7 +136,7 @@
         }
         catch
         {
-            // UI cleanup soll nie crashen
+  
         }
     }
 
@@ -150,7 +146,6 @@
         _subscribedWorkout = null;
     }
 
-    // ===== Workout event handlers =====
 
     private async void OnProgressChanged(int remaining)
     {
@@ -158,7 +153,6 @@
         {
             _timeRemaining = remaining;
 
-            // Countdown Beep (wie bei dir)
             if (remaining == 3)
                 JSRuntime.InvokeVoidAsync("PlayTimer");
 
@@ -168,7 +162,6 @@
 
     private async void OnElementStart(IWorkoutElement el)
     {
-        // erst Typ übernehmen, dann Instruction berechnen
         _elementType = el.Type;
 
         el.ProgressChangedEvent += OnProgressChanged;
@@ -210,13 +203,12 @@
         InvokeAsync(() =>
         {
             _isToggled = false;
-            Workout?.Reset(); // wie bei dir (wenn du das im Flow willst)
+            Workout?.Reset(); 
             JSRuntime.InvokeVoidAsync("PlayDing_3");
             StateHasChanged();
         });
     }
 
-    // ===== Helpers (aus deinem WorkoutControl übernommen) =====
 
     protected static string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
     {
