@@ -4,31 +4,45 @@
 
 @inject IJSRuntime JS
 
-<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-6">
+<PageTitle>Trainingsplanung</PageTitle>
 
-    <MudText Typo="Typo.h4" GutterBottom>
-        @Plan.Name
-    </MudText>
-    <div style="min-width:520px; padding: 0 12px;">
-    <MudTimeline>
-        @foreach (var session in Plan.Sessions)
-        {
-            var isNext = session.Id == _nextSessionId;
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+    @if (_isLoading)
+    {
+        <LoadingScreen Label="Deine Daten werden geladen..." />
+    }
+    else
+    {
+        <PageHeader Title="Dein Trainingsplan"
+                    Subtitle="Der Trainingsplan für das laufende Sportsemester.." />
 
-                <MudTimelineItem id="@(isNext ? "next-session" : null)" 
+        <MudDivider Class="my-4" />
+  
+        <div style="overflow-x:auto; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
+            <!-- width:max-content sorgt dafür, dass die Timeline nicht zusammengedrückt wird -->
+            <div style="width:max-content; height:max-content" >
+                <MudTimeline TimelineOrientation="TimelineOrientation.Vertical">
+                    @foreach (var session in Plan.Sessions)
+                    {
+                        var isNext = session.Id == _nextSessionId;
+
+                        <MudTimelineItem id="@(isNext ? "next-session" : null)" 
                             Color="@(isNext? Color.Secondary: Color.Primary)"
                             Elevation="@(isNext ? 26 : 10)"
                             Size="@(isNext ? Size.Large: Size.Medium)"
                             TimelineAlign="@(session.Date.Day % 2 == 0 ? TimelineAlign.Start : TimelineAlign.End)"
                             Style="width:100%;">
-                <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
-            </MudTimelineItem>
-        }
-    </MudTimeline>
-    </div>
+                            <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
+                         </MudTimelineItem>
+                    }
+                </MudTimeline>
+            </div>
+        </div>
+ }
 </MudContainer>
 
 @code {
+    private bool _isLoading = true;
     private TrainingPlan Plan = default!;
     private string? _nextSessionId;
 
@@ -44,6 +58,7 @@
             .OrderBy(s => s.Date)
             .Select(s => s.Id)
             .FirstOrDefault();
+        _isLoading = false;
     }
 
 
@@ -54,4 +69,4 @@
             await JS.InvokeVoidAsync("scrollToNextSession");
         }
     }
-}
+    }
