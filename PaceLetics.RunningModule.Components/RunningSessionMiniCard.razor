@@ -1,8 +1,6 @@
 ﻿@using MudBlazor
 @using PaceLetics.RunningModule.CodeBase.Models
-
 @namespace PaceLetics.RunningModule.Components
-
 
 <MudCard Elevation="0"
          Style="
@@ -23,24 +21,23 @@
                 @TypeLabel
             </MudChip>
 
-            <MudText Typo="Typo.caption" Color="Color.Secondary">
+            <MudText Typo="Typo.caption" Color="@TextColor">
                 @Session.Date.ToString("dd.MM.yyyy")
             </MudText>
 
-
-  
-            <MudText Typo="Typo.subtitle2"
+			<MudText Typo="Typo.subtitle2" Color="@TextColor"
                      Style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
                 @Session.Name
             </MudText>
 
-            <MudText Typo="Typo.caption" Color="Color.Secondary">
+            <MudText Typo="Typo.caption" Color="@TextColor">
                 @($"{Session.TotalDistance / 1000.0:0.0} km")
             </MudText>
 
         </MudStack>
 
     </MudCardContent>
+
 </MudCard>
 
 @code {
@@ -52,5 +49,8 @@
 
     private string TypeLabel => IsInterval ? "Interval" : "Run";
 
+	private Color TextColor => IsHighlighted ? Color.Primary : Color.Inherit;
+
     private Color TypeColor => IsInterval ? Color.Error : Color.Success;
+
 }

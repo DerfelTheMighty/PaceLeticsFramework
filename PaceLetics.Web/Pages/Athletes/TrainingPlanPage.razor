@@ -1,72 +1,193 @@
 ﻿@page "/Athletes/trainingplanpage"
+@using AthleteDataAccessLibrary.Contracts
+@using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.RunningModule.CodeBase.Models
 @using PaceLetics.RunningModule.Components
-
 @inject IJSRuntime JS
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+@inject IAthleteData AthleteData
+@inject IDialogService dialogService
 
-<PageTitle>Trainingsplanung</PageTitle>
+<PageHeader Title="Dein Trainingsplan"
+            Subtitle="Der Trainingsplan für das laufende Sportsemester.." />
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
-    @if (_isLoading)
-    {
-        <LoadingScreen Label="Deine Daten werden geladen..." />
-    }
-    else
-    {
-        <PageHeader Title="Dein Trainingsplan"
-                    Subtitle="Der Trainingsplan für das laufende Sportsemester.." />
+<MudDivider Class="my-4" />
 
-        <MudDivider Class="my-4" />
-  
-        <div style="overflow-x:auto; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
-            <!-- width:max-content sorgt dafür, dass die Timeline nicht zusammengedrückt wird -->
-            <div style="width:max-content; height:max-content" >
-                <MudTimeline TimelineOrientation="TimelineOrientation.Vertical">
-                    @foreach (var session in Plan.Sessions)
-                    {
-                        var isNext = session.Id == _nextSessionId;
+<!-- Timeline -->
+<div style="height: calc(100vh - 220px); overflow:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
+    <MudTimeline TimelineOrientation="TimelineOrientation.Vertical"
+                 TimelinePosition="TimelinePosition.Left">
 
-                        <MudTimelineItem id="@(isNext ? "next-session" : null)" 
-                            Color="@(isNext? Color.Secondary: Color.Primary)"
-                            Elevation="@(isNext ? 26 : 10)"
-                            Size="@(isNext ? Size.Large: Size.Medium)"
-           
-                            Style="width:100%;">
-                            <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
-                         </MudTimelineItem>
-                    }
-                </MudTimeline>
-            </div>
+        @foreach (var session in Plan.Sessions)
+        {
+            var isNext = session.Id == _nextSessionId;
+
+            <MudTimelineItem id="@(isNext ? "next-session" : null)"
+                             Color="@(isNext ? Color.Primary : Color.Surface)"
+                             Elevation="@(isNext ? 26 : 10)"
+                             Size="@(isNext ? Size.Large : Size.Medium)"
+                             Style="width:100%;">
+
+                <div style="cursor:pointer;"
+                     @onclick="() => OpenDetails(session.Id)">
+                    <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
+                </div>
+
+            </MudTimelineItem>
+        }
+    </MudTimeline>
+</div>
+
+<!-- Overlay (klick zum schließen) -->
+@if (_detailsOpen)
+{
+    <div style="position:fixed; inset:0; background: rgba(0,0,0,0.35); z-index:1300;"
+         @onclick="CloseDetails">
+    </div>
+}
+
+<!-- Bottom Sheet -->
+<div style="
+     position:fixed;
+     left:0; right:0; bottom:0;
+     z-index:1301;
+     transform: translateY(@(_detailsOpen ? "0" : "105%"));
+     transition: transform 180ms ease;
+     pointer-events:@(_detailsOpen ? "auto" : "none");
+">
+    <MudPaper Elevation="12"
+              Style="height:min(70vh, 640px); width:100%; border-top-left-radius:16px; border-top-right-radius:16px; overflow:hidden;">
+
+        <!-- Header -->
+        <div style="padding:12px 16px;">
+            <div style="width:44px; height:4px; border-radius:999px; background: rgba(255,255,255,0.25); margin:0 auto 10px auto;"></div>
+
+            <MudStack Row="true" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Style="width:100%;">
+                <MudText Typo="Typo.h6">@(_resolved?.Name ?? "Session")</MudText>
+                <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseDetails" />
+            </MudStack>
+
+            @if (_resolved is not null)
+            {
+                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                    @_resolved.Date.ToString("dd.MM.yyyy") · @($"{_resolved.TotalDistance / 1000.0:0.0} km")
+                </MudText>
+            }
         </div>
- }
-</MudContainer>
+
+        <MudDivider />
+
+        <!-- Content scrollt -->
+        <div style="height: calc(100% - 78px); overflow:auto; padding:12px 16px;">
+            @if (_resolved is null)
+            {
+                <MudText Color="Color.Secondary">Keine Details geladen.</MudText>
+            }
+            else
+            {
+                <MudStack Spacing="2">
+                    @foreach (var rs in _resolved.Segments)
+                    {
+                        <MudPaper Elevation="0" Class="pa-3" Style="background-color: rgba(255,255,255,0.03);">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.subtitle2">@rs.Segment.Type</MudText>
+
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @(rs.Segment.Distance > 0 ? $"{rs.Segment.Distance} m" : "—")
+                                    @(" · ")
+                                    @(rs.Pace is null ? "—" : $"{rs.Pace:mm\\:ss}/km")
+                                </MudText>
+
+                                @if (rs.SegmentTime is not null || rs.LapTime is not null)
+                                {
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @(rs.SegmentTime is null ? "" : $"Segment: {rs.SegmentTime:hh\\:mm\\:ss}".Trim())
+                                        @(rs.SegmentTime is not null && rs.LapTime is not null ? " · " : "")
+                                        @(rs.LapTime is null ? "" : $"Lap: {rs.LapTime:mm\\:ss}")
+                                    </MudText>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+                </MudStack>
+            }
+        </div>
+    </MudPaper>
+</div>
 
 @code {
     private bool _isLoading = true;
     private TrainingPlan Plan = default!;
     private string? _nextSessionId;
+    private AthleteModel? _athlete;
 
-    protected override void OnInitialized()
+    private bool _detailsOpen;
+    private ResolvedRunningSession? _resolved;
+
+    // TODO: ersetze das durch deinen echten PaceModel-Provider (AthleteState, DI, etc.)
+    private PaceModel _paceModel = default!;
+
+    protected override async Task OnInitializedAsync()
     {
         var jsonPath = "wwwroot/data/intervalls.json";
         var sessions = RunningSessionFactory.Load(jsonPath);
         Plan = new TrainingPlan("ws25-26", "Winterplan 2025/26", sessions);
 
-        var today = DateTime.Today; 
+        var today = DateTime.Today;
         _nextSessionId = Plan.Sessions
             .Where(s => s.Date.Date >= today)
             .OrderBy(s => s.Date)
             .Select(s => s.Id)
             .FirstOrDefault();
+
+        try
+        {
+            var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+            var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
+            if (!string.IsNullOrEmpty(userID))
+            {
+                _athlete = await AthleteData.GetAthlete(userID);
+
+                if (_athlete?.PaceModel is not null)
+                {
+                    _paceModel = _athlete.PaceModel;
+                }
+            }
+        }
+        catch
+        {
+            await dialogService.ShowInformationAsync(
+                "Achtung",
+                "Es gab ein Problem beim Laden deiner Daten. Bitte versuche es später erneut.",
+                Icons.Material.Filled.Error);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+
         _isLoading = false;
     }
-
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender && _nextSessionId != null)
-        {
             await JS.InvokeVoidAsync("scrollToNextSession");
-        }
     }
+
+    private void OpenDetails(string sessionId)
+    {
+        var session = Plan.Sessions.FirstOrDefault(s => s.Id == sessionId);
+        if (session is null) return;
+
+        _resolved = RunningSessionResolver.Resolve(session, _paceModel);
+        _detailsOpen = true;
     }
+
+    private void CloseDetails()
+    {
+        _detailsOpen = false;
+    }
+}
