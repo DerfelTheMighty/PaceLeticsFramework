@@ -30,7 +30,7 @@
                             Color="@(isNext? Color.Secondary: Color.Primary)"
                             Elevation="@(isNext ? 26 : 10)"
                             Size="@(isNext ? Size.Large: Size.Medium)"
-                            TimelineAlign="@(session.Date.Day % 2 == 0 ? TimelineAlign.Start : TimelineAlign.End)"
+           
                             Style="width:100%;">
                             <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
                          </MudTimelineItem>

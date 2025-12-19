@@ -4,27 +4,31 @@
 @namespace PaceLetics.RunningModule.Components
 
 
-<MudCard Elevation="@(IsHighlighted ? 8 : 2)"
-         Style="min-width:320px; width:100%; overflow:hidden; margin-left:8px;">
+<MudCard Elevation="0"
+         Style="
+            background-color: transparent;
+            border: none;
+            min-width:320px;
+            width:100%;
+            margin-left:8px;
+         ">
     <MudCardContent Style="padding:12px 16px;">
 
-        <MudStack>
+        <MudStack Spacing="1">
 
-            <MudStack Row="true"
-                      AlignItems="AlignItems.Center"
-                      JustifyContent="JustifyContent.SpaceBetween">
-                <MudText Typo="Typo.caption" Color="Color.Secondary">
-                    @Session.Date.ToString("dd.MM.yyyy")
-                </MudText>
+            <MudChip T="string" Size="Size.Small"
+                     Variant="Variant.Outlined"
+                     Color="@TypeColor"
+                     Style="width:fit-content;">
+                @TypeLabel
+            </MudChip>
 
-                <MudChip T="string" Size="Size.Small"
-                         Variant="Variant.Outlined"
-                         Color="@TypeColor">
-                    @TypeLabel
-                </MudChip>
-            </MudStack>
+            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                @Session.Date.ToString("dd.MM.yyyy")
+            </MudText>
 
 
+  
             <MudText Typo="Typo.subtitle2"
                      Style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
                 @Session.Name
