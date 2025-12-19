@@ -1,9 +1,5 @@
-﻿using System.Text;
-using System.Text.Json;
-using System.Globalization;
-using PaceLetics.CoreModule.Infrastructure.Models;
-
-namespace Paceletics.Domain.Training
+﻿using System.Text.Json;
+namespace PaceLetics.RunningModule.CodeBase.Models
 {
     /// <summary>
     /// JSON-Definition eines Intervalltrainings (ohne konkrete Paces).
@@ -12,26 +8,15 @@ namespace Paceletics.Domain.Training
     {
         public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-
         public List<int> Distances { get; set; } = new();
         public List<int>? Recovery { get; set; } = new();
-
-        /// <summary>
-        /// Pace-Bereiche/Keys ("E Pace", "M Pace", "T Pace", "I Pace", "R Pace").
-        /// Wenn Count == 1, wird der Eintrag auf alle Intervalle repliziert.
-        /// </summary>
         public List<string> PaceKeys { get; set; } = new();
-
         public int Sets { get; set; } = 1;
         public int SetRecovery { get; set; } = 0;
-
-        /// <summary>
-        /// Datum, an dem diese Einheit geplant ist.
-        /// </summary>
         public DateTime Date { get; set; }
     }
 
-    public static class IntervallTrainingFactory
+    public static class IntervallSessionFactory
     {
         private static readonly JsonSerializerOptions JsonOptions = new()
         {
@@ -39,7 +24,7 @@ namespace Paceletics.Domain.Training
             WriteIndented = true
         };
 
-        public static IReadOnlyList<IntervallTraining> LoadFromJsonFile(string filePath)
+        public static IReadOnlyList<IntervallSession> LoadFromJsonFile(string filePath)
         {
             if (filePath == null) throw new ArgumentNullException(nameof(filePath));
             if (!File.Exists(filePath))
@@ -64,7 +49,7 @@ namespace Paceletics.Domain.Training
             }
         }
 
-        public static IntervallTraining CreateFromDefinition(IntervallTrainingDefinition def)
+        public static IntervallSession CreateFromDefinition(IntervallTrainingDefinition def)
         {
             if (def == null) throw new ArgumentNullException(nameof(def));
             if (def.Distances == null || def.Distances.Count == 0)
@@ -74,7 +59,6 @@ namespace Paceletics.Domain.Training
             var recovery = def.Recovery ?? new List<int>();
             var paceKeys = def.PaceKeys ?? new List<string>();
 
-            // 1 PaceKey → für alle Intervalle verwenden
             if (paceKeys.Count == 1 && distances.Count > 1)
             {
                 var key = paceKeys[0];
@@ -84,7 +68,7 @@ namespace Paceletics.Domain.Training
             if (paceKeys.Count != distances.Count)
                 throw new ArgumentException("PaceKeys.Count must match Distances.Count (or be 1).", nameof(def));
 
-            return new IntervallTraining(
+            return new IntervallSession(
                 def.Id,
                 def.Name,
                 def.Date,
@@ -97,36 +81,18 @@ namespace Paceletics.Domain.Training
         }
     }
 
-    /// <summary>
-    /// Intervall-Training-Template, das mit einem PaceModel "scharf" gemacht werden kann.
-    /// </summary>
-    public sealed class IntervallTraining
+    public sealed class IntervallSession : RunningSession
     {
-        public string Id { get; }
-        public string Name { get; }
-
-        /// <summary>Geplantes Datum der Einheit.</summary>
-        public DateTime Date { get; }
-
         public IReadOnlyList<int> Distances { get; }
         public IReadOnlyList<int> Recovery { get; }
-        public IReadOnlyList<string> PaceKeys => _paceKeys.AsReadOnly();
-
-        public IReadOnlyList<TimeSpan> Paces => _paces.AsReadOnly();
-        public IReadOnlyList<TimeSpan> IntervallTime => _intervalTimes.AsReadOnly();
-        public IReadOnlyList<TimeSpan> LabTime => _lapTimes.AsReadOnly();
+        public IReadOnlyList<string> PaceKeys { get; }
 
         public int Sets { get; }
         public int SetRecovery { get; }
 
-        public PaceModel? AppliedPaceModel { get; private set; }
+        private readonly IReadOnlyList<RunningSegment> _sequence;
 
-        private readonly List<string> _paceKeys;
-        private readonly List<TimeSpan> _paces = new();
-        private readonly List<TimeSpan> _intervalTimes = new();
-        private readonly List<TimeSpan> _lapTimes = new();
-
-        public IntervallTraining(
+        public IntervallSession(
             string id,
             string name,
             DateTime date,
@@ -134,130 +100,67 @@ namespace Paceletics.Domain.Training
             IReadOnlyList<int> recovery,
             IReadOnlyList<string> paceKeys,
             int sets,
-            int setRecovery)
+            int setRecovery,
+            int? warmupDistance = null,
+            int? cooldownDistance = null)
+            : base(id, name, date, warmupDistance, cooldownDistance)
         {
-            if (string.IsNullOrWhiteSpace(id))
-                throw new ArgumentException("Id must not be empty.", nameof(id));
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name must not be empty.", nameof(name));
+            if (distances is null) throw new ArgumentNullException(nameof(distances));
+            if (recovery is null) throw new ArgumentNullException(nameof(recovery));
+            if (paceKeys is null) throw new ArgumentNullException(nameof(paceKeys));
+            if (distances.Count == 0) throw new ArgumentException("Distances must not be empty.", nameof(distances));
+            if (sets <= 0) throw new ArgumentOutOfRangeException(nameof(sets), "Sets must be >= 1.");
+            if (setRecovery < 0) throw new ArgumentOutOfRangeException(nameof(setRecovery), "SetRecovery must be >= 0.");
 
-            if (distances == null) throw new ArgumentNullException(nameof(distances));
-            if (recovery == null) throw new ArgumentNullException(nameof(recovery));
-            if (paceKeys == null) throw new ArgumentNullException(nameof(paceKeys));
+            if (!(recovery.Count == 0 || recovery.Count == distances.Count || recovery.Count == distances.Count - 1))
+                throw new ArgumentException("Recovery.Count must be 0, Distances.Count or Distances.Count - 1.", nameof(recovery));
 
-            if (distances.Count == 0)
-                throw new ArgumentException("At least one interval distance is required.", nameof(distances));
+            var pk = paceKeys.Count == 1
+                ? Enumerable.Repeat(paceKeys[0], distances.Count).ToList()
+                : paceKeys.ToList();
 
-            if (paceKeys.Count != distances.Count)
-                throw new ArgumentException("PaceKeys.Count must match Distances.Count.", nameof(paceKeys));
-
-            if (!(recovery.Count == distances.Count || recovery.Count == distances.Count - 1 || recovery.Count == 0))
-                throw new ArgumentException(
-                    "Recovery.Count must be 0, Distances.Count or Distances.Count - 1.", nameof(recovery));
-
-            if (sets <= 0)
-                throw new ArgumentOutOfRangeException(nameof(sets), "Sets must be >= 1.");
-            if (setRecovery < 0)
-                throw new ArgumentOutOfRangeException(nameof(setRecovery), "SetRecovery must be >= 0.");
-
-            Id = id;
-            Name = name;
-            Date = date;
-            Sets = sets;
-            SetRecovery = setRecovery;
+            if (pk.Count != distances.Count)
+                throw new ArgumentException("PaceKeys.Count must match Distances.Count (or be 1).", nameof(paceKeys));
 
             Distances = distances.ToList().AsReadOnly();
             Recovery = recovery.ToList().AsReadOnly();
-            _paceKeys = paceKeys.ToList();
+            PaceKeys = pk.AsReadOnly();
+
+            Sets = sets;
+            SetRecovery = setRecovery;
+
+            _sequence = BuildSequence().AsReadOnly();
         }
 
-        public void ApplyPaceModel(PaceModel paceModel)
+        public override IReadOnlyList<RunningSegment> Sequence => _sequence;
+
+        public override int TotalDistance => _sequence.Sum(s => s.Distance);
+
+        private List<RunningSegment> BuildSequence()
         {
-            if (paceModel == null) throw new ArgumentNullException(nameof(paceModel));
+            var segments = new List<RunningSegment>();
 
-            AppliedPaceModel = paceModel;
-            _paces.Clear();
-            _intervalTimes.Clear();
-            _lapTimes.Clear();
+            if (WarmupDistance is int wu && wu > 0)
+                segments.Add(new(SegmentType.Warmup, wu, "E Pace"));
 
-            for (int i = 0; i < Distances.Count; i++)
+            for (int s = 0; s < Sets; s++)
             {
-                var dist = Distances[i];
-                var key = _paceKeys[i]; // "E Pace", "M Pace", "T Pace", "I Pace", "R Pace"
-
-                var pace = paceModel.GetPace(key);
-                _paces.Add(pace);
-
-                var intervalSeconds = dist * pace.TotalSeconds / 1000.0;
-                var intervalTime = TimeSpan.FromSeconds(Math.Round(intervalSeconds));
-                _intervalTimes.Add(intervalTime);
-
-                if (dist > 400)
-                {
-                    var lapSeconds = 400 * pace.TotalSeconds / 1000.0;
-                    _lapTimes.Add(TimeSpan.FromSeconds(Math.Round(lapSeconds)));
-                }
-                else
-                {
-                    _lapTimes.Add(intervalTime);
-                }
-            }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"Intervall Training: {Name} ({Id})");
-            sb.AppendLine($"Datum: {Date:yyyy-MM-dd}");
-            sb.AppendLine($"Sets: {Sets}, Erholung zwischen Sets: {SetRecovery}m");
-
-            if (!_paces.Any())
-            {
-                sb.AppendLine("Hinweis: Es wurde noch kein PaceModel angewendet (ApplyPaceModel).");
-                sb.AppendLine("Template:");
-                sb.AppendLine("Intervall | Distanz | PaceKey   | Erholung");
-
                 for (int i = 0; i < Distances.Count; i++)
                 {
-                    string recoveryText = i < Recovery.Count && Recovery.Count > 0
-                        ? $"{Recovery[i]}m"
-                        : "N/A";
+                    segments.Add(new(SegmentType.Intervall, Distances[i], PaceKeys[i]));
 
-                    sb.AppendLine(
-                        $"{i + 1,8} | " +
-                        $"{Distances[i],7}m | " +
-                        $"{_paceKeys[i],-9} | " +
-                        $"{recoveryText}");
+                    if (i < Recovery.Count)
+                        segments.Add(new(SegmentType.Recovery, Recovery[i], "E Pace"));
                 }
 
-                return sb.ToString();
+                if (s < Sets - 1 && SetRecovery > 0)
+                    segments.Add(new(SegmentType.SetRecovery, SetRecovery, "E Pace"));
             }
 
-            sb.AppendLine("Intervall | Distanz | PaceKey   | Pace       | Intervallzeit | Labzeit     | Erholung");
+            if (CooldownDistance is int cd && cd > 0)
+                segments.Add(new(SegmentType.Cooldown, cd, "E Pace"));
 
-            for (int i = 0; i < Distances.Count; i++)
-            {
-                var distance = Distances[i];
-                var key = _paceKeys[i];
-                var pace = _paces[i].ToString(@"mm\:ss", CultureInfo.InvariantCulture);
-                var interval = _intervalTimes[i].ToString(@"mm\:ss", CultureInfo.InvariantCulture);
-                var lap = _lapTimes[i].ToString(@"mm\:ss", CultureInfo.InvariantCulture);
-
-                string recoveryText = i < Recovery.Count && Recovery.Count > 0
-                    ? $"{Recovery[i]}m"
-                    : "N/A";
-
-                sb.AppendLine(
-                    $"{i + 1,8} | " +
-                    $"{distance,7}m | " +
-                    $"{key,-9} | " +
-                    $"{pace,9} min/km | " +
-                    $"{interval,13} | " +
-                    $"{lap,10} | " +
-                    $"{recoveryText}");
-            }
-
-            return sb.ToString();
+            return segments;
         }
     }
 }

@@ -6,7 +6,7 @@
 @using MudBlazor
 @using PaceLetics.AthleteModule.CodeBase.Models
 @using PaceLetics.CoreModule.Infrastructure.Models
-@using Paceletics.Domain.Training
+@using PaceLetics.RunningModule.CodeBase.Models
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
@@ -59,60 +59,6 @@
 
            
                         <MudDivider />
-                        <MudTable T="TableRow"
-                                  Items="TableRows"
-                                  Dense="true"
-                                  Hover="true"
-                                  Breakpoint="Breakpoint.Sm">
-                            <HeaderContent>
-                                <MudTh>#</MudTh>
-                                <MudTh>Distanz</MudTh>
-                                <MudTh>Pacebereich</MudTh>
-                                <MudTh>Pace</MudTh>
-                                <MudTh>Intervallzeit</MudTh>
-                                <MudTh>Rundenzeit (400m)</MudTh>
-                            </HeaderContent>
-
-                            <RowTemplate Context="row">
-
-                                @if (!row.IsPause)
-                                {
-                                    <!-- INTERVALL -->
-                                    
-                                        var i = row.Index;
-                                        var dist = _currentTraining!.Distances[i];
-                                        var key = _currentTraining.PaceKeys[i];
-                                        var pace = _currentTraining.Paces[i];
-                                        var interval = _currentTraining.IntervallTime[i];
-                                        var lap = _currentTraining.LabTime[i];
-                                    
-                                    <MudTd DataLabel="#">@(i + 1)</MudTd>
-                                    <MudTd DataLabel="Distanz">@dist m</MudTd>
-                                    <MudTd DataLabel="Pacebereich">@key</MudTd>
-                                    <MudTd DataLabel="Pace">@pace.ToString(@"mm\:ss") / km</MudTd>
-                                    <MudTd DataLabel="Intervallzeit">@interval.ToString(@"mm\:ss")</MudTd>
-                                    <MudTd DataLabel="Rundenzeit">@lap.ToString(@"mm\:ss")</MudTd>
-                                }
-                                else
-                                {
-      
-                                        var i = row.Index;
-                                        var recDist = _currentTraining!.Recovery[i];
-                                        var pace = _athlete!.PaceModel!.Easy; // Pause-Pace
-                                        var recTime = TimeSpan.FromSeconds(Math.Round(recDist * pace.TotalSeconds / 1000.0));
-                                    
-
-                                    <MudTd DataLabel="#"></MudTd>
-                                    <MudTd DataLabel="Distanz"><b>Pause</b> @recDist m</MudTd>
-                                    <MudTd DataLabel="Pacebereich">—</MudTd>
-                                    <MudTd DataLabel="Pace">@pace.ToString(@"mm\:ss") / km</MudTd>
-                                    <MudTd DataLabel="Pausezeit">@recTime.ToString(@"mm\:ss")</MudTd>
-                                    <MudTd DataLabel="Rundenzeit">—</MudTd>
-                                }
-                            </RowTemplate>
-                        </MudTable>
-
-
 
                     </MudStack>
                 </MudPaper>
@@ -126,7 +72,7 @@
     private bool _isLoading = true;
 
     private AthleteModel? _athlete;
-    private IntervallTraining? _currentTraining;
+    private IntervallSession? _currentTraining;
 
     /// <summary>
     /// Indizes der Intervalle für das aktuelle Training, für das MudTable-Items-Binding.
@@ -153,77 +99,48 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-            var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
 
-            if (string.IsNullOrEmpty(userID))
-            {
-                await DialogService.ShowInformationAsync(
-                    "Achtung",
-                    "Du bist nicht eingeloggt. Bitte melde dich erneut an.",
-                    Icons.Material.Filled.Error);
-                return;
-            }
+        var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
 
-            _athlete = await AthleteData.GetAthlete(userID);
-
-            // Wenn kein PaceModel vorhanden ist, brauchen wir gar nicht erst Trainings laden
-            if (_athlete?.PaceModel is null)
-                return;
-
-            // JSON aus res/intervals.json laden (liegt im Output-Verzeichnis)
-            var baseDir = AppContext.BaseDirectory;
-            var jsonPath = "wwwroot/data/intervalls.json";
-
-            var trainings = IntervallTrainingFactory.LoadFromJsonFile(jsonPath);
-
-            // Nächstes Training finden:
-            // 1) Frühestes Training mit Date >= heute
-            // 2) Falls keins, letzte vergangene Einheit als Fallback
-            var today = DateTime.Today;
-            var upcoming = trainings
-                .Where(t => t.Date.Date >= today)
-                .OrderBy(t => t.Date)
-                .FirstOrDefault();
-
-            var selected = upcoming ?? trainings.OrderByDescending(t => t.Date).FirstOrDefault();
-
-            if (selected is not null)
-            {
-                _currentTraining = CloneAndApplyPace(selected, _athlete.PaceModel);
-            }
-        }
-        catch
+        if (string.IsNullOrEmpty(userID))
         {
             await DialogService.ShowInformationAsync(
                 "Achtung",
-                "Es gab ein Problem beim Laden deiner Daten oder der Intervall-Definitionen. Bitte versuche es später erneut.",
+                "Du bist nicht eingeloggt. Bitte melde dich erneut an.",
                 Icons.Material.Filled.Error);
+            return;
         }
-        finally
+
+        _athlete = await AthleteData.GetAthlete(userID);
+
+        // Wenn kein PaceModel vorhanden ist, brauchen wir gar nicht erst Trainings laden
+        if (_athlete?.PaceModel is null)
+            return;
+
+        // JSON aus res/intervals.json laden (liegt im Output-Verzeichnis)
+        var baseDir = AppContext.BaseDirectory;
+        var jsonPath = "wwwroot/data/intervalls.json";
+
+            
+        var sessions = RunningSessionFactory.Load(jsonPath);
+		var resolved = new List<ResolvedRunningSession>();
+        foreach (var session in sessions.OrderBy(s => s.Date))
         {
-            _isLoading = false;
+            resolved.Add(RunningSessionResolver.Resolve(session, _athlete.PaceModel));
+           
         }
+
+        var today = DateTime.Today;
+        var upcoming = sessions
+            .Where(t => t.Date.Date >= today)
+            .OrderBy(t => t.Date)
+            .FirstOrDefault();
+
+        var selected = upcoming ?? sessions.OrderByDescending(t => t.Date).FirstOrDefault();
+
+
     }
 
-    /// <summary>
-    /// Erzeugt aus einem Template eine "personalisierte" Kopie mit angewendetem PaceModel.
-    /// </summary>
-    private static IntervallTraining CloneAndApplyPace(IntervallTraining template, PaceModel paceModel)
-    {
-        var t = new IntervallTraining(
-            template.Id,
-            template.Name,
-            template.Date,
-            template.Distances,
-            template.Recovery,
-            template.PaceKeys,
-            template.Sets,
-            template.SetRecovery);
-
-        t.ApplyPaceModel(paceModel);
-        return t;
-    }
+    
 }

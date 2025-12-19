@@ -40,6 +40,7 @@
     <ProjectReference Include="..\PaceLetics.AthleteModule.Components\PaceLetics.AthleteModule.Components.csproj" />
     <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
     <ProjectReference Include="..\PaceLetics.RunningModule.CodeBase\PaceLetics.RunningModule.CodeBase.csproj" />
+    <ProjectReference Include="..\PaceLetics.RunningModule.Components\PaceLetics.RunningModule.Components.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.CodeBase\PaceLetics.WorkoutModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.Components\PaceLetics.WorkoutModule.Components.csproj" />
   </ItemGroup>

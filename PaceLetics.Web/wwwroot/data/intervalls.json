@@ -1,22 +1,151 @@
 ﻿[
   {
-    "id": "R-200-3x5",
-    "name": "3 x (5 x 200m R-Pace)",
-    "distances": [ 200, 200, 200, 200, 200 ],
-    "recovery": [ 200, 200, 200, 200, 200 ],
-    "paceKeys": [ "R Pace" ],
-    "sets": 3,
-    "setRecovery": 400,
-    "date": "2026-01-10"
-  },
-  {
-    "id": "I-800-6x",
-    "name": "6 x 800m I-Pace",
-    "distances": [ 800, 800, 800, 800, 800, 800 ],
-    "recovery": [ 400, 400, 400, 400, 400, 400 ],
+    "sessionType": "interval",
+    "id": "2025-11-06-pyramide",
+    "name": "Pyramide 200-400-800-400-200",
+    "date": "2025-11-06",
+    "distances": [ 200, 400, 800, 400, 200 ],
+    "recovery": [],
     "paceKeys": [ "I Pace" ],
     "sets": 1,
-    "setRecovery": 0,
-    "date": "2026-01-08"
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "planned",
+    "id": "2025-11-13-testlauf",
+    "name": "Einstufungslauf 3000m",
+    "date": "2025-11-13",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 3000
+      }
+    ]
+  },
+  {
+    "sessionType": "interval",
+    "id": "2025-11-20-technik",
+    "name": "10x100m Technik + 5x100m",
+    "date": "2025-11-20",
+    "distances": [ 100, 100, 100, 100, 100 ],
+    "recovery": [ 300, 300, 300, 300, 300 ],
+    "paceKeys": [ "R Pace" ],
+    "sets": 1,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2025-11-27-pyramide",
+    "name": "Pyramide 200-400-200-400-200-400",
+    "date": "2025-11-27",
+    "distances": [ 200, 400, 200, 400, 200, 400 ],
+    "recovery": [ 400, 400, 400, 400, 400, 400 ],
+    "paceKeys": [ "R Pace" ],
+    "sets": 1,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2025-12-04-200m",
+    "name": "8–12x200m",
+    "date": "2025-12-04",
+    "distances": [ 200 ],
+    "recovery": [ 400 ],
+    "paceKeys": [ "R Pace" ],
+    "sets": 8,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2025-12-11-400m",
+    "name": "6–10x400m",
+    "date": "2025-12-11",
+    "distances": [ 400 ],
+    "recovery": [ 400 ],
+    "paceKeys": [ "R Pace" ],
+    "sets": 6,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "planned",
+    "id": "2025-12-25-dauerlauf",
+    "name": "Lockerer Dauerlauf 60min",
+    "date": "2025-12-25",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 0,
+        "duration": "01:00:00",
+        "paceKey": "E Pace"
+      }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-01-01-tempo",
+    "name": "Tempodauerlauf 5km",
+    "date": "2026-01-01",
+    "sequence": [
+      {
+        "type": "Warmup",
+        "distance": 2000,
+        "paceKey": "E Pace"
+      },
+      {
+        "type": "Dauerlauf",
+        "distance": 5000,
+        "paceKey": "T Pace"
+      },
+      {
+        "type": "Cooldown",
+        "distance": 2000,
+        "paceKey": "E Pace"
+      }
+    ]
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-01-08-800m",
+    "name": "5–6x800m",
+    "date": "2026-01-08",
+    "distances": [ 800 ],
+    "recovery": [ 400 ],
+    "paceKeys": [ "I Pace" ],
+    "sets": 5,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-01-15-pyramide",
+    "name": "Pyramide 800-1000-1200-1000-800",
+    "date": "2026-01-15",
+    "distances": [ 800, 1000, 1200, 1000, 800 ],
+    "recovery": [ 400, 400, 400, 400, 400 ],
+    "paceKeys": [ "I Pace" ],
+    "sets": 1,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-01-22-1000m",
+    "name": "4–5x1000m",
+    "date": "2026-01-22",
+    "distances": [ 1000 ],
+    "recovery": [ 400 ],
+    "paceKeys": [  "I Pace" ],
+    "sets": 4,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-01-29-testlauf",
+    "name": "Einstufungslauf 3000m",
+    "date": "2026-01-29",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 3000
+      }
+    ]
   }
 ]

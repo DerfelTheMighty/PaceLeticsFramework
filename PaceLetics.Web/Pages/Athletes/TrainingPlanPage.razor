@@ -1,0 +1,46 @@
+﻿@page "/Athletes/trainingplanpage"
+@using PaceLetics.RunningModule.CodeBase.Models
+@using PaceLetics.RunningModule.Components
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-6">
+
+    <MudText Typo="Typo.h4" GutterBottom>
+        @Plan.Name
+    </MudText>
+    <div style="min-width:520px; padding: 0 12px;">
+    <MudTimeline>
+        @foreach (var session in Plan.Sessions)
+        {
+            var isNext = session.Id == _nextSessionId;
+
+            <MudTimelineItem Color="@(isNext? Color.Warning: Color.Primary)"
+                             Elevation="@(isNext ? 18 : 10)"
+                             TimelineAlign="@(session.Date.Day % 2 == 0 ? TimelineAlign.Start : TimelineAlign.End)"
+                             Style="width:100%;">
+
+                <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
+
+            </MudTimelineItem>
+        }
+    </MudTimeline>
+    </div>
+</MudContainer>
+
+@code {
+    private TrainingPlan Plan = default!;
+    private string? _nextSessionId;
+
+    protected override void OnInitialized()
+    {
+        var jsonPath = "wwwroot/data/intervalls.json";
+        var sessions = RunningSessionFactory.Load(jsonPath);
+        Plan = new TrainingPlan("ws25-26", "Winterplan 2025/26", sessions);
+
+        var today = DateTime.Today; // lokal (bei dir Berlin)
+        _nextSessionId = Plan.Sessions
+            .Where(s => s.Date.Date >= today)
+            .OrderBy(s => s.Date)
+            .Select(s => s.Id)
+            .FirstOrDefault();
+    }
+}
