@@ -2,6 +2,8 @@
 @using PaceLetics.RunningModule.CodeBase.Models
 @using PaceLetics.RunningModule.Components
 
+@inject IJSRuntime JS
+
 <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-6">
 
     <MudText Typo="Typo.h4" GutterBottom>
@@ -13,13 +15,13 @@
         {
             var isNext = session.Id == _nextSessionId;
 
-            <MudTimelineItem Color="@(isNext? Color.Warning: Color.Primary)"
-                             Elevation="@(isNext ? 18 : 10)"
-                             TimelineAlign="@(session.Date.Day % 2 == 0 ? TimelineAlign.Start : TimelineAlign.End)"
-                             Style="width:100%;">
-
+                <MudTimelineItem id="@(isNext ? "next-session" : null)" 
+                            Color="@(isNext? Color.Secondary: Color.Primary)"
+                            Elevation="@(isNext ? 26 : 10)"
+                            Size="@(isNext ? Size.Large: Size.Medium)"
+                            TimelineAlign="@(session.Date.Day % 2 == 0 ? TimelineAlign.Start : TimelineAlign.End)"
+                            Style="width:100%;">
                 <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
-
             </MudTimelineItem>
         }
     </MudTimeline>
@@ -36,11 +38,20 @@
         var sessions = RunningSessionFactory.Load(jsonPath);
         Plan = new TrainingPlan("ws25-26", "Winterplan 2025/26", sessions);
 
-        var today = DateTime.Today; // lokal (bei dir Berlin)
+        var today = DateTime.Today; 
         _nextSessionId = Plan.Sessions
             .Where(s => s.Date.Date >= today)
             .OrderBy(s => s.Date)
             .Select(s => s.Id)
             .FirstOrDefault();
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && _nextSessionId != null)
+        {
+            await JS.InvokeVoidAsync("scrollToNextSession");
+        }
     }
 }

@@ -2,7 +2,7 @@
   {
     "sessionType": "interval",
     "id": "2025-11-06-pyramide",
-    "name": "Pyramide 200-400-800-400-200",
+    "name": "Einstiegspyramide",
     "date": "2025-11-06",
     "distances": [ 200, 400, 800, 400, 200 ],
     "recovery": [],
@@ -25,7 +25,7 @@
   {
     "sessionType": "interval",
     "id": "2025-11-20-technik",
-    "name": "10x100m Technik + 5x100m",
+    "name": "100m Technikläufe",
     "date": "2025-11-20",
     "distances": [ 100, 100, 100, 100, 100 ],
     "recovery": [ 300, 300, 300, 300, 300 ],
@@ -36,7 +36,7 @@
   {
     "sessionType": "interval",
     "id": "2025-11-27-pyramide",
-    "name": "Pyramide 200-400-200-400-200-400",
+    "name": "Alternierend 200, 400",
     "date": "2025-11-27",
     "distances": [ 200, 400, 200, 400, 200, 400 ],
     "recovery": [ 400, 400, 400, 400, 400, 400 ],
@@ -47,7 +47,7 @@
   {
     "sessionType": "interval",
     "id": "2025-12-04-200m",
-    "name": "8–12x200m",
+    "name": "Technikintervalle 200m",
     "date": "2025-12-04",
     "distances": [ 200 ],
     "recovery": [ 400 ],
@@ -58,7 +58,7 @@
   {
     "sessionType": "interval",
     "id": "2025-12-11-400m",
-    "name": "6–10x400m",
+    "name": "Technikintervalle 400m",
     "date": "2025-12-11",
     "distances": [ 400 ],
     "recovery": [ 400 ],
@@ -69,13 +69,12 @@
   {
     "sessionType": "planned",
     "id": "2025-12-25-dauerlauf",
-    "name": "Lockerer Dauerlauf 60min",
+    "name": "Lockerer Dauerlauf 10km",
     "date": "2025-12-25",
     "sequence": [
       {
         "type": "Dauerlauf",
-        "distance": 0,
-        "duration": "01:00:00",
+        "distance": 10000,
         "paceKey": "E Pace"
       }
     ]
@@ -98,7 +97,7 @@
       },
       {
         "type": "Cooldown",
-        "distance": 2000,
+        "distance": 1000,
         "paceKey": "E Pace"
       }
     ]
@@ -106,7 +105,7 @@
   {
     "sessionType": "interval",
     "id": "2026-01-08-800m",
-    "name": "5–6x800m",
+    "name": "VO2max Intervalle 800m",
     "date": "2026-01-08",
     "distances": [ 800 ],
     "recovery": [ 400 ],
@@ -117,7 +116,7 @@
   {
     "sessionType": "interval",
     "id": "2026-01-15-pyramide",
-    "name": "Pyramide 800-1000-1200-1000-800",
+    "name": "VO2max Pyramide",
     "date": "2026-01-15",
     "distances": [ 800, 1000, 1200, 1000, 800 ],
     "recovery": [ 400, 400, 400, 400, 400 ],
@@ -128,7 +127,7 @@
   {
     "sessionType": "interval",
     "id": "2026-01-22-1000m",
-    "name": "4–5x1000m",
+    "name": "VO2max Intervalle 1000m",
     "date": "2026-01-22",
     "distances": [ 1000 ],
     "recovery": [ 400 ],

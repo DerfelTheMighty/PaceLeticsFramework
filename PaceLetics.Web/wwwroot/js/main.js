@@ -28,3 +28,14 @@ window.PlayTimer = () => {
     const p = el.play();
     if (p && typeof p.catch === "function") p.catch(() => { });
 };
+
+
+window.scrollToNextSession = () => {
+    const el = document.getElementById("next-session");
+if (el) {
+    el.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+    }
+};
