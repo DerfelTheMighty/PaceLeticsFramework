@@ -9,6 +9,9 @@
 @inject IAthleteData AthleteData
 @inject IDialogService dialogService
 
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+
 <PageHeader Title="Dein Trainingsplan"
             Subtitle="Der Trainingsplan für das laufende Sportsemester.." />
 
@@ -115,6 +118,8 @@
         </div>
     </MudPaper>
 </div>
+
+</MudContainer>
 
 @code {
     private bool _isLoading = true;

@@ -1,0 +1,125 @@
+@using MudBlazor
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
+@using PaceLetics.WorkoutModule.CodeBase.Enums
+@using PaceLetics.WorkoutModule.CodeBase.Models
+@using System.ComponentModel.DataAnnotations
+@inject IWorkoutProvider woProvider
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="2">
+
+            <MudNumericField Label="Anzahl Wiederholungen" @bind-Value="_rounds" Min="1" Max="1000" Style="width:100%" />
+
+            
+            @if (!SelectedLevel.HasValue)
+            {
+                <MudText Typo="Typo.subtitle1" Class="mt-2">Verfügbare Schwierigkeitsstufen</MudText>
+                <MudStack Spacing="2">
+                    @foreach (var v in _variants)
+                    {
+                        var w = woProvider.GetWorkout(v);
+                        var level = w?.Level ?? Level.None;
+                        <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(level)" OnClick="() => OpenVariant(v)">
+                            @GetDisplayName(level)
+                        </MudButton>
+                    }
+                </MudStack>
+            }
+            else
+            {            
+                <MudStack Spacing="2">
+                    <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(SelectedLevel.Value)" OnClick="StartSelected">
+                        Starten
+                    </MudButton>
+                </MudStack>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="Cancel">Abbrechen</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter] public string Name { get; set; }
+    // Optional: when provided the dialog will preselect this level and skip the level-selection step
+    [Parameter] public Level? SelectedLevel { get; set; }
+    // When true the dialog shows a compact layout (no image)
+    [Parameter] public bool Compact { get; set; }
+
+    private List<string> _variants = new();
+    private string _previewImage = "images/exercises/no_image.png";
+    private string _previewDescription = string.Empty;
+    private int _rounds = 1;
+    private string? _selectedVariantId;
+
+    protected override void OnInitialized()
+    {
+        _variants = woProvider.GetWorkoutIdsByName(Name) ?? new List<string>();
+        if (_variants.Any())
+        {
+            var w = woProvider.GetWorkout(_variants.First());
+            _previewDescription = w?.Description ?? string.Empty;
+            var img = w?.Imagefile;
+            if (!string.IsNullOrEmpty(img)) _previewImage = "images/exercises/" + img;
+        }
+
+        if (SelectedLevel.HasValue)
+        {
+            // find a variant matching the selected level (use per-variant GetWorkout)
+            _selectedVariantId = _variants.FirstOrDefault(id => (woProvider.GetWorkout(id)?.Level ?? Level.None) == SelectedLevel.Value);
+        }
+    }
+
+    private void OpenVariant(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            return;
+        woProvider.SetActiveWorkout(id, 1, _rounds);
+        NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
+    }
+
+    private void StartSelected()
+    {
+        if (!string.IsNullOrWhiteSpace(_selectedVariantId))
+        {
+            // use sets = 1 and rounds = _rounds to represent total repetitions
+            woProvider.SetActiveWorkout(_selectedVariantId, 1, _rounds);
+            NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
+        }
+    }
+
+    private void Cancel()
+    {
+        // close dialog by navigating back to workout area (fallback if MudDialogInstance not available)
+        NavigationManager.NavigateTo("/Workouts/workoutarea");
+    }
+
+    private Color GetColor(Level level)
+    {
+        return level switch
+        {
+            Level.Easy => Color.Info,
+            Level.Moderate => Color.Success,
+            Level.Advanced => Color.Warning,
+            Level.Epic => Color.Error,
+            _ => Color.Default,
+        };
+    }
+
+    private string GetDisplayName(Level level)
+    {
+        var type = typeof(Level);
+        var mem = type.GetMember(level.ToString());
+        if (mem != null && mem.Length > 0)
+        {
+            var attrs = mem[0].GetCustomAttributes(typeof(DisplayAttribute), false);
+            if (attrs != null && attrs.Length > 0)
+                return ((DisplayAttribute)attrs[0]).GetName() ?? level.ToString();
+        }
+        return level.ToString();
+    }
+}

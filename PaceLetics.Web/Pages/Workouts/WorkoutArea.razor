@@ -36,7 +36,7 @@
             {
                 @foreach (var item in _workoutPrevs)
                 {
-                    <PaceLetics.WorkoutModule.Components.WorkoutPreviewElement Workout="@item" />
+                    <PaceLetics.WorkoutModule.Components.WorkoutGroupPreviewElement Preview="@item" />
                 }
             }
 
@@ -50,17 +50,24 @@
 
 @code {
     bool _isLoading;
-    List<string> _workouts;
+    List<string> _workoutBases;
     List<WorkoutPreview> _workoutPrevs;
 
 
     protected override void OnInitialized()
     {
         _workoutPrevs = new List<WorkoutPreview>();
-        _workouts = woProvider.GetWorkoutIds();
-        foreach (var wo in _workouts)
+        _workoutBases = woProvider.GetBaseWorkoutNames();
+        foreach (var baseName in _workoutBases)
         {
-            _workoutPrevs.Add(woProvider.GetWorkoutPreview(wo));
+            // use the first variant to render preview information for the group
+            var ids = woProvider.GetWorkoutIdsByName(baseName);
+            if (ids != null && ids.Any())
+            {
+                var preview = woProvider.GetWorkoutPreview(ids.First());
+                if (preview != null)
+                    _workoutPrevs.Add(preview);
+            }
         }
     }
 

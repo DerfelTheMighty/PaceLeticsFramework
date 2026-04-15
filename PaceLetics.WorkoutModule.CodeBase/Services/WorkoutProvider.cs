@@ -20,11 +20,26 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
             _previews = new List<WorkoutPreview>();
             DefinitionFactory factory = new DefinitionFactory();
             _workouts = factory.CreateWorkoutExamples();
-            foreach (var workoutdef in _workouts) 
+            // Build one preview per base workout name (group variants) and collect available levels
+            var baseNames = _workouts.Select(w => w.Name).Distinct();
+            foreach (var name in baseNames)
             {
-                _previews.Add(new WorkoutPreview(workoutdef, provider));
+                var variants = _workouts.Where(w => w.Name == name).ToList();
+                var representative = variants.First();
+                var levels = variants.Select(v => v.Level).Distinct();
+                _previews.Add(new WorkoutPreview(representative, provider, levels));
             }
 
+        }
+
+        public List<string> GetBaseWorkoutNames()
+        {
+            return _workouts.Select(w => w.Name).Distinct().ToList();
+        }
+
+        public List<string> GetWorkoutIdsByName(string name)
+        {
+            return _workouts.Where(w => w.Name == name).Select(w => w.Id).ToList();
         }
 
         public IWorkout GetWorkout(string id)
@@ -40,6 +55,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
 
         public WorkoutPreview GetWorkoutPreview(string id)
         {
+            // find the definition for the id and return the preview for the group (by Name)
+            var def = _workouts.Find(x => x.Id == id);
+            if (def != null)
+                return _previews.Find(p => p.Name == def.Name);
             return _previews.Find(x => x.Id == id);
         }
 

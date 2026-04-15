@@ -1,0 +1,181 @@
+@using MudBlazor
+@using PaceLetics.WorkoutModule.CodeBase.Interfaces
+@using PaceLetics.WorkoutModule.CodeBase.Models
+@using PaceLetics.WorkoutModule.CodeBase.Enums
+
+@inject IWorkoutProvider woProvider
+@inject IDialogService DialogService
+
+<MudCard Class="@CardClass" Elevation="2" Outlined="false">
+    <MudCardContent Class="pa-4">
+        <MudStack Row="true" Spacing="3" AlignItems="AlignItems.Center">
+            <MudImage Src="@GetImagePath()"
+                      Alt="@Preview?.Name"
+                      Class="workout-card-image" />
+
+            <MudStack Spacing="1" Class="flex-grow-1">
+                <MudText Typo="Typo.h6" Class="font-weight-semibold">
+                    @Preview?.Name
+                </MudText>
+
+                @if (!string.IsNullOrWhiteSpace(Preview?.Description))
+                {
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                        @Preview.Description
+                    </MudText>
+                }
+
+                <MudStack Row="true" Spacing="1" Class="mt-2">
+                    <div class="chip-area" @onmouseenter="OnChipEnter" @onmouseleave="OnChipLeave">
+                        @if (Preview?.AvailableLevels != null && Preview.AvailableLevels.Any())
+                        {
+                            @foreach (var level in Preview.AvailableLevels)
+                            {
+                                <MudChip T="string" Size="Size.Small" Variant="Variant.Text" Color="@GetColorForLevel(level)" OnClick="@(() => OpenDialogForLevel(level))">
+                                    @level.ToString()
+                                </MudChip>
+                            }
+                        }
+                    </div>
+                </MudStack>
+            </MudStack>
+
+
+        </MudStack>
+    </MudCardContent>
+</MudCard>
+
+<style>
+    .workout-card {
+        /* cursor removed from whole card - only chips are interactive */
+        border-radius: 16px;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        border: 1px solid transparent;
+    }
+
+    .workout-card.hovered {
+        transform: translateY(-2px);
+        box-shadow: var(--mud-elevation-8);
+        border-color: var(--mud-palette-primary);
+    }
+
+    .workout-card:active {
+        transform: translateY(0);
+    }
+
+    .workout-card-image {
+        width: 132px;
+        height: 88px;
+        min-width: 132px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    /* chevron removed */
+</style>
+
+@code {
+    [Parameter]
+    public WorkoutPreview Preview { get; set; } = default!;
+
+    private List<string> _variants = new();
+    private bool _isChipHover = false;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrWhiteSpace(Preview?.Name))
+            _variants = woProvider.GetWorkoutIdsByName(Preview.Name) ?? new List<string>();
+    }
+
+    private async Task OpenDialogAsync()
+    {
+        if (Preview is null || string.IsNullOrWhiteSpace(Preview.Name))
+            return;
+
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
+
+        var parameters = new DialogParameters
+        {
+            { "Name", Preview.Name }
+        };
+
+        var dialog = await DialogService.ShowAsync<WorkoutDifficultyDialog>(
+            "Schwierigkeit wählen",
+            parameters,
+            options);
+
+        await dialog.Result;
+    }
+
+    private async Task OpenDialogForLevel(CodeBase.Enums.Level level)
+    {
+        if (Preview is null || string.IsNullOrWhiteSpace(Preview.Name))
+            return;
+
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = false
+        };
+
+        var parameters = new DialogParameters
+        {
+            { "Name", Preview.Name },
+            { "SelectedLevel", level },
+            { "Compact", true }
+        };
+
+        var dialog = await DialogService.ShowAsync<WorkoutDifficultyDialog>(
+            Preview.Name,
+            parameters,
+            options);
+
+        await dialog.Result;
+    }
+
+    private string GetImagePath()
+    {
+        var img = Preview?.Exercises?.FirstOrDefault()?.Imagefile;
+
+        return string.IsNullOrWhiteSpace(img)
+            ? "images/exercises/no_image.png"
+            : $"images/exercises/{img}";
+    }
+
+    private Color GetColorForLevel(CodeBase.Enums.Level level)
+    {
+        switch (level)
+        {
+            case CodeBase.Enums.Level.Easy:
+                return Color.Info;
+            case CodeBase.Enums.Level.Moderate:
+                return Color.Success;
+            case CodeBase.Enums.Level.Advanced:
+                return Color.Warning;
+            case CodeBase.Enums.Level.Epic:
+                return Color.Error;
+            default:
+                return Color.Default;
+        }
+    }
+
+    private void OnChipEnter()
+    {
+        _isChipHover = true;
+        StateHasChanged();
+    }
+
+    private void OnChipLeave()
+    {
+        _isChipHover = false;
+        StateHasChanged();
+    }
+
+    private string CardClass => _isChipHover ? "workout-card hovered" : "workout-card";
+}

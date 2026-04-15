@@ -654,7 +654,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
             {
                 Name = "Stabi Handout",
                 Id = "Stabi Handout Easy",
-                Description = "Unser Einstiegsprogramm für den Rumpf",
+                Description = "Das Basisprogramm für den Rumpf",
                 SwitchTime = 5,
                 PreparationTime = 10,
                 RestTime = 10,
@@ -675,7 +675,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
             {
                 Name = "Stabi Handout",
                 Id = "Stabi Handout Moderate",
-                Description = "Das solide Basisprogramm für den Rumpf",
+                Description = "Das Basisprogramm für den Rumpf",
                 SwitchTime = 5,
                 PreparationTime = 10,
                 RestTime = 10,
@@ -696,7 +696,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
             {
                 Name = "Stabi Handout",
                 Id = "Stabi Handout Advanced",
-                Description = "Ambitioniertes Rumpftraining für ambitionierte Läufer:innen",
+                Description = "Das Basisprogramm für den Rumpf",
                 SwitchTime = 5,
                 PreparationTime = 10,
                 RestTime = 10,
@@ -718,7 +718,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
             {
                 Name = "Stabi Handout",
                 Id = "Stabi Handout Epic",
-                Description = "Rumpftraining aus der Hölle",
+                Description = "Das Basisprogramm für den Rumpf",
                 SwitchTime = 5,
                 PreparationTime = 10,
                 RestTime = 10,
