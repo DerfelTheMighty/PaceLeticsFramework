@@ -3,37 +3,42 @@
 @using PaceLetics.WorkoutModule.CodeBase.Enums
 @using PaceLetics.WorkoutModule.CodeBase.Interfaces
 
-<MudPaper Elevation="2" Class="px-3 py-2 d-flex align-center justify-space-between">
+@implements IDisposable
+@inject IJSRuntime JSRuntime
 
-    <div class="d-flex align-center" style="gap:8px">
-        <MudToggleIconButton @bind-Toggled="IsToggled"
-                             Icon="@Icons.Material.Filled.PlayArrow"
-                             ToggledIcon="@Icons.Material.Filled.Pause"
-                             Color="Color.Success"
-                             ToggledColor="Color.Warning" />
-        <MudIconButton Icon="@Icons.Material.Filled.Refresh"
-                       OnClick="ResetWorkout"
-                       Color="Color.Inherit" />
-    </div>
+<MudPaper Elevation="2" Class="px-4 py-3 position-relative">
 
-    <div class="d-flex flex-column" style="min-width:0; text-align:center;">
-        <MudText Typo="Typo.subtitle2">@_instruction</MudText>
-    </div>
-
-    <div class="d-flex align-center" style="gap:10px">
-        <MudText Typo="Typo.h4" Style="min-width:72px; text-align:right;">
-            @_timeRemaining
+    <MudStack Spacing="1" AlignItems="AlignItems.Center" Justify="Justify.Center">
+        <MudText Typo="Typo.h3" Align="Align.Center">
+            @FormattedTime
         </MudText>
-        <MudIconButton Icon="@Icons.Material.Filled.ExpandLess"
-                       OnClick="@OnOpenSheet" />
-    </div>
 
+        @if (!string.IsNullOrWhiteSpace(_instruction))
+        {
+            <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Secondary">
+                @_instruction
+            </MudText>
+        }
+
+        <MudStack Row="true" Spacing="2" Justify="Justify.Center" Class="mt-1">
+            <MudButton Variant="Variant.Filled"
+                       Color="@(IsToggled ? Color.Warning : Color.Success)"
+                       OnClick="ToggleWorkout"
+                       StartIcon="@(IsToggled ? Icons.Material.Filled.Pause : Icons.Material.Filled.PlayArrow)">
+                @(IsToggled ? "Pause" : "Start")
+            </MudButton>
+
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Default"
+                       OnClick="ResetAndStopWorkout"
+                       StartIcon="@Icons.Material.Filled.Refresh">
+                Reset
+            </MudButton>
+        </MudStack>
+    </MudStack>
 </MudPaper>
 
 @code {
-
-
-    // ===== UI state =====
     protected int _timeRemaining;
     protected ExerciseState _exerciseState;
     protected ExerciseState _lastState;
@@ -41,13 +46,10 @@
     protected string _instruction = string.Empty;
 
     private bool _isToggled;
-
     private IWorkout? _subscribedWorkout;
 
-    [Inject] protected IJSRuntime JSRuntime { get; set; } = default!;
-
     [Parameter] public IWorkout? Workout { get; set; }
-    [Parameter] public EventCallback OnOpenSheet { get; set; } // Button in TopBar
+    [Parameter] public EventCallback OnOpenSheet { get; set; }
 
     public bool IsToggled
     {
@@ -55,27 +57,49 @@
         set
         {
             if (_isToggled == value) return;
-
             _isToggled = value;
-
-            if (_isToggled) StartWorkout();
-            else StopWorkout();
-
-            InvokeAsync(StateHasChanged);
         }
     }
+
+    private string FormattedTime => TimeSpan.FromSeconds(Math.Max(0, _timeRemaining)).ToString(@"m\:ss");
 
     private void StopWorkout() => Workout?.Stop();
     private void StartWorkout() => Workout?.Start();
     private void ResetWorkout() => Workout?.Reset();
 
+    private Task ToggleWorkout()
+    {
+        if (Workout is null)
+            return Task.CompletedTask;
+
+        if (IsToggled)
+        {
+            StopWorkout();
+            IsToggled = false;
+        }
+        else
+        {
+            StartWorkout();
+            IsToggled = true;
+        }
+
+        _instruction = GetInstruction(_elementType, _exerciseState, Workout.State);
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task ResetAndStopWorkout()
+    {
+        StopWorkout();
+        ResetWorkout();
+        ResetUiState();
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
     protected override void OnInitialized()
     {
-        _timeRemaining = 0;
-        _exerciseState = ExerciseState.Stop;
-        _lastState = ExerciseState.Stop;
-        _elementType = default;
-        _instruction = string.Empty;
+        ResetUiState();
         base.OnInitialized();
     }
 
@@ -130,13 +154,10 @@
                     el.ProgressChangedEvent -= OnProgressChanged;
                     el.StateChangedEvent -= OnElementStateChanged;
                 }
-                el.ProgressChangedEvent -= OnProgressChanged;
-                el.StateChangedEvent -= OnElementStateChanged;
             }
         }
         catch
         {
-  
         }
     }
 
@@ -145,7 +166,6 @@
         UnsubscribeFromWorkout(_subscribedWorkout);
         _subscribedWorkout = null;
     }
-
 
     private async void OnProgressChanged(int remaining)
     {
@@ -203,12 +223,11 @@
         InvokeAsync(() =>
         {
             _isToggled = false;
-            Workout?.Reset(); 
+            Workout?.Reset();
             JSRuntime.InvokeVoidAsync("PlayDing_3");
             StateHasChanged();
         });
     }
-
 
     protected static string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
     {
@@ -249,5 +268,4 @@
     {
         return state == ExerciseState.Switch || lastState == ExerciseState.Switch;
     }
-
 }

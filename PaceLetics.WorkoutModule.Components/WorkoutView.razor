@@ -9,18 +9,19 @@ else
 {
     <div class="pl-workout-focus">
 
-        <!-- Sticky Top -->
         <div class="pl-topbar">
-            <WorkoutTopBar Workout="Workout" OnOpenSheet="@(()=> _sheetOpen = true)" />
+            <div class="pl-content-width">
+                <WorkoutTopBar Workout="Workout" OnOpenSheet="@(() => _sheetOpen = true)" />
+            </div>
         </div>
 
-        <!-- Now -->
         <div class="pl-now">
-            <WorkoutNow Exercise="Workout.Exercises[_currentExercise]"
-                        OnOpenDetails="@(()=> _sheetOpen = true)" />
+            <div class="pl-content-width">
+                <WorkoutNow Exercise="Workout.Exercises[_currentExercise]"
+                            OnOpenDetails="@(() => _sheetOpen = true)" />
+            </div>
         </div>
 
-        <!-- Bottom Sheet -->
         <MudDrawer @bind-Open="_sheetOpen"
                    Anchor="Anchor.Bottom"
                    Variant="DrawerVariant.Temporary"
@@ -39,25 +40,31 @@ else
 }
 
 <style>
-.pl-workout-focus{
-    height: calc(100vh - 64px); /* ggf. AppBar-Höhe anpassen */
-    display:flex;
-    flex-direction:column;
-}
-.pl-topbar{
-    position: sticky;
-    top: 0;
-    z-index: 30;
-}
-.pl-now{
-    flex: 1;
-    overflow-y: auto;   
-    overflow-x: hidden;
-    padding: 12px;
-}
-.pl-sheet{
-    height: 72vh;
-    border-top-left-radius: 18px;
-    border-top-right-radius: 18px;
-}
+    .pl-workout-focus {
+        height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pl-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+    }
+
+    .pl-now {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .pl-content-width {
+        padding: 12px;
+    }
+
+    .pl-sheet {
+        height: 72vh;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+    }
 </style>

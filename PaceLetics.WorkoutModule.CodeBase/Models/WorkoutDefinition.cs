@@ -1,6 +1,4 @@
-﻿
-
-using PaceLetics.WorkoutModule.CodeBase.Enums;
+﻿using PaceLetics.WorkoutModule.CodeBase.Enums;
 
 namespace PaceLetics.WorkoutModule.CodeBase.Models
 {
@@ -44,8 +42,6 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
         /// List of exercises in the workout
         /// </summary>
         public List<string> Exercises { get; set; } = new();
-
-
 
     }
 
