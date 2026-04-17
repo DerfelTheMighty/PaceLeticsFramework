@@ -1,7 +1,8 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
 
-<MudThemeProvider Theme="MyCustomTheme" IsDarkMode="false" />
+<MudThemeProvider Theme="@_theme" IsDarkMode="false" />
+
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudPopoverProvider />   
@@ -47,4 +48,23 @@
             DrawerWidthRight = "300px"
         }
     };
-}
+
+    private MudTheme _theme = new()
+    {
+        Typography = new Typography()
+        {
+            H1 = new H1Typography() { FontSize = "2.5rem" },
+            H2 = new H2Typography() { FontSize = "2rem" },
+            H3 = new H3Typography() { FontSize = "1.6rem" },
+            H4 = new H4Typography() { FontSize = "1.3rem" },
+            H5 = new H5Typography() { FontSize = "1.1rem" },
+            H6 = new H6Typography() { FontSize = "1rem" },
+
+            Subtitle1 = new Subtitle1Typography() { FontSize = "0.95rem" },
+            Subtitle2 = new Subtitle2Typography() { FontSize = "0.85rem" },
+            Body1 = new Body1Typography() { FontSize = "0.9rem" },
+            Body2 = new Body2Typography() { FontSize = "0.8rem" }
+        }
+    };
+
+    }
