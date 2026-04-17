@@ -2,7 +2,7 @@
   {
     "sessionType": "interval",
     "id": "2026-04-16-pyramide",
-    "name": "E 200-400-800-400-200",
+    "name": "Freie Intervalle 4 x (200, 400)",
     "date": "2026-04-16",
     "distances": [ 200, 400, 200, 400, 200, 400, 200, 400 ],
     "recovery": [200, 400, 200, 400, 200, 400, 200, 400],
