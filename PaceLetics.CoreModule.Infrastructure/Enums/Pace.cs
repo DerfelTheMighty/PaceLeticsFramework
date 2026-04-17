@@ -6,6 +6,6 @@
         Marahon,
         Threshold,
         Intervall,
-        Repetition
+        Repetition,
     }
 }
