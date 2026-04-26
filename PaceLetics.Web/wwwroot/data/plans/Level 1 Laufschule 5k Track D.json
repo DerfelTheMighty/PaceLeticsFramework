@@ -1,0 +1,114 @@
+[
+  {
+    "sessionType": "planned",
+    "id": "2026-04-29-d-einstieg-3x800",
+    "name": "D – Einstieg 3x800 (Gehen/Laufen)",
+    "date": "2026-04-29",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 800 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 800 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 800 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-06-d-3x1000",
+    "name": "D – 3x1000/200 (Gehen/Laufen)",
+    "date": "2026-05-06",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 1000 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 1000 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 1000 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-13-d-2x1200",
+    "name": "D – 2x1200/200 (Gehen/Laufen)",
+    "date": "2026-05-13",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 1200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 1200 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-20-d-2x1500",
+    "name": "D – 2x1500/200 (Gehen/Laufen)",
+    "date": "2026-05-20",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 1500 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 1500 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-27-d-3000",
+    "name": "D – 3 km durchlaufen",
+    "date": "2026-05-27",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 3000
+      }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-03-d-4000",
+    "name": "D – 4 km durchlaufen",
+    "date": "2026-06-03",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 4000
+      }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-10-d-5000-test",
+    "name": "D – 5 km Test",
+    "date": "2026-06-10",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 5000
+      }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-17-d-locker-3000",
+    "name": "D – locker 3 km",
+    "date": "2026-06-17",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 3000
+      }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-24-d-ziel-5000",
+    "name": "D – Unilauf 5 km",
+    "date": "2026-06-24",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 5000
+      }
+    ]
+  }
+]

@@ -1,0 +1,147 @@
+﻿[
+  {
+    "sessionType": "interval",
+    "id": "2026-04-16-pyramide",
+    "name": "Freie Intervalle 4 x (200, 400)",
+    "date": "2026-04-16",
+    "distances": [ 200, 400, 200, 400, 200, 400, 200, 400 ],
+    "recovery": [200, 400, 200, 400, 200, 400, 200, 400],
+    "paceKeys": ["Free Pace"],
+    "sets": 1,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-04-23-einstufungslauf",
+    "name": "Einstufungslauf 3000m & Laufanalyse",
+    "date": "2026-04-23",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 3000
+      }
+    ]
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-04-30-steigerung",
+    "name": "15x 100m Steigerung",
+    "date": "2026-04-30",
+    "distances": [ 100 ],
+    "recovery": [ 100 ],
+    "paceKeys": [ "I Pace" ],
+    "sets": 15,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-05-07-pyramide",
+    "name": "Alternierend 200/400",
+    "date": "2026-05-07",
+    "distances": [ 200, 400, 200, 400, 200, 400 ],
+    "recovery": [ 200, 400, 200, 400, 200, 400 ],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 1,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-05-21-400m",
+    "name": "6x 400m",
+    "date": "2026-05-21",
+    "distances": [ 400 ],
+    "recovery": [ 400 ],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 6,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-05-28-200m",
+    "name": "12x 200m",
+    "date": "2026-05-28",
+    "distances": [ 200 ],
+    "recovery": [],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 12,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-06-04-800m",
+    "name": "5x 800m",
+    "date": "2026-06-04",
+    "distances": [ 800 ],
+    "recovery": [ 400 ],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 5,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-06-11-pyramide",
+    "name": "Pyramide 800-1000-1200-1000-800",
+    "date": "2026-06-11",
+    "distances": [ 800, 1000, 1200, 1000, 800 ],
+    "recovery": [ 400, 400, 400, 400, 400 ],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 1,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-06-18-1000m",
+    "name": "5x 1000m",
+    "date": "2026-06-18",
+    "distances": [ 1000 ],
+    "recovery": [ 400 ],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 5,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-06-25-pyramide",
+    "name": "Alternierend 200/400",
+    "date": "2026-06-25",
+    "distances": [ 200, 400, 200, 400, 200, 400 ],
+    "recovery": [ 200, 400, 200, 400, 200, 400 ],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 1,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-07-02-400m",
+    "name": "6x 400m",
+    "date": "2026-07-02",
+    "distances": [ 400 ],
+    "recovery": [ 400 ],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 6,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "interval",
+    "id": "2026-07-09-200m",
+    "name": "12x 200m",
+    "date": "2026-07-09",
+    "distances": [ 200 ],
+    "recovery": [],
+    "paceKeys": [ "10k Pace" ],
+    "sets": 12,
+    "setRecovery": 0
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-07-16-zirkel",
+    "name": "Zirkel des Grauens 2x",
+    "date": "2026-07-16",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 4000
+      }
+    ]
+  }
+]

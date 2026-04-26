@@ -1,0 +1,137 @@
+[
+  {
+    "sessionType": "planned",
+    "id": "2026-04-29-a-einstieg-6x200",
+    "name": "A – Einstieg 6x200 (Gehen/Laufen)",
+    "date": "2026-04-29",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-06-a-200-200-stabil",
+    "name": "A – 7x200/200 (Gehen/Laufen)",
+    "date": "2026-05-06",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 200 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-13-a-4x400",
+    "name": "A – Einstieg 4x400 (Gehen/Laufen)",
+    "date": "2026-05-13",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-20-a-5x400",
+    "name": "A – 5x400/200 (Gehen/Laufen)",
+    "date": "2026-05-20",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 400 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-05-27-a-3x600",
+    "name": "A – 3x600/200 (Gehen/Laufen)",
+    "date": "2026-05-27",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 600 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 600 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 600 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-03-a-2x800",
+    "name": "A – 2x800/200 (Gehen/Laufen)",
+    "date": "2026-06-03",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 800 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 800 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-10-a-2x1000",
+    "name": "A – 2x1000/200 (Gehen/Laufen)",
+    "date": "2026-06-10",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 1000 },
+      { "type": "Walking", "distance": 200 },
+      { "type": "Dauerlauf", "distance": 1000 },
+      { "type": "Walking", "distance": 200 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-17-a-1500-test",
+    "name": "A – 1500 Testlauf",
+    "date": "2026-06-17",
+    "sequence": [
+      { "type": "Dauerlauf", "distance": 1500 }
+    ]
+  },
+  {
+    "sessionType": "planned",
+    "id": "2026-06-24-a-2500",
+    "name": "A – 2,5 km durchlaufen",
+    "date": "2026-06-24",
+    "sequence": [
+      {
+        "type": "Dauerlauf",
+        "distance": 2500
+      }
+    ]
+  }
+]

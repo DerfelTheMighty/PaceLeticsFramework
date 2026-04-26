@@ -16,6 +16,12 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\data\intervalls.json" />
+    <Content Remove="wwwroot\data\intervalls_2.json" />
+    <Content Remove="wwwroot\data\plans\Level 1 Laufschule 10k Track E.json" />
+    <Content Remove="wwwroot\data\plans\Level 1 Laufschule 2.5k Track A.json" />
+    <Content Remove="wwwroot\data\plans\Level 1 Laufschule 2.5k Track B.json" />
+    <Content Remove="wwwroot\data\plans\Level 1 Laufschule 5k Track C.json" />
+    <Content Remove="wwwroot\data\plans\Level 1 Laufschule 5k Track D.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -97,7 +103,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="wwwroot\data\intervalls.json">
+	  <None Include="wwwroot\data\plans\Level 1 Laufschule 10k Track E.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\data\plans\Level 2 Technik &amp; Schnelligkeit.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\data\plans\Level 3 Technik &amp; Schnelligkeit.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\data\plans\Level 1 Laufschule 5k Track D.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\data\plans\Level 1 Laufschule 5k Track C.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\data\plans\Level 1 Laufschule 2.5k Track B.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\data\plans\Level 1 Laufschule 2.5k Track A.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>	

@@ -10,6 +10,7 @@
     public enum SegmentType
     {
         Warmup,
+        Walking,
         Intervall,
         Recovery,
         SetRecovery,

@@ -4,6 +4,7 @@
 @using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.RunningModule.CodeBase.Models
 @using PaceLetics.RunningModule.Components
+@using Microsoft.JSInterop
 @inject IJSRuntime JS
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
@@ -17,32 +18,55 @@
 
 <MudDivider Class="my-4" />
 
+<MudStack Spacing="2" Class="mb-4">
+    @if (_plans == null || !_plans.Any())
+    {
+        <MudText Typo="Typo.body2" Color="Color.Secondary">Keine Trainingspläne gefunden.</MudText>
+    }
+    else
+    {
+        <MudSelect T="string" Label="Trainingsplan wählen"
+                   Value="_selectedPlanId"
+                   ValueChanged="@(async (string id) => await OnPlanChanged(id))"
+                   Dense="true"
+                   Variant="Variant.Outlined"
+                   Immediate="true">
+            @foreach (var p in _plans)
+            {
+                <MudSelectItem T="string" Value="@p.Id">@p.Name</MudSelectItem>
+            }
+        </MudSelect>
+    }
+</MudStack>
+
 <!-- Timeline -->
-<div style="height: calc(100vh - 220px); overflow:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
+<div style="height: calc(100vh - 300px); overflow:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
     <MudTimeline TimelineOrientation="TimelineOrientation.Vertical"
                  TimelinePosition="TimelinePosition.Left">
 
-        @foreach (var session in Plan.Sessions)
+        @if (Plan is not null)
         {
-            var isNext = session.Id == _nextSessionId;
+            @foreach (var session in Plan.Sessions)
+            {
+                var isNext = session.Id == _nextSessionId;
 
-            <MudTimelineItem id="@(isNext ? "next-session" : null)"
-                             Color="@(isNext ? Color.Primary : Color.Surface)"
-                             Elevation="@(isNext ? 26 : 10)"
-                             Size="@(isNext ? Size.Large : Size.Medium)"
-                             Style="width:100%;">
+                <MudTimelineItem id="@(isNext ? "next-session" : null)"
+                                 Color="@(isNext ? Color.Primary : Color.Surface)"
+                                 Elevation="@(isNext ? 26 : 10)"
+                                 Size="@(isNext ? Size.Large : Size.Medium)"
+                                 Style="width:100%;">
 
-                <div style="cursor:pointer;"
-                     @onclick="() => OpenDetails(session.Id)">
-                    <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
-                </div>
+                    <div style="cursor:pointer;"
+                         @onclick="() => OpenDetails(session.Id)">
+                        <RunningSessionMiniCard Session="session" IsHighlighted="isNext" />
+                    </div>
 
-            </MudTimelineItem>
+                </MudTimelineItem>
+            }
         }
     </MudTimeline>
 </div>
 
-<!-- Overlay (klick zum schließen) -->
 @if (_detailsOpen)
 {
     <div style="position:fixed; inset:0; background: rgba(0,0,0,0.35); z-index:1300;"
@@ -50,7 +74,6 @@
     </div>
 }
 
-<!-- Bottom Sheet -->
 <div style="
      position:fixed;
      left:0; right:0; bottom:0;
@@ -62,7 +85,6 @@
     <MudPaper Elevation="12"
               Style="height:min(70vh, 640px); width:100%; border-top-left-radius:16px; border-top-right-radius:16px; overflow:hidden;">
 
-        <!-- Header -->
         <div style="padding:12px 16px;">
             <div style="width:44px; height:4px; border-radius:999px; background: rgba(255,255,255,0.25); margin:0 auto 10px auto;"></div>
 
@@ -81,7 +103,6 @@
 
         <MudDivider />
 
-        <!-- Content scrollt -->
         <div style="height: calc(100% - 78px); overflow:auto; padding:12px 16px;">
             @if (_resolved is null)
             {
@@ -123,57 +144,122 @@
 
 @code {
     private bool _isLoading = true;
-    private TrainingPlan Plan = default!;
+    private TrainingPlan? Plan;
     private string? _nextSessionId;
     private AthleteModel? _athlete;
+    private string? _userId;
 
     private bool _detailsOpen;
     private ResolvedRunningSession? _resolved;
 
-    // TODO: ersetze das durch deinen echten PaceModel-Provider (AthleteState, DI, etc.)
     private PaceModel _paceModel = default!;
+
+    private List<TrainingPlan> _plans = new();
+    private string? _selectedPlanId;
 
     protected override async Task OnInitializedAsync()
     {
-        var jsonPath = "wwwroot/data/intervalls.json";
-        var sessions = RunningSessionFactory.Load(jsonPath);
-        Plan = new TrainingPlan("ws25-26", "Winterplan 2025/26", sessions);
-
-        var today = DateTime.Today;
-        _nextSessionId = Plan.Sessions
-            .Where(s => s.Date.Date >= today)
-            .OrderBy(s => s.Date)
-            .Select(s => s.Id)
-            .FirstOrDefault();
-
         try
         {
+            // Verzeichnis mit Plan-Dateien
+            var plansDir = Path.Combine(AppContext.BaseDirectory, "wwwroot", "data", "plans");
+            _plans = PaceLetics.RunningModule.CodeBase.Models.TrainingPlanProvider.LoadFromDirectory(plansDir).ToList();
+
+            // Fallback: wenn kein plans-Ordner, lade die ältere single-file intervalls.json als einzelner Plan
+            if (!_plans.Any())
+            {
+                var jsonPath = Path.Combine(AppContext.BaseDirectory, "wwwroot", "data", "intervalls.json");
+                if (File.Exists(jsonPath))
+                {
+                    var sessions = RunningSessionFactory.Load(jsonPath);
+                    var id = Path.GetFileNameWithoutExtension(jsonPath) ?? "default";
+                    var name = id.Replace('-', ' ').Replace('_', ' ');
+                    name = char.ToUpperInvariant(name[0]) + name.Substring(1);
+                    _plans.Add(new TrainingPlan(id, name, sessions));
+                }
+            }
+
+            // athlete laden
             var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
             var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
 
             if (!string.IsNullOrEmpty(userID))
             {
+                _userId = userID;
                 _athlete = await AthleteData.GetAthlete(userID);
 
                 if (_athlete?.PaceModel is not null)
-                {
                     _paceModel = _athlete.PaceModel;
+            }
+
+            // Auswahl: gespeicherter Plan wenn vorhanden (Server-Athlete.SelectedTrainingPlanId), sonst Browser localStorage, sonst nächster oder erster Plan
+            string? storedPlan = null;
+
+            if (_athlete?.SelectedTrainingPlanId is not null && _plans.Any(p => p.Id == _athlete.SelectedTrainingPlanId))
+            {
+                _selectedPlanId = _athlete.SelectedTrainingPlanId;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(userID))
+                {
+                    try
+                    {
+                        var key = $"selectedPlan_{userID}";
+                        storedPlan = await JS.InvokeAsync<string>("localStorage.getItem", key);
+                    }
+                    catch
+                    {
+                        // ignore JS/localStorage errors
+                    }
                 }
+
+                if (!string.IsNullOrEmpty(storedPlan) && _plans.Any(p => p.Id == storedPlan))
+                {
+                    _selectedPlanId = storedPlan;
+                }
+                else
+                {
+                // nächster Plan finden
+                var today = DateTime.Today;
+                var next = _plans
+                    .Where(p => p.Sessions.Any())
+                    .SelectMany(p => p.Sessions.Select(s => (Plan: p, Session: s)))
+                    .Where(x => x.Session.Date.Date >= today)
+                    .OrderBy(x => x.Session.Date)
+                    .FirstOrDefault();
+
+                if (next != default)
+                    _selectedPlanId = next.Plan.Id;
+                else
+                    _selectedPlanId = _plans.FirstOrDefault()?.Id;
+            }
+            }
+
+            // Setze aktuell gewählten Plan
+            Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
+
+            if (Plan is not null)
+            {
+                var today = DateTime.Today;
+                _nextSessionId = Plan.Sessions
+                    .Where(s => s.Date.Date >= today)
+                    .OrderBy(s => s.Date)
+                    .Select(s => s.Id)
+                    .FirstOrDefault();
             }
         }
         catch
         {
             await dialogService.ShowInformationAsync(
                 "Achtung",
-                "Es gab ein Problem beim Laden deiner Daten. Bitte versuche es später erneut.",
+                "Es gab ein Problem beim Laden deiner Daten oder Trainingspläne.",
                 Icons.Material.Filled.Error);
         }
         finally
         {
             _isLoading = false;
         }
-
-        _isLoading = false;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -184,6 +270,7 @@
 
     private void OpenDetails(string sessionId)
     {
+        if (Plan is null) return;
         var session = Plan.Sessions.FirstOrDefault(s => s.Id == sessionId);
         if (session is null) return;
 
@@ -194,5 +281,65 @@
     private void CloseDetails()
     {
         _detailsOpen = false;
+    }
+
+    private async Task SaveSelectedPlanAsync()
+    {
+        if (_selectedPlanId == null) return;
+
+        // local anwenden
+        Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
+
+        var today = DateTime.Today;
+        _nextSessionId = Plan?.Sessions
+            .Where(s => s.Date.Date >= today)
+            .OrderBy(s => s.Date)
+            .Select(s => s.Id)
+            .FirstOrDefault();
+        try
+        {
+            if (!string.IsNullOrEmpty(_userId))
+            {
+                var key = $"selectedPlan_{_userId}";
+                await JS.InvokeVoidAsync("localStorage.setItem", key, _selectedPlanId);
+            }
+        }
+        catch
+        {
+            await dialogService.ShowInformationAsync("Fehler", "Deine Auswahl konnte nicht im Browser gespeichert werden.", Icons.Material.Filled.Error);
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task OnPlanChanged(string id)
+    {
+        _selectedPlanId = id;
+        // apply immediately
+        Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
+
+        var today = DateTime.Today;
+        _nextSessionId = Plan?.Sessions
+            .Where(s => s.Date.Date >= today)
+            .OrderBy(s => s.Date)
+            .Select(s => s.Id)
+            .FirstOrDefault();
+
+        // persist on server if athlete loaded
+        if (_athlete is not null)
+        {
+            try
+            {
+                // ensure AthleteModel has SelectedTrainingPlanId property
+                _athlete.SelectedTrainingPlanId = _selectedPlanId;
+                await AthleteData.UpdateAthlete(_athlete);
+            }
+            catch
+            {
+                await dialogService.ShowInformationAsync("Fehler", "Die Auswahl konnte nicht auf dem Server gespeichert werden.", Icons.Material.Filled.Error);
+            }
+        }
+
+        StateHasChanged();
     }
 }

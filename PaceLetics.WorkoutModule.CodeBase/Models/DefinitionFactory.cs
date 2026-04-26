@@ -164,6 +164,265 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
                 SwitchLeftRight = true,
                 Level = Level.Epic
             });
+                
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Lateral Bounds",
+                Name = "Lateral Bounds",
+                Description = "Dynamische Übung für Fußarbeit, Reaktivkraft und Koordination.",
+                Execution = new List<string>()
+                {
+                    "Gehe in eine leichte Grundposition mit gebeugten Knien!",
+                    "Springe rhythmisch seitlich von einem Bein auf das andere!",
+                    "Halte den Oberkörper stabil und lande weich auf dem Vorfuß!",
+                    "Arbeite schnell und kontrolliert mit aktivem Armeinsatz!"
+                },
+                Duration = 30,
+                ImageFile = "lateral_bounce.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Cross Lunges",
+                Name = "Cross-Lunges",
+                Description = "Dynamische Übung für Beinachse, Gesäßmuskulatur und Hüftstabilität.",
+                Execution = new List<string>()
+                {
+                    "Starte im aufrechten Stand!",
+                    "Setze ein Bein diagonal hinter das Standbein in einen Crossover-Lunge!",
+                    "Beuge beide Knie kontrolliert und halte den Oberkörper stabil!",
+                    "Drücke dich kraftvoll zurück in den Stand und wechsle die Seite!"
+                },
+                Duration = 45,
+                ImageFile = "cross_lunges.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Mountain Climber",
+                Name = "Mountain Climber",
+                Description = "Dynamische Übung für Core, Schulterstabilität und Ganzkörperausdauer.",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Streckstütz mit gestrecktem Körper!",
+                    "Ziehe ein Knie schnell in Richtung Brust!",
+                    "Setze den Fuß zurück und wechsle direkt die Seite!",
+                    "Halte Bauch und Gesäß aktiv, damit die Hüfte ruhig bleibt!"
+                },
+                Duration = 45,
+                ImageFile = "mountain_climber.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Deep Squat Rotational Jumps",
+                Name = "Deep Squat Rotational Jumps",
+                Description = "Explosive Übung für Beinkraft, Koordination und Rotationsstabilität.",
+                Execution = new List<string>()
+                {
+                    "Gehe in einen tiefen Squat!",
+                    "Führe kleine Wechselhopser aus, sodass immer ein Fuß kurz frei ist!",
+                    "Halte das Gesäß tief und richte dich möglichst nicht auf!",
+                    "Arbeite kontrolliert aus der tiefen Position mit leichter Rotation!"
+                },
+                Duration = 45,
+                ImageFile = "deep_squat_rotational_jumps.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Deep Squat Jumps",
+                Name = "Deep Squat Jumps",
+                Description = "Explosive Übung für Beinkraft, Abdruck und Schnellkraft.",
+                Execution = new List<string>()
+                {
+                    "Gehe in einen tiefen Squat!",
+                    "Federe zweimal kurz in der tiefen Position nach!",
+                    "Springe dann explosiv nach oben in die Streckung!",
+                    "Lande weich und gehe direkt wieder kontrolliert tief!"
+                },
+                Duration = 45,
+                ImageFile = "deep_jump_squat.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Side Plank Hip Dips",
+                Name = "Side Plank Hip Dips",
+                Description = "Dynamische Übung für seitliche Rumpfstabilität und Hüftkontrolle.",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Seitstütz auf Unterarm oder Hand!",
+                    "Halte den Körper in einer Linie!",
+                    "Senke die Hüfte kontrolliert Richtung Boden ab!",
+                    "Drücke die Hüfte wieder aktiv nach oben!"
+                },
+                Duration = 40,
+                ImageFile = "side_plank_hip_dip.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Low Squat Jacks",
+                Name = "Low Squat Jacks",
+                Description = "Dynamische Übung für Beine, Gesäß und Kraftausdauer in tiefer Position.",
+                Execution = new List<string>()
+                {
+                    "Gehe in eine tiefe Reiterstellung oder Squat-Position!",
+                    "Bleibe tief mit aktivem Core!",
+                    "Öffne und schließe die Beine schnell und kontrolliert!",
+                    "Halte die Spannung und richte dich dabei nicht auf!"
+                },
+                Duration = 45,
+                ImageFile = "low_squat_jack.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Hand Release Push Up",
+                Name = "Hand-Release Push-up",
+                Description = "Kräftigende Übung für Brust, Schulter, Arme und Rumpf.",
+                Execution = new List<string>()
+                {
+                    "Gehe in die Liegestützposition!",
+                    "Senke den Körper kontrolliert bis zum Boden ab!",
+                    "Löse die Hände kurz vom Boden!",
+                    "Setze die Hände wieder auf und drücke dich kraftvoll hoch!"
+                },
+                Duration = 45,
+                ImageFile = "hand_release_pushup.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Alternating Squat Balance Hold",
+                Name = "Alternating Squat Balance Hold",
+                Description = "Anspruchsvolle Übung für Gleichgewicht, Beinachse und Hüftstabilität.",
+                Execution = new List<string>()
+                {
+                    "Gehe in einen tiefen Squat!",
+                    "Halte das Gesäß tief und den Oberkörper stabil!",
+                    "Löse abwechselnd einen Fuß kurz vom Boden!",
+                    "Bleibe kontrolliert in der tiefen Position und vermeide Ausweichbewegungen!"
+                },
+                Duration = 45,
+                ImageFile = "alternating_squat_balance_hold.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Burpees",
+                Name = "Burpees",
+                Description = "Ganzkörperübung für Schnellkraft, Koordination und Ausdauer.",
+                Execution = new List<string>()
+                {
+                    "Starte im Stand!",
+                    "Gehe tief, setze die Hände auf und springe oder steige in den Streckstütz!",
+                    "Bringe die Füße zurück nach vorn!",
+                    "Richte dich explosiv auf und springe nach oben ab!"
+                },
+                Duration = 45,
+                ImageFile = "burpees.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Lateral Step with Balance Lift",
+                Name = "Lateral Step with Balance Lift",
+                Description = "Koordinative Übung für Beinachse, Hüftstabilität und Gesäßmuskulatur.",
+                Execution = new List<string>()
+                {
+                    "Gehe in eine tiefe seitliche Ausfallschrittposition!",
+                    "Hebe das Standbein kurz kontrolliert vom Boden ab!",
+                    "Bleibe tief und richte dich dabei nicht auf!",
+                    "Wiederhole die Bewegung und wechsle danach die Seite!"
+                },
+                Duration = 45,
+                ImageFile = "lateral_step_with_balance_lift.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Reverse Mountain Climber",
+                Name = "Reverse Mountainclimber",
+                Description = "Dynamische Übung für Core, Hüfte und Schulterstabilität in umgekehrter Stützposition.",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Rückstütz mit gehobener Hüfte!",
+                    "Ziehe abwechselnd ein Knie Richtung Oberkörper!",
+                    "Halte die Hüfte möglichst oben und stabil!",
+                    "Arbeite kontrolliert und rhythmisch mit aktiver Körperspannung!"
+                },
+                Duration = 45,
+                ImageFile = "reverse_mountain_climber.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Horse Stance Overhead Swings",
+                Name = "Horse Stance Overhead Swings",
+                Description = "Dynamische Übung für Schultergürtel, Core und Kraftausdauer.",
+                Execution = new List<string>()
+                {
+                    "Gehe in eine tiefe Reiterstellung!",
+                    "Strecke die Arme über den Kopf!",
+                    "Führe die Arme schnell rhythmisch vor und zurück!",
+                    "Halte den Core angespannt und bleibe stabil in der tiefen Position!"
+                },
+                Duration = 45,
+                ImageFile = "horse_stance_overhead_swings.png",
+                SwitchLeftRight = false,
+                Level = Level.Epic
+            });
+
+            lst.Add(new ExerciseDefinition()
+            {
+                Id = "Plank Rotation Alternating",
+                Name = "Plank Rotation (alternating)",
+                Description = "Anspruchsvolle Core-Übung für Schulterstabilität und kontrollierte Oberkörperrotation.",
+                Execution = new List<string>()
+                {
+                    "Gehe in den Streckstütz!",
+                    "Löse einen Arm und führe den Ellenbogen zum stützenden Arm!",
+                    "Öffne den Oberkörper anschließend kontrolliert nach oben!",
+                    "Führe den Ellenbogen nur bis senkrecht über den Körper und überdrehe nicht!",
+                    "Wechsle anschließend die Seite!"
+                },
+                Duration = 40,
+                ImageFile = "plank_rotation.png",
+                SwitchLeftRight = true,
+                SwitchTime = 5,
+                Level = Level.Epic
+            });
+
 
             #endregion
 
@@ -734,6 +993,34 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
                     "Superwoman Epic",
                     "Mountain Climber Epic" }
             });
+
+            lst.Add(new WorkoutDefinition()
+            {
+                Name = "Race Optimization by Explosive Rebound Training Overload",
+                Id = "roberto_circle",
+                Description = "Explosives Ganzkörper-Workout für Kraft, Stabilität und Reaktivität.",
+                SwitchTime = 5,
+                PreparationTime = 10,
+                RestTime = 10,
+                Level = Enums.Level.Epic,
+                Exercises = new List<string>()
+    {
+        "Lateral Bounds",
+        "Cross Lunges",
+        "Mountain Climber",
+        "Deep Squat Rotational Jumps",
+        "Deep Squat Jumps",
+        "Side Plank Hip Dips",
+        "Low Squat Jacks",
+        "Hand Release Push Up",
+        "Alternating Squat Balance Hold",
+        "Burpees",
+        "Lateral Step with Balance Lift",
+        "Reverse Mountain Climber",
+        "Horse Stance Overhead Swings",
+        "Plank Rotation Alternating"
+    }});
+
             return lst;
 
         }

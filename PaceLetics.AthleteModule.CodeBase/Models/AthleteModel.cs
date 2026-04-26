@@ -44,6 +44,11 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
         /// </summary>
         public PaceModel? PaceModel { get; set; }
 
+        /// <summary>
+        /// Persisted id of the user's selected training plan
+        /// </summary>
+        public string? SelectedTrainingPlanId { get; set; }
+
         public RaceResultModel? ActiveReferenceResult { get; set; }
 
         public AthleteModel() 
