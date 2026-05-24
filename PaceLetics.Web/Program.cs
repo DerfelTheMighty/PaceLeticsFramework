@@ -106,6 +106,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions()
 
 app.UseAuthorization();
 app.UseCookiePolicy();
+app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

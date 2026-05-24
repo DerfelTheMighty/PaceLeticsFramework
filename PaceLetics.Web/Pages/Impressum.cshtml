@@ -4,40 +4,64 @@
 
 <h2>@Localizer["Title"]</h2>
 
-<p>@Localizer["ResponsibleFor"]</p>
+<p>@Localizer["Intro"]</p>
 
-<strong>@ImModel.Name</strong>
-<br />
-@ImModel.Straße
-<br />
-@ImModel.PLZ @ImModel.Ort
-<br />
-@Localizer["Phone"]: @ImModel.Telefonnummer
-<br />
-@Localizer["EmailLabel"]: <a href="mailto:@ImModel.Email">@ImModel.Email</a>
-<br />
+<section class="mb-4">
+    <h3>@Localizer["ResponsibleHeading"]</h3>
+    <p>@Localizer["ResponsibleText"] @ImModel.Name, @ImModel.Street, @ImModel.PostalCode @ImModel.City, @Localizer["Country"].</p>
+</section>
 
-@if (!string.IsNullOrEmpty(ImModel.UStID))
-{
-        <p>@Localizer["VatId"]: @ImModel.UStID</p>
-}
+<section class="mb-4">
+    <h3>@Localizer["TaxHeading"]</h3>
+    <p>@Localizer["VatId"]: @Localizer["VatIdNotProvided"]</p>
+    <p>@Localizer["RegisterEntry"]: @Localizer["RegisterEntryNotProvided"]</p>
+</section>
 
-@if (!string.IsNullOrEmpty(ImModel.RegisterEintrag))
-{
-        <p>@ImModel.RegisterEintrag</p>
-}
+<section class="mb-4">
+    <h3>@Localizer["DisputeHeading"]</h3>
+    <p>@Localizer["DisputeText"]</p>
+</section>
+
+<section class="mb-4">
+    <h3>@Localizer["LiabilityHeading"]</h3>
+    <p>@Localizer["LiabilityOwnContent"]</p>
+    <p>@Localizer["LiabilityLinks"]</p>
+</section>
+
+<section class="mb-4">
+    <h3>@Localizer["CopyrightHeading"]</h3>
+    <p>@Localizer["CopyrightText"]</p>
+</section>
+
+<section class="mb-4">
+    <h3>@Localizer["PrivacyHeading"]</h3>
+    <p>@Localizer["PrivacyText"]</p>
+</section>
+
+<section class="mb-4">
+    <h3>@Localizer["ProviderHeading"]</h3>
+    <address>
+        <strong>@ImModel.Name</strong><br />
+        @ImModel.Street<br />
+        @ImModel.PostalCode @ImModel.City<br />
+        @Localizer["Country"]
+    </address>
+
+    <p>
+        @Localizer["Phone"]: @ImModel.PhoneNumber<br />
+        @Localizer["EmailLabel"]: <a href="mailto:@ImModel.Email">@ImModel.Email</a>
+    </p>
+</section>
 
 @functions {
     public class ImpressumModel
     {
         public string Name { get; set; } = "Christoph Otte";
-        public string Straße { get; set; } = "Effengrube 7";
-        public string PLZ { get; set; } = "23552";
-        public string Ort { get; set; } = "Lübeck";
-        public string Telefonnummer { get; set; } = "0162 6057269";
+        public string Street { get; set; } = "Effengrube 7";
+        public string PostalCode { get; set; } = "23552";
+        public string City { get; set; } = "L\u00fcbeck";
+        public string PhoneNumber { get; set; } = "0162 6057269";
         public string Email { get; set; } = "mail@caotte.de";
-        public string UStID { get; set; } = string.Empty;
-        public string RegisterEintrag { get; set; } = string.Empty;
     }
 
     private ImpressumModel ImModel = new ImpressumModel();

@@ -5,8 +5,25 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Title" xml:space="preserve"><value>Impressum</value></data>
-  <data name="ResponsibleFor" xml:space="preserve"><value>Verantwortlich für den Inhalt dieser Webseite:</value></data>
+  <data name="Intro" xml:space="preserve"><value>Angaben gemaess Paragraf 5 Digitale-Dienste-Gesetz (DDG).</value></data>
+  <data name="ProviderHeading" xml:space="preserve"><value>Diensteanbieter</value></data>
+  <data name="Country" xml:space="preserve"><value>Deutschland</value></data>
   <data name="Phone" xml:space="preserve"><value>Telefon</value></data>
   <data name="EmailLabel" xml:space="preserve"><value>E-Mail</value></data>
+  <data name="ResponsibleHeading" xml:space="preserve"><value>Verantwortlich fuer Inhalte</value></data>
+  <data name="ResponsibleText" xml:space="preserve"><value>Verantwortlich fuer die Inhalte dieser Website ist</value></data>
+  <data name="TaxHeading" xml:space="preserve"><value>Register- und Steuerangaben</value></data>
   <data name="VatId" xml:space="preserve"><value>Umsatzsteuer-Identifikationsnummer</value></data>
+  <data name="VatIdNotProvided" xml:space="preserve"><value>Nicht vergeben oder nicht einschlaegig.</value></data>
+  <data name="RegisterEntry" xml:space="preserve"><value>Handelsregistereintrag</value></data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve"><value>Kein Handelsregistereintrag.</value></data>
+  <data name="DisputeHeading" xml:space="preserve"><value>Verbraucherstreitbeilegung</value></data>
+  <data name="DisputeText" xml:space="preserve"><value>Der Diensteanbieter ist weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen, sofern keine zwingende gesetzliche Verpflichtung besteht.</value></data>
+  <data name="LiabilityHeading" xml:space="preserve"><value>Haftung fuer Inhalte und Links</value></data>
+  <data name="LiabilityOwnContent" xml:space="preserve"><value>Die Inhalte dieser Website wurden mit angemessener Sorgfalt erstellt. Als Diensteanbieter ist der Anbieter fuer eigene Inhalte nach den allgemeinen Gesetzen verantwortlich.</value></data>
+  <data name="LiabilityLinks" xml:space="preserve"><value>Diese Website kann Links zu externen Websites Dritter enthalten. Auf deren aktuelle und kuenftige Inhalte hat der Anbieter keinen Einfluss. Verlinkte Seiten werden bei Verlinkung auf erkennbare Rechtsverstoesse geprueft. Werden Rechtsverstoesse bekannt, werden entsprechende Links zeitnah entfernt.</value></data>
+  <data name="CopyrightHeading" xml:space="preserve"><value>Urheberrecht</value></data>
+  <data name="CopyrightText" xml:space="preserve"><value>Die durch den Anbieter erstellten Inhalte und Werke auf dieser Website unterliegen dem deutschen Urheberrecht. Vervielfaeltigung, Bearbeitung, Verbreitung oder jede Nutzung ausserhalb der Grenzen des Urheberrechts beduerfen der vorherigen Zustimmung, sofern die Nutzung nicht gesetzlich erlaubt ist.</value></data>
+  <data name="PrivacyHeading" xml:space="preserve"><value>Datenschutz</value></data>
+  <data name="PrivacyText" xml:space="preserve"><value>Dieses Impressum ersetzt keine Datenschutzerklaerung. Informationen zur Verarbeitung personenbezogener Daten finden sich in der Datenschutzerklaerung dieser Website.</value></data>
 </root>
