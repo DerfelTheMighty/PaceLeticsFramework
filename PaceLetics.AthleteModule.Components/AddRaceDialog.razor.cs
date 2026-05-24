@@ -69,14 +69,14 @@ namespace PaceLetics.AthleteModule.Components
         private async Task ShowTimeFormatError()
         {
             int seconds = 3;
-            IMudExDialogReference<MudExMessageDialog>? dlg = await dialogService.ShowInformationAsync("Achtung", $"Bitte überprüfe, ob die Eingabe der Laufzeit im Format hh:mm:ss vorliegt.", Icons.Material.Filled.Error, false, true);
+            IMudExDialogReference<MudExMessageDialog>? dlg = await dialogService.ShowInformationAsync(L["AddRaceDialog_Warning_Title"], L["AddRaceDialog_Warning_Message"], Icons.Material.Filled.Error, false, true);
             for (int i = 0; i < seconds; i++)
             {
                 await Task.Delay(1000);
                 dlg.ExecuteOnDialogComponent(dialog =>
                 {
                     dialog.ProgressValue = (i + 1) * 100 / seconds;
-                    dialog.Message = $"Bitte überprüfe, ob die Eingabe der Laufzeit im Format hh:mm:ss vorliegt.";
+                    dialog.Message = L["AddRaceDialog_Warning_Message"];
                 });
             }
 

@@ -1,6 +1,8 @@
 ﻿@using MudBlazor
 @using PaceLetics.WorkoutModule.CodeBase.Interfaces
 
+@inject IStringLocalizer<WorkoutResources> L
+
 <MudPaper Elevation="1" Class="pa-4" Style="height:100%; border-radius:16px;">
     <!-- Header -->
     <div class="d-flex align-center justify-space-between">
@@ -23,7 +25,7 @@
     <!-- CTA unten -->
     <div class="d-flex justify-center mt-4">
         <MudButton Variant="Variant.Text" OnClick="@OnOpenDetails" Style="letter-spacing:.08em;">
-            DETAILS &amp; ABLAUF
+            @L["WorkoutNow_Details"]
         </MudButton>
     </div>
 </MudPaper>

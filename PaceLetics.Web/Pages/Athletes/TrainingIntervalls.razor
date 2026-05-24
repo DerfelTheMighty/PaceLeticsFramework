@@ -11,19 +11,20 @@
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 @inject IDialogService DialogService
+@inject IStringLocalizer<TrainingIntervalls> L
 
-<PageTitle>Dein nächstes Intervalltraining</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
-        <LoadingScreen Label="Deine Daten werden geladen..." />
+        <LoadingScreen Label="@L["Loading"]" />
     }
     else
     {
-        <PageHeader Title="Dein nächstes Intervalltraining"
-                    Subtitle="Diese Einheit ist anhand deines aktuellen Pace-Modells berechnet.." />
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
 
@@ -32,13 +33,13 @@
             @if (_athlete?.Vdot < 1 || _athlete?.PaceModel is null)
             {
                 <MudAlert Severity="Severity.Warning">
-                    Füge einen Einstufungslauf hinzu, damit wir deine optimale Trainingspace bestimmen können.
+                    @L["NoRaceWarning"]
                 </MudAlert>
             }
             else if (_currentTraining is null)
             {
                 <MudAlert Severity="Severity.Info">
-                    Es sind aktuell keine Intervalltrainings definiert.
+                    @L["NoTrainings"]
                 </MudAlert>
             }
             else
@@ -51,7 +52,7 @@
                                 @_currentTraining.Name
                             </MudText>
                             <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                ID: @_currentTraining.Id · Geplant am: @_currentTraining.Date.ToString("dd.MM.yyyy")
+                                ID: @_currentTraining.Id · @L["PlannedOn"] @_currentTraining.Date.ToString("dd.MM.yyyy")
                             </MudText>
                         </MudStack>
 
@@ -106,8 +107,8 @@
         if (string.IsNullOrEmpty(userID))
         {
             await DialogService.ShowInformationAsync(
-                "Achtung",
-                "Du bist nicht eingeloggt. Bitte melde dich erneut an.",
+                L["NotLoggedIn_Title"],
+                L["NotLoggedIn_Message"],
                 Icons.Material.Filled.Error);
             return;
         }

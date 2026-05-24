@@ -6,6 +6,7 @@
 @inject IWorkoutProvider woProvider
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
+@inject IStringLocalizer<WorkoutResources> L
 
 <MudDialog>
     <DialogContent>
@@ -33,12 +34,12 @@
                               Style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block;" />
                 </div>
             }
-            <MudNumericField Label="Anzahl Wiederholungen" @bind-Value="_rounds" Min="1" Max="1000" Style="width:100%" />
+            <MudNumericField Label="@L["DifficultyDialog_Reps"]" @bind-Value="_rounds" Min="1" Max="1000" Style="width:100%" />
 
             
             @if (!SelectedLevel.HasValue)
             {
-                <MudText Typo="Typo.subtitle1" Class="mt-2">Verfügbare Schwierigkeitsstufen</MudText>
+                <MudText Typo="Typo.subtitle1" Class="mt-2">@L["DifficultyDialog_AvailableLevels"]</MudText>
                 <MudStack Spacing="2">
                     @foreach (var v in _variants)
                     {
@@ -54,22 +55,20 @@
             {            
                 <MudStack Spacing="2">
                     <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(SelectedLevel.Value)" OnClick="StartSelected">
-                        Starten
+                        @L["DifficultyDialog_Start"]
                     </MudButton>
                 </MudStack>
             }
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Text" OnClick="Cancel">Abbrechen</MudButton>
+        <MudButton Variant="Variant.Text" OnClick="Cancel">@L["DifficultyDialog_Cancel"]</MudButton>
     </DialogActions>
 </MudDialog>
 
 @code {
     [Parameter] public string Name { get; set; }
-    // Optional: when provided the dialog will preselect this level and skip the level-selection step
     [Parameter] public Level? SelectedLevel { get; set; }
-    // When true the dialog shows a compact layout (no image)
     [Parameter] public bool Compact { get; set; }
 
     private List<string> _variants = new();
@@ -101,8 +100,6 @@
             _selectedVariantId = _variants.FirstOrDefault(id => (woProvider.GetWorkout(id)?.Level ?? Level.None) == SelectedLevel.Value);
         }
     }
-
-
 
     private void OpenVariant(string id)
     {
@@ -142,14 +139,6 @@
 
     private string GetDisplayName(Level level)
     {
-        var type = typeof(Level);
-        var mem = type.GetMember(level.ToString());
-        if (mem != null && mem.Length > 0)
-        {
-            var attrs = mem[0].GetCustomAttributes(typeof(DisplayAttribute), false);
-            if (attrs != null && attrs.Length > 0)
-                return ((DisplayAttribute)attrs[0]).GetName() ?? level.ToString();
-        }
-        return level.ToString();
+        return L[$"Level_{level}"];
     }
 }

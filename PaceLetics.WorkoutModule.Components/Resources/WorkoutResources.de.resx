@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TopBar_GetReady" xml:space="preserve"><value>Bereit machen!</value></data>
+  <data name="TopBar_SideSwitch" xml:space="preserve"><value>Seitenwechsel!</value></data>
+  <data name="TopBar_Execution" xml:space="preserve"><value>Ausführung!</value></data>
+  <data name="TopBar_Paused" xml:space="preserve"><value>Angehalten!</value></data>
+  <data name="TopBar_ExercisePause" xml:space="preserve"><value>Übungspause!</value></data>
+  <data name="BottomSheet_Details" xml:space="preserve"><value>Details</value></data>
+  <data name="BottomSheet_Sequence" xml:space="preserve"><value>Ablauf</value></data>
+  <data name="BottomSheet_NoExercise" xml:space="preserve"><value>Keine Übung.</value></data>
+  <data name="BottomSheet_Execution" xml:space="preserve"><value>Ausführung</value></data>
+  <data name="BottomSheet_NoSteps" xml:space="preserve"><value>Keine Schritte hinterlegt.</value></data>
+  <data name="BottomSheet_TapToPreview" xml:space="preserve"><value>Tippe zum Vorschauen.</value></data>
+  <data name="BottomSheet_RunningViewOnly" xml:space="preserve"><value>Während Running nur Ansicht (kein Springen).</value></data>
+  <data name="BottomSheet_Now" xml:space="preserve"><value>Jetzt</value></data>
+  <data name="DifficultyDialog_Reps" xml:space="preserve"><value>Anzahl Wiederholungen</value></data>
+  <data name="DifficultyDialog_AvailableLevels" xml:space="preserve"><value>Verfügbare Schwierigkeitsstufen</value></data>
+  <data name="DifficultyDialog_Start" xml:space="preserve"><value>Starten</value></data>
+  <data name="DifficultyDialog_Cancel" xml:space="preserve"><value>Abbrechen</value></data>
+  <data name="DifficultyDialog_SelectDifficulty" xml:space="preserve"><value>Schwierigkeit wählen</value></data>
+  <data name="Preview_TotalReps" xml:space="preserve"><value>Wiederholungen insgesamt</value></data>
+  <data name="Preview_Open" xml:space="preserve"><value>Öffnen</value></data>
+  <data name="Preview_MoreInfo" xml:space="preserve"><value>Mehr Infos</value></data>
+  <data name="ExerciseInfo_Duration" xml:space="preserve"><value>Dauer:</value></data>
+  <data name="ExerciseInfo_SideSwitch" xml:space="preserve"><value>Seitenwechsel:</value></data>
+  <data name="ExerciseInfo_Yes" xml:space="preserve"><value>ja</value></data>
+  <data name="ExerciseInfo_No" xml:space="preserve"><value>nein</value></data>
+  <data name="ExerciseInfo_NotAvailable" xml:space="preserve"><value>Übungsinformationen nicht verfügbar.</value></data>
+  <data name="WorkoutNow_Details" xml:space="preserve"><value>DETAILS &amp; ABLAUF</value></data>
+  <data name="Level_Easy" xml:space="preserve"><value>Leicht</value></data>
+  <data name="Level_Moderate" xml:space="preserve"><value>Fortgeschritten</value></data>
+  <data name="Level_Advanced" xml:space="preserve"><value>Schwer</value></data>
+  <data name="Level_Epic" xml:space="preserve"><value>Episch</value></data>
+</root>

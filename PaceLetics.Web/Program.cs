@@ -16,6 +16,7 @@ using PaceLetics.Web.Services;
 using PaceLetics.AthleteModule.CodeBase.Services;
 using PaceLetics.AthleteModule.CodeBase.Interfaces;
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(
 		options.User.RequireUniqueEmail = true;
 		options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     } ).AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddRazorPages();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddRazorPages()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<IExerciseProvider, ExerciseProvider>();
@@ -94,9 +98,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+var supportedCultures = new[] { "de", "en" };
+app.UseRequestLocalization(new RequestLocalizationOptions()
+    .SetDefaultCulture("de")
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures));
+
 app.UseAuthorization();
 app.UseCookiePolicy();
-app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

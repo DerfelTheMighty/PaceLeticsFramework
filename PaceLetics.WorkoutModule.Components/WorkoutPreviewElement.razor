@@ -8,6 +8,7 @@
 
 @inject IWorkoutProvider woProvider;
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<WorkoutResources> L
 
 
 
@@ -42,11 +43,11 @@
         <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Row="true" Spacing="10">
                        
         <MudStack>
-            <MudNumericField Label="Wiederholungen insgesamt" @bind-Value="@_rounds" Min="1" Max="1000" />
+            <MudNumericField Label="@L["Preview_TotalReps"]" @bind-Value="@_rounds" Min="1" Max="1000" />
         </MudStack>
         <MudStack>
-            <MudButton OnClick="@OpenWorkout" Variant="Variant.Text" Color="Color.Primary">Öffnen</MudButton>
-            <MudButton Variant="Variant.Text" Color="Color.Primary">Mehr Infos</MudButton>
+            <MudButton OnClick="@OpenWorkout" Variant="Variant.Text" Color="Color.Primary">@L["Preview_Open"]</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary">@L["Preview_MoreInfo"]</MudButton>
             </MudStack>
         </MudStack>
     </MudCardActions>

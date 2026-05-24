@@ -1,8 +1,10 @@
-﻿@page "/impressum"
+@page "/impressum"
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-<h2>Impressum</h2>
+<h2>@Localizer["Title"]</h2>
 
-<p>Verantwortlich für den Inhalt dieser Webseite:</p>
+<p>@Localizer["ResponsibleFor"]</p>
 
 <strong>@ImModel.Name</strong>
 <br />
@@ -10,14 +12,14 @@
 <br />
 @ImModel.PLZ @ImModel.Ort
 <br />
-Telefon: @ImModel.Telefonnummer
+@Localizer["Phone"]: @ImModel.Telefonnummer
 <br />
-E-Mail: <a href="mailto:@ImModel.Email">@ImModel.Email</a>
+@Localizer["EmailLabel"]: <a href="mailto:@ImModel.Email">@ImModel.Email</a>
 <br />
 
 @if (!string.IsNullOrEmpty(ImModel.UStID))
 {
-        <p>Umsatzsteuer-Identifikationsnummer: @ImModel.UStID</p>
+        <p>@Localizer["VatId"]: @ImModel.UStID</p>
 }
 
 @if (!string.IsNullOrEmpty(ImModel.RegisterEintrag))

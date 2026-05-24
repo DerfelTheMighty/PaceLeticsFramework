@@ -1,5 +1,6 @@
 ﻿@namespace PaceLetics.AthleteModule.Components
 @using MudBlazor
+@inject IStringLocalizer<AthleteResources> L
 
 <MudStack Spacing="3">
 
@@ -28,7 +29,7 @@
             <MudExpansionPanels Multiple="true" Elevation="0" Class="mt-2">
                 <MudExpansionPanel Class="rounded-lg">
                     <TitleContent>
-                        <MudText Color="Color.Primary">Mehr Infos</MudText>
+                        <MudText Color="Color.Primary">@L["PaceInfo_MoreInfo"]</MudText>
                     </TitleContent>
                     <ChildContent>
                         <MudText Typo="Typo.body2" Class="pt-2">

@@ -2,6 +2,7 @@
 @using MudBlazor;
 
 @namespace PaceLetics.AthleteModule.Components
+@inject IStringLocalizer<AthleteResources> L
 
 <MudCard>
     <MudCardHeader>
@@ -20,7 +21,7 @@
     <MudCardContent>
         <MudText>@Model?.Id</MudText>
         <MudText>
-            Ergebnis: <b>@Model?.Time.ToString()</b>
+            @L["RaceCard_Result"] <b>@Model?.Time.ToString()</b>
         </MudText>
     </MudCardContent>
 </MudCard>

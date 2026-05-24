@@ -6,12 +6,13 @@
 @inject IWorkoutProvider woProvider
 @inject IDialogService dialogService
 @inject NavigationManager navManager
+@inject IStringLocalizer<WorkoutRoom> L
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
     @if (_workout is null)
     {
-        <MudText>Kein Workout geladen.</MudText>
+        <MudText>@L["NoWorkout"]</MudText>
     }
     else
     {
@@ -39,7 +40,7 @@
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             dialogService.Show<WorkoutFinishedDialog>(
-                "Herzlichen Glückwünsch! Du hast das Workout erfolgreich abgeschlossen!",
+                L["WorkoutCompleted"],
                 options);
         });
     }

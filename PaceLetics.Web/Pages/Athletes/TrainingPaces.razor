@@ -10,18 +10,19 @@
 @inject IAthleteData AthleteData
 @inject IDialogService dialogService
 @inject IJSRuntime JSRuntime
+@inject IStringLocalizer<TrainingPaces> L
 
-<PageTitle>Deine Pacebereiche</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-8 pb-8" MaxWidth="MaxWidth.Small">
     @if (_isLoading)
     {
-        <LoadingScreen Label="Deine Daten werden geladen..." />
+        <LoadingScreen Label="@L["Loading"]" />
     }
     else
     {
-        <PageHeader Title="Deine Pacebereiche"
-                    Subtitle="Hier findest du deine optimalen Trainingspacebereiche basierend auf deinem VDOT-Wert." />
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
 
@@ -29,7 +30,7 @@
             @if (_athlete?.Vdot < 1)
             {
                 <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                    Füge einen Einstufungslauf hinzu, damit wir deine optimale Trainingspace bestimmen können.
+                    @L["NoRaceWarning"]
                 </MudAlert>
             }
 

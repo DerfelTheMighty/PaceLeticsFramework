@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="CookieNotice" xml:space="preserve"><value>Cookie-Hinweis</value></data>
+  <data name="CookieText" xml:space="preserve"><value>Wir verwenden Cookies, um Ihnen das bestmögliche Erlebnis auf unserer Webseite zu bieten und Ihren Anmeldestatus zu speichern. Diese Cookies sind essenziell für die Funktion unserer Webseite.</value></data>
+  <data name="ConsentText" xml:space="preserve"><value>Indem Sie auf "Zustimmen" klicken oder die Webseite weiterhin nutzen, erklären Sie sich mit der Verwendung dieser Cookies einverstanden. Wenn Sie mehr über die von uns verwendeten Cookies erfahren möchten oder Ihre Zustimmung widerrufen wollen, klicken Sie bitte auf "Mehr erfahren".</value></data>
+  <data name="LearnMore" xml:space="preserve"><value>Mehr erfahren</value></data>
+  <data name="Accept" xml:space="preserve"><value>Zustimmen</value></data>
+</root>

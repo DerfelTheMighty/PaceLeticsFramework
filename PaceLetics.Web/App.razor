@@ -1,4 +1,6 @@
-﻿<CascadingAuthenticationState>
+﻿@using System.Globalization
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
@@ -12,3 +14,17 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    [Parameter] public string? InitialCulture { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(InitialCulture))
+        {
+            var culture = new CultureInfo(InitialCulture);
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.CurrentUICulture = culture;
+        }
+    }
+}

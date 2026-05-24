@@ -1,8 +1,10 @@
-﻿@page
+@page
 @model LoginModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = Localizer["Title"].Value;
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -10,17 +12,17 @@
     <div class="col-md-5">
         <section>
             <form id="account" method="post">
-                <h2>Benutze deine E-Mail-Adresse, um dich einzuloggen.</h2>
+                <h2>@Localizer["LoginPrompt"]</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Email" class="form-label">E-Mail</label>
+                    <label asp-for="Input.Email" class="form-label">@Localizer["Email"]</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Passwort</label>
+                    <label asp-for="Input.Password" class="form-label">@Localizer["Password"]</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="checkbox mb-3">
@@ -30,17 +32,17 @@
                     </label>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">@Localizer["LoginButton"]</button>
                 </div>
                 <div>
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Passwort vergessen?</a>
+                        <a id="forgot-password" asp-page="./ForgotPassword">@Localizer["ForgotPassword"]</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registriere dich als neuer Benutzer</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@Localizer["RegisterNewUser"]</a>
                     </p>
                     <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">E-Mail erneut senden</a>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">@Localizer["ResendEmail"]</a>
                     </p>
                 </div>
             </form>

@@ -31,8 +31,8 @@ namespace PaceLetics.Web.Pages.Athletes
             catch (Exception ex)
             {
                 await dialogService.ShowInformationAsync(
-                    "Fehler beim Laden",
-                    $"Deine Daten konnten nicht geladen werden:\n{ex.Message}",
+                    L["LoadError_Title"],
+                    $"{L["LoadError_Message"]}\n{ex.Message}",
                     Icons.Material.Filled.Error);
             }
             finally

@@ -1,33 +1,35 @@
-﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IViewLocalizer Localizer
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hej @User.Identity?.Name!</a>
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@Localizer["Greeting"] @User.Identity?.Name!</a>
     </li>
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <button  type="submit" class="nav-link btn btn-link text-dark">@Localizer["Logout"]</button>
         </form>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrieren</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">@Localizer["Register"]</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Einloggen</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">@Localizer["Login"]</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Privacy">Datenschutzinformationen</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Privacy">@Localizer["Privacy"]</a>
      </li>
      <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Impressum">Impressum</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Impressum">@Localizer["Impressum"]</a>
      </li>
 }
 </ul>

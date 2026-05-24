@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
@@ -9,15 +11,15 @@
 @if (showBanner)
 {
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        Cookie-Hinweis
+        @Localizer["CookieNotice"]
 
-        Wir verwenden Cookies, um Ihnen das bestmögliche Erlebnis auf unserer Webseite zu bieten und Ihren Anmeldestatus zu speichern. Diese Cookies sind essenziell für die Funktion unserer Webseite.
+        @Localizer["CookieText"]
 
-        Indem Sie auf "Zustimmen" klicken oder die Webseite weiterhin nutzen, erklären Sie sich mit der Verwendung dieser Cookies einverstanden. Wenn Sie mehr über die von uns verwendeten Cookies erfahren möchten oder Ihre Zustimmung widerrufen wollen, klicken Sie bitte auf "Mehr erfahren".
+        @Localizer["ConsentText"]
 
-        <a asp-page="/Privacy">Mehr erfahren</a>.
+        <a asp-page="/Privacy">@Localizer["LearnMore"]</a>.
         <button type="button" class="accept-policy close" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Zustimmen</span>
+            <span aria-hidden="true">@Localizer["Accept"]</span>
         </button>
     </div>
     <script>

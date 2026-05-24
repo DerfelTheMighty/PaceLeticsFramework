@@ -1,6 +1,7 @@
 ﻿@using MudBlazor
 @using PaceLetics.RunningModule.CodeBase.Models
 @namespace PaceLetics.RunningModule.Components
+@inject IStringLocalizer<RunningResources> L
 
 <MudCard Elevation="0"
          Style="
@@ -47,7 +48,7 @@
     private bool IsInterval =>
         Session.Sequence.Any(s => s.Type == SegmentType.Intervall);
 
-    private string TypeLabel => IsInterval ? "Interval" : "Run";
+    private string TypeLabel => IsInterval ? L["MiniCard_Interval"] : L["MiniCard_Run"];
 
 	private Color TextColor => IsHighlighted ? Color.Primary : Color.Inherit;
 

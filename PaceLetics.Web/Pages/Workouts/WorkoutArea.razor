@@ -3,33 +3,33 @@
 @using PaceLetics.WorkoutModule.CodeBase.Models;
 
 @inject IWorkoutProvider woProvider;
+@inject IStringLocalizer<WorkoutArea> L
 
-<PageTitle>Deine Workout Area</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
-        <LoadingScreen Label="Deine Daten werden geladen..." />
+        <LoadingScreen Label="@L["Loading"]" />
     }
     else
     {
-        <PageHeader Title="Workout Area"
-                    Subtitle="Wähle ein Workout und leg los." />
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
 
         <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
 
             <MudText Typo="Typo.body1" Style="opacity:.8;">
-                Willkommen in deiner Workoutarea! Hier findest du eine stetig wachsende Auswahl an verschiedenen Workouts.
-                Leg los und starte ein Workout.
+                @L["IntroText"]
             </MudText>
 
             @if (_workoutPrevs is null || !_workoutPrevs.Any())
             {
                 <MudText Typo="Typo.body2" Style="opacity:.7;">
-                    Noch keine Workouts verfügbar.
+                    @L["NoWorkouts"]
                 </MudText>
             }
             else

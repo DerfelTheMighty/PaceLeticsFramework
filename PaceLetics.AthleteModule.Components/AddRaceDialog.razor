@@ -8,14 +8,15 @@
 @namespace PaceLetics.AthleteModule.Components
 
 @inject IDialogService dialogService
+@inject IStringLocalizer<AthleteResources> L
 
 <MudDialog>
     <TitleContent>
-        <MudText Typo="Typo.h6">Neuer Lauf</MudText>
+        <MudText Typo="Typo.h6">@L["AddRaceDialog_Title"]</MudText>
     </TitleContent>
     <DialogContent>
-        <MudTextField T="string" @bind-Value="_id" Immediate="@true" Label="Bezeichnung" />
-        <MudSelect Dense="true" T="string" Label="Distanz" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)" Value="@_type">
+        <MudTextField T="string" @bind-Value="_id" Immediate="@true" Label="@L["AddRaceDialog_Name"]" />
+        <MudSelect Dense="true" T="string" Label="@L["AddRaceDialog_Distance"]" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)" Value="@_type">
             <MudSelectItem Value="@RaceKeys.D1k" />
             <MudSelectItem Value="@RaceKeys.D3k" />
             <MudSelectItem Value="@RaceKeys.D5k" />
@@ -24,8 +25,8 @@
             <MudSelectItem Value="@RaceKeys.D21k" />
             <MudSelectItem Value="@RaceKeys.D42k" />
         </MudSelect>
-        <MudTextField @bind-Value="_time" Label="Laufzeit" HelperText="hh:mm:ss" Clearable/>
-        <MudDatePicker Label="Datum" @bind-Date="_date" PickerVariant="PickerVariant.Dialog" DisableToolbar="true" />
+        <MudTextField @bind-Value="_time" Label="@L["AddRaceDialog_Time"]" HelperText="@L["AddRaceDialog_TimeHelper"]" Clearable/>
+        <MudDatePicker Label="@L["AddRaceDialog_Date"]" @bind-Date="_date" PickerVariant="PickerVariant.Dialog" DisableToolbar="true" />
     </DialogContent>
     <DialogActions>
         <MudButton Disabled="@string.IsNullOrWhiteSpace(this._id)" OnClick="@this.OK" Size="@Size.Small">

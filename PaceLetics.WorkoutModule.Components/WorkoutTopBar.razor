@@ -5,6 +5,7 @@
 
 @implements IDisposable
 @inject IJSRuntime JSRuntime
+@inject IStringLocalizer<WorkoutResources> L
 
 <MudPaper Elevation="2" Class="px-4 py-3 position-relative">
 
@@ -229,7 +230,7 @@
         });
     }
 
-    protected static string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
+    protected string GetInstruction(WorkoutElements el, ExerciseState eState, WorkoutState wState)
     {
         string result = string.Empty;
 
@@ -237,23 +238,23 @@
         {
             if (el == WorkoutElements.Preparation)
             {
-                result = "Bereit machen!";
+                result = L["TopBar_GetReady"];
             }
             else if (el == WorkoutElements.Exercise)
             {
                 if (eState == ExerciseState.Pause)
-                    result = "Angehalten!";
+                    result = L["TopBar_Paused"];
                 else if (eState == ExerciseState.Switch)
-                    result = "Seitenwechsel!";
+                    result = L["TopBar_SideSwitch"];
                 else
-                    result = "Ausführung!";
+                    result = L["TopBar_Execution"];
             }
             else if (el == WorkoutElements.Rest)
             {
                 if (eState == ExerciseState.Pause)
-                    result = "Angehalten!";
+                    result = L["TopBar_Paused"];
                 else
-                    result = "Übungspause!";
+                    result = L["TopBar_ExercisePause"];
             }
         }
         else if (wState == WorkoutState.Finished || wState == WorkoutState.Stop)

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Dein Trainingsplan</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Der Trainingsplan für das laufende Sportsemester..</value></data>
+  <data name="NoPlans" xml:space="preserve"><value>Keine Trainingspläne gefunden.</value></data>
+  <data name="SelectPlan" xml:space="preserve"><value>Trainingsplan wählen</value></data>
+  <data name="NoDetails" xml:space="preserve"><value>Keine Details geladen.</value></data>
+  <data name="Session" xml:space="preserve"><value>Session</value></data>
+  <data name="Error_Title" xml:space="preserve"><value>Achtung</value></data>
+  <data name="Error_LoadData" xml:space="preserve"><value>Es gab ein Problem beim Laden deiner Daten oder Trainingspläne.</value></data>
+  <data name="Error_SaveBrowser_Title" xml:space="preserve"><value>Fehler</value></data>
+  <data name="Error_SaveBrowser" xml:space="preserve"><value>Deine Auswahl konnte nicht im Browser gespeichert werden.</value></data>
+  <data name="Error_SaveServer_Title" xml:space="preserve"><value>Fehler</value></data>
+  <data name="Error_SaveServer" xml:space="preserve"><value>Die Auswahl konnte nicht auf dem Server gespeichert werden.</value></data>
+</root>

@@ -1,14 +1,12 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="/Athletes/dashboard" Match="NavLinkMatch.All">Dashboard</MudNavLink>
-    <MudNavLink Href="/Athletes/racepaces" Match="NavLinkMatch.Prefix">Laufdaten</MudNavLink>
-    <MudNavLink Href="/Athletes/trainingpaces" Match="NavLinkMatch.Prefix">Pacebereiche</MudNavLink>
-    <MudNavLink Href="/Athletes/trainingplanpage" Match="NavLinkMatch.Prefix">Trainingsplanung</MudNavLink>
-    <MudNavLink Href="/Workouts/WorkoutArea" Match="NavLinkMatch.Prefix">Workouts</MudNavLink>
-    @*<MudNavGroup Title="Settings" Expanded="true">
-        <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
-        <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
-    </MudNavGroup>*@
-    <MudNavLink Href="/impressum" Match="NavLinkMatch.Prefix">About</MudNavLink>
+﻿@inject IStringLocalizer<NavMenu> L
+
+<MudNavMenu>
+    <MudNavLink Href="/Athletes/dashboard" Match="NavLinkMatch.All">@L["Nav_Dashboard"]</MudNavLink>
+    <MudNavLink Href="/Athletes/racepaces" Match="NavLinkMatch.Prefix">@L["Nav_RaceData"]</MudNavLink>
+    <MudNavLink Href="/Athletes/trainingpaces" Match="NavLinkMatch.Prefix">@L["Nav_PaceZones"]</MudNavLink>
+    <MudNavLink Href="/Athletes/trainingplanpage" Match="NavLinkMatch.Prefix">@L["Nav_TrainingPlan"]</MudNavLink>
+    <MudNavLink Href="/Workouts/WorkoutArea" Match="NavLinkMatch.Prefix">@L["Nav_Workouts"]</MudNavLink>
+    <MudNavLink Href="/impressum" Match="NavLinkMatch.Prefix">@L["Nav_About"]</MudNavLink>
 </MudNavMenu>
 
 

@@ -1,4 +1,6 @@
-﻿@{
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
     {
         Layout = parentLayout.ToString();
@@ -9,7 +11,7 @@
     }
 }
 
-<h1>Verwalte deinen Account</h1>
+<h1>@Localizer["ManageAccount"]</h1>
 
 <div>
     <hr />

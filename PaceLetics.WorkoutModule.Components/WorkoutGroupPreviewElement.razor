@@ -5,6 +5,7 @@
 
 @inject IWorkoutProvider woProvider
 @inject IDialogService DialogService
+@inject IStringLocalizer<WorkoutResources> L
 
 <MudCard Class="@CardClass" Elevation="2" Outlined="false">
     <MudCardContent Class="pa-4">
@@ -105,7 +106,7 @@
         };
 
         var dialog = await DialogService.ShowAsync<WorkoutDifficultyDialog>(
-            "Schwierigkeit wählen",
+            L["DifficultyDialog_SelectDifficulty"],
             parameters,
             options);
 

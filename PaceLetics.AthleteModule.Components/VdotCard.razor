@@ -1,6 +1,7 @@
 ﻿
 @using MudBlazor;
 @namespace PaceLetics.AthleteModule.Components
+@inject IStringLocalizer<AthleteResources> L
 
 <MudCard Class="d-flex flex-column align-center pa-4" Style="text-align:center;">
 
@@ -23,7 +24,7 @@
                       font-family="Helvetica"
                       font-size="16"
                       font-weight="500">
-                    Deine VDOT
+                    @L["VdotCard_Title"]
                 </text>
 
                 <text x="50%"
@@ -40,8 +41,7 @@
     </div>
 
     <MudText Align="Align.Center" Class="mt-4">
-        Super! Aus dem Referenzlauf können wir deine individuelle VDOT bestimmen.
-        Das ist ein Surrogat für deine aktuellen läuferischen Fähigkeiten.
+        @L["VdotCard_Description"]
     </MudText>
 </MudCard>
 

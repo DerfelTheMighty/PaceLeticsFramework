@@ -7,6 +7,8 @@
 
 @namespace PaceLetics.WorkoutModule.Components
 
+@inject IStringLocalizer<WorkoutResources> L
+
 @code {
     [Parameter]
     public IExerciseInfo Exercise { get; set; }
@@ -75,8 +77,8 @@
                         <MudImage Fluid="true" Src="@GetImagePath(Exercise.ImageFilename)" Alt="@Exercise.Id" Class="rounded-lg" />
                     </div>
                     <MudStack Spacing="1">
-                        <MudText><b>Dauer:</b> @Exercise.Duration Sekunden</MudText>
-                        <MudText><b>Seitenwechsel:</b> @(Exercise.SwitchLeftRight ? "ja" : "nein")</MudText>
+                        <MudText><b>@L["ExerciseInfo_Duration"]</b> @Exercise.Duration Sekunden</MudText>
+                        <MudText><b>@L["ExerciseInfo_SideSwitch"]</b> @(Exercise.SwitchLeftRight ? L["ExerciseInfo_Yes"] : L["ExerciseInfo_No"])</MudText>
 
                         @if (Exercise.Execution is not null)
                         {
@@ -99,7 +101,7 @@
 }
 else
     {
-    <MudText Color="Color.Error">Exercise information is not available.</MudText>
+    <MudText Color="Color.Error">@L["ExerciseInfo_NotAvailable"]</MudText>
     }
 
 <style>

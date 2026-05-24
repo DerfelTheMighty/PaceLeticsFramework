@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Cookie- und Datenschutzrichtlinie</value></data>
+  <data name="Section1Title" xml:space="preserve"><value>1. Einführung</value></data>
+  <data name="Section1Text" xml:space="preserve"><value>Willkommen auf unserer Webseite. Diese Richtlinie erklärt, wie und warum wir Cookies verwenden und welche Daten wir darüber sammeln.</value></data>
+  <data name="Section2Title" xml:space="preserve"><value>2. Was sind Cookies?</value></data>
+  <data name="Section2Text" xml:space="preserve"><value>Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie eine Webseite besuchen. Sie werden häufig verwendet, um Webseiten funktioneller zu gestalten und Informationen an die Eigentümer der Seite zu liefern.</value></data>
+  <data name="Section3Title" xml:space="preserve"><value>3. Wie und warum verwenden wir Cookies?</value></data>
+  <data name="Section3Text" xml:space="preserve"><value>Wir verwenden Cookies, um:</value></data>
+  <data name="Section3Item1" xml:space="preserve"><value>Ihren Anmeldestatus zu speichern.</value></data>
+  <data name="Section3Item2" xml:space="preserve"><value>Die Performance und Benutzerfreundlichkeit unserer Seite zu verbessern.</value></data>
+  <data name="Section4Title" xml:space="preserve"><value>4. Welche Daten sammeln wir?</value></data>
+  <data name="Section4Text" xml:space="preserve"><value>Wenn Sie unsere Webseite besuchen oder sich registrieren, können folgende Daten gesammelt werden:</value></data>
+  <data name="Section4Item1" xml:space="preserve"><value>IP-Adresse</value></data>
+  <data name="Section4Item2" xml:space="preserve"><value>Browsertyp und -version</value></data>
+  <data name="Section4Item3" xml:space="preserve"><value>Email-Adresse (wenn Sie sich registrieren oder anmelden)</value></data>
+  <data name="Section4Item4" xml:space="preserve"><value>Benutzername (wenn Sie sich registrieren oder anmelden)</value></data>
+  <data name="Section4Item5" xml:space="preserve"><value>Passwort (wenn Sie sich registrieren oder anmelden)</value></data>
+  <data name="Section4Item6" xml:space="preserve"><value>Daten, die während der Laufzeit erfasst werden (z.B. Aktivitäten, Einstellungen)</value></data>
+  <data name="Section5Title" xml:space="preserve"><value>5. Datenlöschung</value></data>
+  <data name="Section5Text" xml:space="preserve"><value>Wenn Sie Ihren Account löschen, werden alle mit Ihrem Account verbundenen Daten, einschließlich Email-Adresse, Benutzername und zu Laufzeiten erfasste Daten, permanent gelöscht.</value></data>
+  <data name="Section6Title" xml:space="preserve"><value>6. Wie können Sie die Verwendung von Cookies steuern?</value></data>
+  <data name="Section6Text" xml:space="preserve"><value>Die meisten Browser erlauben es, Cookies zu kontrollieren. Sie können Einstellungen so konfigurieren, dass Cookies blockiert oder gelöscht werden. Beachten Sie jedoch, dass einige Funktionen unserer Webseite möglicherweise nicht korrekt funktionieren, wenn Cookies deaktiviert sind.</value></data>
+  <data name="Section7Title" xml:space="preserve"><value>7. Änderungen an dieser Richtlinie</value></data>
+  <data name="Section7Text" xml:space="preserve"><value>Wir können diese Richtlinie von Zeit zu Zeit aktualisieren. Änderungen werden auf dieser Seite veröffentlicht.</value></data>
+  <data name="Section8Title" xml:space="preserve"><value>8. Kontakt</value></data>
+  <data name="Section8Text" xml:space="preserve"><value>Bei Fragen zu dieser Cookie- und Datenschutzrichtlinie wenden Sie sich bitte an</value></data>
+</root>

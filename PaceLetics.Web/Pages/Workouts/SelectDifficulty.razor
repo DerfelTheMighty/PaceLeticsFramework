@@ -6,22 +6,23 @@
 @using System.ComponentModel.DataAnnotations
 @inject IWorkoutProvider woProvider
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<SelectDifficulty> L
 
-<PageTitle>Schwierigkeit wählen</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
     <MudPaper Class="p-6" Elevation="2">
         <MudStack Spacing="3">
             <MudStack Row="true" AlignItems="AlignItems.Center" JustifyContent="Justify.SpaceBetween">
-                <MudText Typo="Typo.h4">Schwierigkeit wählen</MudText>
-                <MudButton Variant="Variant.Text" StartIcon="Icons.Material.Filled.ArrowBack" OnClick="@Back">Zurück</MudButton>
+                <MudText Typo="Typo.h4">@L["Title"]</MudText>
+                <MudButton Variant="Variant.Text" StartIcon="Icons.Material.Filled.ArrowBack" OnClick="@Back">@L["Back"]</MudButton>
             </MudStack>
 
             <MudDivider />
 
             @if (_variants is null || !_variants.Any())
             {
-                <MudText>Keine Varianten gefunden.</MudText>
+                <MudText>@L["NoVariants"]</MudText>
             }
             else
             {
@@ -36,11 +37,11 @@
                         <MudText Typo="Typo.body2" Style="opacity:.8">@_previewDescription</MudText>
 
                         <MudStack Row="true" Spacing="2" Class="mt-4">
-                            <MudNumericField Label="Wdh. pro Übung" @bind-Value="_sets" Min="1" Max="20" Style="width:150px" />
-                            <MudNumericField Label="Rundenzahl" @bind-Value="_rounds" Min="1" Max="20" Style="width:150px" />
+                            <MudNumericField Label="@L["SetsPerExercise"]" @bind-Value="_sets" Min="1" Max="20" Style="width:150px" />
+                            <MudNumericField Label="@L["Rounds"]" @bind-Value="_rounds" Min="1" Max="20" Style="width:150px" />
                         </MudStack>
 
-                        <MudText Typo="Typo.subtitle1" Class="mt-4">Verfügbare Schwierigkeitsstufen</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mt-4">@L["AvailableLevels"]</MudText>
                         <MudStack Spacing="2" Class="mt-2">
                             @foreach(var v in _variants)
                             {
@@ -111,16 +112,5 @@
         };
     }
 
-    private string GetDisplayName(Level level)
-    {
-        var type = typeof(Level);
-        var mem = type.GetMember(level.ToString());
-        if (mem != null && mem.Length > 0)
-        {
-            var attrs = mem[0].GetCustomAttributes(typeof(DisplayAttribute), false);
-            if (attrs != null && attrs.Length > 0)
-                return ((DisplayAttribute)attrs[0]).GetName() ?? level.ToString();
-        }
-        return level.ToString();
-    }
+    private string GetDisplayName(Level level) => L[$"Level_{level}"];
 }
