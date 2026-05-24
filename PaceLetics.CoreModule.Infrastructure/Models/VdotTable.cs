@@ -10,11 +10,11 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
     public class VdotTable : IVdotService
     {
 
-        private DataTable _data { get; set; }
+        private readonly DataTable _data;
 
         public VdotTable(DataTable data) 
         {
-            _data = data;
+            _data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
 
@@ -44,12 +44,12 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
                 double[] dataRow = new double[nCol];
                 DataRow row = _data.Rows[iRow];
 
-                double res = (double) row.ItemArray[0];
+                double res = Convert.ToDouble(row.ItemArray[0]);
                 dataRow[0] = res;
                 for (int i = 1; i < nCol; i++)
                 {
                     var obj = row.ItemArray[i];
-                    var seconds = (double)obj;
+                    var seconds = Convert.ToDouble(obj);
                     dataRow[i] = seconds;
                 }
 
@@ -68,37 +68,36 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
         /// <returns></returns>
         public double GetVdot(RaceResultModel result)
         {
-            var closest = _data.Select().
-              OrderBy(dr => Math.Abs((double)dr[result.DistanceM.ToString()] - (double)(result?.Time.TotalSeconds ?? 0 ))).
-              FirstOrDefault();
-            return (double) closest[0];
+            var distanceColumn = result.DistanceM.ToString();
+            var closest = _data.Select()
+              .OrderBy(dr => Math.Abs(Convert.ToDouble(dr[distanceColumn]) - result.Time.TotalSeconds))
+              .FirstOrDefault()
+              ?? throw new InvalidOperationException("Vdot table contains no rows.");
+
+            return Convert.ToDouble(closest[0]);
         }
 
         /// <summary>
         /// Returns a formatted string of the table
         /// </summary>
         /// <returns></returns>
-        public override string? ToString()
+        public override string ToString()
         {
-            if (_data != null)
+            StringBuilder builder = new StringBuilder();
+            foreach (DataRow row in _data.Rows)
             {
-                StringBuilder builder = new StringBuilder();
-                foreach (DataRow row in _data.Rows)
+                string line = "";
+                var value = row.ItemArray[0];
+                line += Convert.ToDouble(value) + "\t";
+                for (int iRow = 1; iRow < row.ItemArray.Length; iRow++)
                 {
-                    string line = "";
-                    var value = row.ItemArray[0];
-                    line += (double)value + "\t";
-                    for (int iRow = 1; iRow < row.ItemArray.Length; iRow++)
-                    {
-                        value = row.ItemArray[iRow];
-                        line += TimeStringConverter.SecondsToTimeString(Convert.ToInt32(value)) + "\t";
-                    }
-                    builder.AppendLine(line);
+                    value = row.ItemArray[iRow];
+                    line += TimeStringConverter.SecondsToTimeString(Convert.ToInt32(value)) + "\t";
                 }
-                return builder.ToString();
+                builder.AppendLine(line);
             }
-            else
-                return null;
+
+            return builder.ToString();
         }
 
     }

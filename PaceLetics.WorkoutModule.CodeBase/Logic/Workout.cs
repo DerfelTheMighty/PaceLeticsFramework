@@ -160,6 +160,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
 
             _workoutElements.RemoveAt(_workoutElements.Count - 1);
             Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
+            Imagefile = Exercises.FirstOrDefault()?.ImageFilename ?? string.Empty;
         }
 
         public Workout(WorkoutDefinition definition, IExerciseProvider provider, int sets, int rounds)
@@ -190,6 +191,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
 
             _workoutElements.RemoveAt(_workoutElements.Count - 1);
             Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
+            Imagefile = Exercises.FirstOrDefault()?.ImageFilename ?? string.Empty;
         }
 
         #region public methods

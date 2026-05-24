@@ -13,7 +13,7 @@
         <MudStack Spacing="2">
             @if (_workoutPreview is not null && _workoutPreview.Exercises.Any())
             {
-                <MudGrid Class="mt-2" Spacing="2" AlignItems="Center" Justify="Justify.Center">
+                <MudGrid Class="mt-2" Spacing="2" Justify="Justify.Center" Style="align-items:center;">
                     @foreach (var ex in _workoutPreview.Exercises)
                     {
                         <MudItem xs="4" sm="3" md="2" lg="2">
@@ -67,7 +67,7 @@
 </MudDialog>
 
 @code {
-    [Parameter] public string Name { get; set; }
+    [Parameter] public string Name { get; set; } = string.Empty;
     [Parameter] public Level? SelectedLevel { get; set; }
     [Parameter] public bool Compact { get; set; }
 
@@ -84,11 +84,11 @@
 
     protected override void OnInitialized()
     {
-        _variants = woProvider.GetWorkoutIdsByName(Name) ?? new List<string>();
+        _variants = woProvider.GetWorkoutIdsByName(Name);
         if (_variants.Any())
         {
             var w = woProvider.GetWorkout(_variants.First());
-            _previewDescription = w?.Description ?? string.Empty;
+            _previewDescription = w.Description;
             _workoutPreview = woProvider.GetWorkoutPreview(_variants.First());
             var img = w?.Exercises.FirstOrDefault().ImageFilename;
             if (!string.IsNullOrEmpty(img)) _previewImage = "images/exercises/" + img;
@@ -97,7 +97,7 @@
         if (SelectedLevel.HasValue)
         {
             // find a variant matching the selected level (use per-variant GetWorkout)
-            _selectedVariantId = _variants.FirstOrDefault(id => (woProvider.GetWorkout(id)?.Level ?? Level.None) == SelectedLevel.Value);
+            _selectedVariantId = _variants.FirstOrDefault(id => woProvider.GetWorkout(id).Level == SelectedLevel.Value);
         }
     }
 

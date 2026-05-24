@@ -8,17 +8,13 @@ namespace PaceLetics.WorkoutModule.Components
     public partial class WorkoutView
     {
         [Parameter]
-        public IWorkout Workout { get; set; }
+        public IWorkout Workout { get; set; } = default!;
 
 
         private bool _allowSlide;
         private int _currentExercise;
-        private double _prgs;
-        private int _toggled;
-
         private ExerciseState _exerciseState;
         private WorkoutElements _elementType;
-        private string _instruction;
         public bool IsControlExpanded { get; set; }
         public string ControlText 
         {

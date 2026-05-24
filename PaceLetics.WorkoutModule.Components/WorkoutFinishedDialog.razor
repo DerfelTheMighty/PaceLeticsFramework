@@ -15,7 +15,7 @@
     </DialogActions>
 </MudDialog>
 @code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
 }

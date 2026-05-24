@@ -17,7 +17,7 @@ namespace PaceLetics.AthleteModule.Components
             await OnEditRaceCard.InvokeAsync();
         }
 
-        private string GetImagePath(string type)
+        private string GetImagePath(string? type)
         {
             var imagePath = "/images/icons/epace.png"; // default image
             switch (type)

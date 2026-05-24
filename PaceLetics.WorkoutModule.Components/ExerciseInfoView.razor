@@ -11,7 +11,7 @@
 
 @code {
     [Parameter]
-    public IExerciseInfo Exercise { get; set; }
+    public IExerciseInfo? Exercise { get; set; }
     
     
 
@@ -84,7 +84,7 @@
                         {
                             @foreach (var step in Exercise.Execution)
                             {
-                                <MudStack Direction="Row" AlignItems="AlignItems.Center" Spacing="1">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
                                     <MudIcon Icon="@Icons.Material.Filled.LabelImportant" />
                                     <MudText>@step</MudText>
                                 </MudStack>

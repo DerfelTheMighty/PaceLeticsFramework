@@ -91,7 +91,7 @@
         <div style="padding:12px 16px;">
             <div style="width:44px; height:4px; border-radius:999px; background: rgba(255,255,255,0.25); margin:0 auto 10px auto;"></div>
 
-            <MudStack Row="true" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Style="width:100%;">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%;">
                 <MudText Typo="Typo.h6">@(_resolved?.Name ?? L["Session"])</MudText>
                 <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseDetails" />
             </MudStack>
@@ -146,7 +146,6 @@
 </MudContainer>
 
 @code {
-    private bool _isLoading = true;
     private TrainingPlan? Plan;
     private string? _nextSessionId;
     private AthleteModel? _athlete;
@@ -242,10 +241,6 @@
                 L["Error_Title"],
                 L["Error_LoadData"],
                 Icons.Material.Filled.Error);
-        }
-        finally
-        {
-            _isLoading = false;
         }
     }
 

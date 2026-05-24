@@ -49,9 +49,9 @@
 
 
 @code {
-    bool _isLoading;
-    List<string> _workoutBases;
-    List<WorkoutPreview> _workoutPrevs;
+    bool _isLoading = true;
+    List<string> _workoutBases = new();
+    List<WorkoutPreview> _workoutPrevs = new();
 
 
     protected override void OnInitialized()
@@ -69,16 +69,9 @@
                     _workoutPrevs.Add(preview);
             }
         }
+
+        _isLoading = false;
     }
 
 
-    private async void OnExStart(IWorkoutElement el)
-    {
-        //if (el.Type == WorkoutModule.Enums.WorkoutElement.Exercise)
-            //InvokeAsync(() =>
-            //{
-            //    _currentExercise = el as IExerciseInfo;
-            //    StateHasChanged();
-            //});
-    }
 }

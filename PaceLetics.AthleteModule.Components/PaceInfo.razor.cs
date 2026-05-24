@@ -28,7 +28,7 @@ namespace PaceLetics.AthleteModule.Components
         [Parameter] public TimeSpan RPaceLow { get; set; }
         [Parameter] public TimeSpan RPaceHigh { get; set; }
 
-        private List<PaceInfoItem> Items;
+        private List<PaceInfoItem> Items = new();
 
         protected override void OnParametersSet()
         {

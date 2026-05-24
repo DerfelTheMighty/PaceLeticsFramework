@@ -37,10 +37,10 @@
 
     private async void OnWorkoutFinished()
     {
-        await InvokeAsync(() =>
+        await InvokeAsync(async () =>
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            dialogService.Show<WorkoutFinishedDialog>(
+            await dialogService.ShowAsync<WorkoutFinishedDialog>(
                 L["WorkoutCompleted"],
                 options);
         });

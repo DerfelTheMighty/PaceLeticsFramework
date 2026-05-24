@@ -63,7 +63,7 @@ namespace PaceLetics.AthleteModule.CodeBase.Services
         {
             string jsonString = File.ReadAllText(filename);
             var result = JsonConvert.DeserializeObject<DataTable>(jsonString);
-            return new VdotTable(result);
+            return new VdotTable(result ?? throw new InvalidDataException($"File '{filename}' does not contain a valid VDOT table."));
         }
 
     }

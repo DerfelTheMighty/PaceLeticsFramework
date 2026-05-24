@@ -20,11 +20,11 @@ namespace PaceLetics.AthleteModule.Components
         private IMask _timeMask = new PatternMask("00:00:00");
         private Regex _timePattern = new Regex(@"^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$");
         [Parameter]
-        public RaceResultModel Model { get; set; }
+        public RaceResultModel Model { get; set; } = new();
 
         [CascadingParameter]
         private IMudDialogInstance MudDialog { get; set; } = default !;
-        private void OK()
+        private async Task OK()
         {
             bool isValidTime = _timePattern.IsMatch(_time);
             if (isValidTime)
@@ -39,7 +39,7 @@ namespace PaceLetics.AthleteModule.Components
             }
             else
             {
-                ShowTimeFormatError();
+                await ShowTimeFormatError();
             }
         }
 
@@ -50,7 +50,7 @@ namespace PaceLetics.AthleteModule.Components
             StateHasChanged();
         }
 
-        protected async override void OnInitialized()
+        protected override void OnInitialized()
         {
             if (Model == null)
             {

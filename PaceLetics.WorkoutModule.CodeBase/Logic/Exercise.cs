@@ -6,7 +6,6 @@ using PaceLetics.WorkoutModule.CodeBase.Models;
 public class Exercise : TimedWorkoutElement, IExerciseInfo, IWorkoutElement
 {
     private readonly Timeslot[] _timeslots;
-    private int _currentTimeSlot;
 
     public string Name { get; }
     public string Id { get; }

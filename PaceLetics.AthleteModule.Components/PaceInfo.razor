@@ -9,7 +9,7 @@
         <MudCard Class="pa-4 rounded-lg" Elevation="1">
 
             <!-- Header mit Icon + PaceKey + Pacezeiten -->
-            <MudStack Direction="Row" AlignItems="AlignItems.Center" JustifyContent="space-between">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
 
                 <MudStack Spacing="0">
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">@p.Title</MudText>
@@ -26,7 +26,7 @@
             </MudStack>
 
             <!-- Expandable Infos -->
-            <MudExpansionPanels Multiple="true" Elevation="0" Class="mt-2">
+            <MudExpansionPanels MultiExpansion="true" Elevation="0" Class="mt-2">
                 <MudExpansionPanel Class="rounded-lg">
                     <TitleContent>
                         <MudText Color="Color.Primary">@L["PaceInfo_MoreInfo"]</MudText>

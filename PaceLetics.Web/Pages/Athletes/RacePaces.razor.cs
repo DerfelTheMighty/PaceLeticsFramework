@@ -52,7 +52,7 @@ namespace PaceLetics.Web.Pages.Athletes
             RaceResultModel? res = _athlete.ActiveReferenceResult;
             var parameters = new DialogParameters<AddRaceDialog> { { x => x.Model, res } };
 
-            var dialogRef = dialogService.Show<AddRaceDialog>(string.Empty, parameters, options);
+            var dialogRef = await dialogService.ShowAsync<AddRaceDialog>(string.Empty, parameters, options);
             var result = await dialogRef.Result;
 
             if (result is null || result.Canceled)
