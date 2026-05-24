@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/Christoph/source/repos/PaceLeticsFramework -type f \\\\\\( -name \"*.razor\" -o -name \"*.cshtml\" \\\\\\) -exec grep -l \"About\" {} \\\\;)",
+      "Bash(dotnet build *)"
+    ]
+  }
+}
