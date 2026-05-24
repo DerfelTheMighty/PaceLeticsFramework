@@ -31,8 +31,10 @@ namespace PaceLetics.RunningModule.CodeBase.Models
 
             var resolved = session.Sequence.Select(seg =>
             {
-                // pace only if key exists
-                TimeSpan? pace = seg.PaceKey is null ? null : paceModel.GetPace(seg.PaceKey);
+                // pace only if the segment key maps to a known training pace
+                TimeSpan? pace = paceModel.TryGetPace(seg.PaceKey, out var resolvedPace)
+                    ? resolvedPace
+                    : null;
 
                 // duration: prefer explicit Duration, else compute from distance+pace
                 TimeSpan? segmentTime =

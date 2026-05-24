@@ -1,5 +1,7 @@
 ﻿using PaceLetics.CoreModule.Infrastructure.Constants;
 
+using PaceLetics.CoreModule.Infrastructure.Enums;
+
 namespace PaceLetics.CoreModule.Infrastructure.Models
 {
 	public class PaceModel
@@ -47,24 +49,43 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 			return result;
 		}
 
+		public TimeSpan GetPace(Pace pace)
+		{
+			return pace switch
+			{
+				Pace.Easy => Easy,
+				Pace.Marathon => Marathon,
+				Pace.Threshold => Threshold,
+				Pace.Intervall => Intervall,
+				Pace.Repetition => Repetition,
+				_ => throw new ArgumentOutOfRangeException(nameof(pace), pace, null)
+			};
+		}
+
 		public TimeSpan GetPace(string paceKey) 
 		{
-			switch (paceKey) 
-			{
-				case PaceKeys.Easy:
-					return Easy;
-				case PaceKeys.Marathon:
-					return Marathon;
-				case PaceKeys.Threshold:
-					return Threshold;
-				case PaceKeys.Intervall:
-                    return Intervall;
-				case PaceKeys.Repetition:
-                    return Repetition;
-				default:
-					return Easy;
-			}
+			return TryGetPace(paceKey, out var pace)
+				? pace
+				: throw new ArgumentException($"Unknown pace key '{paceKey}'.", nameof(paceKey));
+		}
 
+		public bool TryGetPace(string? paceKey, out TimeSpan pace)
+		{
+			pace = paceKey switch
+			{
+				PaceKeys.Easy => Easy,
+				PaceKeys.Marathon => Marathon,
+				PaceKeys.Threshold => Threshold,
+				PaceKeys.Intervall => Intervall,
+				PaceKeys.Repetition => Repetition,
+				_ => default
+			};
+
+			return paceKey is PaceKeys.Easy
+				or PaceKeys.Marathon
+				or PaceKeys.Threshold
+				or PaceKeys.Intervall
+				or PaceKeys.Repetition;
 		}
 
 		/// <summary>

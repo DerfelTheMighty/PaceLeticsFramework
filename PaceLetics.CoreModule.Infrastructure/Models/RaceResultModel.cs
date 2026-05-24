@@ -11,12 +11,12 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 		/// <summary>
 		/// Id or name of the event
 		/// </summary>
-		public string Id { get; set; }
+		public string Id { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Race Type
 		/// </summary>
-		public string Type { get; set; }
+		public string Type { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Reference Distance
@@ -26,21 +26,11 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 		/// <summary>
 		/// Race date
 		/// </summary>
-		public DateTime Date { get; set; }
+		public DateTime Date { get; set; } = DateTime.Now;
 		/// <summary>
 		/// Time in Seconds
 		/// </summary>
 		public TimeSpan Time { get; set; }
-
-		
-        public RaceResultModel()
-        {
-            Id = string.Empty;
-            Type = string.Empty;
-            Date = DateTime.Now;
-            DistanceM = 0;
-            Time = new TimeSpan(0, 0, 0);
-        }
 
         /// <summary>
         /// overrides to string method and returns a formatted string

@@ -3,7 +3,7 @@
     public enum Pace
     {
         Easy,
-        Marahon,
+        Marathon,
         Threshold,
         Intervall,
         Repetition,

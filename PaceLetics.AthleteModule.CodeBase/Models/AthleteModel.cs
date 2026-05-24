@@ -11,16 +11,16 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
         /// <summary>
         /// Unique id for anonymization
         /// </summary>
-        public string? Id { get; set; }
+        public string Id { get; set; } = "NA";
         /// <summary>
         /// Name of the athlete
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = "NA";
 
         /// <summary>
         /// Used as partition key
         /// </summary>
-        public string? AthleteId { get; set; }
+        public string AthleteId { get; set; } = "NA";
         /// <summary>
         /// Current skill level
         /// </summary>
@@ -34,7 +34,7 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
         /// <summary>
         /// List of race results
         /// </summary>
-        public List<RaceResultModel>? RaceResults { get; set; }
+        public List<RaceResultModel> RaceResults { get; set; } = new();
 
 
 
@@ -42,7 +42,7 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
         /// <summary>
         /// Active pacemodel
         /// </summary>
-        public PaceModel? PaceModel { get; set; }
+        public PaceModel PaceModel { get; set; } = new();
 
         /// <summary>
         /// Persisted id of the user's selected training plan
@@ -53,13 +53,7 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
 
         public AthleteModel() 
         {
-            Id = "NA";
-            Name = "NA";
-            AthleteId = "NA";
-            Level = new ExperienceLevel();
-            RaceResults = new List<RaceResultModel>();
-            Vdot = 0;
-            PaceModel= new PaceModel();
+            Level = ExperienceLevel.None;
         }
 
         
