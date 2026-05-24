@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -30,6 +29,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaceLetics.WorkoutModule.Components", "PaceLetics.WorkoutModule.Components\PaceLetics.WorkoutModule.Components.csproj", "{C053D80F-F374-4566-A30B-87C854F34D56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaceLetics.AthleteModule.Components", "PaceLetics.AthleteModule.Components\PaceLetics.AthleteModule.Components.csproj", "{D288BA6F-7E3E-4559-9F66-3A173D7E868A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaceLetics.Tests", "PaceLetics.Tests\PaceLetics.Tests.csproj", "{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +78,10 @@ Global
 		{D288BA6F-7E3E-4559-9F66-3A173D7E868A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D288BA6F-7E3E-4559-9F66-3A173D7E868A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D288BA6F-7E3E-4559-9F66-3A173D7E868A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,12 +36,14 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
         /// <returns></returns>
         public Exercise GetExercise(string id, Level lvl)
         {
-            return _exercises.Find(x => x.Id == id && x.Level == lvl);
+            return _exercises.Find(x => x.Id == id && x.Level == lvl)
+                ?? throw new KeyNotFoundException($"Exercise definition '{id}' with level '{lvl}' was not found.");
         }
 
         public ExercisePreview GetExercisePreview(string id, Level lvl) 
         {
-            return _previews.Find(x => x.Id == id && x.Level == lvl);
+            return _previews.Find(x => x.Id == id && x.Level == lvl)
+                ?? throw new KeyNotFoundException($"Exercise preview '{id}' with level '{lvl}' was not found.");
         }
 
 
