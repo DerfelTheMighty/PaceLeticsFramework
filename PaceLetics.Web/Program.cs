@@ -17,18 +17,14 @@ using PaceLetics.AthleteModule.CodeBase.Services;
 using PaceLetics.AthleteModule.CodeBase.Interfaces;
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Localization;
+using PaceLetics.Web.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-var sqlConnectionString = Environment.GetEnvironmentVariable("PaceLeticsSqlConnString");
-//var nonSqlConnectionVar = builder.Configuration.GetSection("EnvVariables").GetSection("PaceLeticsDbConnString").Value;
-var nonSqlConnectionString = Environment.GetEnvironmentVariable("PaceLeticsDbConnString");
-var mailConnectionString = Environment.GetEnvironmentVariable("PaceLeticsMailConnString");
-//var plDbEndPoint = Environment.GetEnvironmentVariable("PaceLeticsDbEndpoint");
-//var plDbKey = Environment.GetEnvironmentVariable("PaceLeticsDbKey");
+var sqlConnectionString = PaceLeticsConfiguration.GetRequiredEnvironmentVariable("PaceLeticsSqlConnString");
+var nonSqlConnectionString = PaceLeticsConfiguration.GetRequiredEnvironmentVariable("PaceLeticsDbConnString");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(sqlConnectionString));
@@ -51,8 +47,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 builder.Services.AddSingleton<IExerciseProvider, ExerciseProvider>();
 builder.Services.AddScoped<IWorkoutProvider, WorkoutProvider>();
 builder.Services.AddSingleton<AthleteModelFactory>();
-builder.Services.AddTransient<IDataAccess>(x => new DataAccess(
-    nonSqlConnectionString ?? throw new InvalidOperationException("Environment variable 'PaceLeticsDbConnString' is not configured.")));
+builder.Services.AddSingleton(builder.Configuration.GetAthleteDataOptions());
+builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
 builder.Services.AddTransient<IAthleteData, AthleteData>();
 builder.Services.AddScoped<IAthleteService, AthleteService>();
 builder.Services.AddSingleton<IVdotService>(x => (new VdotTableReaderWriter()).FromJson("wwwroot/data/vdot_table.json"));
@@ -66,6 +62,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 builder.Services.AddHttpContextAccessor();
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection(SmtpOptions.SectionName));
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 
