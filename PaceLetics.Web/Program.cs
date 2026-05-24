@@ -67,6 +67,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 
 
 //builder.Services.AddMudServices();

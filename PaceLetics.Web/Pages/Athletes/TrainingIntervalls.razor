@@ -1,17 +1,17 @@
 ﻿@page "/Athletes/trainingintervalls"
 
-@using System.IO
-@using AthleteDataAccessLibrary
 @using AthleteDataAccessLibrary.Contracts
 @using MudBlazor
 @using PaceLetics.AthleteModule.CodeBase.Models
 @using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.RunningModule.CodeBase.Models
+@using PaceLetics.Web.Services
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 @inject IDialogService DialogService
 @inject IStringLocalizer<TrainingIntervalls> L
+@inject ITrainingPlanService TrainingPlanService
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -95,50 +95,43 @@
                 return list;
             });
 
-    // Relativer Pfad zur JSON-Datei im Output (bin/..)
-    private const string IntervalsJsonRelativePath = "res/intervals.json";
-
     protected override async Task OnInitializedAsync()
     {
-
-        var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-
-        if (string.IsNullOrEmpty(userID))
+        try
         {
-            await DialogService.ShowInformationAsync(
-                L["NotLoggedIn_Title"],
-                L["NotLoggedIn_Message"],
-                Icons.Material.Filled.Error);
-            return;
+            var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+            var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
+            if (string.IsNullOrEmpty(userID))
+            {
+                await DialogService.ShowInformationAsync(
+                    L["NotLoggedIn_Title"],
+                    L["NotLoggedIn_Message"],
+                    Icons.Material.Filled.Error);
+                return;
+            }
+
+            _athlete = await AthleteData.GetAthlete(userID);
+
+            if (_athlete?.PaceModel is null)
+                return;
+
+            var sessions = TrainingPlanService.LoadLegacySessions()
+                .OfType<IntervallSession>()
+                .ToList();
+
+            var today = DateTime.Today;
+            var upcoming = sessions
+                .Where(t => t.Date.Date >= today)
+                .OrderBy(t => t.Date)
+                .FirstOrDefault();
+
+            _currentTraining = upcoming ?? sessions.OrderByDescending(t => t.Date).FirstOrDefault();
         }
-
-        _athlete = await AthleteData.GetAthlete(userID);
-
-        // Wenn kein PaceModel vorhanden ist, brauchen wir gar nicht erst Trainings laden
-        if (_athlete?.PaceModel is null)
-            return;
-
-        // JSON aus res/intervals.json laden (liegt im Output-Verzeichnis)
-        var baseDir = AppContext.BaseDirectory;
-        var jsonPath = "wwwroot/data/intervalls.json";
-
-            
-        var sessions = RunningSessionFactory.Load(jsonPath);
-		var resolved = new List<ResolvedRunningSession>();
-        foreach (var session in sessions.OrderBy(s => s.Date))
+        finally
         {
-            resolved.Add(RunningSessionResolver.Resolve(session, _athlete.PaceModel));
-           
+            _isLoading = false;
         }
-
-        var today = DateTime.Today;
-        var upcoming = sessions
-            .Where(t => t.Date.Date >= today)
-            .OrderBy(t => t.Date)
-            .FirstOrDefault();
-
-        var selected = upcoming ?? sessions.OrderByDescending(t => t.Date).FirstOrDefault();
 
 
     }

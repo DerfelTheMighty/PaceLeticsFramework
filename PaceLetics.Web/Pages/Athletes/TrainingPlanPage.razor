@@ -4,12 +4,14 @@
 @using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.RunningModule.CodeBase.Models
 @using PaceLetics.RunningModule.Components
+@using PaceLetics.Web.Services
 @using Microsoft.JSInterop
 @inject IJSRuntime JS
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 @inject IDialogService dialogService
 @inject IStringLocalizer<TrainingPlanPage> L
+@inject ITrainingPlanService TrainingPlanService
 
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
@@ -162,23 +164,7 @@
     {
         try
         {
-            // Verzeichnis mit Plan-Dateien
-            var plansDir = Path.Combine(AppContext.BaseDirectory, "wwwroot", "data", "plans");
-            _plans = PaceLetics.RunningModule.CodeBase.Models.TrainingPlanProvider.LoadFromDirectory(plansDir).ToList();
-
-            // Fallback: wenn kein plans-Ordner, lade die ältere single-file intervalls.json als einzelner Plan
-            if (!_plans.Any())
-            {
-                var jsonPath = Path.Combine(AppContext.BaseDirectory, "wwwroot", "data", "intervalls.json");
-                if (File.Exists(jsonPath))
-                {
-                    var sessions = RunningSessionFactory.Load(jsonPath);
-                    var id = Path.GetFileNameWithoutExtension(jsonPath) ?? "default";
-                    var name = id.Replace('-', ' ').Replace('_', ' ');
-                    name = char.ToUpperInvariant(name[0]) + name.Substring(1);
-                    _plans.Add(new TrainingPlan(id, name, sessions));
-                }
-            }
+            _plans = TrainingPlanService.LoadTrainingPlans().ToList();
 
             // athlete laden
             var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
