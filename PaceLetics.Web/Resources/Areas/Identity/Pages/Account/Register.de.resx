@@ -8,7 +8,8 @@
   <data name="CreateAccount" xml:space="preserve"><value>Erstelle einen neuen Account.</value></data>
   <data name="YourName" xml:space="preserve"><value>Dein Name</value></data>
   <data name="Username" xml:space="preserve"><value>Benutzername</value></data>
-  <data name="Email" xml:space="preserve"><value>E-Mail</value></data>
+  <data name="Email" xml:space="preserve"><value>E-Mail (optional)</value></data>
+  <data name="EmailHelp" xml:space="preserve"><value>Die E-Mail-Adresse ist optional. Sie wird benötigt, wenn du dein Passwort zurücksetzen möchtest.</value></data>
   <data name="Password" xml:space="preserve"><value>Passwort</value></data>
   <data name="ConfirmPassword" xml:space="preserve"><value>Bestätige Passwort</value></data>
   <data name="Submit" xml:space="preserve"><value>Absenden</value></data>

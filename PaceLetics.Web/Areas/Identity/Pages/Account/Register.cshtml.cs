@@ -88,7 +88,6 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -127,10 +126,21 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                
+                var userName = Input.Name?.Trim();
+                var email = Input.Email?.Trim();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                if (!string.IsNullOrWhiteSpace(email)
+                    && await _userManager.FindByEmailAsync(email) is not null)
+                {
+                    ModelState.AddModelError("Input.Email", "Email is already in use.");
+                    return Page();
+                }
+
+                await _userStore.SetUserNameAsync(user, userName, CancellationToken.None);
+                if (!string.IsNullOrWhiteSpace(email))
+                {
+                    await _emailStore.SetEmailAsync(user, email, CancellationToken.None);
+                }
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -142,20 +152,23 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                     athlete.Id = userId;
                     athlete.Name = Input.Name;
                     await _athleteData.InsertAthlete(athlete);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (!string.IsNullOrWhiteSpace(email))
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                            protocol: Request.Scheme);
+
+                        await _emailSender.SendEmailAsync(email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    }
+
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount && !string.IsNullOrWhiteSpace(email))
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = email, returnUrl = returnUrl });
                     }
                     else
                     {

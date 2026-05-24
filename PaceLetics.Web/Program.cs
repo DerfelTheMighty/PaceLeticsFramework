@@ -39,7 +39,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(
 		options.SignIn.RequireConfirmedAccount = false;
 		options.SignIn.RequireConfirmedEmail = false;
 		options.Password.RequireNonAlphanumeric = false;
-		options.User.RequireUniqueEmail = true;
+		options.User.RequireUniqueEmail = false;
 		options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     } ).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
