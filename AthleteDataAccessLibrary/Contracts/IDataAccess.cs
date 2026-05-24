@@ -10,11 +10,9 @@ namespace AthleteDataAccessLibrary.Contracts
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="U"></typeparam>
         /// <param name="sql"></param>
-        /// <param name="parameter"></param>
         /// <returns></returns>
-        Task<List<T>> LoadData<T, U>(string cosmosDb, string container, U parameter);
+        Task<List<T>> LoadData<T>(string cosmosDb, string container);
 
         /// <summary>
         /// 
@@ -25,19 +23,17 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="container"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task<T> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem;
+        Task<T?> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem;
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
-        /// <typeparam name="U"></typeparam>
         /// <param name="cosmosDb"></param>
         /// <param name="container"></param>
-        /// <param name="parameter"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        Task<T> DeleteItem<T, U>(string cosmosDb, string container, U parameter);
+        Task DeleteItem<T>(string cosmosDb, string container, string id);
 
 
         /// <summary>

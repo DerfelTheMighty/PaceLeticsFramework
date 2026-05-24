@@ -14,6 +14,9 @@ namespace AthleteDataAccessLibrary
 
 		public DataAccess(string connectionString)
 		{
+			if (string.IsNullOrWhiteSpace(connectionString))
+				throw new ArgumentException("Cosmos DB connection string must be configured.", nameof(connectionString));
+
 			var client = new CosmosClientBuilder(connectionString)
 								.WithSerializerOptions(new CosmosSerializationOptions
 								{
@@ -24,7 +27,7 @@ namespace AthleteDataAccessLibrary
 			
 		}
 
-		public async Task<List<T>> LoadData<T, U>(string cosmosDb, string container, U parameter)
+		public async Task<List<T>> LoadData<T>(string cosmosDb, string container)
 		{
 			var containerAccess = _client.GetContainer(cosmosDb, container);
 			var iterator = containerAccess.GetItemLinqQueryable<T>().ToFeedIterator();
@@ -40,7 +43,7 @@ namespace AthleteDataAccessLibrary
 			return results;
 		}
 
-		public async Task<T> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem
+		public async Task<T?> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem
 		{
             var containerAccess =  _client.GetContainer(cosmosDb, container);
 			var q = containerAccess.GetItemLinqQueryable<T>(true);
@@ -50,10 +53,10 @@ namespace AthleteDataAccessLibrary
         }
 
 
-		public async Task<T> DeleteItem<T,U>(string cosmosDb, string container, U parameter) 
+		public async Task DeleteItem<T>(string cosmosDb, string container, string id) 
 		{
             var containerAccess = _client.GetContainer(cosmosDb, container);
-            return await containerAccess.DeleteItemAsync<T>(parameter as string, PartitionKey.None);
+            await containerAccess.DeleteItemAsync<T>(id, PartitionKey.None);
         }
 
 

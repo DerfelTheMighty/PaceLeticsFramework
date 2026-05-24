@@ -8,10 +8,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
 {
     public class WorkoutProvider : IWorkoutProvider
     {
-        private List<WorkoutDefinition> _workouts;
-        private List<WorkoutPreview> _previews;
-        private IExerciseProvider _provider;
-        private IWorkout _activeWorkout;
+        private readonly List<WorkoutDefinition> _workouts;
+        private readonly List<WorkoutPreview> _previews;
+        private readonly IExerciseProvider _provider;
+        private IWorkout? _activeWorkout;
 
 
         public WorkoutProvider(IExerciseProvider provider) 
@@ -21,7 +21,10 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
             DefinitionFactory factory = new DefinitionFactory();
             _workouts = factory.CreateWorkoutExamples();
             // Build one preview per base workout name (group variants) and collect available levels
-            var baseNames = _workouts.Select(w => w.Name).Distinct();
+            var baseNames = _workouts
+                .Select(w => w.Name)
+                .Where(name => !string.IsNullOrWhiteSpace(name))
+                .Distinct();
             foreach (var name in baseNames)
             {
                 var variants = _workouts.Where(w => w.Name == name).ToList();
@@ -34,44 +37,59 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
 
         public List<string> GetBaseWorkoutNames()
         {
-            return _workouts.Select(w => w.Name).Distinct().ToList();
+            return _workouts
+                .Select(w => w.Name)
+                .Where(name => !string.IsNullOrWhiteSpace(name))
+                .Select(name => name!)
+                .Distinct()
+                .ToList();
         }
 
         public List<string> GetWorkoutIdsByName(string name)
         {
-            return _workouts.Where(w => w.Name == name).Select(w => w.Id).ToList();
+            return _workouts
+                .Where(w => w.Name == name && !string.IsNullOrWhiteSpace(w.Id))
+                .Select(w => w.Id!)
+                .ToList();
         }
 
         public IWorkout GetWorkout(string id)
         {
-            var def = _workouts.Find(x => x.Id == id);
+            var def = GetDefinition(id);
             return new Workout(def, _provider);
         }
 
         public List<string> GetWorkoutIds()
         {
-            return _workouts.Select(o => o.Id).ToList();
+            return _workouts
+                .Select(o => o.Id)
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .Select(id => id!)
+                .ToList();
         }
 
         public WorkoutPreview GetWorkoutPreview(string id)
         {
             // find the definition for the id and return the preview for the group (by Name)
-            var def = _workouts.Find(x => x.Id == id);
-            if (def != null)
-                return _previews.Find(p => p.Name == def.Name);
-            return _previews.Find(x => x.Id == id);
+            var def = GetDefinition(id);
+            return _previews.First(p => p.Name == def.Name);
         }
 
         public void SetActiveWorkout(string id, int sets, int rounds) 
         {
-            var def = _workouts.Find(x => x.Id == id);
-            if(def !=null)
-                _activeWorkout = new Workout(def, _provider, sets, rounds); 
+            var def = GetDefinition(id);
+            _activeWorkout = new Workout(def, _provider, sets, rounds); 
         }
 
-        public IWorkout GetActiveWorkout() 
+        public IWorkout? GetActiveWorkout() 
         {
             return _activeWorkout;
+        }
+
+        private WorkoutDefinition GetDefinition(string id)
+        {
+            return _workouts.Find(x => x.Id == id)
+                ?? throw new KeyNotFoundException($"Workout definition '{id}' was not found.");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AthleteDataAccessLibrary.Contracts
         /// Retuns the currently active Athletemodel
         /// </summary>
         /// <returns></returns>
-        AthleteModel GetCurrentModel();
+        AthleteModel? GetCurrentModel();
 
         /// <summary>
         /// Sets the current athlete model

@@ -11,8 +11,8 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
 	{
 
 
-		private List<ExercisePreview> _exercises;
-		private List<Level> _availableLevels;
+		private readonly List<ExercisePreview> _exercises = new();
+		private readonly List<Level> _availableLevels;
 
 		public IReadOnlyCollection<ExercisePreview> Exercises { get => _exercises.AsReadOnly(); }
 
@@ -35,10 +35,9 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
 			Id = def.Id ?? string.Empty;
 			Description = def.Description ?? string.Empty;
 			Level = def.Level;
-			_exercises = new List<ExercisePreview>();
 			foreach (var id in def.Exercises ?? Enumerable.Empty<string>())
 				_exercises.Add(provider.GetExercisePreview(id, Level));
-			Count = _exercises?.Count() ?? 0;
+			Count = _exercises.Count;
 
 			_availableLevels = (availableLevels != null)
 				? availableLevels.Distinct().ToList()

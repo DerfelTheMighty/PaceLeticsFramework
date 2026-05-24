@@ -14,7 +14,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Interfaces
 		// Returns all workout ids (variants) that belong to the given base workout name
 		List<string> GetWorkoutIdsByName(string name);
 		void SetActiveWorkout(string id, int sets, int rounds);
-		IWorkout GetActiveWorkout();
+		IWorkout? GetActiveWorkout();
 
 	}
 }

@@ -23,7 +23,11 @@ namespace PaceLetics.Web.Pages.Athletes
 
                 if (!string.IsNullOrEmpty(id))
                 {
-                    _athlete = await AthleteData.GetAthlete(id);
+                    var athlete = await AthleteData.GetAthlete(id);
+                    if (athlete is null)
+                        return;
+
+                    _athlete = athlete;
                     _vdotData[0] = _athlete.Vdot;
                     _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
                 }
@@ -51,7 +55,7 @@ namespace PaceLetics.Web.Pages.Athletes
             var dialogRef = dialogService.Show<AddRaceDialog>(string.Empty, parameters, options);
             var result = await dialogRef.Result;
 
-            if (result.Canceled)
+            if (result is null || result.Canceled)
                 return;
 
             var rrm = result.Data as RaceResultModel;

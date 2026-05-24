@@ -15,7 +15,7 @@ namespace AthleteDataAccessLibrary
 
 		public Task<List<AthleteModel>> GetAthletes()
 		{
-			return _db.LoadData<AthleteModel, dynamic>(_cosmosDb, _containerId, new { });
+			return _db.LoadData<AthleteModel>(_cosmosDb, _containerId);
 		}
 
 		
@@ -25,14 +25,14 @@ namespace AthleteDataAccessLibrary
 		}
 
 
-		public Task<AthleteModel> GetAthlete(string id)
+		public Task<AthleteModel?> GetAthlete(string id)
 		{
             return _db.LoadItem<AthleteModel>(_cosmosDb, _containerId, id);
         }
 
 		public Task DeleteAthlete(string id) 
 		{
-			return _db.DeleteItem<AthleteModel,string>(_cosmosDb, _containerId, id);
+			return _db.DeleteItem<AthleteModel>(_cosmosDb, _containerId, id);
         }
 
 		public Task UpdateAthlete(AthleteModel model) 

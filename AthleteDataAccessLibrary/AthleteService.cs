@@ -13,10 +13,8 @@ namespace AthleteDataAccessLibrary
             _model = null;
         }
 
-        public AthleteModel GetCurrentModel() 
+        public AthleteModel? GetCurrentModel() 
         {
-            if (_model == null)
-                return null;
             return _model;
         }
 

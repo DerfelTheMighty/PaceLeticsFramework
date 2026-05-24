@@ -29,7 +29,8 @@
     protected override void OnInitialized()
     {
         _workout = woProvider.GetActiveWorkout();
-        _workout.WorkoutFinishedEvent += OnWorkoutFinished;
+        if (_workout is not null)
+            _workout.WorkoutFinishedEvent += OnWorkoutFinished;
         navManager.RegisterLocationChangingHandler(LocationChangingHandler);
         base.OnInitialized();
     }

@@ -49,11 +49,12 @@ builder.Services.AddRazorPages()
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<IExerciseProvider, ExerciseProvider>();
-builder.Services.AddSingleton<IWorkoutProvider, WorkoutProvider>();
+builder.Services.AddScoped<IWorkoutProvider, WorkoutProvider>();
 builder.Services.AddSingleton<AthleteModelFactory>();
-builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
+builder.Services.AddTransient<IDataAccess>(x => new DataAccess(
+    nonSqlConnectionString ?? throw new InvalidOperationException("Environment variable 'PaceLeticsDbConnString' is not configured.")));
 builder.Services.AddTransient<IAthleteData, AthleteData>();
-builder.Services.AddSingleton<IAthleteService, AthleteService>();
+builder.Services.AddScoped<IAthleteService, AthleteService>();
 builder.Services.AddSingleton<IVdotService>(x => (new VdotTableReaderWriter()).FromJson("wwwroot/data/vdot_table.json"));
 builder.Services.AddSingleton<IPaceModelProvider>(x => (new PaceModelReaderWriter()).ReadPaceModelFromJson("wwwroot/data/pacemodel.json"));
 builder.Services.Configure<CookiePolicyOptions>(options =>
