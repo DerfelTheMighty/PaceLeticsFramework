@@ -45,19 +45,22 @@
 @code
 {
     bool _isLoading = true;
-    AthleteModel Athlete;
+    AthleteModel? Athlete;
     string _name = String.Empty;
 
-    protected async override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var user = authstate.User;
         var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-        _name = user.Identity.Name;
-        Athlete = await AthleteData.GetAthlete(id);
+        Athlete = string.IsNullOrWhiteSpace(id)
+            ? null
+            : await AthleteData.GetAthlete(id);
+        _name = string.IsNullOrWhiteSpace(Athlete?.Name)
+            ? user.Identity?.Name ?? string.Empty
+            : Athlete.Name;
         _isLoading = false;
-        StateHasChanged();
-        base.OnInitialized();
+        await base.OnInitializedAsync();
     }
 
 }
