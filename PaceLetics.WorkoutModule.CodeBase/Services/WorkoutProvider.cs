@@ -1,7 +1,6 @@
 ﻿
 
 using PaceLetics.WorkoutModule.CodeBase.Interfaces;
-using PaceLetics.WorkoutModule.CodeBase.Logic;
 using PaceLetics.WorkoutModule.CodeBase.Models;
 
 namespace PaceLetics.WorkoutModule.CodeBase.Services
@@ -11,17 +10,27 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
         private readonly List<WorkoutDefinition> _workouts;
         private readonly List<WorkoutPreview> _previews;
         private readonly IExerciseProvider _provider;
+        private readonly IWorkoutFactory _workoutFactory;
         private IWorkout? _activeWorkout;
 
 
         public WorkoutProvider(IExerciseProvider provider) 
-            : this(provider, new DefinitionFactory().CreateWorkoutExamples())
+            : this(provider, new WorkoutFactory(provider), new DefinitionFactory().CreateWorkoutExamples())
         {
         }
 
         public WorkoutProvider(IExerciseProvider provider, IEnumerable<WorkoutDefinition> workoutDefinitions)
+            : this(provider, new WorkoutFactory(provider), workoutDefinitions)
+        {
+        }
+
+        public WorkoutProvider(
+            IExerciseProvider provider,
+            IWorkoutFactory workoutFactory,
+            IEnumerable<WorkoutDefinition> workoutDefinitions)
         {
             _provider = provider;
+            _workoutFactory = workoutFactory;
             _previews = new List<WorkoutPreview>();
             _workouts = workoutDefinitions.ToList();
             // Build one preview per base workout name (group variants) and collect available levels
@@ -60,7 +69,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
         public IWorkout GetWorkout(string id)
         {
             var def = GetDefinition(id);
-            return new Workout(def, _provider);
+            return _workoutFactory.Create(def);
         }
 
         public List<string> GetWorkoutIds()
@@ -82,7 +91,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
         public void SetActiveWorkout(string id, int sets, int rounds) 
         {
             var def = GetDefinition(id);
-            _activeWorkout = new Workout(def, _provider, sets, rounds); 
+            _activeWorkout = _workoutFactory.Create(def, new WorkoutBuildOptions(sets, rounds));
         }
 
         public IWorkout? GetActiveWorkout() 

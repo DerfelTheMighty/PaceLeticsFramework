@@ -1,7 +1,6 @@
 ﻿using PaceLetics.WorkoutModule.CodeBase.Enums;
 using PaceLetics.WorkoutModule.CodeBase.Interfaces;
 using PaceLetics.WorkoutModule.CodeBase.Models;
-using System.Runtime.CompilerServices;
 
 namespace PaceLetics.WorkoutModule.CodeBase.Logic
 {
@@ -139,7 +138,23 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
         /// <param name="definition"></param>
         /// <param name="provider"></param>
         public Workout(WorkoutDefinition definition, IExerciseProvider provider)
+            : this(definition, provider, new WorkoutBuildOptions())
         {
+        }
+
+        public Workout(WorkoutDefinition definition, IExerciseProvider provider, int sets, int rounds)
+            : this(definition, provider, new WorkoutBuildOptions(sets, rounds))
+        {
+        }
+
+        public Workout(WorkoutDefinition definition, IExerciseProvider provider, WorkoutBuildOptions options)
+        {
+            if (options.Sets < 1)
+                throw new ArgumentOutOfRangeException(nameof(options), "Sets must be greater than zero.");
+
+            if (options.Rounds < 1)
+                throw new ArgumentOutOfRangeException(nameof(options), "Rounds must be greater than zero.");
+
             Name = definition.Name ?? string.Empty;
             Id = definition.Id ?? string.Empty;
             Description = definition.Description ?? string.Empty;
@@ -149,49 +164,37 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
             State = WorkoutState.Stop;
             _currentElement = 0;
 
-            _workoutElements = new List<IWorkoutElement>();
-            _workoutElements.Add(new Rest(PreparationTime, WorkoutElements.Preparation));
-
-            foreach (var ex in definition.Exercises)
-            {
-                _workoutElements.Add(provider.GetExercise(ex, Level));
-                _workoutElements.Add(new Rest(RestTime, WorkoutElements.Rest));
-            }
-
-            _workoutElements.RemoveAt(_workoutElements.Count - 1);
+            _workoutElements = BuildElements(definition, provider, options);
             Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
             Imagefile = Exercises.FirstOrDefault()?.ImageFilename ?? string.Empty;
         }
 
-        public Workout(WorkoutDefinition definition, IExerciseProvider provider, int sets, int rounds)
+        private static List<IWorkoutElement> BuildElements(
+            WorkoutDefinition definition,
+            IExerciseProvider provider,
+            WorkoutBuildOptions options)
         {
-            Name = definition.Name ?? string.Empty;
-            Id = definition.Id ?? string.Empty;
-            Description = definition.Description ?? string.Empty;
-            Level = definition.Level;
-            PreparationTime = definition.PreparationTime;
-            RestTime = definition.RestTime;
-            State = WorkoutState.Stop;
-            _currentElement = 0;
+            var elements = new List<IWorkoutElement>
+            {
+                new Rest(definition.PreparationTime, WorkoutElements.Preparation)
+            };
 
-            _workoutElements = new List<IWorkoutElement>();
-            _workoutElements.Add(new Rest(PreparationTime, WorkoutElements.Preparation));
-
-            for (int j = 0; j < rounds; j++)
+            for (int round = 0; round < options.Rounds; round++)
             {
                 foreach (var ex in definition.Exercises)
                 {
-                    for (int i = 0; i < sets; i++)
+                    for (int set = 0; set < options.Sets; set++)
                     {
-                        _workoutElements.Add(provider.GetExercise(ex, Level));
-                        _workoutElements.Add(new Rest(RestTime, WorkoutElements.Rest));
+                        elements.Add(provider.GetExercise(ex, definition.Level));
+                        elements.Add(new Rest(definition.RestTime, WorkoutElements.Rest));
                     }
                 }
             }
 
-            _workoutElements.RemoveAt(_workoutElements.Count - 1);
-            Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
-            Imagefile = Exercises.FirstOrDefault()?.ImageFilename ?? string.Empty;
+            if (elements.Count > 1)
+                elements.RemoveAt(elements.Count - 1);
+
+            return elements;
         }
 
         #region public methods
