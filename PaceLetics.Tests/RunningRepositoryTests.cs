@@ -1,5 +1,6 @@
 using PaceLetics.RunningModule.CodeBase.Models;
 using PaceLetics.RunningModule.CodeBase.Repositories;
+using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 
 namespace PaceLetics.Tests;
 
@@ -69,11 +70,86 @@ public sealed class RunningRepositoryTests
         Assert.All(plans, plan => Assert.NotEmpty(plan.Sessions));
     }
 
+    [Fact]
+    public void JsonTrainingPlanRepository_LoadsTrainingSessionsWithRunsAndWorkouts()
+    {
+        var directory = CreateTempDirectory();
+        File.WriteAllText(Path.Combine(directory, "mixed-plan.json"), """
+        {
+          "schemaVersion": 1,
+          "id": "mixed-plan",
+          "name": "Mixed Plan",
+          "sessions": [
+            {
+              "id": "mixed-session",
+              "name": "Run and Workout",
+              "date": "2026-01-01",
+              "runs": [
+                {
+                  "sessionType": "planned",
+                  "id": "planned-run",
+                  "name": "Easy Run",
+                  "date": "2026-01-01",
+                  "sequence": [
+                    { "type": "Dauerlauf", "distance": 1000, "paceKey": "E Pace" }
+                  ]
+                }
+              ],
+              "workouts": [
+                { "workoutId": "Stabi Handout Easy", "sets": 2, "rounds": 3 }
+              ]
+            }
+          ]
+        }
+        """);
+
+        var plans = new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load();
+
+        var plan = Assert.Single(plans);
+        var session = Assert.Single(plan.Sessions);
+        Assert.Equal("mixed-plan", plan.Id);
+        Assert.Equal("planned-run", Assert.Single(session.Runs).Id);
+        Assert.Equal("Stabi Handout Easy", Assert.Single(session.Workouts).WorkoutId);
+        Assert.Equal(1000, plan.TotalRunDistance);
+    }
+
+    [Fact]
+    public void JsonTrainingPlanRepository_ValidatesWorkoutReferences()
+    {
+        var directory = CreateTempDirectory();
+        File.WriteAllText(Path.Combine(directory, "invalid-plan.json"), """
+        {
+          "id": "invalid-plan",
+          "name": "Invalid Plan",
+          "sessions": [
+            {
+              "id": "invalid-session",
+              "name": "Invalid Session",
+              "date": "2026-01-01",
+              "workouts": [
+                { "workoutId": "missing-workout", "sets": 1, "rounds": 1 }
+              ]
+            }
+          ]
+        }
+        """);
+
+        Assert.Throws<InvalidDataException>(() =>
+            new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load());
+    }
+
     private static string WriteTempJson(string json)
     {
         var path = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.json");
         File.WriteAllText(path, json);
         return path;
+    }
+
+    private static string CreateTempDirectory()
+    {
+        var directory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(directory);
+        return directory;
     }
 
     private static string FindRepositoryRoot()

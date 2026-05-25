@@ -35,11 +35,11 @@ public sealed class JsonRunningSessionRepository : IRunningSessionRepository
 
         using var document = JsonDocument.Parse(json);
         return trimmed.StartsWith("[")
-            ? document.RootElement.EnumerateArray().Select(ParseOne).ToList()
-            : new[] { ParseOne(document.RootElement) };
+            ? document.RootElement.EnumerateArray().Select(ParseDefinition).ToList()
+            : new[] { ParseDefinition(document.RootElement) };
     }
 
-    private static RunningSessionDto ParseOne(JsonElement element)
+    public static RunningSessionDto ParseDefinition(JsonElement element)
     {
         var sessionType = element.GetProperty("sessionType").GetString()?.Trim().ToLowerInvariant();
 
