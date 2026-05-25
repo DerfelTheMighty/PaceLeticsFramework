@@ -15,11 +15,15 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
 
 
         public WorkoutProvider(IExerciseProvider provider) 
+            : this(provider, new DefinitionFactory().CreateWorkoutExamples())
+        {
+        }
+
+        public WorkoutProvider(IExerciseProvider provider, IEnumerable<WorkoutDefinition> workoutDefinitions)
         {
             _provider = provider;
             _previews = new List<WorkoutPreview>();
-            DefinitionFactory factory = new DefinitionFactory();
-            _workouts = factory.CreateWorkoutExamples();
+            _workouts = workoutDefinitions.ToList();
             // Build one preview per base workout name (group variants) and collect available levels
             var baseNames = _workouts
                 .Select(w => w.Name)

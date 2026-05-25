@@ -10,18 +10,20 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
     public class ExerciseProvider : IExerciseProvider
     {
 
-        private List<Exercise> _exercises;
+        private readonly List<Exercise> _exercises;
 
-        private List<ExercisePreview> _previews;
+        private readonly List<ExercisePreview> _previews;
         public ExerciseProvider()
+            : this(new DefinitionFactory().CreateExerciseExamples())
+        {
+        }
+
+        public ExerciseProvider(IEnumerable<ExerciseDefinition> exerciseDefinitions)
         {
             _exercises = new List<Exercise>();
             _previews = new List<ExercisePreview>();
-            DefinitionFactory defFactory = new DefinitionFactory();
 
-            var exercisDefs = defFactory.CreateExerciseExamples();
-
-            foreach (var def in exercisDefs)
+            foreach (var def in exerciseDefinitions)
             {
                 _exercises.Add(new Exercise(def));
                 _previews.Add(new ExercisePreview(def));    

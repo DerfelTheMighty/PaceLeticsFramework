@@ -1,0 +1,851 @@
+{
+  "schemaVersion": 1,
+  "exercises": [
+    {
+      "name": "Glute Bridge",
+      "id": "Glute Bridge Easy",
+      "description": "Statische \u00DCbung f\u00FCr H\u00FCftstreckung, H\u00FCftstabilit\u00E4t und Abdruck",
+      "execution": [
+        "Lege dich auf den R\u00FCcken und stelle die Beine an!",
+        "Dr\u00FCcke mit den Fu\u00DFsohlen gegen den Boden!",
+        "Spanne deine Ges\u00E4\u00DFmuskulatur an und strecke so die H\u00FCfte nach oben!",
+        "Setze Bauch- und Ges\u00E4\u00DFmuskulatur ein, um Streckung zu halten!"
+      ],
+      "duration": 30,
+      "imageFile": "glute_bridge_base.png",
+      "level": "Easy",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Walking Glute Bridge",
+      "id": "Glute Bridge Moderate",
+      "description": "Dynamische \u00DCbung f\u00FCr H\u00FCftstreckung, H\u00FCftstabilit\u00E4t und Abdruck",
+      "execution": [
+        "Gehe in die Glute Bridge!",
+        "Spanne deine Ges\u00E4\u00DFmuskulatur an und strecke so die H\u00FCfte nach oben!",
+        "Setze Bauch- und Ges\u00E4\u00DFmuskulatur ein, um Streckung zu halten!",
+        "Hebe die F\u00FC\u00DFe abwechselnd kurz vom Boden ab!"
+      ],
+      "duration": 60,
+      "imageFile": "glute_bridge_waddle.gif",
+      "level": "Moderate",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Straight Leg Glute Bridge",
+      "id": "Glute Bridge Advanced",
+      "description": "Anspruchsvolle statische \u00DCbung f\u00FCr H\u00FCftstreckung, Stabilit\u00E4t und Abdruck",
+      "execution": [
+        "Gehe in die Glute Bridge!",
+        "Spanne deine Ges\u00E4\u00DFmuskulatur an und strecke so die H\u00FCfte nach oben",
+        "Setze Bauch- und Ges\u00E4\u00DFmuskulatur ein, um Streckung zu halten",
+        "Strecke ein Bein aus und halte dabei die H\u00FCftstreckung"
+      ],
+      "duration": 30,
+      "imageFile": "glute_bridge_straight_leg.png",
+      "level": "Advanced",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Glute Bridge Straight Leg Dip",
+      "id": "Glute Bridge Epic",
+      "description": "Anspruchsvolle dynamische \u00DCbung f\u00FCr H\u00FCftstreckung, -Stabilit\u00E4t und Abruck",
+      "execution": [
+        "Gehe in die Straight Leg Glute Bridge!",
+        "Strecke ein Bein aus und halte dabei die H\u00FCftstreckung",
+        "Senke die H\u00FCfte bis kurz \u00FCber dem Boden ab und hebe sie wieder an!",
+        "Setze Bauch- und Ges\u00E4\u00DFmuskulatur ein!"
+      ],
+      "duration": 60,
+      "imageFile": "glute_bridge_straight_leg_dip.gif",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Quadruped",
+      "id": "Quadruped Easy",
+      "description": "Statische \u00DCbung f\u00FCr Rumpfstabilit\u00E4t und Kr\u00E4ftigung des unteren R\u00FCckens.",
+      "execution": [
+        "Gehe in den Vierf\u00FC\u00DFlerstand mit Oberk\u00F6rper und Kopf auf einer Linie!",
+        "Strecke linken Arm und rechtes Bein aus!",
+        "Spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, kein Hohlkreuz zu bilden!"
+      ],
+      "duration": 30,
+      "imageFile": "quadruped_base.png",
+      "level": "Easy",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Quadruped Crunsh",
+      "id": "Quadruped Moderate",
+      "description": "Dynamische \u00DCbung f\u00FCr Rumpfstabilit\u00E4t und funktionale Kr\u00E4ftigung des unteren R\u00FCckens.",
+      "execution": [
+        "Gehe in den Vierf\u00FC\u00DFlerstand mit Oberk\u00F6rper und Kopf auf einer Linie!",
+        "Strecke linken Arm und rechtes Bein aus!",
+        "Spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, kein Hohlkreuz zu bilden!",
+        "F\u00FChre Ellenbogen und Knie unter dem Oberk\u00F6rper zusammen und Strecke sie wieder aus!"
+      ],
+      "duration": 45,
+      "imageFile": "quadruped_crunsh.gif",
+      "level": "Moderate",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Quadruped Crawl",
+      "id": "Quadruped Advanced",
+      "description": "Anspruchsvolle \u00DCbung f\u00FCr Rumpfstabilit\u00E4t, Bauchmuskulatur und den unteren R\u00FCcken.",
+      "execution": [
+        "Gehe in den Vierf\u00FC\u00DFlerstand mit Oberk\u00F6rper und Kopf auf einer Linie!",
+        "Hebe die Knie vom Boden ab!",
+        "Spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, kein Hohlkreuz zu bilden!",
+        "Hebe abwechselnd kurz die gegen\u00FCberliegenden Gliedma\u00DFen vom Boden ab!"
+      ],
+      "duration": 60,
+      "imageFile": "quadruped_crawl.png",
+      "level": "Advanced",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Quadruped Crawl Crunsh",
+      "id": "Quadruped Epic",
+      "description": "Anspruchsvolle \u00DCbung zur Kraftigung und Koordination im gesamten Rumpf.",
+      "execution": [
+        "Gehe in den Vierf\u00FC\u00DFlerstand mit Oberk\u00F6rper und Kopf auf einer Linie!",
+        "Hebe die Knie vom Boden ab!",
+        "Spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, kein Hohlkreuz zu bilden!",
+        "Strecke abwechselnd die gegen\u00FCberliegenden Gliedma\u00DFen aus!"
+      ],
+      "duration": 45,
+      "imageFile": "quadruped_crawl_crunsh.gif",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "Lateral Bounds",
+      "id": "Lateral Bounds",
+      "description": "Dynamische \u00DCbung f\u00FCr Fu\u00DFarbeit, Reaktivkraft und Koordination.",
+      "execution": [
+        "Gehe in eine leichte Grundposition mit gebeugten Knien!",
+        "Springe rhythmisch seitlich von einem Bein auf das andere!",
+        "Halte den Oberk\u00F6rper stabil und lande weich auf dem Vorfu\u00DF!",
+        "Arbeite schnell und kontrolliert mit aktivem Armeinsatz!"
+      ],
+      "duration": 30,
+      "imageFile": "lateral_bounce.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Cross-Lunges",
+      "id": "Cross Lunges",
+      "description": "Dynamische \u00DCbung f\u00FCr Beinachse, Ges\u00E4\u00DFmuskulatur und H\u00FCftstabilit\u00E4t.",
+      "execution": [
+        "Starte im aufrechten Stand!",
+        "Setze ein Bein diagonal hinter das Standbein in einen Crossover-Lunge!",
+        "Beuge beide Knie kontrolliert und halte den Oberk\u00F6rper stabil!",
+        "Dr\u00FCcke dich kraftvoll zur\u00FCck in den Stand und wechsle die Seite!"
+      ],
+      "duration": 45,
+      "imageFile": "cross_lunges.png",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Mountain Climber",
+      "id": "Mountain Climber",
+      "description": "Dynamische \u00DCbung f\u00FCr Core, Schulterstabilit\u00E4t und Ganzk\u00F6rperausdauer.",
+      "execution": [
+        "Gehe in den Streckst\u00FCtz mit gestrecktem K\u00F6rper!",
+        "Ziehe ein Knie schnell in Richtung Brust!",
+        "Setze den Fu\u00DF zur\u00FCck und wechsle direkt die Seite!",
+        "Halte Bauch und Ges\u00E4\u00DF aktiv, damit die H\u00FCfte ruhig bleibt!"
+      ],
+      "duration": 45,
+      "imageFile": "mountain_climber.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Deep Squat Rotational Jumps",
+      "id": "Deep Squat Rotational Jumps",
+      "description": "Explosive \u00DCbung f\u00FCr Beinkraft, Koordination und Rotationsstabilit\u00E4t.",
+      "execution": [
+        "Gehe in einen tiefen Squat!",
+        "F\u00FChre kleine Wechselhopser aus, sodass immer ein Fu\u00DF kurz frei ist!",
+        "Halte das Ges\u00E4\u00DF tief und richte dich m\u00F6glichst nicht auf!",
+        "Arbeite kontrolliert aus der tiefen Position mit leichter Rotation!"
+      ],
+      "duration": 45,
+      "imageFile": "deep_squat_rotational_jumps.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Deep Squat Jumps",
+      "id": "Deep Squat Jumps",
+      "description": "Explosive \u00DCbung f\u00FCr Beinkraft, Abdruck und Schnellkraft.",
+      "execution": [
+        "Gehe in einen tiefen Squat!",
+        "Federe zweimal kurz in der tiefen Position nach!",
+        "Springe dann explosiv nach oben in die Streckung!",
+        "Lande weich und gehe direkt wieder kontrolliert tief!"
+      ],
+      "duration": 45,
+      "imageFile": "deep_jump_squat.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Side Plank Hip Dips",
+      "id": "Side Plank Hip Dips",
+      "description": "Dynamische \u00DCbung f\u00FCr seitliche Rumpfstabilit\u00E4t und H\u00FCftkontrolle.",
+      "execution": [
+        "Gehe in den Seitst\u00FCtz auf Unterarm oder Hand!",
+        "Halte den K\u00F6rper in einer Linie!",
+        "Senke die H\u00FCfte kontrolliert Richtung Boden ab!",
+        "Dr\u00FCcke die H\u00FCfte wieder aktiv nach oben!"
+      ],
+      "duration": 40,
+      "imageFile": "side_plank_hip_dip.png",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Low Squat Jacks",
+      "id": "Low Squat Jacks",
+      "description": "Dynamische \u00DCbung f\u00FCr Beine, Ges\u00E4\u00DF und Kraftausdauer in tiefer Position.",
+      "execution": [
+        "Gehe in eine tiefe Reiterstellung oder Squat-Position!",
+        "Bleibe tief mit aktivem Core!",
+        "\u00D6ffne und schlie\u00DFe die Beine schnell und kontrolliert!",
+        "Halte die Spannung und richte dich dabei nicht auf!"
+      ],
+      "duration": 45,
+      "imageFile": "low_squat_jack.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Hand-Release Push-up",
+      "id": "Hand Release Push Up",
+      "description": "Kr\u00E4ftigende \u00DCbung f\u00FCr Brust, Schulter, Arme und Rumpf.",
+      "execution": [
+        "Gehe in die Liegest\u00FCtzposition!",
+        "Senke den K\u00F6rper kontrolliert bis zum Boden ab!",
+        "L\u00F6se die H\u00E4nde kurz vom Boden!",
+        "Setze die H\u00E4nde wieder auf und dr\u00FCcke dich kraftvoll hoch!"
+      ],
+      "duration": 45,
+      "imageFile": "hand_release_pushup.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Alternating Squat Balance Hold",
+      "id": "Alternating Squat Balance Hold",
+      "description": "Anspruchsvolle \u00DCbung f\u00FCr Gleichgewicht, Beinachse und H\u00FCftstabilit\u00E4t.",
+      "execution": [
+        "Gehe in einen tiefen Squat!",
+        "Halte das Ges\u00E4\u00DF tief und den Oberk\u00F6rper stabil!",
+        "L\u00F6se abwechselnd einen Fu\u00DF kurz vom Boden!",
+        "Bleibe kontrolliert in der tiefen Position und vermeide Ausweichbewegungen!"
+      ],
+      "duration": 45,
+      "imageFile": "alternating_squat_balance_hold.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Burpees",
+      "id": "Burpees",
+      "description": "Ganzk\u00F6rper\u00FCbung f\u00FCr Schnellkraft, Koordination und Ausdauer.",
+      "execution": [
+        "Starte im Stand!",
+        "Gehe tief, setze die H\u00E4nde auf und springe oder steige in den Streckst\u00FCtz!",
+        "Bringe die F\u00FC\u00DFe zur\u00FCck nach vorn!",
+        "Richte dich explosiv auf und springe nach oben ab!"
+      ],
+      "duration": 45,
+      "imageFile": "burpees.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Lateral Step with Balance Lift",
+      "id": "Lateral Step with Balance Lift",
+      "description": "Koordinative \u00DCbung f\u00FCr Beinachse, H\u00FCftstabilit\u00E4t und Ges\u00E4\u00DFmuskulatur.",
+      "execution": [
+        "Gehe in eine tiefe seitliche Ausfallschrittposition!",
+        "Hebe das Standbein kurz kontrolliert vom Boden ab!",
+        "Bleibe tief und richte dich dabei nicht auf!",
+        "Wiederhole die Bewegung und wechsle danach die Seite!"
+      ],
+      "duration": 45,
+      "imageFile": "lateral_step_with_balance_lift.png",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Reverse Mountainclimber",
+      "id": "Reverse Mountain Climber",
+      "description": "Dynamische \u00DCbung f\u00FCr Core, H\u00FCfte und Schulterstabilit\u00E4t in umgekehrter St\u00FCtzposition.",
+      "execution": [
+        "Gehe in den R\u00FCckst\u00FCtz mit gehobener H\u00FCfte!",
+        "Ziehe abwechselnd ein Knie Richtung Oberk\u00F6rper!",
+        "Halte die H\u00FCfte m\u00F6glichst oben und stabil!",
+        "Arbeite kontrolliert und rhythmisch mit aktiver K\u00F6rperspannung!"
+      ],
+      "duration": 45,
+      "imageFile": "reverse_mountain_climber.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Horse Stance Overhead Swings",
+      "id": "Horse Stance Overhead Swings",
+      "description": "Dynamische \u00DCbung f\u00FCr Schulterg\u00FCrtel, Core und Kraftausdauer.",
+      "execution": [
+        "Gehe in eine tiefe Reiterstellung!",
+        "Strecke die Arme \u00FCber den Kopf!",
+        "F\u00FChre die Arme schnell rhythmisch vor und zur\u00FCck!",
+        "Halte den Core angespannt und bleibe stabil in der tiefen Position!"
+      ],
+      "duration": 45,
+      "imageFile": "horse_stance_overhead_swings.png",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Plank Rotation (alternating)",
+      "id": "Plank Rotation Alternating",
+      "description": "Anspruchsvolle Core-\u00DCbung f\u00FCr Schulterstabilit\u00E4t und kontrollierte Oberk\u00F6rperrotation.",
+      "execution": [
+        "Gehe in den Streckst\u00FCtz!",
+        "L\u00F6se einen Arm und f\u00FChre den Ellenbogen zum st\u00FCtzenden Arm!",
+        "\u00D6ffne den Oberk\u00F6rper anschlie\u00DFend kontrolliert nach oben!",
+        "F\u00FChre den Ellenbogen nur bis senkrecht \u00FCber den K\u00F6rper und \u00FCberdrehe nicht!",
+        "Wechsle anschlie\u00DFend die Seite!"
+      ],
+      "duration": 40,
+      "imageFile": "plank_rotation.png",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Plank push Up",
+      "id": "Plank Push Up Easy",
+      "description": "Effektive \u00FCbung f\u00FCr den ganzen Rumpf",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank) und spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Setze, erst rechts, dann links, die Handfl\u00E4che auf und dr\u00FCcke dich hoch in die Liegest\u00FCtzposition!",
+        "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+        "Wechsle die Reihenfolge beim Seitenwechsel!"
+      ],
+      "duration": 15,
+      "imageFile": "plank_push_up_base.gif",
+      "level": "Easy",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Plank push Up",
+      "id": "Plank Push Up Moderate",
+      "description": "Effektive \u00FCbung f\u00FCr den ganzen Rumpf",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank) und spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Setze, erst rechts, dann links, die Handfl\u00E4che auf und dr\u00FCcke dich hoch in die Liegest\u00FCtzposition!",
+        "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+        "Wechsle die Reihenfolge beim Seitenwechsel!"
+      ],
+      "duration": 30,
+      "imageFile": "plank_push_up_base.gif",
+      "level": "Moderate",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Plank push Up",
+      "id": "Plank Push Up Advanced",
+      "description": "Effektive \u00FCbung f\u00FCr den ganzen Rumpf",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank) und spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Hebe das linke Bein vom Boden ab!",
+        "Setze, erst rechts, dann links, die Handfl\u00E4che auf und dr\u00FCcke dich hoch in die Liegest\u00FCtzposition!",
+        "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+        "Wechsle die Reihenfolge beim Seitenwechsel!"
+      ],
+      "duration": 30,
+      "imageFile": "plank_push_up_leg_lift.gif",
+      "level": "Advanced",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "Plank push Up",
+      "id": "Plank Push Up Epic",
+      "description": "Effektive \u00FCbung f\u00FCr den ganzen Rumpf",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank) und spanne Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Hebe das linke Bein vom Boden ab!",
+        "Setze, erst rechts, dann links, die Handfl\u00E4che auf und dr\u00FCcke dich hoch in die Liegest\u00FCtzposition!",
+        "Gehe, erst rechts, dann links, wieder runter in die Plank position!",
+        "Wechsle die Reihenfolge und das Standbein beim Seitenwechsel!"
+      ],
+      "duration": 40,
+      "imageFile": "plank_push_up_leg_lift.gif",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "Side Plank",
+      "id": "Side Plank Easy",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+        "Hebe deine K\u00F6rpermitte vom Boden ab und st\u00FCtze dich dabei auf Ellenbogen und Fu\u00DFkante.",
+        "Achte darauf, dass der K\u00F6rper eine gerade Linie bildet!",
+        "Nach Abschluss, wechsle zur anderen Seite."
+      ],
+      "duration": 20,
+      "imageFile": "side_plank_base.png",
+      "level": "Easy",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Side Plank",
+      "id": "Side Plank Moderate",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+        "Hebe deine K\u00F6rpermitte vom Boden ab und st\u00FCtze dich dabei auf Ellenbogen und Fu\u00DFkante.",
+        "Achte darauf, dass der K\u00F6rper eine gerade Linie bildet!",
+        "Bewege deine H\u00FCfte kontrolliert auf und ab. Halte die Grundposition stabil!",
+        "Nach Abschluss, wechsle zur anderen Seite."
+      ],
+      "duration": 30,
+      "imageFile": "side_plank_dip.gif",
+      "level": "Moderate",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Side Plank",
+      "id": "Side Plank Advanced",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+        "Hebe deine K\u00F6rpermitte vom Boden ab und st\u00FCtze dich dabei auf Ellenbogen und Fu\u00DFkante.",
+        "Hebe das obere Bein vom Boden ab und halte es oben!",
+        "Nach Abschluss, wechsle zur anderen Seite."
+      ],
+      "duration": 30,
+      "imageFile": "side_plank_leg_raise.png",
+      "level": "Advanced",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "Side Plank",
+      "id": "Side Plank Epic",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich seitlich auf den linken Arm, Ellenbogen unter der Schulter.",
+        "Hebe deine K\u00F6rpermitte vom Boden ab und st\u00FCtze dich dabei auf Ellenbogen und Fu\u00DFkante.",
+        "Hebe das obere Bein und bewege die H\u00FCfte kontrolliert auf und ab, halte die Grundposition stabil!",
+        "Nach Abschluss, wechsle zur anderen Seite."
+      ],
+      "duration": 45,
+      "imageFile": "side_plank_leg_raise_dip.gif",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "Plank Dip",
+      "id": "Plank Dip Easy",
+      "description": "Statische \u00DCbung f\u00FCr Stabilit\u00E4t im Rumpf.",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank) mit Gewicht auf den Unterarmen und Fu\u00DFballen.",
+        "Spanne dabei Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, den Kopf in Verl\u00E4ngerung der Wirbels\u00E4ule zu halten, lass ihn nicht h\u00E4ngen!",
+        "Arbeite mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur, um die Position stabil zu halten."
+      ],
+      "duration": 30,
+      "imageFile": "plank_base.png",
+      "level": "Easy",
+      "switchLeftRight": false,
+      "switchTime": 5
+    },
+    {
+      "name": "Plank Dip",
+      "id": "Plank Dip Moderate",
+      "description": "Statische \u00DCbung f\u00FCr Stabilit\u00E4t im Rumpf.",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank) mit Gewicht auf den Unterarmen und Fu\u00DFballen.",
+        "Spanne dabei Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, den Kopf in Verl\u00E4ngerung der Wirbels\u00E4ule zu halten, lass ihn nicht h\u00E4ngen!",
+        "Arbeite mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur, um die Position stabil zu halten."
+      ],
+      "duration": 60,
+      "imageFile": "plank_base.png",
+      "level": "Moderate",
+      "switchLeftRight": false,
+      "switchTime": 5
+    },
+    {
+      "name": "Plank Dip",
+      "id": "Plank Dip Advanced",
+      "description": "Dymische \u00DCbung f\u00FCr Stabilit\u00E4t und Kraft im Rumpf.",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank). Spanne dabei Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, den Kopf in Verl\u00E4ngerung der Wirbels\u00E4ule zu halten, lass ihn nicht h\u00E4ngen!",
+        "Arbeite mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur, um die Position stabil zu halten.",
+        "Tippe mit der H\u00FCfte abwechselnd nach links und rechts sanft in Richtung Boden."
+      ],
+      "duration": 60,
+      "imageFile": "plank_dip.gif",
+      "level": "Advanced",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Plank Dip",
+      "id": "Plank Dip Epic",
+      "description": "Dymische \u00DCbung f\u00FCr Stabilit\u00E4t und Kraft im Rumpf.",
+      "execution": [
+        "Gehe in den Unterarmst\u00FCtz (Plank). Spanne dabei Ges\u00E4\u00DF- und Bauchmuskulatur bewu\u00DFt an!",
+        "Achte darauf, den Kopf in Verl\u00E4ngerung der Wirbels\u00E4ule zu halten, lass ihn nicht h\u00E4ngen!",
+        "Arbeite mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur, um die Position stabil zu halten.",
+        "Tippe mit der H\u00FCfte abwechselnd nach links und rechts sanft in Richtung Boden."
+      ],
+      "duration": 90,
+      "imageFile": "plank_dip.gif",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "One Leg Deadlift",
+      "id": "One Leg Deadlift Easy",
+      "description": "Effektive \u00DCbung f\u00FCr Balance und Rumpf- und H\u00FCftstabilit\u00E4t!",
+      "execution": [
+        "Starte stehend, spanne Ges\u00E4\u00DF-, Bauch- und R\u00FCckenmuskulatur an; Oberk\u00F6rper bildet eine gerade Linie!",
+        "Gewicht auf ein Bein verlagern, w\u00E4hrend das andere Bein nach hinten gestreckt wird!",
+        "Kippe den Oberk\u00F6rper nach vorne, sodass er parallel zum Boden ist, Arme h\u00E4ngen Richtung boden!",
+        "F\u00FChre die \u00DCbung langsam und kontrolliert aus, um Gleichgewicht und Stabilit\u00E4t zu wahren!"
+      ],
+      "duration": 30,
+      "imageFile": "one_leg_deadlift_hang.gif",
+      "level": "Easy",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "One Leg Deadlift",
+      "id": "One Leg Deadlift Moderate",
+      "description": "Effektive \u00DCbung f\u00FCr Balance und Rumpf- und H\u00FCftstabilit\u00E4t!",
+      "execution": [
+        "Starte stehend, spanne Ges\u00E4\u00DF-, Bauch- und R\u00FCckenmuskulatur an; Oberk\u00F6rper bildet eine gerade Linie!",
+        "Gewicht auf ein Bein verlagern, w\u00E4hrend das andere Bein nach hinten gestreckt wird!",
+        "Kippe den Oberk\u00F6rper nach vorne, sodass er parallel zum Boden ist, Arme bleiben durchg\u00E4ngig gestreckt!",
+        "F\u00FChre die \u00DCbung langsam und kontrolliert aus, um Gleichgewicht und Stabilit\u00E4t zu wahren!"
+      ],
+      "duration": 45,
+      "imageFile": "one_leg_deadlift_hang.gif",
+      "level": "Moderate",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "One Leg Deadlift",
+      "id": "One Leg Deadlift Advanced",
+      "description": "Effektive \u00DCbung f\u00FCr Balance und Rumpf- und H\u00FCftstabilit\u00E4t!",
+      "execution": [
+        "Starte stehend, Arme nach oben, spanne Ges\u00E4\u00DF-, Bauch- und R\u00FCckenmuskulatur an; K\u00F6rper bildet eine gerade Linie!",
+        "Gewicht auf ein Bein verlagern, w\u00E4hrend das andere Bein nach hinten gestreckt wird!",
+        "Kippe den Oberk\u00F6rper nach vorne, sodass er parallel zum Boden ist, Arme bleiben durchg\u00E4ngig gestreckt!",
+        "F\u00FChre die \u00DCbung langsam und kontrolliert aus, um Gleichgewicht und Stabilit\u00E4t zu wahren!"
+      ],
+      "duration": 60,
+      "imageFile": "one_leg_deadlift_straight.gif",
+      "level": "Advanced",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "One Leg Deadlift",
+      "id": "One Leg Deadlift Epic",
+      "description": "Effektive \u00DCbung f\u00FCr Balance und Rumpf- und H\u00FCftstabilit\u00E4t!",
+      "execution": [
+        "Starte stehend, Arme nach oben, spanne Ges\u00E4\u00DF-, Bauch- und R\u00FCckenmuskulatur an; K\u00F6rper bildet eine gerade Linie!",
+        "Gewicht auf ein Bein verlagern, w\u00E4hrend das andere Bein nach hinten gestreckt wird!",
+        "Kippe den Oberk\u00F6rper nach vorne, sodass er parallel zum Boden ist, Arme bleiben durchg\u00E4ngig gestreckt!",
+        "F\u00FChre die \u00DCbung langsam und kontrolliert aus, um Gleichgewicht und Stabilit\u00E4t zu wahren."
+      ],
+      "duration": 90,
+      "imageFile": "one_leg_deadlift_straight.gif",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "Superwoman",
+      "id": "Superwoman Easy",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich flach auf den Bauch, Arme nach oben gestreckt. Der ganze K\u00F6rper bildet eine Linie.",
+        "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
+        "Achte darauf, dass der K\u00F6rper eine gerade Linie bildet!",
+        "Arbeite bewusst mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur, w\u00E4hrend du die Position h\u00E4ltst!"
+      ],
+      "duration": 30,
+      "imageFile": "superwoman_base.png",
+      "level": "Easy",
+      "switchLeftRight": false,
+      "switchTime": 5
+    },
+    {
+      "name": "Superwoman",
+      "id": "Superwoman Moderate",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich flach auf den Bauch, Arme nach oben gestreckt.",
+        "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
+        "Arbeite bewusst mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur! Der ganze K\u00F6rper bildet eine Linie!",
+        "Hebe wechselseit diagonal jeweils einen Arm und ein Bein etwas h\u00F6her."
+      ],
+      "duration": 30,
+      "imageFile": "superwoman_paddle.gif",
+      "level": "Moderate",
+      "switchLeftRight": false,
+      "switchTime": 5
+    },
+    {
+      "name": "Superwoman",
+      "id": "Superwoman Advanced",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich flach auf den Bauch, Arme nach oben gestreckt.",
+        "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
+        "Arbeite bewusst mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur! Der ganze K\u00F6rper bildet eine Linie!",
+        "Hebe wechselseit diagonal jeweils einen Arm und ein Bein etwas h\u00F6her."
+      ],
+      "duration": 60,
+      "imageFile": "superwoman_paddle.gif",
+      "level": "Advanced",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Superwoman",
+      "id": "Superwoman Epic",
+      "description": "Effektive \u00FCbung f\u00FCr die Beinachse und die seitliche Rumpfmuskulatur",
+      "execution": [
+        "Lege dich flach auf den Bauch, Arme nach oben gestreckt.",
+        "Konzentriere das Gewicht auf deine Bauchpartie. Hebe Arme und Beine leicht vom Boden ab.",
+        "Arbeite bewusst mit deiner Ges\u00E4\u00DF- und Bauchmuskulatur! Der ganze K\u00F6rper bildet eine Linie!",
+        "Hebe wechselseit diagonal jeweils einen Arm und ein Bein etwas h\u00F6her."
+      ],
+      "duration": 90,
+      "imageFile": "superwoman_paddle.gif",
+      "level": "Epic",
+      "switchLeftRight": false,
+      "switchTime": 0
+    },
+    {
+      "name": "Mountain Climber",
+      "id": "Mountain Climber Easy",
+      "description": "Effektive \u00DCbung f\u00FCr Kraft und Koordination im gesamten Rumpf.",
+      "execution": [
+        "Gehe in die Liegest\u00FCtzposition!",
+        "Halte den Kopf in einer Linie mit dem R\u00FCcken, Blickrichtung zum Boden!",
+        "Achte darauf, dass der K\u00F6rper eine gerade Linie bildet!",
+        "F\u00FChre abwechselnd die Knie langsam in Richtung der gleichseitigen Ellenbogen!"
+      ],
+      "duration": 30,
+      "imageFile": "mountain_climber_same.gif",
+      "level": "Easy",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Crossover Mountain Climber",
+      "id": "Mountain Climber Moderate",
+      "description": "Effektive \u00DCbung f\u00FCr Kraft und Koordination im gesamten Rumpf.",
+      "execution": [
+        "Gehe in die Liegest\u00FCtzposition!",
+        "Halte den Kopf in einer Linie mit dem R\u00FCcken, Blickrichtung zum Boden!",
+        "Achte darauf, dass der K\u00F6rper eine gerade Linie bildet!",
+        "F\u00FChre abwechselnd die Knie langsam in Richtung der gleichseitigen Ellenbogen!"
+      ],
+      "duration": 30,
+      "imageFile": "mountain_climber_crossover.gif",
+      "level": "Moderate",
+      "switchLeftRight": true,
+      "switchTime": 5
+    },
+    {
+      "name": "Mountain Climber",
+      "id": "Mountain Climber Advanced",
+      "description": "Effektive \u00DCbung f\u00FCr Kraft und Koordination im gesamten Rumpf.",
+      "execution": [
+        "Gehe in die Liegest\u00FCtzposition!",
+        "Halte den Kopf in einer Linie mit dem R\u00FCcken, Blickrichtung zum Boden!",
+        "Achte darauf, dass der K\u00F6rper eine gerade Linie bildet!",
+        "F\u00FChre abwechselnd die Knie langsam in Richtung der gegen\u00FCberliegenden Ellenbogen!"
+      ],
+      "duration": 60,
+      "imageFile": "mountain_climber_same.gif",
+      "level": "Advanced",
+      "switchLeftRight": true,
+      "switchTime": 0
+    },
+    {
+      "name": "Fast Crossover Mountain Climber",
+      "id": "Mountain Climber Epic",
+      "description": "Effektive \u00DCbung f\u00FCr Kraft und Koordination im gesamten Rumpf.",
+      "execution": [
+        "Gehe in die Liegest\u00FCtzposition!",
+        "Halte den Kopf in einer Linie mit dem R\u00FCcken, Blickrichtung zum Boden!",
+        "Achte darauf, dass der K\u00F6rper eine gerade Linie bildet!",
+        "F\u00FChre abwechselnd das Knie schnell in Richtung des gegen\u00FCberliegenden Ellenbogen!"
+      ],
+      "duration": 60,
+      "imageFile": "mountain_climber_crossover.gif",
+      "level": "Epic",
+      "switchLeftRight": true,
+      "switchTime": 0
+    }
+  ],
+  "workouts": [
+    {
+      "name": "Stabi Handout",
+      "id": "Stabi Handout Easy",
+      "description": "Das Basisprogramm f\u00FCr den Rumpf",
+      "level": "Easy",
+      "preparationTime": 10,
+      "restTime": 10,
+      "switchTime": 5,
+      "exercises": [
+        "Glute Bridge Easy",
+        "Quadruped Easy",
+        "Plank Dip Easy",
+        "Side Plank Easy",
+        "Plank Push Up Easy",
+        "One Leg Deadlift Easy",
+        "Superwoman Easy",
+        "Mountain Climber Easy"
+      ]
+    },
+    {
+      "name": "Stabi Handout",
+      "id": "Stabi Handout Moderate",
+      "description": "Das Basisprogramm f\u00FCr den Rumpf",
+      "level": "Moderate",
+      "preparationTime": 10,
+      "restTime": 10,
+      "switchTime": 5,
+      "exercises": [
+        "Glute Bridge Moderate",
+        "Quadruped Moderate",
+        "Plank Dip Moderate",
+        "Side Plank Moderate",
+        "Plank Push Up Moderate",
+        "One Leg Deadlift Moderate",
+        "Superwoman Moderate",
+        "Mountain Climber Moderate"
+      ]
+    },
+    {
+      "name": "Stabi Handout",
+      "id": "Stabi Handout Advanced",
+      "description": "Das Basisprogramm f\u00FCr den Rumpf",
+      "level": "Advanced",
+      "preparationTime": 10,
+      "restTime": 10,
+      "switchTime": 5,
+      "exercises": [
+        "Glute Bridge Advanced",
+        "Quadruped Advanced",
+        "Plank Dip Advanced",
+        "Side Plank Advanced",
+        "Plank Push Up Advanced",
+        "One Leg Deadlift Advanced",
+        "Superwoman Advanced",
+        "Mountain Climber Advanced"
+      ]
+    },
+    {
+      "name": "Stabi Handout",
+      "id": "Stabi Handout Epic",
+      "description": "Das Basisprogramm f\u00FCr den Rumpf",
+      "level": "Epic",
+      "preparationTime": 10,
+      "restTime": 10,
+      "switchTime": 5,
+      "exercises": [
+        "Glute Bridge Epic",
+        "Quadruped Epic",
+        "Plank Dip Epic",
+        "Side Plank Epic",
+        "Plank Push Up Epic",
+        "One Leg Deadlift Epic",
+        "Superwoman Epic",
+        "Mountain Climber Epic"
+      ]
+    },
+    {
+      "name": "Race Optimization by Explosive Rebound Training Overload",
+      "id": "roberto_circle",
+      "description": "Explosives Ganzk\u00F6rper-Workout f\u00FCr Kraft, Stabilit\u00E4t und Reaktivit\u00E4t.",
+      "level": "Epic",
+      "preparationTime": 10,
+      "restTime": 10,
+      "switchTime": 5,
+      "exercises": [
+        "Lateral Bounds",
+        "Cross Lunges",
+        "Mountain Climber",
+        "Deep Squat Rotational Jumps",
+        "Deep Squat Jumps",
+        "Side Plank Hip Dips",
+        "Low Squat Jacks",
+        "Hand Release Push Up",
+        "Alternating Squat Balance Hold",
+        "Burpees",
+        "Lateral Step with Balance Lift",
+        "Reverse Mountain Climber",
+        "Horse Stance Overhead Swings",
+        "Plank Rotation Alternating"
+      ]
+    }
+  ]
+}

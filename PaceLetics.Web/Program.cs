@@ -18,6 +18,8 @@ using PaceLetics.AthleteModule.CodeBase.Interfaces;
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Localization;
 using PaceLetics.Web.Configuration;
+using PaceLetics.WorkoutModule.CodeBase.Models;
+using PaceLetics.WorkoutModule.CodeBase.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,8 +46,16 @@ builder.Services.AddRazorPages()
     .AddDataAnnotationsLocalization();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddSingleton<IExerciseProvider, ExerciseProvider>();
-builder.Services.AddScoped<IWorkoutProvider, WorkoutProvider>();
+var webRootPath = !string.IsNullOrWhiteSpace(builder.Environment.WebRootPath)
+    ? builder.Environment.WebRootPath
+    : Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
+var workoutCatalogPath = Path.Combine(webRootPath, "data", "workouts", "catalog.de.json");
+builder.Services.AddSingleton<IWorkoutCatalogRepository>(new JsonWorkoutCatalogRepository(workoutCatalogPath));
+builder.Services.AddSingleton<WorkoutCatalogDocument>(x => x.GetRequiredService<IWorkoutCatalogRepository>().Load());
+builder.Services.AddSingleton<IExerciseProvider>(x => new ExerciseProvider(x.GetRequiredService<WorkoutCatalogDocument>().Exercises));
+builder.Services.AddScoped<IWorkoutProvider>(x => new WorkoutProvider(
+    x.GetRequiredService<IExerciseProvider>(),
+    x.GetRequiredService<WorkoutCatalogDocument>().Workouts));
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddSingleton(builder.Configuration.GetAthleteDataOptions());
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
