@@ -1,4 +1,5 @@
 using PaceLetics.RunningModule.CodeBase.Models;
+using PaceLetics.RunningModule.CodeBase.Repositories;
 
 namespace PaceLetics.Web.Services;
 
@@ -14,7 +15,7 @@ public sealed class TrainingPlanService : ITrainingPlanService
     public IReadOnlyList<TrainingPlan> LoadTrainingPlans()
     {
         var plansDir = Path.Combine(WebRootPath, "data", "plans");
-        var plans = TrainingPlanProvider.LoadFromDirectory(plansDir).ToList();
+        var plans = new JsonTrainingPlanRepository(plansDir).Load().ToList();
 
         if (plans.Any())
             return plans;
@@ -30,9 +31,11 @@ public sealed class TrainingPlanService : ITrainingPlanService
     public IReadOnlyList<RunningSession> LoadLegacySessions()
     {
         var legacyPath = Path.Combine(WebRootPath, "data", "intervalls.json");
-        return File.Exists(legacyPath)
-            ? RunningSessionFactory.Load(legacyPath)
-            : Array.Empty<RunningSession>();
+        if (!File.Exists(legacyPath))
+            return Array.Empty<RunningSession>();
+
+        var definitions = new JsonRunningSessionRepository(legacyPath).Load();
+        return RunningSessionFactory.Create(definitions);
     }
 
     private string WebRootPath =>

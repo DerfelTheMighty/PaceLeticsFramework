@@ -1,11 +1,8 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
 namespace PaceLetics.RunningModule.CodeBase.Models
 {
     public class RunningSessionDto
     {
-        public string SessionType { get; set; } = ""; // "interval" | "planned"
+        public string SessionType { get; set; } = "";
     }
 
     public sealed class IntervalSessionDto : RunningSessionDto
@@ -22,13 +19,11 @@ namespace PaceLetics.RunningModule.CodeBase.Models
         public int SetRecovery { get; set; } = 0;
     }
 
-
     public sealed class PlannedSessionDto : RunningSessionDto
     {
         public string Id { get; set; } = "";
         public string Name { get; set; } = "";
         public DateTime Date { get; set; }
-
         public List<RunningSegmentDto> Sequence { get; set; } = new();
     }
 
@@ -42,66 +37,51 @@ namespace PaceLetics.RunningModule.CodeBase.Models
 
     public static class RunningSessionFactory
     {
-
-        private static readonly JsonSerializerOptions Opt = new()
+        public static RunningSession Create(RunningSessionDto definition)
         {
-            PropertyNameCaseInsensitive = true,
-            Converters =
+            return definition switch
             {
-                new JsonStringEnumConverter()
-            }
-        };
-
-        public static IReadOnlyList<RunningSession> Load(string filePath)
-        {
-            var json = File.ReadAllText(filePath);
-            var trimmed = json.TrimStart();
-
-            if (trimmed.StartsWith("["))
-            {
-                using var doc = JsonDocument.Parse(json);
-                return doc.RootElement.EnumerateArray().Select(ParseOne).ToList();
-            }
-            else
-            {
-                using var doc = JsonDocument.Parse(json);
-                return new[] { ParseOne(doc.RootElement) };
-            }
-        }
-
-        private static RunningSession ParseOne(JsonElement el)
-        {
-            var sessionType = el.GetProperty("sessionType").GetString()?.Trim().ToLowerInvariant();
-
-            return sessionType switch
-            {
-                "interval" => CreateInterval(el.Deserialize<IntervalSessionDto>(Opt)!),
-                "planned" => CreatePlanned(el.Deserialize<PlannedSessionDto>(Opt)!),
-                _ => throw new InvalidDataException($"Unknown sessionType: {sessionType}")
+                IntervalSessionDto interval => CreateInterval(interval),
+                PlannedSessionDto planned => CreatePlanned(planned),
+                _ => throw new InvalidDataException($"Unknown session definition type: {definition.GetType().Name}")
             };
         }
 
-        private static RunningSession CreateInterval(IntervalSessionDto d)
+        public static IReadOnlyList<RunningSession> Create(IEnumerable<RunningSessionDto> definitions)
         {
-            var recovery = d.Recovery ?? new List<int>();
-
-            var paceKeys = d.PaceKeys ?? new List<string>();
-            if (paceKeys.Count == 1 && d.Distances.Count > 1)
-                paceKeys = Enumerable.Repeat(paceKeys[0], d.Distances.Count).ToList();
-
-            return new IntervallSession(
-                d.Id, d.Name, d.Date,
-                d.Distances, recovery, paceKeys,
-                d.Sets, d.SetRecovery,
-                d.WarmupDistance, d.CooldownDistance
-            );
+            return definitions.Select(Create).ToList();
         }
 
-        private static RunningSession CreatePlanned(PlannedSessionDto d)
+        private static RunningSession CreateInterval(IntervalSessionDto definition)
         {
-            return new PlannedRunSession(d.Id, d.Name, d.Date,
-                d.Sequence.Select(s => new RunningSegment(s.Type, s.Distance, s.PaceKey, s.Duration)).ToList()
-            );
+            var recovery = definition.Recovery ?? new List<int>();
+
+            var paceKeys = definition.PaceKeys ?? new List<string>();
+            if (paceKeys.Count == 1 && definition.Distances.Count > 1)
+                paceKeys = Enumerable.Repeat(paceKeys[0], definition.Distances.Count).ToList();
+
+            return new IntervallSession(
+                definition.Id,
+                definition.Name,
+                definition.Date,
+                definition.Distances,
+                recovery,
+                paceKeys,
+                definition.Sets,
+                definition.SetRecovery,
+                definition.WarmupDistance,
+                definition.CooldownDistance);
+        }
+
+        private static RunningSession CreatePlanned(PlannedSessionDto definition)
+        {
+            return new PlannedRunSession(
+                definition.Id,
+                definition.Name,
+                definition.Date,
+                definition.Sequence
+                    .Select(s => new RunningSegment(s.Type, s.Distance, s.PaceKey, s.Duration))
+                    .ToList());
         }
     }
 }

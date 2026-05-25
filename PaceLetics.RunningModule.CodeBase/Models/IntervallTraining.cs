@@ -1,4 +1,3 @@
-﻿using System.Text.Json;
 namespace PaceLetics.RunningModule.CodeBase.Models
 {
     /// <summary>
@@ -18,37 +17,6 @@ namespace PaceLetics.RunningModule.CodeBase.Models
 
     public static class IntervallSessionFactory
     {
-        private static readonly JsonSerializerOptions JsonOptions = new()
-        {
-            PropertyNameCaseInsensitive = true,
-            WriteIndented = true
-        };
-
-        public static IReadOnlyList<IntervallSession> LoadFromJsonFile(string filePath)
-        {
-            if (filePath == null) throw new ArgumentNullException(nameof(filePath));
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("JSON file not found.", filePath);
-
-            var json = File.ReadAllText(filePath);
-            var trimmed = json.TrimStart();
-
-            if (trimmed.StartsWith("["))
-            {
-                var defs = JsonSerializer.Deserialize<List<IntervallTrainingDefinition>>(json, JsonOptions)
-                           ?? throw new InvalidDataException("Could not deserialize interval definitions array.");
-
-                return defs.Select(CreateFromDefinition).ToList();
-            }
-            else
-            {
-                var def = JsonSerializer.Deserialize<IntervallTrainingDefinition>(json, JsonOptions)
-                          ?? throw new InvalidDataException("Could not deserialize interval definition object.");
-
-                return new[] { CreateFromDefinition(def) };
-            }
-        }
-
         public static IntervallSession CreateFromDefinition(IntervallTrainingDefinition def)
         {
             if (def == null) throw new ArgumentNullException(nameof(def));
@@ -76,8 +44,7 @@ namespace PaceLetics.RunningModule.CodeBase.Models
                 recovery,
                 paceKeys,
                 def.Sets,
-                def.SetRecovery
-            );
+                def.SetRecovery);
         }
     }
 
