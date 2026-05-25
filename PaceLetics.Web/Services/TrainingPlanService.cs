@@ -1,21 +1,26 @@
 using PaceLetics.RunningModule.CodeBase.Models;
 using PaceLetics.RunningModule.CodeBase.Repositories;
+using PaceLetics.TrainingPlanModule.CodeBase.Models;
+using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
+using PaceLetics.WorkoutModule.CodeBase.Interfaces;
 
 namespace PaceLetics.Web.Services;
 
 public sealed class TrainingPlanService : ITrainingPlanService
 {
     private readonly IWebHostEnvironment _environment;
+    private readonly IWorkoutCatalog _workoutCatalog;
 
-    public TrainingPlanService(IWebHostEnvironment environment)
+    public TrainingPlanService(IWebHostEnvironment environment, IWorkoutCatalog workoutCatalog)
     {
         _environment = environment;
+        _workoutCatalog = workoutCatalog;
     }
 
     public IReadOnlyList<TrainingPlan> LoadTrainingPlans()
     {
         var plansDir = Path.Combine(WebRootPath, "data", "plans");
-        var plans = new JsonTrainingPlanRepository(plansDir).Load().ToList();
+        var plans = new JsonTrainingPlanRepository(plansDir, _workoutCatalog).Load().ToList();
 
         if (plans.Any())
             return plans;
@@ -25,7 +30,15 @@ public sealed class TrainingPlanService : ITrainingPlanService
             return Array.Empty<TrainingPlan>();
 
         const string id = "intervalls";
-        return new[] { new TrainingPlan(id, ToReadableName(id), sessions) };
+        return new[] { new TrainingPlan(
+            id,
+            ToReadableName(id),
+            sessions.Select(session => new TrainingSession(
+                session.Id,
+                session.Name,
+                session.Date,
+                new[] { session },
+                Array.Empty<WorkoutSessionDefinition>()))) };
     }
 
     public IReadOnlyList<RunningSession> LoadLegacySessions()

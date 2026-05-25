@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaceLetics.AthleteModule.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaceLetics.Tests", "PaceLetics.Tests\PaceLetics.Tests.csproj", "{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TrainingPlanModule", "TrainingPlanModule", "{40AE6BD6-3C6E-4E26-987E-53077CA7CD2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaceLetics.TrainingPlanModule.CodeBase", "PaceLetics.TrainingPlanModule.CodeBase\PaceLetics.TrainingPlanModule.CodeBase.csproj", "{A23027FB-6FF7-4C06-B787-F568AC77D180}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +86,10 @@ Global
 		{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97C2EBF4-3B06-4597-92FF-BBB374C86CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A23027FB-6FF7-4C06-B787-F568AC77D180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A23027FB-6FF7-4C06-B787-F568AC77D180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A23027FB-6FF7-4C06-B787-F568AC77D180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A23027FB-6FF7-4C06-B787-F568AC77D180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +103,7 @@ Global
 		{8415B0B6-CA20-42B0-8FFD-41828F2B2C1F} = {9680D45C-8DFF-4AE6-9EF5-718FB473231E}
 		{C053D80F-F374-4566-A30B-87C854F34D56} = {9680D45C-8DFF-4AE6-9EF5-718FB473231E}
 		{D288BA6F-7E3E-4559-9F66-3A173D7E868A} = {3A9EDCB5-EAC5-41AF-AC3A-C0BC034A0B71}
+		{A23027FB-6FF7-4C06-B787-F568AC77D180} = {40AE6BD6-3C6E-4E26-987E-53077CA7CD2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB41B04B-BBEA-4D6E-A335-3A03B73E1896}

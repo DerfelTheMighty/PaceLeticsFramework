@@ -16,6 +16,7 @@
     <ProjectReference Include="..\PaceLetics.RunningModule.CodeBase\PaceLetics.RunningModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.Web\PaceLetics.Web.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.CodeBase\PaceLetics.WorkoutModule.CodeBase.csproj" />
+    <ProjectReference Include="..\PaceLetics.TrainingPlanModule.CodeBase\PaceLetics.TrainingPlanModule.CodeBase.csproj" />
   </ItemGroup>
 
   <ItemGroup>
