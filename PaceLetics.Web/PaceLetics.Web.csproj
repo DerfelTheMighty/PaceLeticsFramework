@@ -42,6 +42,7 @@
     <ProjectReference Include="..\PaceLetics.RunningModule.Components\PaceLetics.RunningModule.Components.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.CodeBase\PaceLetics.WorkoutModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.WorkoutModule.Components\PaceLetics.WorkoutModule.Components.csproj" />
+    <ProjectReference Include="..\PaceLetics.TrainingPlanModule.CodeBase\PaceLetics.TrainingPlanModule.CodeBase.csproj" />
   </ItemGroup>
 
   <ItemGroup>
