@@ -33,14 +33,11 @@ public sealed class WorkoutCatalogServiceTests
 
     private static WorkoutCatalog CreateCatalog()
     {
-        return new WorkoutCatalog(new ExerciseCatalog());
+        return WorkoutCatalogTestData.CreateWorkoutCatalog();
     }
 
     private static WorkoutService CreateService()
     {
-        var exerciseCatalog = new ExerciseCatalog();
-        var catalog = new WorkoutCatalog(exerciseCatalog);
-        var factory = new WorkoutFactory(exerciseCatalog, new ExerciseFactory());
-        return new WorkoutService(catalog, factory);
+        return WorkoutCatalogTestData.CreateWorkoutService();
     }
 }

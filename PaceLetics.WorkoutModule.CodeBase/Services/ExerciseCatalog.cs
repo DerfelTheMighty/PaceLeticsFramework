@@ -9,11 +9,6 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
         private readonly List<ExerciseDefinition> _definitions;
         private readonly List<ExercisePreview> _previews;
 
-        public ExerciseCatalog()
-            : this(new DefinitionFactory().CreateExerciseExamples())
-        {
-        }
-
         public ExerciseCatalog(IEnumerable<ExerciseDefinition> exerciseDefinitions)
         {
             _definitions = exerciseDefinitions.ToList();

@@ -8,7 +8,7 @@ public sealed class ExerciseCatalogFactoryTests
     [Fact]
     public void ExerciseCatalog_ReturnsDefinitionAndPreviewForKnownExercise()
     {
-        var catalog = new ExerciseCatalog();
+        var catalog = WorkoutCatalogTestData.CreateExerciseCatalog();
 
         var definition = catalog.GetDefinition("Glute Bridge Easy", Level.Easy);
         var preview = catalog.GetExercisePreview("Glute Bridge Easy", Level.Easy);
@@ -21,7 +21,7 @@ public sealed class ExerciseCatalogFactoryTests
     [Fact]
     public void ExerciseFactory_CreatesRuntimeExerciseFromDefinition()
     {
-        var catalog = new ExerciseCatalog();
+        var catalog = WorkoutCatalogTestData.CreateExerciseCatalog();
         var factory = new ExerciseFactory();
         var definition = catalog.GetDefinition("Glute Bridge Easy", Level.Easy);
 

@@ -8,11 +8,6 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
         private readonly List<WorkoutDefinition> _workouts;
         private readonly List<WorkoutPreview> _previews;
 
-        public WorkoutCatalog(IExerciseCatalog exerciseCatalog)
-            : this(exerciseCatalog, new DefinitionFactory().CreateWorkoutExamples())
-        {
-        }
-
         public WorkoutCatalog(
             IExerciseCatalog exerciseCatalog,
             IEnumerable<WorkoutDefinition> workoutDefinitions)
