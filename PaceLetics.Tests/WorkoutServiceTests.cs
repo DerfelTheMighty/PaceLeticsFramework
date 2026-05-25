@@ -1,24 +1,25 @@
 using PaceLetics.WorkoutModule.CodeBase.Enums;
+using PaceLetics.WorkoutModule.CodeBase.Interfaces;
 using PaceLetics.WorkoutModule.CodeBase.Services;
 
 namespace PaceLetics.Tests;
 
-public class WorkoutProviderTests
+public class WorkoutServiceTests
 {
     [Fact]
     public void GetActiveWorkout_ReturnsNullBeforeSelection()
     {
-        var provider = CreateProvider();
+        var service = CreateService();
 
-        Assert.Null(provider.GetActiveWorkout());
+        Assert.Null(service.GetActiveWorkout());
     }
 
     [Fact]
     public void GetWorkout_ThrowsForUnknownId()
     {
-        var provider = CreateProvider();
+        var service = CreateService();
 
-        Assert.Throws<KeyNotFoundException>(() => provider.GetWorkout("missing-workout"));
+        Assert.Throws<KeyNotFoundException>(() => service.GetWorkout("missing-workout"));
     }
 
     [Fact]
@@ -32,11 +33,11 @@ public class WorkoutProviderTests
     [Fact]
     public void SetActiveWorkout_UsesSetsAndRoundsWhenBuildingWorkout()
     {
-        var provider = CreateProvider();
+        var service = CreateService();
 
-        provider.SetActiveWorkout("Stabi Handout Easy", sets: 2, rounds: 2);
+        service.SetActiveWorkout("Stabi Handout Easy", sets: 2, rounds: 2);
 
-        var workout = provider.GetActiveWorkout();
+        var workout = service.GetActiveWorkout();
         Assert.NotNull(workout);
         Assert.Equal(64, workout.Elements.Count);
         Assert.Equal(32, workout.Exercises.Count);
@@ -47,14 +48,17 @@ public class WorkoutProviderTests
     [InlineData(1, 0)]
     public void SetActiveWorkout_ThrowsForInvalidBuildOptions(int sets, int rounds)
     {
-        var provider = CreateProvider();
+        var service = CreateService();
 
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            provider.SetActiveWorkout("Stabi Handout Easy", sets, rounds));
+            service.SetActiveWorkout("Stabi Handout Easy", sets, rounds));
     }
 
-    private static WorkoutProvider CreateProvider()
+    private static IWorkoutService CreateService()
     {
-        return new WorkoutProvider(new ExerciseProvider());
+        var exerciseProvider = new ExerciseProvider();
+        return new WorkoutService(
+            new WorkoutCatalog(exerciseProvider),
+            new WorkoutFactory(exerciseProvider));
     }
 }
