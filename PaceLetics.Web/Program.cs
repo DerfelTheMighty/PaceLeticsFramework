@@ -58,7 +58,6 @@ builder.Services.AddSingleton<IWorkoutCatalog>(x => new WorkoutCatalog(
     x.GetRequiredService<WorkoutCatalogDocument>().Workouts));
 builder.Services.AddScoped<IWorkoutFactory, WorkoutFactory>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
-builder.Services.AddScoped<IWorkoutProvider, WorkoutProvider>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddSingleton(builder.Configuration.GetAthleteDataOptions());
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));

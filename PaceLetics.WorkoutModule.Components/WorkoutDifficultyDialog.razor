@@ -3,7 +3,8 @@
 @using PaceLetics.WorkoutModule.CodeBase.Enums
 @using PaceLetics.WorkoutModule.CodeBase.Models
 @using System.ComponentModel.DataAnnotations
-@inject IWorkoutProvider woProvider
+@inject IWorkoutCatalog WorkoutCatalog
+@inject IWorkoutService WorkoutService
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 @inject IStringLocalizer<WorkoutResources> L
@@ -43,8 +44,7 @@
                 <MudStack Spacing="2">
                     @foreach (var v in _variants)
                     {
-                        var w = woProvider.GetWorkout(v);
-                        var level = w?.Level ?? Level.None;
+                        var level = WorkoutCatalog.GetDefinition(v).Level;
                         <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(level)" OnClick="() => OpenVariant(v)">
                             @GetDisplayName(level)
                         </MudButton>
@@ -84,20 +84,20 @@
 
     protected override void OnInitialized()
     {
-        _variants = woProvider.GetWorkoutIdsByName(Name);
+        _variants = WorkoutCatalog.GetWorkoutIdsByName(Name);
         if (_variants.Any())
         {
-            var w = woProvider.GetWorkout(_variants.First());
-            _previewDescription = w.Description;
-            _workoutPreview = woProvider.GetWorkoutPreview(_variants.First());
-            var img = w?.Exercises.FirstOrDefault().ImageFilename;
+            var w = WorkoutCatalog.GetDefinition(_variants.First());
+            _previewDescription = w.Description ?? string.Empty;
+            _workoutPreview = WorkoutCatalog.GetWorkoutPreview(_variants.First());
+            var img = _workoutPreview.Exercises.FirstOrDefault()?.Imagefile;
             if (!string.IsNullOrEmpty(img)) _previewImage = "images/exercises/" + img;
         }
 
         if (SelectedLevel.HasValue)
         {
             // find a variant matching the selected level (use per-variant GetWorkout)
-            _selectedVariantId = _variants.FirstOrDefault(id => woProvider.GetWorkout(id).Level == SelectedLevel.Value);
+            _selectedVariantId = _variants.FirstOrDefault(id => WorkoutCatalog.GetDefinition(id).Level == SelectedLevel.Value);
         }
     }
 
@@ -105,7 +105,7 @@
     {
         if (string.IsNullOrWhiteSpace(id))
             return;
-        woProvider.SetActiveWorkout(id, 1, _rounds);
+        WorkoutService.SetActiveWorkout(id, 1, _rounds);
         NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
     }
 
@@ -114,7 +114,7 @@
         if (!string.IsNullOrWhiteSpace(_selectedVariantId))
         {
             // use sets = 1 and rounds = _rounds to represent total repetitions
-            woProvider.SetActiveWorkout(_selectedVariantId, 1, _rounds);
+            WorkoutService.SetActiveWorkout(_selectedVariantId, 1, _rounds);
             NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
         }
     }

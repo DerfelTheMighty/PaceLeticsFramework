@@ -3,7 +3,7 @@
 @using PaceLetics.WorkoutModule.CodeBase.Models
 @using PaceLetics.WorkoutModule.CodeBase.Enums
 
-@inject IWorkoutProvider woProvider
+@inject IWorkoutCatalog WorkoutCatalog
 @inject IDialogService DialogService
 @inject IStringLocalizer<WorkoutResources> L
 
@@ -85,7 +85,7 @@
     protected override void OnInitialized()
     {
         if (!string.IsNullOrWhiteSpace(Preview?.Name))
-            _variants = woProvider.GetWorkoutIdsByName(Preview.Name) ?? new List<string>();
+            _variants = WorkoutCatalog.GetWorkoutIdsByName(Preview.Name) ?? new List<string>();
     }
 
     private async Task OpenDialogAsync()

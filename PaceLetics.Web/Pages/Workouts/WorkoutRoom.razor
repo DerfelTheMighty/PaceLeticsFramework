@@ -3,7 +3,7 @@
 @using PaceLetics.WorkoutModule.CodeBase.Interfaces
 @using PaceLetics.WorkoutModule.Components
 
-@inject IWorkoutProvider woProvider
+@inject IWorkoutService WorkoutService
 @inject IDialogService dialogService
 @inject NavigationManager navManager
 @inject IStringLocalizer<WorkoutRoom> L
@@ -28,7 +28,7 @@
 
     protected override void OnInitialized()
     {
-        _workout = woProvider.GetActiveWorkout();
+        _workout = WorkoutService.GetActiveWorkout();
         if (_workout is not null)
             _workout.WorkoutFinishedEvent += OnWorkoutFinished;
         navManager.RegisterLocationChangingHandler(LocationChangingHandler);

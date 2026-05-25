@@ -4,7 +4,8 @@
 @using PaceLetics.WorkoutModule.CodeBase.Models
 @using PaceLetics.WorkoutModule.CodeBase.Enums
 @using System.ComponentModel.DataAnnotations
-@inject IWorkoutProvider woProvider
+@inject IWorkoutCatalog WorkoutCatalog
+@inject IWorkoutService WorkoutService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<SelectDifficulty> L
 
@@ -45,8 +46,7 @@
                         <MudStack Spacing="2" Class="mt-2">
                             @foreach(var v in _variants)
                             {
-                                var pv = woProvider.GetWorkoutPreview(v);
-                                var level = pv?.Level ?? Level.None;
+                                var level = WorkoutCatalog.GetDefinition(v).Level;
                                 <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(level)" OnClick="() => OpenVariant(v)">
                                     @GetDisplayName(level)
                                 </MudButton>
@@ -72,10 +72,10 @@
 
     protected override void OnInitialized()
     {
-        _variants = woProvider.GetWorkoutIdsByName(Name);
+        _variants = WorkoutCatalog.GetWorkoutIdsByName(Name);
         if (_variants.Any())
         {
-            var p = woProvider.GetWorkoutPreview(_variants.First());
+            var p = WorkoutCatalog.GetWorkoutPreview(_variants.First());
             _previewDescription = p?.Description ?? string.Empty;
             var img = p?.Exercises?.FirstOrDefault()?.Imagefile;
             if (!string.IsNullOrEmpty(img)) _previewImage = "images/exercises/" + img;
@@ -84,7 +84,7 @@
 
     private void OpenVariant(string id)
     {
-        woProvider.SetActiveWorkout(id, _sets, _rounds);
+        WorkoutService.SetActiveWorkout(id, _sets, _rounds);
         NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
     }
 

@@ -2,7 +2,7 @@
 @using PaceLetics.WorkoutModule.CodeBase.Interfaces;
 @using PaceLetics.WorkoutModule.CodeBase.Models;
 
-@inject IWorkoutProvider woProvider;
+@inject IWorkoutCatalog WorkoutCatalog;
 @inject IStringLocalizer<WorkoutArea> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
@@ -57,14 +57,14 @@
     protected override void OnInitialized()
     {
         _workoutPrevs = new List<WorkoutPreview>();
-        _workoutBases = woProvider.GetBaseWorkoutNames();
+        _workoutBases = WorkoutCatalog.GetBaseWorkoutNames();
         foreach (var baseName in _workoutBases)
         {
             // use the first variant to render preview information for the group
-            var ids = woProvider.GetWorkoutIdsByName(baseName);
+            var ids = WorkoutCatalog.GetWorkoutIdsByName(baseName);
             if (ids != null && ids.Any())
             {
-                var preview = woProvider.GetWorkoutPreview(ids.First());
+                var preview = WorkoutCatalog.GetWorkoutPreview(ids.First());
                 if (preview != null)
                     _workoutPrevs.Add(preview);
             }

@@ -6,7 +6,7 @@
 
 @namespace PaceLetics.WorkoutModule.Components
 
-@inject IWorkoutProvider woProvider;
+@inject IWorkoutService WorkoutService;
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<WorkoutResources> L
 
@@ -123,7 +123,7 @@
 
     private void OpenWorkout()
     {
-        woProvider.SetActiveWorkout(Workout.Id, 1, _rounds);
+        WorkoutService.SetActiveWorkout(Workout.Id, 1, _rounds);
         NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
     }
     protected override void OnInitialized()
