@@ -5,31 +5,21 @@
 @inject IViewLocalizer Localizer
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@Localizer["Greeting"] @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
-            <button  type="submit" class="nav-link btn btn-link text-dark">@Localizer["Logout"]</button>
-        </form>
-    </li>
+    <a class="mud-typography mud-typography-body2" style="color:inherit; text-decoration:none; margin-right:1rem;" asp-area="Identity" asp-page="/Account/Manage/Index">@Localizer["Greeting"] @User.Identity?.Name!</a>
+    <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
+        <button type="submit" class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-small mud-ripple-button">
+            <span class="mud-button-label">@Localizer["Logout"]</span>
+        </button>
+    </form>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">@Localizer["Register"]</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">@Localizer["Login"]</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Privacy">@Localizer["Privacy"]</a>
-     </li>
-     <li class="nav-item">
-        <a class="nav-link text-dark" href="/impressum">@Localizer["Impressum"]</a>
-     </li>
+    <a class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-small mud-ripple-button" style="text-decoration:none;" asp-area="Identity" asp-page="/Account/Login">
+        <span class="mud-button-label">@Localizer["Login"]</span>
+    </a>
+    <a class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-small mud-ripple-button" style="text-decoration:none;" asp-area="Identity" asp-page="/Account/Register">
+        <span class="mud-button-label">@Localizer["Register"]</span>
+    </a>
 }
-</ul>

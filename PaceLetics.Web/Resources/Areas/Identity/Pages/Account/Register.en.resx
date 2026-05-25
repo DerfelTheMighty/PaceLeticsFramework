@@ -13,4 +13,11 @@
   <data name="Password" xml:space="preserve"><value>Password</value></data>
   <data name="ConfirmPassword" xml:space="preserve"><value>Confirm Password</value></data>
   <data name="Submit" xml:space="preserve"><value>Submit</value></data>
+  <data name="WelcomeTitle" xml:space="preserve"><value>Join PaceLetics</value></data>
+  <data name="WelcomeText" xml:space="preserve"><value>Create your free account and start training smarter:</value></data>
+  <data name="Feature1" xml:space="preserve"><value>Calculate your individual training paces from race results</value></data>
+  <data name="Feature2" xml:space="preserve"><value>Get structured training plans for your next race</value></data>
+  <data name="Feature3" xml:space="preserve"><value>Access guided workouts for runners</value></data>
+  <data name="CreateAccountHint" xml:space="preserve"><value>It only takes a moment to get started.</value></data>
+  <data name="AlreadyHaveAccount" xml:space="preserve"><value>Already have an account? Log in</value></data>
 </root>

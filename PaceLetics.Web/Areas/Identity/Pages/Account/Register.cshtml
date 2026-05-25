@@ -6,68 +6,50 @@
     ViewData["Title"] = Localizer["Title"].Value;
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="mud-paper mud-elevation-4 pa-6 rounded-lg">
+    <div class="mud-typography mud-typography-h5 mb-2">@Localizer["WelcomeTitle"]</div>
+    <p class="mud-typography mud-typography-body2 mb-2" style="opacity:.7;">@Localizer["WelcomeText"]</p>
+    <ul class="mud-typography mud-typography-body2 mb-4" style="opacity:.7; padding-left:1.2rem;">
+        <li>@Localizer["Feature1"]</li>
+        <li>@Localizer["Feature2"]</li>
+        <li>@Localizer["Feature3"]</li>
+    </ul>
 
-<div class="row">
-    <div class="col-md-5">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>@Localizer["CreateAccount"]</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" placeholder="@Localizer["YourName"].Value" />
-                <label asp-for="Input.Name">@Localizer["Username"]</label>
-                <span asp-validation-for="Input.Name" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="email" placeholder="name@example.com" />
-                <label asp-for="Input.Email">@Localizer["Email"]</label>
-                <div class="form-text">@Localizer["EmailHelp"]</div>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password"].Value" />
-                <label asp-for="Input.Password">@Localizer["Password"]</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password"].Value" />
-                <label asp-for="Input.ConfirmPassword">@Localizer["ConfirmPassword"]</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">@Localizer["Submit"]</button>
-        </form>
-    </div>
-   @*  <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div> *@
+    <div class="mud-divider my-4"></div>
+
+    <div class="mud-typography mud-typography-h6 mb-1">@Localizer["CreateAccount"]</div>
+    <p class="mud-typography mud-typography-body2 mb-4" style="opacity:.65;">@Localizer["CreateAccountHint"]</p>
+
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" placeholder="@Localizer["YourName"].Value" />
+            <label asp-for="Input.Name">@Localizer["Username"]</label>
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Email" class="form-control" autocomplete="email" placeholder="name@example.com" />
+            <label asp-for="Input.Email">@Localizer["Email"]</label>
+            <div class="form-text">@Localizer["EmailHelp"]</div>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password"].Value" />
+            <label asp-for="Input.Password">@Localizer["Password"]</label>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password"].Value" />
+            <label asp-for="Input.ConfirmPassword">@Localizer["ConfirmPassword"]</label>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button id="registerSubmit" type="submit" class="mud-button-root mud-button mud-button-filled mud-button-filled-primary mud-button-filled-size-large mud-ripple-button w-100 mb-3">
+            <span class="mud-button-label">@Localizer["Submit"]</span>
+        </button>
+        <div class="mt-2">
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="mud-typography mud-typography-body2">@Localizer["AlreadyHaveAccount"]</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
