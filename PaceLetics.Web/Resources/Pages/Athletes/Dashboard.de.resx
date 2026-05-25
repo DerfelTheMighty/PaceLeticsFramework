@@ -10,4 +10,29 @@
   <data name="Subtitle" xml:space="preserve"><value>Willkommen bei PaceLetics</value></data>
   <data name="Hello" xml:space="preserve"><value>Hallo</value></data>
   <data name="IntroText" xml:space="preserve"><value>Hier findest du in Zukunft aktuelle Neuigkeiten zum Kurs, Infos zu kommenden Trainingseinheiten und Trainingsvorschläge.</value></data>
+  <data name="Breadcrumb_Personal" xml:space="preserve"><value>Personal</value></data>
+  <data name="WelcomeText" xml:space="preserve"><value>Hallo {0}, hier ist dein aktueller Trainingsstand.</value></data>
+  <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
+  <data name="Metric_TrainingPlan" xml:space="preserve"><value>Trainingsplan</value></data>
+  <data name="Metric_NextSession" xml:space="preserve"><value>Nächste Einheit</value></data>
+  <data name="Metric_Messages" xml:space="preserve"><value>Hinweise</value></data>
+  <data name="Metric_MessagesDetail" xml:space="preserve"><value>Aktuelle Dashboard-Meldungen</value></data>
+  <data name="Metric_NotAvailable" xml:space="preserve"><value>-</value></data>
+  <data name="Metric_ReferenceMissing" xml:space="preserve"><value>Kein Einstufungslauf</value></data>
+  <data name="Metric_ReferenceDate" xml:space="preserve"><value>Stand {0:dd.MM.yyyy}</value></data>
+  <data name="Metric_NoPlan" xml:space="preserve"><value>Kein Plan ausgewählt</value></data>
+  <data name="Metric_PlanSessions" xml:space="preserve"><value>{0} Einheiten</value></data>
+  <data name="Metric_NoSession" xml:space="preserve"><value>Keine anstehende Einheit</value></data>
+  <data name="TrainingOverview_Title" xml:space="preserve"><value>Trainingsübersicht</value></data>
+  <data name="TrainingOverview_Empty" xml:space="preserve"><value>Aktuell ist keine anstehende Einheit geplant.</value></data>
+  <data name="TrainingOverview_PreviewTitle" xml:space="preserve"><value>Planvorschau</value></data>
+  <data name="TrainingOverview_PreviewText" xml:space="preserve"><value>Hier kann später ein Verlauf aus Einheiten, Belastung oder Fortschritt erscheinen.</value></data>
+  <data name="OpenTrainingPlan" xml:space="preserve"><value>Trainingsplan öffnen</value></data>
+  <data name="ReferencePanel_Title" xml:space="preserve"><value>Einstufungslauf</value></data>
+  <data name="ReferencePanel_Empty" xml:space="preserve"><value>Noch kein Einstufungslauf hinterlegt.</value></data>
+  <data name="ManageReferenceRun" xml:space="preserve"><value>Einstufung pflegen</value></data>
+  <data name="PlanPanel_Title" xml:space="preserve"><value>Aktiver Plan</value></data>
+  <data name="SessionRuns" xml:space="preserve"><value>{0} Lauf/Läufe</value></data>
+  <data name="SessionWorkouts" xml:space="preserve"><value>{0} Workout(s)</value></data>
+  <data name="SessionEmpty" xml:space="preserve"><value>Keine Inhalte</value></data>
 </root>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="FeedTitle" xml:space="preserve"><value>Aktuelle Hinweise</value></data>
+  <data name="NoMessages" xml:space="preserve"><value>Alles aktuell. Sobald etwas Wichtiges ansteht, erscheint es hier.</value></data>
+  <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>Einstufungslauf fehlt</value></data>
+  <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>Lege einen Einstufungslauf an, damit PaceLetics deine Trainingspaces sauber berechnen kann.</value></data>
+  <data name="ReferenceRunStale_Title" xml:space="preserve"><value>Einstufungslauf aktualisieren</value></data>
+  <data name="ReferenceRunStale_Body" xml:space="preserve"><value>Dein aktueller Einstufungslauf ist vom {0:d} und damit seit {1:0} Tagen nicht mehr aktualisiert.</value></data>
+  <data name="ReferenceRun_Action" xml:space="preserve"><value>Einstufungslauf pflegen</value></data>
+  <data name="UpcomingTraining_Title" xml:space="preserve"><value>Nächste Einheit</value></data>
+  <data name="UpcomingTrainingToday_Body" xml:space="preserve"><value>Heute steht "{0}" auf deinem Trainingsplan.</value></data>
+  <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>Morgen steht "{0}" auf deinem Trainingsplan.</value></data>
+  <data name="UpcomingTraining_Body" xml:space="preserve"><value>Am {1:d} steht "{0}" auf deinem Trainingsplan.</value></data>
+  <data name="UpcomingTraining_Action" xml:space="preserve"><value>Trainingsplan öffnen</value></data>
+  <data name="Severity_Info" xml:space="preserve"><value>Info</value></data>
+  <data name="Severity_Success" xml:space="preserve"><value>Ok</value></data>
+  <data name="Severity_Warning" xml:space="preserve"><value>Wichtig</value></data>
+  <data name="Severity_Error" xml:space="preserve"><value>Fehler</value></data>
+</root>

@@ -21,6 +21,8 @@ using PaceLetics.Web.Configuration;
 using PaceLetics.WorkoutModule.CodeBase.Models;
 using PaceLetics.WorkoutModule.CodeBase.Repositories;
 using PaceLetics.Web.ViewModels.Workouts;
+using PaceLetics.Web.Services.DashboardMessages;
+using PaceLetics.CoreModule.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +84,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection(SmtpOptions.SectionName));
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
+builder.Services.AddSingleton<DashboardMessageFeedOptions>();
+builder.Services.AddScoped<IAthleteMessageProvider, ReferenceRunDashboardMessageProvider>();
+builder.Services.AddScoped<IAthleteMessageProvider, UpcomingTrainingDashboardMessageProvider>();
+builder.Services.AddScoped<IAthleteMessageFeedService, AthleteMessageFeedService>();
 
 
 //builder.Services.AddMudServices();

@@ -5,15 +5,21 @@
 
 @using MudBlazor;
 @using PaceLetics.AthleteModule.CodeBase.Models;
+@using PaceLetics.CoreModule.Infrastructure.Models
+@using PaceLetics.CoreModule.Infrastructure.Services
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@using PaceLetics.Web.Services
 
 @inject IAthleteData AthleteData
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IStringLocalizer<Dashboard> L
+@inject ITrainingPlanService TrainingPlanService
+@inject IAthleteMessageFeedService AthleteMessageFeedService
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="pl-dashboard-shell pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
@@ -21,19 +27,97 @@
     }
     else
     {
-        <PageHeader Title="@L["Title"]"
-                    Subtitle="@L["Subtitle"]" />
+        <MudStack Spacing="4">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pl-dashboard-breadcrumb">
+                <MudIcon Icon="@Icons.Material.Filled.Menu" Size="Size.Medium" />
+                <MudText Typo="Typo.body1">@L["Breadcrumb_Personal"]</MudText>
+                <MudText Typo="Typo.body1" Class="pl-dashboard-breadcrumb-divider">/</MudText>
+                <MudText Typo="Typo.body1">@L["Title"]</MudText>
+            </MudStack>
 
-        <MudDivider Class="my-4" />
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.h4" Class="pl-dashboard-title">@L["Title"]</MudText>
+                <MudText Typo="Typo.body1" Class="pl-dashboard-subtitle">@L["WelcomeText", _name]</MudText>
+            </MudStack>
 
-        <MudStack Spacing="3">
-            <MudText Typo="Typo.h6">
-                @L["Hello"] @_name
-            </MudText>
+            <MudGrid Spacing="3">
+                <MudItem xs="12" sm="6" lg="4">
+                    <DashboardMetricTile Label="@L["Metric_Vdot"]"
+                                         Value="@GetVdotValue()"
+                                         Detail="@GetReferenceDetail()"
+                                         Icon="@Icons.Material.Filled.Speed"
+                                         Accent="blue"
+                                         Href="/Athletes/trainingpaces" />
+                </MudItem>
 
-            <MudText Typo="Typo.body1" Style="opacity:.8;">
-                @L["IntroText"]
-            </MudText>
+                <MudItem xs="12" sm="6" lg="4">
+                    <DashboardMetricTile Label="@L["Metric_NextSession"]"
+                                         Value="@GetNextSessionValue()"
+                                         Detail="@GetNextSessionDetail()"
+                                         Icon="@Icons.Material.Filled.EventAvailable"
+                                         Accent="green"
+                                         Href="/Athletes/trainingplanpage" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" lg="4">
+                    <DashboardMetricTile Label="@L["Metric_Messages"]"
+                                         Value="@_messages.Count.ToString()"
+                                         Detail="@L["Metric_MessagesDetail"]"
+                                         Icon="@Icons.Material.Filled.NotificationsActive"
+                                         Accent="orange" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid Spacing="3">
+                <MudItem xs="12" md="8">
+                    <MudPaper Elevation="2" Class="pl-dashboard-panel pl-dashboard-panel-large">
+                        <MudStack Spacing="3">
+                            <MudText Typo="Typo.h6">@L["TrainingOverview_Title"]</MudText>
+
+                            @if (_nextSession is null)
+                            {
+                                <MudText Typo="Typo.body2" Class="pl-dashboard-muted">@L["TrainingOverview_Empty"]</MudText>
+                            }
+                            else
+                            {
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="pl-next-session-header">
+                                    <MudStack Spacing="1">
+                                        <MudText Typo="Typo.h5">@_nextSession.Name</MudText>
+                                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
+                                            @_nextSession.Date.ToString("dd.MM.yyyy")
+                                            @(" / ")
+                                            @GetSessionComposition(_nextSession)
+                                        </MudText>
+                                    </MudStack>
+
+                                    <MudButton Href="/Athletes/trainingplanpage"
+                                               Variant="Variant.Filled"
+                                               Color="Color.Primary"
+                                               StartIcon="@Icons.Material.Filled.OpenInNew">
+                                        @L["OpenTrainingPlan"]
+                                    </MudButton>
+                                </MudStack>
+
+                                <div class="pl-training-placeholder">
+                                    <MudIcon Icon="@Icons.Material.Filled.Timeline" Size="Size.Large" />
+                                    <MudStack Spacing="0">
+                                        <MudText Typo="Typo.subtitle1">@L["TrainingOverview_PreviewTitle"]</MudText>
+                                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
+                                            @L["TrainingOverview_PreviewText"]
+                                        </MudText>
+                                    </MudStack>
+                                </div>
+                            }
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudPaper Elevation="2" Class="pl-dashboard-panel pl-dashboard-panel-large">
+                        <DashboardMessageFeed Messages="_messages" />
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
         </MudStack>
     }
 
@@ -47,6 +131,11 @@
     bool _isLoading = true;
     AthleteModel? Athlete;
     string _name = String.Empty;
+    IReadOnlyList<AthleteMessage> _messages = Array.Empty<AthleteMessage>();
+    IReadOnlyList<TrainingPlan> _trainingPlans = Array.Empty<TrainingPlan>();
+    TrainingPlan? _activePlan;
+    TrainingSession? _nextSession;
+    RaceResultModel? _referenceResult;
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,8 +148,90 @@
         _name = string.IsNullOrWhiteSpace(Athlete?.Name)
             ? user.Identity?.Name ?? string.Empty
             : Athlete.Name;
+        _trainingPlans = TrainingPlanService.LoadTrainingPlans();
+        _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
+        _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
+        _referenceResult = Athlete?.ActiveReferenceResult;
+        _messages = AthleteMessageFeedService.Build(new AthleteMessageContext(
+            Athlete?.AthleteId ?? Athlete?.Id,
+            _name,
+            Athlete?.Vdot ?? 0,
+            Athlete?.ActiveReferenceResult,
+            Athlete?.SelectedTrainingPlanId,
+            DateTime.Today));
         _isLoading = false;
         await base.OnInitializedAsync();
+    }
+
+    private static TrainingPlan? ResolveActivePlan(IReadOnlyList<TrainingPlan> trainingPlans, AthleteModel? athlete)
+    {
+        if (trainingPlans.Count == 0)
+            return null;
+
+        if (!string.IsNullOrWhiteSpace(athlete?.SelectedTrainingPlanId))
+        {
+            var selected = trainingPlans.FirstOrDefault(plan => plan.Id == athlete.SelectedTrainingPlanId);
+            if (selected is not null)
+                return selected;
+        }
+
+        return trainingPlans.FirstOrDefault(plan => plan.Sessions.Any(session => session.Date.Date >= DateTime.Today))
+            ?? trainingPlans.FirstOrDefault();
+    }
+
+    private static TrainingSession? ResolveNextSession(TrainingPlan? activePlan, IReadOnlyList<TrainingPlan> trainingPlans)
+    {
+        if (activePlan is not null)
+        {
+            var selectedNext = activePlan.Sessions
+                .Where(session => session.Date.Date >= DateTime.Today)
+                .OrderBy(session => session.Date)
+                .FirstOrDefault();
+
+            if (selectedNext is not null)
+                return selectedNext;
+        }
+
+        return trainingPlans
+            .SelectMany(plan => plan.Sessions)
+            .Where(session => session.Date.Date >= DateTime.Today)
+            .OrderBy(session => session.Date)
+            .FirstOrDefault();
+    }
+
+    private string GetVdotValue()
+    {
+        return Athlete?.Vdot > 0 ? Athlete.Vdot.ToString("0.0") : L["Metric_NotAvailable"];
+    }
+
+    private string GetReferenceDetail()
+    {
+        return _referenceResult is null
+            ? L["Metric_ReferenceMissing"]
+            : string.Format(L["Metric_ReferenceDate"], _referenceResult.Date);
+    }
+
+    private string GetNextSessionValue()
+    {
+        return _nextSession?.Date.ToString("dd.MM.") ?? L["Metric_NotAvailable"];
+    }
+
+    private string GetNextSessionDetail()
+    {
+        return _nextSession?.Name ?? L["Metric_NoSession"];
+    }
+
+    private string GetSessionComposition(TrainingSession session)
+    {
+        var parts = new List<string>();
+
+        if (session.Runs.Count > 0)
+            parts.Add(string.Format(L["SessionRuns"], session.Runs.Count));
+
+        if (session.Workouts.Count > 0)
+            parts.Add(string.Format(L["SessionWorkouts"], session.Workouts.Count));
+
+        return parts.Count == 0 ? L["SessionEmpty"] : string.Join(" / ", parts);
     }
 
 }
