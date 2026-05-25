@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
+using PaceLetics.Web.Configuration;
 using System.Net;
 using System.Net.Mail;
 
@@ -6,31 +8,30 @@ namespace PaceLetics.Web.Services
 {
     public class SmtpEmailSender : IEmailSender
     {
-        private readonly IConfiguration _config;
+        private readonly SmtpOptions _options;
 
-        public SmtpEmailSender(IConfiguration config)
+        public SmtpEmailSender(IOptions<SmtpOptions> options)
         {
-            _config = config;
+            _options = options.Value;
+            _options.Validate();
         }
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var smtpHost = _config["Smtp:Host"];
-            var smtpPort = int.Parse(GetRequiredSetting("Smtp:Port"));
-            var smtpUser = _config["Smtp:User"];
-            var smtpPass = Environment.GetEnvironmentVariable("PaceLeticsSmtpPw");
-            var sender = _config["Smtp:Sender"];
+            var smtpPass = Environment.GetEnvironmentVariable(SmtpOptions.PasswordEnvironmentVariable);
+            if (string.IsNullOrWhiteSpace(smtpPass))
+                smtpPass = _options.Password;
 
-            using var smtp = new SmtpClient(smtpHost ?? throw new InvalidOperationException("Missing SMTP host configuration."))
+            using var smtp = new SmtpClient(_options.Host)
             {
-                Port = smtpPort,
-                Credentials = new NetworkCredential(smtpUser, smtpPass),
+                Port = _options.Port,
+                Credentials = new NetworkCredential(_options.User, smtpPass),
                 EnableSsl = true
             };
 
             var mail = new MailMessage
             {
-                From = new MailAddress(sender ?? throw new InvalidOperationException("Missing SMTP sender configuration.")),
+                From = new MailAddress(_options.Sender),
                 Subject = subject,
                 Body = htmlMessage,
                 IsBodyHtml = true
@@ -38,11 +39,6 @@ namespace PaceLetics.Web.Services
 
             mail.To.Add(email);
             await smtp.SendMailAsync(mail);
-        }
-
-        private string GetRequiredSetting(string key)
-        {
-            return _config[key] ?? throw new InvalidOperationException($"Missing configuration value '{key}'.");
         }
     }
 }

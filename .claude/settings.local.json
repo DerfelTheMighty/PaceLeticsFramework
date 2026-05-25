@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/Christoph/source/repos/PaceLeticsFramework -type f \\\\\\( -name \"*.razor\" -o -name \"*.cshtml\" \\\\\\) -exec grep -l \"About\" {} \\\\;)",
+      "Bash(dotnet build *)",
+      "Bash(dotnet run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(taskkill //F //PID 42060)"
+    ]
+  }
+}
