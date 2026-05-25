@@ -62,4 +62,5 @@ jobs:
           app-name: 'paceletics'
           slot-name: 'Production'
           package: .
+          startup-command: 'dotnet PaceLetics.Web.dll'
           
