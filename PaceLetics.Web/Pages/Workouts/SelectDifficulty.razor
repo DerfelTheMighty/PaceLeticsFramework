@@ -1,11 +1,8 @@
 @page "/Workouts/SelectDifficulty"
-@using PaceLetics.WorkoutModule.CodeBase.Interfaces
 @using MudBlazor
-@using PaceLetics.WorkoutModule.CodeBase.Models
 @using PaceLetics.WorkoutModule.CodeBase.Enums
 @using System.ComponentModel.DataAnnotations
-@inject IWorkoutCatalog WorkoutCatalog
-@inject IWorkoutService WorkoutService
+@inject SelectDifficultyViewModel ViewModel
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<SelectDifficulty> L
 
@@ -21,7 +18,7 @@
 
             <MudDivider />
 
-            @if (_variants is null || !_variants.Any())
+            @if (!ViewModel.Variants.Any())
             {
                 <MudText>@L["NoVariants"]</MudText>
             }
@@ -30,23 +27,23 @@
                 <MudGrid>
                     <MudItem xs="12" md="4">
                         <MudPaper Class="pa-2" Style="display:flex;align-items:center;justify-content:center;">
-                            <MudImage Src="@_previewImage" Alt="@Name" Style="width:100%;height:180px;object-fit:cover;border-radius:4px;" />
+                            <MudImage Src="@ViewModel.PreviewImage" Alt="@Name" Style="width:100%;height:180px;object-fit:cover;border-radius:4px;" />
                         </MudPaper>
                     </MudItem>
                     <MudItem xs="12" md="8">
                         <MudText Typo="Typo.h6">@Name</MudText>
-                        <MudText Typo="Typo.body2" Style="opacity:.8">@_previewDescription</MudText>
+                        <MudText Typo="Typo.body2" Style="opacity:.8">@ViewModel.PreviewDescription</MudText>
 
                         <MudStack Row="true" Spacing="2" Class="mt-4">
-                            <MudNumericField Label="@L["SetsPerExercise"]" @bind-Value="_sets" Min="1" Max="20" Style="width:150px" />
-                            <MudNumericField Label="@L["Rounds"]" @bind-Value="_rounds" Min="1" Max="20" Style="width:150px" />
+                            <MudNumericField Label="@L["SetsPerExercise"]" @bind-Value="ViewModel.Sets" Min="1" Max="20" Style="width:150px" />
+                            <MudNumericField Label="@L["Rounds"]" @bind-Value="ViewModel.Rounds" Min="1" Max="20" Style="width:150px" />
                         </MudStack>
 
                         <MudText Typo="Typo.subtitle1" Class="mt-4">@L["AvailableLevels"]</MudText>
                         <MudStack Spacing="2" Class="mt-2">
-                            @foreach(var v in _variants)
+                            @foreach(var v in ViewModel.Variants)
                             {
-                                var level = WorkoutCatalog.GetDefinition(v).Level;
+                                var level = ViewModel.GetLevel(v);
                                 <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(level)" OnClick="() => OpenVariant(v)">
                                     @GetDisplayName(level)
                                 </MudButton>
@@ -64,40 +61,20 @@
     [SupplyParameterFromQuery(Name = "name")]
     public string Name { get; set; } = string.Empty;
 
-    private List<string> _variants = new();
-    private string _previewImage = "images/exercises/no_image.png";
-    private string _previewDescription = string.Empty;
-    private int _sets = 1;
-    private int _rounds = 1;
-
     protected override void OnInitialized()
     {
-        _variants = WorkoutCatalog.GetWorkoutIdsByName(Name);
-        if (_variants.Any())
-        {
-            var p = WorkoutCatalog.GetWorkoutPreview(_variants.First());
-            _previewDescription = p?.Description ?? string.Empty;
-            var img = p?.Exercises?.FirstOrDefault()?.Imagefile;
-            if (!string.IsNullOrEmpty(img)) _previewImage = "images/exercises/" + img;
-        }
+        ViewModel.Initialize(Name);
     }
 
     private void OpenVariant(string id)
     {
-        WorkoutService.SetActiveWorkout(id, _sets, _rounds);
+        ViewModel.StartWorkout(id);
         NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
     }
 
     private void Back()
     {
         NavigationManager.NavigateTo("/Workouts/workoutarea");
-    }
-
-    private string GetLevelFromId(string id)
-    {
-        if (string.IsNullOrEmpty(id)) return string.Empty;
-        var parts = id.Split(' ');
-        return parts.Last();
     }
 
     private Color GetColor(Level level)

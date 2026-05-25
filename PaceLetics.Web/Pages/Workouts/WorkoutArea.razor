@@ -1,15 +1,12 @@
 ﻿@page "/Workouts/workoutarea"
-@using PaceLetics.WorkoutModule.CodeBase.Interfaces;
-@using PaceLetics.WorkoutModule.CodeBase.Models;
-
-@inject IWorkoutCatalog WorkoutCatalog;
+@inject WorkoutAreaViewModel ViewModel
 @inject IStringLocalizer<WorkoutArea> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
-    @if (_isLoading)
+    @if (ViewModel.IsLoading)
     {
         <LoadingScreen Label="@L["Loading"]" />
     }
@@ -26,7 +23,7 @@
                 @L["IntroText"]
             </MudText>
 
-            @if (_workoutPrevs is null || !_workoutPrevs.Any())
+            @if (!ViewModel.WorkoutPreviews.Any())
             {
                 <MudText Typo="Typo.body2" Style="opacity:.7;">
                     @L["NoWorkouts"]
@@ -34,7 +31,7 @@
             }
             else
             {
-                @foreach (var item in _workoutPrevs)
+                @foreach (var item in ViewModel.WorkoutPreviews)
                 {
                     <PaceLetics.WorkoutModule.Components.WorkoutGroupPreviewElement Preview="@item" />
                 }
@@ -49,28 +46,9 @@
 
 
 @code {
-    bool _isLoading = true;
-    List<string> _workoutBases = new();
-    List<WorkoutPreview> _workoutPrevs = new();
-
-
     protected override void OnInitialized()
     {
-        _workoutPrevs = new List<WorkoutPreview>();
-        _workoutBases = WorkoutCatalog.GetBaseWorkoutNames();
-        foreach (var baseName in _workoutBases)
-        {
-            // use the first variant to render preview information for the group
-            var ids = WorkoutCatalog.GetWorkoutIdsByName(baseName);
-            if (ids != null && ids.Any())
-            {
-                var preview = WorkoutCatalog.GetWorkoutPreview(ids.First());
-                if (preview != null)
-                    _workoutPrevs.Add(preview);
-            }
-        }
-
-        _isLoading = false;
+        ViewModel.Initialize();
     }
 
 

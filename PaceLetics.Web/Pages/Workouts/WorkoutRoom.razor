@@ -1,36 +1,33 @@
 ﻿@page "/Workouts/workoutroom"
 @using PaceLetics.WorkoutModule.CodeBase.Enums
-@using PaceLetics.WorkoutModule.CodeBase.Interfaces
 @using PaceLetics.WorkoutModule.Components
 
-@inject IWorkoutService WorkoutService
+@inject WorkoutRoomViewModel ViewModel
 @inject IDialogService dialogService
 @inject NavigationManager navManager
 @inject IStringLocalizer<WorkoutRoom> L
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
-    @if (_workout is null)
+    @if (ViewModel.Workout is null)
     {
         <MudText>@L["NoWorkout"]</MudText>
     }
     else
     {
         <MudStack Spacing="3">
-            <WorkoutView Workout="@_workout" />
+            <WorkoutView Workout="@ViewModel.Workout" />
         </MudStack>
     }
 
 </MudContainer>
 
 @code {
-    private IWorkout? _workout;
-
     protected override void OnInitialized()
     {
-        _workout = WorkoutService.GetActiveWorkout();
-        if (_workout is not null)
-            _workout.WorkoutFinishedEvent += OnWorkoutFinished;
+        ViewModel.Initialize();
+        if (ViewModel.Workout is not null)
+            ViewModel.Workout.WorkoutFinishedEvent += OnWorkoutFinished;
         navManager.RegisterLocationChangingHandler(LocationChangingHandler);
         base.OnInitialized();
     }
@@ -48,8 +45,7 @@
 
     private ValueTask LocationChangingHandler(LocationChangingContext arg)
     {
-        _workout?.Stop();
-        _workout?.Reset();
+        ViewModel.StopAndReset();
         return ValueTask.CompletedTask;
     }
 }

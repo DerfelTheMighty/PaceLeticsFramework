@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Localization;
 using PaceLetics.Web.Configuration;
 using PaceLetics.WorkoutModule.CodeBase.Models;
 using PaceLetics.WorkoutModule.CodeBase.Repositories;
+using PaceLetics.Web.ViewModels.Workouts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,9 @@ builder.Services.AddSingleton<IWorkoutCatalog>(x => new WorkoutCatalog(
     x.GetRequiredService<WorkoutCatalogDocument>().Workouts));
 builder.Services.AddScoped<IWorkoutFactory, WorkoutFactory>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+builder.Services.AddScoped<WorkoutAreaViewModel>();
+builder.Services.AddScoped<SelectDifficultyViewModel>();
+builder.Services.AddScoped<WorkoutRoomViewModel>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddSingleton(builder.Configuration.GetAthleteDataOptions());
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
