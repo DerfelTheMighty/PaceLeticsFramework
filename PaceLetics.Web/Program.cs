@@ -53,11 +53,12 @@ var workoutCatalogPath = Path.Combine(webRootPath, "data", "workouts", "catalog.
 builder.Services.AddSingleton<IWorkoutCatalogRepository>(new JsonWorkoutCatalogRepository(workoutCatalogPath));
 builder.Services.AddSingleton<WorkoutCatalogDocument>(x => x.GetRequiredService<IWorkoutCatalogRepository>().Load());
 builder.Services.AddSingleton<IExerciseProvider>(x => new ExerciseProvider(x.GetRequiredService<WorkoutCatalogDocument>().Exercises));
-builder.Services.AddScoped<IWorkoutFactory, WorkoutFactory>();
-builder.Services.AddScoped<IWorkoutProvider>(x => new WorkoutProvider(
+builder.Services.AddSingleton<IWorkoutCatalog>(x => new WorkoutCatalog(
     x.GetRequiredService<IExerciseProvider>(),
-    x.GetRequiredService<IWorkoutFactory>(),
     x.GetRequiredService<WorkoutCatalogDocument>().Workouts));
+builder.Services.AddScoped<IWorkoutFactory, WorkoutFactory>();
+builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+builder.Services.AddScoped<IWorkoutProvider, WorkoutProvider>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddSingleton(builder.Configuration.GetAthleteDataOptions());
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
