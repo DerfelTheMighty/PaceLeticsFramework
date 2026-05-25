@@ -52,9 +52,10 @@ var webRootPath = !string.IsNullOrWhiteSpace(builder.Environment.WebRootPath)
 var workoutCatalogPath = Path.Combine(webRootPath, "data", "workouts", "catalog.de.json");
 builder.Services.AddSingleton<IWorkoutCatalogRepository>(new JsonWorkoutCatalogRepository(workoutCatalogPath));
 builder.Services.AddSingleton<WorkoutCatalogDocument>(x => x.GetRequiredService<IWorkoutCatalogRepository>().Load());
-builder.Services.AddSingleton<IExerciseProvider>(x => new ExerciseProvider(x.GetRequiredService<WorkoutCatalogDocument>().Exercises));
+builder.Services.AddSingleton<IExerciseCatalog>(x => new ExerciseCatalog(x.GetRequiredService<WorkoutCatalogDocument>().Exercises));
+builder.Services.AddSingleton<IExerciseFactory, ExerciseFactory>();
 builder.Services.AddSingleton<IWorkoutCatalog>(x => new WorkoutCatalog(
-    x.GetRequiredService<IExerciseProvider>(),
+    x.GetRequiredService<IExerciseCatalog>(),
     x.GetRequiredService<WorkoutCatalogDocument>().Workouts));
 builder.Services.AddScoped<IWorkoutFactory, WorkoutFactory>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();

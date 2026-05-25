@@ -136,25 +136,9 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
         /// 
         /// </summary>
         /// <param name="definition"></param>
-        /// <param name="provider"></param>
-        public Workout(WorkoutDefinition definition, IExerciseProvider provider)
-            : this(definition, provider, new WorkoutBuildOptions())
+        /// <param name="elements"></param>
+        public Workout(WorkoutDefinition definition, IReadOnlyList<IWorkoutElement> elements)
         {
-        }
-
-        public Workout(WorkoutDefinition definition, IExerciseProvider provider, int sets, int rounds)
-            : this(definition, provider, new WorkoutBuildOptions(sets, rounds))
-        {
-        }
-
-        public Workout(WorkoutDefinition definition, IExerciseProvider provider, WorkoutBuildOptions options)
-        {
-            if (options.Sets < 1)
-                throw new ArgumentOutOfRangeException(nameof(options), "Sets must be greater than zero.");
-
-            if (options.Rounds < 1)
-                throw new ArgumentOutOfRangeException(nameof(options), "Rounds must be greater than zero.");
-
             Name = definition.Name ?? string.Empty;
             Id = definition.Id ?? string.Empty;
             Description = definition.Description ?? string.Empty;
@@ -164,37 +148,9 @@ namespace PaceLetics.WorkoutModule.CodeBase.Logic
             State = WorkoutState.Stop;
             _currentElement = 0;
 
-            _workoutElements = BuildElements(definition, provider, options);
+            _workoutElements = elements.ToList();
             Exercises = _workoutElements.Where(x => x.Type == WorkoutElements.Exercise).Cast<IExerciseInfo>().ToList();
             Imagefile = Exercises.FirstOrDefault()?.ImageFilename ?? string.Empty;
-        }
-
-        private static List<IWorkoutElement> BuildElements(
-            WorkoutDefinition definition,
-            IExerciseProvider provider,
-            WorkoutBuildOptions options)
-        {
-            var elements = new List<IWorkoutElement>
-            {
-                new Rest(definition.PreparationTime, WorkoutElements.Preparation)
-            };
-
-            for (int round = 0; round < options.Rounds; round++)
-            {
-                foreach (var ex in definition.Exercises)
-                {
-                    for (int set = 0; set < options.Sets; set++)
-                    {
-                        elements.Add(provider.GetExercise(ex, definition.Level));
-                        elements.Add(new Rest(definition.RestTime, WorkoutElements.Rest));
-                    }
-                }
-            }
-
-            if (elements.Count > 1)
-                elements.RemoveAt(elements.Count - 1);
-
-            return elements;
         }
 
         #region public methods

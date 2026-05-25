@@ -8,17 +8,17 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
         private readonly List<WorkoutDefinition> _workouts;
         private readonly List<WorkoutPreview> _previews;
 
-        public WorkoutCatalog(IExerciseProvider exerciseProvider)
-            : this(exerciseProvider, new DefinitionFactory().CreateWorkoutExamples())
+        public WorkoutCatalog(IExerciseCatalog exerciseCatalog)
+            : this(exerciseCatalog, new DefinitionFactory().CreateWorkoutExamples())
         {
         }
 
         public WorkoutCatalog(
-            IExerciseProvider exerciseProvider,
+            IExerciseCatalog exerciseCatalog,
             IEnumerable<WorkoutDefinition> workoutDefinitions)
         {
             _workouts = workoutDefinitions.ToList();
-            _previews = BuildPreviews(exerciseProvider);
+            _previews = BuildPreviews(exerciseCatalog);
         }
 
         public List<string> GetBaseWorkoutNames()
@@ -60,7 +60,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
             return _previews.First(p => p.Name == def.Name);
         }
 
-        private List<WorkoutPreview> BuildPreviews(IExerciseProvider exerciseProvider)
+        private List<WorkoutPreview> BuildPreviews(IExerciseCatalog exerciseCatalog)
         {
             var previews = new List<WorkoutPreview>();
             var baseNames = _workouts
@@ -73,7 +73,7 @@ namespace PaceLetics.WorkoutModule.CodeBase.Services
                 var variants = _workouts.Where(w => w.Name == name).ToList();
                 var representative = variants.First();
                 var levels = variants.Select(v => v.Level).Distinct();
-                previews.Add(new WorkoutPreview(representative, exerciseProvider, levels));
+                previews.Add(new WorkoutPreview(representative, exerciseCatalog, levels));
             }
 
             return previews;

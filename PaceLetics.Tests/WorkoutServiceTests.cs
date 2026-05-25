@@ -23,11 +23,11 @@ public class WorkoutServiceTests
     }
 
     [Fact]
-    public void ExerciseProvider_ThrowsForUnknownExercise()
+    public void ExerciseCatalog_ThrowsForUnknownExercise()
     {
-        var provider = new ExerciseProvider();
+        var catalog = new ExerciseCatalog();
 
-        Assert.Throws<KeyNotFoundException>(() => provider.GetExercise("missing-exercise", Level.Easy));
+        Assert.Throws<KeyNotFoundException>(() => catalog.GetDefinition("missing-exercise", Level.Easy));
     }
 
     [Fact]
@@ -56,9 +56,9 @@ public class WorkoutServiceTests
 
     private static IWorkoutService CreateService()
     {
-        var exerciseProvider = new ExerciseProvider();
+        var exerciseCatalog = new ExerciseCatalog();
         return new WorkoutService(
-            new WorkoutCatalog(exerciseProvider),
-            new WorkoutFactory(exerciseProvider));
+            new WorkoutCatalog(exerciseCatalog),
+            new WorkoutFactory(exerciseCatalog, new ExerciseFactory()));
     }
 }

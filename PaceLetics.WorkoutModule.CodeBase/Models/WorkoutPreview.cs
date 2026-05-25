@@ -29,14 +29,14 @@ namespace PaceLetics.WorkoutModule.CodeBase.Models
 		public IReadOnlyCollection<Level> AvailableLevels => _availableLevels.AsReadOnly();
 
 
-		public WorkoutPreview(WorkoutDefinition def, IExerciseProvider provider, IEnumerable<Level>? availableLevels = null) 
+		public WorkoutPreview(WorkoutDefinition def, IExerciseCatalog exerciseCatalog, IEnumerable<Level>? availableLevels = null) 
 		{
 			Name = def.Name ?? string.Empty;
 			Id = def.Id ?? string.Empty;
 			Description = def.Description ?? string.Empty;
 			Level = def.Level;
 			foreach (var id in def.Exercises ?? Enumerable.Empty<string>())
-				_exercises.Add(provider.GetExercisePreview(id, Level));
+				_exercises.Add(exerciseCatalog.GetExercisePreview(id, Level));
 			Count = _exercises.Count;
 
 			_availableLevels = (availableLevels != null)
