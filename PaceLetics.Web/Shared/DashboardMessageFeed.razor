@@ -3,7 +3,8 @@
 
 <MudStack Spacing="2">
     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-        <MudText Typo="Typo.h6">@L["FeedTitle"]</MudText>
+        <MudText Typo="Typo.body2">@L["FeedTitle"]</MudText>
+
         <MudChip T="string"
                  Size="Size.Small"
                  Variant="Variant.Filled"
@@ -14,54 +15,22 @@
 
     @if (Messages.Count == 0)
     {
-        <MudPaper Elevation="0" Class="pl-message-tile pl-message-tile-success">
-            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Large" />
-                <MudText Typo="Typo.body2">@L["NoMessages"]</MudText>
-            </MudStack>
-        </MudPaper>
+        <DashboardNewsFeedTile
+            Title="@L["NoMessages"]"
+            Icon="@Icons.Material.Filled.CheckCircle"
+            Severity="Severity.Success" />
     }
     else
     {
-        <MudStack Spacing="2">
+        <MudStack Spacing="1">
             @foreach (var message in Messages)
             {
-                <MudPaper Elevation="0" Class="pl-message-row">
-                    <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Class="pl-message-row-content">
-                        <div class="@GetIconClass(message)">
-                            <MudIcon Icon="@message.Icon" Size="Size.Medium" />
-                        </div>
-
-                        <MudStack Spacing="0" Class="pl-message-copy">
-                            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="pl-message-meta">
-                                <MudText Typo="Typo.subtitle2">@L[message.TitleKey]</MudText>
-                                <MudText Typo="Typo.caption" Class="pl-message-source">@message.SourceModule</MudText>
-                            </MudStack>
-                            <MudText Typo="Typo.body2" Class="pl-message-body">
-                                @L[message.BodyKey, message.BodyArguments.ToArray()]
-                            </MudText>
-                        </MudStack>
-
-                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="pl-message-actions">
-                            <MudChip T="string"
-                                     Size="Size.Small"
-                                     Variant="Variant.Filled"
-                                     Color="@ToMudColor(message.Severity)">
-                                @L[$"Severity_{message.Severity}"]
-                            </MudChip>
-
-                            @if (!string.IsNullOrWhiteSpace(message.ActionHref) &&
-                                 !string.IsNullOrWhiteSpace(message.ActionLabelKey))
-                            {
-                                <MudIconButton Href="@message.ActionHref"
-                                               Icon="@Icons.Material.Filled.ArrowForward"
-                                               Color="@ToMudColor(message.Severity)"
-                                               Size="Size.Small"
-                                               Class="pl-message-action" />
-                            }
-                        </MudStack>
-                    </MudStack>
-                </MudPaper>
+                <DashboardNewsFeedTile
+                    Title="@L[message.TitleKey]"
+                    Detail="@L[message.BodyKey, message.BodyArguments.ToArray()]"
+                    Icon="@message.Icon"
+                    Severity="@message.Severity"
+                    Href="@message.ActionHref" />
             }
         </MudStack>
     }
@@ -70,20 +39,4 @@
 @code {
     [Parameter]
     public IReadOnlyList<AthleteMessage> Messages { get; set; } = Array.Empty<AthleteMessage>();
-
-    private static Color ToMudColor(AthleteMessageSeverity severity)
-    {
-        return severity switch
-        {
-            AthleteMessageSeverity.Success => Color.Success,
-            AthleteMessageSeverity.Warning => Color.Warning,
-            AthleteMessageSeverity.Error => Color.Error,
-            _ => Color.Info
-        };
-    }
-
-    private static string GetIconClass(AthleteMessage message)
-    {
-        return $"pl-message-icon pl-message-icon-{message.Severity.ToString().ToLowerInvariant()}";
-    }
 }

@@ -40,7 +40,7 @@ public sealed class UpcomingTrainingDashboardMessageProvider : IAthleteMessagePr
         queue.Enqueue(new AthleteMessage(
             $"upcoming-training-{upcoming.Id}",
             "TrainingPlan",
-            AthleteMessageSeverity.Info,
+            Severity.Info,
             "UpcomingTraining_Title",
             bodyKey,
             Icons.Material.Filled.EventAvailable,

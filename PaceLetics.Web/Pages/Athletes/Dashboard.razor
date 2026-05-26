@@ -69,10 +69,15 @@
             </MudGrid>
 
             <MudGrid Spacing="3">
-                <MudItem xs="12" md="8">
+                <MudItem xs="12">
                     <MudPaper Elevation="2" Class="pl-dashboard-panel pl-dashboard-panel-large">
                         <MudStack Spacing="3">
-                            <MudText Typo="Typo.h6">@L["TrainingOverview_Title"]</MudText>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Class="pl-panel-heading">
+                                <span class="pl-panel-heading-icon pl-panel-heading-icon-blue">
+                                    <MudIcon Icon="@Icons.Material.Filled.Route" Size="Size.Small" />
+                                </span>
+                                <MudText Typo="Typo.h6">@L["TrainingOverview_Title"]</MudText>
+                            </MudStack>
 
                             @if (_nextSession is null)
                             {
@@ -112,8 +117,8 @@
                     </MudPaper>
                 </MudItem>
 
-                <MudItem xs="12" md="4">
-                    <MudPaper Elevation="2" Class="pl-dashboard-panel pl-dashboard-panel-large">
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pl-dashboard-panel pl-dashboard-feed-panel">
                         <DashboardMessageFeed Messages="_messages" />
                     </MudPaper>
                 </MudItem>

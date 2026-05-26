@@ -1,0 +1,80 @@
+﻿@if (!string.IsNullOrWhiteSpace(Href))
+{
+    <MudLink Href="@Href" Underline="Underline.None">
+        @TileContent
+    </MudLink>
+}
+else
+{
+    @TileContent
+}
+
+@code {
+    private RenderFragment TileContent => @<MudPaper Elevation="2"
+                                                     Class="@TileClass">
+        <MudStack Row="true"
+                  AlignItems="AlignItems.Center"
+                  Spacing="2"
+                  Class="pa-3">
+
+            <MudAvatar Color="@Color"
+                       Variant="Variant.Filled"
+                       Size="Size.Medium">
+                <MudIcon Icon="@Icon" Size="Size.Small" />
+            </MudAvatar>
+
+            <MudStack Spacing="0" Style="flex:1; min-width:0;">
+                <MudText Typo="Typo.body2">
+                    @Title
+                </MudText>
+
+                @if (!string.IsNullOrWhiteSpace(Detail))
+                {
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                        @Detail
+                    </MudText>
+                }
+            </MudStack>
+
+            @if (!string.IsNullOrWhiteSpace(Href))
+            {
+                <MudIcon Icon="@Icons.Material.Filled.ArrowForward"
+                         Size="Size.Small"
+                         Color="Color.Secondary" />
+            }
+        </MudStack>
+    </MudPaper>;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Detail { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; } = Icons.Material.Filled.Info;
+
+    [Parameter]
+    public Severity Severity { get; set; } = Severity.Info;
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    private Color Color => Severity switch
+    {
+        Severity.Success => Color.Success,
+        Severity.Warning => Color.Warning,
+        Severity.Error => Color.Error,
+        Severity.Info => Color.Info,
+        _ => Color.Default
+    };
+
+    private string TileClass => Severity switch
+    {
+        Severity.Success => "mud-border-success",
+        Severity.Warning => "mud-border-warning",
+        Severity.Error => "mud-border-error",
+        Severity.Info => "mud-border-info",
+        _ => string.Empty
+    };
+}

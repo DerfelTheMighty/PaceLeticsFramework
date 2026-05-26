@@ -1,9 +1,10 @@
+using MudBlazor;
 namespace PaceLetics.CoreModule.Infrastructure.Models;
 
 public sealed record AthleteMessage(
     string Id,
     string SourceModule,
-    AthleteMessageSeverity Severity,
+    Severity Severity,
     string TitleKey,
     string BodyKey,
     string Icon,
@@ -12,10 +13,3 @@ public sealed record AthleteMessage(
     int Priority,
     IReadOnlyList<object> BodyArguments);
 
-public enum AthleteMessageSeverity
-{
-    Info,
-    Success,
-    Warning,
-    Error
-}

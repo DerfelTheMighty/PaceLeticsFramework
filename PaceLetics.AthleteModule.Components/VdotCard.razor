@@ -6,15 +6,16 @@
 <MudCard Class="d-flex flex-column align-center pa-4" Style="text-align:center;">
 
     <div class="d-flex justify-center">
-        <MudChart ChartOptions="@(new()
+        <MudChart T="double"
+                  ChartOptions="@(new DonutChartOptions
                   {
-                      ChartPalette = new[] { "#0bba83ff", "0bba83ff" },
+                      ChartPalette = new[] { "#0bba83ff", "#0bba83ff" },
                   })"
                   ChartType="ChartType.Donut"
                   Width="260px"
                   Height="260px"
                   @bind-SelectedIndex="_index"
-                  InputData="@Data">
+                  ChartSeries="@Data.AsChartDataSet()">
 
             <CustomGraphics>
                 <text x="50%"

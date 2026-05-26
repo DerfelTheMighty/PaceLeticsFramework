@@ -5,6 +5,7 @@ using PaceLetics.RunningModule.CodeBase.Models;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.Web.Services;
 using PaceLetics.Web.Services.DashboardMessages;
+using MudBlazor;
 
 namespace PaceLetics.Tests;
 
@@ -22,7 +23,7 @@ public sealed class DashboardMessageFeedServiceTests
 
         var message = Assert.Single(messages);
         Assert.Equal("reference-run-missing", message.Id);
-        Assert.Equal(AthleteMessageSeverity.Warning, message.Severity);
+        Assert.Equal(Severity.Warning, message.Severity);
     }
 
     [Fact]
@@ -35,7 +36,7 @@ public sealed class DashboardMessageFeedServiceTests
 
         var message = Assert.Single(messages);
         Assert.Equal("reference-run-stale", message.Id);
-        Assert.Equal(AthleteMessageSeverity.Info, message.Severity);
+        Assert.Equal(Severity.Info, message.Severity);
     }
 
     [Fact]

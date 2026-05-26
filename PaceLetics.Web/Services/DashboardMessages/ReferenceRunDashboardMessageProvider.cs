@@ -22,7 +22,7 @@ public sealed class ReferenceRunDashboardMessageProvider : IAthleteMessageProvid
             queue.Enqueue(new AthleteMessage(
                 "reference-run-missing",
                 "Athlete",
-                AthleteMessageSeverity.Warning,
+                Severity.Warning,
                 "ReferenceRunMissing_Title",
                 "ReferenceRunMissing_Body",
                 Icons.Material.Filled.DirectionsRun,
@@ -39,7 +39,7 @@ public sealed class ReferenceRunDashboardMessageProvider : IAthleteMessageProvid
             queue.Enqueue(new AthleteMessage(
                 "reference-run-stale",
                 "Athlete",
-                AthleteMessageSeverity.Info,
+                Severity.Info,
                 "ReferenceRunStale_Title",
                 "ReferenceRunStale_Body",
                 Icons.Material.Filled.Update,
