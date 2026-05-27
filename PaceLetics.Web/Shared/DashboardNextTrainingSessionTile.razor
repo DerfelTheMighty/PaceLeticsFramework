@@ -1,0 +1,65 @@
+﻿@using PaceLetics.TrainingPlanModule.CodeBase.Models
+<MudPaper Elevation="0"
+          Class="pa-4"
+          Style="border-radius:20px; border:1px solid var(--mud-palette-lines-default); background:linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background));">
+
+    <MudStack Spacing="3">
+
+        <MudStack Row="true"
+                  AlignItems="AlignItems.Center"
+                  Justify="Justify.SpaceBetween">
+
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.h6">
+                    @Session.Name
+                </MudText>
+
+                <MudText Typo="Typo.body2"
+                         Class="pl-dashboard-muted">
+                    @Session.Date.ToString("dd.MM.yyyy")
+                    @(" / ")
+                    @GetSessionComposition(Session)
+                </MudText>
+            </MudStack>
+
+            <MudButton Href="/Athletes/trainingplanpage"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.OpenInNew">
+                Open
+            </MudButton>
+        </MudStack>
+
+        <MudDivider />
+
+        <MudStack Row="true"
+                  AlignItems="AlignItems.Center"
+                  Spacing="2">
+
+            <MudIcon Icon="@Icons.Material.Filled.Timeline"
+                     Color="Color.Primary" />
+
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.subtitle2">
+                    Vorschau
+                </MudText>
+
+                <MudText Typo="Typo.body2"
+                         Class="pl-dashboard-muted">
+                    Trainingsdetails und Struktur der Einheit.
+                </MudText>
+            </MudStack>
+        </MudStack>
+
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public TrainingSession Session { get; set; } = default!;
+
+    private static string GetSessionComposition(TrainingSession session)
+    {
+        return $"{session.PrimaryRun.TotalDistance} Abschnitte";
+    }
+}

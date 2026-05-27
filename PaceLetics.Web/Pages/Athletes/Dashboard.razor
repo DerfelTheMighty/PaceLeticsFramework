@@ -19,7 +19,7 @@
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 
-<MudContainer Class="pl-dashboard-shell pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
     @if (_isLoading)
     {
@@ -27,18 +27,11 @@
     }
     else
     {
-        <MudStack Spacing="4">
-            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pl-dashboard-breadcrumb">
-                <MudIcon Icon="@Icons.Material.Filled.Menu" Size="Size.Medium" />
-                <MudText Typo="Typo.body1">@L["Breadcrumb_Personal"]</MudText>
-                <MudText Typo="Typo.body1" Class="pl-dashboard-breadcrumb-divider">/</MudText>
-                <MudText Typo="Typo.body1">@L["Title"]</MudText>
-            </MudStack>
+        <PageHeader Title="@L["Title"]" Subtitle="@L["WelcomeText", _name]" />
 
-            <MudStack Spacing="1">
-                <MudText Typo="Typo.h4" Class="pl-dashboard-title">@L["Title"]</MudText>
-                <MudText Typo="Typo.body1" Class="pl-dashboard-subtitle">@L["WelcomeText", _name]</MudText>
-            </MudStack>
+        <MudDivider Class="my-4" />
+
+        <MudStack Spacing="4">
 
             <MudGrid Spacing="3">
                 <MudItem xs="12" sm="6" lg="4">
@@ -70,57 +63,11 @@
 
             <MudGrid Spacing="3">
                 <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pl-dashboard-panel pl-dashboard-panel-large">
-                        <MudStack Spacing="3">
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Class="pl-panel-heading">
-                                <span class="pl-panel-heading-icon pl-panel-heading-icon-blue">
-                                    <MudIcon Icon="@Icons.Material.Filled.Route" Size="Size.Small" />
-                                </span>
-                                <MudText Typo="Typo.h6">@L["TrainingOverview_Title"]</MudText>
-                            </MudStack>
-
-                            @if (_nextSession is null)
-                            {
-                                <MudText Typo="Typo.body2" Class="pl-dashboard-muted">@L["TrainingOverview_Empty"]</MudText>
-                            }
-                            else
-                            {
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="pl-next-session-header">
-                                    <MudStack Spacing="1">
-                                        <MudText Typo="Typo.h5">@_nextSession.Name</MudText>
-                                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
-                                            @_nextSession.Date.ToString("dd.MM.yyyy")
-                                            @(" / ")
-                                            @GetSessionComposition(_nextSession)
-                                        </MudText>
-                                    </MudStack>
-
-                                    <MudButton Href="/Athletes/trainingplanpage"
-                                               Variant="Variant.Filled"
-                                               Color="Color.Primary"
-                                               StartIcon="@Icons.Material.Filled.OpenInNew">
-                                        @L["OpenTrainingPlan"]
-                                    </MudButton>
-                                </MudStack>
-
-                                <div class="pl-training-placeholder">
-                                    <MudIcon Icon="@Icons.Material.Filled.Timeline" Size="Size.Large" />
-                                    <MudStack Spacing="0">
-                                        <MudText Typo="Typo.subtitle1">@L["TrainingOverview_PreviewTitle"]</MudText>
-                                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
-                                            @L["TrainingOverview_PreviewText"]
-                                        </MudText>
-                                    </MudStack>
-                                </div>
-                            }
-                        </MudStack>
-                    </MudPaper>
+					<DashboardNextTrainingSessionTile Session="_nextSession" />
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pl-dashboard-panel pl-dashboard-feed-panel">
                         <DashboardMessageFeed Messages="_messages" />
-                    </MudPaper>
                 </MudItem>
             </MudGrid>
         </MudStack>
