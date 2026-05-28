@@ -114,7 +114,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 1,
           "setRecovery": 0
@@ -123,15 +123,38 @@
       "workouts": []
     },
     {
-      "id": "2026-05-21-400m",
-      "name": "6x 400m",
+      "id": "2026-05-21-200m",
+      "name": "10x 200m",
       "date": "2026-05-21",
       "runs": [
         {
           "sessionType": "interval",
-          "id": "2026-05-21-400m",
-          "name": "6x 400m",
+          "id": "2026-05-21-200m",
+          "name": "10x 200m",
           "date": "2026-05-21",
+          "distances": [
+            200
+          ],
+          "recovery": [],
+          "paceKeys": [
+            "R Pace"
+          ],
+          "sets": 10,
+          "setRecovery": 200
+        }
+      ],
+      "workouts": []
+    },
+    {
+      "id": "2026-05-28-400m",
+      "name": "6x 400m",
+      "date": "2026-05-28",
+      "runs": [
+        {
+          "sessionType": "interval",
+          "id": "2026-05-28-400m",
+          "name": "6x 400m",
+          "date": "2026-05-28",
           "distances": [
             400
           ],
@@ -139,7 +162,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 6,
           "setRecovery": 0
@@ -148,37 +171,14 @@
       "workouts": []
     },
     {
-      "id": "2026-05-28-200m",
-      "name": "12x 200m",
-      "date": "2026-05-28",
-      "runs": [
-        {
-          "sessionType": "interval",
-          "id": "2026-05-28-200m",
-          "name": "12x 200m",
-          "date": "2026-05-28",
-          "distances": [
-            200
-          ],
-          "recovery": [],
-          "paceKeys": [
-            "10k Pace"
-          ],
-          "sets": 12,
-          "setRecovery": 0
-        }
-      ],
-      "workouts": []
-    },
-    {
       "id": "2026-06-04-800m",
-      "name": "5x 800m",
+      "name": "4x 800m",
       "date": "2026-06-04",
       "runs": [
         {
           "sessionType": "interval",
           "id": "2026-06-04-800m",
-          "name": "5x 800m",
+          "name": "4x 800m",
           "date": "2026-06-04",
           "distances": [
             800
@@ -187,9 +187,9 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "I Pace"
           ],
-          "sets": 5,
+          "sets": 4,
           "setRecovery": 0
         }
       ],
@@ -197,30 +197,26 @@
     },
     {
       "id": "2026-06-11-pyramide",
-      "name": "Pyramide 800-1000-1200-1000-800",
+      "name": "Pyramide 800-1000-800",
       "date": "2026-06-11",
       "runs": [
         {
           "sessionType": "interval",
           "id": "2026-06-11-pyramide",
-          "name": "Pyramide 800-1000-1200-1000-800",
+          "name": "Pyramide 800-1000-800",
           "date": "2026-06-11",
           "distances": [
             800,
-            1000,
-            1200,
             1000,
             800
           ],
           "recovery": [
             400,
             400,
-            400,
-            400,
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "I Pace"
           ],
           "sets": 1,
           "setRecovery": 0
@@ -229,14 +225,35 @@
       "workouts": []
     },
     {
+      "id": "2026-06-14-lockerer-dauerlauf-8000",
+      "name": "Lockerer Dauerlauf 8 km",
+      "date": "2026-06-14",
+      "runs": [
+        {
+          "sessionType": "planned",
+          "id": "2026-06-14-lockerer-dauerlauf-8000",
+          "name": "Lockerer Dauerlauf 8 km",
+          "date": "2026-06-14",
+          "sequence": [
+            {
+              "type": "Dauerlauf",
+              "distance": 8000,
+              "paceKey": "E Pace"
+            }
+          ]
+        }
+      ],
+      "workouts": []
+    },
+    {
       "id": "2026-06-18-1000m",
-      "name": "5x 1000m",
+      "name": "4x 1000m",
       "date": "2026-06-18",
       "runs": [
         {
           "sessionType": "interval",
           "id": "2026-06-18-1000m",
-          "name": "5x 1000m",
+          "name": "4x 1000m",
           "date": "2026-06-18",
           "distances": [
             1000
@@ -245,9 +262,9 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "I Pace"
           ],
-          "sets": 5,
+          "sets": 4,
           "setRecovery": 0
         }
       ],
@@ -280,7 +297,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 1,
           "setRecovery": 0
@@ -305,7 +322,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 6,
           "setRecovery": 0
@@ -315,23 +332,23 @@
     },
     {
       "id": "2026-07-09-200m",
-      "name": "12x 200m",
+      "name": "10x 200m",
       "date": "2026-07-09",
       "runs": [
         {
           "sessionType": "interval",
           "id": "2026-07-09-200m",
-          "name": "12x 200m",
+          "name": "10x 200m",
           "date": "2026-07-09",
           "distances": [
             200
           ],
           "recovery": [],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
-          "sets": 12,
-          "setRecovery": 0
+          "sets": 10,
+          "setRecovery": 200
         }
       ],
       "workouts": []

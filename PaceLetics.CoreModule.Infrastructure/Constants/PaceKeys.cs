@@ -7,6 +7,7 @@
         public const string Threshold = "T Pace";
         public const string Intervall = "I Pace";
         public const string Repetition = "R Pace";
+        public const string Recovery = "Recovery Pace";
         public const string Free = "Free Pace";
     }
 }

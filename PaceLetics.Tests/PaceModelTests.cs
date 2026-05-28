@@ -35,6 +35,17 @@ public class PaceModelTests
         Assert.Equal(default, pace);
     }
 
+    [Fact]
+    public void TryGetPace_RecoveryPaceIsThirtySecondsSlowerThanEasyPace()
+    {
+        var model = CreatePaceModel();
+
+        var resolved = model.TryGetPace(PaceKeys.Recovery, out var pace);
+
+        Assert.True(resolved);
+        Assert.Equal(TimeSpan.FromMinutes(6).Add(TimeSpan.FromSeconds(30)), pace);
+    }
+
     internal static PaceModel CreatePaceModel()
     {
         return new PaceModel

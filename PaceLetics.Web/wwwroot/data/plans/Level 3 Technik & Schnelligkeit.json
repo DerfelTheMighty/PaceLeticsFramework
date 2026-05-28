@@ -114,7 +114,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 1,
           "setRecovery": 0
@@ -123,15 +123,38 @@
       "workouts": []
     },
     {
-      "id": "2026-05-21-400m",
-      "name": "6x 400m",
+      "id": "2026-05-21-200m",
+      "name": "12x 200m",
       "date": "2026-05-21",
       "runs": [
         {
           "sessionType": "interval",
-          "id": "2026-05-21-400m",
-          "name": "6x 400m",
+          "id": "2026-05-21-200m",
+          "name": "12x 200m",
           "date": "2026-05-21",
+          "distances": [
+            200
+          ],
+          "recovery": [],
+          "paceKeys": [
+            "R Pace"
+          ],
+          "sets": 12,
+          "setRecovery": 200
+        }
+      ],
+      "workouts": []
+    },
+    {
+      "id": "2026-05-28-400m",
+      "name": "8x 400m",
+      "date": "2026-05-28",
+      "runs": [
+        {
+          "sessionType": "interval",
+          "id": "2026-05-28-400m",
+          "name": "8x 400m",
+          "date": "2026-05-28",
           "distances": [
             400
           ],
@@ -139,32 +162,9 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
-          "sets": 6,
-          "setRecovery": 0
-        }
-      ],
-      "workouts": []
-    },
-    {
-      "id": "2026-05-28-200m",
-      "name": "12x 200m",
-      "date": "2026-05-28",
-      "runs": [
-        {
-          "sessionType": "interval",
-          "id": "2026-05-28-200m",
-          "name": "12x 200m",
-          "date": "2026-05-28",
-          "distances": [
-            200
-          ],
-          "recovery": [],
-          "paceKeys": [
-            "10k Pace"
-          ],
-          "sets": 12,
+          "sets": 8,
           "setRecovery": 0
         }
       ],
@@ -172,13 +172,13 @@
     },
     {
       "id": "2026-06-04-800m",
-      "name": "5x 800m",
+      "name": "6x 800m",
       "date": "2026-06-04",
       "runs": [
         {
           "sessionType": "interval",
           "id": "2026-06-04-800m",
-          "name": "5x 800m",
+          "name": "6x 800m",
           "date": "2026-06-04",
           "distances": [
             800
@@ -187,9 +187,9 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "I Pace"
           ],
-          "sets": 5,
+          "sets": 6,
           "setRecovery": 0
         }
       ],
@@ -220,10 +220,31 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "I Pace"
           ],
           "sets": 1,
           "setRecovery": 0
+        }
+      ],
+      "workouts": []
+    },
+    {
+      "id": "2026-06-14-lockerer-dauerlauf-8000",
+      "name": "Lockerer Dauerlauf 8 km",
+      "date": "2026-06-14",
+      "runs": [
+        {
+          "sessionType": "planned",
+          "id": "2026-06-14-lockerer-dauerlauf-8000",
+          "name": "Lockerer Dauerlauf 8 km",
+          "date": "2026-06-14",
+          "sequence": [
+            {
+              "type": "Dauerlauf",
+              "distance": 8000,
+              "paceKey": "E Pace"
+            }
+          ]
         }
       ],
       "workouts": []
@@ -245,7 +266,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "I Pace"
           ],
           "sets": 5,
           "setRecovery": 0
@@ -280,7 +301,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 1,
           "setRecovery": 0
@@ -305,7 +326,7 @@
             400
           ],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 6,
           "setRecovery": 0
@@ -328,10 +349,10 @@
           ],
           "recovery": [],
           "paceKeys": [
-            "10k Pace"
+            "R Pace"
           ],
           "sets": 12,
-          "setRecovery": 0
+          "setRecovery": 200
         }
       ],
       "workouts": []

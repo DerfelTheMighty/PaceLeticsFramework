@@ -1,3 +1,5 @@
+using PaceKeyConstants = PaceLetics.CoreModule.Infrastructure.Constants.PaceKeys;
+
 namespace PaceLetics.RunningModule.CodeBase.Models
 {
     /// <summary>
@@ -117,11 +119,11 @@ namespace PaceLetics.RunningModule.CodeBase.Models
                     segments.Add(new(SegmentType.Intervall, Distances[i], PaceKeys[i]));
 
                     if (i < Recovery.Count)
-                        segments.Add(new(SegmentType.Recovery, Recovery[i], "E Pace"));
+                        segments.Add(new(SegmentType.Recovery, Recovery[i], PaceKeyConstants.Recovery));
                 }
 
                 if (s < Sets - 1 && SetRecovery > 0)
-                    segments.Add(new(SegmentType.SetRecovery, SetRecovery, "E Pace"));
+                    segments.Add(new(SegmentType.SetRecovery, SetRecovery, PaceKeyConstants.Recovery));
             }
 
             if (CooldownDistance is int cd && cd > 0)

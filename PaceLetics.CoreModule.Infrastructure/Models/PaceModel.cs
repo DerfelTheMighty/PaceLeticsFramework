@@ -78,6 +78,7 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 				PaceKeys.Threshold => Threshold,
 				PaceKeys.Intervall => Intervall,
 				PaceKeys.Repetition => Repetition,
+				PaceKeys.Recovery => Easy.Add(TimeSpan.FromSeconds(30)),
 				_ => default
 			};
 
@@ -85,7 +86,8 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 				or PaceKeys.Marathon
 				or PaceKeys.Threshold
 				or PaceKeys.Intervall
-				or PaceKeys.Repetition;
+				or PaceKeys.Repetition
+				or PaceKeys.Recovery;
 		}
 
 		/// <summary>
