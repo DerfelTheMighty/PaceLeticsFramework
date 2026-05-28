@@ -1,4 +1,4 @@
-using PaceLetics.WorkoutModule.CodeBase.Repositories;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Repositories;
 
 namespace PaceLetics.Tests;
 

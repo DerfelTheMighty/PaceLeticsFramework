@@ -1,10 +1,10 @@
-ï»¿@page "/Athletes/trainingintervalls"
+@page "/Athletes/trainingintervalls"
 
 @using AthleteDataAccessLibrary.Contracts
 @using MudBlazor
 @using PaceLetics.AthleteModule.CodeBase.Models
 @using PaceLetics.CoreModule.Infrastructure.Models
-@using PaceLetics.RunningModule.CodeBase.Models
+@using PaceLetics.TrainingModule.CodeBase.Running.Models
 @using PaceLetics.Web.Services
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
@@ -52,7 +52,7 @@
                                 @_currentTraining.Name
                             </MudText>
                             <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                ID: @_currentTraining.Id Â· @L["PlannedOn"] @_currentTraining.Date.ToString("dd.MM.yyyy")
+                                ID: @_currentTraining.Id · @L["PlannedOn"] @_currentTraining.Date.ToString("dd.MM.yyyy")
                             </MudText>
                         </MudStack>
 
@@ -76,7 +76,7 @@
     private IntervallSession? _currentTraining;
 
     /// <summary>
-    /// Indizes der Intervalle fÃ¼r das aktuelle Training, fÃ¼r das MudTable-Items-Binding.
+    /// Indizes der Intervalle für das aktuelle Training, für das MudTable-Items-Binding.
     /// </summary>
     private IEnumerable<int> IntervalIndices =>
         _currentTraining is null

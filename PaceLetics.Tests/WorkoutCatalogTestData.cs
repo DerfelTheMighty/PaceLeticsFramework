@@ -1,6 +1,6 @@
-using PaceLetics.WorkoutModule.CodeBase.Models;
-using PaceLetics.WorkoutModule.CodeBase.Repositories;
-using PaceLetics.WorkoutModule.CodeBase.Services;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Repositories;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Services;
 
 namespace PaceLetics.Tests;
 

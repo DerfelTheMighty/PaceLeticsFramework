@@ -87,7 +87,7 @@ Methoden:
 ## Zielstruktur pro Modul
 
 ```text
-PaceLetics.WorkoutModule.CodeBase
+PaceLetics.TrainingModule.CodeBase.Workouts
   Definitions/
     ExerciseDefinition.cs
     WorkoutDefinition.cs
@@ -112,7 +112,7 @@ PaceLetics.WorkoutModule.CodeBase
 Das Running-Modul sollte anschließend analog sortiert werden:
 
 ```text
-PaceLetics.RunningModule.CodeBase
+PaceLetics.TrainingModule.CodeBase.Running
   Definitions/
   Repositories/
   Factories/

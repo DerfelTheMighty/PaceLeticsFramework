@@ -1,5 +1,5 @@
-using PaceLetics.WorkoutModule.CodeBase.Enums;
-using PaceLetics.WorkoutModule.CodeBase.Services;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Enums;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Services;
 
 namespace PaceLetics.Tests;
 

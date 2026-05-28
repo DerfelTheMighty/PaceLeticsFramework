@@ -1,0 +1,144 @@
+@using MudBlazor
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Enums
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Models
+@using System.ComponentModel.DataAnnotations
+@inject IWorkoutCatalog WorkoutCatalog
+@inject IWorkoutService WorkoutService
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+@inject IStringLocalizer<WorkoutResources> L
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="2">
+            @if (_workoutPreview is not null && _workoutPreview.Exercises.Any())
+            {
+                <MudGrid Class="mt-2" Spacing="2" Justify="Justify.Center" Style="align-items:center;">
+                    @foreach (var ex in _workoutPreview.Exercises)
+                    {
+                        <MudItem xs="4" sm="3" md="2" lg="2">
+                            <MudPaper Elevation="0" Class="pa-2" Style="display:flex; flex-direction:column; align-items:center;">
+                                <div style="width:100%; height:80px; display:flex; align-items:center; justify-content:center;">
+                                    <img src="@GetImagePath(ex.Imagefile)" alt="@ex.Name" style="max-height:100%; max-width:100%; height:auto; width:auto; border-radius:8px;" />
+                                </div>
+                                <MudText Typo="Typo.caption" Align="Align.Center" Class="mt-1">@ex.Name</MudText>
+                            </MudPaper>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+            else
+            {
+                <div style="height:160px; max-width:520px; margin:16px auto; display:flex; align-items:center; justify-content:center;">
+                    <MudImage Src="@_previewImage"
+                              Style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block;" />
+                </div>
+            }
+            <MudNumericField Label="@L["DifficultyDialog_Reps"]" @bind-Value="_rounds" Min="1" Max="1000" Style="width:100%" />
+
+            
+            @if (!SelectedLevel.HasValue)
+            {
+                <MudText Typo="Typo.subtitle1" Class="mt-2">@L["DifficultyDialog_AvailableLevels"]</MudText>
+                <MudStack Spacing="2">
+                    @foreach (var v in _variants)
+                    {
+                        var level = WorkoutCatalog.GetDefinition(v).Level;
+                        <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(level)" OnClick="() => OpenVariant(v)">
+                            @GetDisplayName(level)
+                        </MudButton>
+                    }
+                </MudStack>
+            }
+            else
+            {            
+                <MudStack Spacing="2">
+                    <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(SelectedLevel.Value)" OnClick="StartSelected">
+                        @L["DifficultyDialog_Start"]
+                    </MudButton>
+                </MudStack>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="Cancel">@L["DifficultyDialog_Cancel"]</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter] public string Name { get; set; } = string.Empty;
+    [Parameter] public Level? SelectedLevel { get; set; }
+    [Parameter] public bool Compact { get; set; }
+
+    private List<string> _variants = new();
+    private string _previewImage = "images/exercises/no_image.png";
+    private string _previewDescription = string.Empty;
+    private int _rounds = 1;
+    private string? _selectedVariantId;
+    private WorkoutPreview? _workoutPreview;
+    private string GetImagePath(string imagefile)
+    {
+        return "images/exercises/" + imagefile;
+    }
+
+    protected override void OnInitialized()
+    {
+        _variants = WorkoutCatalog.GetWorkoutIdsByName(Name);
+        if (_variants.Any())
+        {
+            var w = WorkoutCatalog.GetDefinition(_variants.First());
+            _previewDescription = w.Description ?? string.Empty;
+            _workoutPreview = WorkoutCatalog.GetWorkoutPreview(_variants.First());
+            var img = _workoutPreview.Exercises.FirstOrDefault()?.Imagefile;
+            if (!string.IsNullOrEmpty(img)) _previewImage = "images/exercises/" + img;
+        }
+
+        if (SelectedLevel.HasValue)
+        {
+            // find a variant matching the selected level (use per-variant GetWorkout)
+            _selectedVariantId = _variants.FirstOrDefault(id => WorkoutCatalog.GetDefinition(id).Level == SelectedLevel.Value);
+        }
+    }
+
+    private void OpenVariant(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            return;
+        WorkoutService.SetActiveWorkout(id, 1, _rounds);
+        NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
+    }
+
+    private void StartSelected()
+    {
+        if (!string.IsNullOrWhiteSpace(_selectedVariantId))
+        {
+            // use sets = 1 and rounds = _rounds to represent total repetitions
+            WorkoutService.SetActiveWorkout(_selectedVariantId, 1, _rounds);
+            NavigationManager.NavigateTo("/Workouts/WorkoutRoom");
+        }
+    }
+
+    private void Cancel()
+    {
+        // close dialog by navigating back to workout area (fallback if MudDialogInstance not available)
+        NavigationManager.NavigateTo("/Workouts/workoutarea");
+    }
+
+    private Color GetColor(Level level)
+    {
+        return level switch
+        {
+            Level.Easy => Color.Info,
+            Level.Moderate => Color.Success,
+            Level.Advanced => Color.Warning,
+            Level.Epic => Color.Error,
+            _ => Color.Default,
+        };
+    }
+
+    private string GetDisplayName(Level level)
+    {
+        return L[$"Level_{level}"];
+    }
+}

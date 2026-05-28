@@ -1,7 +1,7 @@
 using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.CoreModule.Infrastructure.Models;
 using PaceLetics.CoreModule.Infrastructure.Services;
-using PaceLetics.RunningModule.CodeBase.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Models;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.Web.Services;
 using PaceLetics.Web.Services.DashboardMessages;

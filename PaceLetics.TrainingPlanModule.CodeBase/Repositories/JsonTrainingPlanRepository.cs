@@ -1,8 +1,8 @@
 using System.Text.Json;
-using PaceLetics.RunningModule.CodeBase.Models;
-using PaceLetics.RunningModule.CodeBase.Repositories;
+using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
-using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 
 namespace PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 

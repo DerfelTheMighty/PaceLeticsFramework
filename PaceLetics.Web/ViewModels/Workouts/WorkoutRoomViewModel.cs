@@ -1,4 +1,4 @@
-using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 
 namespace PaceLetics.Web.ViewModels.Workouts;
 
