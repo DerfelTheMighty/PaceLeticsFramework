@@ -1,76 +1,93 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using AthleteDataAccessLibrary.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
+using PaceLetics.AthleteModule.CodeBase.Models;
+using PaceLetics.Web.Configuration;
+using PaceLetics.Web.Data;
 
 namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly TrainerVerificationOptions _trainerVerificationOptions;
+        private readonly IAthleteData _athleteData;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IOptions<TrainerVerificationOptions> trainerVerificationOptions,
+            IAthleteData athleteData)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _trainerVerificationOptions = trainerVerificationOptions.Value;
+            _athleteData = athleteData;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [Display(Name = "Name")]
         public string Username { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+        public string Roles { get; set; }
+
+        public bool IsTrainer { get; set; }
+
         [TempData]
         public string StatusMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Phone]
-            [Display(Name = "Telefon")]
-            public string PhoneNumber { get; set; }
+            [Required]
+            [StringLength(64, MinimumLength = 3)]
+            [RegularExpression(@"[A-Za-z0-9._-]+", ErrorMessage = "Der oeffentliche Nutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.")]
+            [Display(Name = "Oeffentlicher Nutzername")]
+            public string PublicUserName { get; set; }
+
+            [Url]
+            [Display(Name = "Profilfoto URL")]
+            public string ProfileImageUrl { get; set; }
+
+            [Display(Name = "Oeffentliches Profil sichtbar")]
+            public bool IsPublicProfileVisible { get; set; }
+
+            [DataType(DataType.Password)]
+            [Display(Name = "Trainer-Verifikationscode")]
+            public string TrainerVerificationCode { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            var athlete = await GetOrCreateAthleteAsync(user.Id, userName, roles);
+            var publicProfile = athlete.PublicProfile;
 
             Username = userName;
+            Roles = string.Join(", ", roles.Select(ApplicationRoles.GetDisplayName));
+            IsTrainer = roles.Contains(ApplicationRoles.Trainer);
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PublicUserName = publicProfile?.PublicUserName ?? userName,
+                ProfileImageUrl = publicProfile?.ProfileImageUrl,
+                IsPublicProfileVisible = publicProfile?.IsProfileVisible ?? false
             };
         }
 
@@ -94,26 +111,212 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            var publicUserName = Input.PublicUserName?.Trim();
+            if (!string.IsNullOrWhiteSpace(publicUserName))
+            {
+                if (await PublicUserNameExistsAsync(publicUserName, user.Id))
+                {
+                    ModelState.AddModelError("Input.PublicUserName", "Dieser oeffentliche Nutzername ist bereits vergeben.");
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 await LoadAsync(user);
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.Contains(ApplicationRoles.Trainer)
+                ? ApplicationRoles.Trainer
+                : ApplicationRoles.Athlete;
+
+            if (!string.IsNullOrWhiteSpace(Input.TrainerVerificationCode))
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                var trainerResult = await TryAddTrainerRoleAsync(user, Input.TrainerVerificationCode);
+                if (!trainerResult)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
+                    await LoadAsync(user);
+                    return Page();
                 }
+
+                role = ApplicationRoles.Trainer;
+                roles = await _userManager.GetRolesAsync(user);
             }
+
+            var athlete = await GetOrCreateAthleteAsync(user.Id, await _userManager.GetUserNameAsync(user), roles);
+            athlete.Roles = CreateRoleModel(roles);
+            athlete.PublicProfile = new PublicProfileModel
+            {
+                PublicUserName = publicUserName,
+                NormalizedPublicUserName = NormalizePublicUserName(publicUserName),
+                ProfileImageUrl = Input.ProfileImageUrl?.Trim(),
+                IsProfileVisible = Input.IsPublicProfileVisible,
+                PublicRole = role
+            };
+
+            await _athleteData.UpdateAthlete(athlete);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
+        }
+
+        private async Task<bool> TryAddTrainerRoleAsync(ApplicationUser user, string verificationCode)
+        {
+            if (await _userManager.IsInRoleAsync(user, ApplicationRoles.Trainer))
+            {
+                return true;
+            }
+
+            if (string.IsNullOrWhiteSpace(_trainerVerificationOptions.Code))
+            {
+                ModelState.AddModelError("Input.TrainerVerificationCode", "Die Trainer-Verifikation ist noch nicht konfiguriert.");
+                return false;
+            }
+
+            if (!IsVerificationCodeValid(verificationCode, _trainerVerificationOptions.Code))
+            {
+                ModelState.AddModelError("Input.TrainerVerificationCode", "Der Trainer-Verifikationscode ist ungueltig.");
+                return false;
+            }
+
+            var result = await _userManager.AddToRoleAsync(user, ApplicationRoles.Trainer);
+            if (result.Succeeded)
+            {
+                return true;
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return false;
+        }
+
+        private static bool IsVerificationCodeValid(string inputCode, string configuredCode)
+        {
+            var inputBytes = Encoding.UTF8.GetBytes(inputCode.Trim());
+            var configuredBytes = Encoding.UTF8.GetBytes(configuredCode.Trim());
+
+            return inputBytes.Length == configuredBytes.Length
+                && CryptographicOperations.FixedTimeEquals(inputBytes, configuredBytes);
+        }
+
+        private async Task<AthleteModel> GetOrCreateAthleteAsync(
+            string userId,
+            string userName,
+            IList<string> roles)
+        {
+            var athlete = await _athleteData.GetAthlete(userId);
+            var shouldSave = false;
+
+            if (athlete is null)
+            {
+                athlete = new AthleteModel
+                {
+                    Id = userId,
+                    Name = userName
+                };
+                shouldSave = true;
+            }
+
+            var roleModel = CreateRoleModel(roles);
+            if (!HasSameRoles(athlete.Roles, roleModel))
+            {
+                athlete.Roles = roleModel;
+                shouldSave = true;
+            }
+
+            if (IsMissingPublicProfile(athlete.PublicProfile))
+            {
+                athlete.PublicProfile = CreateDefaultPublicProfile(userName, roles);
+                shouldSave = true;
+            }
+            else
+            {
+                var normalizedPublicUserName = NormalizePublicUserName(athlete.PublicProfile.PublicUserName);
+                if (athlete.PublicProfile.NormalizedPublicUserName != normalizedPublicUserName)
+                {
+                    athlete.PublicProfile.NormalizedPublicUserName = normalizedPublicUserName;
+                    shouldSave = true;
+                }
+            }
+
+            if (shouldSave)
+            {
+                await _athleteData.UpdateAthlete(athlete);
+            }
+
+            return athlete;
+        }
+
+        private async Task<bool> PublicUserNameExistsAsync(string publicUserName, string exceptUserId)
+        {
+            var normalizedPublicUserName = NormalizePublicUserName(publicUserName);
+            var athletes = await _athleteData.GetAthletes();
+
+            return athletes.Any(athlete =>
+                athlete.Id != exceptUserId
+                && athlete.PublicProfile is not null
+                && athlete.PublicProfile.NormalizedPublicUserName == normalizedPublicUserName);
+        }
+
+        private static PublicProfileModel CreateDefaultPublicProfile(string userName, IList<string> roles)
+        {
+            return new PublicProfileModel
+            {
+                PublicUserName = userName,
+                NormalizedPublicUserName = NormalizePublicUserName(userName),
+                ProfileImageUrl = null,
+                IsProfileVisible = false,
+                PublicRole = GetPublicRole(roles)
+            };
+        }
+
+        private static RoleModel CreateRoleModel(IList<string> roles)
+        {
+            var assignedRoles = roles
+                .Where(role => !string.IsNullOrWhiteSpace(role))
+                .Distinct()
+                .ToList();
+
+            if (!assignedRoles.Contains(ApplicationRoles.Athlete))
+            {
+                assignedRoles.Insert(0, ApplicationRoles.Athlete);
+            }
+
+            return new RoleModel
+            {
+                AssignedRoles = assignedRoles
+            };
+        }
+
+        private static bool HasSameRoles(RoleModel currentRoleModel, RoleModel newRoleModel)
+        {
+            var currentRoles = currentRoleModel?.AssignedRoles ?? new List<string>();
+            return currentRoles.OrderBy(role => role).SequenceEqual(
+                newRoleModel.AssignedRoles.OrderBy(role => role));
+        }
+
+        private static bool IsMissingPublicProfile(PublicProfileModel publicProfile)
+        {
+            return publicProfile is null
+                || string.IsNullOrWhiteSpace(publicProfile.PublicUserName)
+                || publicProfile.PublicUserName == "NA";
+        }
+
+        private static string GetPublicRole(IList<string> roles)
+        {
+            return roles.Contains(ApplicationRoles.Trainer)
+                ? ApplicationRoles.Trainer
+                : ApplicationRoles.Athlete;
+        }
+
+        private static string NormalizePublicUserName(string value)
+        {
+            return value.Trim().ToUpperInvariant();
         }
     }
 }

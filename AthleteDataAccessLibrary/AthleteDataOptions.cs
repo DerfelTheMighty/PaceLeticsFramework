@@ -15,5 +15,6 @@ public sealed class AthleteDataOptions
 
         if (string.IsNullOrWhiteSpace(AthleteContainerName))
             throw new InvalidOperationException("AthleteData:AthleteContainerName must be configured.");
+
     }
 }

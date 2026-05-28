@@ -70,7 +70,7 @@ namespace AthleteDataAccessLibrary
         public async Task UpsertItem<T>(string cosmosDb, string container, T parameter)
         {
             var containerAccess = _client.GetContainer(cosmosDb, container);
-            await containerAccess.UpsertItemAsync<T>(parameter, PartitionKey.None);
+            await containerAccess.UpsertItemAsync(parameter);
         }
     }
 }

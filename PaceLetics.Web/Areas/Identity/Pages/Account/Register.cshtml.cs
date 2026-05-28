@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -20,22 +20,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using PaceLetics.AthleteModule.CodeBase.Models;
+using PaceLetics.Web.Data;
 
 namespace PaceLetics.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IAthleteData _athleteData;
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            IUserStore<IdentityUser> userStore,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             IAthleteData ad)
@@ -80,6 +81,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
             /// directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
+            [RegularExpression(@"[A-Za-z0-9._-]+", ErrorMessage = "Der Benutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.")]
             [DataType(DataType.Text)]
             [Display(Name = "Benutzername")]
             public string Name { get; set; }
@@ -148,9 +150,24 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
                     
                     var userId = await _userManager.GetUserIdAsync(user);
-                    var athlete = new AthleteModel();
-                    athlete.Id = userId;
-                    athlete.Name = Input.Name;
+                    await _userManager.AddToRoleAsync(user, ApplicationRoles.Athlete);
+                    var athlete = new AthleteModel
+                    {
+                        Id = userId,
+                        Name = Input.Name,
+                        Roles = new RoleModel
+                        {
+                            AssignedRoles = new List<string> { ApplicationRoles.Athlete }
+                        },
+                        PublicProfile = new PublicProfileModel
+                        {
+                            PublicUserName = userName,
+                            NormalizedPublicUserName = NormalizePublicUserName(userName),
+                            ProfileImageUrl = null,
+                            IsProfileVisible = false,
+                            PublicRole = ApplicationRoles.Athlete
+                        }
+                    };
                     await _athleteData.InsertAthlete(athlete);
                     if (!string.IsNullOrWhiteSpace(email))
                     {
@@ -186,27 +203,32 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
+        }
+
+        private static string NormalizePublicUserName(string value)
+        {
+            return value.Trim().ToUpperInvariant();
         }
     }
 }

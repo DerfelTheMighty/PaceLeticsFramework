@@ -1,0 +1,204 @@
+@page "/profiles"
+@page "/profiles/{PublicUserName}"
+@using AthleteDataAccessLibrary.Contracts
+@using PaceLetics.AthleteModule.CodeBase.Models
+@inject IAthleteData AthleteData
+
+<PageTitle>Profile</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+    @if (_isLoading)
+    {
+        <LoadingScreen Label="Profile werden geladen" />
+    }
+    else if (_selectedProfile is not null)
+    {
+        <PageHeader Title="@_selectedProfile.PublicUserName" Subtitle="@GetRoleDisplayName(_selectedProfile.PublicRole)">
+            <Actions>
+                <MudButton Href="/profiles"
+                           Variant="Variant.Outlined"
+                           Color="Color.Default"
+                           StartIcon="@Icons.Material.Filled.ArrowBack">
+                    Zurueck
+                </MudButton>
+            </Actions>
+        </PageHeader>
+
+        <MudDivider Class="my-4" />
+
+        <MudPaper Elevation="0"
+                  Class="pa-4"
+                  Style="border-radius:20px; border:1px solid var(--mud-palette-lines-default); background:linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background));">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                    @ProfileAvatar(_selectedProfile, Size.Large)
+
+                    <MudStack Spacing="0" Style="flex:1; min-width:0;">
+                        <MudText Typo="Typo.h5">@_selectedProfile.PublicUserName</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">
+                            @GetRoleDisplayName(_selectedProfile.PublicRole)
+                        </MudText>
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+        </MudPaper>
+    }
+    else if (_profileNotFound)
+    {
+        <PageHeader Title="Profil nicht gefunden" Subtitle="Dieses Profil ist nicht sichtbar oder existiert nicht." />
+
+        <MudDivider Class="my-4" />
+
+        <DashboardNewsFeedTile Title="Profil nicht gefunden"
+                               Detail="Oeffne die Profiluebersicht oder pruefe den Link."
+                               Icon="@Icons.Material.Filled.PersonSearch"
+                               Severity="Severity.Warning"
+                               Href="/profiles" />
+    }
+    else
+    {
+        <PageHeader Title="Profile" Subtitle="Sichtbare Athlet:innen- und Trainer:innenprofile." />
+
+        <MudDivider Class="my-4" />
+
+        <MudStack Spacing="4">
+            <MudGrid Spacing="3">
+                <MudItem xs="12" sm="6" lg="4">
+                    <DashboardMetricTile Label="Sichtbar"
+                                         Value="@_profiles.Count.ToString()"
+                                         Detail="oeffentliche Profile"
+                                         Icon="@Icons.Material.Filled.Groups"
+                                         Accent="blue" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" lg="4">
+                    <DashboardMetricTile Label="Trainer:innen"
+                                         Value="@_profiles.Count(profile => profile.PublicRole == ApplicationRoles.Trainer).ToString()"
+                                         Detail="verifizierte Profile"
+                                         Icon="@Icons.Material.Filled.Verified"
+                                         Accent="green" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" lg="4">
+                    <DashboardMetricTile Label="Athlet:innen"
+                                         Value="@_profiles.Count(profile => profile.PublicRole == ApplicationRoles.Athlete).ToString()"
+                                         Detail="aktive Profile"
+                                         Icon="@Icons.Material.Filled.DirectionsRun"
+                                         Accent="orange" />
+                </MudItem>
+            </MudGrid>
+
+            @if (_profiles.Count == 0)
+            {
+                <DashboardNewsFeedTile Title="Keine oeffentlichen Profile"
+                                       Detail="Aktuell sind keine Profile sichtbar geschaltet."
+                                       Icon="@Icons.Material.Filled.VisibilityOff"
+                                       Severity="Severity.Info"
+                                       Href="/Identity/Account/Manage" />
+            }
+            else
+            {
+                <MudGrid Spacing="3">
+                    @foreach (var profile in _profiles)
+                    {
+                        <MudItem xs="12">
+                            <MudLink Href="@GetProfileHref(profile)" Underline="Underline.None">
+                                <MudPaper Elevation="0"
+                                          Class="pa-4"
+                                          Style="border-radius:20px; border:1px solid var(--mud-palette-lines-default); background:linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background));">
+                                    <MudPaper Elevation="2" Class="pa-3">
+                                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                                            @ProfileAvatar(profile, Size.Medium)
+
+                                            <MudStack Spacing="0" Style="flex:1; min-width:0;">
+                                                <MudText Typo="Typo.body2">@profile.PublicUserName</MudText>
+                                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                                    @GetRoleDisplayName(profile.PublicRole)
+                                                </MudText>
+                                            </MudStack>
+
+                                            <MudIcon Icon="@Icons.Material.Filled.ArrowForward"
+                                                     Size="Size.Small"
+                                                     Color="Color.Secondary" />
+                                        </MudStack>
+                                    </MudPaper>
+                                </MudPaper>
+                            </MudLink>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+        </MudStack>
+    }
+</MudContainer>
+
+@code {
+    [Parameter]
+    public string? PublicUserName { get; set; }
+
+    private bool _isLoading = true;
+    private bool _profileNotFound;
+    private List<PublicProfileModel> _profiles = new();
+    private PublicProfileModel? _selectedProfile;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        _profileNotFound = false;
+        _selectedProfile = null;
+
+        _profiles = (await AthleteData.GetAthletes())
+            .Select(athlete => athlete.PublicProfile)
+            .Where(profile => profile is not null
+                && profile.IsProfileVisible
+                && !string.IsNullOrWhiteSpace(profile.PublicUserName)
+                && profile.PublicUserName != "NA")
+            .OrderBy(profile => profile.PublicUserName)
+            .ToList();
+
+        if (!string.IsNullOrWhiteSpace(PublicUserName))
+        {
+            var normalizedPublicUserName = NormalizePublicUserName(PublicUserName);
+            _selectedProfile = _profiles.FirstOrDefault(profile =>
+                profile.NormalizedPublicUserName == normalizedPublicUserName);
+            _profileNotFound = _selectedProfile is null;
+        }
+
+        _isLoading = false;
+    }
+
+    private static string GetProfileHref(PublicProfileModel profile)
+    {
+        return $"/profiles/{Uri.EscapeDataString(profile.PublicUserName)}";
+    }
+
+    private static string NormalizePublicUserName(string value)
+    {
+        return value.Trim().ToUpperInvariant();
+    }
+
+    private static string GetRoleDisplayName(string role)
+    {
+        return ApplicationRoles.GetDisplayName(role);
+    }
+
+    private static string GetInitial(PublicProfileModel profile)
+    {
+        return profile.PublicUserName.Trim().Substring(0, 1).ToUpperInvariant();
+    }
+
+    private RenderFragment ProfileAvatar(PublicProfileModel profile, Size size) => @<MudAvatar Size="@size"
+                                                                                               Color="Color.Primary"
+                                                                                               Variant="Variant.Filled">
+        @if (string.IsNullOrWhiteSpace(profile.ProfileImageUrl))
+        {
+            @GetInitial(profile)
+        }
+        else
+        {
+            <MudImage Src="@profile.ProfileImageUrl"
+                      Alt="@profile.PublicUserName"
+                      Style="width:100%; height:100%; object-fit:cover;" />
+        }
+    </MudAvatar>;
+}

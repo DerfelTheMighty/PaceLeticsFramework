@@ -34,7 +34,7 @@ var nonSqlConnectionString = PaceLeticsConfiguration.GetRequiredEnvironmentVaria
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(sqlConnectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDefaultIdentity<IdentityUser>(
+builder.Services.AddDefaultIdentity<ApplicationUser>(
 	options => 
 	{
 		options.SignIn.RequireConfirmedAccount = false;
@@ -42,13 +42,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(
 		options.Password.RequireNonAlphanumeric = false;
 		options.User.RequireUniqueEmail = false;
 		options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-    } ).AddEntityFrameworkStores<ApplicationDbContext>();
+    } )
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddRazorPages()
     .AddViewLocalization()
     .AddDataAnnotationsLocalization();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
 var webRootPath = !string.IsNullOrWhiteSpace(builder.Environment.WebRootPath)
     ? builder.Environment.WebRootPath
     : Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
@@ -82,6 +84,14 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection(SmtpOptions.SectionName));
+builder.Services.Configure<TrainerVerificationOptions>(options =>
+{
+    builder.Configuration.GetSection(TrainerVerificationOptions.SectionName).Bind(options);
+    if (string.IsNullOrWhiteSpace(options.Code))
+    {
+        options.Code = Environment.GetEnvironmentVariable("PaceLeticsTrainerVerificationCode");
+    }
+});
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddSingleton<DashboardMessageFeedOptions>();
@@ -101,6 +111,8 @@ builder.Services.AddMudServicesWithExtensions(c =>
 });
 
 var app = builder.Build();
+
+await SeedIdentityRolesAsync(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -126,6 +138,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions()
     .AddSupportedCultures(supportedCultures)
     .AddSupportedUICultures(supportedCultures));
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseCookiePolicy();
 app.MapRazorPages();
@@ -133,3 +146,42 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+static async Task SeedIdentityRolesAsync(IServiceProvider services)
+{
+    using var scope = services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("IdentityRoleSeed");
+
+    try
+    {
+        if ((await dbContext.Database.GetPendingMigrationsAsync()).Any())
+        {
+            logger.LogInformation("Skipping identity role seed because database migrations are pending.");
+            return;
+        }
+
+        foreach (var roleName in ApplicationRoles.All)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+        }
+
+        var users = await userManager.Users.ToListAsync();
+        foreach (var user in users)
+        {
+            if (!await userManager.IsInRoleAsync(user, ApplicationRoles.Athlete))
+            {
+                await userManager.AddToRoleAsync(user, ApplicationRoles.Athlete);
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning(ex, "Skipping identity role seed because the identity database is not available.");
+    }
+}

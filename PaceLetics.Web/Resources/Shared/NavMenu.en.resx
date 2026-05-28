@@ -37,5 +37,6 @@
   <data name="Nav_PaceZones" xml:space="preserve"><value>Pace Zones</value></data>
   <data name="Nav_TrainingPlan" xml:space="preserve"><value>Training Plan</value></data>
   <data name="Nav_Workouts" xml:space="preserve"><value>Workouts</value></data>
+  <data name="Nav_Profiles" xml:space="preserve"><value>Profiles</value></data>
   <data name="Nav_About" xml:space="preserve"><value>About</value></data>
 </root>

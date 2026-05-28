@@ -51,6 +51,10 @@ namespace PaceLetics.AthleteModule.CodeBase.Models
 
         public RaceResultModel? ActiveReferenceResult { get; set; }
 
+        public RoleModel Roles { get; set; } = new();
+
+        public PublicProfileModel PublicProfile { get; set; } = new();
+
         public AthleteModel() 
         {
             Level = ExperienceLevel.None;
