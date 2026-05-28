@@ -8,6 +8,8 @@ public sealed class AthleteDataOptions
 
     public string AthleteContainerName { get; set; } = "athletedata";
 
+    public string CourseContainerName { get; set; } = "courses";
+
     public void Validate()
     {
         if (string.IsNullOrWhiteSpace(DatabaseName))
@@ -15,6 +17,9 @@ public sealed class AthleteDataOptions
 
         if (string.IsNullOrWhiteSpace(AthleteContainerName))
             throw new InvalidOperationException("AthleteData:AthleteContainerName must be configured.");
+
+        if (string.IsNullOrWhiteSpace(CourseContainerName))
+            throw new InvalidOperationException("AthleteData:CourseContainerName must be configured.");
 
     }
 }

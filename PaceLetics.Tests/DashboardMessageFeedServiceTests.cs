@@ -147,6 +147,11 @@ public sealed class DashboardMessageFeedServiceTests
             return _plans;
         }
 
+        public Task<IReadOnlyList<TrainingPlan>> LoadTrainingPlansForUserAsync(string? userId)
+        {
+            return Task.FromResult(_plans);
+        }
+
         public IReadOnlyList<RunningSession> LoadLegacySessions()
         {
             return Array.Empty<RunningSession>();

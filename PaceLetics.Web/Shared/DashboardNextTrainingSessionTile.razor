@@ -11,55 +11,73 @@
 
             <MudStack Spacing="1">
                 <MudText Typo="Typo.h6">
-                    @Session.Name
+                    @(Session?.Name ?? "Noch keine Trainingseinheit")
                 </MudText>
 
                 <MudText Typo="Typo.body2"
                          Class="pl-dashboard-muted">
-                    @Session.Date.ToString("dd.MM.yyyy")
-                    @(" / ")
-                    @GetSessionComposition(Session)
+                    @if (Session is null)
+                    {
+                        @("Tritt einem Kurs bei, um veröffentlichte Trainingspläne zu sehen.")
+                    }
+                    else
+                    {
+                        @Session.Date.ToString("dd.MM.yyyy")
+                        @(" / ")
+                        @GetSessionComposition(Session)
+                    }
                 </MudText>
             </MudStack>
 
-            <MudButton Href="/Athletes/trainingplanpage"
+            <MudButton Href="@(Session is null ? "/Athletes/courses" : "/Athletes/trainingplanpage")"
                        Variant="Variant.Filled"
                        Color="Color.Primary"
                        StartIcon="@Icons.Material.Filled.OpenInNew">
-                Open
+                @(Session is null ? "Kurse" : "Open")
             </MudButton>
         </MudStack>
 
-        <MudDivider />
+        @if (Session is not null)
+        {
+            <MudDivider />
 
-        <MudStack Row="true"
-                  AlignItems="AlignItems.Center"
-                  Spacing="2">
+            <MudStack Row="true"
+                      AlignItems="AlignItems.Center"
+                      Spacing="2">
 
-            <MudIcon Icon="@Icons.Material.Filled.Timeline"
-                     Color="Color.Primary" />
+                <MudIcon Icon="@Icons.Material.Filled.Timeline"
+                         Color="Color.Primary" />
 
-            <MudStack Spacing="0">
-                <MudText Typo="Typo.subtitle2">
-                    Vorschau
-                </MudText>
+                <MudStack Spacing="0">
+                    <MudText Typo="Typo.subtitle2">
+                        Vorschau
+                    </MudText>
 
-                <MudText Typo="Typo.body2"
-                         Class="pl-dashboard-muted">
-                    Trainingsdetails und Struktur der Einheit.
-                </MudText>
+                    <MudText Typo="Typo.body2"
+                             Class="pl-dashboard-muted">
+                        Trainingsdetails und Struktur der Einheit.
+                    </MudText>
+                </MudStack>
             </MudStack>
-        </MudStack>
+        }
 
     </MudStack>
 </MudPaper>
 
 @code {
     [Parameter]
-    public TrainingSession Session { get; set; } = default!;
+    public TrainingSession? Session { get; set; }
 
     private static string GetSessionComposition(TrainingSession session)
     {
-        return $"{session.PrimaryRun.TotalDistance} Abschnitte";
+        var parts = new List<string>();
+
+        if (session.PrimaryRun is not null)
+            parts.Add($"{session.PrimaryRun.TotalDistance / 1000.0:0.0} km");
+
+        if (session.Workouts.Count > 0)
+            parts.Add($"{session.Workouts.Count} Workout(s)");
+
+        return parts.Count == 0 ? "Trainingseinheit" : string.Join(" / ", parts);
     }
 }

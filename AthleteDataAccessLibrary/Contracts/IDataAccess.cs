@@ -14,6 +14,10 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <returns></returns>
         Task<List<T>> LoadData<T>(string cosmosDb, string container);
 
+        Task<List<T>> LoadData<T>(string cosmosDb, string container, string documentType);
+
+        Task<List<T>> LoadPartitionData<T>(string cosmosDb, string container, string partitionKeyValue, string documentType);
+
         /// <summary>
         /// 
         /// </summary>
@@ -25,6 +29,8 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <returns></returns>
         Task<T?> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem;
 
+        Task<T?> LoadItem<T>(string cosmosDb, string container, string id, string partitionKeyValue) where T : IQueryItem;
+
 
         /// <summary>
         /// 
@@ -34,6 +40,8 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="id"></param>
         /// <returns></returns>
         Task DeleteItem<T>(string cosmosDb, string container, string id);
+
+        Task DeleteItem<T>(string cosmosDb, string container, string id, string partitionKeyValue);
 
 
         /// <summary>
@@ -45,6 +53,8 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="parameter"></param>
         /// <returns></returns>
         Task UpsertItem<T>(string cosmosDb, string containerId, T parameter);
+
+        Task UpsertItem<T>(string cosmosDb, string containerId, T parameter, string partitionKeyValue);
 
 
         /// <summary>
