@@ -10,6 +10,8 @@ public interface ICourseService
 
     Task<CourseEnrollmentDocument> JoinCourseAsync(string courseId, string athleteUserId);
 
+    Task<CourseEnrollmentDocument> LeaveCourseAsync(string courseId, string athleteUserId);
+
     Task AssignTrainerAsync(string courseId, string trainerUserId, string displayName);
 
     Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null);

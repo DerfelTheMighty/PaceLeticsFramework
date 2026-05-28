@@ -32,6 +32,45 @@ public sealed class CourseServiceTests
     }
 
     [Fact]
+    public async Task LeaveCourse_CancelsEnrollmentAndHidesPublishedPlans()
+    {
+        var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
+        var service = new CourseService(repository);
+        await service.JoinCourseAsync("course-1", "athlete-1");
+
+        var enrollment = await service.LeaveCourseAsync("course-1", "athlete-1");
+        var planIds = await service.GetPublishedTrainingPlanIdsForAthleteAsync("athlete-1");
+
+        Assert.Equal(CourseEnrollmentStatus.Cancelled, enrollment.Status);
+        Assert.NotNull(enrollment.CancelledAt);
+        Assert.Empty(planIds);
+    }
+
+    [Fact]
+    public async Task LeaveCourse_CancelsActiveEventRegistrations()
+    {
+        var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
+        repository.Events.Add(new CourseEventDocument
+        {
+            Id = "event-1",
+            CourseId = "course-1",
+            Title = "Startanalyse",
+            StartsAt = DateTime.UtcNow.AddDays(1),
+            EndsAt = DateTime.UtcNow.AddDays(1).AddHours(1)
+        });
+        var service = new CourseService(repository);
+        await service.JoinCourseAsync("course-1", "athlete-1");
+        await service.RegisterForEventAsync("course-1", "event-1", "athlete-1");
+
+        await service.LeaveCourseAsync("course-1", "athlete-1");
+        var registration = await repository.GetEventRegistrationAsync("course-1", "event-1", "athlete-1");
+
+        Assert.NotNull(registration);
+        Assert.Equal(CourseEventRegistrationStatus.Cancelled, registration.Status);
+        Assert.NotNull(registration.CancelledAt);
+    }
+
+    [Fact]
     public async Task RegisterForEvent_RequiresCourseEnrollment()
     {
         var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));

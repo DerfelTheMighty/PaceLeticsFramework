@@ -76,6 +76,27 @@ public sealed class CourseService : ICourseService
         return enrollment;
     }
 
+    public async Task<CourseEnrollmentDocument> LeaveCourseAsync(string courseId, string athleteUserId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            throw new InvalidOperationException("Ein Kursaustritt erfordert eine angemeldete Athlet:in.");
+
+        var course = await _repository.GetCourseAsync(courseId)
+            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+
+        var enrollment = await _repository.GetEnrollmentAsync(course.Id, athleteUserId)
+            ?? throw new InvalidOperationException("Du bist diesem Kurs nicht beigetreten.");
+
+        var cancelledAt = DateTime.UtcNow;
+        enrollment.Status = CourseEnrollmentStatus.Cancelled;
+        enrollment.CancelledAt = cancelledAt;
+
+        await _repository.UpsertEnrollmentAsync(enrollment);
+        await CancelActiveEventRegistrationsAsync(course.Id, athleteUserId, cancelledAt);
+
+        return enrollment;
+    }
+
     public async Task AssignTrainerAsync(string courseId, string trainerUserId, string displayName)
     {
         var course = await _repository.GetCourseAsync(courseId)
@@ -206,5 +227,21 @@ public sealed class CourseService : ICourseService
 
         await _repository.UpsertEventRegistrationAsync(registration);
         return registration;
+    }
+
+    private async Task CancelActiveEventRegistrationsAsync(string courseId, string athleteUserId, DateTime cancelledAt)
+    {
+        var events = await _repository.GetEventsAsync(courseId);
+
+        foreach (var courseEvent in events)
+        {
+            var registration = await _repository.GetEventRegistrationAsync(courseId, courseEvent.Id, athleteUserId);
+            if (registration?.Status != CourseEventRegistrationStatus.Registered)
+                continue;
+
+            registration.Status = CourseEventRegistrationStatus.Cancelled;
+            registration.CancelledAt = cancelledAt;
+            await _repository.UpsertEventRegistrationAsync(registration);
+        }
     }
 }
