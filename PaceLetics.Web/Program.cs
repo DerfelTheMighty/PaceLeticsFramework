@@ -23,6 +23,7 @@ using PaceLetics.WorkoutModule.CodeBase.Repositories;
 using PaceLetics.Web.ViewModels.Workouts;
 using PaceLetics.Web.Services.DashboardMessages;
 using PaceLetics.CoreModule.Infrastructure.Services;
+using PaceLetics.Web.Services.Courses;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,6 +94,8 @@ builder.Services.Configure<TrainerVerificationOptions>(options =>
     }
 });
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+builder.Services.AddScoped<ICourseRepository, CosmosCourseRepository>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddSingleton<DashboardMessageFeedOptions>();
 builder.Services.AddScoped<IAthleteMessageProvider, ReferenceRunDashboardMessageProvider>();

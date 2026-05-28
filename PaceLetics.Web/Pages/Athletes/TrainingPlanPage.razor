@@ -205,8 +205,6 @@
     {
         try
         {
-            _plans = TrainingPlanService.LoadTrainingPlans().ToList();
-
             // athlete laden
             var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
             var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
@@ -219,6 +217,8 @@
                 if (_athlete?.PaceModel is not null)
                     _paceModel = _athlete.PaceModel;
             }
+
+            _plans = (await TrainingPlanService.LoadTrainingPlansForUserAsync(userID)).ToList();
 
             // Auswahl: gespeicherter Plan wenn vorhanden (Server-Athlete.SelectedTrainingPlanId), sonst Browser localStorage, sonst nächster oder erster Plan
             string? storedPlan = null;

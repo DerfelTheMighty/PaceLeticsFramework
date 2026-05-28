@@ -2,6 +2,7 @@ using PaceLetics.RunningModule.CodeBase.Models;
 using PaceLetics.RunningModule.CodeBase.Repositories;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
+using PaceLetics.Web.Services.Courses;
 using PaceLetics.WorkoutModule.CodeBase.Interfaces;
 
 namespace PaceLetics.Web.Services;
@@ -10,11 +11,16 @@ public sealed class TrainingPlanService : ITrainingPlanService
 {
     private readonly IWebHostEnvironment _environment;
     private readonly IWorkoutCatalog _workoutCatalog;
+    private readonly ICourseService _courseService;
 
-    public TrainingPlanService(IWebHostEnvironment environment, IWorkoutCatalog workoutCatalog)
+    public TrainingPlanService(
+        IWebHostEnvironment environment,
+        IWorkoutCatalog workoutCatalog,
+        ICourseService courseService)
     {
         _environment = environment;
         _workoutCatalog = workoutCatalog;
+        _courseService = courseService;
     }
 
     public IReadOnlyList<TrainingPlan> LoadTrainingPlans()
@@ -39,6 +45,21 @@ public sealed class TrainingPlanService : ITrainingPlanService
                 session.Date,
                 new[] { session },
                 Array.Empty<WorkoutSessionDefinition>()))) };
+    }
+
+    public async Task<IReadOnlyList<TrainingPlan>> LoadTrainingPlansForUserAsync(string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+            return Array.Empty<TrainingPlan>();
+
+        var visiblePlanIds = await _courseService.GetPublishedTrainingPlanIdsForAthleteAsync(userId);
+        if (visiblePlanIds.Count == 0)
+            return Array.Empty<TrainingPlan>();
+
+        var visiblePlanIdSet = visiblePlanIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return LoadTrainingPlans()
+            .Where(plan => visiblePlanIdSet.Contains(plan.Id))
+            .ToList();
     }
 
     public IReadOnlyList<RunningSession> LoadLegacySessions()

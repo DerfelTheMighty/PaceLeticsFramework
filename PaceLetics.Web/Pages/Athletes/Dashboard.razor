@@ -100,7 +100,14 @@
         _name = string.IsNullOrWhiteSpace(Athlete?.Name)
             ? user.Identity?.Name ?? string.Empty
             : Athlete.Name;
-        _trainingPlans = TrainingPlanService.LoadTrainingPlans();
+        try
+        {
+            _trainingPlans = await TrainingPlanService.LoadTrainingPlansForUserAsync(id);
+        }
+        catch
+        {
+            _trainingPlans = Array.Empty<TrainingPlan>();
+        }
         _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
         _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
         _referenceResult = Athlete?.ActiveReferenceResult;

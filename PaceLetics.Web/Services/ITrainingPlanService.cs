@@ -7,5 +7,7 @@ public interface ITrainingPlanService
 {
     IReadOnlyList<TrainingPlan> LoadTrainingPlans();
 
+    Task<IReadOnlyList<TrainingPlan>> LoadTrainingPlansForUserAsync(string? userId);
+
     IReadOnlyList<RunningSession> LoadLegacySessions();
 }
