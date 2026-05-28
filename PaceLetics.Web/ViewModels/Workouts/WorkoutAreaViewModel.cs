@@ -1,5 +1,5 @@
-using PaceLetics.WorkoutModule.CodeBase.Interfaces;
-using PaceLetics.WorkoutModule.CodeBase.Models;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 
 namespace PaceLetics.Web.ViewModels.Workouts;
 

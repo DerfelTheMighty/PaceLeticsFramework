@@ -1,0 +1,70 @@
+@using MudBlazor
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
+
+@if (Workout is null)
+{
+    <MudText>Kein Workout geladen.</MudText>
+}
+else
+{
+    <div class="pl-workout-focus">
+
+        <div class="pl-topbar">
+            <div class="pl-content-width">
+                <WorkoutTopBar Workout="Workout" OnOpenSheet="@(() => _sheetOpen = true)" />
+            </div>
+        </div>
+
+        <div class="pl-now">
+            <div class="pl-content-width">
+                <WorkoutNow Exercise="Workout.Exercises[_currentExercise]"
+                            OnOpenDetails="@(() => _sheetOpen = true)" />
+            </div>
+        </div>
+
+        <MudDrawer @bind-Open="_sheetOpen"
+                   Anchor="Anchor.Bottom"
+                   Variant="DrawerVariant.Temporary"
+                   Elevation="10"
+                   Class="pl-sheet"
+                   ClipMode="DrawerClipMode.Never"
+                   Overlay="true">
+            <WorkoutBottomSheet Workout="Workout"
+                                CurrentIndex="_currentExercise"
+                                AllowBrowse="@_allowSlide"
+                                OnClose="@CloseSheet"
+                                OnSelectIndex="OnSelectIndex" />
+        </MudDrawer>
+
+    </div>
+}
+
+<style>
+    .pl-workout-focus {
+        height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pl-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+    }
+
+    .pl-now {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .pl-content-width {
+        padding: 12px;
+    }
+
+    .pl-sheet {
+        height: 72vh;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+    }
+</style>

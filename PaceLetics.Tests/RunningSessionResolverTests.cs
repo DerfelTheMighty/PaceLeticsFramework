@@ -1,5 +1,5 @@
 using PaceLetics.CoreModule.Infrastructure.Constants;
-using PaceLetics.RunningModule.CodeBase.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Models;
 
 namespace PaceLetics.Tests;
 

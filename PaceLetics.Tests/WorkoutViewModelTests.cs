@@ -1,5 +1,5 @@
 using PaceLetics.Web.ViewModels.Workouts;
-using PaceLetics.WorkoutModule.CodeBase.Services;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Services;
 
 namespace PaceLetics.Tests;
 

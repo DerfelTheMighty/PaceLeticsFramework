@@ -1,4 +1,4 @@
-using PaceLetics.RunningModule.CodeBase.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Models;
 
 namespace PaceLetics.TrainingPlanModule.CodeBase.Models;
 

@@ -1,9 +1,9 @@
-using PaceLetics.RunningModule.CodeBase.Models;
-using PaceLetics.RunningModule.CodeBase.Repositories;
+using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 using PaceLetics.Web.Services.Courses;
-using PaceLetics.WorkoutModule.CodeBase.Interfaces;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 
 namespace PaceLetics.Web.Services;
 

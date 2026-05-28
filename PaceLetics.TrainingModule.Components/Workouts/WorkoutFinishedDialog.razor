@@ -1,0 +1,21 @@
+@using MudBlazor
+
+
+@namespace PaceLetics.TrainingModule.Components.Workouts
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid Justify="Justify.Center" Style="align-items: center;">
+            <MudImage> </MudImage>
+        </MudGrid>
+        
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Yes!</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+}

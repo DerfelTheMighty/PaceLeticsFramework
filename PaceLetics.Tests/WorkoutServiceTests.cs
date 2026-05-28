@@ -1,6 +1,6 @@
-using PaceLetics.WorkoutModule.CodeBase.Enums;
-using PaceLetics.WorkoutModule.CodeBase.Interfaces;
-using PaceLetics.WorkoutModule.CodeBase.Services;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Enums;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
+using PaceLetics.TrainingModule.CodeBase.Workouts.Services;
 
 namespace PaceLetics.Tests;
 

@@ -1,6 +1,6 @@
 # PaceLetics Framework
 
-PaceLetics is a Blazor Server application split into module projects for athlete data, running plans, workout logic, reusable components, and the web host.
+PaceLetics is a Blazor Server application split into module projects for athlete data, training logic, reusable components, and the web host.
 
 ## Project Layout
 
@@ -8,8 +8,8 @@ PaceLetics is a Blazor Server application split into module projects for athlete
 - `AthleteDataAccessLibrary`: Cosmos DB data access and athlete persistence.
 - `PaceLetics.CoreModule.Infrastructure`: shared domain primitives, constants, converters, and VDOT/pace models.
 - `PaceLetics.AthleteModule.*`: athlete domain services and athlete UI components.
-- `PaceLetics.RunningModule.*`: training plan/session models and running UI components.
-- `PaceLetics.WorkoutModule.*`: workout domain logic and workout UI components.
+- `PaceLetics.TrainingModule.*`: running session models, workout domain logic, and training UI components.
+- `PaceLetics.TrainingPlanModule.CodeBase`: training plan loading and composition across runs and workouts.
 - `PaceLetics.Tests`: regression tests for pace lookup, running session resolution, and workout providers.
 
 ## Configuration

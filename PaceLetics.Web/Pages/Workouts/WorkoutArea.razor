@@ -1,4 +1,4 @@
-﻿@page "/Workouts/workoutarea"
+@page "/Workouts/workoutarea"
 @inject WorkoutAreaViewModel ViewModel
 @inject IStringLocalizer<WorkoutArea> L
 
@@ -33,7 +33,7 @@
             {
                 @foreach (var item in ViewModel.WorkoutPreviews)
                 {
-                    <PaceLetics.WorkoutModule.Components.WorkoutGroupPreviewElement Preview="@item" />
+                    <PaceLetics.TrainingModule.Components.Workouts.WorkoutGroupPreviewElement Preview="@item" />
                 }
             }
 

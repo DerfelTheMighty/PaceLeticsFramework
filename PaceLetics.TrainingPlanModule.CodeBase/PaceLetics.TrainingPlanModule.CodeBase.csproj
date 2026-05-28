@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\PaceLetics.WorkoutModule.CodeBase\PaceLetics.WorkoutModule.CodeBase.csproj" />
-    <ProjectReference Include="..\PaceLetics.RunningModule.CodeBase\PaceLetics.RunningModule.CodeBase.csproj" />
+    <ProjectReference Include="..\PaceLetics.TrainingModule.CodeBase\PaceLetics.TrainingModule.CodeBase.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

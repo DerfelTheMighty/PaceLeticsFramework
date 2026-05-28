@@ -1,9 +1,9 @@
-ï»¿@page "/Athletes/trainingplanpage"
+@page "/Athletes/trainingplanpage"
 @using AthleteDataAccessLibrary.Contracts
 @using PaceLetics.AthleteModule.CodeBase.Models
 @using PaceLetics.CoreModule.Infrastructure.Models
-@using PaceLetics.RunningModule.CodeBase.Models
-@using PaceLetics.RunningModule.Components
+@using PaceLetics.TrainingModule.CodeBase.Running.Models
+@using PaceLetics.TrainingModule.Components.Running
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services
 @using Microsoft.JSInterop
@@ -71,7 +71,7 @@
                             <MudPaper Elevation="1" Class="pa-3">
                                 <MudText Typo="Typo.subtitle2">@session.Name</MudText>
                                 <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                    @session.Date.ToString("dd.MM.yyyy") Â· @($"{session.Workouts.Count} Workout(s)")
+                                    @session.Date.ToString("dd.MM.yyyy") · @($"{session.Workouts.Count} Workout(s)")
                                 </MudText>
                             </MudPaper>
                         }
@@ -115,12 +115,12 @@
                     @_selectedTrainingSession.Date.ToString("dd.MM.yyyy")
                     @if (_resolved is not null)
                     {
-                        @(" Â· ")
+                        @(" · ")
                         @($"{_resolved.TotalDistance / 1000.0:0.0} km")
                     }
                     @if (_selectedTrainingSession.Workouts.Count > 0)
                     {
-                        @(" Â· ")
+                        @(" · ")
                         @($"{_selectedTrainingSession.Workouts.Count} Workout(s)")
                     }
                 </MudText>
@@ -145,7 +145,7 @@
                                 <MudStack Spacing="1">
                                     <MudText Typo="Typo.subtitle2">@(!string.IsNullOrWhiteSpace(workout.Name) ? workout.Name : workout.WorkoutId)</MudText>
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                        @($"{workout.Sets} Set(s) Â· {workout.Rounds} Round(s)")
+                                        @($"{workout.Sets} Set(s) · {workout.Rounds} Round(s)")
                                     </MudText>
                                 </MudStack>
                             </MudPaper>
@@ -162,7 +162,7 @@
 
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">
                                         @(rs.Segment.Distance > 0 ? $"{rs.Segment.Distance} m" : "-")
-                                        @(" Â· ")
+                                        @(" · ")
                                         @(rs.Pace is null ? "-" : $"{rs.Pace:mm\\:ss}/km")
                                     </MudText>
 
@@ -170,7 +170,7 @@
                                     {
                                         <MudText Typo="Typo.caption" Color="Color.Secondary">
                                             @(rs.SegmentTime is null ? "" : $"Segment: {rs.SegmentTime:hh\\:mm\\:ss}".Trim())
-                                            @(rs.SegmentTime is not null && rs.LapTime is not null ? " Â· " : "")
+                                            @(rs.SegmentTime is not null && rs.LapTime is not null ? " · " : "")
                                             @(rs.LapTime is null ? "" : $"Lap: {rs.LapTime:mm\\:ss}")
                                         </MudText>
                                     }
@@ -220,7 +220,7 @@
 
             _plans = (await TrainingPlanService.LoadTrainingPlansForUserAsync(userID)).ToList();
 
-            // Auswahl: gespeicherter Plan wenn vorhanden (Server-Athlete.SelectedTrainingPlanId), sonst Browser localStorage, sonst nÃ¤chster oder erster Plan
+            // Auswahl: gespeicherter Plan wenn vorhanden (Server-Athlete.SelectedTrainingPlanId), sonst Browser localStorage, sonst nächster oder erster Plan
             string? storedPlan = null;
 
             if (_athlete?.SelectedTrainingPlanId is not null && _plans.Any(p => p.Id == _athlete.SelectedTrainingPlanId))
@@ -248,7 +248,7 @@
                 }
                 else
                 {
-                    // nÃ¤chster Plan finden
+                    // nächster Plan finden
                     var today = DateTime.Today;
                     var next = _plans
                         .Where(p => p.Sessions.Any())
@@ -264,7 +264,7 @@
                 }
             }
 
-            // Setze aktuell gewÃ¤hlten Plan
+            // Setze aktuell gewählten Plan
             Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
 
             if (Plan is not null)
