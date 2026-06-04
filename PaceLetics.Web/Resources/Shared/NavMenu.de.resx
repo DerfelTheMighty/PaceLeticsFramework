@@ -36,6 +36,7 @@
   <data name="Nav_RaceData" xml:space="preserve"><value>Laufdaten</value></data>
   <data name="Nav_PaceZones" xml:space="preserve"><value>Pacebereiche</value></data>
   <data name="Nav_Courses" xml:space="preserve"><value>Meine Kurse</value></data>
+  <data name="Nav_TrainerCourses" xml:space="preserve"><value>Kurse verwalten</value></data>
   <data name="Nav_TrainingPlan" xml:space="preserve"><value>Trainingsplanung</value></data>
   <data name="Nav_Workouts" xml:space="preserve"><value>Workouts</value></data>
   <data name="Nav_Profiles" xml:space="preserve"><value>Profile</value></data>
