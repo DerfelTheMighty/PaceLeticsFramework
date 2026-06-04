@@ -26,15 +26,17 @@
 
         @if (_courses.Count == 0)
         {
-            <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Kurse veröffentlicht.</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Kurse veroeffentlicht.</MudText>
         }
         else
         {
             var selected = SelectedOverview;
+            var joinedCourses = JoinedCourses.ToList();
+            var availableCourses = AvailableCourses.ToList();
 
             <MudStack Spacing="3">
                 <div style="display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:4px 2px 12px 2px;">
-                    @foreach (var overview in _courses)
+                    @foreach (var overview in joinedCourses)
                     {
                         var course = overview.Course;
                         var isSelected = selected?.Course.Id == course.Id;
@@ -47,10 +49,7 @@
                             <MudStack Spacing="2" Style="height:100%;">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%; gap:8px;">
                                     <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
-                                    @if (overview.IsJoined)
-                                    {
-                                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
-                                    }
+                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
                                 </MudStack>
 
                                 <MudText Typo="Typo.subtitle2" Style="line-height:1.25; min-height:40px; overflow:hidden;">
@@ -67,107 +66,225 @@
                                 <MudSpacer />
 
                                 <MudButton Size="Size.Small"
-                                           Color="@(overview.IsJoined ? Color.Default : Color.Primary)"
-                                           Variant="@(overview.IsJoined ? Variant.Outlined : Variant.Filled)"
-                                           StartIcon="@(overview.IsJoined ? Icons.Material.Filled.Logout : Icons.Material.Filled.HowToReg)"
-                                           OnClick="@(() => ToggleCourseMembershipAsync(overview))">
-                                    @(overview.IsJoined ? "Austreten" : "Beitreten")
+                                           Color="Color.Default"
+                                           Variant="Variant.Outlined"
+                                           StartIcon="@Icons.Material.Filled.Logout"
+                                           OnClick="@(() => LeaveCourseAsync(course.Id, course.Name))">
+                                    Austreten
                                 </MudButton>
                             </MudStack>
                         </MudPaper>
                     }
+
+                    <MudPaper Elevation="1"
+                              Class="pa-3"
+                              Style="@GetAddCourseCardStyle()"
+                              @onclick="OpenCoursePicker">
+                        <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Style="height:100%; gap:8px;">
+                            <MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" Size="Size.Large" />
+                            <MudText Typo="Typo.body2" Color="Color.Primary">Kurs hinzufuegen</MudText>
+                        </MudStack>
+                    </MudPaper>
                 </div>
+
+                @if (joinedCourses.Count == 0)
+                {
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">Du bist noch keinem Kurs beigetreten.</MudText>
+                }
+
+                @if (_isCoursePickerOpen)
+                {
+                    <div style="position:fixed; inset:0; z-index:1300; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.42); padding:24px;" @onclick="CloseCoursePicker">
+                        <MudPaper Elevation="8" Class="pa-4" Style="width:min(560px, 100%); max-height:min(720px, 88vh); overflow:auto;" @onclick:stopPropagation="true">
+                            <MudStack Spacing="3">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                    <MudText Typo="Typo.h6">Kurs hinzufuegen</MudText>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseCoursePicker" />
+                                </MudStack>
+
+                                @if (availableCourses.Count == 0)
+                                {
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine weiteren Kurse verfuegbar.</MudText>
+                                }
+                                else
+                                {
+                                    <MudStack Spacing="2">
+                                        @foreach (var overview in availableCourses)
+                                        {
+                                            var course = overview.Course;
+                                            var nextDate = GetUpcomingDates(course).FirstOrDefault();
+
+                                            <div style="padding:12px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
+                                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                    <MudStack Spacing="1" Style="min-width:0;">
+                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
+                                                            <MudText Typo="Typo.subtitle2">@course.Name</MudText>
+                                                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
+                                                        </MudStack>
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatShortPeriod(course)</MudText>
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                                            @(nextDate is null ? "Kein kommender Termin" : $"{nextDate.StartsAt:dd.MM. HH:mm} Uhr")
+                                                        </MudText>
+                                                    </MudStack>
+                                                    <MudButton Size="Size.Small"
+                                                               Color="Color.Primary"
+                                                               Variant="Variant.Filled"
+                                                               StartIcon="@Icons.Material.Filled.HowToReg"
+                                                               OnClick="@(() => JoinCourseAsync(course.Id))">
+                                                        Beitreten
+                                                    </MudButton>
+                                                </MudStack>
+                                            </div>
+                                        }
+                                    </MudStack>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    </div>
+                }
 
                 @if (selected is not null)
                 {
                     var course = selected.Course;
                     var upcomingDates = GetUpcomingDates(course).Take(6).ToList();
                     var courseEvents = GetEvents(course.Id).ToList();
+                    var trainingPlanPublications = course.TrainingPlanPublications
+                        .OrderBy(publication => publication.TrainingPlanId)
+                        .ToList();
 
                     <MudPaper Elevation="1" Class="pa-4">
                         <MudStack Spacing="3">
-                            <MudStack Row="true" AlignItems="AlignItems.Start" Style="width:100%; gap:12px;">
-                                <MudStack Spacing="1" Style="min-width:0;">
-                                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
-                                        <MudText Typo="Typo.h6">@course.Name</MudText>
-                                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
-                                        @if (selected.IsJoined)
-                                        {
-                                            <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">Beigetreten</MudChip>
-                                        }
-                                    </MudStack>
-                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@course.Description</MudText>
-                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPeriod(course)</MudText>
+                            <MudStack Spacing="1" Style="min-width:0;">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
+                                    <MudText Typo="Typo.h6">@course.Name</MudText>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">Beigetreten</MudChip>
                                 </MudStack>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary" Style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                                    @course.Description
+                                </MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPeriod(course)</MudText>
                             </MudStack>
 
-                            <MudTabs Elevation="0" Rounded="false">
-                                <MudTabPanel Text="Termine">
-                                    @if (upcomingDates.Count == 0)
+                            <section>
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                    <MudText Typo="Typo.subtitle2">Termine</MudText>
+                                    @if (upcomingDates.Count > 1)
                                     {
-                                        <MudText Typo="Typo.body2" Color="Color.Secondary">Keine kommenden Termine.</MudText>
+                                        <MudButton Size="Size.Small"
+                                                   Variant="Variant.Text"
+                                                   Color="Color.Primary"
+                                                   OnClick="@(() => _showAllDates = !_showAllDates)">
+                                            @(_showAllDates ? "Weniger" : "Alle")
+                                        </MudButton>
                                     }
-                                    else
-                                    {
-                                        <MudStack Spacing="1">
-                                            @foreach (var date in upcomingDates)
-                                            {
-                                                <div style="display:grid; grid-template-columns:88px 1fr; gap:12px; align-items:start; padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
-                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@date.StartsAt.ToString("dd.MM.")</MudText>
-                                                    <div>
-                                                        <MudText Typo="Typo.body2">@date.Title</MudText>
-                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatTimeRange(date)</MudText>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </MudStack>
-                                    }
-                                </MudTabPanel>
+                                </MudStack>
 
-                                <MudTabPanel Text="Trainingspläne">
-                                    @if (course.TrainingPlanPublications.Count == 0)
+                                @if (upcomingDates.Count == 0)
+                                {
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Keine kommenden Termine.</MudText>
+                                }
+                                else
+                                {
+                                    <MudStack Spacing="1">
+                                        @foreach (var date in GetVisibleDates(upcomingDates))
+                                        {
+                                            <div style="display:grid; grid-template-columns:72px 1fr; gap:12px; align-items:start; padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
+                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@date.StartsAt.ToString("dd.MM.")</MudText>
+                                                <div>
+                                                    <MudText Typo="Typo.body2">@date.Title</MudText>
+                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatTimeRange(date)</MudText>
+                                                </div>
+                                            </div>
+                                        }
+                                    </MudStack>
+                                }
+                            </section>
+
+                            <section>
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                    <MudText Typo="Typo.subtitle2">Events</MudText>
+                                    @if (courseEvents.Count > 2)
                                     {
-                                        <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Trainingspläne veröffentlicht.</MudText>
+                                        <MudButton Size="Size.Small"
+                                                   Variant="Variant.Text"
+                                                   Color="Color.Primary"
+                                                   OnClick="@(() => _showAllEvents = !_showAllEvents)">
+                                            @(_showAllEvents ? "Weniger" : "Alle")
+                                        </MudButton>
                                     }
-                                    else
+                                </MudStack>
+
+                                @if (courseEvents.Count == 0)
+                                {
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Events eingestellt.</MudText>
+                                }
+                                else
+                                {
+                                    <MudStack Spacing="1">
+                                        @foreach (var courseEvent in GetVisibleEvents(courseEvents))
+                                        {
+                                            <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
+                                                <div>
+                                                    <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
+                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatEventDate(courseEvent)</MudText>
+                                                </div>
+                                                @if (IsRegisteredForEvent(courseEvent.Id))
+                                                {
+                                                    <MudButton Size="Size.Small"
+                                                               Color="Color.Default"
+                                                               Variant="Variant.Outlined"
+                                                               StartIcon="@Icons.Material.Filled.EventBusy"
+                                                               OnClick="@(() => CancelEventRegistrationAsync(course.Id, courseEvent.Id))">
+                                                        Abmelden
+                                                    </MudButton>
+                                                }
+                                                else
+                                                {
+                                                    <MudButton Size="Size.Small"
+                                                               Color="Color.Primary"
+                                                               Variant="Variant.Filled"
+                                                               StartIcon="@Icons.Material.Filled.EventAvailable"
+                                                               OnClick="@(() => RegisterForEventAsync(course.Id, courseEvent.Id))">
+                                                        Anmelden
+                                                    </MudButton>
+                                                }
+                                            </div>
+                                        }
+                                    </MudStack>
+                                }
+                            </section>
+
+                            <section>
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                    <MudText Typo="Typo.subtitle2">Trainingsplaene</MudText>
+                                    @if (trainingPlanPublications.Count > 2)
                                     {
-                                        <MudStack Spacing="1">
-                                            @foreach (var publication in course.TrainingPlanPublications)
-                                            {
+                                        <MudButton Size="Size.Small"
+                                                   Variant="Variant.Text"
+                                                   Color="Color.Primary"
+                                                   OnClick="@(() => _showAllTrainingPlans = !_showAllTrainingPlans)">
+                                            @(_showAllTrainingPlans ? "Weniger" : "Alle")
+                                        </MudButton>
+                                    }
+                                </MudStack>
+
+                                @if (trainingPlanPublications.Count == 0)
+                                {
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Trainingsplaene veroeffentlicht.</MudText>
+                                }
+                                else
+                                {
+                                    <MudStack Spacing="1">
+                                        @foreach (var publication in GetVisibleTrainingPlans(trainingPlanPublications))
+                                        {
+                                            <div style="padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
                                                 <MudText Typo="Typo.body2">@publication.TrainingPlanId</MudText>
-                                            }
-                                        </MudStack>
-                                    }
-                                </MudTabPanel>
-
-                                <MudTabPanel Text="Events">
-                                    @if (!selected.IsJoined)
-                                    {
-                                        <MudText Typo="Typo.body2" Color="Color.Secondary">Events werden nach dem Kursbeitritt verfügbar.</MudText>
-                                    }
-                                    else if (courseEvents.Count == 0)
-                                    {
-                                        <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Events eingestellt.</MudText>
-                                    }
-                                    else
-                                    {
-                                        <MudStack Spacing="1">
-                                            @foreach (var courseEvent in courseEvents)
-                                            {
-                                                <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
-                                                    <div>
-                                                        <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
-                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatEventDate(courseEvent)</MudText>
-                                                    </div>
-                                                    <MudIconButton Icon="@Icons.Material.Filled.EventAvailable"
-                                                                   Color="Color.Primary"
-                                                                   OnClick="@(() => RegisterForEventAsync(course.Id, courseEvent.Id))" />
-                                                </div>
-                                            }
-                                        </MudStack>
-                                    }
-                                </MudTabPanel>
-                            </MudTabs>
+                                            </div>
+                                        }
+                                    </MudStack>
+                                }
+                            </section>
                         </MudStack>
                     </MudPaper>
                 }
@@ -183,10 +300,21 @@
     private string? _selectedCourseId;
     private IReadOnlyList<CourseOverview> _courses = Array.Empty<CourseOverview>();
     private Dictionary<string, IReadOnlyList<CourseEventDocument>> _eventsByCourse = new();
+    private Dictionary<string, CourseEventRegistrationDocument> _registeredEvents = new(StringComparer.OrdinalIgnoreCase);
+    private bool _isCoursePickerOpen;
+    private bool _showAllDates;
+    private bool _showAllEvents;
+    private bool _showAllTrainingPlans;
 
     private CourseOverview? SelectedOverview =>
-        _courses.FirstOrDefault(course => course.Course.Id == _selectedCourseId)
-            ?? _courses.FirstOrDefault();
+        JoinedCourses.FirstOrDefault(course => course.Course.Id == _selectedCourseId)
+            ?? JoinedCourses.FirstOrDefault();
+
+    private IEnumerable<CourseOverview> JoinedCourses =>
+        _courses.Where(course => course.IsJoined);
+
+    private IEnumerable<CourseOverview> AvailableCourses =>
+        _courses.Where(course => !course.IsJoined);
 
     protected override async Task OnInitializedAsync()
     {
@@ -203,20 +331,36 @@
             _errorMessage = null;
             _courses = await CourseService.GetCoursesForAthleteAsync(_userId ?? string.Empty);
             _eventsByCourse = new Dictionary<string, IReadOnlyList<CourseEventDocument>>();
+            _registeredEvents = new Dictionary<string, CourseEventRegistrationDocument>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var course in _courses.Where(course => course.IsJoined).Select(course => course.Course))
             {
-                _eventsByCourse[course.Id] = await CourseService.GetEventsAsync(course.Id);
+                var courseEvents = await CourseService.GetEventsAsync(course.Id);
+                _eventsByCourse[course.Id] = courseEvents;
+
+                foreach (var courseEvent in courseEvents)
+                {
+                    var registration = await CourseService.GetEventRegistrationForAthleteAsync(
+                        course.Id,
+                        courseEvent.Id,
+                        _userId ?? string.Empty);
+
+                    if (registration?.Status == CourseEventRegistrationStatus.Registered)
+                        _registeredEvents[courseEvent.Id] = registration;
+                }
             }
 
-            if (_courses.Count == 0)
+            var joinedCourses = JoinedCourses.ToList();
+            if (joinedCourses.Count == 0)
             {
                 _selectedCourseId = null;
+                ResetDetailExpansion();
             }
             else if (string.IsNullOrWhiteSpace(_selectedCourseId)
-                     || !_courses.Any(course => course.Course.Id == _selectedCourseId))
+                     || joinedCourses.All(course => course.Course.Id != _selectedCourseId))
             {
-                _selectedCourseId = _courses.First().Course.Id;
+                _selectedCourseId = joinedCourses.First().Course.Id;
+                ResetDetailExpansion();
             }
         }
         catch
@@ -224,6 +368,7 @@
             _errorMessage = "Die Kurse konnten nicht aus Cosmos DB geladen werden.";
             _courses = Array.Empty<CourseOverview>();
             _selectedCourseId = null;
+            ResetDetailExpansion();
         }
         finally
         {
@@ -233,14 +378,21 @@
 
     private void SelectCourse(string courseId)
     {
+        if (_selectedCourseId == courseId)
+            return;
+
         _selectedCourseId = courseId;
+        ResetDetailExpansion();
     }
 
-    private Task ToggleCourseMembershipAsync(CourseOverview overview)
+    private void OpenCoursePicker()
     {
-        return overview.IsJoined
-            ? LeaveCourseAsync(overview.Course.Id, overview.Course.Name)
-            : JoinCourseAsync(overview.Course.Id);
+        _isCoursePickerOpen = true;
+    }
+
+    private void CloseCoursePicker()
+    {
+        _isCoursePickerOpen = false;
     }
 
     private async Task JoinCourseAsync(string courseId)
@@ -250,6 +402,8 @@
             _selectedCourseId = courseId;
             await CourseService.JoinCourseAsync(courseId, _userId ?? string.Empty);
             Snackbar.Add("Du bist dem Kurs beigetreten.", Severity.Success);
+            _isCoursePickerOpen = false;
+            ResetDetailExpansion();
             await LoadCoursesAsync();
         }
         catch (Exception ex)
@@ -269,6 +423,7 @@
             _selectedCourseId = courseId;
             await CourseService.LeaveCourseAsync(courseId, _userId ?? string.Empty);
             Snackbar.Add("Du bist aus dem Kurs ausgetreten.", Severity.Success);
+            ResetDetailExpansion();
             await LoadCoursesAsync();
         }
         catch (Exception ex)
@@ -282,7 +437,22 @@
         try
         {
             await CourseService.RegisterForEventAsync(courseId, eventId, _userId ?? string.Empty);
-            Snackbar.Add("Du bist für das Event angemeldet.", Severity.Success);
+            await LoadCoursesAsync();
+            Snackbar.Add("Du bist fuer das Event angemeldet.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task CancelEventRegistrationAsync(string courseId, string eventId)
+    {
+        try
+        {
+            await CourseService.CancelEventRegistrationAsync(courseId, eventId, _userId ?? string.Empty);
+            await LoadCoursesAsync();
+            Snackbar.Add("Du bist fuer das Event abgemeldet.", Severity.Success);
         }
         catch (Exception ex)
         {
@@ -297,11 +467,39 @@
             .OrderBy(date => date.StartsAt);
     }
 
+    private IEnumerable<CourseDateDocument> GetVisibleDates(IReadOnlyList<CourseDateDocument> dates)
+    {
+        return _showAllDates ? dates : dates.Take(1);
+    }
+
     private IEnumerable<CourseEventDocument> GetEvents(string courseId)
     {
         return _eventsByCourse.TryGetValue(courseId, out var events)
             ? events.OrderBy(courseEvent => courseEvent.StartsAt)
             : Array.Empty<CourseEventDocument>();
+    }
+
+    private IEnumerable<CourseEventDocument> GetVisibleEvents(IReadOnlyList<CourseEventDocument> events)
+    {
+        return _showAllEvents ? events : events.Take(2);
+    }
+
+    private IEnumerable<CourseTrainingPlanPublicationDocument> GetVisibleTrainingPlans(
+        IReadOnlyList<CourseTrainingPlanPublicationDocument> publications)
+    {
+        return _showAllTrainingPlans ? publications : publications.Take(2);
+    }
+
+    private bool IsRegisteredForEvent(string eventId)
+    {
+        return _registeredEvents.ContainsKey(eventId);
+    }
+
+    private void ResetDetailExpansion()
+    {
+        _showAllDates = false;
+        _showAllEvents = false;
+        _showAllTrainingPlans = false;
     }
 
     private static string GetCourseCardStyle(bool isSelected)
@@ -311,6 +509,11 @@
             : "1px solid var(--mud-palette-lines-default)";
 
         return $"flex:0 0 244px; width:244px; min-height:178px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:{border};";
+    }
+
+    private static string GetAddCourseCardStyle()
+    {
+        return "flex:0 0 132px; width:132px; min-height:178px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:1px dashed var(--mud-palette-primary);";
     }
 
     private static string FormatPeriod(CourseDocument course)

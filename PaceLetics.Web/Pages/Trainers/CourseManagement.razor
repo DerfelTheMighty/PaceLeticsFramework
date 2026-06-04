@@ -1,0 +1,908 @@
+@page "/Trainers/courses"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using AthleteDataAccessLibrary.Contracts
+@using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@using PaceLetics.Web.Services
+@using PaceLetics.Web.Services.Courses
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ICourseService CourseService
+@inject ITrainingPlanService TrainingPlanService
+@inject IAthleteData AthleteData
+@inject IJSRuntime JS
+@inject ISnackbar Snackbar
+
+<PageTitle>Kurse verwalten</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    @if (_isLoading)
+    {
+        <LoadingScreen Label="Kurse werden geladen" />
+    }
+    else
+    {
+        <PageHeader Title="Kurse verwalten"
+                    Subtitle="Kurse erstellen, Trainer:innen hinzufuegen und eigene Kurse loeschen." />
+
+        <MudDivider Class="my-4" />
+
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
+        }
+
+        <MudStack Spacing="4">
+            <MudPaper Elevation="1" Class="pa-4">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.h6">Neuen Kurs erstellen</MudText>
+
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" md="6">
+                            <MudTextField Label="Name" @bind-Value="_courseName" Variant="Variant.Outlined" />
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudTextField Label="Level" @bind-Value="_courseLevel" Variant="Variant.Outlined" />
+                        </MudItem>
+                        <MudItem xs="12">
+                            <MudTextField Label="Beschreibung"
+                                          @bind-Value="_courseDescription"
+                                          Variant="Variant.Outlined"
+                                          Lines="3" />
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudDatePicker Label="Start"
+                                           Date="_courseStartDate"
+                                           DateChanged="@(date => _courseStartDate = date)"
+                                           Variant="Variant.Outlined" />
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudDatePicker Label="Ende"
+                                           Date="_courseEndDate"
+                                           DateChanged="@(date => _courseEndDate = date)"
+                                           Variant="Variant.Outlined" />
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudStack Row="true" Justify="Justify.FlexEnd">
+                        <MudButton Color="Color.Primary"
+                                   Variant="Variant.Filled"
+                                   StartIcon="@Icons.Material.Filled.Add"
+                                   OnClick="CreateCourseAsync">
+                            Kurs erstellen
+                        </MudButton>
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+
+            @if (_courses.Count == 0)
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                    Du bist aktuell keinem Kurs als Trainer:in zugeordnet.
+                </MudAlert>
+            }
+            else
+            {
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudStack Spacing="3">
+                        <MudSelect T="string"
+                                   Label="Kurs"
+                                   Value="_selectedCourseId"
+                                   ValueChanged="OnSelectedCourseChanged"
+                                   Variant="Variant.Outlined">
+                            @foreach (var course in _courses)
+                            {
+                                <MudSelectItem T="string" Value="@course.Id">@course.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+
+                        @if (SelectedCourse is not null)
+                        {
+                            var course = SelectedCourse;
+                            var isCreator = IsCreator(course);
+                            var canLeave = IsAssignedTrainer(course) && !isCreator;
+
+                            <MudDivider />
+
+                            <MudStack Spacing="2">
+                                <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                    <MudStack Spacing="1" Style="min-width:0;">
+                                        <MudText Typo="Typo.h6">@course.Name</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary">@course.Description</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPeriod(course)</MudText>
+                                    </MudStack>
+
+                                    @if (isCreator)
+                                    {
+                                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                       Color="Color.Error"
+                                                       OnClick="@(() => DeleteCourseAsync(course))" />
+                                    }
+                                    else if (canLeave)
+                                    {
+                                        <MudButton Size="Size.Small"
+                                                   Color="Color.Default"
+                                                   Variant="Variant.Outlined"
+                                                   StartIcon="@Icons.Material.Filled.Logout"
+                                                   OnClick="@(() => LeaveTrainerAsync(course))">
+                                            Austreten
+                                        </MudButton>
+                                    }
+                                </MudStack>
+
+                                <MudText Typo="Typo.subtitle2">Trainer:innen</MudText>
+                                <MudStack Spacing="1">
+                                    @foreach (var trainer in course.Trainers.OrderBy(trainer => trainer.DisplayName))
+                                    {
+                                        <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
+                                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                <MudStack Spacing="0" Style="min-width:0;">
+                                                    <MudText Typo="Typo.body2">@trainer.DisplayName</MudText>
+                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@trainer.Role</MudText>
+                                                </MudStack>
+
+                                                @if (isCreator && trainer.TrainerUserId != course.CreatedByTrainerUserId)
+                                                {
+                                                    <MudIconButton Icon="@Icons.Material.Filled.PersonRemove"
+                                                                   Color="Color.Default"
+                                                                   OnClick="@(() => RemoveTrainerAsync(course, trainer))" />
+                                                }
+                                            </MudStack>
+                                        </MudPaper>
+                                    }
+                                </MudStack>
+
+                                <MudDivider Class="my-2" />
+
+                                <MudStack Row="true" AlignItems="AlignItems.End" Style="gap:12px; flex-wrap:wrap;">
+                                    <MudSelect T="string"
+                                               Label="Trainer:in hinzufuegen"
+                                               Value="_selectedTrainerToAddId"
+                                               ValueChanged="OnTrainerToAddChanged"
+                                               Variant="Variant.Outlined"
+                                               Style="min-width:260px; flex:1;">
+                                        @foreach (var trainer in AvailableTrainerCandidates)
+                                        {
+                                            <MudSelectItem T="string" Value="@trainer.UserId">@trainer.DisplayName</MudSelectItem>
+                                        }
+                                    </MudSelect>
+
+                                    <MudButton Color="Color.Primary"
+                                               Variant="Variant.Filled"
+                                               StartIcon="@Icons.Material.Filled.PersonAdd"
+                                               Disabled="@string.IsNullOrWhiteSpace(_selectedTrainerToAddId)"
+                                               OnClick="@(() => AddTrainerAsync(course))">
+                                        Hinzufuegen
+                                    </MudButton>
+                                </MudStack>
+
+                                <MudTabs Elevation="0" Rounded="false" Class="mt-2">
+                                    <MudTabPanel Text="Termine">
+                                        <MudStack Spacing="2" Class="pt-2">
+                                            @if (course.Dates.Count == 0)
+                                            {
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Termine.</MudText>
+                                            }
+                                            else
+                                            {
+                                                @foreach (var date in course.Dates.OrderBy(date => date.StartsAt))
+                                                {
+                                                    <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
+                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                            <MudStack Spacing="0" Style="min-width:0;">
+                                                                <MudText Typo="Typo.body2">@date.Title</MudText>
+                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatDateRange(date.StartsAt, date.EndsAt)</MudText>
+                                                                @if (!string.IsNullOrWhiteSpace(date.Location))
+                                                                {
+                                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@date.Location</MudText>
+                                                                }
+                                                            </MudStack>
+                                                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                           Color="Color.Default"
+                                                                           OnClick="@(() => RemoveCourseDateAsync(course, date))" />
+                                                        </MudStack>
+                                                    </MudPaper>
+                                                }
+                                            }
+
+                                            <MudDivider Class="my-2" />
+                                            <MudGrid Spacing="2">
+                                                <MudItem xs="12" md="6">
+                                                    <MudTextField Label="Titel" @bind-Value="_dateTitle" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudTextField Label="Ort" @bind-Value="_dateLocation" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="4">
+                                                    <MudDatePicker Label="Datum" Date="_dateStartDate" DateChanged="@(date => _dateStartDate = date)" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="4">
+                                                    <MudTextField Label="Startzeit" @bind-Value="_dateStartTime" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="4">
+                                                    <MudTextField Label="Endzeit" @bind-Value="_dateEndTime" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12">
+                                                    <MudTextField Label="Notizen" @bind-Value="_dateNotes" Variant="Variant.Outlined" Lines="2" />
+                                                </MudItem>
+                                            </MudGrid>
+                                            <MudStack Row="true" Justify="Justify.FlexEnd">
+                                                <MudButton Color="Color.Primary"
+                                                           Variant="Variant.Filled"
+                                                           StartIcon="@Icons.Material.Filled.Event"
+                                                           OnClick="@(() => AddCourseDateAsync(course))">
+                                                    Termin hinzufuegen
+                                                </MudButton>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudTabPanel>
+
+                                    <MudTabPanel Text="Events">
+                                        <MudStack Spacing="2" Class="pt-2">
+                                            @if (_selectedCourseEvents.Count == 0)
+                                            {
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Events.</MudText>
+                                            }
+                                            else
+                                            {
+                                                @foreach (var courseEvent in _selectedCourseEvents.OrderBy(courseEvent => courseEvent.StartsAt))
+                                                {
+                                                    <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
+                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                                            <MudStack Spacing="0" Style="min-width:0;">
+                                                                <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
+                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatDateRange(courseEvent.StartsAt, courseEvent.EndsAt)</MudText>
+                                                                @if (!string.IsNullOrWhiteSpace(courseEvent.Location))
+                                                                {
+                                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@courseEvent.Location</MudText>
+                                                                }
+                                                            </MudStack>
+                                                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:4px;">
+                                                                <MudButton Size="Size.Small"
+                                                                           Variant="Variant.Text"
+                                                                           Color="Color.Primary"
+                                                                           StartIcon="@Icons.Material.Filled.People"
+                                                                           OnClick="@(() => ToggleEventParticipantsAsync(course, courseEvent))">
+                                                                    @GetParticipantsButtonText(courseEvent.Id)
+                                                                </MudButton>
+                                                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                               Color="Color.Default"
+                                                                               OnClick="@(() => DeleteEventAsync(course, courseEvent))" />
+                                                            </MudStack>
+                                                        </MudStack>
+
+                                                        @if (IsParticipantListOpen(courseEvent.Id))
+                                                        {
+                                                            <MudDivider Class="my-2" />
+
+                                                            @if (_eventParticipants.TryGetValue(courseEvent.Id, out var participants) && participants.Count > 0)
+                                                            {
+                                                                <MudStack Spacing="1">
+                                                                    @foreach (var participant in participants)
+                                                                    {
+                                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                                            <MudText Typo="Typo.body2">@GetParticipantDisplayName(participant.AthleteUserId)</MudText>
+                                                                            <MudText Typo="Typo.caption" Color="Color.Secondary">@participant.RegisteredAt.ToString("dd.MM.yyyy HH:mm")</MudText>
+                                                                        </MudStack>
+                                                                    }
+                                                                </MudStack>
+                                                            }
+                                                            else
+                                                            {
+                                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Teilnehmenden registriert.</MudText>
+                                                            }
+                                                        }
+                                                    </MudPaper>
+                                                }
+                                            }
+
+                                            <MudDivider Class="my-2" />
+                                            <MudGrid Spacing="2">
+                                                <MudItem xs="12" md="6">
+                                                    <MudTextField Label="Titel" @bind-Value="_eventTitle" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudTextField Label="Ort" @bind-Value="_eventLocation" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12">
+                                                    <MudTextField Label="Beschreibung" @bind-Value="_eventDescription" Variant="Variant.Outlined" Lines="2" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="4">
+                                                    <MudDatePicker Label="Datum" Date="_eventStartDate" DateChanged="@(date => _eventStartDate = date)" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="4">
+                                                    <MudTextField Label="Startzeit" @bind-Value="_eventStartTime" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="4">
+                                                    <MudTextField Label="Endzeit" @bind-Value="_eventEndTime" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudNumericField T="int?" Label="Kapazitaet" @bind-Value="_eventCapacity" Variant="Variant.Outlined" Min="1" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudDatePicker Label="Anmeldefrist" Date="_eventRegistrationDeadline" DateChanged="@(date => _eventRegistrationDeadline = date)" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                            </MudGrid>
+                                            <MudStack Row="true" Justify="Justify.FlexEnd">
+                                                <MudButton Color="Color.Primary"
+                                                           Variant="Variant.Filled"
+                                                           StartIcon="@Icons.Material.Filled.EventAvailable"
+                                                           OnClick="@(() => CreateEventAsync(course))">
+                                                    Event hinzufuegen
+                                                </MudButton>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudTabPanel>
+
+                                    <MudTabPanel Text="Trainingsplaene">
+                                        <MudStack Spacing="2" Class="pt-2">
+                                            @if (course.TrainingPlanPublications.Count == 0)
+                                            {
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch kein Plan veroeffentlicht.</MudText>
+                                            }
+                                            else
+                                            {
+                                                @foreach (var publication in course.TrainingPlanPublications.OrderBy(publication => publication.TrainingPlanId))
+                                                {
+                                                    <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
+                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                            <MudStack Spacing="0" Style="min-width:0;">
+                                                                <MudText Typo="Typo.body2">@GetTrainingPlanName(publication.TrainingPlanId)</MudText>
+                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">Seit @publication.PublishedAt.ToString("dd.MM.yyyy")</MudText>
+                                                            </MudStack>
+                                                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                           Color="Color.Default"
+                                                                           OnClick="@(() => RemoveTrainingPlanAsync(course, publication.TrainingPlanId))" />
+                                                        </MudStack>
+                                                    </MudPaper>
+                                                }
+                                            }
+
+                                            <MudDivider Class="my-2" />
+                                            <MudStack Row="true" AlignItems="AlignItems.End" Style="gap:12px; flex-wrap:wrap;">
+                                                <MudSelect T="string"
+                                                           Label="Trainingsplan"
+                                                           Value="_selectedTrainingPlanId"
+                                                           ValueChanged="OnTrainingPlanChanged"
+                                                           Variant="Variant.Outlined"
+                                                           Style="min-width:260px; flex:1;">
+                                                    @foreach (var plan in AvailableTrainingPlans(course))
+                                                    {
+                                                        <MudSelectItem T="string" Value="@plan.Id">@plan.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                                <MudButton Color="Color.Primary"
+                                                           Variant="Variant.Filled"
+                                                           StartIcon="@Icons.Material.Filled.Publish"
+                                                           Disabled="@string.IsNullOrWhiteSpace(_selectedTrainingPlanId)"
+                                                           OnClick="@(() => PublishTrainingPlanAsync(course))">
+                                                    Plan hinzufuegen
+                                                </MudButton>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudTabPanel>
+                                </MudTabs>
+                            </MudStack>
+                        }
+                    </MudStack>
+                </MudPaper>
+            }
+        </MudStack>
+    }
+</MudContainer>
+
+@code {
+    private bool _isLoading = true;
+    private string? _userId;
+    private string _displayName = string.Empty;
+    private string? _errorMessage;
+    private string? _selectedCourseId;
+    private string? _selectedTrainerToAddId;
+    private string? _selectedTrainingPlanId;
+    private List<CourseDocument> _courses = new();
+    private List<TrainerCandidate> _trainerCandidates = new();
+    private List<CourseEventDocument> _selectedCourseEvents = new();
+    private List<TrainingPlan> _trainingPlans = new();
+    private Dictionary<string, string> _athleteDisplayNamesById = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, IReadOnlyList<CourseEventRegistrationDocument>> _eventParticipants = new(StringComparer.OrdinalIgnoreCase);
+    private HashSet<string> _openParticipantLists = new(StringComparer.OrdinalIgnoreCase);
+
+    private string _courseName = string.Empty;
+    private string _courseDescription = string.Empty;
+    private string _courseLevel = string.Empty;
+    private DateTime? _courseStartDate = DateTime.Today;
+    private DateTime? _courseEndDate = DateTime.Today.AddMonths(3);
+
+    private string _dateTitle = string.Empty;
+    private string _dateLocation = string.Empty;
+    private string _dateNotes = string.Empty;
+    private DateTime? _dateStartDate = DateTime.Today;
+    private string _dateStartTime = "18:00";
+    private string _dateEndTime = "19:30";
+
+    private string _eventTitle = string.Empty;
+    private string _eventDescription = string.Empty;
+    private string _eventLocation = string.Empty;
+    private DateTime? _eventStartDate = DateTime.Today;
+    private string _eventStartTime = "18:00";
+    private string _eventEndTime = "19:30";
+    private int? _eventCapacity;
+    private DateTime? _eventRegistrationDeadline;
+
+    private CourseDocument? SelectedCourse =>
+        _courses.FirstOrDefault(course => course.Id == _selectedCourseId)
+            ?? _courses.FirstOrDefault();
+
+    private IEnumerable<TrainerCandidate> AvailableTrainerCandidates =>
+        SelectedCourse is null
+            ? _trainerCandidates
+            : _trainerCandidates.Where(candidate =>
+                SelectedCourse.Trainers.All(trainer => trainer.TrainerUserId != candidate.UserId));
+
+    private IEnumerable<TrainingPlan> AvailableTrainingPlans(CourseDocument course)
+    {
+        var publishedPlanIds = course.TrainingPlanPublications
+            .Select(publication => publication.TrainingPlanId)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        return _trainingPlans.Where(plan => !publishedPlanIds.Contains(plan.Id));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            _errorMessage = null;
+
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            _userId = user.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+
+            if (string.IsNullOrWhiteSpace(_userId))
+                throw new InvalidOperationException("Trainer:in konnte nicht ermittelt werden.");
+
+            var athlete = await AthleteData.GetAthlete(_userId);
+            _displayName = GetDisplayName(athlete, user.Identity?.Name ?? _userId);
+
+            var athletes = (await AthleteData.GetAthletes()).ToList();
+            _athleteDisplayNamesById = athletes
+                .ToDictionary(athlete => athlete.Id, athlete => GetDisplayName(athlete, athlete.Id), StringComparer.OrdinalIgnoreCase);
+
+            _trainerCandidates = athletes
+                .Where(athlete => athlete.Id != _userId
+                    && athlete.Roles.AssignedRoles.Contains(ApplicationRoles.Trainer))
+                .Select(athlete => new TrainerCandidate(athlete.Id, GetDisplayName(athlete, athlete.Id)))
+                .OrderBy(trainer => trainer.DisplayName)
+                .ToList();
+
+            _courses = (await CourseService.GetCoursesForTrainerAsync(_userId)).ToList();
+            _trainingPlans = TrainingPlanService.LoadTrainingPlans().ToList();
+            EnsureSelection();
+            await LoadSelectedCourseEventsAsync();
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message;
+            _courses = new();
+            _selectedCourseEvents = new();
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private void EnsureSelection()
+    {
+        if (_courses.Count == 0)
+        {
+            _selectedCourseId = null;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(_selectedCourseId)
+            || _courses.All(course => course.Id != _selectedCourseId))
+        {
+            _selectedCourseId = _courses.First().Id;
+        }
+    }
+
+    private Task OnSelectedCourseChanged(string courseId)
+    {
+        _selectedCourseId = courseId;
+        _selectedTrainerToAddId = null;
+        _selectedTrainingPlanId = null;
+        _eventParticipants.Clear();
+        _openParticipantLists.Clear();
+        return LoadSelectedCourseEventsAsync();
+    }
+
+    private Task OnTrainerToAddChanged(string trainerUserId)
+    {
+        _selectedTrainerToAddId = trainerUserId;
+        return Task.CompletedTask;
+    }
+
+    private Task OnTrainingPlanChanged(string trainingPlanId)
+    {
+        _selectedTrainingPlanId = trainingPlanId;
+        return Task.CompletedTask;
+    }
+
+    private async Task LoadSelectedCourseEventsAsync()
+    {
+        _selectedCourseEvents = SelectedCourse is null
+            ? new List<CourseEventDocument>()
+            : (await CourseService.GetEventsAsync(SelectedCourse.Id)).ToList();
+
+        _eventParticipants.Clear();
+        _openParticipantLists.Clear();
+    }
+
+    private async Task CreateCourseAsync()
+    {
+        try
+        {
+            var course = await CourseService.CreateCourseAsync(
+                new CourseCreateRequest
+                {
+                    Name = _courseName,
+                    Description = _courseDescription,
+                    Level = _courseLevel,
+                    StartDate = _courseStartDate ?? DateTime.Today,
+                    EndDate = _courseEndDate ?? DateTime.Today,
+                    IsPublished = true
+                },
+                _userId ?? string.Empty,
+                _displayName);
+
+            Snackbar.Add("Kurs wurde erstellt.", Severity.Success);
+            ResetCreateForm();
+            _selectedCourseId = course.Id;
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task DeleteCourseAsync(CourseDocument course)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Kurs \"{course.Name}\" wirklich loeschen?");
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await CourseService.DeleteCourseAsync(course.Id, _userId ?? string.Empty);
+            Snackbar.Add("Kurs wurde geloescht.", Severity.Success);
+            _selectedCourseId = null;
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task AddTrainerAsync(CourseDocument course)
+    {
+        var candidate = _trainerCandidates.FirstOrDefault(trainer => trainer.UserId == _selectedTrainerToAddId);
+        if (candidate is null)
+            return;
+
+        try
+        {
+            await CourseService.AddTrainerAsync(
+                course.Id,
+                candidate.UserId,
+                candidate.DisplayName,
+                _userId ?? string.Empty);
+
+            Snackbar.Add("Trainer:in wurde hinzugefuegt.", Severity.Success);
+            _selectedTrainerToAddId = null;
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task RemoveTrainerAsync(CourseDocument course, CourseTrainerDocument trainer)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"{trainer.DisplayName} aus dem Kurs entfernen?");
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await CourseService.RemoveTrainerAsync(course.Id, trainer.TrainerUserId, _userId ?? string.Empty);
+            Snackbar.Add("Trainer:in wurde entfernt.", Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task LeaveTrainerAsync(CourseDocument course)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Als Trainer:in aus \"{course.Name}\" austreten?");
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await CourseService.RemoveTrainerAsync(course.Id, _userId ?? string.Empty, _userId ?? string.Empty);
+            Snackbar.Add("Du bist als Trainer:in ausgetreten.", Severity.Success);
+            _selectedCourseId = null;
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task AddCourseDateAsync(CourseDocument course)
+    {
+        try
+        {
+            var startsAt = CombineDateAndTime(_dateStartDate, _dateStartTime);
+            var endsAt = CombineDateAndTime(_dateStartDate, _dateEndTime);
+
+            await CourseService.AddCourseDateAsync(
+                course.Id,
+                _dateTitle,
+                startsAt,
+                endsAt,
+                _userId ?? string.Empty,
+                _dateLocation,
+                _dateNotes);
+
+            Snackbar.Add("Termin wurde hinzugefuegt.", Severity.Success);
+            ResetDateForm();
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task RemoveCourseDateAsync(CourseDocument course, CourseDateDocument date)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Termin \"{date.Title}\" entfernen?");
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await CourseService.RemoveCourseDateAsync(course.Id, date.Id, _userId ?? string.Empty);
+            Snackbar.Add("Termin wurde entfernt.", Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task CreateEventAsync(CourseDocument course)
+    {
+        try
+        {
+            var startsAt = CombineDateAndTime(_eventStartDate, _eventStartTime);
+            var endsAt = CombineDateAndTime(_eventStartDate, _eventEndTime);
+
+            await CourseService.CreateEventAsync(
+                course.Id,
+                _eventTitle,
+                startsAt,
+                endsAt,
+                _userId ?? string.Empty,
+                _eventDescription,
+                _eventLocation,
+                _eventCapacity,
+                _eventRegistrationDeadline?.Date);
+
+            Snackbar.Add("Event wurde hinzugefuegt.", Severity.Success);
+            ResetEventForm();
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task DeleteEventAsync(CourseDocument course, CourseEventDocument courseEvent)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Event \"{courseEvent.Title}\" entfernen?");
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await CourseService.DeleteEventAsync(course.Id, courseEvent.Id, _userId ?? string.Empty);
+            Snackbar.Add("Event wurde entfernt.", Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task ToggleEventParticipantsAsync(CourseDocument course, CourseEventDocument courseEvent)
+    {
+        if (_openParticipantLists.Remove(courseEvent.Id))
+            return;
+
+        try
+        {
+            if (!_eventParticipants.ContainsKey(courseEvent.Id))
+            {
+                _eventParticipants[courseEvent.Id] =
+                    await CourseService.GetEventRegistrationsForTrainerAsync(course.Id, courseEvent.Id, _userId ?? string.Empty);
+            }
+
+            _openParticipantLists.Add(courseEvent.Id);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task PublishTrainingPlanAsync(CourseDocument course)
+    {
+        if (string.IsNullOrWhiteSpace(_selectedTrainingPlanId))
+            return;
+
+        try
+        {
+            await CourseService.PublishTrainingPlanAsync(
+                course.Id,
+                _selectedTrainingPlanId,
+                _userId ?? string.Empty);
+
+            Snackbar.Add("Trainingsplan wurde hinzugefuegt.", Severity.Success);
+            _selectedTrainingPlanId = null;
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task RemoveTrainingPlanAsync(CourseDocument course, string trainingPlanId)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Trainingsplan \"{GetTrainingPlanName(trainingPlanId)}\" entfernen?");
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await CourseService.RemoveTrainingPlanPublicationAsync(course.Id, trainingPlanId, _userId ?? string.Empty);
+            Snackbar.Add("Trainingsplan wurde entfernt.", Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private void ResetCreateForm()
+    {
+        _courseName = string.Empty;
+        _courseDescription = string.Empty;
+        _courseLevel = string.Empty;
+        _courseStartDate = DateTime.Today;
+        _courseEndDate = DateTime.Today.AddMonths(3);
+    }
+
+    private void ResetDateForm()
+    {
+        _dateTitle = string.Empty;
+        _dateLocation = string.Empty;
+        _dateNotes = string.Empty;
+        _dateStartDate = DateTime.Today;
+        _dateStartTime = "18:00";
+        _dateEndTime = "19:30";
+    }
+
+    private void ResetEventForm()
+    {
+        _eventTitle = string.Empty;
+        _eventDescription = string.Empty;
+        _eventLocation = string.Empty;
+        _eventStartDate = DateTime.Today;
+        _eventStartTime = "18:00";
+        _eventEndTime = "19:30";
+        _eventCapacity = null;
+        _eventRegistrationDeadline = null;
+    }
+
+    private bool IsCreator(CourseDocument course)
+    {
+        return course.CreatedByTrainerUserId == _userId;
+    }
+
+    private bool IsAssignedTrainer(CourseDocument course)
+    {
+        return course.Trainers.Any(trainer => trainer.TrainerUserId == _userId);
+    }
+
+    private static string FormatPeriod(CourseDocument course)
+    {
+        return $"{course.StartDate:dd.MM.yyyy} bis {course.EndDate:dd.MM.yyyy}";
+    }
+
+    private static string FormatDateRange(DateTime startsAt, DateTime endsAt)
+    {
+        return $"{startsAt:dd.MM.yyyy HH:mm} bis {endsAt:HH:mm} Uhr";
+    }
+
+    private string GetTrainingPlanName(string trainingPlanId)
+    {
+        return _trainingPlans.FirstOrDefault(plan => plan.Id == trainingPlanId)?.Name ?? trainingPlanId;
+    }
+
+    private bool IsParticipantListOpen(string eventId)
+    {
+        return _openParticipantLists.Contains(eventId);
+    }
+
+    private string GetParticipantsButtonText(string eventId)
+    {
+        if (!_eventParticipants.TryGetValue(eventId, out var participants))
+            return "Teilnehmende";
+
+        return $"Teilnehmende ({participants.Count})";
+    }
+
+    private string GetParticipantDisplayName(string athleteUserId)
+    {
+        return _athleteDisplayNamesById.TryGetValue(athleteUserId, out var displayName)
+            ? displayName
+            : athleteUserId;
+    }
+
+    private static DateTime CombineDateAndTime(DateTime? date, string time)
+    {
+        if (date is null)
+            throw new InvalidOperationException("Bitte ein Datum auswaehlen.");
+
+        if (!TimeSpan.TryParse(time, out var parsedTime))
+            throw new InvalidOperationException("Bitte eine Uhrzeit im Format HH:mm eingeben.");
+
+        return date.Value.Date.Add(parsedTime);
+    }
+
+    private static string GetDisplayName(AthleteModel? athlete, string fallback)
+    {
+        if (!string.IsNullOrWhiteSpace(athlete?.PublicProfile?.PublicUserName)
+            && athlete.PublicProfile.PublicUserName != "NA")
+        {
+            return athlete.PublicProfile.PublicUserName;
+        }
+
+        if (!string.IsNullOrWhiteSpace(athlete?.Name) && athlete.Name != "NA")
+            return athlete.Name;
+
+        return fallback;
+    }
+
+    private sealed record TrainerCandidate(string UserId, string DisplayName);
+}

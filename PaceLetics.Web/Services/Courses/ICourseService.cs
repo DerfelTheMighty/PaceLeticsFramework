@@ -4,9 +4,15 @@ public interface ICourseService
 {
     Task<IReadOnlyList<CourseOverview>> GetCoursesForAthleteAsync(string athleteUserId);
 
+    Task<IReadOnlyList<CourseDocument>> GetCoursesForTrainerAsync(string trainerUserId);
+
     Task<IReadOnlyList<CourseDocument>> GetJoinedCoursesAsync(string athleteUserId);
 
     Task<IReadOnlyList<string>> GetPublishedTrainingPlanIdsForAthleteAsync(string athleteUserId);
+
+    Task<CourseDocument> CreateCourseAsync(CourseCreateRequest request, string creatorTrainerUserId, string creatorDisplayName);
+
+    Task DeleteCourseAsync(string courseId, string requestingTrainerUserId);
 
     Task<CourseEnrollmentDocument> JoinCourseAsync(string courseId, string athleteUserId);
 
@@ -14,7 +20,24 @@ public interface ICourseService
 
     Task AssignTrainerAsync(string courseId, string trainerUserId, string displayName);
 
+    Task AddTrainerAsync(string courseId, string trainerUserId, string displayName, string requestingTrainerUserId);
+
+    Task RemoveTrainerAsync(string courseId, string trainerUserId, string requestingTrainerUserId);
+
+    Task<CourseDateDocument> AddCourseDateAsync(
+        string courseId,
+        string title,
+        DateTime startsAt,
+        DateTime endsAt,
+        string requestingTrainerUserId,
+        string location = "",
+        string notes = "");
+
+    Task RemoveCourseDateAsync(string courseId, string dateId, string requestingTrainerUserId);
+
     Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null);
+
+    Task RemoveTrainingPlanPublicationAsync(string courseId, string trainingPlanId, string requestingTrainerUserId);
 
     Task<IReadOnlyList<CourseEventDocument>> GetEventsAsync(string courseId);
 
@@ -29,5 +52,19 @@ public interface ICourseService
         int? capacity = null,
         DateTime? registrationDeadline = null);
 
+    Task DeleteEventAsync(string courseId, string eventId, string requestingTrainerUserId);
+
+    Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsForTrainerAsync(
+        string courseId,
+        string eventId,
+        string requestingTrainerUserId);
+
+    Task<CourseEventRegistrationDocument?> GetEventRegistrationForAthleteAsync(
+        string courseId,
+        string eventId,
+        string athleteUserId);
+
     Task<CourseEventRegistrationDocument> RegisterForEventAsync(string courseId, string eventId, string athleteUserId);
+
+    Task<CourseEventRegistrationDocument> CancelEventRegistrationAsync(string courseId, string eventId, string athleteUserId);
 }

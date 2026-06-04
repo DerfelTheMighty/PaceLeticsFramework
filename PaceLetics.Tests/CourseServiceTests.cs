@@ -5,6 +5,341 @@ namespace PaceLetics.Tests;
 public sealed class CourseServiceTests
 {
     [Fact]
+    public async Task CreateCourse_AddsCreatorAsTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        Assert.Equal("trainer-1", course.CreatedByTrainerUserId);
+        var trainer = Assert.Single(course.Trainers);
+        Assert.Equal("trainer-1", trainer.TrainerUserId);
+        Assert.Equal("Coach", trainer.DisplayName);
+    }
+
+    [Fact]
+    public async Task DeleteCourse_RequiresCreator()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            service.DeleteCourseAsync(course.Id, "trainer-2"));
+
+        Assert.NotNull(await repository.GetCourseAsync(course.Id));
+    }
+
+    [Fact]
+    public async Task DeleteCourse_RemovesCourseForCreator()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        await service.DeleteCourseAsync(course.Id, "trainer-1");
+
+        Assert.Null(await repository.GetCourseAsync(course.Id));
+    }
+
+    [Fact]
+    public async Task AddTrainer_AddsTrainerWhenRequesterCanManageMembers()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        await service.AddTrainerAsync(course.Id, "trainer-2", "Second Coach", "trainer-1");
+        var updatedCourse = await repository.GetCourseAsync(course.Id);
+
+        Assert.NotNull(updatedCourse);
+        Assert.Contains(updatedCourse.Trainers, trainer => trainer.TrainerUserId == "trainer-2");
+    }
+
+    [Fact]
+    public async Task RemoveTrainer_AllowsAddedTrainerToLeave()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+        await service.AddTrainerAsync(course.Id, "trainer-2", "Second Coach", "trainer-1");
+
+        await service.RemoveTrainerAsync(course.Id, "trainer-2", "trainer-2");
+        var updatedCourse = await repository.GetCourseAsync(course.Id);
+
+        Assert.NotNull(updatedCourse);
+        Assert.DoesNotContain(updatedCourse.Trainers, trainer => trainer.TrainerUserId == "trainer-2");
+    }
+
+    [Fact]
+    public async Task RemoveTrainer_DoesNotAllowCreatorToLeave()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            service.RemoveTrainerAsync(course.Id, "trainer-1", "trainer-1"));
+    }
+
+    [Fact]
+    public async Task AddCourseDate_AddsDateForAssignedTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        var date = await service.AddCourseDateAsync(
+            course.Id,
+            "Techniktraining",
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(1).AddHours(1),
+            "trainer-1",
+            "Stadion");
+        var updatedCourse = await repository.GetCourseAsync(course.Id);
+
+        Assert.NotNull(updatedCourse);
+        Assert.Contains(updatedCourse.Dates, existing => existing.Id == date.Id && existing.Location == "Stadion");
+    }
+
+    [Fact]
+    public async Task AddCourseDate_RequiresTrainerWithEventPermissions()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            service.AddCourseDateAsync(
+                course.Id,
+                "Techniktraining",
+                DateTime.UtcNow.AddDays(1),
+                DateTime.UtcNow.AddDays(1).AddHours(1),
+                "trainer-2"));
+    }
+
+    [Fact]
+    public async Task CreateEvent_AddsEventForAssignedTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        var courseEvent = await service.CreateEventAsync(
+            course.Id,
+            "Startanalyse",
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(1).AddHours(1),
+            "trainer-1");
+
+        Assert.Contains(repository.Events, existing => existing.Id == courseEvent.Id);
+    }
+
+    [Fact]
+    public async Task DeleteEvent_RemovesEventAndRegistrations()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+        await service.JoinCourseAsync(course.Id, "athlete-1");
+        var courseEvent = await service.CreateEventAsync(
+            course.Id,
+            "Startanalyse",
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(1).AddHours(1),
+            "trainer-1");
+        await service.RegisterForEventAsync(course.Id, courseEvent.Id, "athlete-1");
+
+        await service.DeleteEventAsync(course.Id, courseEvent.Id, "trainer-1");
+
+        Assert.DoesNotContain(repository.Events, existing => existing.Id == courseEvent.Id);
+        Assert.Empty(await repository.GetEventRegistrationsAsync(course.Id, courseEvent.Id));
+    }
+
+    [Fact]
+    public async Task GetEventRegistrationsForTrainer_ReturnsRegisteredParticipantsForAssignedTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+        await service.JoinCourseAsync(course.Id, "athlete-1");
+        await service.JoinCourseAsync(course.Id, "athlete-2");
+        var courseEvent = await service.CreateEventAsync(
+            course.Id,
+            "Startanalyse",
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(1).AddHours(1),
+            "trainer-1");
+        await service.RegisterForEventAsync(course.Id, courseEvent.Id, "athlete-1");
+        await service.RegisterForEventAsync(course.Id, courseEvent.Id, "athlete-2");
+        await service.LeaveCourseAsync(course.Id, "athlete-2");
+
+        var registrations = await service.GetEventRegistrationsForTrainerAsync(course.Id, courseEvent.Id, "trainer-1");
+
+        var registration = Assert.Single(registrations);
+        Assert.Equal("athlete-1", registration.AthleteUserId);
+    }
+
+    [Fact]
+    public async Task GetEventRegistrationsForTrainer_RequiresAssignedTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+        var courseEvent = await service.CreateEventAsync(
+            course.Id,
+            "Startanalyse",
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(1).AddHours(1),
+            "trainer-1");
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            service.GetEventRegistrationsForTrainerAsync(course.Id, courseEvent.Id, "trainer-2"));
+    }
+
+    [Fact]
+    public async Task PublishTrainingPlan_AddsPublicationForAssignedTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        await service.PublishTrainingPlanAsync(course.Id, "plan-1", "trainer-1");
+        var updatedCourse = await repository.GetCourseAsync(course.Id);
+
+        Assert.NotNull(updatedCourse);
+        Assert.Contains(updatedCourse.TrainingPlanPublications, publication => publication.TrainingPlanId == "plan-1");
+    }
+
+    [Fact]
+    public async Task RemoveTrainingPlanPublication_RemovesPublicationForAssignedTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+        await service.PublishTrainingPlanAsync(course.Id, "plan-1", "trainer-1");
+
+        await service.RemoveTrainingPlanPublicationAsync(course.Id, "plan-1", "trainer-1");
+        var updatedCourse = await repository.GetCourseAsync(course.Id);
+
+        Assert.NotNull(updatedCourse);
+        Assert.Empty(updatedCourse.TrainingPlanPublications);
+    }
+
+    [Fact]
     public async Task JoinCourse_CreatesActiveEnrollment()
     {
         var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
@@ -68,6 +403,68 @@ public sealed class CourseServiceTests
         Assert.NotNull(registration);
         Assert.Equal(CourseEventRegistrationStatus.Cancelled, registration.Status);
         Assert.NotNull(registration.CancelledAt);
+    }
+
+    [Fact]
+    public async Task CancelEventRegistration_CancelsActiveRegistration()
+    {
+        var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
+        repository.Events.Add(new CourseEventDocument
+        {
+            Id = "event-1",
+            CourseId = "course-1",
+            Title = "Startanalyse",
+            StartsAt = DateTime.UtcNow.AddDays(1),
+            EndsAt = DateTime.UtcNow.AddDays(1).AddHours(1)
+        });
+        var service = new CourseService(repository);
+        await service.JoinCourseAsync("course-1", "athlete-1");
+        await service.RegisterForEventAsync("course-1", "event-1", "athlete-1");
+
+        var registration = await service.CancelEventRegistrationAsync("course-1", "event-1", "athlete-1");
+
+        Assert.Equal(CourseEventRegistrationStatus.Cancelled, registration.Status);
+        Assert.NotNull(registration.CancelledAt);
+    }
+
+    [Fact]
+    public async Task CancelEventRegistration_RequiresActiveRegistration()
+    {
+        var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
+        repository.Events.Add(new CourseEventDocument
+        {
+            Id = "event-1",
+            CourseId = "course-1",
+            Title = "Startanalyse",
+            StartsAt = DateTime.UtcNow.AddDays(1),
+            EndsAt = DateTime.UtcNow.AddDays(1).AddHours(1)
+        });
+        var service = new CourseService(repository);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            service.CancelEventRegistrationAsync("course-1", "event-1", "athlete-1"));
+    }
+
+    [Fact]
+    public async Task GetEventRegistrationForAthlete_ReturnsRegistration()
+    {
+        var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
+        repository.Events.Add(new CourseEventDocument
+        {
+            Id = "event-1",
+            CourseId = "course-1",
+            Title = "Startanalyse",
+            StartsAt = DateTime.UtcNow.AddDays(1),
+            EndsAt = DateTime.UtcNow.AddDays(1).AddHours(1)
+        });
+        var service = new CourseService(repository);
+        await service.JoinCourseAsync("course-1", "athlete-1");
+        await service.RegisterForEventAsync("course-1", "event-1", "athlete-1");
+
+        var registration = await service.GetEventRegistrationForAthleteAsync("course-1", "event-1", "athlete-1");
+
+        Assert.NotNull(registration);
+        Assert.Equal(CourseEventRegistrationStatus.Registered, registration.Status);
     }
 
     [Fact]
@@ -140,6 +537,15 @@ public sealed class CourseServiceTests
             return Task.CompletedTask;
         }
 
+        public Task DeleteCourseAsync(string courseId)
+        {
+            _courses.RemoveAll(existing => existing.Id == courseId);
+            _enrollments.RemoveAll(existing => existing.CourseId == courseId);
+            Events.RemoveAll(existing => existing.CourseId == courseId);
+            _registrations.RemoveAll(existing => existing.CourseId == courseId);
+            return Task.CompletedTask;
+        }
+
         public Task<IReadOnlyList<CourseEnrollmentDocument>> GetEnrollmentsForAthleteAsync(string athleteUserId)
         {
             return Task.FromResult<IReadOnlyList<CourseEnrollmentDocument>>(
@@ -180,8 +586,18 @@ public sealed class CourseServiceTests
 
         public Task UpsertEventAsync(CourseEventDocument courseEvent)
         {
+            if (string.IsNullOrWhiteSpace(courseEvent.Id))
+                courseEvent.Id = Guid.NewGuid().ToString("N");
+
             Events.RemoveAll(existing => existing.Id == courseEvent.Id);
             Events.Add(courseEvent);
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteEventAsync(string courseId, string eventId)
+        {
+            Events.RemoveAll(existing => existing.CourseId == courseId && existing.Id == eventId);
+            _registrations.RemoveAll(existing => existing.CourseId == courseId && existing.EventId == eventId);
             return Task.CompletedTask;
         }
 

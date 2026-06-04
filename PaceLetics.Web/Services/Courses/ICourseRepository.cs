@@ -8,6 +8,8 @@ public interface ICourseRepository
 
     Task UpsertCourseAsync(CourseDocument course);
 
+    Task DeleteCourseAsync(string courseId);
+
     Task<IReadOnlyList<CourseEnrollmentDocument>> GetEnrollmentsForAthleteAsync(string athleteUserId);
 
     Task<IReadOnlyList<CourseEnrollmentDocument>> GetEnrollmentsForCourseAsync(string courseId);
@@ -21,6 +23,8 @@ public interface ICourseRepository
     Task<CourseEventDocument?> GetEventAsync(string courseId, string eventId);
 
     Task UpsertEventAsync(CourseEventDocument courseEvent);
+
+    Task DeleteEventAsync(string courseId, string eventId);
 
     Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsAsync(string courseId, string eventId);
 

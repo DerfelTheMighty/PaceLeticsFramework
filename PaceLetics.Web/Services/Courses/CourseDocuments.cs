@@ -33,10 +33,22 @@ public sealed class CourseDocument : IQueryItem
     public string Level { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public string CreatedByTrainerUserId { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
     public bool IsPublished { get; set; } = true;
     public List<CourseDateDocument> Dates { get; set; } = new();
     public List<CourseTrainerDocument> Trainers { get; set; } = new();
     public List<CourseTrainingPlanPublicationDocument> TrainingPlanPublications { get; set; } = new();
+}
+
+public sealed class CourseCreateRequest
+{
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Level { get; set; } = string.Empty;
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public bool IsPublished { get; set; } = true;
 }
 
 public sealed class CourseDateDocument
