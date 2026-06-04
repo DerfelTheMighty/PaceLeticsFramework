@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.Web.Data;
@@ -33,13 +34,15 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IAthleteData _athleteData;
+        private readonly IStringLocalizer<RegisterModel> _localizer;
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IAthleteData ad)
+            IAthleteData ad,
+            IStringLocalizer<RegisterModel> localizer)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +51,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _athleteData = ad;
+            _localizer = localizer;
         }
 
         /// <summary>
@@ -134,7 +138,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                 if (!string.IsNullOrWhiteSpace(email)
                     && await _userManager.FindByEmailAsync(email) is not null)
                 {
-                    ModelState.AddModelError("Input.Email", "Email is already in use.");
+                    ModelState.AddModelError("Input.Email", _localizer["EmailAlreadyInUse"]);
                     return Page();
                 }
 
@@ -179,8 +183,10 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        await _emailSender.SendEmailAsync(
+                            email,
+                            _localizer["ConfirmEmailSubject"],
+                            string.Format(_localizer["ConfirmEmailBody"], HtmlEncoder.Default.Encode(callbackUrl)));
                     }
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount && !string.IsNullOrWhiteSpace(email))

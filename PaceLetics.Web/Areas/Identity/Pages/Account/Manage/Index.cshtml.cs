@@ -13,6 +13,7 @@ using AthleteDataAccessLibrary.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.Web.Configuration;
@@ -26,17 +27,20 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly TrainerVerificationOptions _trainerVerificationOptions;
         private readonly IAthleteData _athleteData;
+        private readonly IStringLocalizer<IndexModel> _localizer;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<TrainerVerificationOptions> trainerVerificationOptions,
-            IAthleteData athleteData)
+            IAthleteData athleteData,
+            IStringLocalizer<IndexModel> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _trainerVerificationOptions = trainerVerificationOptions.Value;
             _athleteData = athleteData;
+            _localizer = localizer;
         }
 
         [Display(Name = "Name")]
@@ -80,7 +84,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             var publicProfile = athlete.PublicProfile;
 
             Username = userName;
-            Roles = string.Join(", ", roles.Select(ApplicationRoles.GetDisplayName));
+            Roles = string.Join(", ", roles.Select(GetRoleDisplayName));
             IsTrainer = roles.Contains(ApplicationRoles.Trainer);
 
             Input = new InputModel
@@ -116,7 +120,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             {
                 if (await PublicUserNameExistsAsync(publicUserName, user.Id))
                 {
-                    ModelState.AddModelError("Input.PublicUserName", "Dieser oeffentliche Nutzername ist bereits vergeben.");
+                    ModelState.AddModelError("Input.PublicUserName", _localizer["PublicUserNameExists"]);
                 }
             }
 
@@ -158,7 +162,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             await _athleteData.UpdateAthlete(athlete);
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = _localizer["ProfileUpdated"];
             return RedirectToPage();
         }
 
@@ -171,13 +175,13 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
 
             if (string.IsNullOrWhiteSpace(_trainerVerificationOptions.Code))
             {
-                ModelState.AddModelError("Input.TrainerVerificationCode", "Die Trainer-Verifikation ist noch nicht konfiguriert.");
+                ModelState.AddModelError("Input.TrainerVerificationCode", _localizer["TrainerVerificationNotConfigured"]);
                 return false;
             }
 
             if (!IsVerificationCodeValid(verificationCode, _trainerVerificationOptions.Code))
             {
-                ModelState.AddModelError("Input.TrainerVerificationCode", "Der Trainer-Verifikationscode ist ungueltig.");
+                ModelState.AddModelError("Input.TrainerVerificationCode", _localizer["TrainerVerificationInvalid"]);
                 return false;
             }
 
@@ -312,6 +316,16 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             return roles.Contains(ApplicationRoles.Trainer)
                 ? ApplicationRoles.Trainer
                 : ApplicationRoles.Athlete;
+        }
+
+        private string GetRoleDisplayName(string role)
+        {
+            return role switch
+            {
+                ApplicationRoles.Athlete => _localizer["RoleAthlete"],
+                ApplicationRoles.Trainer => _localizer["RoleTrainer"],
+                _ => role
+            };
         }
 
         private static string NormalizePublicUserName(string value)

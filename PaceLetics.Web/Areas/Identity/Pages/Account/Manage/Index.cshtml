@@ -9,7 +9,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="mb-0">@ViewData["Title"]</h3>
-    <a class="btn btn-outline-secondary" href="/">Zur Hauptansicht</a>
+    <a class="btn btn-outline-secondary" href="/">@Localizer["BackToApp"]</a>
 </div>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
@@ -21,36 +21,36 @@
                 <label asp-for="Username" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
-                <input value="@Model.Roles" class="form-control" placeholder="Rolle" disabled />
-                <label class="form-label">Rolle</label>
+                <input value="@Model.Roles" class="form-control" placeholder="@Localizer["Role"]" disabled />
+                <label class="form-label">@Localizer["Role"]</label>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.PublicUserName" class="form-control" placeholder="pace-runner" />
-                <label asp-for="Input.PublicUserName" class="form-label"></label>
+                <label asp-for="Input.PublicUserName" class="form-label">@Localizer["PublicUserName"]</label>
                 <span asp-validation-for="Input.PublicUserName" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.ProfileImageUrl" class="form-control" placeholder="https://example.com/profile.jpg" />
-                <label asp-for="Input.ProfileImageUrl" class="form-label"></label>
+                <label asp-for="Input.ProfileImageUrl" class="form-label">@Localizer["ProfileImageUrl"]</label>
                 <span asp-validation-for="Input.ProfileImageUrl" class="text-danger"></span>
             </div>
             <div class="form-check form-switch mb-4">
                 <input asp-for="Input.IsPublicProfileVisible" class="form-check-input" />
-                <label asp-for="Input.IsPublicProfileVisible" class="form-check-label"></label>
+                <label asp-for="Input.IsPublicProfileVisible" class="form-check-label">@Localizer["IsPublicProfileVisible"]</label>
             </div>
             @if (!Model.IsTrainer)
             {
                 <div class="mud-divider my-4"></div>
-                <h4>Trainerrolle beantragen</h4>
-                <p class="text-muted">Mit einem gueltigen Verifikationscode wird die Trainerrolle zusaetzlich zur Athlet:innenrolle aktiviert.</p>
+                <h4>@Localizer["RequestTrainerRole"]</h4>
+                <p class="text-muted">@Localizer["RequestTrainerRoleDescription"]</p>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.TrainerVerificationCode" class="form-control" placeholder="Code" autocomplete="off" />
-                    <label asp-for="Input.TrainerVerificationCode" class="form-label"></label>
+                    <label asp-for="Input.TrainerVerificationCode" class="form-label">@Localizer["TrainerVerificationCode"]</label>
                     <span asp-validation-for="Input.TrainerVerificationCode" class="text-danger"></span>
                 </div>
             }
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">@Localizer["Save"]</button>
-            <a class="w-100 btn btn-link mt-2" href="/">Zur Hauptansicht</a>
+            <a class="w-100 btn btn-link mt-2" href="/">@Localizer["BackToApp"]</a>
         </form>
     </div>
 </div>

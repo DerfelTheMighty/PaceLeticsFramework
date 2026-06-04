@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -7,6 +7,7 @@ using AthleteDataAccessLibrary.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using PaceLetics.Web.Data;
 
 namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
@@ -17,16 +18,19 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
         private readonly IAthleteData _athleteData;
+        private readonly IStringLocalizer<DeletePersonalDataModel> _localizer;
         public DeletePersonalDataModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IAthleteData ad,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            IStringLocalizer<DeletePersonalDataModel> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _athleteData = ad;
+            _localizer = localizer;
         }
 
         /// <summary>
@@ -82,7 +86,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    ModelState.AddModelError(string.Empty, _localizer["IncorrectPassword"]);
                     return Page();
                 }
             }

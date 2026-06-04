@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Manage courses</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading courses</value></data>
+  <data name="Title" xml:space="preserve"><value>Manage courses</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Create courses, add coaches, and delete your own courses.</value></data>
+  <data name="CreateCourseTitle" xml:space="preserve"><value>Create a new course</value></data>
+  <data name="Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Level" xml:space="preserve"><value>Level</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="End" xml:space="preserve"><value>End</value></data>
+  <data name="CreateCourse" xml:space="preserve"><value>Create course</value></data>
+  <data name="NoTrainerCourses" xml:space="preserve"><value>You are not assigned to any course as a coach.</value></data>
+  <data name="Course" xml:space="preserve"><value>Course</value></data>
+  <data name="Leave" xml:space="preserve"><value>Leave</value></data>
+  <data name="Trainers" xml:space="preserve"><value>Coaches</value></data>
+  <data name="AddTrainerLabel" xml:space="preserve"><value>Add coach</value></data>
+  <data name="Add" xml:space="preserve"><value>Add</value></data>
+  <data name="Dates" xml:space="preserve"><value>Dates</value></data>
+  <data name="NoDates" xml:space="preserve"><value>No dates yet.</value></data>
+  <data name="EventTitle" xml:space="preserve"><value>Title</value></data>
+  <data name="Location" xml:space="preserve"><value>Location</value></data>
+  <data name="Date" xml:space="preserve"><value>Date</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Start time</value></data>
+  <data name="EndTime" xml:space="preserve"><value>End time</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notes</value></data>
+  <data name="AddDate" xml:space="preserve"><value>Add date</value></data>
+  <data name="Events" xml:space="preserve"><value>Events</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>No events yet.</value></data>
+  <data name="NoParticipants" xml:space="preserve"><value>No participants registered yet.</value></data>
+  <data name="Capacity" xml:space="preserve"><value>Capacity</value></data>
+  <data name="RegistrationDeadline" xml:space="preserve"><value>Registration deadline</value></data>
+  <data name="AddEvent" xml:space="preserve"><value>Add event</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>Training plans</value></data>
+  <data name="NoPublishedPlan" xml:space="preserve"><value>No plan published yet.</value></data>
+  <data name="TrainingPlan" xml:space="preserve"><value>Training plan</value></data>
+  <data name="AddPlan" xml:space="preserve"><value>Add plan</value></data>
+  <data name="Participants" xml:space="preserve"><value>Participants</value></data>
+  <data name="ParticipantsCount" xml:space="preserve"><value>Participants ({0})</value></data>
+  <data name="CreateCourseSuccess" xml:space="preserve"><value>Course was created.</value></data>
+  <data name="DeleteCourseConfirm" xml:space="preserve"><value>Really delete course "{0}"?</value></data>
+  <data name="DeleteCourseSuccess" xml:space="preserve"><value>Course was deleted.</value></data>
+  <data name="AddTrainerSuccess" xml:space="preserve"><value>Coach was added.</value></data>
+  <data name="RemoveTrainerConfirm" xml:space="preserve"><value>Remove {0} from the course?</value></data>
+  <data name="RemoveTrainerSuccess" xml:space="preserve"><value>Coach was removed.</value></data>
+  <data name="LeaveTrainerConfirm" xml:space="preserve"><value>Leave "{0}" as a coach?</value></data>
+  <data name="LeaveTrainerSuccess" xml:space="preserve"><value>You left as a coach.</value></data>
+  <data name="AddDateSuccess" xml:space="preserve"><value>Date was added.</value></data>
+  <data name="RemoveDateConfirm" xml:space="preserve"><value>Remove date "{0}"?</value></data>
+  <data name="RemoveDateSuccess" xml:space="preserve"><value>Date was removed.</value></data>
+  <data name="AddEventSuccess" xml:space="preserve"><value>Event was added.</value></data>
+  <data name="DeleteEventConfirm" xml:space="preserve"><value>Remove event "{0}"?</value></data>
+  <data name="DeleteEventSuccess" xml:space="preserve"><value>Event was removed.</value></data>
+  <data name="PublishPlanSuccess" xml:space="preserve"><value>Training plan was added.</value></data>
+  <data name="RemovePlanConfirm" xml:space="preserve"><value>Remove training plan "{0}"?</value></data>
+  <data name="RemovePlanSuccess" xml:space="preserve"><value>Training plan was removed.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:MM/dd/yyyy} to {1:MM/dd/yyyy}</value></data>
+  <data name="DateRange" xml:space="preserve"><value>{0:MM/dd/yyyy HH:mm} to {1:HH:mm}</value></data>
+  <data name="ValidationDateRequired" xml:space="preserve"><value>Please select a date.</value></data>
+  <data name="ValidationTimeFormat" xml:space="preserve"><value>Please enter a time in HH:mm format.</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>The coach could not be resolved.</value></data>
+</root>

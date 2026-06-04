@@ -4,7 +4,8 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="MiniCard_Interval" xml:space="preserve"><value>Interval</value></data>
-  <data name="MiniCard_Run" xml:space="preserve"><value>Run</value></data>
-  <data name="TrainingCard_Title" xml:space="preserve"><value>Training</value></data>
+  <data name="ConfirmEmailSubject" xml:space="preserve"><value>E-Mail bestaetigen</value></data>
+  <data name="ConfirmEmailBody" xml:space="preserve"><value>Bitte bestaetige deinen Account mit einem Klick auf &lt;a href='{0}'&gt;diesen Link&lt;/a&gt;.</value></data>
+  <data name="ConfirmationSent" xml:space="preserve"><value>Bestaetigung gesendet. Bitte E-Mails pruefen.</value></data>
+  <data name="EmailUnchanged" xml:space="preserve"><value>Das ist bereits die gleiche Adresse.</value></data>
 </root>

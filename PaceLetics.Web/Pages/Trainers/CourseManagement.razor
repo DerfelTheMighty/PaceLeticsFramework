@@ -11,18 +11,19 @@
 @inject IAthleteData AthleteData
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
+@inject IStringLocalizer<CourseManagement> L
 
-<PageTitle>Kurse verwalten</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
     @if (_isLoading)
     {
-        <LoadingScreen Label="Kurse werden geladen" />
+        <LoadingScreen Label="@L["Loading"]" />
     }
     else
     {
-        <PageHeader Title="Kurse verwalten"
-                    Subtitle="Kurse erstellen, Trainer:innen hinzufuegen und eigene Kurse loeschen." />
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
 
@@ -34,29 +35,29 @@
         <MudStack Spacing="4">
             <MudPaper Elevation="1" Class="pa-4">
                 <MudStack Spacing="3">
-                    <MudText Typo="Typo.h6">Neuen Kurs erstellen</MudText>
+                    <MudText Typo="Typo.h6">@L["CreateCourseTitle"]</MudText>
 
                     <MudGrid Spacing="2">
                         <MudItem xs="12" md="6">
-                            <MudTextField Label="Name" @bind-Value="_courseName" Variant="Variant.Outlined" />
+                            <MudTextField Label="@L["Name"]" @bind-Value="_courseName" Variant="Variant.Outlined" />
                         </MudItem>
                         <MudItem xs="12" md="6">
-                            <MudTextField Label="Level" @bind-Value="_courseLevel" Variant="Variant.Outlined" />
+                            <MudTextField Label="@L["Level"]" @bind-Value="_courseLevel" Variant="Variant.Outlined" />
                         </MudItem>
                         <MudItem xs="12">
-                            <MudTextField Label="Beschreibung"
+                            <MudTextField Label="@L["Description"]"
                                           @bind-Value="_courseDescription"
                                           Variant="Variant.Outlined"
                                           Lines="3" />
                         </MudItem>
                         <MudItem xs="12" md="6">
-                            <MudDatePicker Label="Start"
+                            <MudDatePicker Label="@L["Start"]"
                                            Date="_courseStartDate"
                                            DateChanged="@(date => _courseStartDate = date)"
                                            Variant="Variant.Outlined" />
                         </MudItem>
                         <MudItem xs="12" md="6">
-                            <MudDatePicker Label="Ende"
+                            <MudDatePicker Label="@L["End"]"
                                            Date="_courseEndDate"
                                            DateChanged="@(date => _courseEndDate = date)"
                                            Variant="Variant.Outlined" />
@@ -68,7 +69,7 @@
                                    Variant="Variant.Filled"
                                    StartIcon="@Icons.Material.Filled.Add"
                                    OnClick="CreateCourseAsync">
-                            Kurs erstellen
+                            @L["CreateCourse"]
                         </MudButton>
                     </MudStack>
                 </MudStack>
@@ -77,7 +78,7 @@
             @if (_courses.Count == 0)
             {
                 <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                    Du bist aktuell keinem Kurs als Trainer:in zugeordnet.
+                    @L["NoTrainerCourses"]
                 </MudAlert>
             }
             else
@@ -85,7 +86,7 @@
                 <MudPaper Elevation="1" Class="pa-4">
                     <MudStack Spacing="3">
                         <MudSelect T="string"
-                                   Label="Kurs"
+                                   Label="@L["Course"]"
                                    Value="_selectedCourseId"
                                    ValueChanged="OnSelectedCourseChanged"
                                    Variant="Variant.Outlined">
@@ -124,12 +125,12 @@
                                                    Variant="Variant.Outlined"
                                                    StartIcon="@Icons.Material.Filled.Logout"
                                                    OnClick="@(() => LeaveTrainerAsync(course))">
-                                            Austreten
+                                            @L["Leave"]
                                         </MudButton>
                                     }
                                 </MudStack>
 
-                                <MudText Typo="Typo.subtitle2">Trainer:innen</MudText>
+                                <MudText Typo="Typo.subtitle2">@L["Trainers"]</MudText>
                                 <MudStack Spacing="1">
                                     @foreach (var trainer in course.Trainers.OrderBy(trainer => trainer.DisplayName))
                                     {
@@ -155,7 +156,7 @@
 
                                 <MudStack Row="true" AlignItems="AlignItems.End" Style="gap:12px; flex-wrap:wrap;">
                                     <MudSelect T="string"
-                                               Label="Trainer:in hinzufuegen"
+                                               Label="@L["AddTrainerLabel"]"
                                                Value="_selectedTrainerToAddId"
                                                ValueChanged="OnTrainerToAddChanged"
                                                Variant="Variant.Outlined"
@@ -171,16 +172,16 @@
                                                StartIcon="@Icons.Material.Filled.PersonAdd"
                                                Disabled="@string.IsNullOrWhiteSpace(_selectedTrainerToAddId)"
                                                OnClick="@(() => AddTrainerAsync(course))">
-                                        Hinzufuegen
+                                        @L["Add"]
                                     </MudButton>
                                 </MudStack>
 
                                 <MudTabs Elevation="0" Rounded="false" Class="mt-2">
-                                    <MudTabPanel Text="Termine">
+                                    <MudTabPanel Text="@L["Dates"]">
                                         <MudStack Spacing="2" Class="pt-2">
                                             @if (course.Dates.Count == 0)
                                             {
-                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Termine.</MudText>
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoDates"]</MudText>
                                             }
                                             else
                                             {
@@ -207,22 +208,22 @@
                                             <MudDivider Class="my-2" />
                                             <MudGrid Spacing="2">
                                                 <MudItem xs="12" md="6">
-                                                    <MudTextField Label="Titel" @bind-Value="_dateTitle" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["EventTitle"]" @bind-Value="_dateTitle" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12" md="6">
-                                                    <MudTextField Label="Ort" @bind-Value="_dateLocation" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["Location"]" @bind-Value="_dateLocation" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12" md="4">
-                                                    <MudDatePicker Label="Datum" Date="_dateStartDate" DateChanged="@(date => _dateStartDate = date)" Variant="Variant.Outlined" />
+                                                    <MudDatePicker Label="@L["Date"]" Date="_dateStartDate" DateChanged="@(date => _dateStartDate = date)" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="Startzeit" @bind-Value="_dateStartTime" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["StartTime"]" @bind-Value="_dateStartTime" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="Endzeit" @bind-Value="_dateEndTime" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["EndTime"]" @bind-Value="_dateEndTime" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12">
-                                                    <MudTextField Label="Notizen" @bind-Value="_dateNotes" Variant="Variant.Outlined" Lines="2" />
+                                                    <MudTextField Label="@L["Notes"]" @bind-Value="_dateNotes" Variant="Variant.Outlined" Lines="2" />
                                                 </MudItem>
                                             </MudGrid>
                                             <MudStack Row="true" Justify="Justify.FlexEnd">
@@ -230,17 +231,17 @@
                                                            Variant="Variant.Filled"
                                                            StartIcon="@Icons.Material.Filled.Event"
                                                            OnClick="@(() => AddCourseDateAsync(course))">
-                                                    Termin hinzufuegen
+                                                    @L["AddDate"]
                                                 </MudButton>
                                             </MudStack>
                                         </MudStack>
                                     </MudTabPanel>
 
-                                    <MudTabPanel Text="Events">
+                                    <MudTabPanel Text="@L["Events"]">
                                         <MudStack Spacing="2" Class="pt-2">
                                             @if (_selectedCourseEvents.Count == 0)
                                             {
-                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Events.</MudText>
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoEvents"]</MudText>
                                             }
                                             else
                                             {
@@ -288,7 +289,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Teilnehmenden registriert.</MudText>
+                                                                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoParticipants"]</MudText>
                                                             }
                                                         }
                                                     </MudPaper>
@@ -298,28 +299,28 @@
                                             <MudDivider Class="my-2" />
                                             <MudGrid Spacing="2">
                                                 <MudItem xs="12" md="6">
-                                                    <MudTextField Label="Titel" @bind-Value="_eventTitle" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["EventTitle"]" @bind-Value="_eventTitle" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12" md="6">
-                                                    <MudTextField Label="Ort" @bind-Value="_eventLocation" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["Location"]" @bind-Value="_eventLocation" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12">
-                                                    <MudTextField Label="Beschreibung" @bind-Value="_eventDescription" Variant="Variant.Outlined" Lines="2" />
+                                                    <MudTextField Label="@L["Description"]" @bind-Value="_eventDescription" Variant="Variant.Outlined" Lines="2" />
                                                 </MudItem>
                                                 <MudItem xs="12" md="4">
-                                                    <MudDatePicker Label="Datum" Date="_eventStartDate" DateChanged="@(date => _eventStartDate = date)" Variant="Variant.Outlined" />
+                                                    <MudDatePicker Label="@L["Date"]" Date="_eventStartDate" DateChanged="@(date => _eventStartDate = date)" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="Startzeit" @bind-Value="_eventStartTime" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["StartTime"]" @bind-Value="_eventStartTime" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="Endzeit" @bind-Value="_eventEndTime" Variant="Variant.Outlined" />
+                                                    <MudTextField Label="@L["EndTime"]" @bind-Value="_eventEndTime" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12" md="6">
-                                                    <MudNumericField T="int?" Label="Kapazitaet" @bind-Value="_eventCapacity" Variant="Variant.Outlined" Min="1" />
+                                                    <MudNumericField T="int?" Label="@L["Capacity"]" @bind-Value="_eventCapacity" Variant="Variant.Outlined" Min="1" />
                                                 </MudItem>
                                                 <MudItem xs="12" md="6">
-                                                    <MudDatePicker Label="Anmeldefrist" Date="_eventRegistrationDeadline" DateChanged="@(date => _eventRegistrationDeadline = date)" Variant="Variant.Outlined" />
+                                                    <MudDatePicker Label="@L["RegistrationDeadline"]" Date="_eventRegistrationDeadline" DateChanged="@(date => _eventRegistrationDeadline = date)" Variant="Variant.Outlined" />
                                                 </MudItem>
                                             </MudGrid>
                                             <MudStack Row="true" Justify="Justify.FlexEnd">
@@ -327,17 +328,17 @@
                                                            Variant="Variant.Filled"
                                                            StartIcon="@Icons.Material.Filled.EventAvailable"
                                                            OnClick="@(() => CreateEventAsync(course))">
-                                                    Event hinzufuegen
+                                                    @L["AddEvent"]
                                                 </MudButton>
                                             </MudStack>
                                         </MudStack>
                                     </MudTabPanel>
 
-                                    <MudTabPanel Text="Trainingsplaene">
+                                    <MudTabPanel Text="@L["TrainingPlans"]">
                                         <MudStack Spacing="2" Class="pt-2">
                                             @if (course.TrainingPlanPublications.Count == 0)
                                             {
-                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch kein Plan veroeffentlicht.</MudText>
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoPublishedPlan"]</MudText>
                                             }
                                             else
                                             {
@@ -360,7 +361,7 @@
                                             <MudDivider Class="my-2" />
                                             <MudStack Row="true" AlignItems="AlignItems.End" Style="gap:12px; flex-wrap:wrap;">
                                                 <MudSelect T="string"
-                                                           Label="Trainingsplan"
+                                                           Label="@L["TrainingPlan"]"
                                                            Value="_selectedTrainingPlanId"
                                                            ValueChanged="OnTrainingPlanChanged"
                                                            Variant="Variant.Outlined"
@@ -375,7 +376,7 @@
                                                            StartIcon="@Icons.Material.Filled.Publish"
                                                            Disabled="@string.IsNullOrWhiteSpace(_selectedTrainingPlanId)"
                                                            OnClick="@(() => PublishTrainingPlanAsync(course))">
-                                                    Plan hinzufuegen
+                                                    @L["AddPlan"]
                                                 </MudButton>
                                             </MudStack>
                                         </MudStack>
@@ -464,7 +465,7 @@
             _userId = user.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
 
             if (string.IsNullOrWhiteSpace(_userId))
-                throw new InvalidOperationException("Trainer:in konnte nicht ermittelt werden.");
+                throw new InvalidOperationException(L["TrainerNotResolved"]);
 
             var athlete = await AthleteData.GetAthlete(_userId);
             _displayName = GetDisplayName(athlete, user.Identity?.Name ?? _userId);
@@ -561,7 +562,7 @@
                 _userId ?? string.Empty,
                 _displayName);
 
-            Snackbar.Add("Kurs wurde erstellt.", Severity.Success);
+            Snackbar.Add(L["CreateCourseSuccess"], Severity.Success);
             ResetCreateForm();
             _selectedCourseId = course.Id;
             await LoadAsync();
@@ -574,14 +575,14 @@
 
     private async Task DeleteCourseAsync(CourseDocument course)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Kurs \"{course.Name}\" wirklich loeschen?");
+        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["DeleteCourseConfirm"], course.Name));
         if (!confirmed)
             return;
 
         try
         {
             await CourseService.DeleteCourseAsync(course.Id, _userId ?? string.Empty);
-            Snackbar.Add("Kurs wurde geloescht.", Severity.Success);
+            Snackbar.Add(L["DeleteCourseSuccess"], Severity.Success);
             _selectedCourseId = null;
             await LoadAsync();
         }
@@ -605,7 +606,7 @@
                 candidate.DisplayName,
                 _userId ?? string.Empty);
 
-            Snackbar.Add("Trainer:in wurde hinzugefuegt.", Severity.Success);
+            Snackbar.Add(L["AddTrainerSuccess"], Severity.Success);
             _selectedTrainerToAddId = null;
             await LoadAsync();
         }
@@ -617,14 +618,14 @@
 
     private async Task RemoveTrainerAsync(CourseDocument course, CourseTrainerDocument trainer)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"{trainer.DisplayName} aus dem Kurs entfernen?");
+        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemoveTrainerConfirm"], trainer.DisplayName));
         if (!confirmed)
             return;
 
         try
         {
             await CourseService.RemoveTrainerAsync(course.Id, trainer.TrainerUserId, _userId ?? string.Empty);
-            Snackbar.Add("Trainer:in wurde entfernt.", Severity.Success);
+            Snackbar.Add(L["RemoveTrainerSuccess"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
@@ -635,14 +636,14 @@
 
     private async Task LeaveTrainerAsync(CourseDocument course)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Als Trainer:in aus \"{course.Name}\" austreten?");
+        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["LeaveTrainerConfirm"], course.Name));
         if (!confirmed)
             return;
 
         try
         {
             await CourseService.RemoveTrainerAsync(course.Id, _userId ?? string.Empty, _userId ?? string.Empty);
-            Snackbar.Add("Du bist als Trainer:in ausgetreten.", Severity.Success);
+            Snackbar.Add(L["LeaveTrainerSuccess"], Severity.Success);
             _selectedCourseId = null;
             await LoadAsync();
         }
@@ -668,7 +669,7 @@
                 _dateLocation,
                 _dateNotes);
 
-            Snackbar.Add("Termin wurde hinzugefuegt.", Severity.Success);
+            Snackbar.Add(L["AddDateSuccess"], Severity.Success);
             ResetDateForm();
             await LoadAsync();
         }
@@ -680,14 +681,14 @@
 
     private async Task RemoveCourseDateAsync(CourseDocument course, CourseDateDocument date)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Termin \"{date.Title}\" entfernen?");
+        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemoveDateConfirm"], date.Title));
         if (!confirmed)
             return;
 
         try
         {
             await CourseService.RemoveCourseDateAsync(course.Id, date.Id, _userId ?? string.Empty);
-            Snackbar.Add("Termin wurde entfernt.", Severity.Success);
+            Snackbar.Add(L["RemoveDateSuccess"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
@@ -714,7 +715,7 @@
                 _eventCapacity,
                 _eventRegistrationDeadline?.Date);
 
-            Snackbar.Add("Event wurde hinzugefuegt.", Severity.Success);
+            Snackbar.Add(L["AddEventSuccess"], Severity.Success);
             ResetEventForm();
             await LoadAsync();
         }
@@ -726,14 +727,14 @@
 
     private async Task DeleteEventAsync(CourseDocument course, CourseEventDocument courseEvent)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Event \"{courseEvent.Title}\" entfernen?");
+        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["DeleteEventConfirm"], courseEvent.Title));
         if (!confirmed)
             return;
 
         try
         {
             await CourseService.DeleteEventAsync(course.Id, courseEvent.Id, _userId ?? string.Empty);
-            Snackbar.Add("Event wurde entfernt.", Severity.Success);
+            Snackbar.Add(L["DeleteEventSuccess"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
@@ -775,7 +776,7 @@
                 _selectedTrainingPlanId,
                 _userId ?? string.Empty);
 
-            Snackbar.Add("Trainingsplan wurde hinzugefuegt.", Severity.Success);
+            Snackbar.Add(L["PublishPlanSuccess"], Severity.Success);
             _selectedTrainingPlanId = null;
             await LoadAsync();
         }
@@ -787,14 +788,14 @@
 
     private async Task RemoveTrainingPlanAsync(CourseDocument course, string trainingPlanId)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Trainingsplan \"{GetTrainingPlanName(trainingPlanId)}\" entfernen?");
+        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemovePlanConfirm"], GetTrainingPlanName(trainingPlanId)));
         if (!confirmed)
             return;
 
         try
         {
             await CourseService.RemoveTrainingPlanPublicationAsync(course.Id, trainingPlanId, _userId ?? string.Empty);
-            Snackbar.Add("Trainingsplan wurde entfernt.", Severity.Success);
+            Snackbar.Add(L["RemovePlanSuccess"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
@@ -844,14 +845,14 @@
         return course.Trainers.Any(trainer => trainer.TrainerUserId == _userId);
     }
 
-    private static string FormatPeriod(CourseDocument course)
+    private string FormatPeriod(CourseDocument course)
     {
-        return $"{course.StartDate:dd.MM.yyyy} bis {course.EndDate:dd.MM.yyyy}";
+        return string.Format(L["Period"], course.StartDate, course.EndDate);
     }
 
-    private static string FormatDateRange(DateTime startsAt, DateTime endsAt)
+    private string FormatDateRange(DateTime startsAt, DateTime endsAt)
     {
-        return $"{startsAt:dd.MM.yyyy HH:mm} bis {endsAt:HH:mm} Uhr";
+        return string.Format(L["DateRange"], startsAt, endsAt);
     }
 
     private string GetTrainingPlanName(string trainingPlanId)
@@ -867,9 +868,9 @@
     private string GetParticipantsButtonText(string eventId)
     {
         if (!_eventParticipants.TryGetValue(eventId, out var participants))
-            return "Teilnehmende";
+            return L["Participants"];
 
-        return $"Teilnehmende ({participants.Count})";
+        return string.Format(L["ParticipantsCount"], participants.Count);
     }
 
     private string GetParticipantDisplayName(string athleteUserId)
@@ -879,13 +880,13 @@
             : athleteUserId;
     }
 
-    private static DateTime CombineDateAndTime(DateTime? date, string time)
+    private DateTime CombineDateAndTime(DateTime? date, string time)
     {
         if (date is null)
-            throw new InvalidOperationException("Bitte ein Datum auswaehlen.");
+            throw new InvalidOperationException(L["ValidationDateRequired"]);
 
         if (!TimeSpan.TryParse(time, out var parsedTime))
-            throw new InvalidOperationException("Bitte eine Uhrzeit im Format HH:mm eingeben.");
+            throw new InvalidOperationException(L["ValidationTimeFormat"]);
 
         return date.Value.Date.Add(parsedTime);
     }

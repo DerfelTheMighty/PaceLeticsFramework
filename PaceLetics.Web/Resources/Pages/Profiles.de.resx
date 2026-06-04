@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Profile</value></data>
+  <data name="Loading" xml:space="preserve"><value>Profile werden geladen</value></data>
+  <data name="Back" xml:space="preserve"><value>Zurueck</value></data>
+  <data name="NotFoundTitle" xml:space="preserve"><value>Profil nicht gefunden</value></data>
+  <data name="NotFoundSubtitle" xml:space="preserve"><value>Dieses Profil ist nicht sichtbar oder existiert nicht.</value></data>
+  <data name="NotFoundDetail" xml:space="preserve"><value>Oeffne die Profiluebersicht oder pruefe den Link.</value></data>
+  <data name="Title" xml:space="preserve"><value>Profile</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Sichtbare Athlet:innen- und Trainer:innenprofile.</value></data>
+  <data name="MetricVisible" xml:space="preserve"><value>Sichtbar</value></data>
+  <data name="MetricVisibleDetail" xml:space="preserve"><value>oeffentliche Profile</value></data>
+  <data name="MetricTrainers" xml:space="preserve"><value>Trainer:innen</value></data>
+  <data name="MetricTrainersDetail" xml:space="preserve"><value>verifizierte Profile</value></data>
+  <data name="MetricAthletes" xml:space="preserve"><value>Athlet:innen</value></data>
+  <data name="MetricAthletesDetail" xml:space="preserve"><value>aktive Profile</value></data>
+  <data name="NoProfilesTitle" xml:space="preserve"><value>Keine oeffentlichen Profile</value></data>
+  <data name="NoProfilesDetail" xml:space="preserve"><value>Aktuell sind keine Profile sichtbar geschaltet.</value></data>
+</root>

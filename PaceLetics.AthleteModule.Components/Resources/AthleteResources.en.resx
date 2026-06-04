@@ -26,4 +26,5 @@
   <data name="AddRaceDialog_Date" xml:space="preserve"><value>Date</value></data>
   <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Attention</value></data>
   <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Please check that the race time is in the correct format (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>Ok</value></data>
 </root>

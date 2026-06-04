@@ -1,9 +1,10 @@
 @using MudBlazor
 @using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
+@inject IStringLocalizer<WorkoutResources> L
 
 @if (Workout is null)
 {
-    <MudText>Kein Workout geladen.</MudText>
+    <MudText>@L["WorkoutView_NoWorkout"]</MudText>
 }
 else
 {

@@ -26,14 +26,14 @@
                        Color="@(IsToggled ? Color.Warning : Color.Success)"
                        OnClick="ToggleWorkout"
                        StartIcon="@(IsToggled ? Icons.Material.Filled.Pause : Icons.Material.Filled.PlayArrow)">
-                @(IsToggled ? "Pause" : "Start")
+                @(IsToggled ? L["TopBar_Pause"] : L["TopBar_Start"])
             </MudButton>
 
             <MudButton Variant="Variant.Outlined"
                        Color="Color.Default"
                        OnClick="ResetAndStopWorkout"
                        StartIcon="@Icons.Material.Filled.Refresh">
-                Reset
+                @L["TopBar_Reset"]
             </MudButton>
         </MudStack>
     </MudStack>
