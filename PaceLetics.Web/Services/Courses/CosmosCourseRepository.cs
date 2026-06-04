@@ -50,6 +50,44 @@ public sealed class CosmosCourseRepository : ICourseRepository
             course.CourseId);
     }
 
+    public async Task DeleteCourseAsync(string courseId)
+    {
+        var registrations = await LoadPartitionItems<CourseEventRegistrationDocument>(
+            courseId,
+            CourseDocumentTypes.EventRegistration);
+        var events = await LoadPartitionItems<CourseEventDocument>(courseId, CourseDocumentTypes.Event);
+        var enrollments = await LoadPartitionItems<CourseEnrollmentDocument>(
+            courseId,
+            CourseDocumentTypes.Enrollment);
+
+        foreach (var registration in registrations)
+            await _db.DeleteItem<CourseEventRegistrationDocument>(
+                _options.DatabaseName,
+                _options.CourseContainerName,
+                registration.Id,
+                courseId);
+
+        foreach (var courseEvent in events)
+            await _db.DeleteItem<CourseEventDocument>(
+                _options.DatabaseName,
+                _options.CourseContainerName,
+                courseEvent.Id,
+                courseId);
+
+        foreach (var enrollment in enrollments)
+            await _db.DeleteItem<CourseEnrollmentDocument>(
+                _options.DatabaseName,
+                _options.CourseContainerName,
+                enrollment.Id,
+                courseId);
+
+        await _db.DeleteItem<CourseDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            courseId,
+            courseId);
+    }
+
     public async Task<IReadOnlyList<CourseEnrollmentDocument>> GetEnrollmentsForAthleteAsync(string athleteUserId)
     {
         if (string.IsNullOrWhiteSpace(athleteUserId))
@@ -127,6 +165,26 @@ public sealed class CosmosCourseRepository : ICourseRepository
             _options.CourseContainerName,
             courseEvent,
             courseEvent.CourseId);
+    }
+
+    public async Task DeleteEventAsync(string courseId, string eventId)
+    {
+        var registrations = await GetEventRegistrationsAsync(courseId, eventId);
+
+        foreach (var registration in registrations)
+        {
+            await _db.DeleteItem<CourseEventRegistrationDocument>(
+                _options.DatabaseName,
+                _options.CourseContainerName,
+                registration.Id,
+                courseId);
+        }
+
+        await _db.DeleteItem<CourseEventDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            eventId,
+            courseId);
     }
 
     public async Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsAsync(string courseId, string eventId)

@@ -5,6 +5,11 @@
     <MudNavLink Href="/Athletes/racepaces" Match="NavLinkMatch.Prefix">@L["Nav_RaceData"]</MudNavLink>
     <MudNavLink Href="/Athletes/trainingpaces" Match="NavLinkMatch.Prefix">@L["Nav_PaceZones"]</MudNavLink>
     <MudNavLink Href="/Athletes/courses" Match="NavLinkMatch.Prefix">@L["Nav_Courses"]</MudNavLink>
+    <AuthorizeView Roles="@ApplicationRoles.Trainer">
+        <Authorized>
+            <MudNavLink Href="/Trainers/courses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerCourses"]</MudNavLink>
+        </Authorized>
+    </AuthorizeView>
     <MudNavLink Href="/Athletes/trainingplanpage" Match="NavLinkMatch.Prefix">@L["Nav_TrainingPlan"]</MudNavLink>
     <MudNavLink Href="/Workouts/WorkoutArea" Match="NavLinkMatch.Prefix">@L["Nav_Workouts"]</MudNavLink>
     <MudNavLink Href="/profiles" Match="NavLinkMatch.Prefix">@L["Nav_Profiles"]</MudNavLink>

@@ -159,9 +159,26 @@
                                                         <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatEventDate(courseEvent)</MudText>
                                                     </div>
-                                                    <MudIconButton Icon="@Icons.Material.Filled.EventAvailable"
+                                                    @if (IsRegisteredForEvent(courseEvent.Id))
+                                                    {
+                                                        <MudButton Size="Size.Small"
+                                                                   Color="Color.Default"
+                                                                   Variant="Variant.Outlined"
+                                                                   StartIcon="@Icons.Material.Filled.EventBusy"
+                                                                   OnClick="@(() => CancelEventRegistrationAsync(course.Id, courseEvent.Id))">
+                                                            Abmelden
+                                                        </MudButton>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudButton Size="Size.Small"
                                                                    Color="Color.Primary"
-                                                                   OnClick="@(() => RegisterForEventAsync(course.Id, courseEvent.Id))" />
+                                                                   Variant="Variant.Filled"
+                                                                   StartIcon="@Icons.Material.Filled.EventAvailable"
+                                                                   OnClick="@(() => RegisterForEventAsync(course.Id, courseEvent.Id))">
+                                                            Anmelden
+                                                        </MudButton>
+                                                    }
                                                 </div>
                                             }
                                         </MudStack>
@@ -183,6 +200,7 @@
     private string? _selectedCourseId;
     private IReadOnlyList<CourseOverview> _courses = Array.Empty<CourseOverview>();
     private Dictionary<string, IReadOnlyList<CourseEventDocument>> _eventsByCourse = new();
+    private Dictionary<string, CourseEventRegistrationDocument> _registeredEvents = new(StringComparer.OrdinalIgnoreCase);
 
     private CourseOverview? SelectedOverview =>
         _courses.FirstOrDefault(course => course.Course.Id == _selectedCourseId)
@@ -203,10 +221,23 @@
             _errorMessage = null;
             _courses = await CourseService.GetCoursesForAthleteAsync(_userId ?? string.Empty);
             _eventsByCourse = new Dictionary<string, IReadOnlyList<CourseEventDocument>>();
+            _registeredEvents = new Dictionary<string, CourseEventRegistrationDocument>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var course in _courses.Where(course => course.IsJoined).Select(course => course.Course))
             {
-                _eventsByCourse[course.Id] = await CourseService.GetEventsAsync(course.Id);
+                var courseEvents = await CourseService.GetEventsAsync(course.Id);
+                _eventsByCourse[course.Id] = courseEvents;
+
+                foreach (var courseEvent in courseEvents)
+                {
+                    var registration = await CourseService.GetEventRegistrationForAthleteAsync(
+                        course.Id,
+                        courseEvent.Id,
+                        _userId ?? string.Empty);
+
+                    if (registration?.Status == CourseEventRegistrationStatus.Registered)
+                        _registeredEvents[courseEvent.Id] = registration;
+                }
             }
 
             if (_courses.Count == 0)
@@ -282,7 +313,22 @@
         try
         {
             await CourseService.RegisterForEventAsync(courseId, eventId, _userId ?? string.Empty);
+            await LoadCoursesAsync();
             Snackbar.Add("Du bist für das Event angemeldet.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task CancelEventRegistrationAsync(string courseId, string eventId)
+    {
+        try
+        {
+            await CourseService.CancelEventRegistrationAsync(courseId, eventId, _userId ?? string.Empty);
+            await LoadCoursesAsync();
+            Snackbar.Add("Du bist fuer das Event abgemeldet.", Severity.Success);
         }
         catch (Exception ex)
         {
@@ -302,6 +348,11 @@
         return _eventsByCourse.TryGetValue(courseId, out var events)
             ? events.OrderBy(courseEvent => courseEvent.StartsAt)
             : Array.Empty<CourseEventDocument>();
+    }
+
+    private bool IsRegisteredForEvent(string eventId)
+    {
+        return _registeredEvents.ContainsKey(eventId);
     }
 
     private static string GetCourseCardStyle(bool isSelected)
