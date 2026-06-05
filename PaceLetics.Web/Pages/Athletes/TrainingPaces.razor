@@ -35,6 +35,8 @@
 
             <PaceInfo EPaceLow="@_lowerPace.Easy"
                       EPaceHigh="@_upperPace.Easy"
+                      RecoveryPaceLow="@_lowerPace.Easy.Add(TimeSpan.FromSeconds(30))"
+                      RecoveryPaceHigh="@_upperPace.Easy.Add(TimeSpan.FromSeconds(30))"
                       MPaceLow="@_lowerPace.Marathon"
                       MPaceHigh="@_upperPace.Marathon"
                       TPaceLow="@_lowerPace.Threshold"

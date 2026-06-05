@@ -8,8 +8,8 @@
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
             <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="min-width:0;">
-                <div class="pl-race-icon">
-                    <MudImage Src="@GetImagePath(Model?.Type)" Width="30" Height="30" />
+                <div class="@($"pl-race-code {GetRaceDistanceClass(Model?.Type)}")" aria-hidden="true">
+                    @GetRaceDistanceCode(Model?.Type)
                 </div>
 
                 <MudStack Spacing="0" Style="min-width:0;">

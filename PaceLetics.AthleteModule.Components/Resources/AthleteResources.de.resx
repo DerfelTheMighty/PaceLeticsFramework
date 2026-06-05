@@ -9,6 +9,11 @@
   <data name="RaceCard_Result" xml:space="preserve"><value>Ergebnis:</value></data>
   <data name="RaceCard_Edit" xml:space="preserve"><value>Lauf bearbeiten</value></data>
   <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Mehr Infos</value></data>
+  <data name="PaceInfo_Free_Title" xml:space="preserve"><value>Freie Pace</value></data>
+  <data name="PaceInfo_Free_Value" xml:space="preserve"><value>Keine feste Zielpace</value></data>
+  <data name="PaceInfo_Free_Description" xml:space="preserve"><value>Waehle die Pace frei. Nutze diesen Bereich fuer lockere Bewegung, Technik, Warm-ups oder Laeufe, bei denen das Gefuehl wichtiger ist als ein Zielsplit.</value></data>
+  <data name="PaceInfo_Recovery_Title" xml:space="preserve"><value>Recovery Pace</value></data>
+  <data name="PaceInfo_Recovery_Description" xml:space="preserve"><value>Dein bewusst entspanntes Regenerationstempo. Bleib klar unter Easy-Belastung, damit die naechste Qualitaetseinheit frisch bleibt.</value></data>
   <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Easy Pace (E-Pace)</value></data>
   <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Dein lockerer Dauerlauf. Laufe in diesem Tempo, wenn du regenerativ oder locker trainierst. Es fördert die Grundlagenausdauer und hilft bei der Erholung.</value></data>
   <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Marathon Pace (M-Pace)</value></data>

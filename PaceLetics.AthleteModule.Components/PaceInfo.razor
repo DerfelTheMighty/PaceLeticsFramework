@@ -6,7 +6,7 @@
 
     @foreach (var p in Items)
     {
-        <MudPaper Class="@($"pa-4 pl-pace-card pl-metric-{p.Accent}")" Elevation="0">
+        <MudPaper Class="@($"pa-4 pl-pace-card pl-pace-zone-{p.ZoneKey}")" Elevation="0">
 
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
 
@@ -14,7 +14,7 @@
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">@p.Title</MudText>
 
                     <MudText Typo="Typo.body2" Color="Color.Secondary">
-                        @p.Upper.ToString("mm':'ss") - @p.Lower.ToString("mm':'ss") min/km
+                        @p.PaceText
                     </MudText>
 
                     <MudText Typo="Typo.caption" Color="Color.Secondary">
@@ -22,8 +22,8 @@
                     </MudText>
                 </MudStack>
 
-                <div class="pl-pace-icon">
-                    <MudImage Src="@p.Icon" Width="30" Height="30" />
+                <div class="pl-pace-zone-mark" aria-hidden="true">
+                    @p.Code
                 </div>
 
             </MudStack>

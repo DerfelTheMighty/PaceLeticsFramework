@@ -1,6 +1,7 @@
 ﻿@page "/Athletes/trainingplanpage"
 @using AthleteDataAccessLibrary.Contracts
 @using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.CoreModule.Infrastructure.Constants
 @using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.TrainingModule.CodeBase.Running.Models
 @using PaceLetics.TrainingModule.Components.Running
@@ -170,24 +171,36 @@
                     {
                         @foreach (var rs in _resolved.Segments)
                         {
-                            <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
-                                <MudStack Spacing="1">
-                                    <MudText Typo="Typo.subtitle2">@rs.Segment.Type</MudText>
+                            var paceZoneClass = GetPaceZoneClass(rs.Segment.PaceKey);
+                            var paceZoneCode = GetPaceZoneCode(rs.Segment.PaceKey);
 
-                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                        @(rs.Segment.Distance > 0 ? $"{rs.Segment.Distance} m" : "-")
-                                        @(" · ")
-                                        @(rs.Pace is null ? "-" : $"{rs.Pace:mm\\:ss}/km")
-                                    </MudText>
-
-                                    @if (rs.SegmentTime is not null || rs.LapTime is not null)
+                            <MudPaper Elevation="0" Class="@($"pa-3 pl-bottom-sheet-item {paceZoneClass}")">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                                    @if (!string.IsNullOrEmpty(paceZoneCode))
                                     {
-                                        <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                            @(rs.SegmentTime is null ? "" : $"Segment: {rs.SegmentTime:hh\\:mm\\:ss}".Trim())
-                                            @(rs.SegmentTime is not null && rs.LapTime is not null ? " · " : "")
-                                            @(rs.LapTime is null ? "" : $"Lap: {rs.LapTime:mm\\:ss}")
-                                        </MudText>
+                                        <div class="pl-pace-zone-mark pl-pace-zone-mark-small" aria-hidden="true">
+                                            @paceZoneCode
+                                        </div>
                                     }
+
+                                    <MudStack Spacing="1" Style="min-width:0;">
+                                        <MudText Typo="Typo.subtitle2">@rs.Segment.Type</MudText>
+
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                            @(rs.Segment.Distance > 0 ? $"{rs.Segment.Distance} m" : "-")
+                                            @(" · ")
+                                            @(rs.Pace is null ? "-" : $"{rs.Pace:mm\\:ss}/km")
+                                        </MudText>
+
+                                        @if (rs.SegmentTime is not null || rs.LapTime is not null)
+                                        {
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                                @(rs.SegmentTime is null ? "" : $"Segment: {rs.SegmentTime:hh\\:mm\\:ss}".Trim())
+                                                @(rs.SegmentTime is not null && rs.LapTime is not null ? " · " : "")
+                                                @(rs.LapTime is null ? "" : $"Lap: {rs.LapTime:mm\\:ss}")
+                                            </MudText>
+                                        }
+                                    </MudStack>
                                 </MudStack>
                             </MudPaper>
                         }
@@ -321,6 +334,36 @@
     private void CloseDetails()
     {
         _detailsOpen = false;
+    }
+
+    private static string GetPaceZoneClass(string? paceKey)
+    {
+        return paceKey switch
+        {
+            PaceKeys.Free => "pl-pace-zone-free",
+            PaceKeys.Recovery => "pl-pace-zone-recovery",
+            PaceKeys.Easy => "pl-pace-zone-easy",
+            PaceKeys.Marathon => "pl-pace-zone-marathon",
+            PaceKeys.Threshold => "pl-pace-zone-threshold",
+            PaceKeys.Intervall => "pl-pace-zone-intervall",
+            PaceKeys.Repetition => "pl-pace-zone-repetition",
+            _ => string.Empty
+        };
+    }
+
+    private static string GetPaceZoneCode(string? paceKey)
+    {
+        return paceKey switch
+        {
+            PaceKeys.Free => "Free",
+            PaceKeys.Recovery => "Rec",
+            PaceKeys.Easy => "E",
+            PaceKeys.Marathon => "M",
+            PaceKeys.Threshold => "T",
+            PaceKeys.Intervall => "I",
+            PaceKeys.Repetition => "R",
+            _ => string.Empty
+        };
     }
 
     private async Task SaveSelectedPlanAsync()

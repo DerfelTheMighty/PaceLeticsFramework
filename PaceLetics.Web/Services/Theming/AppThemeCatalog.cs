@@ -6,18 +6,18 @@ public static class AppThemeCatalog
 {
     public static IReadOnlyList<AppThemeDefinition> Themes { get; } =
     [
-        new(AppThemeName.PaceLetics, "PaceLetics", CreatePaceLeticsTheme(), Icons.Material.Filled.DirectionsRun, IsDarkMode: true),
-        new(AppThemeName.Ocean, "Ocean", CreateOceanTheme(), Icons.Material.Filled.Waves, IsDarkMode: true),
-        new(AppThemeName.Forest, "Forest", CreateForestTheme(), Icons.Material.Filled.Park, IsDarkMode: true),
-        new(AppThemeName.HighContrast, "High Contrast", CreateHighContrastTheme(), Icons.Material.Filled.Contrast, IsDarkMode: false),
-        new(AppThemeName.Wildflowers, "Wildflowers", CreateWildflowersTheme(), Icons.Material.Filled.LocalFlorist, IsDarkMode: false),
-        new(AppThemeName.Afterglow, "Afterglow", CreateAfterglowTheme(), Icons.Material.Filled.WbTwilight, IsDarkMode: true),
-        new(AppThemeName.DarkRomance, "Dark Romance", CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite, IsDarkMode: true),
-        new(AppThemeName.Maritime, "Maritime", CreateMaritimeTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false),
-        new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false),
-        new(AppThemeName.GoldenHour, "Golden Hour", CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false),
-        new(AppThemeName.StellarForge, "Stellar Forge", CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome, IsDarkMode: true),
-        new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false)
+        new(AppThemeName.PaceLetics, "PaceLetics", CreatePaceLeticsTheme(), Icons.Material.Filled.DirectionsRun, IsDarkMode: true, PaceZones: CreatePaceLeticsPaceZones()),
+        new(AppThemeName.Ocean, "Ocean", CreateOceanTheme(), Icons.Material.Filled.Waves, IsDarkMode: true, PaceZones: CreateOceanPaceZones()),
+        new(AppThemeName.Forest, "Forest", CreateForestTheme(), Icons.Material.Filled.Park, IsDarkMode: true, PaceZones: CreateForestPaceZones()),
+        new(AppThemeName.HighContrast, "High Contrast", CreateHighContrastTheme(), Icons.Material.Filled.Contrast, IsDarkMode: false, PaceZones: CreateHighContrastPaceZones()),
+        new(AppThemeName.Wildflowers, "Wildflowers", CreateWildflowersTheme(), Icons.Material.Filled.LocalFlorist, IsDarkMode: false, PaceZones: CreateWildflowersPaceZones()),
+        new(AppThemeName.Afterglow, "Afterglow", CreateAfterglowTheme(), Icons.Material.Filled.WbTwilight, IsDarkMode: true, PaceZones: CreateAfterglowPaceZones()),
+        new(AppThemeName.DarkRomance, "Dark Romance", CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite, IsDarkMode: true, PaceZones: CreateDarkRomancePaceZones()),
+        new(AppThemeName.Maritime, "Maritime", CreateMaritimeTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false, PaceZones: CreateMaritimePaceZones()),
+        new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false, PaceZones: CreateTropicalPaceZones()),
+        new(AppThemeName.GoldenHour, "Golden Hour", CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false, PaceZones: CreateGoldenHourPaceZones()),
+        new(AppThemeName.StellarForge, "Stellar Forge", CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome, IsDarkMode: true, PaceZones: CreateStellarForgePaceZones()),
+        new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false, PaceZones: CreateSummitBlazePaceZones())
     ];
 
     public static AppThemeDefinition GetThemeDefinition(AppThemeName name)
@@ -29,6 +29,150 @@ public static class AppThemeCatalog
     public static MudTheme GetTheme(AppThemeName name)
     {
         return GetThemeDefinition(name).Theme;
+    }
+
+    private static PaceZonePalette CreatePaceLeticsPaceZones()
+    {
+        return new(
+            Free: "#8A7EA6",
+            Recovery: "#00EFFF",
+            Easy: "#3DFF8F",
+            Marathon: "#C6FF3D",
+            Threshold: "#FFE45E",
+            Intervall: "#FF8A3D",
+            Repetition: "#FF43D1");
+    }
+
+    private static PaceZonePalette CreateOceanPaceZones()
+    {
+        return new(
+            Free: "#8FA9BD",
+            Recovery: "#7AD7F0",
+            Easy: "#43D9B8",
+            Marathon: "#38C6FF",
+            Threshold: "#FFD166",
+            Intervall: "#FF8F70",
+            Repetition: "#FF5E8A");
+    }
+
+    private static PaceZonePalette CreateForestPaceZones()
+    {
+        return new(
+            Free: "#A5947F",
+            Recovery: "#88B7E8",
+            Easy: "#87D66B",
+            Marathon: "#D0A05F",
+            Threshold: "#E0C95A",
+            Intervall: "#F08A5D",
+            Repetition: "#F45C6B");
+    }
+
+    private static PaceZonePalette CreateHighContrastPaceZones()
+    {
+        return new(
+            Free: "#666666",
+            Recovery: "#005FCC",
+            Easy: "#007A3D",
+            Marathon: "#5A35B1",
+            Threshold: "#B77900",
+            Intervall: "#D00000",
+            Repetition: "#000000");
+    }
+
+    private static PaceZonePalette CreateWildflowersPaceZones()
+    {
+        return new(
+            Free: "#7B8271",
+            Recovery: "#4F80E1",
+            Easy: "#5C8A2E",
+            Marathon: "#2F9B80",
+            Threshold: "#D89A1A",
+            Intervall: "#E85D4A",
+            Repetition: "#B03A7A");
+    }
+
+    private static PaceZonePalette CreateAfterglowPaceZones()
+    {
+        return new(
+            Free: "#A899B0",
+            Recovery: "#A5A0FF",
+            Easy: "#6ED4A8",
+            Marathon: "#FFC857",
+            Threshold: "#FF9F5A",
+            Intervall: "#FF6B70",
+            Repetition: "#E56AD6");
+    }
+
+    private static PaceZonePalette CreateDarkRomancePaceZones()
+    {
+        return new(
+            Free: "#9B7F8B",
+            Recovery: "#9A85D6",
+            Easy: "#7DC48F",
+            Marathon: "#D6A647",
+            Threshold: "#F08270",
+            Intervall: "#E85D84",
+            Repetition: "#C846AA");
+    }
+
+    private static PaceZonePalette CreateMaritimePaceZones()
+    {
+        return new(
+            Free: "#7D8682",
+            Recovery: "#6DAFC1",
+            Easy: "#5F8E7A",
+            Marathon: "#2F6F7E",
+            Threshold: "#C9A66B",
+            Intervall: "#A85F4D",
+            Repetition: "#7E4E72");
+    }
+
+    private static PaceZonePalette CreateTropicalPaceZones()
+    {
+        return new(
+            Free: "#6E817C",
+            Recovery: "#007EA7",
+            Easy: "#008C7A",
+            Marathon: "#8BC34A",
+            Threshold: "#D89C2B",
+            Intervall: "#F06A4D",
+            Repetition: "#C23A7B");
+    }
+
+    private static PaceZonePalette CreateGoldenHourPaceZones()
+    {
+        return new(
+            Free: "#8E7B71",
+            Recovery: "#4C7CC7",
+            Easy: "#2F9A71",
+            Marathon: "#7B5FE8",
+            Threshold: "#F4A62A",
+            Intervall: "#D94F4A",
+            Repetition: "#C63F8D");
+    }
+
+    private static PaceZonePalette CreateStellarForgePaceZones()
+    {
+        return new(
+            Free: "#8B92A8",
+            Recovery: "#4CC9F0",
+            Easy: "#49D4AA",
+            Marathon: "#FFE81F",
+            Threshold: "#FFB703",
+            Intervall: "#FF5D72",
+            Repetition: "#C77DFF");
+    }
+
+    private static PaceZonePalette CreateSummitBlazePaceZones()
+    {
+        return new(
+            Free: "#756D68",
+            Recovery: "#1769AA",
+            Easy: "#1E8E5A",
+            Marathon: "#7B55C7",
+            Threshold: "#E87500",
+            Intervall: "#FC4C02",
+            Repetition: "#D84373");
     }
 
     private static MudTheme CreatePaceLeticsTheme()
