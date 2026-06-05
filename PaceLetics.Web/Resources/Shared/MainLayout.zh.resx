@@ -5,21 +5,4 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Theme" xml:space="preserve"><value>主题</value></data>
-  <data name="ColorScheme" xml:space="preserve"><value>配色方案</value></data>
-  <data name="Theme_PaceLetics" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="Theme_Ocean" xml:space="preserve"><value>海洋</value></data>
-  <data name="Theme_Forest" xml:space="preserve"><value>森林</value></data>
-  <data name="Theme_HighContrast" xml:space="preserve"><value>高对比度</value></data>
-  <data name="Theme_Wildflowers" xml:space="preserve"><value>野花</value></data>
-  <data name="Theme_Afterglow" xml:space="preserve"><value>余晖</value></data>
-  <data name="Theme_DarkRomance" xml:space="preserve"><value>暗色浪漫</value></data>
-  <data name="Theme_Maritime" xml:space="preserve"><value>海事</value></data>
-  <data name="Theme_Tropical" xml:space="preserve"><value>热带</value></data>
-  <data name="Theme_GoldenHour" xml:space="preserve"><value>黄金时刻</value></data>
-  <data name="Theme_StellarForge" xml:space="preserve"><value>星辰熔炉</value></data>
-  <data name="Theme_ElderVale" xml:space="preserve"><value>古老山谷</value></data>
-  <data name="Theme_SummitBlaze" xml:space="preserve"><value>峰顶光焰</value></data>
-  <data name="Scheme_Light" xml:space="preserve"><value>浅色</value></data>
-  <data name="Scheme_Dark" xml:space="preserve"><value>深色</value></data>
-  <data name="Scheme_System" xml:space="preserve"><value>系统</value></data>
 </root>

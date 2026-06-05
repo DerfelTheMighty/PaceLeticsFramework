@@ -6,49 +6,34 @@ public static class AppThemeCatalog
 {
     public static IReadOnlyList<AppThemeDefinition> Themes { get; } =
     [
-        new(AppThemeName.PaceLetics, CreatePaceLeticsTheme(), Icons.Material.Filled.DirectionsRun),
-        new(AppThemeName.Ocean, CreateOceanTheme(), Icons.Material.Filled.Waves),
-        new(AppThemeName.Forest, CreateForestTheme(), Icons.Material.Filled.Park),
-        new(AppThemeName.HighContrast, CreateHighContrastTheme(), Icons.Material.Filled.Contrast),
-        new(AppThemeName.Wildflowers, CreateWildflowersTheme(), Icons.Material.Filled.LocalFlorist),
-        new(AppThemeName.Afterglow, CreateAfterglowTheme(), Icons.Material.Filled.WbTwilight),
-        new(AppThemeName.DarkRomance, CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite),
-        new(AppThemeName.Maritime, CreateMaritimeTheme(), Icons.Material.Filled.Sailing),
-        new(AppThemeName.Tropical, CreateTropicalTheme(), Icons.Material.Filled.BeachAccess),
-        new(AppThemeName.GoldenHour, CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny),
-        new(AppThemeName.StellarForge, CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome),
-        new(AppThemeName.ElderVale, CreateElderValeTheme(), Icons.Material.Filled.Terrain),
-        new(AppThemeName.SummitBlaze, CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment)
+        new(AppThemeName.PaceLetics, "PaceLetics", CreatePaceLeticsTheme(), Icons.Material.Filled.DirectionsRun, IsDarkMode: true),
+        new(AppThemeName.Ocean, "Ocean", CreateOceanTheme(), Icons.Material.Filled.Waves, IsDarkMode: true),
+        new(AppThemeName.Forest, "Forest", CreateForestTheme(), Icons.Material.Filled.Park, IsDarkMode: true),
+        new(AppThemeName.HighContrast, "High Contrast", CreateHighContrastTheme(), Icons.Material.Filled.Contrast, IsDarkMode: false),
+        new(AppThemeName.Wildflowers, "Wildflowers", CreateWildflowersTheme(), Icons.Material.Filled.LocalFlorist, IsDarkMode: false),
+        new(AppThemeName.Afterglow, "Afterglow", CreateAfterglowTheme(), Icons.Material.Filled.WbTwilight, IsDarkMode: true),
+        new(AppThemeName.DarkRomance, "Dark Romance", CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite, IsDarkMode: true),
+        new(AppThemeName.Maritime, "Maritime", CreateMaritimeTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false),
+        new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false),
+        new(AppThemeName.GoldenHour, "Golden Hour", CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false),
+        new(AppThemeName.StellarForge, "Stellar Forge", CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome, IsDarkMode: true),
+        new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false)
     ];
+
+    public static AppThemeDefinition GetThemeDefinition(AppThemeName name)
+    {
+        return Themes.FirstOrDefault(theme => theme.Name == name)
+            ?? Themes[0];
+    }
 
     public static MudTheme GetTheme(AppThemeName name)
     {
-        return Themes.FirstOrDefault(theme => theme.Name == name)?.Theme
-            ?? Themes[0].Theme;
+        return GetThemeDefinition(name).Theme;
     }
 
     private static MudTheme CreatePaceLeticsTheme()
     {
         return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#FF2BD6",
-                Secondary = "#00E5FF",
-                Tertiary = "#B7FF2A",
-                Info = "#00B8FF",
-                Success = "#22E87A",
-                Warning = "#FFE14A",
-                Error = "#FF3B7D",
-                Background = "#FFF6FF",
-                BackgroundGray = "#F3E8FF",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#31116E",
-                AppbarText = "#FFF7FF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#2B154D",
-                TextPrimary = "#241136",
-                TextSecondary = "#6C4F82"
-            },
             dark: new PaletteDark
             {
                 Primary = "#FF43D1",
@@ -73,86 +58,48 @@ public static class AppThemeCatalog
     private static MudTheme CreateOceanTheme()
     {
         return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#006C80",
-                Secondary = "#6C5CE7",
-                Tertiary = "#FFB703",
-                Info = "#006C80",
-                Success = "#008A74",
-                Warning = "#D99500",
-                Error = "#D94A3D",
-                Background = "#F3FBFD",
-                BackgroundGray = "#E6F3F7",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#004E64",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#183238",
-                TextPrimary = "#173037",
-                TextSecondary = "#587078"
-            },
             dark: new PaletteDark
             {
-                Primary = "#35C2DC",
-                Secondary = "#A49BFF",
+                Primary = "#38C6FF",
+                Secondary = "#7AD7F0",
                 Tertiary = "#FFD166",
-                Info = "#35C2DC",
-                Success = "#48D6B8",
+                Info = "#38C6FF",
+                Success = "#43D9B8",
                 Warning = "#FFD166",
                 Error = "#FF7F76",
-                Background = "#0C171D",
-                BackgroundGray = "#13232B",
-                Surface = "#182A33",
-                AppbarBackground = "#071116",
-                AppbarText = "#EAF9FC",
-                DrawerBackground = "#101E25",
-                DrawerText = "#D7EDF2",
-                TextPrimary = "#EDF9FB",
-                TextSecondary = "#9DB9C1"
+                Background = "#06172B",
+                BackgroundGray = "#0A213B",
+                Surface = "#102B49",
+                AppbarBackground = "#03101F",
+                AppbarText = "#EAF8FF",
+                DrawerBackground = "#071B31",
+                DrawerText = "#D9F0FA",
+                TextPrimary = "#EDF8FF",
+                TextSecondary = "#A8C6D9"
             });
     }
 
     private static MudTheme CreateForestTheme()
     {
         return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#2E7D32",
-                Secondary = "#8E5A2A",
-                Tertiary = "#C2410C",
-                Info = "#3D6FA8",
-                Success = "#2E7D32",
-                Warning = "#A56B32",
-                Error = "#B84A3A",
-                Background = "#F8FAF3",
-                BackgroundGray = "#EFF3E6",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#24452B",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#283323",
-                TextPrimary = "#263122",
-                TextSecondary = "#68735F"
-            },
             dark: new PaletteDark
             {
-                Primary = "#78C86B",
-                Secondary = "#C9975D",
+                Primary = "#87D66B",
+                Secondary = "#D0A05F",
                 Tertiary = "#F08A5D",
-                Info = "#7FB2E8",
-                Success = "#78C86B",
-                Warning = "#C9975D",
+                Info = "#88B7E8",
+                Success = "#87D66B",
+                Warning = "#D0A05F",
                 Error = "#F08A5D",
-                Background = "#11170E",
-                BackgroundGray = "#1A2216",
-                Surface = "#202A1C",
-                AppbarBackground = "#0C120A",
-                AppbarText = "#EEF8EA",
-                DrawerBackground = "#151D12",
-                DrawerText = "#E0EBD9",
-                TextPrimary = "#F0F8EC",
-                TextSecondary = "#B3C1AA"
+                Background = "#1A1008",
+                BackgroundGray = "#24160B",
+                Surface = "#2D1E11",
+                AppbarBackground = "#120A05",
+                AppbarText = "#F5EFE5",
+                DrawerBackground = "#211309",
+                DrawerText = "#EFE2D0",
+                TextPrimary = "#F7EFE5",
+                TextSecondary = "#CAB59A"
             });
     }
 
@@ -179,27 +126,6 @@ public static class AppThemeCatalog
                 TextSecondary = "#222222",
                 LinesDefault = "#000000",
                 Divider = "#000000"
-            },
-            dark: new PaletteDark
-            {
-                Primary = "#FFFFFF",
-                Secondary = "#00D9FF",
-                Tertiary = "#FFD400",
-                Info = "#00D9FF",
-                Success = "#2EFF8F",
-                Warning = "#FFD400",
-                Error = "#FF5A5F",
-                Background = "#000000",
-                BackgroundGray = "#111111",
-                Surface = "#080808",
-                AppbarBackground = "#000000",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#000000",
-                DrawerText = "#FFFFFF",
-                TextPrimary = "#FFFFFF",
-                TextSecondary = "#E5E5E5",
-                LinesDefault = "#FFFFFF",
-                Divider = "#FFFFFF"
             });
     }
 
@@ -208,66 +134,28 @@ public static class AppThemeCatalog
         return CreateTheme(
             light: new PaletteLight
             {
-                Primary = "#6D8F2E",
-                Secondary = "#C55A8A",
-                Tertiary = "#E6A23C",
-                Info = "#5C7FA8",
-                Success = "#6D8F2E",
-                Warning = "#C98728",
-                Error = "#B95764",
-                Background = "#FBFAF3",
-                BackgroundGray = "#F0F4E7",
+                Primary = "#D22B2B",
+                Secondary = "#4F80E1",
+                Tertiary = "#F2C94C",
+                Info = "#4F80E1",
+                Success = "#5C8A2E",
+                Warning = "#D89A1A",
+                Error = "#C62828",
+                Background = "#FFFDF4",
+                BackgroundGray = "#F2F5E8",
                 Surface = "#FFFFFF",
-                AppbarBackground = "#4F6F27",
+                AppbarBackground = "#5C8A2E",
                 AppbarText = "#FFFFFF",
                 DrawerBackground = "#FFFFFF",
-                DrawerText = "#2F3526",
-                TextPrimary = "#2E3327",
-                TextSecondary = "#6F755F"
-            },
-            dark: new PaletteDark
-            {
-                Primary = "#A8D75F",
-                Secondary = "#F08DB8",
-                Tertiary = "#F4C36F",
-                Info = "#8FBDE8",
-                Success = "#A8D75F",
-                Warning = "#F4C36F",
-                Error = "#F08DB8",
-                Background = "#15170F",
-                BackgroundGray = "#202519",
-                Surface = "#252A1D",
-                AppbarBackground = "#0F130A",
-                AppbarText = "#F4F8E8",
-                DrawerBackground = "#1A2013",
-                DrawerText = "#E7EFD7",
-                TextPrimary = "#F5FAEA",
-                TextSecondary = "#C1CDA9"
+                DrawerText = "#2E3525",
+                TextPrimary = "#283022",
+                TextSecondary = "#68745C"
             });
     }
 
     private static MudTheme CreateAfterglowTheme()
     {
         return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#D45D4C",
-                Secondary = "#5B5BD6",
-                Tertiary = "#F0A202",
-                Info = "#5B5BD6",
-                Success = "#2F8F6B",
-                Warning = "#D98B00",
-                Error = "#D45D4C",
-                Background = "#FFF8F2",
-                BackgroundGray = "#F5ECE7",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#633D73",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#3B2D35",
-                TextPrimary = "#362B31",
-                TextSecondary = "#76656D"
-            },
             dark: new PaletteDark
             {
                 Primary = "#FF8A70",
@@ -292,33 +180,14 @@ public static class AppThemeCatalog
     private static MudTheme CreateDarkRomanceTheme()
     {
         return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#8F1D3A",
-                Secondary = "#3B2C5A",
-                Tertiary = "#B7791F",
-                Info = "#5B4A8C",
-                Success = "#477A53",
-                Warning = "#B7791F",
-                Error = "#8F1D3A",
-                Background = "#FBF5F7",
-                BackgroundGray = "#F1E7EC",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#4A1425",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#35252B",
-                TextPrimary = "#302228",
-                TextSecondary = "#7B6670"
-            },
             dark: new PaletteDark
             {
                 Primary = "#E85D84",
                 Secondary = "#9A85D6",
-                Tertiary = "#E0A23B",
+                Tertiary = "#D6A647",
                 Info = "#9A85D6",
                 Success = "#7DC48F",
-                Warning = "#E0A23B",
+                Warning = "#D6A647",
                 Error = "#E85D84",
                 Background = "#12090D",
                 BackgroundGray = "#211118",
@@ -337,41 +206,22 @@ public static class AppThemeCatalog
         return CreateTheme(
             light: new PaletteLight
             {
-                Primary = "#0B5E78",
-                Secondary = "#C43E35",
-                Tertiary = "#D9A441",
-                Info = "#0B5E78",
-                Success = "#2D8C72",
-                Warning = "#B8862B",
-                Error = "#C43E35",
-                Background = "#F5FAFC",
-                BackgroundGray = "#E8F1F4",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#123C52",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#253740",
-                TextPrimary = "#20323B",
-                TextSecondary = "#637781"
-            },
-            dark: new PaletteDark
-            {
-                Primary = "#58C4E0",
-                Secondary = "#F47B73",
-                Tertiary = "#F0C15D",
-                Info = "#58C4E0",
-                Success = "#69D2AE",
-                Warning = "#F0C15D",
-                Error = "#F47B73",
-                Background = "#0B141A",
-                BackgroundGray = "#121F27",
-                Surface = "#172832",
-                AppbarBackground = "#061015",
-                AppbarText = "#EAF8FC",
-                DrawerBackground = "#101C23",
-                DrawerText = "#DCECF1",
-                TextPrimary = "#EFFAFF",
-                TextSecondary = "#A5BBC4"
+                Primary = "#2F6F7E",
+                Secondary = "#A85F4D",
+                Tertiary = "#C9A66B",
+                Info = "#3C7F92",
+                Success = "#5F8E7A",
+                Warning = "#B58A45",
+                Error = "#A85F4D",
+                Background = "#F7EFE4",
+                BackgroundGray = "#E9DDD0",
+                Surface = "#FFFDF8",
+                AppbarBackground = "#4F7F8C",
+                AppbarText = "#FFFDF8",
+                DrawerBackground = "#FFFDF8",
+                DrawerText = "#3F4B4C",
+                TextPrimary = "#343F40",
+                TextSecondary = "#71807B"
             });
     }
 
@@ -396,25 +246,6 @@ public static class AppThemeCatalog
                 DrawerText = "#213733",
                 TextPrimary = "#1F3430",
                 TextSecondary = "#5D7771"
-            },
-            dark: new PaletteDark
-            {
-                Primary = "#29D3BD",
-                Secondary = "#FF957A",
-                Tertiary = "#B7E06A",
-                Info = "#5CC8FF",
-                Success = "#29D3BD",
-                Warning = "#B7E06A",
-                Error = "#FF957A",
-                Background = "#071815",
-                BackgroundGray = "#10241F",
-                Surface = "#17302A",
-                AppbarBackground = "#04110F",
-                AppbarText = "#E9FFFA",
-                DrawerBackground = "#0D1D19",
-                DrawerText = "#D8F2EC",
-                TextPrimary = "#ECFFFB",
-                TextSecondary = "#A3C6BE"
             });
     }
 
@@ -439,112 +270,32 @@ public static class AppThemeCatalog
                 DrawerText = "#3E2B35",
                 TextPrimary = "#36272F",
                 TextSecondary = "#806A73"
-            },
-            dark: new PaletteDark
-            {
-                Primary = "#FF8B70",
-                Secondary = "#B7A2FF",
-                Tertiary = "#FFD166",
-                Info = "#80B6FF",
-                Success = "#74D8A7",
-                Warning = "#FFD166",
-                Error = "#FF7194",
-                Background = "#171018",
-                BackgroundGray = "#241923",
-                Surface = "#2D202A",
-                AppbarBackground = "#100A12",
-                AppbarText = "#FFF0E8",
-                DrawerBackground = "#1C131B",
-                DrawerText = "#F5DFE8",
-                TextPrimary = "#FFF5ED",
-                TextSecondary = "#D4BBC6"
             });
     }
 
     private static MudTheme CreateStellarForgeTheme()
     {
         return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#2E5EEA",
-                Secondary = "#D83B52",
-                Tertiary = "#F0C84B",
-                Info = "#2E5EEA",
-                Success = "#2C9F7E",
-                Warning = "#B9891B",
-                Error = "#D83B52",
-                Background = "#F7F8FC",
-                BackgroundGray = "#E8ECF5",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#202849",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#242A3B",
-                TextPrimary = "#202536",
-                TextSecondary = "#687086"
-            },
             dark: new PaletteDark
             {
-                Primary = "#5F8BFF",
-                Secondary = "#FF5D72",
-                Tertiary = "#FFE169",
-                Info = "#5F8BFF",
+                Primary = "#FFE81F",
+                Secondary = "#4CC9F0",
+                Tertiary = "#FFB703",
+                Info = "#4CC9F0",
                 Success = "#49D4AA",
-                Warning = "#FFE169",
+                Warning = "#FFE81F",
                 Error = "#FF5D72",
-                Background = "#080A12",
-                BackgroundGray = "#121627",
-                Surface = "#1B2036",
-                AppbarBackground = "#05070D",
-                AppbarText = "#EEF3FF",
-                DrawerBackground = "#0E1220",
-                DrawerText = "#E2E8FF",
-                TextPrimary = "#F5F7FF",
-                TextSecondary = "#AEB8D2"
-            });
-    }
-
-    private static MudTheme CreateElderValeTheme()
-    {
-        return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#477A48",
-                Secondary = "#8A5F3C",
-                Tertiary = "#C9A34A",
-                Info = "#4E6FA8",
-                Success = "#477A48",
-                Warning = "#A6772A",
-                Error = "#A9483D",
-                Background = "#F8FAF0",
-                BackgroundGray = "#ECEFDF",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#3A5134",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#2D3327",
-                TextPrimary = "#2A3025",
-                TextSecondary = "#69705F"
+                Background = "#05070D",
+                BackgroundGray = "#0E1322",
+                Surface = "#171C2F",
+                AppbarBackground = "#02040A",
+                AppbarText = "#FFE81F",
+                DrawerBackground = "#0A0F1B",
+                DrawerText = "#FFEFB0",
+                TextPrimary = "#FFF7C2",
+                TextSecondary = "#BFC7DA"
             },
-            dark: new PaletteDark
-            {
-                Primary = "#8BC47B",
-                Secondary = "#C99A66",
-                Tertiary = "#E8C76A",
-                Info = "#8AADF0",
-                Success = "#8BC47B",
-                Warning = "#E8C76A",
-                Error = "#E07A6E",
-                Background = "#10140D",
-                BackgroundGray = "#1B2116",
-                Surface = "#252D1F",
-                AppbarBackground = "#0A0E08",
-                AppbarText = "#F1F8E9",
-                DrawerBackground = "#151B11",
-                DrawerText = "#E4EDD9",
-                TextPrimary = "#F5FAEE",
-                TextSecondary = "#B9C5AD"
-            });
+            typography: CreateStellarForgeTypography());
     }
 
     private static MudTheme CreateSummitBlazeTheme()
@@ -568,52 +319,57 @@ public static class AppThemeCatalog
                 DrawerText = "#242424",
                 TextPrimary = "#202020",
                 TextSecondary = "#6B5D57"
-            },
-            dark: new PaletteDark
-            {
-                Primary = "#FF6A2A",
-                Secondary = "#56A7F2",
-                Tertiary = "#E8E8E8",
-                Info = "#56A7F2",
-                Success = "#4BD184",
-                Warning = "#FF9B3D",
-                Error = "#FF7043",
-                Background = "#111111",
-                BackgroundGray = "#1D1D1D",
-                Surface = "#272727",
-                AppbarBackground = "#0B0B0B",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#171717",
-                DrawerText = "#F2F2F2",
-                TextPrimary = "#FFFFFF",
-                TextSecondary = "#C7C7C7"
             });
     }
 
-    private static MudTheme CreateTheme(PaletteLight light, PaletteDark dark)
+    private static MudTheme CreateTheme(
+        PaletteLight? light = null,
+        PaletteDark? dark = null,
+        Typography? typography = null)
     {
         return new MudTheme
         {
-            PaletteLight = light,
-            PaletteDark = dark,
+            PaletteLight = light ?? new PaletteLight(),
+            PaletteDark = dark ?? new PaletteDark(),
             LayoutProperties = new LayoutProperties
             {
                 DrawerWidthLeft = "260px",
                 DrawerWidthRight = "300px"
             },
-            Typography = new Typography
-            {
-                H1 = new H1Typography { FontSize = "2.5rem" },
-                H2 = new H2Typography { FontSize = "2rem" },
-                H3 = new H3Typography { FontSize = "1.6rem" },
-                H4 = new H4Typography { FontSize = "1.3rem" },
-                H5 = new H5Typography { FontSize = "1.1rem" },
-                H6 = new H6Typography { FontSize = "1rem" },
-                Subtitle1 = new Subtitle1Typography { FontSize = "0.95rem" },
-                Subtitle2 = new Subtitle2Typography { FontSize = "0.85rem" },
-                Body1 = new Body1Typography { FontSize = "0.9rem" },
-                Body2 = new Body2Typography { FontSize = "0.8rem" }
-            }
+            Typography = typography ?? CreateDefaultTypography()
         };
+    }
+
+    private static Typography CreateDefaultTypography()
+    {
+        return new Typography
+        {
+            H1 = new H1Typography { FontSize = "2.5rem" },
+            H2 = new H2Typography { FontSize = "2rem" },
+            H3 = new H3Typography { FontSize = "1.6rem" },
+            H4 = new H4Typography { FontSize = "1.3rem" },
+            H5 = new H5Typography { FontSize = "1.1rem" },
+            H6 = new H6Typography { FontSize = "1rem" },
+            Subtitle1 = new Subtitle1Typography { FontSize = "0.95rem" },
+            Subtitle2 = new Subtitle2Typography { FontSize = "0.85rem" },
+            Body1 = new Body1Typography { FontSize = "0.9rem" },
+            Body2 = new Body2Typography { FontSize = "0.8rem" }
+        };
+    }
+
+    private static Typography CreateStellarForgeTypography()
+    {
+        var typography = CreateDefaultTypography();
+        var displayFamily = new[] { "Arial Black", "Impact", "Segoe UI", "sans-serif" };
+
+        typography.Default = new DefaultTypography { FontFamily = displayFamily };
+        typography.H1 = new H1Typography { FontFamily = displayFamily, FontSize = "2.5rem", FontWeight = "700" };
+        typography.H2 = new H2Typography { FontFamily = displayFamily, FontSize = "2rem", FontWeight = "700" };
+        typography.H3 = new H3Typography { FontFamily = displayFamily, FontSize = "1.6rem", FontWeight = "700" };
+        typography.H4 = new H4Typography { FontFamily = displayFamily, FontSize = "1.3rem", FontWeight = "700" };
+        typography.H5 = new H5Typography { FontFamily = displayFamily, FontSize = "1.1rem", FontWeight = "700" };
+        typography.H6 = new H6Typography { FontFamily = displayFamily, FontSize = "1rem", FontWeight = "700" };
+
+        return typography;
     }
 }
