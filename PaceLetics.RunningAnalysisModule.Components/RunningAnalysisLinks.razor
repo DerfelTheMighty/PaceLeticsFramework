@@ -1,0 +1,44 @@
+@namespace PaceLetics.RunningAnalysisModule.Components
+
+<MudStack Spacing="2">
+    @if (Items.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">No analyses available.</MudAlert>
+    }
+    else
+    {
+        @foreach (var item in Items.OrderByDescending(item => item.StartsAt))
+        {
+            <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                    <MudStack Spacing="0" Style="min-width:0;">
+                        <MudText Typo="Typo.body1">@item.Title</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@item.StartsAt.ToString("g")</MudText>
+                    </MudStack>
+
+                    @if (!string.IsNullOrWhiteSpace(item.DriveFolderUrl)
+                         && item.FolderStatus == RunningAnalysisFolderStatus.Ready)
+                    {
+                        <MudButton Href="@item.DriveFolderUrl"
+                                   Target="_blank"
+                                   Color="Color.Primary"
+                                   Variant="Variant.Outlined"
+                                   StartIcon="@Icons.Material.Filled.FolderOpen">
+                            Open
+                        </MudButton>
+                    }
+                    else
+                    {
+                        <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
+                            @item.FolderStatus
+                        </MudChip>
+                    }
+                </MudStack>
+            </MudPaper>
+        }
+    }
+</MudStack>
+
+@code {
+    [Parameter] public IReadOnlyList<RunningAnalysisLink> Items { get; set; } = Array.Empty<RunningAnalysisLink>();
+}

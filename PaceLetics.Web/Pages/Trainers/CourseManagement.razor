@@ -258,7 +258,15 @@
                                                     <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
                                                         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
                                                             <MudStack Spacing="0" Style="min-width:0;">
-                                                                <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
+                                                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                                    <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
+                                                                    <MudChip T="string"
+                                                                             Size="Size.Small"
+                                                                             Color="@GetCourseEventTypeColor(courseEvent.EventType)"
+                                                                             Variant="Variant.Outlined">
+                                                                        @FormatCourseEventType(courseEvent.EventType)
+                                                                    </MudChip>
+                                                                </MudStack>
                                                                 <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatDateRange(courseEvent.StartsAt, courseEvent.EndsAt)</MudText>
                                                                 @if (!string.IsNullOrWhiteSpace(courseEvent.Location))
                                                                 {
@@ -311,6 +319,15 @@
                                                 </MudItem>
                                                 <MudItem xs="12" md="6">
                                                     <MudTextField Label="@L["Location"]" @bind-Value="_eventLocation" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudSelect T="string"
+                                                               Label="@L["EventType"]"
+                                                               @bind-Value="_eventType"
+                                                               Variant="Variant.Outlined">
+                                                        <MudSelectItem T="string" Value="@CourseEventTypes.General">@L["EventType_General"]</MudSelectItem>
+                                                        <MudSelectItem T="string" Value="@CourseEventTypes.RunningAnalysis">@L["EventType_RunningAnalysis"]</MudSelectItem>
+                                                    </MudSelect>
                                                 </MudItem>
                                                 <MudItem xs="12">
                                                     <MudTextField Label="@L["Description"]" @bind-Value="_eventDescription" Variant="Variant.Outlined" Lines="2" />
@@ -431,6 +448,7 @@
     private string _eventTitle = string.Empty;
     private string _eventDescription = string.Empty;
     private string _eventLocation = string.Empty;
+    private string _eventType = CourseEventTypes.General;
     private DateTime? _eventStartDate = DateTime.Today;
     private string _eventStartTime = "18:00";
     private string _eventEndTime = "19:30";
@@ -721,7 +739,8 @@
                 _eventDescription,
                 _eventLocation,
                 _eventCapacity,
-                _eventRegistrationDeadline?.Date);
+                _eventRegistrationDeadline?.Date,
+                _eventType);
 
             Snackbar.Add(L["AddEventSuccess"], Severity.Success);
             ResetEventForm();
@@ -836,6 +855,7 @@
         _eventTitle = string.Empty;
         _eventDescription = string.Empty;
         _eventLocation = string.Empty;
+        _eventType = CourseEventTypes.General;
         _eventStartDate = DateTime.Today;
         _eventStartTime = "18:00";
         _eventEndTime = "19:30";
@@ -861,6 +881,20 @@
     private string FormatDateRange(DateTime startsAt, DateTime endsAt)
     {
         return string.Format(L["DateRange"], startsAt, endsAt);
+    }
+
+    private string FormatCourseEventType(string? eventType)
+    {
+        return string.Equals(eventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase)
+            ? L["EventType_RunningAnalysis"]
+            : L["EventType_General"];
+    }
+
+    private Color GetCourseEventTypeColor(string? eventType)
+    {
+        return string.Equals(eventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase)
+            ? Color.Primary
+            : Color.Default;
     }
 
     private string GetTrainingPlanName(string trainingPlanId)

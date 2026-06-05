@@ -35,6 +35,9 @@
   <data name="NoParticipants" xml:space="preserve"><value>No participants registered yet.</value></data>
   <data name="Capacity" xml:space="preserve"><value>Capacity</value></data>
   <data name="RegistrationDeadline" xml:space="preserve"><value>Registration deadline</value></data>
+  <data name="EventType" xml:space="preserve"><value>Event type</value></data>
+  <data name="EventType_General" xml:space="preserve"><value>General</value></data>
+  <data name="EventType_RunningAnalysis" xml:space="preserve"><value>Running analysis</value></data>
   <data name="AddEvent" xml:space="preserve"><value>Add event</value></data>
   <data name="TrainingPlans" xml:space="preserve"><value>Training plans</value></data>
   <data name="NoPublishedPlan" xml:space="preserve"><value>No plan published yet.</value></data>

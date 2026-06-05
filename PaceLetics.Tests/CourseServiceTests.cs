@@ -515,6 +515,47 @@ public sealed class CourseServiceTests
             service.RegisterForEventAsync("course-1", "event-1", "athlete-1"));
     }
 
+    [Fact]
+    public async Task RegisterForEvent_NotifiesRunningAnalysisAdapterForRunningAnalysisEvent()
+    {
+        var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
+        var adapter = new FakeRunningAnalysisRegistrationAdapter();
+        var service = new CourseService(repository, runningAnalysisRegistrationAdapter: adapter);
+        await service.JoinCourseAsync("course-1", "athlete-1");
+        var courseEvent = await service.CreateEventAsync(
+            "course-1",
+            "Laufanalyse",
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(1).AddHours(1),
+            "trainer-1",
+            eventType: CourseEventTypes.RunningAnalysis);
+
+        await service.RegisterForEventAsync("course-1", courseEvent.Id, "athlete-1");
+
+        var notification = Assert.Single(adapter.Notifications);
+        Assert.Equal(courseEvent.Id, notification.CourseEvent.Id);
+        Assert.Equal("athlete-1", notification.Registration.AthleteUserId);
+    }
+
+    [Fact]
+    public async Task RegisterForEvent_DoesNotNotifyRunningAnalysisAdapterForGeneralEvent()
+    {
+        var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
+        var adapter = new FakeRunningAnalysisRegistrationAdapter();
+        var service = new CourseService(repository, runningAnalysisRegistrationAdapter: adapter);
+        await service.JoinCourseAsync("course-1", "athlete-1");
+        var courseEvent = await service.CreateEventAsync(
+            "course-1",
+            "Workshop",
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(1).AddHours(1),
+            "trainer-1");
+
+        await service.RegisterForEventAsync("course-1", courseEvent.Id, "athlete-1");
+
+        Assert.Empty(adapter.Notifications);
+    }
+
     private static CourseDocument CreateCourse(string courseId, string planId)
     {
         return new CourseDocument
@@ -526,6 +567,15 @@ public sealed class CourseServiceTests
             IsPublished = true,
             StartDate = DateTime.UtcNow.AddDays(-1),
             EndDate = DateTime.UtcNow.AddDays(30),
+            CreatedByTrainerUserId = "trainer-1",
+            Trainers = new List<CourseTrainerDocument>
+            {
+                new()
+                {
+                    TrainerUserId = "trainer-1",
+                    DisplayName = "Coach"
+                }
+            },
             TrainingPlanPublications = new List<CourseTrainingPlanPublicationDocument>
             {
                 new()
@@ -654,4 +704,24 @@ public sealed class CourseServiceTests
             return Task.CompletedTask;
         }
     }
+
+    private sealed class FakeRunningAnalysisRegistrationAdapter : ICourseRunningAnalysisRegistrationAdapter
+    {
+        public List<Notification> Notifications { get; } = new();
+
+        public Task OnRegisteredAsync(
+            CourseDocument course,
+            CourseEventDocument courseEvent,
+            CourseEventRegistrationDocument registration,
+            CancellationToken cancellationToken = default)
+        {
+            Notifications.Add(new Notification(course, courseEvent, registration));
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed record Notification(
+        CourseDocument Course,
+        CourseEventDocument CourseEvent,
+        CourseEventRegistrationDocument Registration);
 }

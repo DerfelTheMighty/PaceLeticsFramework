@@ -50,7 +50,8 @@ public interface ICourseService
         string description = "",
         string location = "",
         int? capacity = null,
-        DateTime? registrationDeadline = null);
+        DateTime? registrationDeadline = null,
+        string eventType = CourseEventTypes.General);
 
     Task DeleteEventAsync(string courseId, string eventId, string requestingTrainerUserId);
 
