@@ -17,7 +17,8 @@ public static class PaceLeticsConfiguration
         var options = new AthleteDataOptions
         {
             DatabaseName = section[nameof(AthleteDataOptions.DatabaseName)] ?? defaults.DatabaseName,
-            AthleteContainerName = section[nameof(AthleteDataOptions.AthleteContainerName)] ?? defaults.AthleteContainerName
+            AthleteContainerName = section[nameof(AthleteDataOptions.AthleteContainerName)] ?? defaults.AthleteContainerName,
+            CourseContainerName = section[nameof(AthleteDataOptions.CourseContainerName)] ?? defaults.CourseContainerName
         };
 
         options.Validate();

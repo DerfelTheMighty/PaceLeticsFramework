@@ -21,6 +21,12 @@ else
     [Parameter]
     public bool Framed { get; set; } = true;
 
+    [Parameter]
+    public bool AllowDelete { get; set; }
+
+    [Parameter]
+    public EventCallback<AthleteMessage> OnDelete { get; set; }
+
     private RenderFragment FeedContent => @<MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
             <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Style="min-width:0;">
@@ -54,7 +60,11 @@ else
                                            Detail="@L[message.BodyKey, message.BodyArguments.ToArray()]"
                                            Icon="@message.Icon"
                                            Severity="@message.Severity"
-                                           Href="@message.ActionHref" />
+                                           Href="@message.ActionHref"
+                                           IsRead="@message.IsRead"
+                                           ShowDelete="@(AllowDelete && OnDelete.HasDelegate)"
+                                           DeleteLabel="@L["DeleteMessage"]"
+                                           OnDelete="@(() => OnDelete.InvokeAsync(message))" />
                 }
             </MudStack>
         }
