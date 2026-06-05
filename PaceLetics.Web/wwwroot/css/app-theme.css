@@ -179,14 +179,16 @@
 .pl-message-menu-panel {
     position: fixed;
     top: 72px;
-    left: 50%;
+    left: 0;
+    right: 0;
     z-index: 1299;
-    transform: translateX(-50%);
-    width: min(390px, calc(100vw - 24px));
+    width: auto;
     max-height: min(640px, calc(100vh - 88px));
     overflow: auto;
-    border-radius: var(--pl-radius);
+    border-radius: 0 0 var(--pl-radius) var(--pl-radius);
     border: 1px solid var(--mud-palette-lines-default);
+    border-left: 0;
+    border-right: 0;
     background: var(--mud-palette-surface);
     box-shadow: var(--mud-elevation-8);
 }
