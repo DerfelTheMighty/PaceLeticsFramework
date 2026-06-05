@@ -17,6 +17,7 @@
   <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>“{0}” 明天在你的训练计划中。</value></data>
   <data name="UpcomingTraining_Body" xml:space="preserve"><value>“{0}” 安排在 {1:d} 的训练计划中。</value></data>
   <data name="UpcomingTraining_Action" xml:space="preserve"><value>打开训练计划</value></data>
+  <data name="DeleteMessage" xml:space="preserve"><value>删除消息</value></data>
   <data name="Severity_Info" xml:space="preserve"><value>信息</value></data>
   <data name="Severity_Success" xml:space="preserve"><value>确定</value></data>
   <data name="Severity_Warning" xml:space="preserve"><value>重要</value></data>

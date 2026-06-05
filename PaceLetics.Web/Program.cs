@@ -124,6 +124,7 @@ builder.Services.AddSingleton<DashboardMessageFeedOptions>();
 builder.Services.AddScoped<IAthleteMessageProvider, ReferenceRunDashboardMessageProvider>();
 builder.Services.AddScoped<IAthleteMessageProvider, UpcomingTrainingDashboardMessageProvider>();
 builder.Services.AddScoped<IAthleteMessageFeedService, AthleteMessageFeedService>();
+builder.Services.AddScoped<IAthleteMessageFeedStateStore, CosmosAthleteMessageFeedStateStore>();
 
 
 //builder.Services.AddMudServices();

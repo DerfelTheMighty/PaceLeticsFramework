@@ -17,6 +17,7 @@
   <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; est prévu dans votre plan d’entraînement demain.</value></data>
   <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; est prévu dans votre plan d’entraînement le {1:d}.</value></data>
   <data name="UpcomingTraining_Action" xml:space="preserve"><value>Ouvrir le plan d’entraînement</value></data>
+  <data name="DeleteMessage" xml:space="preserve"><value>Supprimer le message</value></data>
   <data name="Severity_Info" xml:space="preserve"><value>Info</value></data>
   <data name="Severity_Success" xml:space="preserve"><value>OK</value></data>
   <data name="Severity_Warning" xml:space="preserve"><value>Important</value></data>

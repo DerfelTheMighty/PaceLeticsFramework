@@ -1,34 +1,43 @@
-# PR Report: Theme Catalog Refresh
+# PR Report: Persistent Message Feed State
 
 ## Summary
-- Reworked theme selection so each theme now controls whether it renders in light or dark mode.
-- Removed the separate Light/Dark/System color-scheme selector from the app bar theme menu.
-- Moved visible theme names into the theme catalog as English display names, making English the single source for theme labels.
-- Removed the `ElderVale` theme from the enum, catalog, menu, and legacy layout resources.
-- Simplified the theme catalog by keeping only the active palette for each theme instead of maintaining unused light/dark variants.
+- Reworked the athlete message feed so read and deleted message state is persisted server-side per user.
+- Added `IsRead` / `IsUnread` state to `AthleteMessage`, while keeping message generation provider-driven.
+- Replaced the right-anchored `MudMenu` feed with a viewport-centered overlay to prevent the panel from being clipped on the right side.
+- Added a delete action to each feed message, with localized tooltip/ARIA labels.
+- Updated the feed badge and warning button state so only unread messages ask for user attention.
 
-## Theme Direction
-- Dark themes: PaceLetics, Ocean, Forest, Afterglow, Dark Romance, Stellar Forge.
-- Light themes: High Contrast, Wildflowers, Maritime, Tropical, Golden Hour, Summit Blaze.
-- Ocean now uses a deeper dark-blue background.
-- Forest now uses a dark-brown background.
-- Wildflowers has a brighter poppy/cornflower-inspired palette.
-- Maritime is light with a warmer beach/shabby-chic coastal palette.
-- Stellar Forge is dark with stronger Star-Wars-like yellow and heavier display typography.
+## Implementation Details
+- Added a Cosmos-backed message feed state store:
+  - `AthleteMessageFeedStateDocument`
+  - `IAthleteMessageFeedStateStore`
+  - `CosmosAthleteMessageFeedStateStore`
+- Persisted user state stores stable generated message IDs with read/deleted flags and timestamps.
+- The feed still rebuilds current messages from `IAthleteMessageProvider` implementations; persisted state is applied afterward.
+- Deleted messages are filtered out when the feed is rendered.
+- Opening the feed marks currently visible unread messages as read and persists that state.
+- Deleting a message marks it read and deleted, removes it from the current feed immediately, and persists the change.
 
-## Main Areas Changed
-- Theme catalog and palettes: `PaceLetics.Web/Services/Theming/AppThemeCatalog.cs`
-- Theme metadata: `PaceLetics.Web/Services/Theming/AppThemeDefinition.cs`
-- Theme enum cleanup: `PaceLetics.Web/Services/Theming/AppThemeName.cs`
-- Theme preference behavior: `PaceLetics.Web/Services/Theming/ThemePreferenceService.cs`
-- App bar theme menu: `PaceLetics.Web/Shared/MainLayout.razor`
-- Removed color-scheme enum: `PaceLetics.Web/Services/Theming/AppColorScheme.cs`
-- Removed obsolete translated theme and scheme labels from `PaceLetics.Web/Resources/Shared/MainLayout*.resx`
+## UI Changes
+- The feed panel is now fixed-positioned and horizontally centered in the viewport.
+- The feed width remains responsive via `min(390px, calc(100vw - 24px))`.
+- Feed tiles now separate the navigation link area from the delete icon, preventing delete clicks from triggering navigation.
+- Read messages render with normal emphasis; unread messages retain stronger tile emphasis.
+
+## Configuration
+- Registered `IAthleteMessageFeedStateStore` in DI.
+- Fixed `AthleteDataOptions` binding so `CourseContainerName` is read from configuration instead of always falling back to the default.
 
 ## Verification
-- `dotnet test PaceLetics.Tests\PaceLetics.Tests.csproj --filter AppThemeCatalogTests` succeeded.
-- Search confirmed no remaining `AppColorScheme`, `ColorScheme`, `Scheme_*`, `ElderVale`, or localized `Theme_*` references in `PaceLetics.Web` and `PaceLetics.Tests`.
+- `dotnet test PaceLetics.Tests\PaceLetics.Tests.csproj --no-restore` succeeded.
+- Added unit coverage for default unread state, feed state document IDs, read state, and delete state.
+- Browser verification on `http://localhost:5117` confirmed:
+  - The feed overlay is centered (`centerDelta = 0`).
+  - The overlay is not clipped left or right.
+  - Delete buttons render for feed messages.
+  - Opening the feed marks messages as read.
+  - Deleting a message removes it immediately and the deletion remains after reload.
 
 ## Notes
-- Existing NuGet vulnerability warnings for `OpenMcdf` and `SharpCompress` still appear during test restore/build and are unrelated to this change.
-- Existing analyzer/nullability warnings in component projects remain unrelated to this change.
+- Existing NuGet vulnerability warnings for `OpenMcdf` and `SharpCompress` still appear during test/build and are unrelated to this change.
+- Existing component analyzer/nullability warnings remain unrelated to this change.

@@ -1,50 +1,65 @@
-﻿@if (!string.IsNullOrWhiteSpace(Href))
-{
-    <MudLink Href="@Href" Underline="Underline.None">
-        @TileContent
-    </MudLink>
-}
-else
-{
-    @TileContent
-}
+@TileContent
 
 @code {
     private RenderFragment TileContent => @<MudPaper Elevation="0"
-                                                     Class="@TileClass">
-        <MudStack Row="true"
-                  AlignItems="AlignItems.Center"
-                  Spacing="2"
-                  Class="pa-3">
-
-            <MudAvatar Color="@Color"
-                       Variant="Variant.Filled"
-                       Size="Size.Medium"
-                       Class="pl-feed-tile-icon">
-                <MudIcon Icon="@Icon" Size="Size.Small" />
-            </MudAvatar>
-
-            <MudStack Spacing="0" Style="flex:1; min-width:0;">
-                <MudText Typo="Typo.body2">
-                    @Title
-                </MudText>
-
-                @if (!string.IsNullOrWhiteSpace(Detail))
-                {
-                    <MudText Typo="Typo.caption" Color="Color.Secondary">
-                        @Detail
-                    </MudText>
-                }
-            </MudStack>
-
+                                                      Class="@TileClass">
+        <div class="pl-feed-tile-layout">
             @if (!string.IsNullOrWhiteSpace(Href))
             {
-                <MudIcon Icon="@Icons.Material.Filled.ArrowForward"
-                         Size="Size.Small"
-                         Color="Color.Secondary" />
+                <MudLink Href="@Href"
+                         Underline="Underline.None"
+                         Class="pl-feed-tile-main">
+                    @MainContent
+
+                    <MudIcon Icon="@Icons.Material.Filled.ArrowForward"
+                             Size="Size.Small"
+                             Color="Color.Secondary" />
+                </MudLink>
+            }
+            else
+            {
+                <div class="pl-feed-tile-main">
+                    @MainContent
+                </div>
+            }
+
+            @if (ShowDelete)
+            {
+                <span class="pl-feed-tile-actions" @onclick:stopPropagation="true">
+                    <MudTooltip Text="@DeleteLabel">
+                        <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                       Size="Size.Small"
+                                       Color="Color.Secondary"
+                                       Class="pl-feed-tile-delete"
+                                       OnClick="HandleDeleteAsync"
+                                       aria-label="@DeleteLabel" />
+                    </MudTooltip>
+                </span>
+            }
+        </div>
+    </MudPaper>;
+
+    private RenderFragment MainContent => @<text>
+        <MudAvatar Color="@Color"
+                   Variant="Variant.Filled"
+                   Size="Size.Medium"
+                   Class="pl-feed-tile-icon">
+            <MudIcon Icon="@Icon" Size="Size.Small" />
+        </MudAvatar>
+
+        <MudStack Spacing="0" Style="flex:1; min-width:0;">
+            <MudText Typo="Typo.body2" Class="pl-feed-tile-title">
+                @Title
+            </MudText>
+
+            @if (!string.IsNullOrWhiteSpace(Detail))
+            {
+                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                    @Detail
+                </MudText>
             }
         </MudStack>
-    </MudPaper>;
+    </text>;
 
     [Parameter, EditorRequired]
     public string Title { get; set; } = string.Empty;
@@ -61,6 +76,23 @@ else
     [Parameter]
     public string? Href { get; set; }
 
+    [Parameter]
+    public bool IsRead { get; set; }
+
+    [Parameter]
+    public bool ShowDelete { get; set; }
+
+    [Parameter]
+    public string DeleteLabel { get; set; } = "Delete message";
+
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
+
+    private Task HandleDeleteAsync()
+    {
+        return OnDelete.InvokeAsync();
+    }
+
     private Color Color => Severity switch
     {
         Severity.Success => Color.Success,
@@ -72,10 +104,12 @@ else
 
     private string TileClass => Severity switch
     {
-        Severity.Success => "pl-feed-tile pl-feed-tile-success",
-        Severity.Warning => "pl-feed-tile pl-feed-tile-warning",
-        Severity.Error => "pl-feed-tile pl-feed-tile-error",
-        Severity.Info => "pl-feed-tile pl-feed-tile-info",
-        _ => "pl-feed-tile"
+        Severity.Success => $"pl-feed-tile pl-feed-tile-success {ReadStateClass}",
+        Severity.Warning => $"pl-feed-tile pl-feed-tile-warning {ReadStateClass}",
+        Severity.Error => $"pl-feed-tile pl-feed-tile-error {ReadStateClass}",
+        Severity.Info => $"pl-feed-tile pl-feed-tile-info {ReadStateClass}",
+        _ => $"pl-feed-tile {ReadStateClass}"
     };
+
+    private string ReadStateClass => IsRead ? "pl-feed-tile-read" : "pl-feed-tile-unread";
 }

@@ -11,5 +11,9 @@ public sealed record AthleteMessage(
     string? ActionHref,
     string? ActionLabelKey,
     int Priority,
-    IReadOnlyList<object> BodyArguments);
+    IReadOnlyList<object> BodyArguments,
+    bool IsRead = false)
+{
+    public bool IsUnread => !IsRead;
+}
 

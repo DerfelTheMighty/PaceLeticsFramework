@@ -17,6 +17,7 @@
   <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; yarın antrenman planında.</value></data>
   <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; {1:d} tarihinde antrenman planında.</value></data>
   <data name="UpcomingTraining_Action" xml:space="preserve"><value>Antrenman planını aç</value></data>
+  <data name="DeleteMessage" xml:space="preserve"><value>Mesaji sil</value></data>
   <data name="Severity_Info" xml:space="preserve"><value>Bilgi</value></data>
   <data name="Severity_Success" xml:space="preserve"><value>Tamam</value></data>
   <data name="Severity_Warning" xml:space="preserve"><value>Önemli</value></data>
