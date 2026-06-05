@@ -25,7 +25,20 @@
 <MudStack Spacing="2" Class="mb-4">
     @if (_plans == null || !_plans.Any())
     {
-        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoPlans"]</MudText>
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+            <MudStack Row="true"
+                      AlignItems="AlignItems.Center"
+                      Justify="Justify.SpaceBetween"
+                      Style="width:100%; gap:12px;">
+                <MudText Typo="Typo.body2">@L["NoPlans"]</MudText>
+                <MudTooltip Text="@L["CourseSelectionLink"]">
+                    <MudIconButton Href="/Athletes/courses"
+                                   Icon="@Icons.Material.Filled.School"
+                                   Color="Color.Primary"
+                                   aria-label="@L["CourseSelectionLink"]" />
+                </MudTooltip>
+            </MudStack>
+        </MudAlert>
     }
     else
     {
@@ -44,12 +57,12 @@
 </MudStack>
 
 <!-- Timeline -->
-<div style="height: calc(100vh - 300px); overflow:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
-    <MudTimeline TimelineOrientation="TimelineOrientation.Vertical"
-                 TimelinePosition="TimelinePosition.Left">
+@if (Plan is not null)
+{
+    <div style="height: calc(100vh - 300px); overflow:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
+        <MudTimeline TimelineOrientation="TimelineOrientation.Vertical"
+                     TimelinePosition="TimelinePosition.Left">
 
-        @if (Plan is not null)
-        {
             @foreach (var session in Plan.Sessions)
             {
                 var isNext = session.Id == _nextSessionId;
@@ -79,10 +92,9 @@
 
                 </MudTimelineItem>
             }
-        }
-    </MudTimeline>
-</div>
-
+        </MudTimeline>
+    </div>
+}
 @if (_detailsOpen)
 {
     <div style="position:fixed; inset:0; background: rgba(0,0,0,0.35); z-index:1300;"

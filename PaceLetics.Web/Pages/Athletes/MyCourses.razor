@@ -44,16 +44,16 @@
                         var nextDate = GetUpcomingDates(course).FirstOrDefault();
 
                         <MudPaper Elevation="@(isSelected ? 4 : 1)"
-                                  Class="pa-3"
+                                  Class="pa-2"
                                   Style="@GetCourseCardStyle(isSelected)"
                                   @onclick="@(() => SelectCourse(course.Id))">
                             <MudStack Spacing="2" Style="height:100%;">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%; gap:8px;">
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@FormatCourseLevel(course.Level)</MudChip>
                                     <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
                                 </MudStack>
 
-                                <MudText Typo="Typo.subtitle2" Style="line-height:1.25; min-height:40px; overflow:hidden;">
+                                <MudText Typo="Typo.body2" Style="line-height:1.25; min-height:34px; overflow:hidden;">
                                     @course.Name
                                 </MudText>
 
@@ -66,13 +66,15 @@
 
                                 <MudSpacer />
 
-                                <MudButton Size="Size.Small"
-                                           Color="Color.Default"
-                                           Variant="Variant.Outlined"
-                                           StartIcon="@Icons.Material.Filled.Logout"
-                                           OnClick="@(() => LeaveCourseAsync(course.Id, course.Name))">
-                                    @L["Leave"]
-                                </MudButton>
+                                <MudStack Row="true" Justify="Justify.FlexEnd" Style="width:100%;">
+                                    <MudTooltip Text="@L["Leave"]">
+                                        <MudIconButton Size="Size.Small"
+                                                       Color="Color.Default"
+                                                       Icon="@Icons.Material.Filled.Logout"
+                                                       OnClick="@(() => LeaveCourseAsync(course.Id, course.Name))"
+                                                       aria-label="@L["Leave"]" />
+                                    </MudTooltip>
+                                </MudStack>
                             </MudStack>
                         </MudPaper>
                     }
@@ -120,20 +122,20 @@
                                                     <MudStack Spacing="1" Style="min-width:0;">
                                                         <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
                                                             <MudText Typo="Typo.subtitle2">@course.Name</MudText>
-                                                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
+                                                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@FormatCourseLevel(course.Level)</MudChip>
                                                         </MudStack>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatShortPeriod(course)</MudText>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">
                                                             @FormatUpcomingDate(nextDate)
                                                         </MudText>
                                                     </MudStack>
-                                                    <MudButton Size="Size.Small"
-                                                               Color="Color.Primary"
-                                                               Variant="Variant.Filled"
-                                                               StartIcon="@Icons.Material.Filled.HowToReg"
-                                                               OnClick="@(() => JoinCourseAsync(course.Id))">
-                                                        @L["Join"]
-                                                    </MudButton>
+                                                    <MudTooltip Text="@L["Join"]">
+                                                        <MudIconButton Size="Size.Small"
+                                                                       Color="Color.Primary"
+                                                                       Icon="@Icons.Material.Filled.HowToReg"
+                                                                       OnClick="@(() => JoinCourseAsync(course.Id))"
+                                                                       aria-label="@L["Join"]" />
+                                                    </MudTooltip>
                                                 </MudStack>
                                             </div>
                                         }
@@ -158,7 +160,7 @@
                             <MudStack Spacing="1" Style="min-width:0;">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
                                     <MudText Typo="Typo.h6">@course.Name</MudText>
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@FormatCourseLevel(course.Level)</MudChip>
                                     <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">@L["Joined"]</MudChip>
                                 </MudStack>
                                 <MudText Typo="Typo.body2" Color="Color.Secondary" Style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
@@ -232,23 +234,23 @@
                                                 </div>
                                                 @if (IsRegisteredForEvent(courseEvent.Id))
                                                 {
-                                                    <MudButton Size="Size.Small"
-                                                               Color="Color.Default"
-                                                               Variant="Variant.Outlined"
-                                                               StartIcon="@Icons.Material.Filled.EventBusy"
-                                                               OnClick="@(() => CancelEventRegistrationAsync(course.Id, courseEvent.Id))">
-                                                        @L["CancelRegistration"]
-                                                    </MudButton>
+                                                    <MudTooltip Text="@L["CancelRegistration"]">
+                                                        <MudIconButton Size="Size.Small"
+                                                                       Color="Color.Default"
+                                                                       Icon="@Icons.Material.Filled.Logout"
+                                                                       OnClick="@(() => CancelEventRegistrationAsync(course.Id, courseEvent.Id))"
+                                                                       aria-label="@L["CancelRegistration"]" />
+                                                    </MudTooltip>
                                                 }
                                                 else
                                                 {
-                                                    <MudButton Size="Size.Small"
-                                                               Color="Color.Primary"
-                                                               Variant="Variant.Filled"
-                                                               StartIcon="@Icons.Material.Filled.EventAvailable"
-                                                               OnClick="@(() => RegisterForEventAsync(course.Id, courseEvent.Id))">
-                                                        @L["Register"]
-                                                    </MudButton>
+                                                    <MudTooltip Text="@L["Register"]">
+                                                        <MudIconButton Size="Size.Small"
+                                                                       Color="Color.Primary"
+                                                                       Icon="@Icons.Material.Filled.HowToReg"
+                                                                       OnClick="@(() => RegisterForEventAsync(course.Id, courseEvent.Id))"
+                                                                       aria-label="@L["Register"]" />
+                                                    </MudTooltip>
                                                 }
                                             </div>
                                         }
@@ -509,12 +511,17 @@
             ? "2px solid var(--mud-palette-primary)"
             : "1px solid var(--mud-palette-lines-default)";
 
-        return $"flex:0 0 244px; width:244px; min-height:178px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:{border};";
+        return $"flex:0 0 176px; width:176px; min-height:132px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:{border};";
     }
 
     private static string GetAddCourseCardStyle()
     {
-        return "flex:0 0 132px; width:132px; min-height:178px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:1px dashed var(--mud-palette-primary);";
+        return "flex:0 0 104px; width:104px; min-height:132px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:1px dashed var(--mud-palette-primary);";
+    }
+
+    private static string FormatCourseLevel(string level)
+    {
+        return CourseLevelFormatting.Format(level);
     }
 
     private string FormatPeriod(CourseDocument course)

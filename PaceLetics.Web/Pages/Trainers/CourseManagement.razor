@@ -42,7 +42,15 @@
                             <MudTextField Label="@L["Name"]" @bind-Value="_courseName" Variant="Variant.Outlined" />
                         </MudItem>
                         <MudItem xs="12" md="6">
-                            <MudTextField Label="@L["Level"]" @bind-Value="_courseLevel" Variant="Variant.Outlined" />
+                            <MudSelect T="CourseLevel"
+                                       Label="@L["Level"]"
+                                       @bind-Value="_courseLevel"
+                                       Variant="Variant.Outlined">
+                                @foreach (var level in CourseLevelFormatting.All)
+                                {
+                                    <MudSelectItem T="CourseLevel" Value="@level">@CourseLevelFormatting.Format(level)</MudSelectItem>
+                                }
+                            </MudSelect>
                         </MudItem>
                         <MudItem xs="12">
                             <MudTextField Label="@L["Description"]"
@@ -409,7 +417,7 @@
 
     private string _courseName = string.Empty;
     private string _courseDescription = string.Empty;
-    private string _courseLevel = string.Empty;
+    private CourseLevel _courseLevel = CourseLevel.Level1;
     private DateTime? _courseStartDate = DateTime.Today;
     private DateTime? _courseEndDate = DateTime.Today.AddMonths(3);
 
@@ -808,7 +816,7 @@
     {
         _courseName = string.Empty;
         _courseDescription = string.Empty;
-        _courseLevel = string.Empty;
+        _courseLevel = CourseLevel.Level1;
         _courseStartDate = DateTime.Today;
         _courseEndDate = DateTime.Today.AddMonths(3);
     }

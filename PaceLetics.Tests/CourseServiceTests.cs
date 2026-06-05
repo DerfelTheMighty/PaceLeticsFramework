@@ -27,6 +27,36 @@ public sealed class CourseServiceTests
     }
 
     [Fact]
+    public async Task CreateCourse_StoresFormattedCourseLevel()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Testkurs",
+                Level = CourseLevel.Level3,
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        Assert.Equal("Level 3", course.Level);
+    }
+
+    [Theory]
+    [InlineData("1", "Level 1")]
+    [InlineData("Level 2", "Level 2")]
+    [InlineData("level 5", "Level 5")]
+    [InlineData("Advanced", "Advanced")]
+    public void CourseLevelFormatting_FormatsKnownLevelsAndPreservesUnknownValues(string level, string expected)
+    {
+        Assert.Equal(expected, CourseLevelFormatting.Format(level));
+    }
+
+    [Fact]
     public async Task DeleteCourse_RequiresCreator()
     {
         var repository = new InMemoryCourseRepository();
