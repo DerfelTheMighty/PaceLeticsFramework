@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Nav_Dashboard" xml:space="preserve"><value>仪表板</value></data>
+  <data name="Nav_RaceData" xml:space="preserve"><value>比赛数据</value></data>
+  <data name="Nav_PaceZones" xml:space="preserve"><value>配速区间</value></data>
+  <data name="Nav_Courses" xml:space="preserve"><value>我的课程</value></data>
+  <data name="Nav_TrainerCourses" xml:space="preserve"><value>管理课程</value></data>
+  <data name="Nav_TrainingPlan" xml:space="preserve"><value>训练计划</value></data>
+  <data name="Nav_Workouts" xml:space="preserve"><value>训练</value></data>
+  <data name="Nav_Profiles" xml:space="preserve"><value>个人资料</value></data>
+  <data name="Nav_About" xml:space="preserve"><value>关于</value></data>
+</root>

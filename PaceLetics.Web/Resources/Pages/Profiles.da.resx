@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Profiler</value></data>
+  <data name="Loading" xml:space="preserve"><value>Indlæser profiler</value></data>
+  <data name="Back" xml:space="preserve"><value>Tilbage</value></data>
+  <data name="NotFoundTitle" xml:space="preserve"><value>Profil ikke fundet</value></data>
+  <data name="NotFoundSubtitle" xml:space="preserve"><value>Denne profil er ikke synlig eller findes ikke.</value></data>
+  <data name="NotFoundDetail" xml:space="preserve"><value>Åbn profiloversigten, eller kontroller linket.</value></data>
+  <data name="Title" xml:space="preserve"><value>Profiler</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Synlige atlet- og trænerprofiler.</value></data>
+  <data name="MetricVisible" xml:space="preserve"><value>Synlige</value></data>
+  <data name="MetricVisibleDetail" xml:space="preserve"><value>offentlige profiler</value></data>
+  <data name="MetricTrainers" xml:space="preserve"><value>Trænere</value></data>
+  <data name="MetricTrainersDetail" xml:space="preserve"><value>bekræftede profiler</value></data>
+  <data name="MetricAthletes" xml:space="preserve"><value>Atleter</value></data>
+  <data name="MetricAthletesDetail" xml:space="preserve"><value>aktive profiler</value></data>
+  <data name="RoleAthlete" xml:space="preserve"><value>Atlet</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Træner</value></data>
+  <data name="NoProfilesTitle" xml:space="preserve"><value>Ingen offentlige profiler</value></data>
+  <data name="NoProfilesDetail" xml:space="preserve"><value>Der er i øjeblikket ingen synlige profiler.</value></data>
+</root>

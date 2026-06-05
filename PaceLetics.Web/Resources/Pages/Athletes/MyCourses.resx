@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>My courses</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading courses</value></data>
+  <data name="Title" xml:space="preserve"><value>My courses</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Course memberships, dates, and events</value></data>
+  <data name="NoPublishedCourses" xml:space="preserve"><value>No courses are currently published.</value></data>
+  <data name="NoUpcomingDate" xml:space="preserve"><value>No upcoming date</value></data>
+  <data name="UpcomingDate" xml:space="preserve"><value>{0:MM/dd HH:mm}</value></data>
+  <data name="Leave" xml:space="preserve"><value>Leave</value></data>
+  <data name="AddCourse" xml:space="preserve"><value>Add course</value></data>
+  <data name="NoJoinedCourses" xml:space="preserve"><value>You have not joined a course yet.</value></data>
+  <data name="NoAvailableCourses" xml:space="preserve"><value>No additional courses are currently available.</value></data>
+  <data name="Join" xml:space="preserve"><value>Join</value></data>
+  <data name="Joined" xml:space="preserve"><value>Joined</value></data>
+  <data name="Dates" xml:space="preserve"><value>Dates</value></data>
+  <data name="Events" xml:space="preserve"><value>Events</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>Training plans</value></data>
+  <data name="ShowAll" xml:space="preserve"><value>All</value></data>
+  <data name="ShowLess" xml:space="preserve"><value>Less</value></data>
+  <data name="NoUpcomingDates" xml:space="preserve"><value>No upcoming dates.</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>No events are currently listed.</value></data>
+  <data name="CancelRegistration" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Register" xml:space="preserve"><value>Register</value></data>
+  <data name="NoTrainingPlans" xml:space="preserve"><value>No training plans published yet.</value></data>
+  <data name="LoadError" xml:space="preserve"><value>The courses could not be loaded from Cosmos DB.</value></data>
+  <data name="JoinSuccess" xml:space="preserve"><value>You joined the course.</value></data>
+  <data name="LeaveConfirm" xml:space="preserve"><value>Leave "{0}"?</value></data>
+  <data name="LeaveSuccess" xml:space="preserve"><value>You left the course.</value></data>
+  <data name="RegisterSuccess" xml:space="preserve"><value>You registered for the event.</value></data>
+  <data name="CancelRegistrationSuccess" xml:space="preserve"><value>Your event registration was cancelled.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:MM/dd/yyyy} to {1:MM/dd/yyyy}</value></data>
+  <data name="ShortPeriod" xml:space="preserve"><value>{0:MM/dd} to {1:MM/dd}</value></data>
+  <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} to {1:HH:mm}</value></data>
+  <data name="EventDate" xml:space="preserve"><value>{0:MM/dd/yyyy HH:mm} to {1:HH:mm}</value></data>
+</root>

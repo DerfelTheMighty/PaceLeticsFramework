@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Profiller</value></data>
+  <data name="Loading" xml:space="preserve"><value>Profiller yükleniyor</value></data>
+  <data name="Back" xml:space="preserve"><value>Geri</value></data>
+  <data name="NotFoundTitle" xml:space="preserve"><value>Profil bulunamadı</value></data>
+  <data name="NotFoundSubtitle" xml:space="preserve"><value>Bu profil görünür değil veya mevcut değil.</value></data>
+  <data name="NotFoundDetail" xml:space="preserve"><value>Profil genel görünümünü açın veya bağlantıyı kontrol edin.</value></data>
+  <data name="Title" xml:space="preserve"><value>Profiller</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Görünür sporcu ve antrenör profilleri.</value></data>
+  <data name="MetricVisible" xml:space="preserve"><value>Görünür</value></data>
+  <data name="MetricVisibleDetail" xml:space="preserve"><value>herkese açık profiller</value></data>
+  <data name="MetricTrainers" xml:space="preserve"><value>Antrenörler</value></data>
+  <data name="MetricTrainersDetail" xml:space="preserve"><value>doğrulanmış profiller</value></data>
+  <data name="MetricAthletes" xml:space="preserve"><value>Sporcular</value></data>
+  <data name="MetricAthletesDetail" xml:space="preserve"><value>aktif profiller</value></data>
+  <data name="RoleAthlete" xml:space="preserve"><value>Sporcu</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Antrenör</value></data>
+  <data name="NoProfilesTitle" xml:space="preserve"><value>Herkese açık profil yok</value></data>
+  <data name="NoProfilesDetail" xml:space="preserve"><value>Şu anda görünür profil yok.</value></data>
+</root>

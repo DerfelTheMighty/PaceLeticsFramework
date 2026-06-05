@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Profils</value></data>
+  <data name="Loading" xml:space="preserve"><value>Chargement des profils</value></data>
+  <data name="Back" xml:space="preserve"><value>Retour</value></data>
+  <data name="NotFoundTitle" xml:space="preserve"><value>Profil introuvable</value></data>
+  <data name="NotFoundSubtitle" xml:space="preserve"><value>Ce profil n’est pas visible ou n’existe pas.</value></data>
+  <data name="NotFoundDetail" xml:space="preserve"><value>Ouvrez l’aperçu des profils ou vérifiez le lien.</value></data>
+  <data name="Title" xml:space="preserve"><value>Profils</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Profils visibles d’athlètes et de coachs.</value></data>
+  <data name="MetricVisible" xml:space="preserve"><value>Visibles</value></data>
+  <data name="MetricVisibleDetail" xml:space="preserve"><value>profils publics</value></data>
+  <data name="MetricTrainers" xml:space="preserve"><value>Coachs</value></data>
+  <data name="MetricTrainersDetail" xml:space="preserve"><value>profils vérifiés</value></data>
+  <data name="MetricAthletes" xml:space="preserve"><value>Athlètes</value></data>
+  <data name="MetricAthletesDetail" xml:space="preserve"><value>profils actifs</value></data>
+  <data name="RoleAthlete" xml:space="preserve"><value>Athlète</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Coach</value></data>
+  <data name="NoProfilesTitle" xml:space="preserve"><value>Aucun profil public</value></data>
+  <data name="NoProfilesDetail" xml:space="preserve"><value>Aucun profil n’est actuellement visible.</value></data>
+</root>

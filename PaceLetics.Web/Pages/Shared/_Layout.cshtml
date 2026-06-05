@@ -1,9 +1,13 @@
 @using Microsoft.AspNetCore.Hosting
 @using Microsoft.AspNetCore.Mvc.ViewEngines
+@using System.Globalization
 @inject IWebHostEnvironment Environment
 @inject ICompositeViewEngine Engine
+@{
+    var textDirection = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
 <!DOCTYPE html>
-<html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" dir="@textDirection">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

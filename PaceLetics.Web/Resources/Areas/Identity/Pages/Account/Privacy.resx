@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Cookie and Privacy Policy</value></data>
+  <data name="Section1Title" xml:space="preserve"><value>1. Introduction</value></data>
+  <data name="Section1Text" xml:space="preserve"><value>Welcome to our website. This policy explains how and why we use cookies and what data we collect through them.</value></data>
+  <data name="Section2Title" xml:space="preserve"><value>2. What are Cookies?</value></data>
+  <data name="Section2Text" xml:space="preserve"><value>Cookies are small text files stored on your device when you visit a website. They are commonly used to make websites more functional and to provide information to the site owners.</value></data>
+  <data name="Section3Title" xml:space="preserve"><value>3. How and why do we use Cookies?</value></data>
+  <data name="Section3Text" xml:space="preserve"><value>We use cookies to:</value></data>
+  <data name="Section3Item1" xml:space="preserve"><value>Save your login status.</value></data>
+  <data name="Section3Item2" xml:space="preserve"><value>Improve the performance and usability of our site.</value></data>
+  <data name="Section4Title" xml:space="preserve"><value>4. What data do we collect?</value></data>
+  <data name="Section4Text" xml:space="preserve"><value>When you visit our website or register, the following data may be collected:</value></data>
+  <data name="Section4Item1" xml:space="preserve"><value>IP address</value></data>
+  <data name="Section4Item2" xml:space="preserve"><value>Browser type and version</value></data>
+  <data name="Section4Item3" xml:space="preserve"><value>Email address (when you register or log in)</value></data>
+  <data name="Section4Item4" xml:space="preserve"><value>Username (when you register or log in)</value></data>
+  <data name="Section4Item5" xml:space="preserve"><value>Password (when you register or log in)</value></data>
+  <data name="Section4Item6" xml:space="preserve"><value>Data collected during runtime (e.g., activities, settings)</value></data>
+  <data name="Section5Title" xml:space="preserve"><value>5. Data Deletion</value></data>
+  <data name="Section5Text" xml:space="preserve"><value>When you delete your account, all data associated with your account, including email address, username, and runtime data, will be permanently deleted.</value></data>
+  <data name="Section6Title" xml:space="preserve"><value>6. How can you control Cookie usage?</value></data>
+  <data name="Section6Text" xml:space="preserve"><value>Most browsers allow you to control cookies. You can configure settings to block or delete cookies. However, please note that some features of our website may not function correctly if cookies are disabled.</value></data>
+  <data name="Section7Title" xml:space="preserve"><value>7. Changes to this Policy</value></data>
+  <data name="Section7Text" xml:space="preserve"><value>We may update this policy from time to time. Changes will be published on this page.</value></data>
+  <data name="Section8Title" xml:space="preserve"><value>8. Contact</value></data>
+  <data name="Section8Text" xml:space="preserve"><value>If you have questions about this cookie and privacy policy, please contact</value></data>
+</root>

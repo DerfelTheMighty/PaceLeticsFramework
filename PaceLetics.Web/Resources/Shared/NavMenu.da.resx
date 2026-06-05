@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Nav_Dashboard" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Nav_RaceData" xml:space="preserve"><value>Løbsdata</value></data>
+  <data name="Nav_PaceZones" xml:space="preserve"><value>Tempozoner</value></data>
+  <data name="Nav_Courses" xml:space="preserve"><value>Mine kurser</value></data>
+  <data name="Nav_TrainerCourses" xml:space="preserve"><value>Administrer kurser</value></data>
+  <data name="Nav_TrainingPlan" xml:space="preserve"><value>Træningsplan</value></data>
+  <data name="Nav_Workouts" xml:space="preserve"><value>Træninger</value></data>
+  <data name="Nav_Profiles" xml:space="preserve"><value>Profiler</value></data>
+  <data name="Nav_About" xml:space="preserve"><value>Om</value></data>
+</root>
