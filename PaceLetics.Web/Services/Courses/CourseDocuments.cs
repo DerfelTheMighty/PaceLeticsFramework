@@ -22,6 +22,54 @@ public static class CourseEventRegistrationStatus
     public const string Cancelled = "cancelled";
 }
 
+public enum CourseLevel
+{
+    Level0 = 0,
+    Level1 = 1,
+    Level2 = 2,
+    Level3 = 3,
+    Level4 = 4,
+    Level5 = 5
+}
+
+public static class CourseLevelFormatting
+{
+    public static IReadOnlyList<CourseLevel> All { get; } = Enum.GetValues<CourseLevel>();
+
+    public static string Format(CourseLevel level)
+    {
+        return $"Level {(int)level}";
+    }
+
+    public static string Format(string? level)
+    {
+        return TryParse(level, out var parsed)
+            ? Format(parsed)
+            : level?.Trim() ?? string.Empty;
+    }
+
+    public static bool TryParse(string? level, out CourseLevel parsed)
+    {
+        parsed = default;
+
+        if (string.IsNullOrWhiteSpace(level))
+            return false;
+
+        var value = level.Trim();
+        if (value.StartsWith("Level", StringComparison.OrdinalIgnoreCase))
+            value = value["Level".Length..].Trim();
+
+        if (!int.TryParse(value, out var numericLevel))
+            return false;
+
+        if (!Enum.IsDefined(typeof(CourseLevel), numericLevel))
+            return false;
+
+        parsed = (CourseLevel)numericLevel;
+        return true;
+    }
+}
+
 public sealed class CourseDocument : IQueryItem
 {
     public string Id { get; set; } = string.Empty;
@@ -45,7 +93,7 @@ public sealed class CourseCreateRequest
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public string Level { get; set; } = string.Empty;
+    public CourseLevel Level { get; set; } = CourseLevel.Level1;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool IsPublished { get; set; } = true;

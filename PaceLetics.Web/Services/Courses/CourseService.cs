@@ -94,7 +94,7 @@ public sealed class CourseService : ICourseService
             Slug = courseId,
             Name = request.Name.Trim(),
             Description = request.Description?.Trim() ?? string.Empty,
-            Level = request.Level?.Trim() ?? string.Empty,
+            Level = CourseLevelFormatting.Format(request.Level),
             StartDate = request.StartDate.Date,
             EndDate = request.EndDate.Date,
             CreatedByTrainerUserId = creatorTrainerUserId,

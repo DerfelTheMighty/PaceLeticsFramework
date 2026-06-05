@@ -6,7 +6,8 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Title" xml:space="preserve"><value>Dein Trainingsplan</value></data>
   <data name="Subtitle" xml:space="preserve"><value>Der Trainingsplan für das laufende Sportsemester..</value></data>
-  <data name="NoPlans" xml:space="preserve"><value>Keine Trainingspläne gefunden.</value></data>
+  <data name="NoPlans" xml:space="preserve"><value>Keine Trainingspläne vorhanden. Tritt einem Kurs bei, um einen Trainingsplan zu erhalten.</value></data>
+  <data name="CourseSelectionLink" xml:space="preserve"><value>Zur Kursauswahl</value></data>
   <data name="SelectPlan" xml:space="preserve"><value>Trainingsplan wählen</value></data>
   <data name="NoDetails" xml:space="preserve"><value>Keine Details geladen.</value></data>
   <data name="Session" xml:space="preserve"><value>Session</value></data>
