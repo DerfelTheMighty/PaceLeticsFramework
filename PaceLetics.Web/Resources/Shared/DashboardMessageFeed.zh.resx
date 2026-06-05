@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="FeedTitle" xml:space="preserve"><value>当前消息</value></data>
+  <data name="FeedSubtitle" xml:space="preserve"><value>你的训练当前提示</value></data>
+  <data name="NoMessages" xml:space="preserve"><value>一切都是最新的。重要消息会显示在这里。</value></data>
+  <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>缺少评估跑</value></data>
+  <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>添加一次评估跑，让 PaceLetics 能可靠计算你的训练配速。</value></data>
+  <data name="ReferenceRunStale_Title" xml:space="preserve"><value>更新你的评估跑</value></data>
+  <data name="ReferenceRunStale_Body" xml:space="preserve"><value>你当前的评估跑日期为 {0:d}，已经 {1:0} 天未更新。</value></data>
+  <data name="ReferenceRun_Action" xml:space="preserve"><value>管理评估跑</value></data>
+  <data name="UpcomingTraining_Title" xml:space="preserve"><value>下一次训练</value></data>
+  <data name="UpcomingTrainingToday_Body" xml:space="preserve"><value>“{0}” 今天在你的训练计划中。</value></data>
+  <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>“{0}” 明天在你的训练计划中。</value></data>
+  <data name="UpcomingTraining_Body" xml:space="preserve"><value>“{0}” 安排在 {1:d} 的训练计划中。</value></data>
+  <data name="UpcomingTraining_Action" xml:space="preserve"><value>打开训练计划</value></data>
+  <data name="Severity_Info" xml:space="preserve"><value>信息</value></data>
+  <data name="Severity_Success" xml:space="preserve"><value>确定</value></data>
+  <data name="Severity_Warning" xml:space="preserve"><value>重要</value></data>
+  <data name="Severity_Error" xml:space="preserve"><value>错误</value></data>
+</root>

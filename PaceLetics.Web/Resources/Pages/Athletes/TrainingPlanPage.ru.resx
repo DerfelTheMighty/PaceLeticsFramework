@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Ваш план тренировок</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>План тренировок на текущий спортивный семестр.</value></data>
+  <data name="NoPlans" xml:space="preserve"><value>Планы тренировок недоступны. Присоединитесь к курсу, чтобы получить план.</value></data>
+  <data name="CourseSelectionLink" xml:space="preserve"><value>Перейти к выбору курса</value></data>
+  <data name="SelectPlan" xml:space="preserve"><value>Выберите план тренировок</value></data>
+  <data name="NoDetails" xml:space="preserve"><value>Детали не загружены.</value></data>
+  <data name="Session" xml:space="preserve"><value>Занятие</value></data>
+  <data name="Error_Title" xml:space="preserve"><value>Внимание</value></data>
+  <data name="Error_LoadData" xml:space="preserve"><value>Возникла проблема при загрузке данных или планов тренировок.</value></data>
+  <data name="Error_SaveBrowser_Title" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Error_SaveBrowser" xml:space="preserve"><value>Ваш выбор не удалось сохранить в браузере.</value></data>
+  <data name="Error_SaveServer_Title" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Error_SaveServer" xml:space="preserve"><value>Не удалось сохранить выбор на сервере.</value></data>
+</root>

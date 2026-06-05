@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmEmailSubject" xml:space="preserve">
+    <value>Confirma tu correo electrónico</value>
+  </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>Confirma tu cuenta &lt;a href='{0}'&gt;haciendo clic aquí&lt;/a&gt;.</value>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>El correo electrónico ya está en uso.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirmar contraseña</value>
+  </data>
+  <data name="ValidationRequired" xml:space="preserve">
+    <value>Introduce {0}.</value>
+  </data>
+  <data name="ValidationUserNameCharacters" xml:space="preserve">
+    <value>El nombre de usuario solo puede contener letras, números, puntos, guiones bajos y guiones.</value>
+  </data>
+  <data name="ValidationEmail" xml:space="preserve">
+    <value>Introduce una dirección de correo electrónico válida.</value>
+  </data>
+  <data name="ValidationStringLength" xml:space="preserve">
+    <value>{0} debe tener al menos {2} y como máximo {1} caracteres.</value>
+  </data>
+  <data name="ValidationPasswordMatch" xml:space="preserve">
+    <value>La contraseña y la confirmación no coinciden.</value>
+  </data>
+</root>

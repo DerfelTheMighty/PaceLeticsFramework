@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Administrer kurser</value></data>
+  <data name="Loading" xml:space="preserve"><value>Indlæser kurser</value></data>
+  <data name="Title" xml:space="preserve"><value>Administrer kurser</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Opret kurser, tilføj coaches, og slet dine egne kurser.</value></data>
+  <data name="CreateCourseTitle" xml:space="preserve"><value>Opret et nyt kursus</value></data>
+  <data name="Name" xml:space="preserve"><value>Navn</value></data>
+  <data name="Level" xml:space="preserve"><value>Niveau</value></data>
+  <data name="Description" xml:space="preserve"><value>Beskrivelse</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="End" xml:space="preserve"><value>Slut</value></data>
+  <data name="CreateCourse" xml:space="preserve"><value>Opret kursus</value></data>
+  <data name="NoTrainerCourses" xml:space="preserve"><value>Du er ikke tilknyttet noget kursus som coach.</value></data>
+  <data name="Course" xml:space="preserve"><value>Kursus</value></data>
+  <data name="Leave" xml:space="preserve"><value>Forlad</value></data>
+  <data name="Trainers" xml:space="preserve"><value>Coaches</value></data>
+  <data name="AddTrainerLabel" xml:space="preserve"><value>Tilføj coach</value></data>
+  <data name="Add" xml:space="preserve"><value>Tilføj</value></data>
+  <data name="Dates" xml:space="preserve"><value>Datoer</value></data>
+  <data name="NoDates" xml:space="preserve"><value>Ingen datoer endnu.</value></data>
+  <data name="EventTitle" xml:space="preserve"><value>Titel</value></data>
+  <data name="Location" xml:space="preserve"><value>Sted</value></data>
+  <data name="Date" xml:space="preserve"><value>Dato</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Starttid</value></data>
+  <data name="EndTime" xml:space="preserve"><value>Sluttid</value></data>
+  <data name="Notes" xml:space="preserve"><value>Noter</value></data>
+  <data name="AddDate" xml:space="preserve"><value>Tilføj dato</value></data>
+  <data name="Events" xml:space="preserve"><value>Events</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>Ingen events endnu.</value></data>
+  <data name="NoParticipants" xml:space="preserve"><value>Ingen deltagere registreret endnu.</value></data>
+  <data name="Capacity" xml:space="preserve"><value>Kapacitet</value></data>
+  <data name="RegistrationDeadline" xml:space="preserve"><value>Tilmeldingsfrist</value></data>
+  <data name="EventType" xml:space="preserve"><value>Eventtype</value></data>
+  <data name="EventType_General" xml:space="preserve"><value>Generelt</value></data>
+  <data name="EventType_RunningAnalysis" xml:space="preserve"><value>Løbeanalyse</value></data>
+  <data name="AddEvent" xml:space="preserve"><value>Tilføj event</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>Træningsplaner</value></data>
+  <data name="NoPublishedPlan" xml:space="preserve"><value>Ingen plan offentliggjort endnu.</value></data>
+  <data name="TrainingPlan" xml:space="preserve"><value>Træningsplan</value></data>
+  <data name="AddPlan" xml:space="preserve"><value>Tilføj plan</value></data>
+  <data name="Participants" xml:space="preserve"><value>Deltagere</value></data>
+  <data name="ParticipantsCount" xml:space="preserve"><value>Deltagere ({0})</value></data>
+  <data name="CreateCourseSuccess" xml:space="preserve"><value>Kursus blev oprettet.</value></data>
+  <data name="DeleteCourseConfirm" xml:space="preserve"><value>Vil du virkelig slette kurset &quot;{0}&quot;?</value></data>
+  <data name="DeleteCourseSuccess" xml:space="preserve"><value>Kursus blev slettet.</value></data>
+  <data name="AddTrainerSuccess" xml:space="preserve"><value>Coach blev tilføjet.</value></data>
+  <data name="RemoveTrainerConfirm" xml:space="preserve"><value>Fjern {0} fra kurset?</value></data>
+  <data name="RemoveTrainerSuccess" xml:space="preserve"><value>Coach blev fjernet.</value></data>
+  <data name="LeaveTrainerConfirm" xml:space="preserve"><value>Forlad &quot;{0}&quot; som coach?</value></data>
+  <data name="LeaveTrainerSuccess" xml:space="preserve"><value>Du forlod rollen som coach.</value></data>
+  <data name="AddDateSuccess" xml:space="preserve"><value>Dato blev tilføjet.</value></data>
+  <data name="RemoveDateConfirm" xml:space="preserve"><value>Fjern datoen &quot;{0}&quot;?</value></data>
+  <data name="RemoveDateSuccess" xml:space="preserve"><value>Dato blev fjernet.</value></data>
+  <data name="AddEventSuccess" xml:space="preserve"><value>Event blev tilføjet.</value></data>
+  <data name="DeleteEventConfirm" xml:space="preserve"><value>Fjern eventet &quot;{0}&quot;?</value></data>
+  <data name="DeleteEventSuccess" xml:space="preserve"><value>Event blev fjernet.</value></data>
+  <data name="PublishPlanSuccess" xml:space="preserve"><value>Træningsplan blev tilføjet.</value></data>
+  <data name="RemovePlanConfirm" xml:space="preserve"><value>Fjern træningsplanen &quot;{0}&quot;?</value></data>
+  <data name="RemovePlanSuccess" xml:space="preserve"><value>Træningsplan blev fjernet.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:dd.MM.yyyy} til {1:dd.MM.yyyy}</value></data>
+  <data name="DateRange" xml:space="preserve"><value>{0:dd.MM.yyyy HH:mm} til {1:HH:mm}</value></data>
+  <data name="ValidationDateRequired" xml:space="preserve"><value>Vælg en dato.</value></data>
+  <data name="ValidationTimeFormat" xml:space="preserve"><value>Indtast et tidspunkt i HH:mm-format.</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>Coachen kunne ikke findes.</value></data>
+</root>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>管理课程</value></data>
+  <data name="Loading" xml:space="preserve"><value>正在加载课程</value></data>
+  <data name="Title" xml:space="preserve"><value>管理课程</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>创建课程、添加教练并删除自己的课程。</value></data>
+  <data name="CreateCourseTitle" xml:space="preserve"><value>创建新课程</value></data>
+  <data name="Name" xml:space="preserve"><value>名称</value></data>
+  <data name="Level" xml:space="preserve"><value>等级</value></data>
+  <data name="Description" xml:space="preserve"><value>描述</value></data>
+  <data name="Start" xml:space="preserve"><value>开始</value></data>
+  <data name="End" xml:space="preserve"><value>结束</value></data>
+  <data name="CreateCourse" xml:space="preserve"><value>创建课程</value></data>
+  <data name="NoTrainerCourses" xml:space="preserve"><value>你没有作为教练分配到任何课程。</value></data>
+  <data name="Course" xml:space="preserve"><value>课程</value></data>
+  <data name="Leave" xml:space="preserve"><value>退出</value></data>
+  <data name="Trainers" xml:space="preserve"><value>教练</value></data>
+  <data name="AddTrainerLabel" xml:space="preserve"><value>添加教练</value></data>
+  <data name="Add" xml:space="preserve"><value>添加</value></data>
+  <data name="Dates" xml:space="preserve"><value>日期</value></data>
+  <data name="NoDates" xml:space="preserve"><value>暂无日期。</value></data>
+  <data name="EventTitle" xml:space="preserve"><value>标题</value></data>
+  <data name="Location" xml:space="preserve"><value>地点</value></data>
+  <data name="Date" xml:space="preserve"><value>日期</value></data>
+  <data name="StartTime" xml:space="preserve"><value>开始时间</value></data>
+  <data name="EndTime" xml:space="preserve"><value>结束时间</value></data>
+  <data name="Notes" xml:space="preserve"><value>备注</value></data>
+  <data name="AddDate" xml:space="preserve"><value>添加日期</value></data>
+  <data name="Events" xml:space="preserve"><value>活动</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>暂无活动。</value></data>
+  <data name="NoParticipants" xml:space="preserve"><value>暂无已报名参与者。</value></data>
+  <data name="Capacity" xml:space="preserve"><value>容量</value></data>
+  <data name="RegistrationDeadline" xml:space="preserve"><value>报名截止日期</value></data>
+  <data name="EventType" xml:space="preserve"><value>活动类型</value></data>
+  <data name="EventType_General" xml:space="preserve"><value>常规</value></data>
+  <data name="EventType_RunningAnalysis" xml:space="preserve"><value>跑步分析</value></data>
+  <data name="AddEvent" xml:space="preserve"><value>添加活动</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>训练计划</value></data>
+  <data name="NoPublishedPlan" xml:space="preserve"><value>尚未发布计划。</value></data>
+  <data name="TrainingPlan" xml:space="preserve"><value>训练计划</value></data>
+  <data name="AddPlan" xml:space="preserve"><value>添加计划</value></data>
+  <data name="Participants" xml:space="preserve"><value>参与者</value></data>
+  <data name="ParticipantsCount" xml:space="preserve"><value>参与者 ({0})</value></data>
+  <data name="CreateCourseSuccess" xml:space="preserve"><value>课程已创建。</value></data>
+  <data name="DeleteCourseConfirm" xml:space="preserve"><value>确定删除课程“{0}”？</value></data>
+  <data name="DeleteCourseSuccess" xml:space="preserve"><value>课程已删除。</value></data>
+  <data name="AddTrainerSuccess" xml:space="preserve"><value>教练已添加。</value></data>
+  <data name="RemoveTrainerConfirm" xml:space="preserve"><value>从课程中移除 {0}？</value></data>
+  <data name="RemoveTrainerSuccess" xml:space="preserve"><value>教练已移除。</value></data>
+  <data name="LeaveTrainerConfirm" xml:space="preserve"><value>以教练身份退出“{0}”？</value></data>
+  <data name="LeaveTrainerSuccess" xml:space="preserve"><value>你已以教练身份退出。</value></data>
+  <data name="AddDateSuccess" xml:space="preserve"><value>日期已添加。</value></data>
+  <data name="RemoveDateConfirm" xml:space="preserve"><value>移除日期“{0}”？</value></data>
+  <data name="RemoveDateSuccess" xml:space="preserve"><value>日期已移除。</value></data>
+  <data name="AddEventSuccess" xml:space="preserve"><value>活动已添加。</value></data>
+  <data name="DeleteEventConfirm" xml:space="preserve"><value>移除活动“{0}”？</value></data>
+  <data name="DeleteEventSuccess" xml:space="preserve"><value>活动已移除。</value></data>
+  <data name="PublishPlanSuccess" xml:space="preserve"><value>训练计划已添加。</value></data>
+  <data name="RemovePlanConfirm" xml:space="preserve"><value>移除训练计划“{0}”？</value></data>
+  <data name="RemovePlanSuccess" xml:space="preserve"><value>训练计划已移除。</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:yyyy/MM/dd} 至 {1:yyyy/MM/dd}</value></data>
+  <data name="DateRange" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm} 至 {1:HH:mm}</value></data>
+  <data name="ValidationDateRequired" xml:space="preserve"><value>请选择日期。</value></data>
+  <data name="ValidationTimeFormat" xml:space="preserve"><value>请输入 HH:mm 格式的时间。</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>无法解析教练。</value></data>
+</root>

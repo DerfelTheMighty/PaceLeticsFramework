@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Ваша зона тренировок</value></data>
+  <data name="Loading" xml:space="preserve"><value>Загрузка ваших данных...</value></data>
+  <data name="Title" xml:space="preserve"><value>Зона тренировок</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Выберите тренировку и начинайте.</value></data>
+  <data name="IntroText" xml:space="preserve"><value>Добро пожаловать в зону тренировок! Здесь вы найдете постоянно растущий выбор разных тренировок. Начните тренировку.</value></data>
+  <data name="NoWorkouts" xml:space="preserve"><value>Тренировки пока недоступны.</value></data>
+</root>

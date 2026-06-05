@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="FeedTitle" xml:space="preserve"><value>پیام‌های فعلی</value></data>
+  <data name="FeedSubtitle" xml:space="preserve"><value>نکات فعلی برای تمرین شما</value></data>
+  <data name="NoMessages" xml:space="preserve"><value>همه چیز به‌روز است. پیام‌های مهم اینجا نمایش داده می‌شوند.</value></data>
+  <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>دویدن ارزیابی وجود ندارد</value></data>
+  <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>یک دویدن ارزیابی اضافه کنید تا PaceLetics بتواند پیس‌های تمرینی شما را دقیق محاسبه کند.</value></data>
+  <data name="ReferenceRunStale_Title" xml:space="preserve"><value>دویدن ارزیابی خود را به‌روزرسانی کنید</value></data>
+  <data name="ReferenceRunStale_Body" xml:space="preserve"><value>دویدن ارزیابی فعلی شما مربوط به {0:d} است و {1:0} روز به‌روزرسانی نشده است.</value></data>
+  <data name="ReferenceRun_Action" xml:space="preserve"><value>مدیریت دویدن ارزیابی</value></data>
+  <data name="UpcomingTraining_Title" xml:space="preserve"><value>جلسه بعدی</value></data>
+  <data name="UpcomingTrainingToday_Body" xml:space="preserve"><value>&quot;{0}&quot; امروز در برنامه تمرینی شماست.</value></data>
+  <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; فردا در برنامه تمرینی شماست.</value></data>
+  <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; در تاریخ {1:d} در برنامه تمرینی شماست.</value></data>
+  <data name="UpcomingTraining_Action" xml:space="preserve"><value>باز کردن برنامه تمرینی</value></data>
+  <data name="Severity_Info" xml:space="preserve"><value>اطلاعات</value></data>
+  <data name="Severity_Success" xml:space="preserve"><value>باشه</value></data>
+  <data name="Severity_Warning" xml:space="preserve"><value>مهم</value></data>
+  <data name="Severity_Error" xml:space="preserve"><value>خطا</value></data>
+</root>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>مدیریت دوره‌ها</value></data>
+  <data name="Loading" xml:space="preserve"><value>در حال بارگذاری دوره‌ها</value></data>
+  <data name="Title" xml:space="preserve"><value>مدیریت دوره‌ها</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>دوره ایجاد کنید، مربی اضافه کنید و دوره‌های خود را حذف کنید.</value></data>
+  <data name="CreateCourseTitle" xml:space="preserve"><value>ایجاد دوره جدید</value></data>
+  <data name="Name" xml:space="preserve"><value>نام</value></data>
+  <data name="Level" xml:space="preserve"><value>سطح</value></data>
+  <data name="Description" xml:space="preserve"><value>توضیح</value></data>
+  <data name="Start" xml:space="preserve"><value>شروع</value></data>
+  <data name="End" xml:space="preserve"><value>پایان</value></data>
+  <data name="CreateCourse" xml:space="preserve"><value>ایجاد دوره</value></data>
+  <data name="NoTrainerCourses" xml:space="preserve"><value>شما به عنوان مربی به هیچ دوره‌ای اختصاص داده نشده‌اید.</value></data>
+  <data name="Course" xml:space="preserve"><value>دوره</value></data>
+  <data name="Leave" xml:space="preserve"><value>ترک</value></data>
+  <data name="Trainers" xml:space="preserve"><value>مربیان</value></data>
+  <data name="AddTrainerLabel" xml:space="preserve"><value>افزودن مربی</value></data>
+  <data name="Add" xml:space="preserve"><value>افزودن</value></data>
+  <data name="Dates" xml:space="preserve"><value>تاریخ‌ها</value></data>
+  <data name="NoDates" xml:space="preserve"><value>هنوز تاریخی وجود ندارد.</value></data>
+  <data name="EventTitle" xml:space="preserve"><value>عنوان</value></data>
+  <data name="Location" xml:space="preserve"><value>مکان</value></data>
+  <data name="Date" xml:space="preserve"><value>تاریخ</value></data>
+  <data name="StartTime" xml:space="preserve"><value>زمان شروع</value></data>
+  <data name="EndTime" xml:space="preserve"><value>زمان پایان</value></data>
+  <data name="Notes" xml:space="preserve"><value>یادداشت‌ها</value></data>
+  <data name="AddDate" xml:space="preserve"><value>افزودن تاریخ</value></data>
+  <data name="Events" xml:space="preserve"><value>رویدادها</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>هنوز رویدادی وجود ندارد.</value></data>
+  <data name="NoParticipants" xml:space="preserve"><value>هنوز شرکت‌کننده‌ای ثبت‌نام نکرده است.</value></data>
+  <data name="Capacity" xml:space="preserve"><value>ظرفیت</value></data>
+  <data name="RegistrationDeadline" xml:space="preserve"><value>مهلت ثبت‌نام</value></data>
+  <data name="EventType" xml:space="preserve"><value>نوع رویداد</value></data>
+  <data name="EventType_General" xml:space="preserve"><value>عمومی</value></data>
+  <data name="EventType_RunningAnalysis" xml:space="preserve"><value>تحلیل دویدن</value></data>
+  <data name="AddEvent" xml:space="preserve"><value>افزودن رویداد</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>برنامه‌های تمرینی</value></data>
+  <data name="NoPublishedPlan" xml:space="preserve"><value>هنوز برنامه‌ای منتشر نشده است.</value></data>
+  <data name="TrainingPlan" xml:space="preserve"><value>برنامه تمرینی</value></data>
+  <data name="AddPlan" xml:space="preserve"><value>افزودن برنامه</value></data>
+  <data name="Participants" xml:space="preserve"><value>شرکت‌کنندگان</value></data>
+  <data name="ParticipantsCount" xml:space="preserve"><value>شرکت‌کنندگان ({0})</value></data>
+  <data name="CreateCourseSuccess" xml:space="preserve"><value>دوره ایجاد شد.</value></data>
+  <data name="DeleteCourseConfirm" xml:space="preserve"><value>واقعاً دوره &quot;{0}&quot; حذف شود؟</value></data>
+  <data name="DeleteCourseSuccess" xml:space="preserve"><value>دوره حذف شد.</value></data>
+  <data name="AddTrainerSuccess" xml:space="preserve"><value>مربی اضافه شد.</value></data>
+  <data name="RemoveTrainerConfirm" xml:space="preserve"><value>{0} از دوره حذف شود؟</value></data>
+  <data name="RemoveTrainerSuccess" xml:space="preserve"><value>مربی حذف شد.</value></data>
+  <data name="LeaveTrainerConfirm" xml:space="preserve"><value>&quot;{0}&quot; را به عنوان مربی ترک می‌کنید؟</value></data>
+  <data name="LeaveTrainerSuccess" xml:space="preserve"><value>شما به عنوان مربی خارج شدید.</value></data>
+  <data name="AddDateSuccess" xml:space="preserve"><value>تاریخ اضافه شد.</value></data>
+  <data name="RemoveDateConfirm" xml:space="preserve"><value>تاریخ &quot;{0}&quot; حذف شود؟</value></data>
+  <data name="RemoveDateSuccess" xml:space="preserve"><value>تاریخ حذف شد.</value></data>
+  <data name="AddEventSuccess" xml:space="preserve"><value>رویداد اضافه شد.</value></data>
+  <data name="DeleteEventConfirm" xml:space="preserve"><value>رویداد &quot;{0}&quot; حذف شود؟</value></data>
+  <data name="DeleteEventSuccess" xml:space="preserve"><value>رویداد حذف شد.</value></data>
+  <data name="PublishPlanSuccess" xml:space="preserve"><value>برنامه تمرینی اضافه شد.</value></data>
+  <data name="RemovePlanConfirm" xml:space="preserve"><value>برنامه تمرینی &quot;{0}&quot; حذف شود؟</value></data>
+  <data name="RemovePlanSuccess" xml:space="preserve"><value>برنامه تمرینی حذف شد.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:yyyy/MM/dd} تا {1:yyyy/MM/dd}</value></data>
+  <data name="DateRange" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm} تا {1:HH:mm}</value></data>
+  <data name="ValidationDateRequired" xml:space="preserve"><value>لطفاً یک تاریخ انتخاب کنید.</value></data>
+  <data name="ValidationTimeFormat" xml:space="preserve"><value>لطفاً زمان را با قالب HH:mm وارد کنید.</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>مربی شناسایی نشد.</value></data>
+</root>

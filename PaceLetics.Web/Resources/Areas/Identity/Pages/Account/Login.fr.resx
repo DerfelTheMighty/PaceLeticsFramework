@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Se connecter</value>
+  </data>
+  <data name="LoginPrompt" xml:space="preserve">
+    <value>Utilisez votre nom d’utilisateur ou votre e-mail pour vous connecter.</value>
+  </data>
+  <data name="UserNameOrEmail" xml:space="preserve">
+    <value>Nom d’utilisateur ou e-mail</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Mot de passe oublié ?</value>
+  </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>S’inscrire comme nouvel utilisateur</value>
+  </data>
+  <data name="ResendEmail" xml:space="preserve">
+    <value>Renvoyer la confirmation par e-mail</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Bienvenue sur PaceLetics</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>Votre compagnon de course personnel. Suivez vos résultats, calculez vos allures et suivez des plans adaptés à votre niveau.</value>
+  </data>
+  <data name="Feature1" xml:space="preserve">
+    <value>Zones d’allure personnalisées selon vos performances</value>
+  </data>
+  <data name="Feature2" xml:space="preserve">
+    <value>Plans d’entraînement structurés pour vos objectifs</value>
+  </data>
+  <data name="Feature3" xml:space="preserve">
+    <value>Entraînements guidés pour la force et la mobilité</value>
+  </data>
+  <data name="Feature4" xml:space="preserve">
+    <value>Suivez vos progrès dans le temps</value>
+  </data>
+</root>

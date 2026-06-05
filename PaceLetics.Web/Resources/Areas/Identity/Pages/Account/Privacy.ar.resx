@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>سياسة ملفات تعريف الارتباط والخصوصية</value>
+  </data>
+  <data name="Section1Title" xml:space="preserve">
+    <value>1. المقدمة</value>
+  </data>
+  <data name="Section1Text" xml:space="preserve">
+    <value>مرحبًا بك في موقعنا. توضح هذه السياسة كيف ولماذا نستخدم ملفات تعريف الارتباط وما البيانات التي نجمعها من خلالها.</value>
+  </data>
+  <data name="Section2Title" xml:space="preserve">
+    <value>2. ما هي ملفات تعريف الارتباط؟</value>
+  </data>
+  <data name="Section2Text" xml:space="preserve">
+    <value>ملفات تعريف الارتباط هي ملفات نصية صغيرة تُخزن على جهازك عند زيارة موقع إلكتروني. تُستخدم عادة لجعل المواقع أكثر فاعلية وتزويد مالكي الموقع بالمعلومات.</value>
+  </data>
+  <data name="Section3Title" xml:space="preserve">
+    <value>3. كيف ولماذا نستخدم ملفات تعريف الارتباط؟</value>
+  </data>
+  <data name="Section3Text" xml:space="preserve">
+    <value>نستخدم ملفات تعريف الارتباط من أجل:</value>
+  </data>
+  <data name="Section3Item1" xml:space="preserve">
+    <value>حفظ حالة تسجيل الدخول.</value>
+  </data>
+  <data name="Section3Item2" xml:space="preserve">
+    <value>تحسين أداء موقعنا وسهولة استخدامه.</value>
+  </data>
+  <data name="Section4Title" xml:space="preserve">
+    <value>4. ما البيانات التي نجمعها؟</value>
+  </data>
+  <data name="Section4Text" xml:space="preserve">
+    <value>عند زيارة موقعنا أو التسجيل، قد يتم جمع البيانات التالية:</value>
+  </data>
+  <data name="Section4Item1" xml:space="preserve">
+    <value>عنوان IP</value>
+  </data>
+  <data name="Section4Item2" xml:space="preserve">
+    <value>نوع المتصفح وإصداره</value>
+  </data>
+  <data name="Section4Item3" xml:space="preserve">
+    <value>عنوان البريد الإلكتروني (عند التسجيل أو تسجيل الدخول)</value>
+  </data>
+  <data name="Section4Item4" xml:space="preserve">
+    <value>اسم المستخدم (عند التسجيل أو تسجيل الدخول)</value>
+  </data>
+  <data name="Section4Item5" xml:space="preserve">
+    <value>كلمة المرور (عند التسجيل أو تسجيل الدخول)</value>
+  </data>
+  <data name="Section4Item6" xml:space="preserve">
+    <value>البيانات التي تُجمع أثناء التشغيل (مثل الأنشطة والإعدادات)</value>
+  </data>
+  <data name="Section5Title" xml:space="preserve">
+    <value>5. حذف البيانات</value>
+  </data>
+  <data name="Section5Text" xml:space="preserve">
+    <value>عند حذف حسابك، سيتم حذف جميع البيانات المرتبطة به نهائيًا، بما في ذلك عنوان البريد الإلكتروني واسم المستخدم وبيانات التشغيل.</value>
+  </data>
+  <data name="Section6Title" xml:space="preserve">
+    <value>6. كيف يمكنك التحكم في استخدام ملفات تعريف الارتباط؟</value>
+  </data>
+  <data name="Section6Text" xml:space="preserve">
+    <value>تتيح معظم المتصفحات التحكم في ملفات تعريف الارتباط. يمكنك ضبط الإعدادات لحظرها أو حذفها. لكن يرجى ملاحظة أن بعض ميزات موقعنا قد لا تعمل بشكل صحيح إذا تم تعطيلها.</value>
+  </data>
+  <data name="Section7Title" xml:space="preserve">
+    <value>7. التغييرات على هذه السياسة</value>
+  </data>
+  <data name="Section7Text" xml:space="preserve">
+    <value>قد نقوم بتحديث هذه السياسة من وقت لآخر. ستُنشر التغييرات على هذه الصفحة.</value>
+  </data>
+  <data name="Section8Title" xml:space="preserve">
+    <value>8. الاتصال</value>
+  </data>
+  <data name="Section8Text" xml:space="preserve">
+    <value>إذا كانت لديك أسئلة حول سياسة ملفات تعريف الارتباط والخصوصية هذه، يرجى التواصل مع</value>
+  </data>
+</root>

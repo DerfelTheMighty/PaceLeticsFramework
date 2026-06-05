@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="FeedTitle" xml:space="preserve"><value>الرسائل الحالية</value></data>
+  <data name="FeedSubtitle" xml:space="preserve"><value>ملاحظات حالية لتدريبك</value></data>
+  <data name="NoMessages" xml:space="preserve"><value>كل شيء محدث. ستظهر الرسائل المهمة هنا.</value></data>
+  <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>الجري التقييمي مفقود</value></data>
+  <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>أضف جريًا تقييميًا حتى يتمكن PaceLetics من حساب سرعات تدريبك بدقة.</value></data>
+  <data name="ReferenceRunStale_Title" xml:space="preserve"><value>حدّث الجري التقييمي</value></data>
+  <data name="ReferenceRunStale_Body" xml:space="preserve"><value>الجري التقييمي الحالي بتاريخ {0:d} ولم يتم تحديثه منذ {1:0} يومًا.</value></data>
+  <data name="ReferenceRun_Action" xml:space="preserve"><value>إدارة الجري التقييمي</value></data>
+  <data name="UpcomingTraining_Title" xml:space="preserve"><value>الجلسة التالية</value></data>
+  <data name="UpcomingTrainingToday_Body" xml:space="preserve"><value>&quot;{0}&quot; موجود في خطة تدريبك اليوم.</value></data>
+  <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; موجود في خطة تدريبك غدًا.</value></data>
+  <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; موجود في خطة تدريبك بتاريخ {1:d}.</value></data>
+  <data name="UpcomingTraining_Action" xml:space="preserve"><value>فتح خطة التدريب</value></data>
+  <data name="Severity_Info" xml:space="preserve"><value>معلومة</value></data>
+  <data name="Severity_Success" xml:space="preserve"><value>حسنًا</value></data>
+  <data name="Severity_Warning" xml:space="preserve"><value>مهم</value></data>
+  <data name="Severity_Error" xml:space="preserve"><value>خطأ</value></data>
+</root>

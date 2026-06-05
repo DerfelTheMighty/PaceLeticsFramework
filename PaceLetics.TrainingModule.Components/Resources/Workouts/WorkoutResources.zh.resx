@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TopBar_GetReady" xml:space="preserve"><value>准备好！</value></data>
+  <data name="TopBar_SideSwitch" xml:space="preserve"><value>换边！</value></data>
+  <data name="TopBar_Execution" xml:space="preserve"><value>开始！</value></data>
+  <data name="TopBar_Paused" xml:space="preserve"><value>已暂停！</value></data>
+  <data name="TopBar_ExercisePause" xml:space="preserve"><value>练习休息！</value></data>
+  <data name="BottomSheet_Details" xml:space="preserve"><value>详情</value></data>
+  <data name="BottomSheet_Sequence" xml:space="preserve"><value>顺序</value></data>
+  <data name="BottomSheet_NoExercise" xml:space="preserve"><value>没有练习。</value></data>
+  <data name="BottomSheet_Execution" xml:space="preserve"><value>执行</value></data>
+  <data name="BottomSheet_NoSteps" xml:space="preserve"><value>没有可用步骤。</value></data>
+  <data name="BottomSheet_TapToPreview" xml:space="preserve"><value>点击预览。</value></data>
+  <data name="BottomSheet_RunningViewOnly" xml:space="preserve"><value>仅在跑步时查看（不能跳过）。</value></data>
+  <data name="BottomSheet_Now" xml:space="preserve"><value>现在</value></data>
+  <data name="DifficultyDialog_Reps" xml:space="preserve"><value>重复次数</value></data>
+  <data name="DifficultyDialog_AvailableLevels" xml:space="preserve"><value>可用难度等级</value></data>
+  <data name="DifficultyDialog_Start" xml:space="preserve"><value>开始</value></data>
+  <data name="DifficultyDialog_Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="DifficultyDialog_SelectDifficulty" xml:space="preserve"><value>选择难度</value></data>
+  <data name="Preview_TotalReps" xml:space="preserve"><value>总次数</value></data>
+  <data name="Preview_Open" xml:space="preserve"><value>打开</value></data>
+  <data name="Preview_MoreInfo" xml:space="preserve"><value>更多信息</value></data>
+  <data name="ExerciseInfo_Duration" xml:space="preserve"><value>时长：</value></data>
+  <data name="ExerciseInfo_SideSwitch" xml:space="preserve"><value>换边：</value></data>
+  <data name="ExerciseInfo_Yes" xml:space="preserve"><value>是</value></data>
+  <data name="ExerciseInfo_No" xml:space="preserve"><value>否</value></data>
+  <data name="ExerciseInfo_NotAvailable" xml:space="preserve"><value>练习信息不可用。</value></data>
+  <data name="WorkoutNow_Details" xml:space="preserve"><value>详情与顺序</value></data>
+  <data name="Level_Easy" xml:space="preserve"><value>简单</value></data>
+  <data name="Level_Moderate" xml:space="preserve"><value>中等</value></data>
+  <data name="Level_Advanced" xml:space="preserve"><value>高级</value></data>
+  <data name="Level_Epic" xml:space="preserve"><value>史诗级</value></data>
+  <data name="TopBar_Start" xml:space="preserve"><value>开始</value></data>
+  <data name="TopBar_Pause" xml:space="preserve"><value>暂停</value></data>
+  <data name="TopBar_Reset" xml:space="preserve"><value>重置</value></data>
+  <data name="WorkoutView_NoWorkout" xml:space="preserve"><value>未加载训练。</value></data>
+  <data name="FinishedDialog_Confirm" xml:space="preserve"><value>是！</value></data>
+  <data name="TrainingCard_Title" xml:space="preserve"><value>训练</value></data>
+</root>

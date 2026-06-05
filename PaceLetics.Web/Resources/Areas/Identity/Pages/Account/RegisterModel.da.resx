@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmEmailSubject" xml:space="preserve">
+    <value>Bekræft din e-mail</value>
+  </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>Bekræft din konto ved at &lt;a href='{0}'&gt;klikke her&lt;/a&gt;.</value>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>E-mailen er allerede i brug.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Brugernavn</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Adgangskode</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Bekræft adgangskode</value>
+  </data>
+  <data name="ValidationRequired" xml:space="preserve">
+    <value>Indtast {0}.</value>
+  </data>
+  <data name="ValidationUserNameCharacters" xml:space="preserve">
+    <value>Brugernavnet må kun indeholde bogstaver, tal, punktummer, understregninger og bindestreger.</value>
+  </data>
+  <data name="ValidationEmail" xml:space="preserve">
+    <value>Indtast en gyldig e-mailadresse.</value>
+  </data>
+  <data name="ValidationStringLength" xml:space="preserve">
+    <value>{0} skal være mindst {2} og højst {1} tegn langt.</value>
+  </data>
+  <data name="ValidationPasswordMatch" xml:space="preserve">
+    <value>Adgangskoden og bekræftelsen stemmer ikke overens.</value>
+  </data>
+</root>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>法律声明</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>根据德国数字服务法（Digitale-Dienste-Gesetz, DDG）第 5 条提供的信息。</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>服务提供者</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>德国</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>电话</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>内容负责人</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>本网站内容负责人是</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>登记和税务信息</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>增值税识别号</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>未分配或不适用。</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>商业登记信息</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>无商业登记信息。</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>消费者争议解决</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>除非有强制性法定义务，服务提供者既不愿意也没有义务参与消费者仲裁委员会前的争议解决程序。</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>内容和链接责任</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>本网站内容已尽合理谨慎编制。作为服务提供者，提供者根据一般法律对自己的内容负责。</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>本网站可能包含指向外部第三方网站的链接。提供者无法影响这些网站当前或未来的内容。链接创建时会检查明显的法律违规。如果发现法律违规，这些链接将被及时移除。</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>版权</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>提供者在本网站创建的内容和作品受德国版权法保护。除非法律明确允许，复制、编辑、传播或任何超出版权法范围的使用都需要事先同意。</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>隐私</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>本法律声明不替代隐私政策。有关个人数据处理的信息请见本网站的隐私政策。</value>
+  </data>
+</root>

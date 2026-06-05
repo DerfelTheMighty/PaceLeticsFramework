@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="VdotCard_Title" xml:space="preserve"><value>Votre VDOT</value></data>
+  <data name="VdotCard_Description" xml:space="preserve"><value>Parfait ! À partir de votre course de référence, nous pouvons déterminer votre VDOT individuel. C’est la base de vos zones d’entraînement personnelles.</value></data>
+  <data name="RaceCard_Result" xml:space="preserve"><value>Résultat :</value></data>
+  <data name="RaceCard_Edit" xml:space="preserve"><value>Modifier la course</value></data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Plus d’infos</value></data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Allure facile (E-Pace)</value></data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Votre allure facile. Courez à cette allure pour récupérer ou vous entraîner facilement. Elle développe l’endurance aérobie et aide la récupération.</value></data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Allure marathon (M-Pace)</value></data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Votre allure marathon. L’entraînement dans cette zone améliore votre capacité à tenir une allure régulière sur de longues distances.</value></data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Allure seuil (T-Pace)</value></data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Votre allure seuil. L’entraînement dans cette zone améliore votre seuil lactique et vous aide à courir plus vite sans trop accumuler d’acide lactique.</value></data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>Allure intervalle (I-Pace)</value></data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>Votre allure d’intervalle. Des efforts courts et intenses dans cette zone améliorent votre VO2max.</value></data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Allure répétition (R-Pace)</value></data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Votre allure de répétition. Des courses très courtes et rapides à cette allure améliorent l’économie de course et la vitesse.</value></data>
+  <data name="AddRaceDialog_Title" xml:space="preserve"><value>Nouvelle course</value></data>
+  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Nom</value></data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Distance</value></data>
+  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Temps de course</value></data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
+  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Attention</value></data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Veuillez vérifier que le temps de course est au bon format (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>OK</value></data>
+</root>

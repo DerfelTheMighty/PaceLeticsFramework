@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>خطة تدريبك</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>خطة التدريب للفصل الرياضي الحالي.</value></data>
+  <data name="NoPlans" xml:space="preserve"><value>لا توجد خطط تدريب متاحة. انضم إلى دورة للحصول على خطة تدريب.</value></data>
+  <data name="CourseSelectionLink" xml:space="preserve"><value>الانتقال إلى اختيار الدورة</value></data>
+  <data name="SelectPlan" xml:space="preserve"><value>اختر خطة التدريب</value></data>
+  <data name="NoDetails" xml:space="preserve"><value>لم يتم تحميل أي تفاصيل.</value></data>
+  <data name="Session" xml:space="preserve"><value>جلسة</value></data>
+  <data name="Error_Title" xml:space="preserve"><value>تنبيه</value></data>
+  <data name="Error_LoadData" xml:space="preserve"><value>حدثت مشكلة أثناء تحميل بياناتك أو خطط التدريب.</value></data>
+  <data name="Error_SaveBrowser_Title" xml:space="preserve"><value>خطأ</value></data>
+  <data name="Error_SaveBrowser" xml:space="preserve"><value>تعذر حفظ اختيارك في المتصفح.</value></data>
+  <data name="Error_SaveServer_Title" xml:space="preserve"><value>خطأ</value></data>
+  <data name="Error_SaveServer" xml:space="preserve"><value>تعذر حفظ الاختيار على الخادم.</value></data>
+</root>

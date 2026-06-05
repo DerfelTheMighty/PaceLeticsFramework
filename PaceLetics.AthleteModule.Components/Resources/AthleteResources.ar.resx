@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="VdotCard_Title" xml:space="preserve"><value>VDOT الخاص بك</value></data>
+  <data name="VdotCard_Description" xml:space="preserve"><value>رائع! من سباقك المرجعي يمكننا تحديد قيمة VDOT الخاصة بك. وهذا هو أساس مناطق تدريبك الشخصية.</value></data>
+  <data name="RaceCard_Result" xml:space="preserve"><value>النتيجة:</value></data>
+  <data name="RaceCard_Edit" xml:space="preserve"><value>تعديل السباق</value></data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>مزيد من المعلومات</value></data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>الوتيرة السهلة (E-Pace)</value></data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>وتيرة الجري السهل لديك. اركض بهذه الوتيرة للاستشفاء أو التدريب السهل. تبني التحمل الهوائي وتساعد التعافي.</value></data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>وتيرة الماراثون (M-Pace)</value></data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>وتيرة الماراثون لديك. التدريب في هذه المنطقة يحسن قدرتك على الحفاظ على وتيرة ثابتة لمسافات طويلة.</value></data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>وتيرة العتبة (T-Pace)</value></data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>وتيرة العتبة لديك. التدريب في هذه المنطقة يحسن عتبة اللاكتات ويساعدك على الجري أسرع دون تراكم الكثير من حمض اللاكتيك.</value></data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>وتيرة الفواصل (I-Pace)</value></data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>وتيرة الفواصل لديك. الجهود القصيرة والمكثفة في هذه المنطقة تحسن الحد الأقصى لاستهلاك الأكسجين (VO2max).</value></data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>وتيرة التكرار (R-Pace)</value></data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>وتيرة التكرار لديك. الجريات القصيرة جدًا والسريعة بهذه الوتيرة تحسن اقتصاد الجري والسرعة.</value></data>
+  <data name="AddRaceDialog_Title" xml:space="preserve"><value>سباق جديد</value></data>
+  <data name="AddRaceDialog_Name" xml:space="preserve"><value>الاسم</value></data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>المسافة</value></data>
+  <data name="AddRaceDialog_Time" xml:space="preserve"><value>وقت السباق</value></data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
+  <data name="AddRaceDialog_Date" xml:space="preserve"><value>التاريخ</value></data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>تنبيه</value></data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>يرجى التأكد من أن وقت السباق بالتنسيق الصحيح (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>حسنًا</value></data>
+</root>

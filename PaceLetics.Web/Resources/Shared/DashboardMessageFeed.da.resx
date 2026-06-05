@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="FeedTitle" xml:space="preserve"><value>Aktuelle beskeder</value></data>
+  <data name="FeedSubtitle" xml:space="preserve"><value>Aktuelle noter til din træning</value></data>
+  <data name="NoMessages" xml:space="preserve"><value>Alt er opdateret. Vigtige beskeder vises her.</value></data>
+  <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>Vurderingsløb mangler</value></data>
+  <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>Tilføj et vurderingsløb, så PaceLetics kan beregne dine træningstempoer pålideligt.</value></data>
+  <data name="ReferenceRunStale_Title" xml:space="preserve"><value>Opdater dit vurderingsløb</value></data>
+  <data name="ReferenceRunStale_Body" xml:space="preserve"><value>Dit aktuelle vurderingsløb er fra {0:d} og er ikke blevet opdateret i {1:0} dage.</value></data>
+  <data name="ReferenceRun_Action" xml:space="preserve"><value>Administrer vurderingsløb</value></data>
+  <data name="UpcomingTraining_Title" xml:space="preserve"><value>Næste session</value></data>
+  <data name="UpcomingTrainingToday_Body" xml:space="preserve"><value>&quot;{0}&quot; er på din træningsplan i dag.</value></data>
+  <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; er på din træningsplan i morgen.</value></data>
+  <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; er på din træningsplan den {1:d}.</value></data>
+  <data name="UpcomingTraining_Action" xml:space="preserve"><value>Åbn træningsplan</value></data>
+  <data name="Severity_Info" xml:space="preserve"><value>Info</value></data>
+  <data name="Severity_Success" xml:space="preserve"><value>Ok</value></data>
+  <data name="Severity_Warning" xml:space="preserve"><value>Vigtigt</value></data>
+  <data name="Severity_Error" xml:space="preserve"><value>Fejl</value></data>
+</root>

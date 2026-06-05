@@ -14,7 +14,6 @@
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IStringLocalizer<Dashboard> L
 @inject ITrainingPlanService TrainingPlanService
-@inject IAthleteMessageFeedService AthleteMessageFeedService
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -51,23 +50,11 @@
                                          Accent="green"
                                          Href="/Athletes/trainingplanpage" />
                 </MudItem>
-
-                <MudItem xs="12" sm="6" lg="4">
-                    <DashboardMetricTile Label="@L["Metric_Messages"]"
-                                         Value="@_messages.Count.ToString()"
-                                         Detail="@L["Metric_MessagesDetail"]"
-                                         Icon="@Icons.Material.Filled.NotificationsActive"
-                                         Accent="orange" />
-                </MudItem>
             </MudGrid>
 
             <MudGrid Spacing="3">
                 <MudItem xs="12">
 					<DashboardNextTrainingSessionTile Session="_nextSession" />
-                </MudItem>
-
-                <MudItem xs="12">
-                        <DashboardMessageFeed Messages="_messages" />
                 </MudItem>
             </MudGrid>
         </MudStack>
@@ -83,7 +70,6 @@
     bool _isLoading = true;
     AthleteModel? Athlete;
     string _name = String.Empty;
-    IReadOnlyList<AthleteMessage> _messages = Array.Empty<AthleteMessage>();
     IReadOnlyList<TrainingPlan> _trainingPlans = Array.Empty<TrainingPlan>();
     TrainingPlan? _activePlan;
     TrainingSession? _nextSession;
@@ -111,13 +97,6 @@
         _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
         _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
         _referenceResult = Athlete?.ActiveReferenceResult;
-        _messages = AthleteMessageFeedService.Build(new AthleteMessageContext(
-            Athlete?.AthleteId ?? Athlete?.Id,
-            _name,
-            Athlete?.Vdot ?? 0,
-            Athlete?.ActiveReferenceResult,
-            Athlete?.SelectedTrainingPlanId,
-            DateTime.Today));
         _isLoading = false;
         await base.OnInitializedAsync();
     }

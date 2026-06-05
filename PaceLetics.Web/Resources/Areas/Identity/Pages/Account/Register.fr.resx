@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Inscription</value>
+  </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>Créez un nouveau compte.</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Votre nom</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nom d’utilisateur</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail (facultatif)</value>
+  </data>
+  <data name="EmailHelp" xml:space="preserve">
+    <value>L’e-mail est facultatif. Il est requis si vous souhaitez réinitialiser votre mot de passe.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirmer le mot de passe</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Rejoindre PaceLetics</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>Créez votre compte gratuit et entraînez-vous plus intelligemment :</value>
+  </data>
+  <data name="Feature1" xml:space="preserve">
+    <value>Calculez vos allures d’entraînement individuelles à partir de vos résultats</value>
+  </data>
+  <data name="Feature2" xml:space="preserve">
+    <value>Obtenez des plans d’entraînement structurés pour votre prochaine course</value>
+  </data>
+  <data name="Feature3" xml:space="preserve">
+    <value>Accédez à des entraînements guidés pour coureurs</value>
+  </data>
+  <data name="CreateAccountHint" xml:space="preserve">
+    <value>Il suffit d’un instant pour commencer.</value>
+  </data>
+  <data name="AlreadyHaveAccount" xml:space="preserve">
+    <value>Vous avez déjà un compte ? Connectez-vous</value>
+  </data>
+</root>

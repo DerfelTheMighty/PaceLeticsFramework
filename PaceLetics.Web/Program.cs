@@ -56,7 +56,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddRazorPages()
     .AddViewLocalization()
-    .AddDataAnnotationsLocalization();
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (modelType, factory) =>
+            factory.Create(modelType.DeclaringType ?? modelType);
+    });
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
 var webRootPath = !string.IsNullOrWhiteSpace(builder.Environment.WebRootPath)

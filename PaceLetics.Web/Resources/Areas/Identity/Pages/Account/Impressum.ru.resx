@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Правовая информация</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>Информация согласно разделу 5 немецкого Закона о цифровых услугах (Digitale-Dienste-Gesetz, DDG).</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>Поставщик услуги</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Германия</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>Ответственный за контент</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>Лицо, ответственное за содержание этого сайта:</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>Регистрационная и налоговая информация</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>Номер плательщика НДС</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>Не назначено или не применимо.</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>Запись в торговом реестре</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>Записи в торговом реестре нет.</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>Урегулирование потребительских споров</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>Поставщик услуги не готов и не обязан участвовать в процедурах урегулирования споров в органе потребительского арбитража, если только не применяется обязательное законодательное требование.</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>Ответственность за контент и ссылки</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>Содержание этого сайта подготовлено с разумной тщательностью. Как поставщик услуги, провайдер несет ответственность за собственный контент в соответствии с общими законами.</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>Этот сайт может содержать ссылки на внешние сайты третьих лиц. Поставщик не влияет на их текущее или будущее содержание. Связанные страницы проверяются на очевидные правовые нарушения при создании ссылки. Если такие нарушения станут известны, ссылки будут оперативно удалены.</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>Авторское право</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>Контент и материалы, созданные поставщиком на этом сайте, защищены немецким законодательством об авторском праве. Воспроизведение, редактирование, распространение или любое использование за пределами авторского права требует предварительного согласия, если использование прямо не разрешено законом.</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>Конфиденциальность</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>Эта правовая информация не заменяет политику конфиденциальности. Информация об обработке персональных данных приведена в политике конфиденциальности этого сайта.</value>
+  </data>
+</root>

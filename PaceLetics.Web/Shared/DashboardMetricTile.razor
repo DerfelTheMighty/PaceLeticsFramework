@@ -1,18 +1,15 @@
 @if (!string.IsNullOrWhiteSpace(Href))
 {
-    <MudPaper Elevation="0"
-          Class="pa-4 pl-panel">
-        <MudLink Href="@Href" Underline="Underline.None" Class="pl-metric-link">
-            @TileContent
-        </MudLink>
-    </MudPaper>
+    <MudLink Href="@Href" Underline="Underline.None" Class="pl-metric-link">
+        @TileContent
+    </MudLink>
 }
 else
 {
     @TileContent
 }
 @code {
-    private RenderFragment TileContent => @<MudPaper Elevation="2" Class="@TileClass">
+    private RenderFragment TileContent => @<MudPaper Elevation="0" Class="@TileClass">
         <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pl-metric-content">
             <div class="pl-metric-icon">
                 <MudIcon Icon="@Icon" Size="Size.Large" />

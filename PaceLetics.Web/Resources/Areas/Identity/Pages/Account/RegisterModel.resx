@@ -1,10 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="ConfirmEmailSubject" xml:space="preserve"><value>Confirm your email</value></data>
-  <data name="ConfirmEmailBody" xml:space="preserve"><value>Please confirm your account by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value></data>
-  <data name="EmailAlreadyInUse" xml:space="preserve"><value>Email is already in use.</value></data>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmEmailSubject" xml:space="preserve">
+    <value>Confirm your email</value>
+  </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>Please confirm your account by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>Email is already in use.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passwort</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Passwort bestätigen</value>
+  </data>
+  <data name="ValidationRequired" xml:space="preserve">
+    <value>Bitte gib {0} ein.</value>
+  </data>
+  <data name="ValidationUserNameCharacters" xml:space="preserve">
+    <value>Der Benutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.</value>
+  </data>
+  <data name="ValidationEmail" xml:space="preserve">
+    <value>Bitte gib eine gültige E-Mail-Adresse ein.</value>
+  </data>
+  <data name="ValidationStringLength" xml:space="preserve">
+    <value>{0} muss mindestens {2} und höchstens {1} Zeichen lang sein.</value>
+  </data>
+  <data name="ValidationPasswordMatch" xml:space="preserve">
+    <value>Passwort und Passwortbestätigung stimmen nicht überein.</value>
+  </data>
 </root>

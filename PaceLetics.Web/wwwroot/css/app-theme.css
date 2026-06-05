@@ -3,6 +3,13 @@
     --pl-overlay-background: color-mix(in srgb, var(--mud-palette-background) 18%, black 52%);
 }
 
+.pl-pageheader {
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 22%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--mud-palette-primary) 10%, var(--mud-palette-surface)), var(--mud-palette-surface) 68%);
+}
+
 .pl-panel {
     border: 1px solid var(--mud-palette-lines-default);
     border-radius: var(--pl-radius);
@@ -43,6 +50,7 @@
     width: min(560px, 100%);
     max-height: min(720px, 88vh);
     overflow: auto;
+    border-radius: var(--pl-radius);
 }
 
 .pl-bottom-sheet {
@@ -110,6 +118,10 @@
     --pl-metric-accent: var(--mud-palette-tertiary);
 }
 
+.pl-metric-red {
+    --pl-metric-accent: var(--mud-palette-error);
+}
+
 .pl-metric-tile {
     border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 34%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
@@ -155,6 +167,112 @@
 
 .pl-metric-arrow {
     color: var(--pl-metric-accent, var(--mud-palette-primary));
+}
+
+.pl-message-menu-panel {
+    width: min(390px, calc(100vw - 24px));
+    max-height: min(640px, calc(100vh - 88px));
+    overflow: auto;
+    border-radius: var(--pl-radius);
+}
+
+.pl-message-button-unread {
+    color: var(--mud-palette-warning) !important;
+    background: color-mix(in srgb, var(--mud-palette-warning) 22%, transparent) !important;
+}
+
+.pl-message-badge .mud-badge {
+    box-shadow: 0 0 0 2px var(--mud-palette-appbar-background);
+}
+
+.pl-feed-header-icon,
+.pl-race-icon,
+.pl-vdot-icon,
+.pl-pace-icon,
+.pl-training-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: var(--pl-radius);
+    color: var(--pl-metric-accent, var(--mud-palette-primary));
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 16%, transparent);
+}
+
+.pl-feed-tile {
+    --pl-feed-accent: var(--mud-palette-primary);
+    border: 1px solid color-mix(in srgb, var(--pl-feed-accent) 28%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+    background: color-mix(in srgb, var(--pl-feed-accent) 7%, var(--mud-palette-surface));
+}
+
+.pl-feed-tile-info {
+    --pl-feed-accent: var(--mud-palette-info);
+}
+
+.pl-feed-tile-success {
+    --pl-feed-accent: var(--mud-palette-success);
+}
+
+.pl-feed-tile-warning {
+    --pl-feed-accent: var(--mud-palette-warning);
+}
+
+.pl-feed-tile-error {
+    --pl-feed-accent: var(--mud-palette-error);
+}
+
+.pl-feed-tile-icon {
+    color: var(--pl-feed-accent);
+    background: color-mix(in srgb, var(--pl-feed-accent) 16%, transparent);
+}
+
+.pl-vdot-card,
+.pl-race-card,
+.pl-pace-card,
+.pl-training-panel {
+    border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 26%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 8%, var(--mud-palette-surface));
+}
+
+.pl-vdot-card {
+    --pl-metric-accent: var(--mud-palette-primary);
+    text-align: center;
+}
+
+.pl-race-card,
+.pl-training-panel {
+    --pl-metric-accent: var(--mud-palette-secondary);
+}
+
+.pl-pace-card {
+    min-height: 136px;
+}
+
+.pl-interval-row {
+    display: grid;
+    grid-template-columns: 42px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+}
+
+.pl-interval-row:last-child {
+    border-bottom: 0;
+}
+
+.pl-interval-row-muted {
+    opacity: .72;
+}
+
+.pl-course-detail {
+    border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 18%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+    background: color-mix(in srgb, var(--mud-palette-primary) 6%, var(--mud-palette-surface));
 }
 
 .pl-identity-success {

@@ -1,6 +1,12 @@
 @inject IStringLocalizer<Konfigurations> L
 
-<h3>@L["Title"]</h3>
+<PageTitle>@L["Title"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" />
+
+    <MudDivider Class="my-4" />
+</MudContainer>
 
 @code {
 

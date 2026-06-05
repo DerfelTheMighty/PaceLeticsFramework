@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>دوره‌های من</value></data>
+  <data name="Loading" xml:space="preserve"><value>در حال بارگذاری دوره‌ها</value></data>
+  <data name="Title" xml:space="preserve"><value>دوره‌های من</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>عضویت دوره‌ها، تاریخ‌ها و رویدادها</value></data>
+  <data name="NoPublishedCourses" xml:space="preserve"><value>در حال حاضر دوره‌ای منتشر نشده است.</value></data>
+  <data name="NoUpcomingDate" xml:space="preserve"><value>تاریخ آینده‌ای وجود ندارد</value></data>
+  <data name="UpcomingDate" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm}</value></data>
+  <data name="Leave" xml:space="preserve"><value>ترک</value></data>
+  <data name="AddCourse" xml:space="preserve"><value>افزودن دوره</value></data>
+  <data name="NoJoinedCourses" xml:space="preserve"><value>هنوز به هیچ دوره‌ای نپیوسته‌اید.</value></data>
+  <data name="NoAvailableCourses" xml:space="preserve"><value>در حال حاضر دوره دیگری در دسترس نیست.</value></data>
+  <data name="Join" xml:space="preserve"><value>پیوستن</value></data>
+  <data name="Joined" xml:space="preserve"><value>پیوسته</value></data>
+  <data name="Dates" xml:space="preserve"><value>تاریخ‌ها</value></data>
+  <data name="Events" xml:space="preserve"><value>رویدادها</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>برنامه‌های تمرینی</value></data>
+  <data name="ShowAll" xml:space="preserve"><value>همه</value></data>
+  <data name="ShowLess" xml:space="preserve"><value>کمتر</value></data>
+  <data name="NoUpcomingDates" xml:space="preserve"><value>تاریخ‌های آینده وجود ندارد.</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>در حال حاضر رویدادی فهرست نشده است.</value></data>
+  <data name="CancelRegistration" xml:space="preserve"><value>لغو</value></data>
+  <data name="Register" xml:space="preserve"><value>ثبت‌نام</value></data>
+  <data name="NoTrainingPlans" xml:space="preserve"><value>هنوز برنامه تمرینی منتشر نشده است.</value></data>
+  <data name="LoadError" xml:space="preserve"><value>دوره‌ها از Cosmos DB بارگذاری نشدند.</value></data>
+  <data name="JoinSuccess" xml:space="preserve"><value>شما به دوره پیوستید.</value></data>
+  <data name="LeaveConfirm" xml:space="preserve"><value>&quot;{0}&quot; را ترک می‌کنید؟</value></data>
+  <data name="LeaveSuccess" xml:space="preserve"><value>شما دوره را ترک کردید.</value></data>
+  <data name="RegisterSuccess" xml:space="preserve"><value>شما برای رویداد ثبت‌نام کردید.</value></data>
+  <data name="CancelRegistrationSuccess" xml:space="preserve"><value>ثبت‌نام رویداد شما لغو شد.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:yyyy/MM/dd} تا {1:yyyy/MM/dd}</value></data>
+  <data name="ShortPeriod" xml:space="preserve"><value>{0:MM/dd} تا {1:MM/dd}</value></data>
+  <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} تا {1:HH:mm}</value></data>
+  <data name="EventDate" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm} تا {1:HH:mm}</value></data>
+</root>

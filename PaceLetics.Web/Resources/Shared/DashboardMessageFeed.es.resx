@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="FeedTitle" xml:space="preserve"><value>Mensajes actuales</value></data>
+  <data name="FeedSubtitle" xml:space="preserve"><value>Notas actuales para tu entrenamiento</value></data>
+  <data name="NoMessages" xml:space="preserve"><value>Todo está al día. Los mensajes importantes aparecerán aquí.</value></data>
+  <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>Falta la carrera de evaluación</value></data>
+  <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>Añade una carrera de evaluación para que PaceLetics calcule tus ritmos de entrenamiento con fiabilidad.</value></data>
+  <data name="ReferenceRunStale_Title" xml:space="preserve"><value>Actualiza tu carrera de evaluación</value></data>
+  <data name="ReferenceRunStale_Body" xml:space="preserve"><value>Tu carrera de evaluación actual es del {0:d} y no se ha actualizado en {1:0} días.</value></data>
+  <data name="ReferenceRun_Action" xml:space="preserve"><value>Gestionar carrera de evaluación</value></data>
+  <data name="UpcomingTraining_Title" xml:space="preserve"><value>Próxima sesión</value></data>
+  <data name="UpcomingTrainingToday_Body" xml:space="preserve"><value>&quot;{0}&quot; está en tu plan de entrenamiento de hoy.</value></data>
+  <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; está en tu plan de entrenamiento de mañana.</value></data>
+  <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; está en tu plan de entrenamiento el {1:d}.</value></data>
+  <data name="UpcomingTraining_Action" xml:space="preserve"><value>Abrir plan de entrenamiento</value></data>
+  <data name="Severity_Info" xml:space="preserve"><value>Info</value></data>
+  <data name="Severity_Success" xml:space="preserve"><value>Aceptar</value></data>
+  <data name="Severity_Warning" xml:space="preserve"><value>Importante</value></data>
+  <data name="Severity_Error" xml:space="preserve"><value>Error</value></data>
+</root>

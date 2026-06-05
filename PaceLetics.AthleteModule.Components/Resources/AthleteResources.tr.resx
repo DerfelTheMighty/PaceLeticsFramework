@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="VdotCard_Title" xml:space="preserve"><value>VDOT değerin</value></data>
+  <data name="VdotCard_Description" xml:space="preserve"><value>Harika! Referans yarışından bireysel VDOT değerini belirleyebiliriz. Bu, kişisel antrenman bölgelerinin temelidir.</value></data>
+  <data name="RaceCard_Result" xml:space="preserve"><value>Sonuç:</value></data>
+  <data name="RaceCard_Edit" xml:space="preserve"><value>Yarışı düzenle</value></data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Daha fazla bilgi</value></data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Kolay tempo (E-Pace)</value></data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Kolay koşu tempon. Bu tempoda toparlanma veya rahat antrenman yap. Aerobik dayanıklılığı geliştirir ve toparlanmaya yardımcı olur.</value></data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Maraton temposu (M-Pace)</value></data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Maraton tempon. Bu bölgede antrenman uzun mesafelerde sabit tempo koruma becerini geliştirir.</value></data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Eşik temposu (T-Pace)</value></data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Eşik tempon. Bu bölgede antrenman laktat eşiğini geliştirir ve fazla laktik asit biriktirmeden daha hızlı koşmana yardımcı olur.</value></data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>İnterval temposu (I-Pace)</value></data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>İnterval tempon. Bu bölgede kısa ve yoğun eforlar maksimum oksijen alımını (VO2max) geliştirir.</value></data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Tekrar temposu (R-Pace)</value></data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Tekrar tempon. Bu tempoda çok kısa ve hızlı koşular koşu ekonomini ve hızını geliştirir.</value></data>
+  <data name="AddRaceDialog_Title" xml:space="preserve"><value>Yeni yarış</value></data>
+  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Ad</value></data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Mesafe</value></data>
+  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Yarış süresi</value></data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
+  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Tarih</value></data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Dikkat</value></data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Lütfen yarış süresinin doğru formatta olduğundan emin ol (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>Tamam</value></data>
+</root>

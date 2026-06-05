@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Loading" xml:space="preserve"><value>Indlæser dine data...</value></data>
+  <data name="Title" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Velkommen til PaceLetics</value></data>
+  <data name="Hello" xml:space="preserve"><value>Hej</value></data>
+  <data name="IntroText" xml:space="preserve"><value>Her finder du seneste kursusnyt, information om kommende træningspas og træningsforslag.</value></data>
+  <data name="Breadcrumb_Personal" xml:space="preserve"><value>Personligt</value></data>
+  <data name="WelcomeText" xml:space="preserve"><value>Hej {0}, her er din aktuelle træningsstatus.</value></data>
+  <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
+  <data name="Metric_TrainingPlan" xml:space="preserve"><value>Træningsplan</value></data>
+  <data name="Metric_NextSession" xml:space="preserve"><value>Næste session</value></data>
+  <data name="Metric_Messages" xml:space="preserve"><value>Beskeder</value></data>
+  <data name="Metric_MessagesDetail" xml:space="preserve"><value>Aktuelle dashboardbeskeder</value></data>
+  <data name="Metric_NotAvailable" xml:space="preserve"><value>-</value></data>
+  <data name="Metric_ReferenceMissing" xml:space="preserve"><value>Intet vurderingsløb</value></data>
+  <data name="Metric_ReferenceDate" xml:space="preserve"><value>Opdateret {0:dd.MM.yyyy}</value></data>
+  <data name="Metric_NoPlan" xml:space="preserve"><value>Ingen plan valgt</value></data>
+  <data name="Metric_PlanSessions" xml:space="preserve"><value>{0} sessioner</value></data>
+  <data name="Metric_NoSession" xml:space="preserve"><value>Ingen kommende session</value></data>
+  <data name="TrainingOverview_Title" xml:space="preserve"><value>Træningsoverblik</value></data>
+  <data name="TrainingOverview_Empty" xml:space="preserve"><value>Der er ingen kommende session planlagt lige nu.</value></data>
+  <data name="TrainingOverview_PreviewTitle" xml:space="preserve"><value>Planforhåndsvisning</value></data>
+  <data name="TrainingOverview_PreviewText" xml:space="preserve"><value>Dette område kan senere vise en tidslinje over sessioner, belastning eller fremgang.</value></data>
+  <data name="OpenTrainingPlan" xml:space="preserve"><value>Åbn træningsplan</value></data>
+  <data name="ReferencePanel_Title" xml:space="preserve"><value>Vurderingsløb</value></data>
+  <data name="ReferencePanel_Empty" xml:space="preserve"><value>Der er endnu ikke gemt et vurderingsløb.</value></data>
+  <data name="ManageReferenceRun" xml:space="preserve"><value>Administrer vurdering</value></data>
+  <data name="PlanPanel_Title" xml:space="preserve"><value>Aktiv plan</value></data>
+  <data name="SessionRuns" xml:space="preserve"><value>{0} løb</value></data>
+  <data name="SessionWorkouts" xml:space="preserve"><value>{0} workouts</value></data>
+  <data name="SessionEmpty" xml:space="preserve"><value>Intet indhold</value></data>
+</root>

@@ -7,6 +7,7 @@
   <data name="VdotCard_Title" xml:space="preserve"><value>Deine VDOT</value></data>
   <data name="VdotCard_Description" xml:space="preserve"><value>Super! Aus dem Referenzlauf können wir deine individuelle VDOT bestimmen. Diese bildet die Grundlage für deine persönlichen Trainingsbereiche.</value></data>
   <data name="RaceCard_Result" xml:space="preserve"><value>Ergebnis:</value></data>
+  <data name="RaceCard_Edit" xml:space="preserve"><value>Lauf bearbeiten</value></data>
   <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Mehr Infos</value></data>
   <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Easy Pace (E-Pace)</value></data>
   <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Dein lockerer Dauerlauf. Laufe in diesem Tempo, wenn du regenerativ oder locker trainierst. Es fördert die Grundlagenausdauer und hilft bei der Erholung.</value></data>

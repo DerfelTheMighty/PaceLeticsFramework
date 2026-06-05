@@ -10,7 +10,7 @@ else
 }
 
 @code {
-    private RenderFragment TileContent => @<MudPaper Elevation="2"
+    private RenderFragment TileContent => @<MudPaper Elevation="0"
                                                      Class="@TileClass">
         <MudStack Row="true"
                   AlignItems="AlignItems.Center"
@@ -19,7 +19,8 @@ else
 
             <MudAvatar Color="@Color"
                        Variant="Variant.Filled"
-                       Size="Size.Medium">
+                       Size="Size.Medium"
+                       Class="pl-feed-tile-icon">
                 <MudIcon Icon="@Icon" Size="Size.Small" />
             </MudAvatar>
 
@@ -60,7 +61,21 @@ else
     [Parameter]
     public string? Href { get; set; }
 
-    private Color Color => Color.Primary;
+    private Color Color => Severity switch
+    {
+        Severity.Success => Color.Success,
+        Severity.Warning => Color.Warning,
+        Severity.Error => Color.Error,
+        Severity.Info => Color.Info,
+        _ => Color.Primary
+    };
 
-    private string TileClass => "mud-border-primary";
+    private string TileClass => Severity switch
+    {
+        Severity.Success => "pl-feed-tile pl-feed-tile-success",
+        Severity.Warning => "pl-feed-tile pl-feed-tile-warning",
+        Severity.Error => "pl-feed-tile pl-feed-tile-error",
+        Severity.Info => "pl-feed-tile pl-feed-tile-info",
+        _ => "pl-feed-tile"
+    };
 }

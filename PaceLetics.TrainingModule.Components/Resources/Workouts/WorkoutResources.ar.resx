@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TopBar_GetReady" xml:space="preserve"><value>استعد!</value></data>
+  <data name="TopBar_SideSwitch" xml:space="preserve"><value>بدّل الجانب!</value></data>
+  <data name="TopBar_Execution" xml:space="preserve"><value>ابدأ!</value></data>
+  <data name="TopBar_Paused" xml:space="preserve"><value>متوقف مؤقتًا!</value></data>
+  <data name="TopBar_ExercisePause" xml:space="preserve"><value>استراحة تمرين!</value></data>
+  <data name="BottomSheet_Details" xml:space="preserve"><value>التفاصيل</value></data>
+  <data name="BottomSheet_Sequence" xml:space="preserve"><value>التسلسل</value></data>
+  <data name="BottomSheet_NoExercise" xml:space="preserve"><value>لا يوجد تمرين.</value></data>
+  <data name="BottomSheet_Execution" xml:space="preserve"><value>التنفيذ</value></data>
+  <data name="BottomSheet_NoSteps" xml:space="preserve"><value>لا توجد خطوات متاحة.</value></data>
+  <data name="BottomSheet_TapToPreview" xml:space="preserve"><value>انقر للمعاينة.</value></data>
+  <data name="BottomSheet_RunningViewOnly" xml:space="preserve"><value>عرض فقط أثناء الجري (بدون تخطي).</value></data>
+  <data name="BottomSheet_Now" xml:space="preserve"><value>الآن</value></data>
+  <data name="DifficultyDialog_Reps" xml:space="preserve"><value>عدد التكرارات</value></data>
+  <data name="DifficultyDialog_AvailableLevels" xml:space="preserve"><value>مستويات الصعوبة المتاحة</value></data>
+  <data name="DifficultyDialog_Start" xml:space="preserve"><value>ابدأ</value></data>
+  <data name="DifficultyDialog_Cancel" xml:space="preserve"><value>إلغاء</value></data>
+  <data name="DifficultyDialog_SelectDifficulty" xml:space="preserve"><value>اختر الصعوبة</value></data>
+  <data name="Preview_TotalReps" xml:space="preserve"><value>إجمالي التكرارات</value></data>
+  <data name="Preview_Open" xml:space="preserve"><value>فتح</value></data>
+  <data name="Preview_MoreInfo" xml:space="preserve"><value>مزيد من المعلومات</value></data>
+  <data name="ExerciseInfo_Duration" xml:space="preserve"><value>المدة:</value></data>
+  <data name="ExerciseInfo_SideSwitch" xml:space="preserve"><value>تبديل الجانب:</value></data>
+  <data name="ExerciseInfo_Yes" xml:space="preserve"><value>نعم</value></data>
+  <data name="ExerciseInfo_No" xml:space="preserve"><value>لا</value></data>
+  <data name="ExerciseInfo_NotAvailable" xml:space="preserve"><value>معلومات التمرين غير متاحة.</value></data>
+  <data name="WorkoutNow_Details" xml:space="preserve"><value>التفاصيل والتسلسل</value></data>
+  <data name="Level_Easy" xml:space="preserve"><value>سهل</value></data>
+  <data name="Level_Moderate" xml:space="preserve"><value>متوسط</value></data>
+  <data name="Level_Advanced" xml:space="preserve"><value>متقدم</value></data>
+  <data name="Level_Epic" xml:space="preserve"><value>ملحمي</value></data>
+  <data name="TopBar_Start" xml:space="preserve"><value>ابدأ</value></data>
+  <data name="TopBar_Pause" xml:space="preserve"><value>إيقاف مؤقت</value></data>
+  <data name="TopBar_Reset" xml:space="preserve"><value>إعادة تعيين</value></data>
+  <data name="WorkoutView_NoWorkout" xml:space="preserve"><value>لم يتم تحميل أي تمرين.</value></data>
+  <data name="FinishedDialog_Confirm" xml:space="preserve"><value>نعم!</value></data>
+  <data name="TrainingCard_Title" xml:space="preserve"><value>تدريب</value></data>
+</root>

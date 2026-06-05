@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AddTrainerRequired" xml:space="preserve"><value>请选择教练。</value></data>
+  <data name="CancelEventAthleteRequired" xml:space="preserve"><value>取消活动报名需要已登录的运动员。</value></data>
+  <data name="CancelEventNotRegistered" xml:space="preserve"><value>你未报名此活动。</value></data>
+  <data name="CourseNotFound" xml:space="preserve"><value>未找到课程。</value></data>
+  <data name="CreateCourseEndBeforeStart" xml:space="preserve"><value>课程结束日期不能早于开始日期。</value></data>
+  <data name="CreateCourseNameRequired" xml:space="preserve"><value>课程需要名称。</value></data>
+  <data name="CreateCourseTrainerRequired" xml:space="preserve"><value>课程需要已登录的教练。</value></data>
+  <data name="DateEndAfterStart" xml:space="preserve"><value>结束时间必须晚于开始时间。</value></data>
+  <data name="DateNotFound" xml:space="preserve"><value>未找到日期。</value></data>
+  <data name="DateTitleRequired" xml:space="preserve"><value>日期需要标题。</value></data>
+  <data name="DeleteCourseCreatorOnly" xml:space="preserve"><value>只有创建该课程的教练可以删除它。</value></data>
+  <data name="EventEndAfterStart" xml:space="preserve"><value>活动结束时间必须晚于开始时间。</value></data>
+  <data name="EventNotFound" xml:space="preserve"><value>未找到活动。</value></data>
+  <data name="EventTitleRequired" xml:space="preserve"><value>活动需要标题。</value></data>
+  <data name="JoinCourseAthleteRequired" xml:space="preserve"><value>加入课程需要已登录的运动员。</value></data>
+  <data name="LeaveCourseAthleteRequired" xml:space="preserve"><value>退出课程需要已登录的运动员。</value></data>
+  <data name="LeaveCourseNotJoined" xml:space="preserve"><value>你尚未加入此课程。</value></data>
+  <data name="PermissionManageEvents" xml:space="preserve"><value>你无权管理此课程的日期和活动。</value></data>
+  <data name="PermissionManagePlans" xml:space="preserve"><value>你无权管理此课程的训练计划。</value></data>
+  <data name="PermissionManageTrainers" xml:space="preserve"><value>你无权管理此课程的教练。</value></data>
+  <data name="RegisterEventAthleteRequired" xml:space="preserve"><value>活动报名需要已登录的运动员。</value></data>
+  <data name="RegisterEventDeadlinePassed" xml:space="preserve"><value>该活动报名截止日期已过。</value></data>
+  <data name="RegisterEventFull" xml:space="preserve"><value>该活动没有可用名额。</value></data>
+  <data name="RegisterEventRequiresEnrollment" xml:space="preserve"><value>报名活动前必须先加入课程。</value></data>
+  <data name="RemoveTrainerLeadCannotLeave" xml:space="preserve"><value>课程负责人可以删除课程，但不能退出。</value></data>
+  <data name="RemoveTrainerNotAssigned" xml:space="preserve"><value>该教练未分配到课程。</value></data>
+  <data name="RoleCourseLead" xml:space="preserve"><value>课程负责人</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>教练</value></data>
+  <data name="TrainingPlanNotFound" xml:space="preserve"><value>未找到训练计划。</value></data>
+  <data name="TrainingPlanRequired" xml:space="preserve"><value>请选择训练计划。</value></data>
+</root>

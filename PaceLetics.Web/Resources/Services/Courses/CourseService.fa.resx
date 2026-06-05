@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AddTrainerRequired" xml:space="preserve"><value>لطفاً یک مربی انتخاب کنید.</value></data>
+  <data name="CancelEventAthleteRequired" xml:space="preserve"><value>لغو ثبت‌نام رویداد به ورزشکار واردشده نیاز دارد.</value></data>
+  <data name="CancelEventNotRegistered" xml:space="preserve"><value>شما برای این رویداد ثبت‌نام نکرده‌اید.</value></data>
+  <data name="CourseNotFound" xml:space="preserve"><value>دوره یافت نشد.</value></data>
+  <data name="CreateCourseEndBeforeStart" xml:space="preserve"><value>تاریخ پایان دوره نمی‌تواند قبل از تاریخ شروع باشد.</value></data>
+  <data name="CreateCourseNameRequired" xml:space="preserve"><value>یک دوره به نام نیاز دارد.</value></data>
+  <data name="CreateCourseTrainerRequired" xml:space="preserve"><value>یک دوره به مربی واردشده نیاز دارد.</value></data>
+  <data name="DateEndAfterStart" xml:space="preserve"><value>زمان پایان باید بعد از زمان شروع باشد.</value></data>
+  <data name="DateNotFound" xml:space="preserve"><value>تاریخ یافت نشد.</value></data>
+  <data name="DateTitleRequired" xml:space="preserve"><value>یک تاریخ به عنوان نیاز دارد.</value></data>
+  <data name="DeleteCourseCreatorOnly" xml:space="preserve"><value>فقط مربی ایجادکننده دوره می‌تواند آن را حذف کند.</value></data>
+  <data name="EventEndAfterStart" xml:space="preserve"><value>زمان پایان رویداد باید بعد از زمان شروع باشد.</value></data>
+  <data name="EventNotFound" xml:space="preserve"><value>رویداد یافت نشد.</value></data>
+  <data name="EventTitleRequired" xml:space="preserve"><value>یک رویداد به عنوان نیاز دارد.</value></data>
+  <data name="JoinCourseAthleteRequired" xml:space="preserve"><value>پیوستن به دوره به ورزشکار واردشده نیاز دارد.</value></data>
+  <data name="LeaveCourseAthleteRequired" xml:space="preserve"><value>ترک دوره به ورزشکار واردشده نیاز دارد.</value></data>
+  <data name="LeaveCourseNotJoined" xml:space="preserve"><value>شما به این دوره نپیوسته‌اید.</value></data>
+  <data name="PermissionManageEvents" xml:space="preserve"><value>شما اجازه مدیریت تاریخ‌ها و رویدادهای این دوره را ندارید.</value></data>
+  <data name="PermissionManagePlans" xml:space="preserve"><value>شما اجازه مدیریت برنامه‌های تمرینی این دوره را ندارید.</value></data>
+  <data name="PermissionManageTrainers" xml:space="preserve"><value>شما اجازه مدیریت مربیان این دوره را ندارید.</value></data>
+  <data name="RegisterEventAthleteRequired" xml:space="preserve"><value>ثبت‌نام رویداد به ورزشکار واردشده نیاز دارد.</value></data>
+  <data name="RegisterEventDeadlinePassed" xml:space="preserve"><value>مهلت ثبت‌نام این رویداد گذشته است.</value></data>
+  <data name="RegisterEventFull" xml:space="preserve"><value>برای این رویداد ظرفیت خالی وجود ندارد.</value></data>
+  <data name="RegisterEventRequiresEnrollment" xml:space="preserve"><value>پیش از ثبت‌نام در رویدادها باید به دوره بپیوندید.</value></data>
+  <data name="RemoveTrainerLeadCannotLeave" xml:space="preserve"><value>مسئول دوره می‌تواند دوره را حذف کند اما نمی‌تواند آن را ترک کند.</value></data>
+  <data name="RemoveTrainerNotAssigned" xml:space="preserve"><value>این مربی به دوره اختصاص داده نشده است.</value></data>
+  <data name="RoleCourseLead" xml:space="preserve"><value>مسئول دوره</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>مربی</value></data>
+  <data name="TrainingPlanNotFound" xml:space="preserve"><value>برنامه تمرینی یافت نشد.</value></data>
+  <data name="TrainingPlanRequired" xml:space="preserve"><value>لطفاً یک برنامه تمرینی انتخاب کنید.</value></data>
+</root>

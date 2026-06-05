@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Aviso legal</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>Información conforme al artículo 5 de la Ley alemana de servicios digitales (Digitale-Dienste-Gesetz, DDG).</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>Proveedor de servicios</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Alemania</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>Responsable del contenido</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>La persona responsable del contenido de este sitio web es</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>Información registral y fiscal</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>Número de identificación fiscal IVA</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>No asignado o no aplicable.</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>Inscripción en el registro mercantil</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>Sin inscripción en el registro mercantil.</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>Resolución de litigios de consumo</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>El proveedor de servicios no está dispuesto ni obligado a participar en procedimientos de resolución de disputas ante una junta de arbitraje de consumo, salvo que exista una obligación legal imperativa.</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>Responsabilidad por contenido y enlaces</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>El contenido de este sitio web se ha preparado con cuidado razonable. Como proveedor de servicios, el proveedor es responsable de su propio contenido de acuerdo con las leyes generales.</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>Este sitio web puede contener enlaces a sitios externos de terceros. El proveedor no tiene influencia sobre su contenido actual o futuro. Las páginas enlazadas se revisan al crear el enlace para detectar infracciones legales evidentes. Si se conocen infracciones, dichos enlaces se eliminarán rápidamente.</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>Derechos de autor</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>El contenido y las obras creadas por el proveedor en este sitio están sujetos a la legislación alemana de derechos de autor. La reproducción, edición, distribución o cualquier uso fuera de los límites del derecho de autor requiere consentimiento previo, salvo que la ley lo permita expresamente.</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>Privacidad</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>Este aviso legal no sustituye a la política de privacidad. La información sobre el tratamiento de datos personales se proporciona en la política de privacidad de este sitio web.</value>
+  </data>
+</root>

@@ -4,25 +4,34 @@
 @namespace PaceLetics.AthleteModule.Components
 @inject IStringLocalizer<AthleteResources> L
 
-<MudCard>
-    <MudCardHeader>
-        <CardHeaderContent>
-            <MudExGrid>
-                <MudAvatar>
-                    <MudImage Src="@GetImagePath(Model?.Type)"></MudImage>
-                </MudAvatar>
-                <MudText>@Model?.Date.ToString("dd-MM-yyyy").Replace("-",".")</MudText>
-            </MudExGrid>
-        </CardHeaderContent>
-        <CardHeaderActions>
-            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="OnEditRaceCard"/>
-        </CardHeaderActions>
-    </MudCardHeader>
-    <MudCardContent>
-        <MudText>@Model?.Id</MudText>
-        <MudText>
+<MudPaper Elevation="0" Class="pa-4 pl-race-card">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="min-width:0;">
+                <div class="pl-race-icon">
+                    <MudImage Src="@GetImagePath(Model?.Type)" Width="30" Height="30" />
+                </div>
+
+                <MudStack Spacing="0" Style="min-width:0;">
+                    <MudText Typo="Typo.subtitle2">@Model?.Id</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                        @Model?.Date.ToString("dd.MM.yyyy")
+                    </MudText>
+                </MudStack>
+            </MudStack>
+
+            <MudTooltip Text="@L["RaceCard_Edit"]">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                               Color="Color.Primary"
+                               OnClick="HandleEditCard"
+                               aria-label="@L["RaceCard_Edit"]" />
+            </MudTooltip>
+        </MudStack>
+
+        <MudDivider />
+
+        <MudText Typo="Typo.body2">
             @L["RaceCard_Result"] <b>@Model?.Time.ToString()</b>
         </MudText>
-    </MudCardContent>
-</MudCard>
-
+    </MudStack>
+</MudPaper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Cookie 与隐私政策</value>
+  </data>
+  <data name="Section1Title" xml:space="preserve">
+    <value>1. 简介</value>
+  </data>
+  <data name="Section1Text" xml:space="preserve">
+    <value>欢迎访问我们的网站。本政策说明我们如何以及为何使用 Cookie，以及通过 Cookie 收集哪些数据。</value>
+  </data>
+  <data name="Section2Title" xml:space="preserve">
+    <value>2. 什么是 Cookie？</value>
+  </data>
+  <data name="Section2Text" xml:space="preserve">
+    <value>Cookie 是你访问网站时存储在设备上的小型文本文件。它们通常用于让网站更具功能性，并向网站所有者提供信息。</value>
+  </data>
+  <data name="Section3Title" xml:space="preserve">
+    <value>3. 我们如何以及为何使用 Cookie？</value>
+  </data>
+  <data name="Section3Text" xml:space="preserve">
+    <value>我们使用 Cookie 来：</value>
+  </data>
+  <data name="Section3Item1" xml:space="preserve">
+    <value>保存你的登录状态。</value>
+  </data>
+  <data name="Section3Item2" xml:space="preserve">
+    <value>提升网站性能和可用性。</value>
+  </data>
+  <data name="Section4Title" xml:space="preserve">
+    <value>4. 我们收集哪些数据？</value>
+  </data>
+  <data name="Section4Text" xml:space="preserve">
+    <value>当你访问我们的网站或注册时，可能会收集以下数据：</value>
+  </data>
+  <data name="Section4Item1" xml:space="preserve">
+    <value>IP 地址</value>
+  </data>
+  <data name="Section4Item2" xml:space="preserve">
+    <value>浏览器类型和版本</value>
+  </data>
+  <data name="Section4Item3" xml:space="preserve">
+    <value>电子邮件地址（注册或登录时）</value>
+  </data>
+  <data name="Section4Item4" xml:space="preserve">
+    <value>用户名（注册或登录时）</value>
+  </data>
+  <data name="Section4Item5" xml:space="preserve">
+    <value>密码（注册或登录时）</value>
+  </data>
+  <data name="Section4Item6" xml:space="preserve">
+    <value>运行期间收集的数据（例如活动、设置）</value>
+  </data>
+  <data name="Section5Title" xml:space="preserve">
+    <value>5. 数据删除</value>
+  </data>
+  <data name="Section5Text" xml:space="preserve">
+    <value>删除账户时，与账户相关的所有数据都会被永久删除，包括电子邮件地址、用户名和运行数据。</value>
+  </data>
+  <data name="Section6Title" xml:space="preserve">
+    <value>6. 如何控制 Cookie 使用？</value>
+  </data>
+  <data name="Section6Text" xml:space="preserve">
+    <value>大多数浏览器允许你控制 Cookie。你可以配置设置来阻止或删除 Cookie。但请注意，如果禁用 Cookie，我们网站的某些功能可能无法正常工作。</value>
+  </data>
+  <data name="Section7Title" xml:space="preserve">
+    <value>7. 本政策的变更</value>
+  </data>
+  <data name="Section7Text" xml:space="preserve">
+    <value>我们可能会不时更新本政策。变更将在本页面发布。</value>
+  </data>
+  <data name="Section8Title" xml:space="preserve">
+    <value>8. 联系方式</value>
+  </data>
+  <data name="Section8Text" xml:space="preserve">
+    <value>如果你对本 Cookie 和隐私政策有疑问，请联系</value>
+  </data>
+</root>
