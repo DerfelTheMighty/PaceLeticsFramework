@@ -60,21 +60,7 @@ else
     [Parameter]
     public string? Href { get; set; }
 
-    private Color Color => Severity switch
-    {
-        Severity.Success => Color.Success,
-        Severity.Warning => Color.Warning,
-        Severity.Error => Color.Error,
-        Severity.Info => Color.Info,
-        _ => Color.Default
-    };
+    private Color Color => Color.Primary;
 
-    private string TileClass => Severity switch
-    {
-        Severity.Success => "mud-border-success",
-        Severity.Warning => "mud-border-warning",
-        Severity.Error => "mud-border-error",
-        Severity.Info => "mud-border-info",
-        _ => string.Empty
-    };
+    private string TileClass => "mud-border-primary";
 }

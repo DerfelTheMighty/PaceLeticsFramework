@@ -1,12 +1,20 @@
 :root {
-    --mud-palette-primary: #594ae2;
+    --mud-palette-primary: #FF2BD6;
+    --mud-palette-secondary: #00E5FF;
+    --mud-palette-tertiary: #B7FF2A;
+    --mud-palette-info: #00B8FF;
+    --mud-palette-success: #22E87A;
+    --mud-palette-warning: #FFE14A;
+    --mud-palette-error: #FF3B7D;
     --mud-palette-primary-text: #fff;
-    --mud-palette-primary-hover: rgba(89,74,226,0.06);
+    --mud-palette-primary-hover: color-mix(in srgb, var(--mud-palette-primary) 8%, transparent);
     --mud-palette-surface: #fff;
-    --mud-palette-background: #fff;
-    --mud-palette-text-primary: rgba(0,0,0,0.87);
-    --mud-palette-text-secondary: rgba(0,0,0,0.54);
-    --mud-palette-appbar-background: #594ae2;
+    --mud-palette-background: #FFF6FF;
+    --mud-palette-background-gray: #F3E8FF;
+    --mud-palette-text-primary: #241136;
+    --mud-palette-text-secondary: #6C4F82;
+    --mud-palette-appbar-background: #31116E;
     --mud-palette-appbar-text: #fff;
-    --mud-palette-divider: rgba(0,0,0,0.12);
+    --mud-palette-divider: #E7D4F7;
+    --mud-palette-lines-default: #E7D4F7;
 }

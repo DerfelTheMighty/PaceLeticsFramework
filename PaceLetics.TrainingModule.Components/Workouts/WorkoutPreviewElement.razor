@@ -97,25 +97,6 @@
         }
     }
 
-    private string GetOutlineColor(Level level)
-    {
-        switch (level)
-        {
-            case Level.Easy:
-                return "outline-color:mud-palette-info;outline-width:thick";
-            case Level.Moderate:
-                return "outline-color:--mud-palette-success;";
-            case Level.Advanced:
-                return "outline-color:--mud-palette-warning;";
-            case Level.Epic:
-                return "outline-color:--mud-palette-error;";
-            default:
-                return "outline-color:--mud-palette-info;";
-        }
-    }
-
-
-
     private string GetImagePath(string imagefile)
     {
         return "images/exercises/" + imagefile;
