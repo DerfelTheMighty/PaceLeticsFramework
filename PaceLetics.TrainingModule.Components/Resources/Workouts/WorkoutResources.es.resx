@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TopBar_GetReady" xml:space="preserve"><value>¡Prepárate!</value></data>
+  <data name="TopBar_SideSwitch" xml:space="preserve"><value>¡Cambia de lado!</value></data>
+  <data name="TopBar_Execution" xml:space="preserve"><value>¡Vamos!</value></data>
+  <data name="TopBar_Paused" xml:space="preserve"><value>¡En pausa!</value></data>
+  <data name="TopBar_ExercisePause" xml:space="preserve"><value>¡Pausa de ejercicio!</value></data>
+  <data name="BottomSheet_Details" xml:space="preserve"><value>Detalles</value></data>
+  <data name="BottomSheet_Sequence" xml:space="preserve"><value>Secuencia</value></data>
+  <data name="BottomSheet_NoExercise" xml:space="preserve"><value>Sin ejercicio.</value></data>
+  <data name="BottomSheet_Execution" xml:space="preserve"><value>Ejecución</value></data>
+  <data name="BottomSheet_NoSteps" xml:space="preserve"><value>No hay pasos disponibles.</value></data>
+  <data name="BottomSheet_TapToPreview" xml:space="preserve"><value>Toca para previsualizar.</value></data>
+  <data name="BottomSheet_RunningViewOnly" xml:space="preserve"><value>Solo vista durante la carrera (sin saltos).</value></data>
+  <data name="BottomSheet_Now" xml:space="preserve"><value>Ahora</value></data>
+  <data name="DifficultyDialog_Reps" xml:space="preserve"><value>Número de repeticiones</value></data>
+  <data name="DifficultyDialog_AvailableLevels" xml:space="preserve"><value>Niveles de dificultad disponibles</value></data>
+  <data name="DifficultyDialog_Start" xml:space="preserve"><value>Iniciar</value></data>
+  <data name="DifficultyDialog_Cancel" xml:space="preserve"><value>Cancelar</value></data>
+  <data name="DifficultyDialog_SelectDifficulty" xml:space="preserve"><value>Elegir dificultad</value></data>
+  <data name="Preview_TotalReps" xml:space="preserve"><value>Repeticiones totales</value></data>
+  <data name="Preview_Open" xml:space="preserve"><value>Abrir</value></data>
+  <data name="Preview_MoreInfo" xml:space="preserve"><value>Más información</value></data>
+  <data name="ExerciseInfo_Duration" xml:space="preserve"><value>Duración:</value></data>
+  <data name="ExerciseInfo_SideSwitch" xml:space="preserve"><value>Cambio de lado:</value></data>
+  <data name="ExerciseInfo_Yes" xml:space="preserve"><value>sí</value></data>
+  <data name="ExerciseInfo_No" xml:space="preserve"><value>no</value></data>
+  <data name="ExerciseInfo_NotAvailable" xml:space="preserve"><value>La información del ejercicio no está disponible.</value></data>
+  <data name="WorkoutNow_Details" xml:space="preserve"><value>DETALLES Y SECUENCIA</value></data>
+  <data name="Level_Easy" xml:space="preserve"><value>Fácil</value></data>
+  <data name="Level_Moderate" xml:space="preserve"><value>Moderado</value></data>
+  <data name="Level_Advanced" xml:space="preserve"><value>Avanzado</value></data>
+  <data name="Level_Epic" xml:space="preserve"><value>Épico</value></data>
+  <data name="TopBar_Start" xml:space="preserve"><value>Iniciar</value></data>
+  <data name="TopBar_Pause" xml:space="preserve"><value>Pausa</value></data>
+  <data name="TopBar_Reset" xml:space="preserve"><value>Restablecer</value></data>
+  <data name="WorkoutView_NoWorkout" xml:space="preserve"><value>No hay entrenamiento cargado.</value></data>
+  <data name="FinishedDialog_Confirm" xml:space="preserve"><value>¡Sí!</value></data>
+  <data name="TrainingCard_Title" xml:space="preserve"><value>Entrenamiento</value></data>
+</root>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>إدارة الدورات</value></data>
+  <data name="Loading" xml:space="preserve"><value>جارٍ تحميل الدورات</value></data>
+  <data name="Title" xml:space="preserve"><value>إدارة الدورات</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>أنشئ دورات وأضف مدربين واحذف دوراتك الخاصة.</value></data>
+  <data name="CreateCourseTitle" xml:space="preserve"><value>إنشاء دورة جديدة</value></data>
+  <data name="Name" xml:space="preserve"><value>الاسم</value></data>
+  <data name="Level" xml:space="preserve"><value>المستوى</value></data>
+  <data name="Description" xml:space="preserve"><value>الوصف</value></data>
+  <data name="Start" xml:space="preserve"><value>البداية</value></data>
+  <data name="End" xml:space="preserve"><value>النهاية</value></data>
+  <data name="CreateCourse" xml:space="preserve"><value>إنشاء دورة</value></data>
+  <data name="NoTrainerCourses" xml:space="preserve"><value>لست معينًا كمدرب في أي دورة.</value></data>
+  <data name="Course" xml:space="preserve"><value>دورة</value></data>
+  <data name="Leave" xml:space="preserve"><value>مغادرة</value></data>
+  <data name="Trainers" xml:space="preserve"><value>المدربون</value></data>
+  <data name="AddTrainerLabel" xml:space="preserve"><value>إضافة مدرب</value></data>
+  <data name="Add" xml:space="preserve"><value>إضافة</value></data>
+  <data name="Dates" xml:space="preserve"><value>المواعيد</value></data>
+  <data name="NoDates" xml:space="preserve"><value>لا توجد مواعيد بعد.</value></data>
+  <data name="EventTitle" xml:space="preserve"><value>العنوان</value></data>
+  <data name="Location" xml:space="preserve"><value>الموقع</value></data>
+  <data name="Date" xml:space="preserve"><value>التاريخ</value></data>
+  <data name="StartTime" xml:space="preserve"><value>وقت البدء</value></data>
+  <data name="EndTime" xml:space="preserve"><value>وقت الانتهاء</value></data>
+  <data name="Notes" xml:space="preserve"><value>ملاحظات</value></data>
+  <data name="AddDate" xml:space="preserve"><value>إضافة موعد</value></data>
+  <data name="Events" xml:space="preserve"><value>الفعاليات</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>لا توجد فعاليات بعد.</value></data>
+  <data name="NoParticipants" xml:space="preserve"><value>لا يوجد مشاركون مسجلون بعد.</value></data>
+  <data name="Capacity" xml:space="preserve"><value>السعة</value></data>
+  <data name="RegistrationDeadline" xml:space="preserve"><value>موعد انتهاء التسجيل</value></data>
+  <data name="EventType" xml:space="preserve"><value>نوع الفعالية</value></data>
+  <data name="EventType_General" xml:space="preserve"><value>عام</value></data>
+  <data name="EventType_RunningAnalysis" xml:space="preserve"><value>تحليل الجري</value></data>
+  <data name="AddEvent" xml:space="preserve"><value>إضافة فعالية</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>خطط التدريب</value></data>
+  <data name="NoPublishedPlan" xml:space="preserve"><value>لم تُنشر أي خطة بعد.</value></data>
+  <data name="TrainingPlan" xml:space="preserve"><value>خطة التدريب</value></data>
+  <data name="AddPlan" xml:space="preserve"><value>إضافة خطة</value></data>
+  <data name="Participants" xml:space="preserve"><value>المشاركون</value></data>
+  <data name="ParticipantsCount" xml:space="preserve"><value>المشاركون ({0})</value></data>
+  <data name="CreateCourseSuccess" xml:space="preserve"><value>تم إنشاء الدورة.</value></data>
+  <data name="DeleteCourseConfirm" xml:space="preserve"><value>هل تريد حقًا حذف الدورة &quot;{0}&quot;؟</value></data>
+  <data name="DeleteCourseSuccess" xml:space="preserve"><value>تم حذف الدورة.</value></data>
+  <data name="AddTrainerSuccess" xml:space="preserve"><value>تمت إضافة المدرب.</value></data>
+  <data name="RemoveTrainerConfirm" xml:space="preserve"><value>إزالة {0} من الدورة؟</value></data>
+  <data name="RemoveTrainerSuccess" xml:space="preserve"><value>تمت إزالة المدرب.</value></data>
+  <data name="LeaveTrainerConfirm" xml:space="preserve"><value>مغادرة &quot;{0}&quot; كمدرب؟</value></data>
+  <data name="LeaveTrainerSuccess" xml:space="preserve"><value>لقد غادرت كمدرب.</value></data>
+  <data name="AddDateSuccess" xml:space="preserve"><value>تمت إضافة الموعد.</value></data>
+  <data name="RemoveDateConfirm" xml:space="preserve"><value>إزالة الموعد &quot;{0}&quot;؟</value></data>
+  <data name="RemoveDateSuccess" xml:space="preserve"><value>تمت إزالة الموعد.</value></data>
+  <data name="AddEventSuccess" xml:space="preserve"><value>تمت إضافة الفعالية.</value></data>
+  <data name="DeleteEventConfirm" xml:space="preserve"><value>إزالة الفعالية &quot;{0}&quot;؟</value></data>
+  <data name="DeleteEventSuccess" xml:space="preserve"><value>تمت إزالة الفعالية.</value></data>
+  <data name="PublishPlanSuccess" xml:space="preserve"><value>تمت إضافة خطة التدريب.</value></data>
+  <data name="RemovePlanConfirm" xml:space="preserve"><value>إزالة خطة التدريب &quot;{0}&quot;؟</value></data>
+  <data name="RemovePlanSuccess" xml:space="preserve"><value>تمت إزالة خطة التدريب.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:yyyy/MM/dd} إلى {1:yyyy/MM/dd}</value></data>
+  <data name="DateRange" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm} إلى {1:HH:mm}</value></data>
+  <data name="ValidationDateRequired" xml:space="preserve"><value>يرجى اختيار تاريخ.</value></data>
+  <data name="ValidationTimeFormat" xml:space="preserve"><value>يرجى إدخال وقت بتنسيق HH:mm.</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>تعذر تحديد المدرب.</value></data>
+</root>

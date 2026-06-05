@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="VdotCard_Title" xml:space="preserve"><value>Ваш VDOT</value></data>
+  <data name="VdotCard_Description" xml:space="preserve"><value>Отлично! По контрольному забегу мы можем определить ваш индивидуальный VDOT. Это основа ваших личных тренировочных зон.</value></data>
+  <data name="RaceCard_Result" xml:space="preserve"><value>Результат:</value></data>
+  <data name="RaceCard_Edit" xml:space="preserve"><value>Редактировать забег</value></data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Подробнее</value></data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Легкий темп (E-Pace)</value></data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Ваш легкий беговой темп. Бегайте в этом темпе для восстановления или легкой тренировки. Он развивает аэробную выносливость и помогает восстановлению.</value></data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Марафонский темп (M-Pace)</value></data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Ваш марафонский темп. Тренировки в этой зоне улучшают способность держать ровный темп на длинных дистанциях.</value></data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Пороговый темп (T-Pace)</value></data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Ваш пороговый темп. Тренировки в этой зоне улучшают лактатный порог и помогают бежать быстрее без чрезмерного накопления молочной кислоты.</value></data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>Интервальный темп (I-Pace)</value></data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>Ваш интервальный темп. Короткие интенсивные отрезки в этой зоне улучшают максимальное потребление кислорода (VO2max).</value></data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Темп повторений (R-Pace)</value></data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Ваш темп повторений. Очень короткие быстрые отрезки в этом темпе улучшают экономичность бега и скорость.</value></data>
+  <data name="AddRaceDialog_Title" xml:space="preserve"><value>Новый забег</value></data>
+  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Имя</value></data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Дистанция</value></data>
+  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Время забега</value></data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
+  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Дата</value></data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Внимание</value></data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Проверьте, что время забега указано в правильном формате (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>ОК</value></data>
+</root>

@@ -6,40 +6,29 @@
 
     @foreach (var p in Items)
     {
-        <MudCard Class="pa-4 rounded-lg" Elevation="1">
+        <MudPaper Class="@($"pa-4 pl-pace-card pl-metric-{p.Accent}")" Elevation="0">
 
-            <!-- Header mit Icon + PaceKey + Pacezeiten -->
-            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
 
-                <MudStack Spacing="0">
+                <MudStack Spacing="1" Style="min-width:0;">
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">@p.Title</MudText>
 
                     <MudText Typo="Typo.body2" Color="Color.Secondary">
-                        @p.Upper.ToString("mm':'ss") – @p.Lower.ToString("mm':'ss") min/km
+                        @p.Upper.ToString("mm':'ss") - @p.Lower.ToString("mm':'ss") min/km
+                    </MudText>
+
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                        @p.Description
                     </MudText>
                 </MudStack>
 
-                <MudAvatar Size="Size.Large">
-                    <MudImage Src="@p.Icon"/>
-                </MudAvatar>
+                <div class="pl-pace-icon">
+                    <MudImage Src="@p.Icon" Width="30" Height="30" />
+                </div>
 
             </MudStack>
 
-            <!-- Expandable Infos -->
-            <MudExpansionPanels MultiExpansion="true" Elevation="0" Class="mt-2">
-                <MudExpansionPanel Class="rounded-lg">
-                    <TitleContent>
-                        <MudText Color="Color.Primary">@L["PaceInfo_MoreInfo"]</MudText>
-                    </TitleContent>
-                    <ChildContent>
-                        <MudText Typo="Typo.body2" Class="pt-2">
-                            @p.Description
-                        </MudText>
-                    </ChildContent>
-                </MudExpansionPanel>
-            </MudExpansionPanels>
-
-        </MudCard>
+        </MudPaper>
     }
 
 </MudStack>

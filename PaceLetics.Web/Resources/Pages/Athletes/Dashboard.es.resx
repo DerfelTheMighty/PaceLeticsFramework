@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Panel</value></data>
+  <data name="Loading" xml:space="preserve"><value>Cargando tus datos...</value></data>
+  <data name="Title" xml:space="preserve"><value>Panel</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Bienvenido a PaceLetics</value></data>
+  <data name="Hello" xml:space="preserve"><value>Hola</value></data>
+  <data name="IntroText" xml:space="preserve"><value>Aquí encontrarás noticias de cursos, próximas sesiones y sugerencias de entrenamiento.</value></data>
+  <data name="Breadcrumb_Personal" xml:space="preserve"><value>Personal</value></data>
+  <data name="WelcomeText" xml:space="preserve"><value>Hola {0}, aquí está tu estado actual de entrenamiento.</value></data>
+  <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
+  <data name="Metric_TrainingPlan" xml:space="preserve"><value>Plan de entrenamiento</value></data>
+  <data name="Metric_NextSession" xml:space="preserve"><value>Próxima sesión</value></data>
+  <data name="Metric_Messages" xml:space="preserve"><value>Mensajes</value></data>
+  <data name="Metric_MessagesDetail" xml:space="preserve"><value>Mensajes actuales del panel</value></data>
+  <data name="Metric_NotAvailable" xml:space="preserve"><value>-</value></data>
+  <data name="Metric_ReferenceMissing" xml:space="preserve"><value>Sin carrera de evaluación</value></data>
+  <data name="Metric_ReferenceDate" xml:space="preserve"><value>Actualizado {0:dd/MM/yyyy}</value></data>
+  <data name="Metric_NoPlan" xml:space="preserve"><value>No hay plan seleccionado</value></data>
+  <data name="Metric_PlanSessions" xml:space="preserve"><value>{0} sesiones</value></data>
+  <data name="Metric_NoSession" xml:space="preserve"><value>Sin próxima sesión</value></data>
+  <data name="TrainingOverview_Title" xml:space="preserve"><value>Resumen de entrenamiento</value></data>
+  <data name="TrainingOverview_Empty" xml:space="preserve"><value>No hay ninguna próxima sesión planificada ahora mismo.</value></data>
+  <data name="TrainingOverview_PreviewTitle" xml:space="preserve"><value>Vista previa del plan</value></data>
+  <data name="TrainingOverview_PreviewText" xml:space="preserve"><value>Esta zona podrá mostrar una línea temporal de sesiones, carga o progreso.</value></data>
+  <data name="OpenTrainingPlan" xml:space="preserve"><value>Abrir plan de entrenamiento</value></data>
+  <data name="ReferencePanel_Title" xml:space="preserve"><value>Carrera de evaluación</value></data>
+  <data name="ReferencePanel_Empty" xml:space="preserve"><value>Aún no se ha guardado ninguna carrera de evaluación.</value></data>
+  <data name="ManageReferenceRun" xml:space="preserve"><value>Gestionar evaluación</value></data>
+  <data name="PlanPanel_Title" xml:space="preserve"><value>Plan activo</value></data>
+  <data name="SessionRuns" xml:space="preserve"><value>{0} carrera(s)</value></data>
+  <data name="SessionWorkouts" xml:space="preserve"><value>{0} entrenamiento(s)</value></data>
+  <data name="SessionEmpty" xml:space="preserve"><value>Sin contenido</value></data>
+</root>

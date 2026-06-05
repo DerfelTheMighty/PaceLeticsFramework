@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="FeedTitle" xml:space="preserve"><value>Messages actuels</value></data>
+  <data name="FeedSubtitle" xml:space="preserve"><value>Notes actuelles pour votre entraînement</value></data>
+  <data name="NoMessages" xml:space="preserve"><value>Tout est à jour. Les messages importants apparaîtront ici.</value></data>
+  <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>Course d’évaluation manquante</value></data>
+  <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>Ajoutez une course d’évaluation pour que PaceLetics calcule vos allures d’entraînement de manière fiable.</value></data>
+  <data name="ReferenceRunStale_Title" xml:space="preserve"><value>Mettez à jour votre course d’évaluation</value></data>
+  <data name="ReferenceRunStale_Body" xml:space="preserve"><value>Votre course d’évaluation actuelle date du {0:d} et n’a pas été mise à jour depuis {1:0} jours.</value></data>
+  <data name="ReferenceRun_Action" xml:space="preserve"><value>Gérer la course d’évaluation</value></data>
+  <data name="UpcomingTraining_Title" xml:space="preserve"><value>Prochaine séance</value></data>
+  <data name="UpcomingTrainingToday_Body" xml:space="preserve"><value>&quot;{0}&quot; est prévu dans votre plan d’entraînement aujourd’hui.</value></data>
+  <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; est prévu dans votre plan d’entraînement demain.</value></data>
+  <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; est prévu dans votre plan d’entraînement le {1:d}.</value></data>
+  <data name="UpcomingTraining_Action" xml:space="preserve"><value>Ouvrir le plan d’entraînement</value></data>
+  <data name="Severity_Info" xml:space="preserve"><value>Info</value></data>
+  <data name="Severity_Success" xml:space="preserve"><value>OK</value></data>
+  <data name="Severity_Warning" xml:space="preserve"><value>Important</value></data>
+  <data name="Severity_Error" xml:space="preserve"><value>Erreur</value></data>
+</root>

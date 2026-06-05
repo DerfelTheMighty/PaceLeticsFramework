@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Mentions légales</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>Informations conformément à l’article 5 de la loi allemande sur les services numériques (Digitale-Dienste-Gesetz, DDG).</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>Prestataire de service</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Allemagne</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Téléphone</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>Responsable du contenu</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>La personne responsable du contenu de ce site est</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>Informations d’enregistrement et fiscales</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>Numéro d’identification TVA</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>Non attribué ou non applicable.</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>Inscription au registre du commerce</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>Aucune inscription au registre du commerce.</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>Résolution des litiges de consommation</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>Le prestataire n’est ni disposé ni obligé de participer à une procédure de règlement des litiges devant une commission d’arbitrage des consommateurs, sauf obligation légale impérative.</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>Responsabilité relative au contenu et aux liens</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>Le contenu de ce site a été préparé avec un soin raisonnable. En tant que prestataire de services, le fournisseur est responsable de son propre contenu conformément aux lois générales.</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>Ce site peut contenir des liens vers des sites externes de tiers. Le fournisseur n’a aucune influence sur leur contenu actuel ou futur. Les pages liées sont vérifiées lors de la création du lien afin de détecter d’éventuelles violations manifestes. Si de telles violations sont connues, les liens seront retirés rapidement.</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>Droit d’auteur</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>Les contenus et œuvres créés par le fournisseur sur ce site sont soumis au droit d’auteur allemand. Toute reproduction, modification, distribution ou utilisation au-delà des limites du droit d’auteur nécessite un consentement préalable, sauf autorisation expresse de la loi.</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>Confidentialité</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>Ces mentions légales ne remplacent pas la politique de confidentialité. Les informations relatives au traitement des données personnelles figurent dans la politique de confidentialité de ce site.</value>
+  </data>
+</root>

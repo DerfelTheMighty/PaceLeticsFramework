@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>我的课程</value></data>
+  <data name="Loading" xml:space="preserve"><value>正在加载课程</value></data>
+  <data name="Title" xml:space="preserve"><value>我的课程</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>课程成员、日期和活动</value></data>
+  <data name="NoPublishedCourses" xml:space="preserve"><value>当前没有已发布的课程。</value></data>
+  <data name="NoUpcomingDate" xml:space="preserve"><value>没有即将到来的日期</value></data>
+  <data name="UpcomingDate" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm}</value></data>
+  <data name="Leave" xml:space="preserve"><value>退出</value></data>
+  <data name="AddCourse" xml:space="preserve"><value>添加课程</value></data>
+  <data name="NoJoinedCourses" xml:space="preserve"><value>你还没有加入课程。</value></data>
+  <data name="NoAvailableCourses" xml:space="preserve"><value>当前没有其他可用课程。</value></data>
+  <data name="Join" xml:space="preserve"><value>加入</value></data>
+  <data name="Joined" xml:space="preserve"><value>已加入</value></data>
+  <data name="Dates" xml:space="preserve"><value>日期</value></data>
+  <data name="Events" xml:space="preserve"><value>活动</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>训练计划</value></data>
+  <data name="ShowAll" xml:space="preserve"><value>全部</value></data>
+  <data name="ShowLess" xml:space="preserve"><value>更少</value></data>
+  <data name="NoUpcomingDates" xml:space="preserve"><value>没有即将到来的日期。</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>当前没有列出的活动。</value></data>
+  <data name="CancelRegistration" xml:space="preserve"><value>取消</value></data>
+  <data name="Register" xml:space="preserve"><value>报名</value></data>
+  <data name="NoTrainingPlans" xml:space="preserve"><value>尚未发布训练计划。</value></data>
+  <data name="LoadError" xml:space="preserve"><value>无法从 Cosmos DB 加载课程。</value></data>
+  <data name="JoinSuccess" xml:space="preserve"><value>你已加入课程。</value></data>
+  <data name="LeaveConfirm" xml:space="preserve"><value>退出“{0}”？</value></data>
+  <data name="LeaveSuccess" xml:space="preserve"><value>你已退出课程。</value></data>
+  <data name="RegisterSuccess" xml:space="preserve"><value>你已报名活动。</value></data>
+  <data name="CancelRegistrationSuccess" xml:space="preserve"><value>你的活动报名已取消。</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:yyyy/MM/dd} 至 {1:yyyy/MM/dd}</value></data>
+  <data name="ShortPeriod" xml:space="preserve"><value>{0:MM/dd} 至 {1:MM/dd}</value></data>
+  <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} 至 {1:HH:mm}</value></data>
+  <data name="EventDate" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm} 至 {1:HH:mm}</value></data>
+</root>

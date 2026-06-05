@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TopBar_GetReady" xml:space="preserve"><value>Приготовьтесь!</value></data>
+  <data name="TopBar_SideSwitch" xml:space="preserve"><value>Смените сторону!</value></data>
+  <data name="TopBar_Execution" xml:space="preserve"><value>Поехали!</value></data>
+  <data name="TopBar_Paused" xml:space="preserve"><value>Пауза!</value></data>
+  <data name="TopBar_ExercisePause" xml:space="preserve"><value>Перерыв в упражнении!</value></data>
+  <data name="BottomSheet_Details" xml:space="preserve"><value>Детали</value></data>
+  <data name="BottomSheet_Sequence" xml:space="preserve"><value>Последовательность</value></data>
+  <data name="BottomSheet_NoExercise" xml:space="preserve"><value>Нет упражнения.</value></data>
+  <data name="BottomSheet_Execution" xml:space="preserve"><value>Выполнение</value></data>
+  <data name="BottomSheet_NoSteps" xml:space="preserve"><value>Шаги недоступны.</value></data>
+  <data name="BottomSheet_TapToPreview" xml:space="preserve"><value>Нажмите для предпросмотра.</value></data>
+  <data name="BottomSheet_RunningViewOnly" xml:space="preserve"><value>Просмотр только во время бега (без пропуска).</value></data>
+  <data name="BottomSheet_Now" xml:space="preserve"><value>Сейчас</value></data>
+  <data name="DifficultyDialog_Reps" xml:space="preserve"><value>Количество повторений</value></data>
+  <data name="DifficultyDialog_AvailableLevels" xml:space="preserve"><value>Доступные уровни сложности</value></data>
+  <data name="DifficultyDialog_Start" xml:space="preserve"><value>Старт</value></data>
+  <data name="DifficultyDialog_Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="DifficultyDialog_SelectDifficulty" xml:space="preserve"><value>Выберите сложность</value></data>
+  <data name="Preview_TotalReps" xml:space="preserve"><value>Всего повторений</value></data>
+  <data name="Preview_Open" xml:space="preserve"><value>Открыть</value></data>
+  <data name="Preview_MoreInfo" xml:space="preserve"><value>Подробнее</value></data>
+  <data name="ExerciseInfo_Duration" xml:space="preserve"><value>Длительность:</value></data>
+  <data name="ExerciseInfo_SideSwitch" xml:space="preserve"><value>Смена стороны:</value></data>
+  <data name="ExerciseInfo_Yes" xml:space="preserve"><value>да</value></data>
+  <data name="ExerciseInfo_No" xml:space="preserve"><value>нет</value></data>
+  <data name="ExerciseInfo_NotAvailable" xml:space="preserve"><value>Информация об упражнении недоступна.</value></data>
+  <data name="WorkoutNow_Details" xml:space="preserve"><value>ДЕТАЛИ И ПОСЛЕДОВАТЕЛЬНОСТЬ</value></data>
+  <data name="Level_Easy" xml:space="preserve"><value>Легкий</value></data>
+  <data name="Level_Moderate" xml:space="preserve"><value>Средний</value></data>
+  <data name="Level_Advanced" xml:space="preserve"><value>Продвинутый</value></data>
+  <data name="Level_Epic" xml:space="preserve"><value>Эпический</value></data>
+  <data name="TopBar_Start" xml:space="preserve"><value>Старт</value></data>
+  <data name="TopBar_Pause" xml:space="preserve"><value>Пауза</value></data>
+  <data name="TopBar_Reset" xml:space="preserve"><value>Сброс</value></data>
+  <data name="WorkoutView_NoWorkout" xml:space="preserve"><value>Тренировка не загружена.</value></data>
+  <data name="FinishedDialog_Confirm" xml:space="preserve"><value>Да!</value></data>
+  <data name="TrainingCard_Title" xml:space="preserve"><value>Тренировка</value></data>
+</root>

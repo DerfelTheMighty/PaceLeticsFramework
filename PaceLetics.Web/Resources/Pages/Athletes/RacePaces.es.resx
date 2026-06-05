@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Tus datos de carrera</value></data>
+  <data name="Loading" xml:space="preserve"><value>Cargando tus datos...</value></data>
+  <data name="Title" xml:space="preserve"><value>Tus datos de carrera</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Introduce una nueva carrera de referencia o edita la existente.</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>Añade una carrera de referencia para determinar tus zonas de entrenamiento.</value></data>
+  <data name="AddRace" xml:space="preserve"><value>Añadir carrera de referencia</value></data>
+  <data name="RaceOldWarning" xml:space="preserve"><value>Tu carrera de referencia tiene más de 6 meses. Para entrenar mejor, usa una referencia más reciente.</value></data>
+  <data name="LoadError_Title" xml:space="preserve"><value>Error de carga</value></data>
+  <data name="LoadError_Message" xml:space="preserve"><value>No se pudieron cargar tus datos:</value></data>
+</root>

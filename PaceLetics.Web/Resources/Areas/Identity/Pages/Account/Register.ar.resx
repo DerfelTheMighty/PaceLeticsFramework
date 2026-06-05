@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>التسجيل</value>
+  </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>أنشئ حسابًا جديدًا.</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>اسمك</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني (اختياري)</value>
+  </data>
+  <data name="EmailHelp" xml:space="preserve">
+    <value>البريد الإلكتروني اختياري. وهو مطلوب إذا أردت إعادة تعيين كلمة المرور.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>انضم إلى PaceLetics</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>أنشئ حسابك المجاني وابدأ التدريب بذكاء أكبر:</value>
+  </data>
+  <data name="Feature1" xml:space="preserve">
+    <value>احسب سرعات تدريبك الفردية من نتائج السباقات</value>
+  </data>
+  <data name="Feature2" xml:space="preserve">
+    <value>احصل على خطط تدريب منظمة لسباقك القادم</value>
+  </data>
+  <data name="Feature3" xml:space="preserve">
+    <value>الوصول إلى تمارين موجهة للعدائين</value>
+  </data>
+  <data name="CreateAccountHint" xml:space="preserve">
+    <value>لا يستغرق البدء سوى لحظة.</value>
+  </data>
+  <data name="AlreadyHaveAccount" xml:space="preserve">
+    <value>هل لديك حساب بالفعل؟ سجّل الدخول</value>
+  </data>
+</root>

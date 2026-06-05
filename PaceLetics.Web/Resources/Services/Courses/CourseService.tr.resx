@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AddTrainerRequired" xml:space="preserve"><value>Lütfen bir antrenör seç.</value></data>
+  <data name="CancelEventAthleteRequired" xml:space="preserve"><value>Etkinlik kaydını iptal etmek için giriş yapmış bir sporcu gerekir.</value></data>
+  <data name="CancelEventNotRegistered" xml:space="preserve"><value>Bu etkinliğe kayıtlı değilsin.</value></data>
+  <data name="CourseNotFound" xml:space="preserve"><value>Kurs bulunamadı.</value></data>
+  <data name="CreateCourseEndBeforeStart" xml:space="preserve"><value>Kurs bitiş tarihi başlangıç tarihinden önce olamaz.</value></data>
+  <data name="CreateCourseNameRequired" xml:space="preserve"><value>Kurs için ad gerekli.</value></data>
+  <data name="CreateCourseTrainerRequired" xml:space="preserve"><value>Kurs için giriş yapmış bir antrenör gerekli.</value></data>
+  <data name="DateEndAfterStart" xml:space="preserve"><value>Bitiş saati başlangıç saatinden sonra olmalıdır.</value></data>
+  <data name="DateNotFound" xml:space="preserve"><value>Tarih bulunamadı.</value></data>
+  <data name="DateTitleRequired" xml:space="preserve"><value>Tarih için başlık gerekli.</value></data>
+  <data name="DeleteCourseCreatorOnly" xml:space="preserve"><value>Bu kursu yalnızca oluşturan antrenör silebilir.</value></data>
+  <data name="EventEndAfterStart" xml:space="preserve"><value>Etkinlik bitiş saati başlangıç saatinden sonra olmalıdır.</value></data>
+  <data name="EventNotFound" xml:space="preserve"><value>Etkinlik bulunamadı.</value></data>
+  <data name="EventTitleRequired" xml:space="preserve"><value>Etkinlik için başlık gerekli.</value></data>
+  <data name="JoinCourseAthleteRequired" xml:space="preserve"><value>Kursa katılmak için giriş yapmış bir sporcu gerekir.</value></data>
+  <data name="LeaveCourseAthleteRequired" xml:space="preserve"><value>Kurstan ayrılmak için giriş yapmış bir sporcu gerekir.</value></data>
+  <data name="LeaveCourseNotJoined" xml:space="preserve"><value>Bu kursa katılmadın.</value></data>
+  <data name="PermissionManageEvents" xml:space="preserve"><value>Bu kursun tarihlerini ve etkinliklerini yönetme iznin yok.</value></data>
+  <data name="PermissionManagePlans" xml:space="preserve"><value>Bu kursun antrenman planlarını yönetme iznin yok.</value></data>
+  <data name="PermissionManageTrainers" xml:space="preserve"><value>Bu kursun antrenörlerini yönetme iznin yok.</value></data>
+  <data name="RegisterEventAthleteRequired" xml:space="preserve"><value>Etkinlik kaydı için giriş yapmış bir sporcu gerekir.</value></data>
+  <data name="RegisterEventDeadlinePassed" xml:space="preserve"><value>Bu etkinliğin kayıt süresi doldu.</value></data>
+  <data name="RegisterEventFull" xml:space="preserve"><value>Bu etkinlikte boş yer yok.</value></data>
+  <data name="RegisterEventRequiresEnrollment" xml:space="preserve"><value>Etkinliklere kayıt olmadan önce kursa katılmalısın.</value></data>
+  <data name="RemoveTrainerLeadCannotLeave" xml:space="preserve"><value>Kurs sorumlusu kursu silebilir ama kurstan ayrılamaz.</value></data>
+  <data name="RemoveTrainerNotAssigned" xml:space="preserve"><value>Bu antrenör kursa atanmadı.</value></data>
+  <data name="RoleCourseLead" xml:space="preserve"><value>Kurs sorumlusu</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Antrenör</value></data>
+  <data name="TrainingPlanNotFound" xml:space="preserve"><value>Antrenman planı bulunamadı.</value></data>
+  <data name="TrainingPlanRequired" xml:space="preserve"><value>Lütfen bir antrenman planı seç.</value></data>
+</root>

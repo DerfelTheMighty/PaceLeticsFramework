@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="LoginPrompt" xml:space="preserve">
+    <value>برای ورود از نام کاربری یا نشانی ایمیل خود استفاده کنید.</value>
+  </data>
+  <data name="UserNameOrEmail" xml:space="preserve">
+    <value>نام کاربری یا ایمیل</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ایمیل</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>گذرواژه</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>گذرواژه خود را فراموش کرده‌اید؟</value>
+  </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>ثبت‌نام به عنوان کاربر جدید</value>
+  </data>
+  <data name="ResendEmail" xml:space="preserve">
+    <value>ارسال دوباره تأیید ایمیل</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>به PaceLetics خوش آمدید</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>همراه شخصی دویدن شما. نتایج مسابقه را دنبال کنید، سرعت تمرین را محاسبه کنید و برنامه‌های متناسب با سطح آمادگی خود را دنبال کنید.</value>
+  </data>
+  <data name="Feature1" xml:space="preserve">
+    <value>محدوده‌های سرعت شخصی‌سازی‌شده بر اساس عملکرد مسابقه شما</value>
+  </data>
+  <data name="Feature2" xml:space="preserve">
+    <value>برنامه‌های تمرینی ساختاریافته برای اهداف شما</value>
+  </data>
+  <data name="Feature3" xml:space="preserve">
+    <value>تمرین‌های راهنمایی‌شده برای قدرت و تحرک</value>
+  </data>
+  <data name="Feature4" xml:space="preserve">
+    <value>پیشرفت خود را در طول زمان دنبال کنید</value>
+  </data>
+</root>

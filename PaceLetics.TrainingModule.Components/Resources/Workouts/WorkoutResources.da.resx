@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TopBar_GetReady" xml:space="preserve"><value>Gør dig klar!</value></data>
+  <data name="TopBar_SideSwitch" xml:space="preserve"><value>Skift side!</value></data>
+  <data name="TopBar_Execution" xml:space="preserve"><value>Start!</value></data>
+  <data name="TopBar_Paused" xml:space="preserve"><value>Sat på pause!</value></data>
+  <data name="TopBar_ExercisePause" xml:space="preserve"><value>Øvelsespause!</value></data>
+  <data name="BottomSheet_Details" xml:space="preserve"><value>Detaljer</value></data>
+  <data name="BottomSheet_Sequence" xml:space="preserve"><value>Rækkefølge</value></data>
+  <data name="BottomSheet_NoExercise" xml:space="preserve"><value>Ingen øvelse.</value></data>
+  <data name="BottomSheet_Execution" xml:space="preserve"><value>Udførelse</value></data>
+  <data name="BottomSheet_NoSteps" xml:space="preserve"><value>Ingen trin tilgængelige.</value></data>
+  <data name="BottomSheet_TapToPreview" xml:space="preserve"><value>Tryk for forhåndsvisning.</value></data>
+  <data name="BottomSheet_RunningViewOnly" xml:space="preserve"><value>Kun visning under løb (ingen spring).</value></data>
+  <data name="BottomSheet_Now" xml:space="preserve"><value>Nu</value></data>
+  <data name="DifficultyDialog_Reps" xml:space="preserve"><value>Antal gentagelser</value></data>
+  <data name="DifficultyDialog_AvailableLevels" xml:space="preserve"><value>Tilgængelige sværhedsgrader</value></data>
+  <data name="DifficultyDialog_Start" xml:space="preserve"><value>Start</value></data>
+  <data name="DifficultyDialog_Cancel" xml:space="preserve"><value>Annuller</value></data>
+  <data name="DifficultyDialog_SelectDifficulty" xml:space="preserve"><value>Vælg sværhedsgrad</value></data>
+  <data name="Preview_TotalReps" xml:space="preserve"><value>Samlede gentagelser</value></data>
+  <data name="Preview_Open" xml:space="preserve"><value>Åbn</value></data>
+  <data name="Preview_MoreInfo" xml:space="preserve"><value>Mere info</value></data>
+  <data name="ExerciseInfo_Duration" xml:space="preserve"><value>Varighed:</value></data>
+  <data name="ExerciseInfo_SideSwitch" xml:space="preserve"><value>Sideskift:</value></data>
+  <data name="ExerciseInfo_Yes" xml:space="preserve"><value>ja</value></data>
+  <data name="ExerciseInfo_No" xml:space="preserve"><value>nej</value></data>
+  <data name="ExerciseInfo_NotAvailable" xml:space="preserve"><value>Øvelsesinformation er ikke tilgængelig.</value></data>
+  <data name="WorkoutNow_Details" xml:space="preserve"><value>DETALJER OG RÆKKEFØLGE</value></data>
+  <data name="Level_Easy" xml:space="preserve"><value>Let</value></data>
+  <data name="Level_Moderate" xml:space="preserve"><value>Moderat</value></data>
+  <data name="Level_Advanced" xml:space="preserve"><value>Avanceret</value></data>
+  <data name="Level_Epic" xml:space="preserve"><value>Episk</value></data>
+  <data name="TopBar_Start" xml:space="preserve"><value>Start</value></data>
+  <data name="TopBar_Pause" xml:space="preserve"><value>Pause</value></data>
+  <data name="TopBar_Reset" xml:space="preserve"><value>Nulstil</value></data>
+  <data name="WorkoutView_NoWorkout" xml:space="preserve"><value>Ingen workout indlæst.</value></data>
+  <data name="FinishedDialog_Confirm" xml:space="preserve"><value>Ja!</value></data>
+  <data name="TrainingCard_Title" xml:space="preserve"><value>Træning</value></data>
+</root>

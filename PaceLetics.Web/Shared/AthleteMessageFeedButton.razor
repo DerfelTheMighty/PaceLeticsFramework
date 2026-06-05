@@ -1,0 +1,170 @@
+@using System.Text.Json
+@using AthleteDataAccessLibrary.Contracts
+@using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.CoreModule.Infrastructure.Models
+@using PaceLetics.CoreModule.Infrastructure.Services
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAthleteData AthleteData
+@inject IAthleteMessageFeedService AthleteMessageFeedService
+@inject IJSRuntime JS
+@inject IStringLocalizer<DashboardMessageFeed> L
+
+@if (_isAuthenticated)
+{
+    <MudMenu AnchorOrigin="Origin.BottomRight"
+             TransformOrigin="Origin.TopRight"
+             PopoverClass="pl-message-popover"
+             ListClass="pa-0"
+             OpenChanged="HandleMenuOpenChanged">
+        <ActivatorContent>
+            <MudBadge Content="@_unreadCount"
+                      Visible="@ShowUnreadBadge"
+                      Color="Color.Warning"
+                      Overlap="true"
+                      Class="pl-message-badge">
+                <MudTooltip Text="@L["FeedTitle"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.Alarm"
+                                   Color="@MessageButtonColor"
+                                   Class="@MessageButtonClass"
+                                   OnClick="@context.ToggleAsync"
+                                   aria-label="@L["FeedTitle"]" />
+                </MudTooltip>
+            </MudBadge>
+        </ActivatorContent>
+        <ChildContent>
+            <div class="pl-message-menu-panel" @onclick:stopPropagation="true">
+                <DashboardMessageFeed Messages="_messages" Framed="false" />
+            </div>
+        </ChildContent>
+    </MudMenu>
+}
+
+@code {
+    private IReadOnlyList<AthleteMessage> _messages = Array.Empty<AthleteMessage>();
+    private HashSet<string> _readMessageIds = new(StringComparer.Ordinal);
+    private bool _isAuthenticated;
+    private bool _readStateLoaded;
+    private int _unreadCount;
+    private string? _storageKey;
+
+    private bool ShowUnreadBadge => _readStateLoaded && _unreadCount > 0;
+
+    private Color MessageButtonColor => ShowUnreadBadge ? Color.Warning : Color.Inherit;
+
+    private string MessageButtonClass => ShowUnreadBadge ? "pl-message-button-unread" : string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        _isAuthenticated = user.Identity?.IsAuthenticated == true;
+
+        if (!_isAuthenticated)
+            return;
+
+        var userId = user.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+        var storageUserId = !string.IsNullOrWhiteSpace(userId)
+            ? userId
+            : user.Identity?.Name ?? "current";
+
+        _storageKey = $"paceletics.messageFeed.read.{storageUserId}";
+
+        AthleteModel? athlete = null;
+        try
+        {
+            athlete = string.IsNullOrWhiteSpace(userId)
+                ? null
+                : await AthleteData.GetAthlete(userId);
+        }
+        catch
+        {
+            athlete = null;
+        }
+
+        var athleteName = string.IsNullOrWhiteSpace(athlete?.Name)
+            ? user.Identity?.Name ?? string.Empty
+            : athlete.Name;
+
+        _messages = AthleteMessageFeedService.Build(new AthleteMessageContext(
+            athlete?.AthleteId ?? athlete?.Id ?? userId,
+            athleteName,
+            athlete?.Vdot ?? 0,
+            athlete?.ActiveReferenceResult,
+            athlete?.SelectedTrainingPlanId,
+            DateTime.Today));
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || !_isAuthenticated)
+            return;
+
+        await LoadReadStateAsync();
+        RefreshUnreadCount();
+        _readStateLoaded = true;
+        StateHasChanged();
+    }
+
+    private async Task HandleMenuOpenChanged(bool open)
+    {
+        if (!open)
+            return;
+
+        await MarkCurrentMessagesReadAsync();
+    }
+
+    private async Task LoadReadStateAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_storageKey))
+            return;
+
+        try
+        {
+            var json = await JS.InvokeAsync<string?>("localStorage.getItem", _storageKey);
+            var ids = string.IsNullOrWhiteSpace(json)
+                ? Array.Empty<string>()
+                : JsonSerializer.Deserialize<string[]>(json) ?? Array.Empty<string>();
+
+            _readMessageIds = new HashSet<string>(ids, StringComparer.Ordinal);
+        }
+        catch
+        {
+            _readMessageIds = new HashSet<string>(StringComparer.Ordinal);
+        }
+    }
+
+    private async Task MarkCurrentMessagesReadAsync()
+    {
+        if (_messages.Count == 0)
+            return;
+
+        foreach (var message in _messages)
+        {
+            _readMessageIds.Add(message.Id);
+        }
+
+        RefreshUnreadCount();
+        await PersistReadStateAsync();
+    }
+
+    private async Task PersistReadStateAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_storageKey))
+            return;
+
+        try
+        {
+            var json = JsonSerializer.Serialize(_readMessageIds.OrderBy(id => id));
+            await JS.InvokeVoidAsync("localStorage.setItem", _storageKey, json);
+        }
+        catch
+        {
+            // localStorage is a convenience for highlighting only.
+        }
+    }
+
+    private void RefreshUnreadCount()
+    {
+        _unreadCount = _messages.Count(message => !_readMessageIds.Contains(message.Id));
+    }
+}

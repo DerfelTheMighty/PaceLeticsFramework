@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AddTrainerRequired" xml:space="preserve"><value>Vælg en coach.</value></data>
+  <data name="CancelEventAthleteRequired" xml:space="preserve"><value>Annullering af en eventtilmelding kræver en indlogget atlet.</value></data>
+  <data name="CancelEventNotRegistered" xml:space="preserve"><value>Du er ikke tilmeldt dette event.</value></data>
+  <data name="CourseNotFound" xml:space="preserve"><value>Kurset blev ikke fundet.</value></data>
+  <data name="CreateCourseEndBeforeStart" xml:space="preserve"><value>Kursets slutdato kan ikke være før startdatoen.</value></data>
+  <data name="CreateCourseNameRequired" xml:space="preserve"><value>Et kursus skal have et navn.</value></data>
+  <data name="CreateCourseTrainerRequired" xml:space="preserve"><value>Et kursus kræver en indlogget coach.</value></data>
+  <data name="DateEndAfterStart" xml:space="preserve"><value>Sluttidspunktet skal være efter starttidspunktet.</value></data>
+  <data name="DateNotFound" xml:space="preserve"><value>Datoen blev ikke fundet.</value></data>
+  <data name="DateTitleRequired" xml:space="preserve"><value>En dato skal have en titel.</value></data>
+  <data name="DeleteCourseCreatorOnly" xml:space="preserve"><value>Kun coachen, der oprettede kurset, kan slette det.</value></data>
+  <data name="EventEndAfterStart" xml:space="preserve"><value>Eventets sluttidspunkt skal være efter starttidspunktet.</value></data>
+  <data name="EventNotFound" xml:space="preserve"><value>Eventet blev ikke fundet.</value></data>
+  <data name="EventTitleRequired" xml:space="preserve"><value>Et event skal have en titel.</value></data>
+  <data name="JoinCourseAthleteRequired" xml:space="preserve"><value>Deltagelse i et kursus kræver en indlogget atlet.</value></data>
+  <data name="LeaveCourseAthleteRequired" xml:space="preserve"><value>At forlade et kursus kræver en indlogget atlet.</value></data>
+  <data name="LeaveCourseNotJoined" xml:space="preserve"><value>Du har ikke deltaget i dette kursus.</value></data>
+  <data name="PermissionManageEvents" xml:space="preserve"><value>Du må ikke administrere datoer og events for dette kursus.</value></data>
+  <data name="PermissionManagePlans" xml:space="preserve"><value>Du må ikke administrere træningsplaner for dette kursus.</value></data>
+  <data name="PermissionManageTrainers" xml:space="preserve"><value>Du må ikke administrere coaches for dette kursus.</value></data>
+  <data name="RegisterEventAthleteRequired" xml:space="preserve"><value>Eventtilmelding kræver en indlogget atlet.</value></data>
+  <data name="RegisterEventDeadlinePassed" xml:space="preserve"><value>Tilmeldingsfristen for dette event er overskredet.</value></data>
+  <data name="RegisterEventFull" xml:space="preserve"><value>Der er ingen ledige pladser til dette event.</value></data>
+  <data name="RegisterEventRequiresEnrollment" xml:space="preserve"><value>Du skal deltage i kurset, før du kan tilmelde dig events.</value></data>
+  <data name="RemoveTrainerLeadCannotLeave" xml:space="preserve"><value>Kursusansvarlig kan slette kurset, men kan ikke forlade det.</value></data>
+  <data name="RemoveTrainerNotAssigned" xml:space="preserve"><value>Denne coach er ikke tilknyttet kurset.</value></data>
+  <data name="RoleCourseLead" xml:space="preserve"><value>Kursusansvarlig</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Coach</value></data>
+  <data name="TrainingPlanNotFound" xml:space="preserve"><value>Træningsplanen blev ikke fundet.</value></data>
+  <data name="TrainingPlanRequired" xml:space="preserve"><value>Vælg en træningsplan.</value></data>
+</root>

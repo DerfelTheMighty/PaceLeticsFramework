@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Yasal bildirim</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>Alman Dijital Hizmetler Yasası (Digitale-Dienste-Gesetz, DDG) 5. maddesi uyarınca bilgiler.</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>Hizmet sağlayıcı</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Almanya</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-posta</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>İçerikten sorumlu</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>Bu web sitesinin içeriğinden sorumlu kişi</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>Kayıt ve vergi bilgileri</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>KDV kimlik numarası</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>Atanmamış veya uygulanamaz.</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>Ticaret sicili kaydı</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>Ticaret sicili kaydı yok.</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>Tüketici uyuşmazlık çözümü</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>Zorunlu bir yasal yükümlülük bulunmadıkça hizmet sağlayıcı, bir tüketici tahkim kurulu önündeki uyuşmazlık çözüm süreçlerine katılmaya ne istekli ne de yükümlüdür.</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>İçerik ve bağlantılara ilişkin sorumluluk</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>Bu web sitesindeki içerik makul özenle hazırlanmıştır. Hizmet sağlayıcı olarak sağlayıcı, genel yasalar uyarınca kendi içeriğinden sorumludur.</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>Bu web sitesi harici üçüncü taraf web sitelerine bağlantılar içerebilir. Sağlayıcının bu sitelerin mevcut veya gelecekteki içerikleri üzerinde etkisi yoktur. Bağlantı verilen sayfalar oluşturulduklarında açık yasal ihlaller açısından kontrol edilir. Yasal ihlaller öğrenilirse bu bağlantılar derhal kaldırılır.</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>Telif hakkı</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>Bu web sitesinde sağlayıcı tarafından oluşturulan içerik ve çalışmalar Alman telif hakkı yasasına tabidir. Yasaların açıkça izin verdiği durumlar dışında çoğaltma, düzenleme, dağıtım veya telif hakkı sınırlarının ötesindeki her türlü kullanım önceden onay gerektirir.</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>Gizlilik</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>Bu yasal bildirim gizlilik politikasının yerine geçmez. Kişisel verilerin işlenmesine ilişkin bilgiler bu web sitesinin gizlilik politikasında yer alır.</value>
+  </data>
+</root>

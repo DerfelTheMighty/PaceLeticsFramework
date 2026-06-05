@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Juridisk meddelelse</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>Oplysninger i henhold til § 5 i den tyske lov om digitale tjenester (Digitale-Dienste-Gesetz, DDG).</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>Tjenesteudbyder</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Tyskland</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>Ansvarlig for indhold</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>Den person, der er ansvarlig for indholdet på dette website, er</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>Register- og skatteoplysninger</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>Momsregistreringsnummer</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>Ikke tildelt eller ikke relevant.</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>Registrering i handelsregister</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>Ingen registrering i handelsregister.</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>Forbrugerklageløsning</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>Tjenesteudbyderen er hverken villig eller forpligtet til at deltage i tvistbilæggelse ved et forbrugerklagenævn, medmindre en obligatorisk lovpligtig forpligtelse gælder.</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>Ansvar for indhold og links</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>Indholdet på dette website er udarbejdet med rimelig omhu. Som tjenesteudbyder er udbyderen ansvarlig for eget indhold i henhold til de almindelige love.</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>Dette website kan indeholde links til eksterne tredjepartswebsites. Udbyderen har ingen indflydelse på deres nuværende eller fremtidige indhold. Linkede sider kontrolleres for åbenlyse juridiske overtrædelser, når linket oprettes. Hvis juridiske overtrædelser bliver kendt, fjernes sådanne links straks.</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>Ophavsret</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>Indholdet og værkerne oprettet af udbyderen på dette website er underlagt tysk ophavsret. Kopiering, redigering, distribution eller enhver brug ud over ophavsrettens grænser kræver forudgående samtykke, medmindre brugen udtrykkeligt er tilladt ved lov.</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>Privatliv</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>Denne juridiske meddelelse erstatter ikke privatlivspolitikken. Oplysninger om behandling af personoplysninger findes i privatlivspolitikken på dette website.</value>
+  </data>
+</root>

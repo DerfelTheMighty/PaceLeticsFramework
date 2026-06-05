@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="VdotCard_Title" xml:space="preserve"><value>VDOT شما</value></data>
+  <data name="VdotCard_Description" xml:space="preserve"><value>عالی! از مسابقه مرجع شما می‌توانیم VDOT اختصاصی شما را تعیین کنیم. این پایه محدوده‌های تمرینی شخصی شماست.</value></data>
+  <data name="RaceCard_Result" xml:space="preserve"><value>نتیجه:</value></data>
+  <data name="RaceCard_Edit" xml:space="preserve"><value>ویرایش مسابقه</value></data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>اطلاعات بیشتر</value></data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>پیس آسان (E-Pace)</value></data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>پیس دویدن آسان شما. برای ریکاوری یا تمرین آسان با این پیس بدوید. استقامت هوازی را می‌سازد و به ریکاوری کمک می‌کند.</value></data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>پیس ماراتن (M-Pace)</value></data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>پیس ماراتن شما. تمرین در این محدوده توانایی حفظ پیس ثابت در مسافت‌های طولانی را بهبود می‌دهد.</value></data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>پیس آستانه (T-Pace)</value></data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>پیس آستانه شما. تمرین در این محدوده آستانه لاکتات را بهتر می‌کند و کمک می‌کند بدون تجمع زیاد اسید لاکتیک سریع‌تر بدوید.</value></data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>پیس اینتروال (I-Pace)</value></data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>پیس اینتروال شما. تلاش‌های کوتاه و شدید در این محدوده جذب اکسیژن حداکثری (VO2max) را بهبود می‌دهد.</value></data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>پیس تکرار (R-Pace)</value></data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>پیس تکرار شما. دویدن‌های بسیار کوتاه و سریع با این پیس اقتصاد دویدن و سرعت شما را بهتر می‌کند.</value></data>
+  <data name="AddRaceDialog_Title" xml:space="preserve"><value>مسابقه جدید</value></data>
+  <data name="AddRaceDialog_Name" xml:space="preserve"><value>نام</value></data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>مسافت</value></data>
+  <data name="AddRaceDialog_Time" xml:space="preserve"><value>زمان مسابقه</value></data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
+  <data name="AddRaceDialog_Date" xml:space="preserve"><value>تاریخ</value></data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>توجه</value></data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>لطفاً بررسی کنید زمان مسابقه با قالب درست وارد شده باشد (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>باشه</value></data>
+</root>

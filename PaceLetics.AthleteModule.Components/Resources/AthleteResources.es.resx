@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="VdotCard_Title" xml:space="preserve"><value>Tu VDOT</value></data>
+  <data name="VdotCard_Description" xml:space="preserve"><value>¡Genial! A partir de tu carrera de referencia podemos determinar tu VDOT individual. Es la base de tus zonas de entrenamiento personales.</value></data>
+  <data name="RaceCard_Result" xml:space="preserve"><value>Resultado:</value></data>
+  <data name="RaceCard_Edit" xml:space="preserve"><value>Editar carrera</value></data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Más información</value></data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Ritmo fácil (E-Pace)</value></data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Tu ritmo fácil. Corre a este ritmo para recuperación o entrenamiento suave. Mejora la resistencia aeróbica y ayuda a recuperar.</value></data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Ritmo de maratón (M-Pace)</value></data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Tu ritmo de maratón. Entrenar en esta zona mejora tu capacidad de mantener un ritmo constante en largas distancias.</value></data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Ritmo umbral (T-Pace)</value></data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Tu ritmo umbral. Entrenar en esta zona mejora tu umbral de lactato y te ayuda a correr más rápido sin acumular demasiado ácido láctico.</value></data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>Ritmo de intervalos (I-Pace)</value></data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>Tu ritmo de intervalos. Esfuerzos cortos e intensos en esta zona mejoran tu consumo máximo de oxígeno (VO2max).</value></data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Ritmo de repetición (R-Pace)</value></data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Tu ritmo de repetición. Carreras muy cortas y rápidas a este ritmo mejoran tu economía de carrera y velocidad.</value></data>
+  <data name="AddRaceDialog_Title" xml:space="preserve"><value>Nueva carrera</value></data>
+  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Nombre</value></data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Distancia</value></data>
+  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Tiempo de carrera</value></data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
+  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Fecha</value></data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Atención</value></data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Comprueba que el tiempo de carrera tenga el formato correcto (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>Aceptar</value></data>
+</root>

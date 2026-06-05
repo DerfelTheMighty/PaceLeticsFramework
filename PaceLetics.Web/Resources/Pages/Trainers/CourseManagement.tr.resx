@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Kursları yönet</value></data>
+  <data name="Loading" xml:space="preserve"><value>Kurslar yükleniyor</value></data>
+  <data name="Title" xml:space="preserve"><value>Kursları yönet</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Kurs oluştur, antrenör ekle ve kendi kurslarını sil.</value></data>
+  <data name="CreateCourseTitle" xml:space="preserve"><value>Yeni kurs oluştur</value></data>
+  <data name="Name" xml:space="preserve"><value>Ad</value></data>
+  <data name="Level" xml:space="preserve"><value>Seviye</value></data>
+  <data name="Description" xml:space="preserve"><value>Açıklama</value></data>
+  <data name="Start" xml:space="preserve"><value>Başlangıç</value></data>
+  <data name="End" xml:space="preserve"><value>Bitiş</value></data>
+  <data name="CreateCourse" xml:space="preserve"><value>Kurs oluştur</value></data>
+  <data name="NoTrainerCourses" xml:space="preserve"><value>Antrenör olarak hiçbir kursa atanmadın.</value></data>
+  <data name="Course" xml:space="preserve"><value>Kurs</value></data>
+  <data name="Leave" xml:space="preserve"><value>Ayrıl</value></data>
+  <data name="Trainers" xml:space="preserve"><value>Antrenörler</value></data>
+  <data name="AddTrainerLabel" xml:space="preserve"><value>Antrenör ekle</value></data>
+  <data name="Add" xml:space="preserve"><value>Ekle</value></data>
+  <data name="Dates" xml:space="preserve"><value>Tarihler</value></data>
+  <data name="NoDates" xml:space="preserve"><value>Henüz tarih yok.</value></data>
+  <data name="EventTitle" xml:space="preserve"><value>Başlık</value></data>
+  <data name="Location" xml:space="preserve"><value>Konum</value></data>
+  <data name="Date" xml:space="preserve"><value>Tarih</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Başlangıç saati</value></data>
+  <data name="EndTime" xml:space="preserve"><value>Bitiş saati</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notlar</value></data>
+  <data name="AddDate" xml:space="preserve"><value>Tarih ekle</value></data>
+  <data name="Events" xml:space="preserve"><value>Etkinlikler</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>Henüz etkinlik yok.</value></data>
+  <data name="NoParticipants" xml:space="preserve"><value>Henüz kayıtlı katılımcı yok.</value></data>
+  <data name="Capacity" xml:space="preserve"><value>Kapasite</value></data>
+  <data name="RegistrationDeadline" xml:space="preserve"><value>Kayıt son tarihi</value></data>
+  <data name="EventType" xml:space="preserve"><value>Etkinlik türü</value></data>
+  <data name="EventType_General" xml:space="preserve"><value>Genel</value></data>
+  <data name="EventType_RunningAnalysis" xml:space="preserve"><value>Koşu analizi</value></data>
+  <data name="AddEvent" xml:space="preserve"><value>Etkinlik ekle</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>Antrenman planları</value></data>
+  <data name="NoPublishedPlan" xml:space="preserve"><value>Henüz plan yayınlanmadı.</value></data>
+  <data name="TrainingPlan" xml:space="preserve"><value>Antrenman planı</value></data>
+  <data name="AddPlan" xml:space="preserve"><value>Plan ekle</value></data>
+  <data name="Participants" xml:space="preserve"><value>Katılımcılar</value></data>
+  <data name="ParticipantsCount" xml:space="preserve"><value>Katılımcılar ({0})</value></data>
+  <data name="CreateCourseSuccess" xml:space="preserve"><value>Kurs oluşturuldu.</value></data>
+  <data name="DeleteCourseConfirm" xml:space="preserve"><value>&quot;{0}&quot; kursu gerçekten silinsin mi?</value></data>
+  <data name="DeleteCourseSuccess" xml:space="preserve"><value>Kurs silindi.</value></data>
+  <data name="AddTrainerSuccess" xml:space="preserve"><value>Antrenör eklendi.</value></data>
+  <data name="RemoveTrainerConfirm" xml:space="preserve"><value>{0} kurstan kaldırılsın mı?</value></data>
+  <data name="RemoveTrainerSuccess" xml:space="preserve"><value>Antrenör kaldırıldı.</value></data>
+  <data name="LeaveTrainerConfirm" xml:space="preserve"><value>&quot;{0}&quot; kursundan antrenör olarak ayrıl?</value></data>
+  <data name="LeaveTrainerSuccess" xml:space="preserve"><value>Antrenör olarak ayrıldın.</value></data>
+  <data name="AddDateSuccess" xml:space="preserve"><value>Tarih eklendi.</value></data>
+  <data name="RemoveDateConfirm" xml:space="preserve"><value>&quot;{0}&quot; tarihi kaldırılsın mı?</value></data>
+  <data name="RemoveDateSuccess" xml:space="preserve"><value>Tarih kaldırıldı.</value></data>
+  <data name="AddEventSuccess" xml:space="preserve"><value>Etkinlik eklendi.</value></data>
+  <data name="DeleteEventConfirm" xml:space="preserve"><value>&quot;{0}&quot; etkinliği kaldırılsın mı?</value></data>
+  <data name="DeleteEventSuccess" xml:space="preserve"><value>Etkinlik kaldırıldı.</value></data>
+  <data name="PublishPlanSuccess" xml:space="preserve"><value>Antrenman planı eklendi.</value></data>
+  <data name="RemovePlanConfirm" xml:space="preserve"><value>&quot;{0}&quot; antrenman planı kaldırılsın mı?</value></data>
+  <data name="RemovePlanSuccess" xml:space="preserve"><value>Antrenman planı kaldırıldı.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:dd.MM.yyyy} - {1:dd.MM.yyyy}</value></data>
+  <data name="DateRange" xml:space="preserve"><value>{0:dd.MM.yyyy HH:mm} - {1:HH:mm}</value></data>
+  <data name="ValidationDateRequired" xml:space="preserve"><value>Lütfen bir tarih seç.</value></data>
+  <data name="ValidationTimeFormat" xml:space="preserve"><value>Lütfen HH:mm formatında saat gir.</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>Antrenör bulunamadı.</value></data>
+</root>

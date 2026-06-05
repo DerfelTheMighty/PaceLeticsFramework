@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>اطلاعیه حقوقی</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>اطلاعات مطابق ماده ۵ قانون خدمات دیجیتال آلمان (Digitale-Dienste-Gesetz, DDG).</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>ارائه‌دهنده خدمات</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>آلمان</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>تلفن</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>ایمیل</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>مسئول محتوا</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>شخص مسئول محتوای این وب‌سایت است</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>اطلاعات ثبت و مالیات</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>شماره شناسایی مالیات بر ارزش افزوده</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>اختصاص داده نشده یا قابل اعمال نیست.</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>ثبت در دفتر تجاری</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>ثبت تجاری وجود ندارد.</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>حل اختلاف مصرف‌کننده</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>ارائه‌دهنده خدمات، مگر در صورت وجود الزام قانونی اجباری، نه مایل و نه موظف به شرکت در روند حل اختلاف نزد هیئت داوری مصرف‌کنندگان است.</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>مسئولیت محتوا و پیوندها</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>محتوای این وب‌سایت با دقت معقول تهیه شده است. ارائه‌دهنده خدمات طبق قوانین عمومی مسئول محتوای خود است.</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>این وب‌سایت ممکن است شامل پیوندهایی به وب‌سایت‌های خارجی شخص ثالث باشد. ارائه‌دهنده هیچ تأثیری بر محتوای فعلی یا آینده آن‌ها ندارد. هنگام ایجاد پیوند، صفحات پیوندشده برای تخلفات قانونی آشکار بررسی می‌شوند. اگر تخلفات قانونی شناخته شود، این پیوندها سریعاً حذف خواهند شد.</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>حق نشر</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>محتوا و آثار ایجادشده توسط ارائه‌دهنده در این وب‌سایت تابع قانون حق نشر آلمان است. تکثیر، ویرایش، توزیع یا هر استفاده فراتر از حدود حق نشر نیازمند رضایت قبلی است، مگر آن‌که قانون صراحتاً اجازه داده باشد.</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>حریم خصوصی</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>این اطلاعیه حقوقی جایگزین سیاست حریم خصوصی نیست. اطلاعات مربوط به پردازش داده‌های شخصی در سیاست حریم خصوصی این وب‌سایت ارائه شده است.</value>
+  </data>
+</root>

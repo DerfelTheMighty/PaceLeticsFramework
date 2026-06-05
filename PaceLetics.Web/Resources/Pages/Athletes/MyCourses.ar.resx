@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>دوراتي</value></data>
+  <data name="Loading" xml:space="preserve"><value>جارٍ تحميل الدورات</value></data>
+  <data name="Title" xml:space="preserve"><value>دوراتي</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>عضويات الدورات والمواعيد والفعاليات</value></data>
+  <data name="NoPublishedCourses" xml:space="preserve"><value>لا توجد دورات منشورة حاليًا.</value></data>
+  <data name="NoUpcomingDate" xml:space="preserve"><value>لا يوجد موعد قادم</value></data>
+  <data name="UpcomingDate" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm}</value></data>
+  <data name="Leave" xml:space="preserve"><value>مغادرة</value></data>
+  <data name="AddCourse" xml:space="preserve"><value>إضافة دورة</value></data>
+  <data name="NoJoinedCourses" xml:space="preserve"><value>لم تنضم إلى أي دورة بعد.</value></data>
+  <data name="NoAvailableCourses" xml:space="preserve"><value>لا توجد دورات إضافية متاحة حاليًا.</value></data>
+  <data name="Join" xml:space="preserve"><value>انضم</value></data>
+  <data name="Joined" xml:space="preserve"><value>منضم</value></data>
+  <data name="Dates" xml:space="preserve"><value>المواعيد</value></data>
+  <data name="Events" xml:space="preserve"><value>الفعاليات</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>خطط التدريب</value></data>
+  <data name="ShowAll" xml:space="preserve"><value>الكل</value></data>
+  <data name="ShowLess" xml:space="preserve"><value>أقل</value></data>
+  <data name="NoUpcomingDates" xml:space="preserve"><value>لا توجد مواعيد قادمة.</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>لا توجد فعاليات مدرجة حاليًا.</value></data>
+  <data name="CancelRegistration" xml:space="preserve"><value>إلغاء</value></data>
+  <data name="Register" xml:space="preserve"><value>تسجيل</value></data>
+  <data name="NoTrainingPlans" xml:space="preserve"><value>لم تُنشر أي خطط تدريب بعد.</value></data>
+  <data name="LoadError" xml:space="preserve"><value>تعذر تحميل الدورات من Cosmos DB.</value></data>
+  <data name="JoinSuccess" xml:space="preserve"><value>لقد انضممت إلى الدورة.</value></data>
+  <data name="LeaveConfirm" xml:space="preserve"><value>مغادرة &quot;{0}&quot;؟</value></data>
+  <data name="LeaveSuccess" xml:space="preserve"><value>لقد غادرت الدورة.</value></data>
+  <data name="RegisterSuccess" xml:space="preserve"><value>لقد سجلت في الفعالية.</value></data>
+  <data name="CancelRegistrationSuccess" xml:space="preserve"><value>تم إلغاء تسجيلك في الفعالية.</value></data>
+  <data name="Period" xml:space="preserve"><value>{0:yyyy/MM/dd} إلى {1:yyyy/MM/dd}</value></data>
+  <data name="ShortPeriod" xml:space="preserve"><value>{0:MM/dd} إلى {1:MM/dd}</value></data>
+  <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} إلى {1:HH:mm}</value></data>
+  <data name="EventDate" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm} إلى {1:HH:mm}</value></data>
+</root>

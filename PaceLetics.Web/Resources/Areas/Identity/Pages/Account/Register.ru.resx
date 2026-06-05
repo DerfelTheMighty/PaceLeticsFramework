@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>Создайте новый аккаунт.</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Ваше имя</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email (необязательно)</value>
+  </data>
+  <data name="EmailHelp" xml:space="preserve">
+    <value>Email необязателен. Он нужен, если вы хотите сбросить пароль.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Подтвердите пароль</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Присоединяйтесь к PaceLetics</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>Создайте бесплатный аккаунт и тренируйтесь умнее:</value>
+  </data>
+  <data name="Feature1" xml:space="preserve">
+    <value>Рассчитайте индивидуальные тренировочные темпы по результатам забегов</value>
+  </data>
+  <data name="Feature2" xml:space="preserve">
+    <value>Получайте структурированные планы тренировок для следующего забега</value>
+  </data>
+  <data name="Feature3" xml:space="preserve">
+    <value>Доступ к тренировкам с сопровождением для бегунов</value>
+  </data>
+  <data name="CreateAccountHint" xml:space="preserve">
+    <value>Чтобы начать, нужна всего минута.</value>
+  </data>
+  <data name="AlreadyHaveAccount" xml:space="preserve">
+    <value>Уже есть аккаунт? Войдите</value>
+  </data>
+</root>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Ваша следующая интервальная тренировка</value></data>
+  <data name="Loading" xml:space="preserve"><value>Загрузка ваших данных...</value></data>
+  <data name="Title" xml:space="preserve"><value>Ваша следующая интервальная тренировка</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Это занятие рассчитывается на основе вашей текущей модели темпа.</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>Добавьте контрольный забег, чтобы мы могли определить ваши оптимальные тренировочные темпы.</value></data>
+  <data name="NoTrainings" xml:space="preserve"><value>Сейчас интервальные тренировки не заданы.</value></data>
+  <data name="PlannedOn" xml:space="preserve"><value>Запланировано на:</value></data>
+  <data name="NotLoggedIn_Title" xml:space="preserve"><value>Внимание</value></data>
+  <data name="NotLoggedIn_Message" xml:space="preserve"><value>Вы не вошли в систему. Пожалуйста, войдите снова.</value></data>
+</root>

@@ -10,7 +10,8 @@ namespace PaceLetics.AthleteModule.Components
          string Icon,
          TimeSpan Upper,
          TimeSpan Lower,
-         string Description
+         string Description,
+         string Accent
      );
 
         [Parameter] public TimeSpan EPaceLow { get; set; }
@@ -36,23 +37,28 @@ namespace PaceLetics.AthleteModule.Components
         {
             new(L["PaceInfo_EPace_Title"], "/images/icons/epace.png",
                 Upper: EPaceHigh, Lower: EPaceLow,
-                Description: L["PaceInfo_EPace_Description"]),
+                Description: L["PaceInfo_EPace_Description"],
+                Accent: "green"),
 
             new(L["PaceInfo_MPace_Title"], "/images/icons/mpace.png",
                 Upper: MPaceHigh, Lower: MPaceLow,
-                Description: L["PaceInfo_MPace_Description"]),
+                Description: L["PaceInfo_MPace_Description"],
+                Accent: "blue"),
 
             new(L["PaceInfo_TPace_Title"], "/images/icons/tpace.png",
                 Upper: TPaceHigh, Lower: TPaceLow,
-                Description: L["PaceInfo_TPace_Description"]),
+                Description: L["PaceInfo_TPace_Description"],
+                Accent: "orange"),
 
             new(L["PaceInfo_IPace_Title"], "/images/icons/ipace.png",
                 Upper: IPaceHigh, Lower: IPaceLow,
-                Description: L["PaceInfo_IPace_Description"]),
+                Description: L["PaceInfo_IPace_Description"],
+                Accent: "red"),
 
             new(L["PaceInfo_RPace_Title"], "/images/icons/rpace.png",
                 Upper: RPaceHigh, Lower: RPaceLow,
-                Description: L["PaceInfo_RPace_Description"])
+                Description: L["PaceInfo_RPace_Description"],
+                Accent: "orange")
         };
         }
     }

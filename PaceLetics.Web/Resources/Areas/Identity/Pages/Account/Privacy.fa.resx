@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>سیاست کوکی و حریم خصوصی</value>
+  </data>
+  <data name="Section1Title" xml:space="preserve">
+    <value>1. مقدمه</value>
+  </data>
+  <data name="Section1Text" xml:space="preserve">
+    <value>به وب‌سایت ما خوش آمدید. این سیاست توضیح می‌دهد که چگونه و چرا از کوکی‌ها استفاده می‌کنیم و چه داده‌هایی از طریق آن‌ها جمع‌آوری می‌شود.</value>
+  </data>
+  <data name="Section2Title" xml:space="preserve">
+    <value>2. کوکی‌ها چیستند؟</value>
+  </data>
+  <data name="Section2Text" xml:space="preserve">
+    <value>کوکی‌ها فایل‌های متنی کوچکی هستند که هنگام بازدید از یک وب‌سایت روی دستگاه شما ذخیره می‌شوند. معمولاً برای کاربردی‌تر کردن وب‌سایت‌ها و ارائه اطلاعات به صاحبان سایت استفاده می‌شوند.</value>
+  </data>
+  <data name="Section3Title" xml:space="preserve">
+    <value>3. چگونه و چرا از کوکی‌ها استفاده می‌کنیم؟</value>
+  </data>
+  <data name="Section3Text" xml:space="preserve">
+    <value>ما از کوکی‌ها استفاده می‌کنیم برای:</value>
+  </data>
+  <data name="Section3Item1" xml:space="preserve">
+    <value>ذخیره وضعیت ورود شما.</value>
+  </data>
+  <data name="Section3Item2" xml:space="preserve">
+    <value>بهبود عملکرد و کاربردپذیری سایت ما.</value>
+  </data>
+  <data name="Section4Title" xml:space="preserve">
+    <value>4. چه داده‌هایی جمع‌آوری می‌کنیم؟</value>
+  </data>
+  <data name="Section4Text" xml:space="preserve">
+    <value>وقتی از وب‌سایت ما بازدید می‌کنید یا ثبت‌نام می‌کنید، داده‌های زیر ممکن است جمع‌آوری شوند:</value>
+  </data>
+  <data name="Section4Item1" xml:space="preserve">
+    <value>نشانی IP</value>
+  </data>
+  <data name="Section4Item2" xml:space="preserve">
+    <value>نوع و نسخه مرورگر</value>
+  </data>
+  <data name="Section4Item3" xml:space="preserve">
+    <value>نشانی ایمیل (هنگام ثبت‌نام یا ورود)</value>
+  </data>
+  <data name="Section4Item4" xml:space="preserve">
+    <value>نام کاربری (هنگام ثبت‌نام یا ورود)</value>
+  </data>
+  <data name="Section4Item5" xml:space="preserve">
+    <value>گذرواژه (هنگام ثبت‌نام یا ورود)</value>
+  </data>
+  <data name="Section4Item6" xml:space="preserve">
+    <value>داده‌های جمع‌آوری‌شده هنگام اجرا (مانند فعالیت‌ها و تنظیمات)</value>
+  </data>
+  <data name="Section5Title" xml:space="preserve">
+    <value>5. حذف داده‌ها</value>
+  </data>
+  <data name="Section5Text" xml:space="preserve">
+    <value>وقتی حساب خود را حذف می‌کنید، همه داده‌های مرتبط با حساب، از جمله نشانی ایمیل، نام کاربری و داده‌های زمان اجرا، برای همیشه حذف می‌شوند.</value>
+  </data>
+  <data name="Section6Title" xml:space="preserve">
+    <value>6. چگونه می‌توانید استفاده از کوکی‌ها را کنترل کنید؟</value>
+  </data>
+  <data name="Section6Text" xml:space="preserve">
+    <value>بیشتر مرورگرها امکان کنترل کوکی‌ها را می‌دهند. می‌توانید تنظیمات را برای مسدود یا حذف کردن کوکی‌ها پیکربندی کنید. لطفاً توجه داشته باشید که اگر کوکی‌ها غیرفعال شوند، برخی ویژگی‌های وب‌سایت ممکن است درست کار نکنند.</value>
+  </data>
+  <data name="Section7Title" xml:space="preserve">
+    <value>7. تغییرات این سیاست</value>
+  </data>
+  <data name="Section7Text" xml:space="preserve">
+    <value>ممکن است این سیاست را هر از گاهی به‌روزرسانی کنیم. تغییرات در این صفحه منتشر می‌شوند.</value>
+  </data>
+  <data name="Section8Title" xml:space="preserve">
+    <value>8. تماس</value>
+  </data>
+  <data name="Section8Text" xml:space="preserve">
+    <value>اگر درباره این سیاست کوکی و حریم خصوصی پرسشی دارید، لطفاً تماس بگیرید با</value>
+  </data>
+</root>

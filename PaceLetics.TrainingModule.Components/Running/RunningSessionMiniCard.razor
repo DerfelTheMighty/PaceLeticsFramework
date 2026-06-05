@@ -3,15 +3,10 @@
 @namespace PaceLetics.TrainingModule.Components.Running
 @inject IStringLocalizer<RunningResources> L
 
-<MudCard Elevation="0"
-         Style="
-            background-color: transparent;
-            border: none;
-            min-width:320px;
-            width:100%;
-            margin-left:8px;
-         ">
-    <MudCardContent Style="padding:12px 16px;">
+<MudPaper Elevation="0"
+          Class="@CardClass"
+          Style="min-width:320px; width:100%; margin-left:8px;">
+    <div style="padding:12px 16px;">
 
         <MudStack Spacing="1">
 
@@ -37,9 +32,9 @@
 
         </MudStack>
 
-    </MudCardContent>
+    </div>
 
-</MudCard>
+</MudPaper>
 
 @code {
     [Parameter, EditorRequired] public RunningSession Session { get; set; } = default!;
@@ -53,5 +48,9 @@
 	private Color TextColor => IsHighlighted ? Color.Primary : Color.Inherit;
 
     private Color TypeColor => IsInterval ? Color.Error : Color.Success;
+
+    private string CardClass => IsHighlighted
+        ? "pl-metric-tile pl-metric-green"
+        : "pl-surface-card";
 
 }

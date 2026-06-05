@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>إشعار قانوني</value>
+  </data>
+  <data name="Intro" xml:space="preserve">
+    <value>معلومات وفقًا للمادة 5 من قانون الخدمات الرقمية الألماني (Digitale-Dienste-Gesetz, DDG).</value>
+  </data>
+  <data name="ProviderHeading" xml:space="preserve">
+    <value>مزود الخدمة</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>ألمانيا</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>الهاتف</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="ResponsibleHeading" xml:space="preserve">
+    <value>المسؤول عن المحتوى</value>
+  </data>
+  <data name="ResponsibleText" xml:space="preserve">
+    <value>الشخص المسؤول عن محتوى هذا الموقع هو</value>
+  </data>
+  <data name="TaxHeading" xml:space="preserve">
+    <value>معلومات التسجيل والضرائب</value>
+  </data>
+  <data name="VatId" xml:space="preserve">
+    <value>رقم تعريف ضريبة القيمة المضافة</value>
+  </data>
+  <data name="VatIdNotProvided" xml:space="preserve">
+    <value>غير مخصص أو غير قابل للتطبيق.</value>
+  </data>
+  <data name="RegisterEntry" xml:space="preserve">
+    <value>قيد السجل التجاري</value>
+  </data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve">
+    <value>لا يوجد قيد في السجل التجاري.</value>
+  </data>
+  <data name="DisputeHeading" xml:space="preserve">
+    <value>تسوية نزاعات المستهلكين</value>
+  </data>
+  <data name="DisputeText" xml:space="preserve">
+    <value>مزود الخدمة غير مستعد وغير ملزم بالمشاركة في إجراءات تسوية النزاعات أمام هيئة تحكيم للمستهلكين، ما لم يكن هناك التزام قانوني إلزامي.</value>
+  </data>
+  <data name="LiabilityHeading" xml:space="preserve">
+    <value>المسؤولية عن المحتوى والروابط</value>
+  </data>
+  <data name="LiabilityOwnContent" xml:space="preserve">
+    <value>تم إعداد المحتوى على هذا الموقع بعناية معقولة. وبصفته مزود خدمة، يكون المزود مسؤولًا عن محتواه الخاص وفقًا للقوانين العامة.</value>
+  </data>
+  <data name="LiabilityLinks" xml:space="preserve">
+    <value>قد يحتوي هذا الموقع على روابط لمواقع خارجية تابعة لأطراف ثالثة. لا يملك المزود أي تأثير على محتواها الحالي أو المستقبلي. تتم مراجعة الصفحات المرتبطة عند إنشاء الرابط بحثًا عن انتهاكات قانونية واضحة. وإذا أصبحت الانتهاكات معروفة، فستتم إزالة هذه الروابط فورًا.</value>
+  </data>
+  <data name="CopyrightHeading" xml:space="preserve">
+    <value>حقوق النشر</value>
+  </data>
+  <data name="CopyrightText" xml:space="preserve">
+    <value>يخضع المحتوى والأعمال التي أنشأها المزود على هذا الموقع لقانون حقوق النشر الألماني. يتطلب النسخ أو التحرير أو التوزيع أو أي استخدام يتجاوز حدود حقوق النشر موافقة مسبقة، ما لم يكن الاستخدام مسموحًا به صراحة بموجب القانون.</value>
+  </data>
+  <data name="PrivacyHeading" xml:space="preserve">
+    <value>الخصوصية</value>
+  </data>
+  <data name="PrivacyText" xml:space="preserve">
+    <value>لا يحل هذا الإشعار القانوني محل سياسة الخصوصية. تتوفر معلومات معالجة البيانات الشخصية في سياسة الخصوصية لهذا الموقع.</value>
+  </data>
+</root>

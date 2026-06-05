@@ -3,7 +3,7 @@
 @namespace PaceLetics.AthleteModule.Components
 @inject IStringLocalizer<AthleteResources> L
 
-<MudCard Class="d-flex flex-column align-center pa-4" Style="text-align:center;">
+<MudPaper Elevation="0" Class="d-flex flex-column align-center pa-4 pl-vdot-card">
 
     <div class="d-flex justify-center">
         <MudChart T="double"
@@ -44,7 +44,7 @@
     <MudText Align="Align.Center" Class="mt-4">
         @L["VdotCard_Description"]
     </MudText>
-</MudCard>
+</MudPaper>
 
 
 

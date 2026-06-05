@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmEmailSubject" xml:space="preserve">
+    <value>ایمیل خود را تأیید کنید</value>
+  </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>لطفاً با &lt;a href='{0}'&gt;کلیک کردن اینجا&lt;/a&gt; حساب خود را تأیید کنید.</value>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>این ایمیل قبلاً استفاده شده است.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>نام کاربری</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ایمیل</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>گذرواژه</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأیید گذرواژه</value>
+  </data>
+  <data name="ValidationRequired" xml:space="preserve">
+    <value>لطفاً {0} را وارد کنید.</value>
+  </data>
+  <data name="ValidationUserNameCharacters" xml:space="preserve">
+    <value>نام کاربری فقط می‌تواند شامل حروف، اعداد، نقطه، زیرخط و خط تیره باشد.</value>
+  </data>
+  <data name="ValidationEmail" xml:space="preserve">
+    <value>لطفاً یک نشانی ایمیل معتبر وارد کنید.</value>
+  </data>
+  <data name="ValidationStringLength" xml:space="preserve">
+    <value>{0} باید حداقل {2} و حداکثر {1} نویسه داشته باشد.</value>
+  </data>
+  <data name="ValidationPasswordMatch" xml:space="preserve">
+    <value>گذرواژه و تأیید آن مطابقت ندارند.</value>
+  </data>
+</root>

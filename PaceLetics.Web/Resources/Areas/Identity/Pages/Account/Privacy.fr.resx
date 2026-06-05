@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Politique relative aux cookies et à la confidentialité</value>
+  </data>
+  <data name="Section1Title" xml:space="preserve">
+    <value>1. Introduction</value>
+  </data>
+  <data name="Section1Text" xml:space="preserve">
+    <value>Bienvenue sur notre site. Cette politique explique comment et pourquoi nous utilisons des cookies et quelles données nous collectons par leur intermédiaire.</value>
+  </data>
+  <data name="Section2Title" xml:space="preserve">
+    <value>2. Que sont les cookies ?</value>
+  </data>
+  <data name="Section2Text" xml:space="preserve">
+    <value>Les cookies sont de petits fichiers texte stockés sur votre appareil lorsque vous visitez un site web. Ils sont couramment utilisés pour rendre les sites plus fonctionnels et fournir des informations à leurs propriétaires.</value>
+  </data>
+  <data name="Section3Title" xml:space="preserve">
+    <value>3. Comment et pourquoi utilisons-nous les cookies ?</value>
+  </data>
+  <data name="Section3Text" xml:space="preserve">
+    <value>Nous utilisons des cookies pour :</value>
+  </data>
+  <data name="Section3Item1" xml:space="preserve">
+    <value>Enregistrer votre état de connexion.</value>
+  </data>
+  <data name="Section3Item2" xml:space="preserve">
+    <value>Améliorer les performances et l’ergonomie de notre site.</value>
+  </data>
+  <data name="Section4Title" xml:space="preserve">
+    <value>4. Quelles données collectons-nous ?</value>
+  </data>
+  <data name="Section4Text" xml:space="preserve">
+    <value>Lorsque vous visitez notre site ou vous inscrivez, les données suivantes peuvent être collectées :</value>
+  </data>
+  <data name="Section4Item1" xml:space="preserve">
+    <value>Adresse IP</value>
+  </data>
+  <data name="Section4Item2" xml:space="preserve">
+    <value>Type et version du navigateur</value>
+  </data>
+  <data name="Section4Item3" xml:space="preserve">
+    <value>Adresse e-mail (lors de l’inscription ou de la connexion)</value>
+  </data>
+  <data name="Section4Item4" xml:space="preserve">
+    <value>Nom d’utilisateur (lors de l’inscription ou de la connexion)</value>
+  </data>
+  <data name="Section4Item5" xml:space="preserve">
+    <value>Mot de passe (lors de l’inscription ou de la connexion)</value>
+  </data>
+  <data name="Section4Item6" xml:space="preserve">
+    <value>Données collectées pendant l’utilisation (p. ex. activités, paramètres)</value>
+  </data>
+  <data name="Section5Title" xml:space="preserve">
+    <value>5. Suppression des données</value>
+  </data>
+  <data name="Section5Text" xml:space="preserve">
+    <value>Lorsque vous supprimez votre compte, toutes les données associées, y compris l’adresse e-mail, le nom d’utilisateur et les données d’utilisation, sont supprimées définitivement.</value>
+  </data>
+  <data name="Section6Title" xml:space="preserve">
+    <value>6. Comment contrôler l’utilisation des cookies ?</value>
+  </data>
+  <data name="Section6Text" xml:space="preserve">
+    <value>La plupart des navigateurs vous permettent de contrôler les cookies. Vous pouvez configurer les paramètres pour les bloquer ou les supprimer. Certaines fonctionnalités de notre site peuvent toutefois ne pas fonctionner correctement si les cookies sont désactivés.</value>
+  </data>
+  <data name="Section7Title" xml:space="preserve">
+    <value>7. Modifications de cette politique</value>
+  </data>
+  <data name="Section7Text" xml:space="preserve">
+    <value>Nous pouvons mettre cette politique à jour de temps à autre. Les changements seront publiés sur cette page.</value>
+  </data>
+  <data name="Section8Title" xml:space="preserve">
+    <value>8. Contact</value>
+  </data>
+  <data name="Section8Text" xml:space="preserve">
+    <value>Si vous avez des questions sur cette politique relative aux cookies et à la confidentialité, veuillez contacter</value>
+  </data>
+</root>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AddTrainerRequired" xml:space="preserve"><value>Selecciona un entrenador.</value></data>
+  <data name="CancelEventAthleteRequired" xml:space="preserve"><value>Cancelar una inscripción requiere un atleta conectado.</value></data>
+  <data name="CancelEventNotRegistered" xml:space="preserve"><value>No estás registrado en este evento.</value></data>
+  <data name="CourseNotFound" xml:space="preserve"><value>No se encontró el curso.</value></data>
+  <data name="CreateCourseEndBeforeStart" xml:space="preserve"><value>La fecha de fin del curso no puede ser anterior a la de inicio.</value></data>
+  <data name="CreateCourseNameRequired" xml:space="preserve"><value>Un curso necesita un nombre.</value></data>
+  <data name="CreateCourseTrainerRequired" xml:space="preserve"><value>Un curso necesita un entrenador conectado.</value></data>
+  <data name="DateEndAfterStart" xml:space="preserve"><value>La hora de fin debe ser posterior a la de inicio.</value></data>
+  <data name="DateNotFound" xml:space="preserve"><value>No se encontró la fecha.</value></data>
+  <data name="DateTitleRequired" xml:space="preserve"><value>Una fecha necesita un título.</value></data>
+  <data name="DeleteCourseCreatorOnly" xml:space="preserve"><value>Solo el entrenador que creó el curso puede eliminarlo.</value></data>
+  <data name="EventEndAfterStart" xml:space="preserve"><value>La hora de fin del evento debe ser posterior a la de inicio.</value></data>
+  <data name="EventNotFound" xml:space="preserve"><value>No se encontró el evento.</value></data>
+  <data name="EventTitleRequired" xml:space="preserve"><value>Un evento necesita un título.</value></data>
+  <data name="JoinCourseAthleteRequired" xml:space="preserve"><value>Unirse a un curso requiere un atleta conectado.</value></data>
+  <data name="LeaveCourseAthleteRequired" xml:space="preserve"><value>Salir de un curso requiere un atleta conectado.</value></data>
+  <data name="LeaveCourseNotJoined" xml:space="preserve"><value>No te has unido a este curso.</value></data>
+  <data name="PermissionManageEvents" xml:space="preserve"><value>No tienes permiso para gestionar fechas y eventos de este curso.</value></data>
+  <data name="PermissionManagePlans" xml:space="preserve"><value>No tienes permiso para gestionar planes de entrenamiento de este curso.</value></data>
+  <data name="PermissionManageTrainers" xml:space="preserve"><value>No tienes permiso para gestionar los entrenadores de este curso.</value></data>
+  <data name="RegisterEventAthleteRequired" xml:space="preserve"><value>La inscripción requiere un atleta conectado.</value></data>
+  <data name="RegisterEventDeadlinePassed" xml:space="preserve"><value>La fecha límite de inscripción ya pasó.</value></data>
+  <data name="RegisterEventFull" xml:space="preserve"><value>No hay plazas disponibles para este evento.</value></data>
+  <data name="RegisterEventRequiresEnrollment" xml:space="preserve"><value>Debes unirte al curso antes de registrarte en eventos.</value></data>
+  <data name="RemoveTrainerLeadCannotLeave" xml:space="preserve"><value>El responsable puede eliminar el curso, pero no salir de él.</value></data>
+  <data name="RemoveTrainerNotAssigned" xml:space="preserve"><value>Este entrenador no está asignado al curso.</value></data>
+  <data name="RoleCourseLead" xml:space="preserve"><value>Responsable del curso</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Entrenador</value></data>
+  <data name="TrainingPlanNotFound" xml:space="preserve"><value>No se encontró el plan de entrenamiento.</value></data>
+  <data name="TrainingPlanRequired" xml:space="preserve"><value>Selecciona un plan de entrenamiento.</value></data>
+</root>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmEmailSubject" xml:space="preserve">
+    <value>أكّد بريدك الإلكتروني</value>
+  </data>
+  <data name="ConfirmEmailBody" xml:space="preserve">
+    <value>يرجى تأكيد حسابك عبر &lt;a href='{0}'&gt;النقر هنا&lt;/a&gt;.</value>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>البريد الإلكتروني مستخدم بالفعل.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="ValidationRequired" xml:space="preserve">
+    <value>يرجى إدخال {0}.</value>
+  </data>
+  <data name="ValidationUserNameCharacters" xml:space="preserve">
+    <value>قد يحتوي اسم المستخدم فقط على أحرف وأرقام ونقاط وشرطات سفلية وشرطات.</value>
+  </data>
+  <data name="ValidationEmail" xml:space="preserve">
+    <value>يرجى إدخال عنوان بريد إلكتروني صالح.</value>
+  </data>
+  <data name="ValidationStringLength" xml:space="preserve">
+    <value>يجب أن يكون {0} بطول لا يقل عن {2} ولا يزيد عن {1} حرفًا.</value>
+  </data>
+  <data name="ValidationPasswordMatch" xml:space="preserve">
+    <value>كلمة المرور وتأكيدها غير متطابقين.</value>
+  </data>
+</root>

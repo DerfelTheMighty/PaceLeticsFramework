@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Cookie- og privatlivspolitik</value>
+  </data>
+  <data name="Section1Title" xml:space="preserve">
+    <value>1. Introduktion</value>
+  </data>
+  <data name="Section1Text" xml:space="preserve">
+    <value>Velkommen til vores website. Denne politik forklarer, hvordan og hvorfor vi bruger cookies, og hvilke data vi indsamler via dem.</value>
+  </data>
+  <data name="Section2Title" xml:space="preserve">
+    <value>2. Hvad er cookies?</value>
+  </data>
+  <data name="Section2Text" xml:space="preserve">
+    <value>Cookies er små tekstfiler, der gemmes på din enhed, når du besøger et website. De bruges ofte til at gøre websites mere funktionelle og give information til ejerne.</value>
+  </data>
+  <data name="Section3Title" xml:space="preserve">
+    <value>3. Hvordan og hvorfor bruger vi cookies?</value>
+  </data>
+  <data name="Section3Text" xml:space="preserve">
+    <value>Vi bruger cookies til at:</value>
+  </data>
+  <data name="Section3Item1" xml:space="preserve">
+    <value>Gem din loginstatus.</value>
+  </data>
+  <data name="Section3Item2" xml:space="preserve">
+    <value>Forbedre ydeevnen og brugervenligheden af vores site.</value>
+  </data>
+  <data name="Section4Title" xml:space="preserve">
+    <value>4. Hvilke data indsamler vi?</value>
+  </data>
+  <data name="Section4Text" xml:space="preserve">
+    <value>Når du besøger vores website eller registrerer dig, kan følgende data blive indsamlet:</value>
+  </data>
+  <data name="Section4Item1" xml:space="preserve">
+    <value>IP-adresse</value>
+  </data>
+  <data name="Section4Item2" xml:space="preserve">
+    <value>Browsertype og version</value>
+  </data>
+  <data name="Section4Item3" xml:space="preserve">
+    <value>E-mailadresse (når du registrerer dig eller logger ind)</value>
+  </data>
+  <data name="Section4Item4" xml:space="preserve">
+    <value>Brugernavn (når du registrerer dig eller logger ind)</value>
+  </data>
+  <data name="Section4Item5" xml:space="preserve">
+    <value>Adgangskode (når du registrerer dig eller logger ind)</value>
+  </data>
+  <data name="Section4Item6" xml:space="preserve">
+    <value>Data indsamlet under brug (f.eks. aktiviteter, indstillinger)</value>
+  </data>
+  <data name="Section5Title" xml:space="preserve">
+    <value>5. Sletning af data</value>
+  </data>
+  <data name="Section5Text" xml:space="preserve">
+    <value>Når du sletter din konto, slettes alle data knyttet til kontoen permanent, herunder e-mailadresse, brugernavn og runtime-data.</value>
+  </data>
+  <data name="Section6Title" xml:space="preserve">
+    <value>6. Hvordan kan du styre brugen af cookies?</value>
+  </data>
+  <data name="Section6Text" xml:space="preserve">
+    <value>De fleste browsere giver dig mulighed for at styre cookies. Du kan konfigurere indstillinger til at blokere eller slette cookies. Bemærk dog, at nogle funktioner på vores website muligvis ikke fungerer korrekt, hvis cookies er deaktiveret.</value>
+  </data>
+  <data name="Section7Title" xml:space="preserve">
+    <value>7. Ændringer i denne politik</value>
+  </data>
+  <data name="Section7Text" xml:space="preserve">
+    <value>Vi kan opdatere denne politik fra tid til anden. Ændringer offentliggøres på denne side.</value>
+  </data>
+  <data name="Section8Title" xml:space="preserve">
+    <value>8. Kontakt</value>
+  </data>
+  <data name="Section8Text" xml:space="preserve">
+    <value>Hvis du har spørgsmål om denne cookie- og privatlivspolitik, bedes du kontakte</value>
+  </data>
+</root>

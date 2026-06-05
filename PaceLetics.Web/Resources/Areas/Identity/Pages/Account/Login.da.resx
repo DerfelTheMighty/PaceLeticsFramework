@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Log ind</value>
+  </data>
+  <data name="LoginPrompt" xml:space="preserve">
+    <value>Brug dit brugernavn eller din e-mailadresse til at logge ind.</value>
+  </data>
+  <data name="UserNameOrEmail" xml:space="preserve">
+    <value>Brugernavn eller e-mail</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Adgangskode</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Har du glemt din adgangskode?</value>
+  </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>Registrer som ny bruger</value>
+  </data>
+  <data name="ResendEmail" xml:space="preserve">
+    <value>Send e-mailbekræftelse igen</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Velkommen til PaceLetics</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>Din personlige løbemakker. Følg dine løbsresultater, beregn træningstempoer, og følg strukturerede træningsplaner tilpasset dit niveau.</value>
+  </data>
+  <data name="Feature1" xml:space="preserve">
+    <value>Personlige tempozoner baseret på dine løbspræstationer</value>
+  </data>
+  <data name="Feature2" xml:space="preserve">
+    <value>Strukturerede træningsplaner til dine mål</value>
+  </data>
+  <data name="Feature3" xml:space="preserve">
+    <value>Guidede træninger til styrke og mobilitet</value>
+  </data>
+  <data name="Feature4" xml:space="preserve">
+    <value>Følg din fremgang over tid</value>
+  </data>
+</root>
