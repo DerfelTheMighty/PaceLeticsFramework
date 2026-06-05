@@ -17,35 +17,34 @@ namespace PaceLetics.AthleteModule.Components
             await OnEditRaceCard.InvokeAsync();
         }
 
-        private string GetImagePath(string? type)
+        private static string GetRaceDistanceCode(string? type)
         {
-            var imagePath = "/images/icons/epace.png"; // default image
-            switch (type)
+            return type switch
             {
-                case RaceKeys.D1k:
-                    imagePath = "/images/icons/icon_1k.png";
-                    break;
-                case RaceKeys.D3k:
-                    imagePath = "/images/icons/icon_3k.png";
-                    break;
-                case RaceKeys.D5k:
-                    imagePath = "/images/icons/icon_5k.png";
-                    break;
-                case RaceKeys.D10k:
-                    imagePath = "/images/icons/icon_10k.png";
-                    break;
-                case RaceKeys.D15k:
-                    imagePath = "/images/icons/icon_15k.png";
-                    break;
-                case RaceKeys.D21k:
-                    imagePath = "/images/icons/icon_21k.png";
-                    break;
-                default:
-                    imagePath = "/images/icons/icon_3k.png";
-                    break;
-            }
+                RaceKeys.D1k => "1K",
+                RaceKeys.D3k => "3K",
+                RaceKeys.D5k => "5K",
+                RaceKeys.D10k => "10K",
+                RaceKeys.D15k => "15K",
+                RaceKeys.D21k => "21K",
+                RaceKeys.D42k => "42K",
+                _ => "RUN"
+            };
+        }
 
-            return imagePath;
+        private static string GetRaceDistanceClass(string? type)
+        {
+            return type switch
+            {
+                RaceKeys.D1k => "pl-race-distance-1k",
+                RaceKeys.D3k => "pl-race-distance-3k",
+                RaceKeys.D5k => "pl-race-distance-5k",
+                RaceKeys.D10k => "pl-race-distance-10k",
+                RaceKeys.D15k => "pl-race-distance-15k",
+                RaceKeys.D21k => "pl-race-distance-21k",
+                RaceKeys.D42k => "pl-race-distance-42k",
+                _ => "pl-race-distance-default"
+            };
         }
     }
 }

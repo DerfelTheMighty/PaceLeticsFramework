@@ -7,4 +7,14 @@ public sealed record AppThemeDefinition(
     string DisplayName,
     MudTheme Theme,
     string Icon,
-    bool IsDarkMode);
+    bool IsDarkMode,
+    PaceZonePalette PaceZones);
+
+public sealed record PaceZonePalette(
+    string Free,
+    string Recovery,
+    string Easy,
+    string Marathon,
+    string Threshold,
+    string Intervall,
+    string Repetition);

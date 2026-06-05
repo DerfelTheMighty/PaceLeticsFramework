@@ -14,7 +14,7 @@
 
 <PageTitle>PaceLetics</PageTitle>
 
-<MudLayout>
+<MudLayout Style="@GetThemeStyle()">
     <MudAppBar Elevation="1">
 
         <MudIconButton Icon="@Icons.Material.Filled.Menu"
@@ -94,6 +94,22 @@
     private string GetThemeName(AppThemeName themeName)
     {
         return AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
+    }
+
+    private string GetThemeStyle()
+    {
+        var zones = ThemePreferences.CurrentThemeDefinition.PaceZones;
+
+        return string.Join(";",
+        [
+            $"--pl-pace-free:{zones.Free}",
+            $"--pl-pace-recovery:{zones.Recovery}",
+            $"--pl-pace-easy:{zones.Easy}",
+            $"--pl-pace-marathon:{zones.Marathon}",
+            $"--pl-pace-threshold:{zones.Threshold}",
+            $"--pl-pace-intervall:{zones.Intervall}",
+            $"--pl-pace-repetition:{zones.Repetition}"
+        ]);
     }
 
     private void OnThemePreferenceChanged()

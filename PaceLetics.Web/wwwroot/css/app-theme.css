@@ -203,9 +203,8 @@
 }
 
 .pl-feed-header-icon,
-.pl-race-icon,
+.pl-race-code,
 .pl-vdot-icon,
-.pl-pace-icon,
 .pl-training-icon {
     display: inline-flex;
     align-items: center;
@@ -216,6 +215,46 @@
     border-radius: var(--pl-radius);
     color: var(--pl-metric-accent, var(--mud-palette-primary));
     background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 16%, transparent);
+}
+
+.pl-race-code {
+    font-size: .78rem;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0;
+}
+
+.pl-race-distance-1k {
+    --pl-metric-accent: var(--mud-palette-info);
+}
+
+.pl-race-distance-3k {
+    --pl-metric-accent: var(--mud-palette-primary);
+}
+
+.pl-race-distance-5k {
+    --pl-metric-accent: var(--mud-palette-success);
+}
+
+.pl-race-distance-10k {
+    --pl-metric-accent: var(--mud-palette-secondary);
+}
+
+.pl-race-distance-15k {
+    --pl-metric-accent: var(--mud-palette-warning);
+}
+
+.pl-race-distance-21k {
+    --pl-metric-accent: var(--mud-palette-tertiary);
+}
+
+.pl-race-distance-42k {
+    --pl-metric-accent: var(--mud-palette-error);
+}
+
+.pl-race-distance-default {
+    --pl-metric-accent: var(--mud-palette-text-secondary);
 }
 
 .pl-feed-tile {
@@ -313,6 +352,67 @@
 
 .pl-pace-card {
     min-height: 136px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pl-pace-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: var(--pl-metric-accent, var(--mud-palette-primary));
+}
+
+.pl-pace-zone-free {
+    --pl-metric-accent: var(--pl-pace-free, var(--mud-palette-text-secondary));
+}
+
+.pl-pace-zone-recovery {
+    --pl-metric-accent: var(--pl-pace-recovery, var(--mud-palette-info));
+}
+
+.pl-pace-zone-easy {
+    --pl-metric-accent: var(--pl-pace-easy, var(--mud-palette-success));
+}
+
+.pl-pace-zone-marathon {
+    --pl-metric-accent: var(--pl-pace-marathon, var(--mud-palette-primary));
+}
+
+.pl-pace-zone-threshold {
+    --pl-metric-accent: var(--pl-pace-threshold, var(--mud-palette-warning));
+}
+
+.pl-pace-zone-intervall {
+    --pl-metric-accent: var(--pl-pace-intervall, var(--mud-palette-error));
+}
+
+.pl-pace-zone-repetition {
+    --pl-metric-accent: var(--pl-pace-repetition, var(--mud-palette-tertiary));
+}
+
+.pl-pace-zone-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 56%, transparent);
+    border-radius: var(--pl-radius);
+    color: var(--pl-metric-accent, var(--mud-palette-primary));
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 16%, transparent);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.pl-pace-zone-mark-small {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+    font-size: .72rem;
 }
 
 .pl-interval-row {
