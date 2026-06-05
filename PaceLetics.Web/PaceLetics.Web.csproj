@@ -38,6 +38,9 @@
     <ProjectReference Include="..\AthleteDataAccessLibrary\AthleteDataAccessLibrary.csproj" />
     <ProjectReference Include="..\PaceLetics.AthleteModule.Components\PaceLetics.AthleteModule.Components.csproj" />
     <ProjectReference Include="..\PaceLetics.CoreModule.Infrastructure\PaceLetics.CoreModule.Infrastructure.csproj" />
+    <ProjectReference Include="..\PaceLetics.RunningAnalysisModule.CodeBase\PaceLetics.RunningAnalysisModule.CodeBase.csproj" />
+    <ProjectReference Include="..\PaceLetics.RunningAnalysisModule.Components\PaceLetics.RunningAnalysisModule.Components.csproj" />
+    <ProjectReference Include="..\PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive\PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive.csproj" />
     <ProjectReference Include="..\PaceLetics.TrainingPlanModule.CodeBase\PaceLetics.TrainingPlanModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.TrainingModule.CodeBase\PaceLetics.TrainingModule.CodeBase.csproj" />
     <ProjectReference Include="..\PaceLetics.TrainingModule.Components\PaceLetics.TrainingModule.Components.csproj" />

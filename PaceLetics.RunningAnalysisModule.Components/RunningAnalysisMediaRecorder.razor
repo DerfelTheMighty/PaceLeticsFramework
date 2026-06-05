@@ -1,0 +1,145 @@
+@namespace PaceLetics.RunningAnalysisModule.Components
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<MudStack Spacing="2">
+    <div class="running-analysis-media-recorder">
+        <video @ref="_videoElement" autoplay muted playsinline></video>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+    }
+
+    @if (ShowControls)
+    {
+        <MudStack Row="true" Justify="Justify.Center" Style="gap:8px; flex-wrap:wrap;">
+            @if (!_isRecording)
+            {
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           Disabled="@(!IsOnline)"
+                           StartIcon="@Icons.Material.Filled.FiberManualRecord"
+                           OnClick="StartAsync">
+                    Start
+                </MudButton>
+            }
+            else
+            {
+                <MudButton Color="Color.Error"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Stop"
+                           OnClick="StopAsync">
+                    Stop
+                </MudButton>
+            }
+        </MudStack>
+    }
+</MudStack>
+
+<style>
+    .running-analysis-media-recorder {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        background: #111;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .running-analysis-media-recorder video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+</style>
+
+@code {
+    private ElementReference _videoElement;
+    private IJSObjectReference? _module;
+    private bool _isRecording;
+    private string? _errorMessage;
+
+    [Parameter] public bool IsOnline { get; set; } = true;
+    [Parameter] public bool ShowControls { get; set; } = true;
+    [Parameter] public EventCallback<RunningAnalysisRecordedVideo> OnRecorded { get; set; }
+    [Parameter] public EventCallback<bool> IsRecordingChanged { get; set; }
+
+    public async Task StartAsync()
+    {
+        if (!IsOnline)
+            return;
+
+        try
+        {
+            _errorMessage = null;
+            var module = await GetModuleAsync();
+            await module.InvokeVoidAsync("startRecording", _videoElement);
+            _isRecording = true;
+            await IsRecordingChanged.InvokeAsync(true);
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message;
+            _isRecording = false;
+            await IsRecordingChanged.InvokeAsync(false);
+        }
+    }
+
+    public async Task StopAsync()
+    {
+        if (!_isRecording)
+            return;
+
+        try
+        {
+            var module = await GetModuleAsync();
+            var payload = await module.InvokeAsync<RecordedVideoPayload>("stopRecording", _videoElement);
+            _isRecording = false;
+            await IsRecordingChanged.InvokeAsync(false);
+            await OnRecorded.InvokeAsync(new RunningAnalysisRecordedVideo(
+                payload.Data,
+                payload.ContentType,
+                payload.FileExtension));
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message;
+            _isRecording = false;
+            await IsRecordingChanged.InvokeAsync(false);
+        }
+    }
+
+    private async Task<IJSObjectReference> GetModuleAsync()
+    {
+        _module ??= await JS.InvokeAsync<IJSObjectReference>(
+            "import",
+            "./_content/PaceLetics.RunningAnalysisModule.Components/runningAnalysisMediaRecorder.js");
+
+        return _module;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is null)
+            return;
+
+        try
+        {
+            await _module.InvokeVoidAsync("disposeRecorder", _videoElement);
+            await _module.DisposeAsync();
+        }
+        catch
+        {
+            // Best-effort cleanup during component disposal.
+        }
+    }
+
+    private sealed class RecordedVideoPayload
+    {
+        public byte[] Data { get; set; } = Array.Empty<byte>();
+        public string ContentType { get; set; } = "video/webm";
+        public string FileExtension { get; set; } = "webm";
+    }
+}

@@ -1,0 +1,78 @@
+@namespace PaceLetics.RunningAnalysisModule.Components
+
+<MudStack Spacing="2">
+    @if (Items.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">No participants registered.</MudAlert>
+    }
+    else
+    {
+        @foreach (var item in Items.OrderBy(item => item.SortOrder).ThenBy(item => item.DisplayName))
+        {
+            var selected = item.ParticipantId == SelectedParticipantId;
+            <div role="button" tabindex="0" style="cursor:pointer;" @onclick="@(() => SelectAsync(item.ParticipantId))">
+                <MudPaper Elevation="0"
+                          Class="pa-3"
+                          Style="@GetRowStyle(selected)">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                        <MudStack Spacing="0" Style="min-width:0;">
+                            <MudText Typo="Typo.body1">@item.DisplayName</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@GetStatusText(item)</MudText>
+                        </MudStack>
+
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px;">
+                            @if (item.RecordingCount > 0)
+                            {
+                                <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                                    @item.RecordingCount
+                                </MudChip>
+                            }
+
+                            <MudIconButton Icon="@Icons.Material.Filled.Videocam"
+                                           Color="@(selected ? Color.Primary : Color.Default)"
+                                           OnClick="@(() => RecordAsync(item.ParticipantId))" />
+                        </MudStack>
+                    </MudStack>
+                </MudPaper>
+            </div>
+        }
+    }
+</MudStack>
+
+@code {
+    [Parameter] public IReadOnlyList<RunningAnalysisRosterItem> Items { get; set; } = Array.Empty<RunningAnalysisRosterItem>();
+    [Parameter] public string? SelectedParticipantId { get; set; }
+    [Parameter] public EventCallback<string> SelectedParticipantIdChanged { get; set; }
+    [Parameter] public EventCallback<string> OnRecord { get; set; }
+
+    private async Task SelectAsync(string participantId)
+    {
+        SelectedParticipantId = participantId;
+        await SelectedParticipantIdChanged.InvokeAsync(participantId);
+    }
+
+    private async Task RecordAsync(string participantId)
+    {
+        await SelectAsync(participantId);
+        await OnRecord.InvokeAsync(participantId);
+    }
+
+    private static string GetStatusText(RunningAnalysisRosterItem item)
+    {
+        if (item.FolderStatus != RunningAnalysisFolderStatus.Ready)
+            return $"Folder: {item.FolderStatus}";
+
+        if (item.PermissionStatus != RunningAnalysisPermissionStatus.Granted)
+            return $"Permission: {item.PermissionStatus}";
+
+        return item.RecordingCount == 0
+            ? "Ready"
+            : "Recorded";
+    }
+
+    private static string GetRowStyle(bool selected)
+    {
+        var borderColor = selected ? "var(--mud-palette-primary)" : "var(--mud-palette-lines-default)";
+        return $"border:1px solid {borderColor};";
+    }
+}

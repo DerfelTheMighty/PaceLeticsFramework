@@ -6,11 +6,16 @@ public sealed class CourseService : ICourseService
 {
     private readonly ICourseRepository _repository;
     private readonly IStringLocalizer<CourseService>? _localizer;
+    private readonly ICourseRunningAnalysisRegistrationAdapter? _runningAnalysisRegistrationAdapter;
 
-    public CourseService(ICourseRepository repository, IStringLocalizer<CourseService>? localizer = null)
+    public CourseService(
+        ICourseRepository repository,
+        IStringLocalizer<CourseService>? localizer = null,
+        ICourseRunningAnalysisRegistrationAdapter? runningAnalysisRegistrationAdapter = null)
     {
         _repository = repository;
         _localizer = localizer;
+        _runningAnalysisRegistrationAdapter = runningAnalysisRegistrationAdapter;
     }
 
     public async Task<IReadOnlyList<CourseOverview>> GetCoursesForAthleteAsync(string athleteUserId)
@@ -350,7 +355,8 @@ public sealed class CourseService : ICourseService
         string description = "",
         string location = "",
         int? capacity = null,
-        DateTime? registrationDeadline = null)
+        DateTime? registrationDeadline = null,
+        string eventType = CourseEventTypes.General)
     {
         if (string.IsNullOrWhiteSpace(title))
             throw new InvalidOperationException(Text("EventTitleRequired", "Ein Event braucht einen Titel."));
@@ -369,6 +375,7 @@ public sealed class CourseService : ICourseService
             Title = title,
             StartsAt = startsAt,
             EndsAt = endsAt,
+            EventType = string.IsNullOrWhiteSpace(eventType) ? CourseEventTypes.General : eventType,
             Description = description,
             Location = location,
             Capacity = capacity,
@@ -469,6 +476,7 @@ public sealed class CourseService : ICourseService
             registration.RegisteredAt = DateTime.UtcNow;
 
         await _repository.UpsertEventRegistrationAsync(registration);
+        await NotifyRunningAnalysisRegistrationAsync(courseEvent, registration);
         return registration;
     }
 
@@ -507,6 +515,22 @@ public sealed class CourseService : ICourseService
             registration.CancelledAt = cancelledAt;
             await _repository.UpsertEventRegistrationAsync(registration);
         }
+    }
+
+    private async Task NotifyRunningAnalysisRegistrationAsync(
+        CourseEventDocument courseEvent,
+        CourseEventRegistrationDocument registration)
+    {
+        if (_runningAnalysisRegistrationAdapter is null)
+            return;
+
+        if (!string.Equals(courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        var course = await _repository.GetCourseAsync(courseEvent.CourseId)
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
+
+        await _runningAnalysisRegistrationAdapter.OnRegisteredAsync(course, courseEvent, registration);
     }
 
     private static string CreateCourseId(string name)

@@ -1,0 +1,148 @@
+@namespace PaceLetics.RunningAnalysisModule.Components
+
+<MudStack Spacing="3">
+    <MudPaper Elevation="0" Class="pa-4" Style="border:1px solid var(--mud-palette-lines-default);">
+        <MudStack Spacing="2">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                <MudText Typo="Typo.h6">@ParticipantName</MudText>
+                <MudChip T="string"
+                         Size="Size.Small"
+                         Color="@(IsOnline ? Color.Success : Color.Error)"
+                         Variant="Variant.Outlined">
+                    @(IsOnline ? "Online" : "Offline")
+                </MudChip>
+            </MudStack>
+
+            <div class="running-analysis-camera-frame">
+                @if (ChildContent is not null)
+                {
+                    @ChildContent
+                }
+                else
+                {
+                    <RunningAnalysisMediaRecorder @ref="_mediaRecorder"
+                                                  IsOnline="IsOnline"
+                                                  ShowControls="false"
+                                                  OnRecorded="OnRecorded"
+                                                  IsRecordingChanged="OnRecorderStateChangedAsync" />
+                }
+            </div>
+        </MudStack>
+    </MudPaper>
+
+    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+        <MudButton Variant="Variant.Text"
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   OnClick="OnBackToRoster">
+            List
+        </MudButton>
+
+        <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+            @if (!IsRecordingActive)
+            {
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           Disabled="@(!IsOnline)"
+                           StartIcon="@Icons.Material.Filled.FiberManualRecord"
+                           OnClick="StartRecordingAsync">
+                    Start
+                </MudButton>
+            }
+            else
+            {
+                <MudButton Color="Color.Error"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Stop"
+                           OnClick="StopRecordingAsync">
+                    Stop
+                </MudButton>
+            }
+
+            <MudButton Variant="Variant.Outlined"
+                       StartIcon="@Icons.Material.Filled.Replay"
+                       OnClick="OnRetake">
+                Again
+            </MudButton>
+
+            <MudButton Color="Color.Primary"
+                       Variant="Variant.Outlined"
+                       EndIcon="@Icons.Material.Filled.ArrowForward"
+                       OnClick="OnNextParticipant">
+                Next
+            </MudButton>
+        </MudStack>
+    </MudStack>
+</MudStack>
+
+<style>
+    .running-analysis-camera-frame {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--mud-palette-background-grey);
+        color: var(--mud-palette-text-secondary);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+</style>
+
+@code {
+    private RunningAnalysisMediaRecorder? _mediaRecorder;
+    private bool _recorderIsRecording;
+
+    [Parameter] public string ParticipantName { get; set; } = string.Empty;
+    [Parameter] public bool IsOnline { get; set; } = true;
+    [Parameter] public bool IsRecording { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback OnStartRecording { get; set; }
+    [Parameter] public EventCallback OnStopRecording { get; set; }
+    [Parameter] public EventCallback<RunningAnalysisRecordedVideo> OnRecorded { get; set; }
+    [Parameter] public EventCallback<bool> IsRecordingChanged { get; set; }
+    [Parameter] public EventCallback OnRetake { get; set; }
+    [Parameter] public EventCallback OnNextParticipant { get; set; }
+    [Parameter] public EventCallback OnBackToRoster { get; set; }
+
+    private bool IsRecordingActive => IsRecording || _recorderIsRecording;
+
+    private async Task StartRecordingAsync()
+    {
+        if (!IsOnline)
+            return;
+
+        await OnStartRecording.InvokeAsync();
+
+        if (_mediaRecorder is not null)
+        {
+            await _mediaRecorder.StartAsync();
+            return;
+        }
+
+        await OnRecorderStateChangedAsync(true);
+    }
+
+    private async Task StopRecordingAsync()
+    {
+        if (!IsRecordingActive)
+            return;
+
+        if (_mediaRecorder is not null)
+        {
+            await _mediaRecorder.StopAsync();
+        }
+        else
+        {
+            await OnRecorderStateChangedAsync(false);
+        }
+
+        await OnStopRecording.InvokeAsync();
+    }
+
+    private async Task OnRecorderStateChangedAsync(bool isRecording)
+    {
+        _recorderIsRecording = isRecording;
+        await IsRecordingChanged.InvokeAsync(isRecording);
+    }
+}

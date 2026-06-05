@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Drive.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PaceLetics.RunningAnalysisModule.CodeBase\PaceLetics.RunningAnalysisModule.CodeBase.csproj" />
+  </ItemGroup>
+
+</Project>

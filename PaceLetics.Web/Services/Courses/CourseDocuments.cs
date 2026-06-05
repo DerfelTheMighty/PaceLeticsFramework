@@ -22,6 +22,12 @@ public static class CourseEventRegistrationStatus
     public const string Cancelled = "cancelled";
 }
 
+public static class CourseEventTypes
+{
+    public const string General = "general";
+    public const string RunningAnalysis = "runningAnalysis";
+}
+
 public enum CourseLevel
 {
     Level0 = 0,
@@ -143,6 +149,7 @@ public sealed class CourseEventDocument : IQueryItem
     public string Id { get; set; } = string.Empty;
     public string CourseId { get; set; } = string.Empty;
     public string DocumentType { get; set; } = CourseDocumentTypes.Event;
+    public string EventType { get; set; } = CourseEventTypes.General;
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime StartsAt { get; set; }

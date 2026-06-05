@@ -17,6 +17,7 @@ using PaceLetics.AthleteModule.CodeBase.Services;
 using PaceLetics.AthleteModule.CodeBase.Interfaces;
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 using PaceLetics.Web.Configuration;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Repositories;
@@ -24,7 +25,11 @@ using PaceLetics.Web.ViewModels.Workouts;
 using PaceLetics.Web.Services.DashboardMessages;
 using PaceLetics.CoreModule.Infrastructure.Services;
 using PaceLetics.Web.Services.Courses;
+using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
+using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
+using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Services;
+using PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,6 +101,17 @@ builder.Services.Configure<TrainerVerificationOptions>(options =>
 });
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<ICourseRepository, CosmosCourseRepository>();
+builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName));
+builder.Services.AddScoped<CosmosRunningAnalysisRepository>();
+builder.Services.AddScoped<IRunningAnalysisRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
+builder.Services.AddScoped<IUserDriveFolderRegistry>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
+builder.Services.AddSingleton<IRunningAnalysisClock, SystemRunningAnalysisClock>();
+builder.Services.AddScoped<IRunningAnalysisStorageProvider>(x =>
+    new GoogleDriveRunningAnalysisStorageProvider(
+        x.GetRequiredService<IOptions<GoogleDriveRunningAnalysisOptions>>().Value));
+builder.Services.AddScoped<IRunningAnalysisService, RunningAnalysisService>();
+builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunningAnalysisRegistrationAdapter>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddScoped<ThemePreferenceService>();
