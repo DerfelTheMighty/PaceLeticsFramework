@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>个人资料</value></data>
+  <data name="Loading" xml:space="preserve"><value>正在加载个人资料</value></data>
+  <data name="Back" xml:space="preserve"><value>返回</value></data>
+  <data name="NotFoundTitle" xml:space="preserve"><value>未找到个人资料</value></data>
+  <data name="NotFoundSubtitle" xml:space="preserve"><value>此个人资料不可见或不存在。</value></data>
+  <data name="NotFoundDetail" xml:space="preserve"><value>打开个人资料概览或检查链接。</value></data>
+  <data name="Title" xml:space="preserve"><value>个人资料</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>可见的运动员和教练个人资料。</value></data>
+  <data name="MetricVisible" xml:space="preserve"><value>可见</value></data>
+  <data name="MetricVisibleDetail" xml:space="preserve"><value>公开个人资料</value></data>
+  <data name="MetricTrainers" xml:space="preserve"><value>教练</value></data>
+  <data name="MetricTrainersDetail" xml:space="preserve"><value>已验证的个人资料</value></data>
+  <data name="MetricAthletes" xml:space="preserve"><value>运动员</value></data>
+  <data name="MetricAthletesDetail" xml:space="preserve"><value>活跃个人资料</value></data>
+  <data name="RoleAthlete" xml:space="preserve"><value>运动员</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>教练</value></data>
+  <data name="NoProfilesTitle" xml:space="preserve"><value>没有公开个人资料</value></data>
+  <data name="NoProfilesDetail" xml:space="preserve"><value>当前没有可见的个人资料。</value></data>
+</root>

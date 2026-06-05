@@ -18,6 +18,8 @@
   <data name="MetricTrainersDetail" xml:space="preserve"><value>verifizierte Profile</value></data>
   <data name="MetricAthletes" xml:space="preserve"><value>Athlet:innen</value></data>
   <data name="MetricAthletesDetail" xml:space="preserve"><value>aktive Profile</value></data>
+  <data name="RoleAthlete" xml:space="preserve"><value>Athlet:in</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Trainer:in</value></data>
   <data name="NoProfilesTitle" xml:space="preserve"><value>Keine oeffentlichen Profile</value></data>
   <data name="NoProfilesDetail" xml:space="preserve"><value>Aktuell sind keine Profile sichtbar geschaltet.</value></data>
 </root>

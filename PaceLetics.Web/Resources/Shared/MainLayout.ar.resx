@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Theme" xml:space="preserve"><value>السمة</value></data>
+  <data name="ColorScheme" xml:space="preserve"><value>نظام الألوان</value></data>
+  <data name="Theme_PaceLetics" xml:space="preserve"><value>PaceLetics</value></data>
+  <data name="Theme_Ocean" xml:space="preserve"><value>المحيط</value></data>
+  <data name="Theme_Forest" xml:space="preserve"><value>الغابة</value></data>
+  <data name="Theme_HighContrast" xml:space="preserve"><value>تباين عالٍ</value></data>
+  <data name="Theme_Wildflowers" xml:space="preserve"><value>زهور برية</value></data>
+  <data name="Theme_Afterglow" xml:space="preserve"><value>وهج المساء</value></data>
+  <data name="Theme_DarkRomance" xml:space="preserve"><value>رومانسية داكنة</value></data>
+  <data name="Theme_Maritime" xml:space="preserve"><value>بحري</value></data>
+  <data name="Theme_Tropical" xml:space="preserve"><value>استوائي</value></data>
+  <data name="Theme_GoldenHour" xml:space="preserve"><value>الساعة الذهبية</value></data>
+  <data name="Theme_StellarForge" xml:space="preserve"><value>مسبك النجوم</value></data>
+  <data name="Theme_ElderVale" xml:space="preserve"><value>الوادي القديم</value></data>
+  <data name="Theme_SummitBlaze" xml:space="preserve"><value>وهج القمة</value></data>
+  <data name="Scheme_Light" xml:space="preserve"><value>فاتح</value></data>
+  <data name="Scheme_Dark" xml:space="preserve"><value>داكن</value></data>
+  <data name="Scheme_System" xml:space="preserve"><value>النظام</value></data>
+</root>

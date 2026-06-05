@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Profil</value></data>
+  <data name="Username" xml:space="preserve"><value>Brugernavn</value></data>
+  <data name="UsernamePlaceholder" xml:space="preserve"><value>Vælg dit brugernavn.</value></data>
+  <data name="Save" xml:space="preserve"><value>Gem</value></data>
+  <data name="BackToApp" xml:space="preserve"><value>Tilbage til appen</value></data>
+  <data name="Role" xml:space="preserve"><value>Rolle</value></data>
+  <data name="RequestTrainerRole" xml:space="preserve"><value>Anmod om trænerrolle</value></data>
+  <data name="RequestTrainerRoleDescription" xml:space="preserve"><value>En gyldig bekræftelseskode aktiverer trænerrollen ud over atletrollen.</value></data>
+  <data name="PublicUserName" xml:space="preserve"><value>Offentligt brugernavn</value></data>
+  <data name="ProfileImageUrl" xml:space="preserve"><value>Profilfoto-URL</value></data>
+  <data name="IsPublicProfileVisible" xml:space="preserve"><value>Offentlig profil synlig</value></data>
+  <data name="TrainerVerificationCode" xml:space="preserve"><value>Trænerbekræftelseskode</value></data>
+</root>

@@ -18,7 +18,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="@Localizer["UsernamePlaceholder"].Value" disabled />
-                <label asp-for="Username" class="form-label"></label>
+                <label class="form-label">@Localizer["Username"]</label>
             </div>
             <div class="form-floating mb-3">
                 <input value="@Model.Roles" class="form-control" placeholder="@Localizer["Role"]" disabled />

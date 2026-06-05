@@ -5,6 +5,7 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Title" xml:space="preserve"><value>Profil</value></data>
+  <data name="Username" xml:space="preserve"><value>Benutzername</value></data>
   <data name="UsernamePlaceholder" xml:space="preserve"><value>Bitte Benutzername wählen.</value></data>
   <data name="Save" xml:space="preserve"><value>Speichern</value></data>
   <data name="BackToApp" xml:space="preserve"><value>Zur Hauptansicht</value></data>

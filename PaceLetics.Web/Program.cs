@@ -27,6 +27,7 @@ using PaceLetics.CoreModule.Infrastructure.Services;
 using PaceLetics.Web.Services.Courses;
 using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
+using PaceLetics.Web.Localization;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Services;
 using PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
@@ -153,11 +154,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-var supportedCultures = new[] { "de", "en" };
 app.UseRequestLocalization(new RequestLocalizationOptions()
     .SetDefaultCulture("de")
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures));
+    .AddSupportedCultures(SupportedCultures.Codes)
+    .AddSupportedUICultures(SupportedCultures.Codes));
 
 app.UseAuthentication();
 app.UseAuthorization();

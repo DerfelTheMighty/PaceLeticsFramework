@@ -176,9 +176,14 @@
         return value.Trim().ToUpperInvariant();
     }
 
-    private static string GetRoleDisplayName(string role)
+    private string GetRoleDisplayName(string role)
     {
-        return ApplicationRoles.GetDisplayName(role);
+        return role switch
+        {
+            ApplicationRoles.Athlete => L["RoleAthlete"],
+            ApplicationRoles.Trainer => L["RoleTrainer"],
+            _ => role
+        };
     }
 
     private static string GetInitial(PublicProfileModel profile)

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Theme" xml:space="preserve"><value>Tema</value></data>
+  <data name="ColorScheme" xml:space="preserve"><value>Farveskema</value></data>
+  <data name="Theme_PaceLetics" xml:space="preserve"><value>PaceLetics</value></data>
+  <data name="Theme_Ocean" xml:space="preserve"><value>Hav</value></data>
+  <data name="Theme_Forest" xml:space="preserve"><value>Skov</value></data>
+  <data name="Theme_HighContrast" xml:space="preserve"><value>Høj kontrast</value></data>
+  <data name="Theme_Wildflowers" xml:space="preserve"><value>Vilde blomster</value></data>
+  <data name="Theme_Afterglow" xml:space="preserve"><value>Efterglød</value></data>
+  <data name="Theme_DarkRomance" xml:space="preserve"><value>Mørk romance</value></data>
+  <data name="Theme_Maritime" xml:space="preserve"><value>Maritim</value></data>
+  <data name="Theme_Tropical" xml:space="preserve"><value>Tropisk</value></data>
+  <data name="Theme_GoldenHour" xml:space="preserve"><value>Gylden time</value></data>
+  <data name="Theme_StellarForge" xml:space="preserve"><value>Stjernesmedje</value></data>
+  <data name="Theme_ElderVale" xml:space="preserve"><value>Ældgammel dal</value></data>
+  <data name="Theme_SummitBlaze" xml:space="preserve"><value>Topglød</value></data>
+  <data name="Scheme_Light" xml:space="preserve"><value>Lys</value></data>
+  <data name="Scheme_Dark" xml:space="preserve"><value>Mørk</value></data>
+  <data name="Scheme_System" xml:space="preserve"><value>System</value></data>
+</root>

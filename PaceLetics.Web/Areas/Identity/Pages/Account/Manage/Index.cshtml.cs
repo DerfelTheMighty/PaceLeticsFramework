@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AthleteDataAccessLibrary.Contracts;
 using Microsoft.AspNetCore.Identity;
@@ -60,7 +61,6 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [StringLength(64, MinimumLength = 3)]
-            [RegularExpression(@"[A-Za-z0-9._-]+", ErrorMessage = "Der oeffentliche Nutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.")]
             [Display(Name = "Oeffentlicher Nutzername")]
             public string PublicUserName { get; set; }
 
@@ -118,7 +118,11 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             var publicUserName = Input.PublicUserName?.Trim();
             if (!string.IsNullOrWhiteSpace(publicUserName))
             {
-                if (await PublicUserNameExistsAsync(publicUserName, user.Id))
+                if (!IsPublicUserNameFormatValid(publicUserName))
+                {
+                    ModelState.AddModelError("Input.PublicUserName", _localizer["PublicUserNameCharacters"]);
+                }
+                else if (await PublicUserNameExistsAsync(publicUserName, user.Id))
                 {
                     ModelState.AddModelError("Input.PublicUserName", _localizer["PublicUserNameExists"]);
                 }
@@ -331,6 +335,11 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         private static string NormalizePublicUserName(string value)
         {
             return value.Trim().ToUpperInvariant();
+        }
+
+        private static bool IsPublicUserNameFormatValid(string value)
+        {
+            return Regex.IsMatch(value, @"\A[A-Za-z0-9._-]+\z");
         }
     }
 }

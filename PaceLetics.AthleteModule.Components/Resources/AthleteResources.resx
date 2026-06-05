@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="VdotCard_Title" xml:space="preserve"><value>Your VDOT</value></data>
+  <data name="VdotCard_Description" xml:space="preserve"><value>Great! From your reference race we can determine your individual VDOT. This forms the basis for your personal training zones.</value></data>
+  <data name="RaceCard_Result" xml:space="preserve"><value>Result:</value></data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>More info</value></data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Easy Pace (E-Pace)</value></data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Your easy run pace. Run at this pace for recovery or easy training. It builds aerobic endurance and aids recovery.</value></data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Marathon Pace (M-Pace)</value></data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Your marathon pace. Training in this zone improves your ability to maintain a steady pace over long distances.</value></data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Threshold Pace (T-Pace)</value></data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Your threshold pace. Training in this zone improves your lactate threshold and helps you run faster without accumulating too much lactic acid.</value></data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>Interval Pace (I-Pace)</value></data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>Your interval pace. Short, intense efforts in this zone improve your maximum oxygen uptake (VO2max).</value></data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Repetition Pace (R-Pace)</value></data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Your repetition pace. Very short, fast runs at this pace improve your running economy and speed.</value></data>
+  <data name="AddRaceDialog_Title" xml:space="preserve"><value>New Race</value></data>
+  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Name</value></data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Distance</value></data>
+  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Race time</value></data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
+  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Attention</value></data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Please check that the race time is in the correct format (hh:mm:ss).</value></data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>Ok</value></data>
+</root>

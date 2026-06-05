@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Legal Notice</value></data>
+  <data name="Intro" xml:space="preserve"><value>Information pursuant to Section 5 of the German Digital Services Act (Digitale-Dienste-Gesetz, DDG).</value></data>
+  <data name="ProviderHeading" xml:space="preserve"><value>Service provider</value></data>
+  <data name="Country" xml:space="preserve"><value>Germany</value></data>
+  <data name="Phone" xml:space="preserve"><value>Phone</value></data>
+  <data name="EmailLabel" xml:space="preserve"><value>Email</value></data>
+  <data name="ResponsibleHeading" xml:space="preserve"><value>Responsible for content</value></data>
+  <data name="ResponsibleText" xml:space="preserve"><value>The person responsible for the content of this website is</value></data>
+  <data name="TaxHeading" xml:space="preserve"><value>Register and tax information</value></data>
+  <data name="VatId" xml:space="preserve"><value>VAT identification number</value></data>
+  <data name="VatIdNotProvided" xml:space="preserve"><value>Not assigned or not applicable.</value></data>
+  <data name="RegisterEntry" xml:space="preserve"><value>Commercial register entry</value></data>
+  <data name="RegisterEntryNotProvided" xml:space="preserve"><value>No commercial register entry.</value></data>
+  <data name="DisputeHeading" xml:space="preserve"><value>Consumer dispute resolution</value></data>
+  <data name="DisputeText" xml:space="preserve"><value>The service provider is neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board, unless a mandatory statutory obligation applies.</value></data>
+  <data name="LiabilityHeading" xml:space="preserve"><value>Liability for content and links</value></data>
+  <data name="LiabilityOwnContent" xml:space="preserve"><value>The content on this website has been prepared with reasonable care. As a service provider, the provider is responsible for its own content in accordance with the general laws.</value></data>
+  <data name="LiabilityLinks" xml:space="preserve"><value>This website may contain links to external third-party websites. The provider has no influence on their current or future content. Linked pages are reviewed for obvious legal violations when the link is created. If legal violations become known, such links will be removed promptly.</value></data>
+  <data name="CopyrightHeading" xml:space="preserve"><value>Copyright</value></data>
+  <data name="CopyrightText" xml:space="preserve"><value>The content and works created by the provider on this website are subject to German copyright law. Reproduction, editing, distribution or any use beyond the limits of copyright law requires prior consent, unless the use is expressly permitted by law.</value></data>
+  <data name="PrivacyHeading" xml:space="preserve"><value>Privacy</value></data>
+  <data name="PrivacyText" xml:space="preserve"><value>This legal notice does not replace the privacy policy. Information on the processing of personal data is provided in the privacy policy of this website.</value></data>
+</root>

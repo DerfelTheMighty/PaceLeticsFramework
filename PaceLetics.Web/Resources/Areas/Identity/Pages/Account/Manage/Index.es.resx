@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Perfil</value></data>
+  <data name="Username" xml:space="preserve"><value>Nombre de usuario</value></data>
+  <data name="UsernamePlaceholder" xml:space="preserve"><value>Elige tu nombre de usuario.</value></data>
+  <data name="Save" xml:space="preserve"><value>Guardar</value></data>
+  <data name="BackToApp" xml:space="preserve"><value>Volver a la app</value></data>
+  <data name="Role" xml:space="preserve"><value>Rol</value></data>
+  <data name="RequestTrainerRole" xml:space="preserve"><value>Solicitar rol de entrenador</value></data>
+  <data name="RequestTrainerRoleDescription" xml:space="preserve"><value>Un código de verificación válido activa el rol de entrenador además del rol de atleta.</value></data>
+  <data name="PublicUserName" xml:space="preserve"><value>Nombre de usuario público</value></data>
+  <data name="ProfileImageUrl" xml:space="preserve"><value>URL de foto de perfil</value></data>
+  <data name="IsPublicProfileVisible" xml:space="preserve"><value>Perfil público visible</value></data>
+  <data name="TrainerVerificationCode" xml:space="preserve"><value>Código de verificación de entrenador</value></data>
+</root>

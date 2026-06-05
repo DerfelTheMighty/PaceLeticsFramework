@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ProfileUpdated" xml:space="preserve"><value>Votre profil a été mis à jour.</value></data>
+  <data name="PublicUserNameCharacters" xml:space="preserve"><value>Le nom d’utilisateur public ne peut contenir que des lettres, chiffres, points, traits de soulignement et traits d’union.</value></data>
+  <data name="PublicUserNameExists" xml:space="preserve"><value>Ce nom d’utilisateur public est déjà pris.</value></data>
+  <data name="RoleAthlete" xml:space="preserve"><value>Athlète</value></data>
+  <data name="RoleTrainer" xml:space="preserve"><value>Coach</value></data>
+  <data name="TrainerVerificationInvalid" xml:space="preserve"><value>Le code de vérification coach est invalide.</value></data>
+  <data name="TrainerVerificationNotConfigured" xml:space="preserve"><value>La vérification coach n’est pas encore configurée.</value></data>
+</root>

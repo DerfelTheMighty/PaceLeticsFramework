@@ -1,27 +1,27 @@
-# PR Report: Theme Management and Course UI Improvements
+# PR Report: Localization Language Expansion
 
 ## Summary
-- Added full app theme management with selectable theme presets and Light/Dark/System color schemes.
-- Added centralized theme persistence via `localStorage` and system dark-mode observation.
-- Improved athlete course UI with smaller joined-course cards and icon-only registration/deregistration actions.
-- Reworked course levels to use a `CourseLevel` enum for creation while keeping stored course documents backward-compatible.
-- Improved the training-plan empty state with a localized message box and icon link to course selection.
+- Added Turkish, Danish, Arabic, Russian, French, Chinese, Spanish, and Persian to the supported app cultures.
+- Reworked the language selector to render from a shared culture catalog instead of hard-coded German/English entries.
+- Added right-to-left document direction support for Arabic and Persian in both the Blazor host and Identity layout.
+- Localized visible profile role labels such as athlete and coach, including the profile overview and account management area.
+- Added controlled English fallback resource files so newly supported cultures resolve text instead of showing raw resource keys.
 
 ## Main Areas Changed
-- Theme service and presets: `PaceLetics.Web/Services/Theming/*`
-- App shell theme menu: `PaceLetics.Web/Shared/MainLayout.razor`
-- Theme localization: `PaceLetics.Web/Resources/Shared/MainLayout.*.resx`
-- Course overview UI: `PaceLetics.Web/Pages/Athletes/MyCourses.razor`
-- Trainer course creation: `PaceLetics.Web/Pages/Trainers/CourseManagement.razor`
-- Course level model and formatting: `PaceLetics.Web/Services/Courses/CourseDocuments.cs`
-- Course creation normalization: `PaceLetics.Web/Services/Courses/CourseService.cs`
-- Training-plan empty state localization: `PaceLetics.Web/Pages/Athletes/TrainingPlanPage.razor`
+- Supported culture catalog: `PaceLetics.Web/Localization/*`
+- Request localization registration: `PaceLetics.Web/Program.cs`
+- Language menu: `PaceLetics.Web/Shared/CultureSelector.razor`
+- HTML language and direction metadata: `PaceLetics.Web/Pages/_Host.cshtml`, `PaceLetics.Web/Pages/Shared/_Layout.cshtml`
+- Profile role localization: `PaceLetics.Web/Pages/Profiles.razor`, `PaceLetics.Web/Resources/Pages/Profiles.*.resx`
+- Account profile localization and validation messaging: `PaceLetics.Web/Areas/Identity/Pages/Account/Manage/Index.cshtml*`
+- Localization fallback resources: neutral `.resx` files copied from existing English resources.
+- New translated resource files for core surfaces: app title fallback, navigation, layout theme labels, profile overview, and account profile management.
 
 ## Verification
-- `dotnet build PaceLetics.Web\PaceLetics.Web.csproj --no-restore -p:OutputPath=..\artifacts\verify-build\PaceLetics.Web\` succeeded.
-- `dotnet test PaceLetics.Tests\PaceLetics.Tests.csproj --no-restore --filter CourseServiceTests -p:OutputPath=..\artifacts\verify-test\bin\ -p:BaseIntermediateOutputPath=..\artifacts\verify-test\obj\` succeeded.
+- `dotnet test PaceLeticsFramework.sln` succeeded.
+- Browser smoke check confirmed `culture=ar&ui-culture=ar` renders the Identity layout with `lang="ar"` and `dir="rtl"`.
 
 ## Notes
-- Standard build/test output paths can be locked while the local `PaceLetics.Web` dev server is running, so verification used isolated output folders.
+- The new cultures use English fallback resources for screens that do not yet have full native translations. This prevents missing-resource keys from appearing while keeping future translation work incremental.
 - Existing package vulnerability warnings for `OpenMcdf` and `SharpCompress` remain unrelated to this change.
-- Browser smoke testing reached the local app, but unauthenticated requests redirect to the Identity login page because the local Identity database was unavailable.
+- German course seed content still exists in `CourseSeedData.cs`; that is seeded course data rather than profile UI localization.
