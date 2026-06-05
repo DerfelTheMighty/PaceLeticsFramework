@@ -1,18 +1,19 @@
-﻿@using AthleteDataAccessLibrary;
+@using AthleteDataAccessLibrary;
 @using AthleteDataAccessLibrary.Contracts;
 @using PaceLetics.AthleteModule.CodeBase.Models;
 
 @inject IAthleteData _ad;
+@inject IStringLocalizer<AthleteListView> L
 
-<h3>AthleteListView</h3>
+<h3>@L["Title"]</h3>
 
 <DataGridView Athletes="@athletes"></DataGridView>
 
 @code {
-	private IList<AthleteModel>? athletes;
+    private IList<AthleteModel>? athletes;
 
-	protected override async Task OnInitializedAsync()
-	{
-		athletes = await _ad.GetAthletes();
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        athletes = await _ad.GetAthletes();
+    }
 }

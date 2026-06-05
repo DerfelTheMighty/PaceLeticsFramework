@@ -1,4 +1,5 @@
-﻿@using System.Globalization
+@using System.Globalization
+@inject IStringLocalizer<App> L
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
@@ -7,7 +8,7 @@
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
-            <PageTitle>Not found</PageTitle>
+            <PageTitle>@L["NotFoundTitle"]</PageTitle>
             <LayoutView Layout="@typeof(MainLayout)">
                 <p role="alert"></p>
             </LayoutView>

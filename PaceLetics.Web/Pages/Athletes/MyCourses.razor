@@ -5,17 +5,18 @@
 @inject ICourseService CourseService
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
+@inject IStringLocalizer<MyCourses> L
 
-<PageTitle>Meine Kurse</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
     @if (_isLoading)
     {
-        <LoadingScreen Label="Kurse werden geladen" />
+        <LoadingScreen Label="@L["Loading"]" />
     }
     else
     {
-        <PageHeader Title="Meine Kurse" Subtitle="Kursbeitritte, Termine und Events" />
+        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
 
@@ -26,7 +27,7 @@
 
         @if (_courses.Count == 0)
         {
-            <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Kurse veroeffentlicht.</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoPublishedCourses"]</MudText>
         }
         else
         {
@@ -59,7 +60,7 @@
                                 <MudStack Spacing="0">
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatShortPeriod(course)</MudText>
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                        @(nextDate is null ? "Kein kommender Termin" : $"{nextDate.StartsAt:dd.MM. HH:mm} Uhr")
+                                        @FormatUpcomingDate(nextDate)
                                     </MudText>
                                 </MudStack>
 
@@ -70,7 +71,7 @@
                                            Variant="Variant.Outlined"
                                            StartIcon="@Icons.Material.Filled.Logout"
                                            OnClick="@(() => LeaveCourseAsync(course.Id, course.Name))">
-                                    Austreten
+                                    @L["Leave"]
                                 </MudButton>
                             </MudStack>
                         </MudPaper>
@@ -82,14 +83,14 @@
                               @onclick="OpenCoursePicker">
                         <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Style="height:100%; gap:8px;">
                             <MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" Size="Size.Large" />
-                            <MudText Typo="Typo.body2" Color="Color.Primary">Kurs hinzufuegen</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Primary">@L["AddCourse"]</MudText>
                         </MudStack>
                     </MudPaper>
                 </div>
 
                 @if (joinedCourses.Count == 0)
                 {
-                    <MudText Typo="Typo.body2" Color="Color.Secondary">Du bist noch keinem Kurs beigetreten.</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoJoinedCourses"]</MudText>
                 }
 
                 @if (_isCoursePickerOpen)
@@ -98,13 +99,13 @@
                         <MudPaper Elevation="8" Class="pa-4" Style="width:min(560px, 100%); max-height:min(720px, 88vh); overflow:auto;" @onclick:stopPropagation="true">
                             <MudStack Spacing="3">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                    <MudText Typo="Typo.h6">Kurs hinzufuegen</MudText>
+                                    <MudText Typo="Typo.h6">@L["AddCourse"]</MudText>
                                     <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseCoursePicker" />
                                 </MudStack>
 
                                 @if (availableCourses.Count == 0)
                                 {
-                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine weiteren Kurse verfuegbar.</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoAvailableCourses"]</MudText>
                                 }
                                 else
                                 {
@@ -123,7 +124,7 @@
                                                         </MudStack>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatShortPeriod(course)</MudText>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                                            @(nextDate is null ? "Kein kommender Termin" : $"{nextDate.StartsAt:dd.MM. HH:mm} Uhr")
+                                                            @FormatUpcomingDate(nextDate)
                                                         </MudText>
                                                     </MudStack>
                                                     <MudButton Size="Size.Small"
@@ -131,7 +132,7 @@
                                                                Variant="Variant.Filled"
                                                                StartIcon="@Icons.Material.Filled.HowToReg"
                                                                OnClick="@(() => JoinCourseAsync(course.Id))">
-                                                        Beitreten
+                                                        @L["Join"]
                                                     </MudButton>
                                                 </MudStack>
                                             </div>
@@ -158,7 +159,7 @@
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
                                     <MudText Typo="Typo.h6">@course.Name</MudText>
                                     <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@course.Level</MudChip>
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">Beigetreten</MudChip>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">@L["Joined"]</MudChip>
                                 </MudStack>
                                 <MudText Typo="Typo.body2" Color="Color.Secondary" Style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
                                     @course.Description
@@ -168,21 +169,21 @@
 
                             <section>
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                    <MudText Typo="Typo.subtitle2">Termine</MudText>
+                                    <MudText Typo="Typo.subtitle2">@L["Dates"]</MudText>
                                     @if (upcomingDates.Count > 1)
                                     {
                                         <MudButton Size="Size.Small"
                                                    Variant="Variant.Text"
                                                    Color="Color.Primary"
                                                    OnClick="@(() => _showAllDates = !_showAllDates)">
-                                            @(_showAllDates ? "Weniger" : "Alle")
+                                            @(_showAllDates ? L["ShowLess"] : L["ShowAll"])
                                         </MudButton>
                                     }
                                 </MudStack>
 
                                 @if (upcomingDates.Count == 0)
                                 {
-                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Keine kommenden Termine.</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoUpcomingDates"]</MudText>
                                 }
                                 else
                                 {
@@ -210,14 +211,14 @@
                                                    Variant="Variant.Text"
                                                    Color="Color.Primary"
                                                    OnClick="@(() => _showAllEvents = !_showAllEvents)">
-                                            @(_showAllEvents ? "Weniger" : "Alle")
+                                            @(_showAllEvents ? L["ShowLess"] : L["ShowAll"])
                                         </MudButton>
                                     }
                                 </MudStack>
 
                                 @if (courseEvents.Count == 0)
                                 {
-                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Events eingestellt.</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoEvents"]</MudText>
                                 }
                                 else
                                 {
@@ -236,7 +237,7 @@
                                                                Variant="Variant.Outlined"
                                                                StartIcon="@Icons.Material.Filled.EventBusy"
                                                                OnClick="@(() => CancelEventRegistrationAsync(course.Id, courseEvent.Id))">
-                                                        Abmelden
+                                                        @L["CancelRegistration"]
                                                     </MudButton>
                                                 }
                                                 else
@@ -246,7 +247,7 @@
                                                                Variant="Variant.Filled"
                                                                StartIcon="@Icons.Material.Filled.EventAvailable"
                                                                OnClick="@(() => RegisterForEventAsync(course.Id, courseEvent.Id))">
-                                                        Anmelden
+                                                        @L["Register"]
                                                     </MudButton>
                                                 }
                                             </div>
@@ -257,21 +258,21 @@
 
                             <section>
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                    <MudText Typo="Typo.subtitle2">Trainingsplaene</MudText>
+                                    <MudText Typo="Typo.subtitle2">@L["TrainingPlans"]</MudText>
                                     @if (trainingPlanPublications.Count > 2)
                                     {
                                         <MudButton Size="Size.Small"
                                                    Variant="Variant.Text"
                                                    Color="Color.Primary"
                                                    OnClick="@(() => _showAllTrainingPlans = !_showAllTrainingPlans)">
-                                            @(_showAllTrainingPlans ? "Weniger" : "Alle")
+                                            @(_showAllTrainingPlans ? L["ShowLess"] : L["ShowAll"])
                                         </MudButton>
                                     }
                                 </MudStack>
 
                                 @if (trainingPlanPublications.Count == 0)
                                 {
-                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Trainingsplaene veroeffentlicht.</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoTrainingPlans"]</MudText>
                                 }
                                 else
                                 {
@@ -365,7 +366,7 @@
         }
         catch
         {
-            _errorMessage = "Die Kurse konnten nicht aus Cosmos DB geladen werden.";
+            _errorMessage = L["LoadError"];
             _courses = Array.Empty<CourseOverview>();
             _selectedCourseId = null;
             ResetDetailExpansion();
@@ -401,7 +402,7 @@
         {
             _selectedCourseId = courseId;
             await CourseService.JoinCourseAsync(courseId, _userId ?? string.Empty);
-            Snackbar.Add("Du bist dem Kurs beigetreten.", Severity.Success);
+            Snackbar.Add(L["JoinSuccess"], Severity.Success);
             _isCoursePickerOpen = false;
             ResetDetailExpansion();
             await LoadCoursesAsync();
@@ -416,13 +417,13 @@
     {
         try
         {
-            var confirmed = await JS.InvokeAsync<bool>("confirm", $"Aus \"{courseName}\" austreten?");
+            var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["LeaveConfirm"], courseName));
             if (!confirmed)
                 return;
 
             _selectedCourseId = courseId;
             await CourseService.LeaveCourseAsync(courseId, _userId ?? string.Empty);
-            Snackbar.Add("Du bist aus dem Kurs ausgetreten.", Severity.Success);
+            Snackbar.Add(L["LeaveSuccess"], Severity.Success);
             ResetDetailExpansion();
             await LoadCoursesAsync();
         }
@@ -438,7 +439,7 @@
         {
             await CourseService.RegisterForEventAsync(courseId, eventId, _userId ?? string.Empty);
             await LoadCoursesAsync();
-            Snackbar.Add("Du bist fuer das Event angemeldet.", Severity.Success);
+            Snackbar.Add(L["RegisterSuccess"], Severity.Success);
         }
         catch (Exception ex)
         {
@@ -452,7 +453,7 @@
         {
             await CourseService.CancelEventRegistrationAsync(courseId, eventId, _userId ?? string.Empty);
             await LoadCoursesAsync();
-            Snackbar.Add("Du bist fuer das Event abgemeldet.", Severity.Success);
+            Snackbar.Add(L["CancelRegistrationSuccess"], Severity.Success);
         }
         catch (Exception ex)
         {
@@ -516,23 +517,30 @@
         return "flex:0 0 132px; width:132px; min-height:178px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:1px dashed var(--mud-palette-primary);";
     }
 
-    private static string FormatPeriod(CourseDocument course)
+    private string FormatPeriod(CourseDocument course)
     {
-        return $"{course.StartDate:dd.MM.yyyy} bis {course.EndDate:dd.MM.yyyy}";
+        return string.Format(L["Period"], course.StartDate, course.EndDate);
     }
 
-    private static string FormatShortPeriod(CourseDocument course)
+    private string FormatShortPeriod(CourseDocument course)
     {
-        return $"{course.StartDate:dd.MM.} bis {course.EndDate:dd.MM.}";
+        return string.Format(L["ShortPeriod"], course.StartDate, course.EndDate);
     }
 
-    private static string FormatTimeRange(CourseDateDocument date)
+    private string FormatTimeRange(CourseDateDocument date)
     {
-        return $"{date.StartsAt:HH:mm} bis {date.EndsAt:HH:mm} Uhr";
+        return string.Format(L["TimeRange"], date.StartsAt, date.EndsAt);
     }
 
-    private static string FormatEventDate(CourseEventDocument courseEvent)
+    private string FormatEventDate(CourseEventDocument courseEvent)
     {
-        return $"{courseEvent.StartsAt:dd.MM.yyyy HH:mm} bis {courseEvent.EndsAt:HH:mm} Uhr";
+        return string.Format(L["EventDate"], courseEvent.StartsAt, courseEvent.EndsAt);
+    }
+
+    private string FormatUpcomingDate(CourseDateDocument? date)
+    {
+        return date is null
+            ? L["NoUpcomingDate"]
+            : string.Format(L["UpcomingDate"], date.StartsAt);
     }
 }

@@ -35,4 +35,10 @@
   <data name="Level_Moderate" xml:space="preserve"><value>Moderate</value></data>
   <data name="Level_Advanced" xml:space="preserve"><value>Advanced</value></data>
   <data name="Level_Epic" xml:space="preserve"><value>Epic</value></data>
+  <data name="TopBar_Start" xml:space="preserve"><value>Start</value></data>
+  <data name="TopBar_Pause" xml:space="preserve"><value>Pause</value></data>
+  <data name="TopBar_Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="WorkoutView_NoWorkout" xml:space="preserve"><value>No workout loaded.</value></data>
+  <data name="FinishedDialog_Confirm" xml:space="preserve"><value>Yes!</value></data>
+  <data name="TrainingCard_Title" xml:space="preserve"><value>Training</value></data>
 </root>

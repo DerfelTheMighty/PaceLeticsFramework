@@ -1,32 +1,33 @@
-﻿@using PaceLetics.AthleteModule.CodeBase.Models;
+@using PaceLetics.AthleteModule.CodeBase.Models;
+@inject IStringLocalizer<DataGridView> L
 
 @if (Athletes == null)
 {
-	<p><em>Loading...</em></p>
+    <p><em>@L["Loading"]</em></p>
 }
 else
 {
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Vdot</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach(var athlete in Athletes)
-			{
-				<tr>
-					<td>@athlete.Name</td>
-					<td>@athlete.Vdot</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@L["Name"]</th>
+                <th>Vdot</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var athlete in Athletes)
+            {
+                <tr>
+                    <td>@athlete.Name</td>
+                    <td>@athlete.Vdot</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 @code {
-	[Parameter]
-	public IList<AthleteModel> Athletes{ get; set; } = new List<AthleteModel>();
+    [Parameter]
+    public IList<AthleteModel> Athletes{ get; set; } = new List<AthleteModel>();
 
 }

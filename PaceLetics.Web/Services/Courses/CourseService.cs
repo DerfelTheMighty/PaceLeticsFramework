@@ -1,12 +1,16 @@
+using Microsoft.Extensions.Localization;
+
 namespace PaceLetics.Web.Services.Courses;
 
 public sealed class CourseService : ICourseService
 {
     private readonly ICourseRepository _repository;
+    private readonly IStringLocalizer<CourseService>? _localizer;
 
-    public CourseService(ICourseRepository repository)
+    public CourseService(ICourseRepository repository, IStringLocalizer<CourseService>? localizer = null)
     {
         _repository = repository;
+        _localizer = localizer;
     }
 
     public async Task<IReadOnlyList<CourseOverview>> GetCoursesForAthleteAsync(string athleteUserId)
@@ -73,13 +77,13 @@ public sealed class CourseService : ICourseService
             throw new ArgumentNullException(nameof(request));
 
         if (string.IsNullOrWhiteSpace(creatorTrainerUserId))
-            throw new InvalidOperationException("Ein Kurs braucht eine angemeldete Trainer:in.");
+            throw new InvalidOperationException(Text("CreateCourseTrainerRequired", "Ein Kurs braucht eine angemeldete Trainer:in."));
 
         if (string.IsNullOrWhiteSpace(request.Name))
-            throw new InvalidOperationException("Ein Kurs braucht einen Namen.");
+            throw new InvalidOperationException(Text("CreateCourseNameRequired", "Ein Kurs braucht einen Namen."));
 
         if (request.EndDate.Date < request.StartDate.Date)
-            throw new InvalidOperationException("Das Kursende darf nicht vor dem Kursstart liegen.");
+            throw new InvalidOperationException(Text("CreateCourseEndBeforeStart", "Das Kursende darf nicht vor dem Kursstart liegen."));
 
         var courseId = CreateCourseId(request.Name);
         var now = DateTime.UtcNow;
@@ -102,7 +106,7 @@ public sealed class CourseService : ICourseService
                 {
                     TrainerUserId = creatorTrainerUserId,
                     DisplayName = NormalizeDisplayName(creatorDisplayName, creatorTrainerUserId),
-                    Role = "Kursleitung",
+                    Role = Text("RoleCourseLead", "Kursleitung"),
                     CanManagePlans = true,
                     CanManageEvents = true,
                     CanManageMembers = true
@@ -117,10 +121,10 @@ public sealed class CourseService : ICourseService
     public async Task DeleteCourseAsync(string courseId, string requestingTrainerUserId)
     {
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         if (course.CreatedByTrainerUserId != requestingTrainerUserId)
-            throw new InvalidOperationException("Nur die Trainer:in, die den Kurs erstellt hat, kann ihn loeschen.");
+            throw new InvalidOperationException(Text("DeleteCourseCreatorOnly", "Nur die Trainer:in, die den Kurs erstellt hat, kann ihn loeschen."));
 
         await _repository.DeleteCourseAsync(course.Id);
     }
@@ -128,10 +132,10 @@ public sealed class CourseService : ICourseService
     public async Task<CourseEnrollmentDocument> JoinCourseAsync(string courseId, string athleteUserId)
     {
         if (string.IsNullOrWhiteSpace(athleteUserId))
-            throw new InvalidOperationException("Ein Kursbeitritt erfordert eine angemeldete Athlet:in.");
+            throw new InvalidOperationException(Text("JoinCourseAthleteRequired", "Ein Kursbeitritt erfordert eine angemeldete Athlet:in."));
 
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         var existing = await _repository.GetEnrollmentAsync(course.Id, athleteUserId);
         var enrollment = existing ?? new CourseEnrollmentDocument
@@ -154,13 +158,13 @@ public sealed class CourseService : ICourseService
     public async Task<CourseEnrollmentDocument> LeaveCourseAsync(string courseId, string athleteUserId)
     {
         if (string.IsNullOrWhiteSpace(athleteUserId))
-            throw new InvalidOperationException("Ein Kursaustritt erfordert eine angemeldete Athlet:in.");
+            throw new InvalidOperationException(Text("LeaveCourseAthleteRequired", "Ein Kursaustritt erfordert eine angemeldete Athlet:in."));
 
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         var enrollment = await _repository.GetEnrollmentAsync(course.Id, athleteUserId)
-            ?? throw new InvalidOperationException("Du bist diesem Kurs nicht beigetreten.");
+            ?? throw new InvalidOperationException(Text("LeaveCourseNotJoined", "Du bist diesem Kurs nicht beigetreten."));
 
         var cancelledAt = DateTime.UtcNow;
         enrollment.Status = CourseEnrollmentStatus.Cancelled;
@@ -175,7 +179,7 @@ public sealed class CourseService : ICourseService
     public async Task AssignTrainerAsync(string courseId, string trainerUserId, string displayName)
     {
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         course.Trainers.RemoveAll(trainer => trainer.TrainerUserId == trainerUserId);
         course.Trainers.Add(new CourseTrainerDocument
@@ -194,10 +198,10 @@ public sealed class CourseService : ICourseService
         string requestingTrainerUserId)
     {
         if (string.IsNullOrWhiteSpace(trainerUserId))
-            throw new InvalidOperationException("Bitte eine Trainer:in auswaehlen.");
+            throw new InvalidOperationException(Text("AddTrainerRequired", "Bitte eine Trainer:in auswaehlen."));
 
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequireTrainerManagement(course, requestingTrainerUserId);
 
@@ -206,7 +210,7 @@ public sealed class CourseService : ICourseService
         {
             TrainerUserId = trainerUserId,
             DisplayName = NormalizeDisplayName(displayName, trainerUserId),
-            Role = "Trainer:in",
+            Role = Text("RoleTrainer", "Trainer:in"),
             CanManagePlans = true,
             CanManageEvents = true,
             CanManageMembers = true
@@ -218,17 +222,17 @@ public sealed class CourseService : ICourseService
     public async Task RemoveTrainerAsync(string courseId, string trainerUserId, string requestingTrainerUserId)
     {
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         if (course.CreatedByTrainerUserId == trainerUserId)
-            throw new InvalidOperationException("Die Kursleitung kann den Kurs loeschen, aber nicht austreten.");
+            throw new InvalidOperationException(Text("RemoveTrainerLeadCannotLeave", "Die Kursleitung kann den Kurs loeschen, aber nicht austreten."));
 
         if (trainerUserId != requestingTrainerUserId)
             RequireTrainerManagement(course, requestingTrainerUserId);
 
         var removed = course.Trainers.RemoveAll(trainer => trainer.TrainerUserId == trainerUserId);
         if (removed == 0)
-            throw new InvalidOperationException("Diese Trainer:in ist dem Kurs nicht zugeordnet.");
+            throw new InvalidOperationException(Text("RemoveTrainerNotAssigned", "Diese Trainer:in ist dem Kurs nicht zugeordnet."));
 
         await _repository.UpsertCourseAsync(course);
     }
@@ -243,13 +247,13 @@ public sealed class CourseService : ICourseService
         string notes = "")
     {
         if (string.IsNullOrWhiteSpace(title))
-            throw new InvalidOperationException("Ein Termin braucht einen Titel.");
+            throw new InvalidOperationException(Text("DateTitleRequired", "Ein Termin braucht einen Titel."));
 
         if (endsAt <= startsAt)
-            throw new InvalidOperationException("Das Termin-Ende muss nach dem Start liegen.");
+            throw new InvalidOperationException(Text("DateEndAfterStart", "Das Termin-Ende muss nach dem Start liegen."));
 
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequireEventManagement(course, requestingTrainerUserId);
 
@@ -273,13 +277,13 @@ public sealed class CourseService : ICourseService
     public async Task RemoveCourseDateAsync(string courseId, string dateId, string requestingTrainerUserId)
     {
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequireEventManagement(course, requestingTrainerUserId);
 
         var removed = course.Dates.RemoveAll(date => date.Id == dateId);
         if (removed == 0)
-            throw new InvalidOperationException("Der Termin wurde nicht gefunden.");
+            throw new InvalidOperationException(Text("DateNotFound", "Der Termin wurde nicht gefunden."));
 
         await _repository.UpsertCourseAsync(course);
     }
@@ -287,10 +291,10 @@ public sealed class CourseService : ICourseService
     public async Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null)
     {
         if (string.IsNullOrWhiteSpace(trainingPlanId))
-            throw new InvalidOperationException("Bitte einen Trainingsplan auswaehlen.");
+            throw new InvalidOperationException(Text("TrainingPlanRequired", "Bitte einen Trainingsplan auswaehlen."));
 
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequirePlanManagement(course, publishedByUserId);
 
@@ -321,13 +325,13 @@ public sealed class CourseService : ICourseService
     public async Task RemoveTrainingPlanPublicationAsync(string courseId, string trainingPlanId, string requestingTrainerUserId)
     {
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequirePlanManagement(course, requestingTrainerUserId);
 
         var removed = course.TrainingPlanPublications.RemoveAll(publication => publication.TrainingPlanId == trainingPlanId);
         if (removed == 0)
-            throw new InvalidOperationException("Der Trainingsplan wurde nicht gefunden.");
+            throw new InvalidOperationException(Text("TrainingPlanNotFound", "Der Trainingsplan wurde nicht gefunden."));
 
         await _repository.UpsertCourseAsync(course);
     }
@@ -349,13 +353,13 @@ public sealed class CourseService : ICourseService
         DateTime? registrationDeadline = null)
     {
         if (string.IsNullOrWhiteSpace(title))
-            throw new InvalidOperationException("Ein Event braucht einen Titel.");
+            throw new InvalidOperationException(Text("EventTitleRequired", "Ein Event braucht einen Titel."));
 
         if (endsAt <= startsAt)
-            throw new InvalidOperationException("Das Event-Ende muss nach dem Start liegen.");
+            throw new InvalidOperationException(Text("EventEndAfterStart", "Das Event-Ende muss nach dem Start liegen."));
 
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequireEventManagement(course, createdByUserId);
 
@@ -380,12 +384,12 @@ public sealed class CourseService : ICourseService
     public async Task DeleteEventAsync(string courseId, string eventId, string requestingTrainerUserId)
     {
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequireEventManagement(course, requestingTrainerUserId);
 
         var courseEvent = await _repository.GetEventAsync(courseId, eventId)
-            ?? throw new InvalidOperationException("Das Event wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("EventNotFound", "Das Event wurde nicht gefunden."));
 
         await _repository.DeleteEventAsync(course.Id, courseEvent.Id);
     }
@@ -396,12 +400,12 @@ public sealed class CourseService : ICourseService
         string requestingTrainerUserId)
     {
         var course = await _repository.GetCourseAsync(courseId)
-            ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "Der Kurs wurde nicht gefunden."));
 
         RequireEventManagement(course, requestingTrainerUserId);
 
         _ = await _repository.GetEventAsync(courseId, eventId)
-            ?? throw new InvalidOperationException("Das Event wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("EventNotFound", "Das Event wurde nicht gefunden."));
 
         return (await _repository.GetEventRegistrationsAsync(courseId, eventId))
             .Where(registration => registration.Status == CourseEventRegistrationStatus.Registered)
@@ -418,7 +422,7 @@ public sealed class CourseService : ICourseService
             return null;
 
         _ = await _repository.GetEventAsync(courseId, eventId)
-            ?? throw new InvalidOperationException("Das Event wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("EventNotFound", "Das Event wurde nicht gefunden."));
 
         return await _repository.GetEventRegistrationAsync(courseId, eventId, athleteUserId);
     }
@@ -426,17 +430,17 @@ public sealed class CourseService : ICourseService
     public async Task<CourseEventRegistrationDocument> RegisterForEventAsync(string courseId, string eventId, string athleteUserId)
     {
         if (string.IsNullOrWhiteSpace(athleteUserId))
-            throw new InvalidOperationException("Eine Event-Anmeldung erfordert eine angemeldete Athlet:in.");
+            throw new InvalidOperationException(Text("RegisterEventAthleteRequired", "Eine Event-Anmeldung erfordert eine angemeldete Athlet:in."));
 
         var enrollment = await _repository.GetEnrollmentAsync(courseId, athleteUserId);
         if (enrollment?.Status != CourseEnrollmentStatus.Active)
-            throw new InvalidOperationException("Du musst dem Kurs beigetreten sein, bevor du dich für Events anmeldest.");
+            throw new InvalidOperationException(Text("RegisterEventRequiresEnrollment", "Du musst dem Kurs beigetreten sein, bevor du dich fuer Events anmeldest."));
 
         var courseEvent = await _repository.GetEventAsync(courseId, eventId)
-            ?? throw new InvalidOperationException("Das Event wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("EventNotFound", "Das Event wurde nicht gefunden."));
 
         if (courseEvent.RegistrationDeadline is not null && courseEvent.RegistrationDeadline < DateTime.UtcNow)
-            throw new InvalidOperationException("Die Anmeldefrist für dieses Event ist abgelaufen.");
+            throw new InvalidOperationException(Text("RegisterEventDeadlinePassed", "Die Anmeldefrist fuer dieses Event ist abgelaufen."));
 
         var registrations = await _repository.GetEventRegistrationsAsync(courseId, eventId);
         var activeRegistrations = registrations.Count(registration =>
@@ -446,7 +450,7 @@ public sealed class CourseService : ICourseService
         {
             var existing = registrations.FirstOrDefault(registration => registration.AthleteUserId == athleteUserId);
             if (existing?.Status != CourseEventRegistrationStatus.Registered)
-                throw new InvalidOperationException("Für dieses Event sind keine freien Plätze mehr verfügbar.");
+                throw new InvalidOperationException(Text("RegisterEventFull", "Fuer dieses Event sind keine freien Plaetze mehr verfuegbar."));
         }
 
         var registration = await _repository.GetEventRegistrationAsync(courseId, eventId, athleteUserId)
@@ -471,16 +475,16 @@ public sealed class CourseService : ICourseService
     public async Task<CourseEventRegistrationDocument> CancelEventRegistrationAsync(string courseId, string eventId, string athleteUserId)
     {
         if (string.IsNullOrWhiteSpace(athleteUserId))
-            throw new InvalidOperationException("Eine Event-Abmeldung erfordert eine angemeldete Athlet:in.");
+            throw new InvalidOperationException(Text("CancelEventAthleteRequired", "Eine Event-Abmeldung erfordert eine angemeldete Athlet:in."));
 
         _ = await _repository.GetEventAsync(courseId, eventId)
-            ?? throw new InvalidOperationException("Das Event wurde nicht gefunden.");
+            ?? throw new InvalidOperationException(Text("EventNotFound", "Das Event wurde nicht gefunden."));
 
         var registration = await _repository.GetEventRegistrationAsync(courseId, eventId, athleteUserId)
-            ?? throw new InvalidOperationException("Du bist fuer dieses Event nicht angemeldet.");
+            ?? throw new InvalidOperationException(Text("CancelEventNotRegistered", "Du bist fuer dieses Event nicht angemeldet."));
 
         if (registration.Status != CourseEventRegistrationStatus.Registered)
-            throw new InvalidOperationException("Du bist fuer dieses Event nicht angemeldet.");
+            throw new InvalidOperationException(Text("CancelEventNotRegistered", "Du bist fuer dieses Event nicht angemeldet."));
 
         registration.Status = CourseEventRegistrationStatus.Cancelled;
         registration.CancelledAt = DateTime.UtcNow;
@@ -528,24 +532,33 @@ public sealed class CourseService : ICourseService
             : displayName.Trim();
     }
 
-    private static void RequireTrainerManagement(CourseDocument course, string requestingTrainerUserId)
+    private void RequireTrainerManagement(CourseDocument course, string requestingTrainerUserId)
     {
         var trainer = course.Trainers.FirstOrDefault(trainer => trainer.TrainerUserId == requestingTrainerUserId);
         if (trainer is null || !trainer.CanManageMembers)
-            throw new InvalidOperationException("Du darfst die Trainer:innen dieses Kurses nicht verwalten.");
+            throw new InvalidOperationException(Text("PermissionManageTrainers", "Du darfst die Trainer:innen dieses Kurses nicht verwalten."));
     }
 
-    private static void RequireEventManagement(CourseDocument course, string requestingTrainerUserId)
+    private void RequireEventManagement(CourseDocument course, string requestingTrainerUserId)
     {
         var trainer = course.Trainers.FirstOrDefault(trainer => trainer.TrainerUserId == requestingTrainerUserId);
         if (trainer is null || !trainer.CanManageEvents)
-            throw new InvalidOperationException("Du darfst Termine und Events dieses Kurses nicht verwalten.");
+            throw new InvalidOperationException(Text("PermissionManageEvents", "Du darfst Termine und Events dieses Kurses nicht verwalten."));
     }
 
-    private static void RequirePlanManagement(CourseDocument course, string requestingTrainerUserId)
+    private void RequirePlanManagement(CourseDocument course, string requestingTrainerUserId)
     {
         var trainer = course.Trainers.FirstOrDefault(trainer => trainer.TrainerUserId == requestingTrainerUserId);
         if (trainer is null || !trainer.CanManagePlans)
-            throw new InvalidOperationException("Du darfst Trainingsplaene dieses Kurses nicht verwalten.");
+            throw new InvalidOperationException(Text("PermissionManagePlans", "Du darfst Trainingsplaene dieses Kurses nicht verwalten."));
+    }
+
+    private string Text(string key, string fallback)
+    {
+        if (_localizer is null)
+            return fallback;
+
+        var localized = _localizer[key];
+        return localized.ResourceNotFound ? fallback : localized.Value;
     }
 }

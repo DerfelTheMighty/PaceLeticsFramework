@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Localization;
 using PaceLetics.Web.Data;
 
 namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
@@ -21,15 +22,18 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IStringLocalizer<EmailModel> _localizer;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IStringLocalizer<EmailModel> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _localizer = localizer;
         }
 
         /// <summary>
@@ -127,14 +131,14 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
                     protocol: Request.Scheme);
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    _localizer["ConfirmEmailSubject"],
+                    string.Format(_localizer["ConfirmEmailBody"], HtmlEncoder.Default.Encode(callbackUrl)));
 
-                StatusMessage = "Bestätigung gesendet. Bitte E-Mails prüfen.";
+                StatusMessage = _localizer["ConfirmationSent"];
                 return RedirectToPage();
             }
 
-            StatusMessage = "Das ist ja die gleiche Adresse.";
+            StatusMessage = _localizer["EmailUnchanged"];
             return RedirectToPage();
         }
 
@@ -163,10 +167,10 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                _localizer["ConfirmEmailSubject"],
+                string.Format(_localizer["ConfirmEmailBody"], HtmlEncoder.Default.Encode(callbackUrl)));
 
-            StatusMessage = "Bestätigung gesendet. Bitte E-Mails prüfen.";
+            StatusMessage = _localizer["ConfirmationSent"];
             return RedirectToPage();
         }
     }

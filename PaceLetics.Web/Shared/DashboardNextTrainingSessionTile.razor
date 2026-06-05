@@ -1,4 +1,6 @@
-﻿@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@inject IStringLocalizer<DashboardNextTrainingSessionTile> L
+
 <MudPaper Elevation="0"
           Class="pa-4"
           Style="border-radius:20px; border:1px solid var(--mud-palette-lines-default); background:linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background));">
@@ -10,15 +12,15 @@
                   Justify="Justify.SpaceBetween">
 
             <MudStack Spacing="1">
-                <MudText Typo="Typo.h6">                                                                                   
-                    @(Session?.Name ?? "Noch keine Trainingseinheit")
+                <MudText Typo="Typo.h6">
+                    @(Session?.Name ?? L["NoSessionTitle"])
                 </MudText>
 
                 <MudText Typo="Typo.body2"
                          Class="pl-dashboard-muted">
                     @if (Session is null)
                     {
-                        @("Tritt einem Kurs bei, um veröffentlichte Trainingspläne zu sehen.")
+                        @L["NoSessionDetail"]
                     }
                     else
                     {
@@ -33,7 +35,7 @@
                        Variant="Variant.Filled"
                        Color="Color.Primary"
                        StartIcon="@Icons.Material.Filled.OpenInNew">
-                @(Session is null ? "Kurse" : "Open")
+                @(Session is null ? L["Courses"] : L["Open"])
             </MudButton>
         </MudStack>
 
@@ -50,12 +52,12 @@
 
                 <MudStack Spacing="0">
                     <MudText Typo="Typo.subtitle2">
-                        Vorschau
+                        @L["PreviewTitle"]
                     </MudText>
 
                     <MudText Typo="Typo.body2"
                              Class="pl-dashboard-muted">
-                        Trainingsdetails und Struktur der Einheit.
+                        @L["PreviewDetail"]
                     </MudText>
                 </MudStack>
             </MudStack>
@@ -68,7 +70,7 @@
     [Parameter]
     public TrainingSession? Session { get; set; }
 
-    private static string GetSessionComposition(TrainingSession session)
+    private string GetSessionComposition(TrainingSession session)
     {
         var parts = new List<string>();
 
@@ -76,8 +78,8 @@
             parts.Add($"{session.PrimaryRun.TotalDistance / 1000.0:0.0} km");
 
         if (session.Workouts.Count > 0)
-            parts.Add($"{session.Workouts.Count} Workout(s)");
+            parts.Add(string.Format(L["WorkoutCount"], session.Workouts.Count));
 
-        return parts.Count == 0 ? "Trainingseinheit" : string.Join(" / ", parts);
+        return parts.Count == 0 ? L["TrainingSession"] : string.Join(" / ", parts);
     }
 }

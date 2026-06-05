@@ -3,13 +3,14 @@
 @using AthleteDataAccessLibrary.Contracts
 @using PaceLetics.AthleteModule.CodeBase.Models
 @inject IAthleteData AthleteData
+@inject IStringLocalizer<Profiles> L
 
-<PageTitle>Profile</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
     @if (_isLoading)
     {
-        <LoadingScreen Label="Profile werden geladen" />
+        <LoadingScreen Label="@L["Loading"]" />
     }
     else if (_selectedProfile is not null)
     {
@@ -19,7 +20,7 @@
                            Variant="Variant.Outlined"
                            Color="Color.Default"
                            StartIcon="@Icons.Material.Filled.ArrowBack">
-                    Zurueck
+                    @L["Back"]
                 </MudButton>
             </Actions>
         </PageHeader>
@@ -45,44 +46,44 @@
     }
     else if (_profileNotFound)
     {
-        <PageHeader Title="Profil nicht gefunden" Subtitle="Dieses Profil ist nicht sichtbar oder existiert nicht." />
+        <PageHeader Title="@L["NotFoundTitle"]" Subtitle="@L["NotFoundSubtitle"]" />
 
         <MudDivider Class="my-4" />
 
-        <DashboardNewsFeedTile Title="Profil nicht gefunden"
-                               Detail="Oeffne die Profiluebersicht oder pruefe den Link."
+        <DashboardNewsFeedTile Title="@L["NotFoundTitle"]"
+                               Detail="@L["NotFoundDetail"]"
                                Icon="@Icons.Material.Filled.PersonSearch"
                                Severity="Severity.Warning"
                                Href="/profiles" />
     }
     else
     {
-        <PageHeader Title="Profile" Subtitle="Sichtbare Athlet:innen- und Trainer:innenprofile." />
+        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
 
         <MudStack Spacing="4">
             <MudGrid Spacing="3">
                 <MudItem xs="12" sm="6" lg="4">
-                    <DashboardMetricTile Label="Sichtbar"
+                    <DashboardMetricTile Label="@L["MetricVisible"]"
                                          Value="@_profiles.Count.ToString()"
-                                         Detail="oeffentliche Profile"
+                                         Detail="@L["MetricVisibleDetail"]"
                                          Icon="@Icons.Material.Filled.Groups"
                                          Accent="blue" />
                 </MudItem>
 
                 <MudItem xs="12" sm="6" lg="4">
-                    <DashboardMetricTile Label="Trainer:innen"
+                    <DashboardMetricTile Label="@L["MetricTrainers"]"
                                          Value="@_profiles.Count(profile => profile.PublicRole == ApplicationRoles.Trainer).ToString()"
-                                         Detail="verifizierte Profile"
+                                         Detail="@L["MetricTrainersDetail"]"
                                          Icon="@Icons.Material.Filled.Verified"
                                          Accent="green" />
                 </MudItem>
 
                 <MudItem xs="12" sm="6" lg="4">
-                    <DashboardMetricTile Label="Athlet:innen"
+                    <DashboardMetricTile Label="@L["MetricAthletes"]"
                                          Value="@_profiles.Count(profile => profile.PublicRole == ApplicationRoles.Athlete).ToString()"
-                                         Detail="aktive Profile"
+                                         Detail="@L["MetricAthletesDetail"]"
                                          Icon="@Icons.Material.Filled.DirectionsRun"
                                          Accent="orange" />
                 </MudItem>
@@ -90,8 +91,8 @@
 
             @if (_profiles.Count == 0)
             {
-                <DashboardNewsFeedTile Title="Keine oeffentlichen Profile"
-                                       Detail="Aktuell sind keine Profile sichtbar geschaltet."
+                <DashboardNewsFeedTile Title="@L["NoProfilesTitle"]"
+                                       Detail="@L["NoProfilesDetail"]"
                                        Icon="@Icons.Material.Filled.VisibilityOff"
                                        Severity="Severity.Info"
                                        Href="/Identity/Account/Manage" />
