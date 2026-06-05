@@ -13,6 +13,5 @@ public enum AppThemeName
     Tropical,
     GoldenHour,
     StellarForge,
-    ElderVale,
     SummitBlaze
 }

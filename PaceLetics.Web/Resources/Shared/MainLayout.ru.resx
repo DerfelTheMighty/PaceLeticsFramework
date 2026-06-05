@@ -5,21 +5,4 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Theme" xml:space="preserve"><value>Тема</value></data>
-  <data name="ColorScheme" xml:space="preserve"><value>Цветовая схема</value></data>
-  <data name="Theme_PaceLetics" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="Theme_Ocean" xml:space="preserve"><value>Океан</value></data>
-  <data name="Theme_Forest" xml:space="preserve"><value>Лес</value></data>
-  <data name="Theme_HighContrast" xml:space="preserve"><value>Высокий контраст</value></data>
-  <data name="Theme_Wildflowers" xml:space="preserve"><value>Полевые цветы</value></data>
-  <data name="Theme_Afterglow" xml:space="preserve"><value>Послесвечение</value></data>
-  <data name="Theme_DarkRomance" xml:space="preserve"><value>Темная романтика</value></data>
-  <data name="Theme_Maritime" xml:space="preserve"><value>Морская</value></data>
-  <data name="Theme_Tropical" xml:space="preserve"><value>Тропическая</value></data>
-  <data name="Theme_GoldenHour" xml:space="preserve"><value>Золотой час</value></data>
-  <data name="Theme_StellarForge" xml:space="preserve"><value>Звездная кузница</value></data>
-  <data name="Theme_ElderVale" xml:space="preserve"><value>Древняя долина</value></data>
-  <data name="Theme_SummitBlaze" xml:space="preserve"><value>Сияние вершины</value></data>
-  <data name="Scheme_Light" xml:space="preserve"><value>Светлая</value></data>
-  <data name="Scheme_Dark" xml:space="preserve"><value>Темная</value></data>
-  <data name="Scheme_System" xml:space="preserve"><value>Система</value></data>
 </root>

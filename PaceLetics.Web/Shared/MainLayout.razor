@@ -45,25 +45,6 @@
                     </MudStack>
                 </MudMenuItem>
             }
-
-            <MudDivider />
-            <MudMenuItem Disabled="true">
-                <MudText Typo="Typo.caption" Color="Color.Secondary">@L["ColorScheme"]</MudText>
-            </MudMenuItem>
-            @foreach (var scheme in Enum.GetValues<AppColorScheme>())
-            {
-                <MudMenuItem OnClick="@(() => ThemePreferences.SetColorSchemeAsync(scheme))">
-                    <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Style="min-width:180px;">
-                        <MudIcon Icon="@GetColorSchemeIcon(scheme)" Size="Size.Small" />
-                        <MudText>@GetColorSchemeName(scheme)</MudText>
-                        <MudSpacer />
-                        @if (ThemePreferences.ColorScheme == scheme)
-                        {
-                            <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" />
-                        }
-                    </MudStack>
-                </MudMenuItem>
-            }
         </MudMenu>
         <CultureSelector />
         <LoginDisplay />
@@ -107,54 +88,12 @@
 
     private string GetThemeMenuIcon()
     {
-        return ThemePreferences.ColorScheme switch
-        {
-            AppColorScheme.Light => Icons.Material.Filled.LightMode,
-            AppColorScheme.Dark => Icons.Material.Filled.DarkMode,
-            _ => Icons.Material.Filled.Palette
-        };
-    }
-
-    private string GetColorSchemeIcon(AppColorScheme scheme)
-    {
-        return scheme switch
-        {
-            AppColorScheme.Light => Icons.Material.Filled.LightMode,
-            AppColorScheme.Dark => Icons.Material.Filled.DarkMode,
-            _ => Icons.Material.Filled.SettingsSuggest
-        };
+        return ThemePreferences.CurrentThemeDefinition.Icon;
     }
 
     private string GetThemeName(AppThemeName themeName)
     {
-        return themeName switch
-        {
-            AppThemeName.PaceLetics => L["Theme_PaceLetics"],
-            AppThemeName.Ocean => L["Theme_Ocean"],
-            AppThemeName.Forest => L["Theme_Forest"],
-            AppThemeName.HighContrast => L["Theme_HighContrast"],
-            AppThemeName.Wildflowers => L["Theme_Wildflowers"],
-            AppThemeName.Afterglow => L["Theme_Afterglow"],
-            AppThemeName.DarkRomance => L["Theme_DarkRomance"],
-            AppThemeName.Maritime => L["Theme_Maritime"],
-            AppThemeName.Tropical => L["Theme_Tropical"],
-            AppThemeName.GoldenHour => L["Theme_GoldenHour"],
-            AppThemeName.StellarForge => L["Theme_StellarForge"],
-            AppThemeName.ElderVale => L["Theme_ElderVale"],
-            AppThemeName.SummitBlaze => L["Theme_SummitBlaze"],
-            _ => themeName.ToString()
-        };
-    }
-
-    private string GetColorSchemeName(AppColorScheme scheme)
-    {
-        return scheme switch
-        {
-            AppColorScheme.Light => L["Scheme_Light"],
-            AppColorScheme.Dark => L["Scheme_Dark"],
-            AppColorScheme.System => L["Scheme_System"],
-            _ => scheme.ToString()
-        };
+        return AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
     }
 
     private void OnThemePreferenceChanged()

@@ -5,21 +5,4 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Theme" xml:space="preserve"><value>پوسته</value></data>
-  <data name="ColorScheme" xml:space="preserve"><value>طرح رنگ</value></data>
-  <data name="Theme_PaceLetics" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="Theme_Ocean" xml:space="preserve"><value>اقیانوس</value></data>
-  <data name="Theme_Forest" xml:space="preserve"><value>جنگل</value></data>
-  <data name="Theme_HighContrast" xml:space="preserve"><value>کنتراست بالا</value></data>
-  <data name="Theme_Wildflowers" xml:space="preserve"><value>گل‌های وحشی</value></data>
-  <data name="Theme_Afterglow" xml:space="preserve"><value>پس‌تاب</value></data>
-  <data name="Theme_DarkRomance" xml:space="preserve"><value>رمانس تیره</value></data>
-  <data name="Theme_Maritime" xml:space="preserve"><value>دریایی</value></data>
-  <data name="Theme_Tropical" xml:space="preserve"><value>گرمسیری</value></data>
-  <data name="Theme_GoldenHour" xml:space="preserve"><value>ساعت طلایی</value></data>
-  <data name="Theme_StellarForge" xml:space="preserve"><value>کوره ستاره‌ای</value></data>
-  <data name="Theme_ElderVale" xml:space="preserve"><value>دره کهن</value></data>
-  <data name="Theme_SummitBlaze" xml:space="preserve"><value>درخشش قله</value></data>
-  <data name="Scheme_Light" xml:space="preserve"><value>روشن</value></data>
-  <data name="Scheme_Dark" xml:space="preserve"><value>تیره</value></data>
-  <data name="Scheme_System" xml:space="preserve"><value>سیستم</value></data>
 </root>
