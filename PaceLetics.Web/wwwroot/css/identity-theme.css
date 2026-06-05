@@ -1,20 +1,20 @@
 :root {
-    --mud-palette-primary: #1E7B5F;
-    --mud-palette-secondary: #F2A541;
-    --mud-palette-tertiary: #2F80ED;
-    --mud-palette-info: #2F80ED;
-    --mud-palette-success: #1E7B5F;
-    --mud-palette-warning: #D8891D;
-    --mud-palette-error: #C94B4B;
+    --mud-palette-primary: #FF2BD6;
+    --mud-palette-secondary: #00E5FF;
+    --mud-palette-tertiary: #B7FF2A;
+    --mud-palette-info: #00B8FF;
+    --mud-palette-success: #22E87A;
+    --mud-palette-warning: #FFE14A;
+    --mud-palette-error: #FF3B7D;
     --mud-palette-primary-text: #fff;
     --mud-palette-primary-hover: color-mix(in srgb, var(--mud-palette-primary) 8%, transparent);
     --mud-palette-surface: #fff;
-    --mud-palette-background: #F7FAF8;
-    --mud-palette-background-gray: #EEF4F1;
-    --mud-palette-text-primary: #1F2A27;
-    --mud-palette-text-secondary: #60746E;
-    --mud-palette-appbar-background: #163D34;
+    --mud-palette-background: #FFF6FF;
+    --mud-palette-background-gray: #F3E8FF;
+    --mud-palette-text-primary: #241136;
+    --mud-palette-text-secondary: #6C4F82;
+    --mud-palette-appbar-background: #31116E;
     --mud-palette-appbar-text: #fff;
-    --mud-palette-divider: #DDE7E1;
-    --mud-palette-lines-default: #DDE7E1;
+    --mud-palette-divider: #E7D4F7;
+    --mud-palette-lines-default: #E7D4F7;
 }
