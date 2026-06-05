@@ -7,13 +7,13 @@
     padding: 12px 14px;
     border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 22%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--mud-palette-primary) 10%, var(--mud-palette-surface)), var(--mud-palette-surface) 68%);
+    background: var(--pl-pageheader-background, linear-gradient(135deg, color-mix(in srgb, var(--mud-palette-primary) 10%, var(--mud-palette-surface)), var(--mud-palette-surface) 68%));
 }
 
 .pl-panel {
     border: 1px solid var(--mud-palette-lines-default);
     border-radius: var(--pl-radius);
-    background: linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background));
+    background: var(--pl-panel-background, linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background)));
 }
 
 .pl-surface-card {
@@ -125,7 +125,7 @@
 .pl-metric-tile {
     border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 34%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
-    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 10%, var(--mud-palette-surface));
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-metric-tile-accent, 10%), var(--mud-palette-surface));
 }
 
 .pl-metric-link {
@@ -147,7 +147,7 @@
     flex: 0 0 42px;
     border-radius: var(--pl-radius);
     color: var(--pl-metric-accent, var(--mud-palette-primary));
-    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 16%, transparent);
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-icon-accent, 16%), var(--pl-accent-soft-base, transparent));
 }
 
 .pl-metric-copy {
@@ -214,7 +214,7 @@
     flex: 0 0 42px;
     border-radius: var(--pl-radius);
     color: var(--pl-metric-accent, var(--mud-palette-primary));
-    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 16%, transparent);
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-icon-accent, 16%), var(--pl-accent-soft-base, transparent));
 }
 
 .pl-race-code {
@@ -261,7 +261,7 @@
     --pl-feed-accent: var(--mud-palette-primary);
     border: 1px solid color-mix(in srgb, var(--pl-feed-accent) 28%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
-    background: color-mix(in srgb, var(--pl-feed-accent) 7%, var(--mud-palette-surface));
+    background: color-mix(in srgb, var(--pl-feed-accent) var(--pl-feed-tile-accent, 7%), var(--mud-palette-surface));
 }
 
 .pl-feed-tile-layout {
@@ -303,7 +303,7 @@
 
 .pl-feed-tile-unread {
     border-color: color-mix(in srgb, var(--pl-feed-accent) 44%, var(--mud-palette-lines-default));
-    background: color-mix(in srgb, var(--pl-feed-accent) 12%, var(--mud-palette-surface));
+    background: color-mix(in srgb, var(--pl-feed-accent) var(--pl-feed-tile-unread-accent, 12%), var(--mud-palette-surface));
 }
 
 .pl-feed-tile-unread .pl-feed-tile-title {
@@ -328,7 +328,7 @@
 
 .pl-feed-tile-icon {
     color: var(--pl-feed-accent);
-    background: color-mix(in srgb, var(--pl-feed-accent) 16%, transparent);
+    background: color-mix(in srgb, var(--pl-feed-accent) var(--pl-icon-accent, 16%), var(--pl-accent-soft-base, transparent));
 }
 
 .pl-vdot-card,
@@ -337,7 +337,7 @@
 .pl-training-panel {
     border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 26%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
-    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 8%, var(--mud-palette-surface));
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-card-accent, 8%), var(--mud-palette-surface));
 }
 
 .pl-vdot-card {
@@ -402,7 +402,7 @@
     border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 56%, transparent);
     border-radius: var(--pl-radius);
     color: var(--pl-metric-accent, var(--mud-palette-primary));
-    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 16%, transparent);
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-icon-accent, 16%), var(--pl-accent-soft-base, transparent));
     font-weight: 800;
     line-height: 1;
     text-transform: uppercase;
@@ -435,7 +435,7 @@
 .pl-course-detail {
     border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 18%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
-    background: color-mix(in srgb, var(--mud-palette-primary) 6%, var(--mud-palette-surface));
+    background: color-mix(in srgb, var(--mud-palette-primary) var(--pl-course-detail-accent, 6%), var(--mud-palette-surface));
 }
 
 .pl-identity-success {

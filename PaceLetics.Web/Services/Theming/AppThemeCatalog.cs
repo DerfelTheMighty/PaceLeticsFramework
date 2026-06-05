@@ -58,13 +58,13 @@ public static class AppThemeCatalog
     private static PaceZonePalette CreateForestPaceZones()
     {
         return new(
-            Free: "#A5947F",
-            Recovery: "#88B7E8",
-            Easy: "#87D66B",
-            Marathon: "#D0A05F",
-            Threshold: "#E0C95A",
-            Intervall: "#F08A5D",
-            Repetition: "#F45C6B");
+            Free: "#BBAA92",
+            Recovery: "#9FD0FF",
+            Easy: "#9FE68E",
+            Marathon: "#F1C97D",
+            Threshold: "#F4DD72",
+            Intervall: "#F59F79",
+            Repetition: "#FF8494");
     }
 
     private static PaceZonePalette CreateHighContrastPaceZones()
@@ -82,13 +82,13 @@ public static class AppThemeCatalog
     private static PaceZonePalette CreateWildflowersPaceZones()
     {
         return new(
-            Free: "#7B8271",
-            Recovery: "#4F80E1",
-            Easy: "#5C8A2E",
-            Marathon: "#2F9B80",
-            Threshold: "#D89A1A",
-            Intervall: "#E85D4A",
-            Repetition: "#B03A7A");
+            Free: "#8C9277",
+            Recovery: "#77A8FF",
+            Easy: "#73B66E",
+            Marathon: "#63C6AD",
+            Threshold: "#F2B84B",
+            Intervall: "#FF9078",
+            Repetition: "#F26D9B");
     }
 
     private static PaceZonePalette CreateAfterglowPaceZones()
@@ -106,37 +106,37 @@ public static class AppThemeCatalog
     private static PaceZonePalette CreateDarkRomancePaceZones()
     {
         return new(
-            Free: "#9B7F8B",
-            Recovery: "#9A85D6",
-            Easy: "#7DC48F",
-            Marathon: "#D6A647",
-            Threshold: "#F08270",
-            Intervall: "#E85D84",
-            Repetition: "#C846AA");
+            Free: "#B98FA2",
+            Recovery: "#C6A9FF",
+            Easy: "#93DEA4",
+            Marathon: "#F2C56D",
+            Threshold: "#FF9C8A",
+            Intervall: "#FF8CAB",
+            Repetition: "#F27AD5");
     }
 
     private static PaceZonePalette CreateMaritimePaceZones()
     {
         return new(
-            Free: "#7D8682",
-            Recovery: "#6DAFC1",
-            Easy: "#5F8E7A",
-            Marathon: "#2F6F7E",
-            Threshold: "#C9A66B",
-            Intervall: "#A85F4D",
-            Repetition: "#7E4E72");
+            Free: "#7E918E",
+            Recovery: "#7ED5E6",
+            Easy: "#77C9A5",
+            Marathon: "#5CBFD2",
+            Threshold: "#F3CC7C",
+            Intervall: "#FF9B85",
+            Repetition: "#D58BC1");
     }
 
     private static PaceZonePalette CreateTropicalPaceZones()
     {
         return new(
-            Free: "#6E817C",
-            Recovery: "#007EA7",
-            Easy: "#008C7A",
-            Marathon: "#8BC34A",
-            Threshold: "#D89C2B",
-            Intervall: "#F06A4D",
-            Repetition: "#C23A7B");
+            Free: "#6F8C84",
+            Recovery: "#46BFE3",
+            Easy: "#1BC7AA",
+            Marathon: "#B6E65E",
+            Threshold: "#F5BF4A",
+            Intervall: "#FF9078",
+            Repetition: "#F06FA9");
     }
 
     private static PaceZonePalette CreateGoldenHourPaceZones()
@@ -228,13 +228,13 @@ public static class AppThemeCatalog
         return CreateTheme(
             dark: new PaletteDark
             {
-                Primary = "#87D66B",
-                Secondary = "#D0A05F",
-                Tertiary = "#F08A5D",
-                Info = "#88B7E8",
-                Success = "#87D66B",
-                Warning = "#D0A05F",
-                Error = "#F08A5D",
+                Primary = "#9FE68E",
+                Secondary = "#F1C97D",
+                Tertiary = "#F59F79",
+                Info = "#9FD0FF",
+                Success = "#9FE68E",
+                Warning = "#F1C97D",
+                Error = "#FF8494",
                 Background = "#1A1008",
                 BackgroundGray = "#24160B",
                 Surface = "#2D1E11",
@@ -278,22 +278,22 @@ public static class AppThemeCatalog
         return CreateTheme(
             light: new PaletteLight
             {
-                Primary = "#D22B2B",
-                Secondary = "#4F80E1",
-                Tertiary = "#F2C94C",
-                Info = "#4F80E1",
-                Success = "#5C8A2E",
-                Warning = "#D89A1A",
-                Error = "#C62828",
-                Background = "#FFFDF4",
-                BackgroundGray = "#F2F5E8",
+                Primary = "#F26D85",
+                Secondary = "#77A8FF",
+                Tertiary = "#FFE06E",
+                Info = "#77A8FF",
+                Success = "#73B66E",
+                Warning = "#F2B84B",
+                Error = "#E94F66",
+                Background = "#FFF7D9",
+                BackgroundGray = "#F5EDBF",
                 Surface = "#FFFFFF",
-                AppbarBackground = "#5C8A2E",
+                AppbarBackground = "#73B66E",
                 AppbarText = "#FFFFFF",
                 DrawerBackground = "#FFFFFF",
                 DrawerText = "#2E3525",
                 TextPrimary = "#283022",
-                TextSecondary = "#68745C"
+                TextSecondary = "#68725C"
             });
     }
 
@@ -326,22 +326,22 @@ public static class AppThemeCatalog
         return CreateTheme(
             dark: new PaletteDark
             {
-                Primary = "#E85D84",
-                Secondary = "#9A85D6",
-                Tertiary = "#D6A647",
-                Info = "#9A85D6",
-                Success = "#7DC48F",
-                Warning = "#D6A647",
-                Error = "#E85D84",
-                Background = "#12090D",
-                BackgroundGray = "#211118",
-                Surface = "#2A1720",
-                AppbarBackground = "#0B0508",
+                Primary = "#FF8CAB",
+                Secondary = "#C6A9FF",
+                Tertiary = "#F2C56D",
+                Info = "#C6A9FF",
+                Success = "#93DEA4",
+                Warning = "#F2C56D",
+                Error = "#FF8CAB",
+                Background = "#201018",
+                BackgroundGray = "#2A1520",
+                Surface = "#321B27",
+                AppbarBackground = "#5C2237",
                 AppbarText = "#FFEAF0",
-                DrawerBackground = "#1A0D13",
-                DrawerText = "#F4DDE6",
-                TextPrimary = "#FFF0F4",
-                TextSecondary = "#C9AAB6"
+                DrawerBackground = "#26131D",
+                DrawerText = "#F8DDE8",
+                TextPrimary = "#FFF2F6",
+                TextSecondary = "#D9B6C4"
             });
     }
 
@@ -350,22 +350,22 @@ public static class AppThemeCatalog
         return CreateTheme(
             light: new PaletteLight
             {
-                Primary = "#2F6F7E",
-                Secondary = "#A85F4D",
-                Tertiary = "#C9A66B",
-                Info = "#3C7F92",
-                Success = "#5F8E7A",
-                Warning = "#B58A45",
-                Error = "#A85F4D",
-                Background = "#F7EFE4",
-                BackgroundGray = "#E9DDD0",
-                Surface = "#FFFDF8",
-                AppbarBackground = "#4F7F8C",
+                Primary = "#5CBFD2",
+                Secondary = "#FF9B85",
+                Tertiary = "#F3CC7C",
+                Info = "#7ED5E6",
+                Success = "#77C9A5",
+                Warning = "#E8B85F",
+                Error = "#E87866",
+                Background = "#EAF7F8",
+                BackgroundGray = "#D4ECEE",
+                Surface = "#FFFFFF",
+                AppbarBackground = "#3E9EAF",
                 AppbarText = "#FFFDF8",
-                DrawerBackground = "#FFFDF8",
+                DrawerBackground = "#FFFFFF",
                 DrawerText = "#3F4B4C",
                 TextPrimary = "#343F40",
-                TextSecondary = "#71807B"
+                TextSecondary = "#637C7A"
             });
     }
 
@@ -374,22 +374,22 @@ public static class AppThemeCatalog
         return CreateTheme(
             light: new PaletteLight
             {
-                Primary = "#008C7A",
-                Secondary = "#F06A4D",
-                Tertiary = "#8BC34A",
-                Info = "#007EA7",
-                Success = "#008C7A",
-                Warning = "#D89C2B",
-                Error = "#F06A4D",
-                Background = "#F4FCF8",
-                BackgroundGray = "#E6F5ED",
+                Primary = "#1BC7AA",
+                Secondary = "#FF9078",
+                Tertiary = "#B6E65E",
+                Info = "#46BFE3",
+                Success = "#1BC7AA",
+                Warning = "#F5BF4A",
+                Error = "#F06A69",
+                Background = "#E6FAEF",
+                BackgroundGray = "#CCF1DF",
                 Surface = "#FFFFFF",
-                AppbarBackground = "#006B66",
+                AppbarBackground = "#15A997",
                 AppbarText = "#FFFFFF",
                 DrawerBackground = "#FFFFFF",
                 DrawerText = "#213733",
                 TextPrimary = "#1F3430",
-                TextSecondary = "#5D7771"
+                TextSecondary = "#587A72"
             });
     }
 

@@ -98,10 +98,10 @@
 
     private string GetThemeStyle()
     {
-        var zones = ThemePreferences.CurrentThemeDefinition.PaceZones;
-
-        return string.Join(";",
-        [
+        var theme = ThemePreferences.CurrentThemeDefinition;
+        var zones = theme.PaceZones;
+        var styles = new List<string>
+        {
             $"--pl-pace-free:{zones.Free}",
             $"--pl-pace-recovery:{zones.Recovery}",
             $"--pl-pace-easy:{zones.Easy}",
@@ -109,7 +109,31 @@
             $"--pl-pace-threshold:{zones.Threshold}",
             $"--pl-pace-intervall:{zones.Intervall}",
             $"--pl-pace-repetition:{zones.Repetition}"
-        ]);
+        };
+
+        if (UsesPastelSurfaces(theme.Name))
+        {
+            styles.Add("--pl-pageheader-background:var(--mud-palette-background-gray)");
+            styles.Add("--pl-panel-background:var(--mud-palette-surface)");
+            styles.Add("--pl-accent-soft-base:var(--mud-palette-background-gray)");
+            styles.Add("--pl-metric-tile-accent:22%");
+            styles.Add("--pl-feed-tile-accent:18%");
+            styles.Add("--pl-feed-tile-unread-accent:28%");
+            styles.Add("--pl-card-accent:18%");
+            styles.Add("--pl-course-detail-accent:16%");
+            styles.Add("--pl-icon-accent:30%");
+        }
+
+        return string.Join(";", styles);
+    }
+
+    private static bool UsesPastelSurfaces(AppThemeName themeName)
+    {
+        return themeName is AppThemeName.Forest
+            or AppThemeName.Wildflowers
+            or AppThemeName.DarkRomance
+            or AppThemeName.Maritime
+            or AppThemeName.Tropical;
     }
 
     private void OnThemePreferenceChanged()
