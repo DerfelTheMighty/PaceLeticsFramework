@@ -1,8 +1,7 @@
 @if (!string.IsNullOrWhiteSpace(Href))
 {
     <MudPaper Elevation="0"
-          Class="pa-4"
-          Style="border-radius:20px; border:1px solid var(--mud-palette-lines-default); background:linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background));">
+          Class="pa-4 pl-panel">
         <MudLink Href="@Href" Underline="Underline.None" Class="pl-metric-link">
             @TileContent
         </MudLink>

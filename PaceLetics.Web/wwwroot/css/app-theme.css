@@ -1,0 +1,162 @@
+:root {
+    --pl-radius: 8px;
+    --pl-overlay-background: color-mix(in srgb, var(--mud-palette-background) 18%, black 52%);
+}
+
+.pl-panel {
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: var(--pl-radius);
+    background: linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background));
+}
+
+.pl-surface-card {
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: var(--pl-radius);
+    background: var(--mud-palette-surface);
+}
+
+.pl-list-row {
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+    padding: 8px 0;
+}
+
+.pl-list-row-comfortable {
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+    padding: 12px 0;
+}
+
+.pl-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    background: var(--pl-overlay-background);
+}
+
+.pl-modal-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.pl-modal-panel {
+    width: min(560px, 100%);
+    max-height: min(720px, 88vh);
+    overflow: auto;
+}
+
+.pl-bottom-sheet {
+    width: 100%;
+    height: min(70vh, 640px);
+    overflow: hidden;
+    border-top-left-radius: var(--pl-radius);
+    border-top-right-radius: var(--pl-radius);
+    background: var(--mud-palette-surface);
+}
+
+.pl-bottom-sheet-handle {
+    width: 44px;
+    height: 4px;
+    margin: 0 auto 10px auto;
+    border-radius: 999px;
+    background: var(--mud-palette-lines-default);
+}
+
+.pl-bottom-sheet-item {
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: var(--pl-radius);
+    background: var(--mud-palette-background-gray);
+}
+
+.pl-course-strip {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 2px 12px 2px;
+}
+
+.pl-course-card {
+    flex: 0 0 176px;
+    width: 176px;
+    min-height: 132px;
+    scroll-snap-align: start;
+    cursor: pointer;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: var(--pl-radius);
+}
+
+.pl-course-card-selected {
+    border-color: var(--mud-palette-primary);
+    border-width: 2px;
+}
+
+.pl-course-card-add {
+    flex-basis: 104px;
+    width: 104px;
+    border: 1px dashed var(--mud-palette-primary);
+}
+
+.pl-metric-blue {
+    --pl-metric-accent: var(--mud-palette-primary);
+}
+
+.pl-metric-green {
+    --pl-metric-accent: var(--mud-palette-secondary);
+}
+
+.pl-metric-orange {
+    --pl-metric-accent: var(--mud-palette-tertiary);
+}
+
+.pl-metric-tile {
+    border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 34%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 10%, var(--mud-palette-surface));
+}
+
+.pl-metric-link {
+    display: block;
+    color: var(--mud-palette-text-primary);
+}
+
+.pl-metric-content {
+    min-height: 86px;
+    padding: 14px;
+}
+
+.pl-metric-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: var(--pl-radius);
+    color: var(--pl-metric-accent, var(--mud-palette-primary));
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 16%, transparent);
+}
+
+.pl-metric-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.pl-metric-label,
+.pl-metric-detail,
+.pl-dashboard-muted {
+    color: var(--mud-palette-text-secondary);
+}
+
+.pl-metric-value {
+    color: var(--mud-palette-text-primary);
+}
+
+.pl-metric-arrow {
+    color: var(--pl-metric-accent, var(--mud-palette-primary));
+}
+
+.pl-identity-success {
+    color: var(--mud-palette-success) !important;
+}

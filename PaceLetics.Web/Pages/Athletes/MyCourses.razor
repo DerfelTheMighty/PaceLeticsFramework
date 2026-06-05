@@ -36,7 +36,7 @@
             var availableCourses = AvailableCourses.ToList();
 
             <MudStack Spacing="3">
-                <div style="display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:4px 2px 12px 2px;">
+                <div class="pl-course-strip">
                     @foreach (var overview in joinedCourses)
                     {
                         var course = overview.Course;
@@ -44,8 +44,7 @@
                         var nextDate = GetUpcomingDates(course).FirstOrDefault();
 
                         <MudPaper Elevation="@(isSelected ? 4 : 1)"
-                                  Class="pa-2"
-                                  Style="@GetCourseCardStyle(isSelected)"
+                                  Class="@GetCourseCardClass(isSelected)"
                                   @onclick="@(() => SelectCourse(course.Id))">
                             <MudStack Spacing="2" Style="height:100%;">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%; gap:8px;">
@@ -80,8 +79,7 @@
                     }
 
                     <MudPaper Elevation="1"
-                              Class="pa-3"
-                              Style="@GetAddCourseCardStyle()"
+                              Class="pa-3 pl-course-card pl-course-card-add"
                               @onclick="OpenCoursePicker">
                         <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Style="height:100%; gap:8px;">
                             <MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" Size="Size.Large" />
@@ -97,8 +95,8 @@
 
                 @if (_isCoursePickerOpen)
                 {
-                    <div style="position:fixed; inset:0; z-index:1300; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.42); padding:24px;" @onclick="CloseCoursePicker">
-                        <MudPaper Elevation="8" Class="pa-4" Style="width:min(560px, 100%); max-height:min(720px, 88vh); overflow:auto;" @onclick:stopPropagation="true">
+                    <div class="pl-overlay pl-modal-overlay" @onclick="CloseCoursePicker">
+                        <MudPaper Elevation="8" Class="pa-4 pl-modal-panel" @onclick:stopPropagation="true">
                             <MudStack Spacing="3">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
                                     <MudText Typo="Typo.h6">@L["AddCourse"]</MudText>
@@ -117,7 +115,7 @@
                                             var course = overview.Course;
                                             var nextDate = GetUpcomingDates(course).FirstOrDefault();
 
-                                            <div style="padding:12px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
+                                            <div class="pl-list-row-comfortable">
                                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
                                                     <MudStack Spacing="1" Style="min-width:0;">
                                                         <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
@@ -192,7 +190,7 @@
                                     <MudStack Spacing="1">
                                         @foreach (var date in GetVisibleDates(upcomingDates))
                                         {
-                                            <div style="display:grid; grid-template-columns:72px 1fr; gap:12px; align-items:start; padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
+                                            <div class="pl-list-row" style="display:grid; grid-template-columns:72px 1fr; gap:12px; align-items:start;">
                                                 <MudText Typo="Typo.caption" Color="Color.Secondary">@date.StartsAt.ToString("dd.MM.")</MudText>
                                                 <div>
                                                     <MudText Typo="Typo.body2">@date.Title</MudText>
@@ -227,7 +225,7 @@
                                     <MudStack Spacing="1">
                                         @foreach (var courseEvent in GetVisibleEvents(courseEvents))
                                         {
-                                            <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
+                                            <div class="pl-list-row" style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;">
                                                 <div>
                                                     <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
                                                     <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatEventDate(courseEvent)</MudText>
@@ -281,7 +279,7 @@
                                     <MudStack Spacing="1">
                                         @foreach (var publication in GetVisibleTrainingPlans(trainingPlanPublications))
                                         {
-                                            <div style="padding:8px 0; border-bottom:1px solid var(--mud-palette-lines-default);">
+                                            <div class="pl-list-row">
                                                 <MudText Typo="Typo.body2">@publication.TrainingPlanId</MudText>
                                             </div>
                                         }
@@ -505,18 +503,11 @@
         _showAllTrainingPlans = false;
     }
 
-    private static string GetCourseCardStyle(bool isSelected)
+    private static string GetCourseCardClass(bool isSelected)
     {
-        var border = isSelected
-            ? "2px solid var(--mud-palette-primary)"
-            : "1px solid var(--mud-palette-lines-default)";
-
-        return $"flex:0 0 176px; width:176px; min-height:132px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:{border};";
-    }
-
-    private static string GetAddCourseCardStyle()
-    {
-        return "flex:0 0 104px; width:104px; min-height:132px; scroll-snap-align:start; cursor:pointer; border-radius:8px; border:1px dashed var(--mud-palette-primary);";
+        return isSelected
+            ? "pa-2 pl-course-card pl-course-card-selected"
+            : "pa-2 pl-course-card";
     }
 
     private static string FormatCourseLevel(string level)

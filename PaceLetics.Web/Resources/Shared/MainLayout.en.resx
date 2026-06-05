@@ -10,6 +10,11 @@
   <data name="Theme_Ocean" xml:space="preserve"><value>Ocean</value></data>
   <data name="Theme_Forest" xml:space="preserve"><value>Forest</value></data>
   <data name="Theme_HighContrast" xml:space="preserve"><value>High contrast</value></data>
+  <data name="Theme_Wildflowers" xml:space="preserve"><value>Wildflowers</value></data>
+  <data name="Theme_Afterglow" xml:space="preserve"><value>Afterglow</value></data>
+  <data name="Theme_DarkRomance" xml:space="preserve"><value>Dark Romance</value></data>
+  <data name="Theme_Maritime" xml:space="preserve"><value>Maritime</value></data>
+  <data name="Theme_Tropical" xml:space="preserve"><value>Tropical</value></data>
   <data name="Scheme_Light" xml:space="preserve"><value>Light</value></data>
   <data name="Scheme_Dark" xml:space="preserve"><value>Dark</value></data>
   <data name="Scheme_System" xml:space="preserve"><value>System</value></data>

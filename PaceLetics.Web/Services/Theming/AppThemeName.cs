@@ -5,5 +5,10 @@ public enum AppThemeName
     PaceLetics,
     Ocean,
     Forest,
-    HighContrast
+    HighContrast,
+    Wildflowers,
+    Afterglow,
+    DarkRomance,
+    Maritime,
+    Tropical
 }
