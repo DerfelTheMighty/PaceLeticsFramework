@@ -14,7 +14,11 @@ public static class AppThemeCatalog
         new(AppThemeName.Afterglow, CreateAfterglowTheme(), Icons.Material.Filled.WbTwilight),
         new(AppThemeName.DarkRomance, CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite),
         new(AppThemeName.Maritime, CreateMaritimeTheme(), Icons.Material.Filled.Sailing),
-        new(AppThemeName.Tropical, CreateTropicalTheme(), Icons.Material.Filled.BeachAccess)
+        new(AppThemeName.Tropical, CreateTropicalTheme(), Icons.Material.Filled.BeachAccess),
+        new(AppThemeName.GoldenHour, CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny),
+        new(AppThemeName.StellarForge, CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome),
+        new(AppThemeName.ElderVale, CreateElderValeTheme(), Icons.Material.Filled.Terrain),
+        new(AppThemeName.SummitBlaze, CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment)
     ];
 
     public static MudTheme GetTheme(AppThemeName name)
@@ -411,6 +415,178 @@ public static class AppThemeCatalog
                 DrawerText = "#D8F2EC",
                 TextPrimary = "#ECFFFB",
                 TextSecondary = "#A3C6BE"
+            });
+    }
+
+    private static MudTheme CreateGoldenHourTheme()
+    {
+        return CreateTheme(
+            light: new PaletteLight
+            {
+                Primary = "#D94F4A",
+                Secondary = "#7B5FE8",
+                Tertiary = "#F4A62A",
+                Info = "#4C7CC7",
+                Success = "#2F9A71",
+                Warning = "#D98417",
+                Error = "#C63F5E",
+                Background = "#FFF8EF",
+                BackgroundGray = "#F5E8DC",
+                Surface = "#FFFFFF",
+                AppbarBackground = "#743C6F",
+                AppbarText = "#FFFFFF",
+                DrawerBackground = "#FFFFFF",
+                DrawerText = "#3E2B35",
+                TextPrimary = "#36272F",
+                TextSecondary = "#806A73"
+            },
+            dark: new PaletteDark
+            {
+                Primary = "#FF8B70",
+                Secondary = "#B7A2FF",
+                Tertiary = "#FFD166",
+                Info = "#80B6FF",
+                Success = "#74D8A7",
+                Warning = "#FFD166",
+                Error = "#FF7194",
+                Background = "#171018",
+                BackgroundGray = "#241923",
+                Surface = "#2D202A",
+                AppbarBackground = "#100A12",
+                AppbarText = "#FFF0E8",
+                DrawerBackground = "#1C131B",
+                DrawerText = "#F5DFE8",
+                TextPrimary = "#FFF5ED",
+                TextSecondary = "#D4BBC6"
+            });
+    }
+
+    private static MudTheme CreateStellarForgeTheme()
+    {
+        return CreateTheme(
+            light: new PaletteLight
+            {
+                Primary = "#2E5EEA",
+                Secondary = "#D83B52",
+                Tertiary = "#F0C84B",
+                Info = "#2E5EEA",
+                Success = "#2C9F7E",
+                Warning = "#B9891B",
+                Error = "#D83B52",
+                Background = "#F7F8FC",
+                BackgroundGray = "#E8ECF5",
+                Surface = "#FFFFFF",
+                AppbarBackground = "#202849",
+                AppbarText = "#FFFFFF",
+                DrawerBackground = "#FFFFFF",
+                DrawerText = "#242A3B",
+                TextPrimary = "#202536",
+                TextSecondary = "#687086"
+            },
+            dark: new PaletteDark
+            {
+                Primary = "#5F8BFF",
+                Secondary = "#FF5D72",
+                Tertiary = "#FFE169",
+                Info = "#5F8BFF",
+                Success = "#49D4AA",
+                Warning = "#FFE169",
+                Error = "#FF5D72",
+                Background = "#080A12",
+                BackgroundGray = "#121627",
+                Surface = "#1B2036",
+                AppbarBackground = "#05070D",
+                AppbarText = "#EEF3FF",
+                DrawerBackground = "#0E1220",
+                DrawerText = "#E2E8FF",
+                TextPrimary = "#F5F7FF",
+                TextSecondary = "#AEB8D2"
+            });
+    }
+
+    private static MudTheme CreateElderValeTheme()
+    {
+        return CreateTheme(
+            light: new PaletteLight
+            {
+                Primary = "#477A48",
+                Secondary = "#8A5F3C",
+                Tertiary = "#C9A34A",
+                Info = "#4E6FA8",
+                Success = "#477A48",
+                Warning = "#A6772A",
+                Error = "#A9483D",
+                Background = "#F8FAF0",
+                BackgroundGray = "#ECEFDF",
+                Surface = "#FFFFFF",
+                AppbarBackground = "#3A5134",
+                AppbarText = "#FFFFFF",
+                DrawerBackground = "#FFFFFF",
+                DrawerText = "#2D3327",
+                TextPrimary = "#2A3025",
+                TextSecondary = "#69705F"
+            },
+            dark: new PaletteDark
+            {
+                Primary = "#8BC47B",
+                Secondary = "#C99A66",
+                Tertiary = "#E8C76A",
+                Info = "#8AADF0",
+                Success = "#8BC47B",
+                Warning = "#E8C76A",
+                Error = "#E07A6E",
+                Background = "#10140D",
+                BackgroundGray = "#1B2116",
+                Surface = "#252D1F",
+                AppbarBackground = "#0A0E08",
+                AppbarText = "#F1F8E9",
+                DrawerBackground = "#151B11",
+                DrawerText = "#E4EDD9",
+                TextPrimary = "#F5FAEE",
+                TextSecondary = "#B9C5AD"
+            });
+    }
+
+    private static MudTheme CreateSummitBlazeTheme()
+    {
+        return CreateTheme(
+            light: new PaletteLight
+            {
+                Primary = "#FC4C02",
+                Secondary = "#1769AA",
+                Tertiary = "#212121",
+                Info = "#1769AA",
+                Success = "#1E8E5A",
+                Warning = "#E87500",
+                Error = "#D84315",
+                Background = "#FFF8F4",
+                BackgroundGray = "#F0E7E2",
+                Surface = "#FFFFFF",
+                AppbarBackground = "#FC4C02",
+                AppbarText = "#FFFFFF",
+                DrawerBackground = "#FFFFFF",
+                DrawerText = "#242424",
+                TextPrimary = "#202020",
+                TextSecondary = "#6B5D57"
+            },
+            dark: new PaletteDark
+            {
+                Primary = "#FF6A2A",
+                Secondary = "#56A7F2",
+                Tertiary = "#E8E8E8",
+                Info = "#56A7F2",
+                Success = "#4BD184",
+                Warning = "#FF9B3D",
+                Error = "#FF7043",
+                Background = "#111111",
+                BackgroundGray = "#1D1D1D",
+                Surface = "#272727",
+                AppbarBackground = "#0B0B0B",
+                AppbarText = "#FFFFFF",
+                DrawerBackground = "#171717",
+                DrawerText = "#F2F2F2",
+                TextPrimary = "#FFFFFF",
+                TextSecondary = "#C7C7C7"
             });
     }
 

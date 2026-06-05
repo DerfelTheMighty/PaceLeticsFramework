@@ -10,5 +10,9 @@ public enum AppThemeName
     Afterglow,
     DarkRomance,
     Maritime,
-    Tropical
+    Tropical,
+    GoldenHour,
+    StellarForge,
+    ElderVale,
+    SummitBlaze
 }

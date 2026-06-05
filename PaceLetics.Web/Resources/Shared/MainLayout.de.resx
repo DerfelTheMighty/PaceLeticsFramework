@@ -15,6 +15,10 @@
   <data name="Theme_DarkRomance" xml:space="preserve"><value>Dark Romance</value></data>
   <data name="Theme_Maritime" xml:space="preserve"><value>Maritime</value></data>
   <data name="Theme_Tropical" xml:space="preserve"><value>Tropical</value></data>
+  <data name="Theme_GoldenHour" xml:space="preserve"><value>Goldene Stunde</value></data>
+  <data name="Theme_StellarForge" xml:space="preserve"><value>Sternenschmiede</value></data>
+  <data name="Theme_ElderVale" xml:space="preserve"><value>Altes Tal</value></data>
+  <data name="Theme_SummitBlaze" xml:space="preserve"><value>Gipfelglut</value></data>
   <data name="Scheme_Light" xml:space="preserve"><value>Hell</value></data>
   <data name="Scheme_Dark" xml:space="preserve"><value>Dunkel</value></data>
   <data name="Scheme_System" xml:space="preserve"><value>System</value></data>
