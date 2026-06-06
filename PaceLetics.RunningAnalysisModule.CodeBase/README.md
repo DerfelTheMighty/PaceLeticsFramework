@@ -31,6 +31,29 @@ for an event of type `RunningAnalysis`.
 - `IRunningAnalysisClock`
   Keeps time-dependent behavior testable.
 
+## Google Drive Credentials
+
+Do not place a Google service-account key in `PaceLetics.Web/appsettings.json`.
+The repository only contains non-secret defaults. Configure real credentials
+through one of these untracked channels:
+
+```powershell
+dotnet user-secrets set "RunningAnalysis:GoogleDrive:RootFolderId" "<central-folder-id>" --project PaceLetics.Web
+dotnet user-secrets set "RunningAnalysis:GoogleDrive:ServiceAccountJsonPath" "C:\secure\paceletics-google-drive-service-account.json" --project PaceLetics.Web
+```
+
+or environment variables:
+
+```powershell
+$env:RunningAnalysis__GoogleDrive__RootFolderId = "<central-folder-id>"
+$env:RunningAnalysis__GoogleDrive__ServiceAccountJsonPath = "C:\secure\paceletics-google-drive-service-account.json"
+```
+
+For local development only, copy `PaceLetics.Web/appsettings.Local.example.json`
+to `PaceLetics.Web/appsettings.Local.json`. The local file is ignored by git.
+Share the central Google Drive folder with the service-account email and set its
+folder id as `RunningAnalysis:GoogleDrive:RootFolderId`.
+
 ## Next Adapters
 
 - Course event adapter: call registration when an athlete registers for a running
