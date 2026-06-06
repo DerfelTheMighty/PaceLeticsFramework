@@ -5,32 +5,27 @@
 @inject ICourseService CourseService
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
+@inject LoadingStateService Loading
 @inject IStringLocalizer<MyCourses> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
-    @if (_isLoading)
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    <MudDivider Class="my-4" />
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
-        <LoadingScreen Label="@L["Loading"]" />
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
+    }
+
+    @if (_courses.Count == 0)
+    {
+        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoPublishedCourses"]</MudText>
     }
     else
     {
-        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
-
-        <MudDivider Class="my-4" />
-
-        @if (!string.IsNullOrWhiteSpace(_errorMessage))
-        {
-            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
-        }
-
-        @if (_courses.Count == 0)
-        {
-            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoPublishedCourses"]</MudText>
-        }
-        else
-        {
             var selected = SelectedOverview;
             var joinedCourses = JoinedCourses.ToList();
             var availableCourses = AvailableCourses.ToList();
@@ -290,12 +285,10 @@
                     </MudPaper>
                 }
             </MudStack>
-        }
     }
 </MudContainer>
 
 @code {
-    private bool _isLoading = true;
     private string? _userId;
     private string? _errorMessage;
     private string? _selectedCourseId;
@@ -326,55 +319,53 @@
 
     private async Task LoadCoursesAsync()
     {
-        try
+        await Loading.RunAsync(L["Loading"], async () =>
         {
-            _isLoading = true;
-            _errorMessage = null;
-            _courses = await CourseService.GetCoursesForAthleteAsync(_userId ?? string.Empty);
-            _eventsByCourse = new Dictionary<string, IReadOnlyList<CourseEventDocument>>();
-            _registeredEvents = new Dictionary<string, CourseEventRegistrationDocument>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (var course in _courses.Where(course => course.IsJoined).Select(course => course.Course))
+            try
             {
-                var courseEvents = await CourseService.GetEventsAsync(course.Id);
-                _eventsByCourse[course.Id] = courseEvents;
+                _errorMessage = null;
+                _courses = await CourseService.GetCoursesForAthleteAsync(_userId ?? string.Empty);
+                _eventsByCourse = new Dictionary<string, IReadOnlyList<CourseEventDocument>>();
+                _registeredEvents = new Dictionary<string, CourseEventRegistrationDocument>(StringComparer.OrdinalIgnoreCase);
 
-                foreach (var courseEvent in courseEvents)
+                foreach (var course in _courses.Where(course => course.IsJoined).Select(course => course.Course))
                 {
-                    var registration = await CourseService.GetEventRegistrationForAthleteAsync(
-                        course.Id,
-                        courseEvent.Id,
-                        _userId ?? string.Empty);
+                    var courseEvents = await CourseService.GetEventsAsync(course.Id);
+                    _eventsByCourse[course.Id] = courseEvents;
 
-                    if (registration?.Status == CourseEventRegistrationStatus.Registered)
-                        _registeredEvents[courseEvent.Id] = registration;
+                    foreach (var courseEvent in courseEvents)
+                    {
+                        var registration = await CourseService.GetEventRegistrationForAthleteAsync(
+                            course.Id,
+                            courseEvent.Id,
+                            _userId ?? string.Empty);
+
+                        if (registration?.Status == CourseEventRegistrationStatus.Registered)
+                            _registeredEvents[courseEvent.Id] = registration;
+                    }
+                }
+
+                var joinedCourses = JoinedCourses.ToList();
+                if (joinedCourses.Count == 0)
+                {
+                    _selectedCourseId = null;
+                    ResetDetailExpansion();
+                }
+                else if (string.IsNullOrWhiteSpace(_selectedCourseId)
+                         || joinedCourses.All(course => course.Course.Id != _selectedCourseId))
+                {
+                    _selectedCourseId = joinedCourses.First().Course.Id;
+                    ResetDetailExpansion();
                 }
             }
-
-            var joinedCourses = JoinedCourses.ToList();
-            if (joinedCourses.Count == 0)
+            catch
             {
+                _errorMessage = L["LoadError"];
+                _courses = Array.Empty<CourseOverview>();
                 _selectedCourseId = null;
                 ResetDetailExpansion();
             }
-            else if (string.IsNullOrWhiteSpace(_selectedCourseId)
-                     || joinedCourses.All(course => course.Course.Id != _selectedCourseId))
-            {
-                _selectedCourseId = joinedCourses.First().Course.Id;
-                ResetDetailExpansion();
-            }
-        }
-        catch
-        {
-            _errorMessage = L["LoadError"];
-            _courses = Array.Empty<CourseOverview>();
-            _selectedCourseId = null;
-            ResetDetailExpansion();
-        }
-        finally
-        {
-            _isLoading = false;
-        }
+        });
     }
 
     private void SelectCourse(string courseId)

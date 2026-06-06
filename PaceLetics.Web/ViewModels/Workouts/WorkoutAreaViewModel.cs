@@ -13,7 +13,6 @@ public sealed class WorkoutAreaViewModel
         _workoutCatalog = workoutCatalog;
     }
 
-    public bool IsLoading { get; private set; } = true;
     public IReadOnlyList<WorkoutPreview> WorkoutPreviews => _workoutPreviews;
 
     public void Initialize()
@@ -28,7 +27,5 @@ public sealed class WorkoutAreaViewModel
 
             _workoutPreviews.Add(_workoutCatalog.GetWorkoutPreview(ids.First()));
         }
-
-        IsLoading = false;
     }
 }

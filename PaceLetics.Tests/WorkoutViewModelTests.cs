@@ -12,7 +12,7 @@ public sealed class WorkoutViewModelTests
 
         viewModel.Initialize();
 
-        Assert.False(viewModel.IsLoading);
+        Assert.NotEmpty(viewModel.WorkoutPreviews);
         Assert.Contains(viewModel.WorkoutPreviews, preview => preview.Name == "Stabi Handout");
     }
 

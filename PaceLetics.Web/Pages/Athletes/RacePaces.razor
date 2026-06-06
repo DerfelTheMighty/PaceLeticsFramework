@@ -14,54 +14,48 @@
 @inject IDialogService dialogService
 @inject IVdotService vdotService
 @inject IPaceModelProvider pmProvider
+@inject LoadingStateService Loading
 @inject IStringLocalizer<RacePaces> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
-    @if (_isLoading)
-    {
-        <LoadingScreen Label="@L["Loading"]" />
-    }
-    else
-    {
-        <PageHeader Title="@L["Title"]"
-                    Subtitle="@L["Subtitle"]" />
+    <PageHeader Title="@L["Title"]"
+                Subtitle="@L["Subtitle"]" />
 
-        <MudDivider Class="my-4" />
+    <MudDivider Class="my-4" />
 
-        <MudStack Spacing="3">
+    <MudStack Spacing="3">
 
-            @if (_athlete?.ActiveReferenceResult is null)
+        @if (_athlete?.ActiveReferenceResult is null)
+        {
+            <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                @L["NoRaceWarning"]
+            </MudAlert>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Warning"
+                       StartIcon="@Icons.Material.Filled.AddCircle"
+                       OnClick="AddAthlete">
+                @L["AddRace"]
+            </MudButton>
+        }
+        else
+        {
+            <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
+
+            @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
             {
-                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                    @L["NoRaceWarning"]
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                    @L["RaceOldWarning"]
                 </MudAlert>
-
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Warning"
-                           StartIcon="@Icons.Material.Filled.AddCircle"
-                           OnClick="AddAthlete">
-                    @L["AddRace"]
-                </MudButton>
-            }
-            else
-            {
-                <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
-
-                @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
-                {
-                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                        @L["RaceOldWarning"]
-                    </MudAlert>
-                }
-
-                <VdotCard Data="@_vdotData" />
             }
 
-        </MudStack>
-    }
+            <VdotCard Data="@_vdotData" />
+        }
+
+    </MudStack>
 
 </MudContainer>
 

@@ -13,6 +13,7 @@
 @inject IAthleteData AthleteData
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IStringLocalizer<Dashboard> L
+@inject LoadingStateService Loading
 @inject ITrainingPlanService TrainingPlanService
 
 <PageTitle>@L["PageTitle"]</PageTitle>
@@ -20,45 +21,38 @@
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
-    @if (_isLoading)
-    {
-        <LoadingScreen Label="@L["Loading"]" />
-    }
-    else
-    {
-        <PageHeader Title="@L["Title"]" Subtitle="@L["WelcomeText", _name]" />
+    <PageHeader Title="@L["Title"]" Subtitle="@L["WelcomeText", _name]" />
 
-        <MudDivider Class="my-4" />
+    <MudDivider Class="my-4" />
 
-        <MudStack Spacing="4">
+    <MudStack Spacing="4">
 
-            <MudGrid Spacing="3">
-                <MudItem xs="12" sm="6" lg="4">
-                    <DashboardMetricTile Label="@L["Metric_Vdot"]"
-                                         Value="@GetVdotValue()"
-                                         Detail="@GetReferenceDetail()"
-                                         Icon="@Icons.Material.Filled.Speed"
-                                         Accent="blue"
-                                         Href="/Athletes/trainingpaces" />
-                </MudItem>
+        <MudGrid Spacing="3">
+            <MudItem xs="12" sm="6" lg="4">
+                <DashboardMetricTile Label="@L["Metric_Vdot"]"
+                                     Value="@GetVdotValue()"
+                                     Detail="@GetReferenceDetail()"
+                                     Icon="@Icons.Material.Filled.Speed"
+                                     Accent="blue"
+                                     Href="/Athletes/trainingpaces" />
+            </MudItem>
 
-                <MudItem xs="12" sm="6" lg="4">
-                    <DashboardMetricTile Label="@L["Metric_NextSession"]"
-                                         Value="@GetNextSessionValue()"
-                                         Detail="@GetNextSessionDetail()"
-                                         Icon="@Icons.Material.Filled.EventAvailable"
-                                         Accent="green"
-                                         Href="/Athletes/trainingplanpage" />
-                </MudItem>
-            </MudGrid>
+            <MudItem xs="12" sm="6" lg="4">
+                <DashboardMetricTile Label="@L["Metric_NextSession"]"
+                                     Value="@GetNextSessionValue()"
+                                     Detail="@GetNextSessionDetail()"
+                                     Icon="@Icons.Material.Filled.EventAvailable"
+                                     Accent="green"
+                                     Href="/Athletes/trainingplanpage" />
+            </MudItem>
+        </MudGrid>
 
-            <MudGrid Spacing="3">
-                <MudItem xs="12">
-					<DashboardNextTrainingSessionTile Session="_nextSession" />
-                </MudItem>
-            </MudGrid>
-        </MudStack>
-    }
+        <MudGrid Spacing="3">
+            <MudItem xs="12">
+                <DashboardNextTrainingSessionTile Session="_nextSession" />
+            </MudItem>
+        </MudGrid>
+    </MudStack>
 
 </MudContainer>
 
@@ -67,7 +61,6 @@
 
 @code
 {
-    bool _isLoading = true;
     AthleteModel? Athlete;
     string _name = String.Empty;
     IReadOnlyList<TrainingPlan> _trainingPlans = Array.Empty<TrainingPlan>();
@@ -77,27 +70,30 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-        Athlete = string.IsNullOrWhiteSpace(id)
-            ? null
-            : await AthleteData.GetAthlete(id);
-        _name = string.IsNullOrWhiteSpace(Athlete?.Name)
-            ? user.Identity?.Name ?? string.Empty
-            : Athlete.Name;
-        try
+        await Loading.RunAsync(L["Loading"], async () =>
         {
-            _trainingPlans = await TrainingPlanService.LoadTrainingPlansForUserAsync(id);
-        }
-        catch
-        {
-            _trainingPlans = Array.Empty<TrainingPlan>();
-        }
-        _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
-        _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
-        _referenceResult = Athlete?.ActiveReferenceResult;
-        _isLoading = false;
+            var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+            var user = authstate.User;
+            var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+            Athlete = string.IsNullOrWhiteSpace(id)
+                ? null
+                : await AthleteData.GetAthlete(id);
+            _name = string.IsNullOrWhiteSpace(Athlete?.Name)
+                ? user.Identity?.Name ?? string.Empty
+                : Athlete.Name;
+            try
+            {
+                _trainingPlans = await TrainingPlanService.LoadTrainingPlansForUserAsync(id);
+            }
+            catch
+            {
+                _trainingPlans = Array.Empty<TrainingPlan>();
+            }
+            _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
+            _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
+            _referenceResult = Athlete?.ActiveReferenceResult;
+        });
+
         await base.OnInitializedAsync();
     }
 

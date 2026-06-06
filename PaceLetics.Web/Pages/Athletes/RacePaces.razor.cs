@@ -10,39 +10,37 @@ namespace PaceLetics.Web.Pages.Athletes
     public partial class RacePaces
     {
         private string _input = string.Empty;
-        private bool _isLoading = true;
         private AthleteModel _athlete = new AthleteModel();
         private double[] _vdotData { get; set; } = {0, 0};
         protected override async Task OnInitializedAsync()
         {
-            try
+            await Loading.RunAsync(L["Loading"], async () =>
             {
-                var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-                var user = authstate.User;
-                var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-
-                if (!string.IsNullOrEmpty(id))
+                try
                 {
-                    var athlete = await AthleteData.GetAthlete(id);
-                    if (athlete is null)
-                        return;
+                    var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+                    var user = authstate.User;
+                    var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
 
-                    _athlete = athlete;
-                    _vdotData[0] = _athlete.Vdot;
-                    _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        var athlete = await AthleteData.GetAthlete(id);
+                        if (athlete is null)
+                            return;
+
+                        _athlete = athlete;
+                        _vdotData[0] = _athlete.Vdot;
+                        _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                await dialogService.ShowInformationAsync(
-                    L["LoadError_Title"],
-                    $"{L["LoadError_Message"]}\n{ex.Message}",
-                    Icons.Material.Filled.Error);
-            }
-            finally
-            {
-                _isLoading = false;
-            }
+                catch (Exception ex)
+                {
+                    await dialogService.ShowInformationAsync(
+                        L["LoadError_Title"],
+                        $"{L["LoadError_Message"]}\n{ex.Message}",
+                        Icons.Material.Filled.Error);
+                }
+            });
         }
 
         private async Task AddAthlete()
@@ -68,15 +66,7 @@ namespace PaceLetics.Web.Pages.Athletes
             _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
             _athlete.PaceModel = pmProvider[_athlete.Vdot];
 
-            _isLoading = true;
-            try
-            {
-                await AthleteData.UpdateAthlete(_athlete);
-            }
-            finally
-            {
-                _isLoading = false;
-            }
+            await Loading.RunAsync(L["Loading"], () => AthleteData.UpdateAthlete(_athlete));
         }
     }
 }

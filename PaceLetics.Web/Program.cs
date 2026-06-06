@@ -27,6 +27,7 @@ using PaceLetics.CoreModule.Infrastructure.Services;
 using PaceLetics.Web.Services.Courses;
 using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
+using PaceLetics.Web.Services.Loading;
 using PaceLetics.Web.Localization;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Services;
@@ -120,6 +121,7 @@ builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunn
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddScoped<ThemePreferenceService>();
+builder.Services.AddScoped<LoadingStateService>();
 builder.Services.AddSingleton<DashboardMessageFeedOptions>();
 builder.Services.AddScoped<IAthleteMessageProvider, ReferenceRunDashboardMessageProvider>();
 builder.Services.AddScoped<IAthleteMessageProvider, UpcomingTrainingDashboardMessageProvider>();
