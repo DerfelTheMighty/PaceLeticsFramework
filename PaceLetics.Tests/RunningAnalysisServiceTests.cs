@@ -9,6 +9,36 @@ namespace PaceLetics.Tests;
 public sealed class RunningAnalysisServiceTests
 {
     [Fact]
+    public async Task PrepareEvent_CreatesPreparedEvent()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var service = CreateService(repository, new FakeRunningAnalysisStorageProvider(), new FakeUserDriveFolderRegistry());
+
+        var analysisEvent = await service.PrepareEventAsync(CreateEventRequest());
+
+        Assert.Equal("course-event-1", analysisEvent.ExternalEventId);
+        Assert.Equal("course-1", analysisEvent.CourseId);
+        Assert.Equal(RunningAnalysisEventStatus.Prepared, analysisEvent.Status);
+        Assert.Single(repository.Events.Values);
+    }
+
+    [Fact]
+    public async Task PrepareEvent_UpdatesExistingEventWithoutResettingProgress()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var service = CreateService(repository, new FakeRunningAnalysisStorageProvider(), new FakeUserDriveFolderRegistry());
+        var analysisEvent = await service.PrepareEventAsync(CreateEventRequest());
+        await service.StartAnalysisAsync(analysisEvent.Id);
+
+        var updated = await service.PrepareEventAsync(CreateEventRequest(title: "Updated analysis"));
+
+        Assert.Equal(analysisEvent.Id, updated.Id);
+        Assert.Equal("Updated analysis", updated.Title);
+        Assert.Equal(RunningAnalysisEventStatus.InProgress, updated.Status);
+        Assert.Single(repository.Events.Values);
+    }
+
+    [Fact]
     public async Task RegisterParticipant_CreatesFolderAndGrantsWriteAccess()
     {
         var repository = new InMemoryRunningAnalysisRepository();
@@ -202,6 +232,16 @@ public sealed class RunningAnalysisServiceTests
             DisplayName: "Runner One",
             Email: "runner@example.com",
             RegistrationId: "registration-1");
+    }
+
+    private static RunningAnalysisEventRequest CreateEventRequest(string title = "Running analysis")
+    {
+        return new RunningAnalysisEventRequest(
+            ExternalEventId: "course-event-1",
+            CourseId: "course-1",
+            Title: title,
+            StartsAt: new DateTime(2026, 6, 5, 18, 0, 0, DateTimeKind.Utc),
+            EndsAt: new DateTime(2026, 6, 5, 20, 0, 0, DateTimeKind.Utc));
     }
 
     private sealed record FixedRunningAnalysisClock(DateTime UtcNow) : IRunningAnalysisClock;

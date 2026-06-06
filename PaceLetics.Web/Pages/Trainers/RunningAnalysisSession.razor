@@ -1,0 +1,411 @@
+@page "/Trainers/courses/{CourseId}/events/{EventId}/running-analysis"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@implements IAsyncDisposable
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
+@using PaceLetics.RunningAnalysisModule.Components
+@using PaceLetics.Web.Services.Courses
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ICourseService CourseService
+@inject IRunningAnalysisService RunningAnalysisService
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+@inject LoadingStateService Loading
+@inject IStringLocalizer<RunningAnalysisSession> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+            <PageHeader Title="@(_courseEvent?.Title ?? L["Title"].ToString())"
+                        Subtitle="@GetHeaderSubtitle()" />
+
+            <MudButton Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
+                @L["BackToCourses"]
+            </MudButton>
+        </MudStack>
+
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+        }
+        else if (_analysisEvent is not null)
+        {
+            <MudPaper Elevation="1" Class="pa-4">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                        <MudChip T="string" Size="Size.Small" Color="@GetStatusColor()" Variant="Variant.Outlined">
+                            @FormatStatus(_analysisEvent.Status)
+                        </MudChip>
+                        <MudChip T="string"
+                                 Size="Size.Small"
+                                 Color="@(_isOnline ? Color.Success : Color.Error)"
+                                 Variant="Variant.Outlined">
+                            @(_isOnline ? L["Online"] : L["Offline"])
+                        </MudChip>
+                    </MudStack>
+
+                    <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                        @if (_analysisEvent.Status != RunningAnalysisEventStatus.InProgress
+                             && _analysisEvent.Status != RunningAnalysisEventStatus.Completed)
+                        {
+                            <MudButton Color="Color.Primary"
+                                       Variant="Variant.Filled"
+                                       StartIcon="@Icons.Material.Filled.PlayArrow"
+                                       OnClick="StartAnalysisAsync">
+                                @L["StartAnalysis"]
+                            </MudButton>
+                        }
+
+                        @if (_analysisEvent.Status != RunningAnalysisEventStatus.Completed)
+                        {
+                            <MudButton Color="Color.Primary"
+                                       Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.DoneAll"
+                                       OnClick="CompleteAnalysisAsync">
+                                @L["CompleteAnalysis"]
+                            </MudButton>
+                        }
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+
+            @if (_analysisEvent.Status == RunningAnalysisEventStatus.Completed)
+            {
+                <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
+                    @L["CompletedMessage"]
+                </MudAlert>
+            }
+
+            @if (_isCaptureMode && CurrentParticipant is not null)
+            {
+                <RunningAnalysisCapturePanel ParticipantName="@CurrentParticipant.DisplayName"
+                                             IsOnline="@(_isOnline && _analysisEvent.Status != RunningAnalysisEventStatus.Completed)"
+                                             IsRecording="_isRecording"
+                                             OnStartRecording="EnsureAnalysisStartedAsync"
+                                             OnStopRecording="OnStopRecordingAsync"
+                                             OnRecorded="UploadRecordingAsync"
+                                             IsRecordingChanged="OnRecordingChangedAsync"
+                                             OnRetake="RetakeAsync"
+                                             OnNextParticipant="NextParticipantAsync"
+                                             OnBackToRoster="BackToRosterAsync" />
+            }
+            else
+            {
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.h6">@L["Roster"]</MudText>
+                        <RunningAnalysisRoster Items="_roster"
+                                               SelectedParticipantId="_selectedParticipantId"
+                                               SelectedParticipantIdChanged="OnParticipantSelectedAsync"
+                                               OnRecord="OpenCaptureAsync" />
+                    </MudStack>
+                </MudPaper>
+            }
+        }
+    </MudStack>
+</MudContainer>
+
+@code {
+    [Parameter] public string? CourseId { get; set; }
+    [Parameter] public string? EventId { get; set; }
+
+    private string? _userId;
+    private string? _errorMessage;
+    private CourseDocument? _course;
+    private CourseEventDocument? _courseEvent;
+    private RunningAnalysisEvent? _analysisEvent;
+    private IReadOnlyList<RunningAnalysisRosterItem> _roster = Array.Empty<RunningAnalysisRosterItem>();
+    private string? _selectedParticipantId;
+    private bool _isCaptureMode;
+    private bool _isRecording;
+    private bool _isOnline = true;
+    private IJSObjectReference? _recorderModule;
+
+    private RunningAnalysisRosterItem? CurrentParticipant =>
+        string.IsNullOrWhiteSpace(_selectedParticipantId)
+            ? null
+            : _roster.FirstOrDefault(participant => participant.ParticipantId == _selectedParticipantId);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        await Loading.RunAsync(L["Loading"], async () =>
+        {
+            try
+            {
+                _errorMessage = null;
+                await RefreshOnlineStateAsync();
+
+                var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+
+                if (string.IsNullOrWhiteSpace(_userId))
+                    throw new InvalidOperationException(L["TrainerNotResolved"]);
+
+                var courses = await CourseService.GetCoursesForTrainerAsync(_userId);
+                _course = courses.FirstOrDefault(course => course.Id == CourseId)
+                    ?? throw new InvalidOperationException(L["CourseNotFound"]);
+
+                var events = await CourseService.GetEventsAsync(_course.Id);
+                _courseEvent = events.FirstOrDefault(courseEvent => courseEvent.Id == EventId)
+                    ?? throw new InvalidOperationException(L["EventNotFound"]);
+
+                if (!string.Equals(_courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidOperationException(L["NotRunningAnalysis"]);
+
+                _analysisEvent = await RunningAnalysisService.PrepareEventAsync(
+                    new RunningAnalysisEventRequest(
+                        _courseEvent.Id,
+                        _course.Id,
+                        _courseEvent.Title,
+                        _courseEvent.StartsAt,
+                        _courseEvent.EndsAt));
+
+                await LoadRosterAsync();
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+                _roster = Array.Empty<RunningAnalysisRosterItem>();
+            }
+        });
+    }
+
+    private async Task LoadRosterAsync()
+    {
+        if (_analysisEvent is null)
+            return;
+
+        _roster = await RunningAnalysisService.GetRosterAsync(_analysisEvent.Id);
+
+        if (!string.IsNullOrWhiteSpace(_selectedParticipantId)
+            && _roster.All(participant => participant.ParticipantId != _selectedParticipantId))
+        {
+            _selectedParticipantId = null;
+            _isCaptureMode = false;
+        }
+    }
+
+    private async Task StartAnalysisAsync()
+    {
+        if (_analysisEvent is null)
+            return;
+
+        try
+        {
+            _analysisEvent = await RunningAnalysisService.StartAnalysisAsync(_analysisEvent.Id);
+            Snackbar.Add(L["StartSuccess"], Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task EnsureAnalysisStartedAsync()
+    {
+        await RefreshOnlineStateAsync();
+
+        if (_analysisEvent is null
+            || _analysisEvent.Status == RunningAnalysisEventStatus.InProgress)
+        {
+            return;
+        }
+
+        if (_analysisEvent.Status == RunningAnalysisEventStatus.Completed)
+            throw new InvalidOperationException(L["CompletedCannotRecord"]);
+
+        _analysisEvent = await RunningAnalysisService.StartAnalysisAsync(_analysisEvent.Id);
+    }
+
+    private async Task CompleteAnalysisAsync()
+    {
+        if (_analysisEvent is null)
+            return;
+
+        var confirmed = await JS.InvokeAsync<bool>("confirm", L["CompleteConfirm"].ToString());
+        if (!confirmed)
+            return;
+
+        try
+        {
+            _analysisEvent = await RunningAnalysisService.CompleteAnalysisAsync(_analysisEvent.Id);
+            _isCaptureMode = false;
+            _isRecording = false;
+            Snackbar.Add(L["CompleteSuccess"], Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private Task OnParticipantSelectedAsync(string participantId)
+    {
+        _selectedParticipantId = participantId;
+        return Task.CompletedTask;
+    }
+
+    private async Task OpenCaptureAsync(string participantId)
+    {
+        await RefreshOnlineStateAsync();
+        _selectedParticipantId = participantId;
+        _isCaptureMode = true;
+    }
+
+    private Task BackToRosterAsync()
+    {
+        _isCaptureMode = false;
+        return Task.CompletedTask;
+    }
+
+    private Task OnRecordingChangedAsync(bool isRecording)
+    {
+        _isRecording = isRecording;
+        return Task.CompletedTask;
+    }
+
+    private Task OnStopRecordingAsync()
+    {
+        _isRecording = false;
+        return Task.CompletedTask;
+    }
+
+    private Task RetakeAsync()
+    {
+        Snackbar.Add(L["RetakeHint"], Severity.Info);
+        return Task.CompletedTask;
+    }
+
+    private async Task NextParticipantAsync()
+    {
+        if (_roster.Count == 0)
+        {
+            _isCaptureMode = false;
+            return;
+        }
+
+        var currentIndex = _roster.ToList().FindIndex(participant => participant.ParticipantId == _selectedParticipantId);
+        var next = currentIndex >= 0 && currentIndex < _roster.Count - 1
+            ? _roster[currentIndex + 1]
+            : null;
+
+        if (next is null)
+        {
+            _isCaptureMode = false;
+            Snackbar.Add(L["NoNextParticipant"], Severity.Info);
+            return;
+        }
+
+        await OpenCaptureAsync(next.ParticipantId);
+    }
+
+    private async Task UploadRecordingAsync(RunningAnalysisRecordedVideo video)
+    {
+        if (_analysisEvent is null || CurrentParticipant is null)
+            return;
+
+        await RefreshOnlineStateAsync();
+
+        try
+        {
+            using var content = new MemoryStream(video.Data);
+            var recording = await RunningAnalysisService.UploadRecordingAsync(
+                _analysisEvent.Id,
+                CurrentParticipant.ParticipantId,
+                BuildFileName(CurrentParticipant, video.FileExtension),
+                video.ContentType,
+                content,
+                _isOnline);
+
+            await LoadRosterAsync();
+
+            if (recording.UploadStatus == RunningAnalysisUploadStatus.Uploaded)
+            {
+                Snackbar.Add(L["UploadSuccess"], Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add(recording.ErrorMessage ?? L["UploadFailed"], Severity.Warning);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task RefreshOnlineStateAsync()
+    {
+        try
+        {
+            _recorderModule ??= await JS.InvokeAsync<IJSObjectReference>(
+                "import",
+                "./_content/PaceLetics.RunningAnalysisModule.Components/runningAnalysisMediaRecorder.js");
+            _isOnline = await _recorderModule.InvokeAsync<bool>("isOnline");
+        }
+        catch
+        {
+            _isOnline = true;
+        }
+    }
+
+    private string GetHeaderSubtitle()
+    {
+        if (_course is null || _courseEvent is null)
+            return L["Subtitle"];
+
+        return string.Format(L["SubtitleWithCourse"], _course.Name, _courseEvent.StartsAt, _courseEvent.EndsAt);
+    }
+
+    private Color GetStatusColor()
+    {
+        return _analysisEvent?.Status switch
+        {
+            RunningAnalysisEventStatus.InProgress => Color.Primary,
+            RunningAnalysisEventStatus.Completed => Color.Success,
+            RunningAnalysisEventStatus.Prepared => Color.Info,
+            _ => Color.Default
+        };
+    }
+
+    private string FormatStatus(RunningAnalysisEventStatus status)
+    {
+        return status switch
+        {
+            RunningAnalysisEventStatus.Prepared => L["Status_Prepared"],
+            RunningAnalysisEventStatus.InProgress => L["Status_InProgress"],
+            RunningAnalysisEventStatus.Completed => L["Status_Completed"],
+            _ => L["Status_Draft"]
+        };
+    }
+
+    private static string BuildFileName(RunningAnalysisRosterItem participant, string extension)
+    {
+        var safeName = new string(participant.DisplayName
+            .Trim()
+            .Select(character => char.IsLetterOrDigit(character) ? character : '-')
+            .ToArray());
+
+        safeName = string.IsNullOrWhiteSpace(safeName) ? participant.ParticipantId : safeName;
+        extension = string.IsNullOrWhiteSpace(extension) ? "webm" : extension.Trim().TrimStart('.');
+
+        return $"{DateTime.UtcNow:yyyyMMdd-HHmmss}-{safeName}.{extension}";
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_recorderModule is not null)
+            await _recorderModule.DisposeAsync();
+    }
+}

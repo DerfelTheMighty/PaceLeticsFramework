@@ -1,8 +1,12 @@
 @page "/Athletes/courses"
 @attribute [Authorize]
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
 @using PaceLetics.Web.Services.Courses
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ICourseService CourseService
+@inject IRunningAnalysisService RunningAnalysisService
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
@@ -220,20 +224,46 @@
                                     <MudStack Spacing="1">
                                         @foreach (var courseEvent in GetVisibleEvents(courseEvents))
                                         {
+                                            var analysisLink = GetAnalysisLink(courseEvent.Id);
                                             <div class="pl-list-row" style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;">
                                                 <div>
-                                                    <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
+                                                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                        <MudText Typo="Typo.body2">@courseEvent.Title</MudText>
+                                                        @if (IsRunningAnalysisEvent(courseEvent))
+                                                        {
+                                                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                                                                @L["RunningAnalysis"]
+                                                            </MudChip>
+                                                        }
+                                                    </MudStack>
                                                     <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatEventDate(courseEvent)</MudText>
+                                                    @if (IsRunningAnalysisEvent(courseEvent) && IsRegisteredForEvent(courseEvent.Id))
+                                                    {
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatAnalysisFolderStatus(analysisLink)</MudText>
+                                                    }
                                                 </div>
                                                 @if (IsRegisteredForEvent(courseEvent.Id))
                                                 {
-                                                    <MudTooltip Text="@L["CancelRegistration"]">
-                                                        <MudIconButton Size="Size.Small"
-                                                                       Color="Color.Default"
-                                                                       Icon="@Icons.Material.Filled.Logout"
-                                                                       OnClick="@(() => CancelEventRegistrationAsync(course.Id, courseEvent.Id))"
-                                                                       aria-label="@L["CancelRegistration"]" />
-                                                    </MudTooltip>
+                                                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:4px;">
+                                                        @if (IsAnalysisFolderReady(analysisLink))
+                                                        {
+                                                            <MudTooltip Text="@L["OpenAnalysisFolder"]">
+                                                                <MudIconButton Size="Size.Small"
+                                                                               Color="Color.Primary"
+                                                                               Icon="@Icons.Material.Filled.FolderOpen"
+                                                                               OnClick="@(() => OpenAnalysisFolderAsync(analysisLink!.DriveFolderUrl!))"
+                                                                               aria-label="@L["OpenAnalysisFolder"]" />
+                                                            </MudTooltip>
+                                                        }
+
+                                                        <MudTooltip Text="@L["CancelRegistration"]">
+                                                            <MudIconButton Size="Size.Small"
+                                                                           Color="Color.Default"
+                                                                           Icon="@Icons.Material.Filled.Logout"
+                                                                           OnClick="@(() => CancelEventRegistrationAsync(course.Id, courseEvent.Id))"
+                                                                           aria-label="@L["CancelRegistration"]" />
+                                                        </MudTooltip>
+                                                    </MudStack>
                                                 }
                                                 else
                                                 {
@@ -295,6 +325,7 @@
     private IReadOnlyList<CourseOverview> _courses = Array.Empty<CourseOverview>();
     private Dictionary<string, IReadOnlyList<CourseEventDocument>> _eventsByCourse = new();
     private Dictionary<string, CourseEventRegistrationDocument> _registeredEvents = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, RunningAnalysisLink> _analysisLinksByExternalEventId = new(StringComparer.OrdinalIgnoreCase);
     private bool _isCoursePickerOpen;
     private bool _showAllDates;
     private bool _showAllEvents;
@@ -327,6 +358,9 @@
                 _courses = await CourseService.GetCoursesForAthleteAsync(_userId ?? string.Empty);
                 _eventsByCourse = new Dictionary<string, IReadOnlyList<CourseEventDocument>>();
                 _registeredEvents = new Dictionary<string, CourseEventRegistrationDocument>(StringComparer.OrdinalIgnoreCase);
+                _analysisLinksByExternalEventId = (await RunningAnalysisService.GetAnalysesForAthleteAsync(_userId ?? string.Empty))
+                    .GroupBy(analysis => analysis.ExternalEventId, StringComparer.OrdinalIgnoreCase)
+                    .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
 
                 foreach (var course in _courses.Where(course => course.IsJoined).Select(course => course.Course))
                 {
@@ -485,6 +519,47 @@
     private bool IsRegisteredForEvent(string eventId)
     {
         return _registeredEvents.ContainsKey(eventId);
+    }
+
+    private static bool IsRunningAnalysisEvent(CourseEventDocument courseEvent)
+    {
+        return string.Equals(courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private RunningAnalysisLink? GetAnalysisLink(string eventId)
+    {
+        return _analysisLinksByExternalEventId.TryGetValue(eventId, out var analysis)
+            ? analysis
+            : null;
+    }
+
+    private static bool IsAnalysisFolderReady(RunningAnalysisLink? analysis)
+    {
+        return analysis?.FolderStatus == RunningAnalysisFolderStatus.Ready
+            && analysis.PermissionStatus == RunningAnalysisPermissionStatus.Granted
+            && !string.IsNullOrWhiteSpace(analysis.DriveFolderUrl);
+    }
+
+    private string FormatAnalysisFolderStatus(RunningAnalysisLink? analysis)
+    {
+        if (analysis is null)
+            return L["AnalysisPreparing"];
+
+        if (IsAnalysisFolderReady(analysis))
+            return L["AnalysisReady"];
+
+        if (analysis.FolderStatus == RunningAnalysisFolderStatus.Failed
+            || analysis.PermissionStatus == RunningAnalysisPermissionStatus.Failed)
+        {
+            return L["AnalysisFailed"];
+        }
+
+        return L["AnalysisPreparing"];
+    }
+
+    private Task OpenAnalysisFolderAsync(string folderUrl)
+    {
+        return JS.InvokeVoidAsync("open", folderUrl, "_blank").AsTask();
     }
 
     private void ResetDetailExpansion()

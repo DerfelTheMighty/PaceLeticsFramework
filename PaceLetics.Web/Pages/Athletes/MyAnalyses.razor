@@ -1,0 +1,62 @@
+@page "/Athletes/analyses"
+@attribute [Authorize]
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
+@using PaceLetics.RunningAnalysisModule.Components
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IRunningAnalysisService RunningAnalysisService
+@inject LoadingStateService Loading
+@inject IStringLocalizer<MyAnalyses> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    <MudDivider Class="my-4" />
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+    }
+    else
+    {
+        <RunningAnalysisLinks Items="_analyses"
+                              EmptyText="@L["NoAnalyses"]"
+                              OpenText="@L["OpenFolder"]" />
+    }
+</MudContainer>
+
+@code {
+    private string? _userId;
+    private string? _errorMessage;
+    private IReadOnlyList<RunningAnalysisLink> _analyses = Array.Empty<RunningAnalysisLink>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        await Loading.RunAsync(L["Loading"], async () =>
+        {
+            try
+            {
+                _errorMessage = null;
+                var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+
+                if (string.IsNullOrWhiteSpace(_userId))
+                    throw new InvalidOperationException(L["AthleteNotResolved"]);
+
+                _analyses = await RunningAnalysisService.GetAnalysesForAthleteAsync(_userId);
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+                _analyses = Array.Empty<RunningAnalysisLink>();
+            }
+        });
+    }
+}

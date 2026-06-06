@@ -3,7 +3,7 @@
 <MudStack Spacing="2">
     @if (Items.Count == 0)
     {
-        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">No analyses available.</MudAlert>
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@EmptyText</MudAlert>
     }
     else
     {
@@ -24,7 +24,7 @@
                                    Color="Color.Primary"
                                    Variant="Variant.Outlined"
                                    StartIcon="@Icons.Material.Filled.FolderOpen">
-                            Open
+                            @OpenText
                         </MudButton>
                     }
                     else
@@ -41,4 +41,6 @@
 
 @code {
     [Parameter] public IReadOnlyList<RunningAnalysisLink> Items { get; set; } = Array.Empty<RunningAnalysisLink>();
+    [Parameter] public string EmptyText { get; set; } = "No analyses available.";
+    [Parameter] public string OpenText { get; set; } = "Open";
 }

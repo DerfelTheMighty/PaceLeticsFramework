@@ -86,6 +86,10 @@ export function disposeRecorder(videoElement) {
   recorders.delete(videoElement);
 }
 
+export function isOnline() {
+  return navigator.onLine;
+}
+
 function stopStream(videoElement, stream) {
   if (stream) {
     for (const track of stream.getTracks()) {

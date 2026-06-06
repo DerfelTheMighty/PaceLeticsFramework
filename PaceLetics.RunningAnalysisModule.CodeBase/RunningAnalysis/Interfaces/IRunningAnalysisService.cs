@@ -4,6 +4,10 @@ namespace PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 
 public interface IRunningAnalysisService
 {
+    Task<RunningAnalysisEvent> PrepareEventAsync(
+        RunningAnalysisEventRequest request,
+        CancellationToken cancellationToken = default);
+
     Task<RunningAnalysisParticipant> RegisterParticipantAsync(
         RunningAnalysisRegistration registration,
         CancellationToken cancellationToken = default);

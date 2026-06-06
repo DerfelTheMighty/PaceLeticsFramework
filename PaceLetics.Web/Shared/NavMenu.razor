@@ -5,6 +5,7 @@
     <MudNavLink Href="/Athletes/racepaces" Match="NavLinkMatch.Prefix">@L["Nav_RaceData"]</MudNavLink>
     <MudNavLink Href="/Athletes/trainingpaces" Match="NavLinkMatch.Prefix">@L["Nav_PaceZones"]</MudNavLink>
     <MudNavLink Href="/Athletes/courses" Match="NavLinkMatch.Prefix">@L["Nav_Courses"]</MudNavLink>
+    <MudNavLink Href="/Athletes/analyses" Match="NavLinkMatch.Prefix">@L["Nav_Analyses"]</MudNavLink>
     <AuthorizeView Roles="@ApplicationRoles.Trainer">
         <Authorized>
             <MudNavLink Href="/Trainers/courses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerCourses"]</MudNavLink>
