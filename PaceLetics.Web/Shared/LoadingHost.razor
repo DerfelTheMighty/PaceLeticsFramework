@@ -1,0 +1,26 @@
+@implements IDisposable
+@inject PaceLetics.Web.Services.Loading.LoadingStateService Loading
+
+@if (Loading.IsLoading)
+{
+    <div class="pl-overlay pl-loading-overlay" role="status" aria-live="polite" aria-busy="true">
+        <LoadingScreen Label="@Loading.Label" />
+    </div>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        Loading.Changed += OnLoadingChanged;
+    }
+
+    private void OnLoadingChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Loading.Changed -= OnLoadingChanged;
+    }
+}

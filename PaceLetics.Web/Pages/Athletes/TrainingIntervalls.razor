@@ -10,6 +10,7 @@
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 @inject IDialogService DialogService
+@inject LoadingStateService Loading
 @inject IStringLocalizer<TrainingIntervalls> L
 @inject ITrainingPlanService TrainingPlanService
 
@@ -17,100 +18,91 @@
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
 
-    @if (_isLoading)
-    {
-        <LoadingScreen Label="@L["Loading"]" />
-    }
-    else
-    {
-        <PageHeader Title="@L["Title"]"
-                    Subtitle="@L["Subtitle"]" />
+    <PageHeader Title="@L["Title"]"
+                Subtitle="@L["Subtitle"]" />
 
-        <MudDivider Class="my-4" />
+    <MudDivider Class="my-4" />
 
-        <MudStack Spacing="3">
+    <MudStack Spacing="3">
 
-            @if (_athlete?.Vdot < 1 || _athlete?.PaceModel is null)
-            {
-                <MudAlert Severity="Severity.Warning">
-                    @L["NoRaceWarning"]
-                </MudAlert>
-            }
-            else if (_currentTraining is null)
-            {
-                <MudAlert Severity="Severity.Info">
-                    @L["NoTrainings"]
-                </MudAlert>
-            }
-            else
-            {
-                <MudPaper Class="pa-4 pl-training-panel" Elevation="0">
-                    <MudStack Spacing="3">
+        @if (_athlete?.Vdot < 1 || _athlete?.PaceModel is null)
+        {
+            <MudAlert Severity="Severity.Warning">
+                @L["NoRaceWarning"]
+            </MudAlert>
+        }
+        else if (_currentTraining is null)
+        {
+            <MudAlert Severity="Severity.Info">
+                @L["NoTrainings"]
+            </MudAlert>
+        }
+        else
+        {
+            <MudPaper Class="pa-4 pl-training-panel" Elevation="0">
+                <MudStack Spacing="3">
 
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="min-width:0;">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="min-width:0;">
+                            <div class="pl-training-icon">
+                                <MudIcon Icon="@Icons.Material.Filled.Timeline" Size="Size.Medium" />
+                            </div>
+
+                            <MudStack Spacing="0" Style="min-width:0;">
+                                <MudText Typo="Typo.h6">
+                                    @_currentTraining.Name
+                                </MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    ID: @_currentTraining.Id / @L["PlannedOn"] @_currentTraining.Date.ToString("dd.MM.yyyy")
+                                </MudText>
+                            </MudStack>
+                        </MudStack>
+                    </MudStack>
+
+                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Wrap="Wrap.Wrap">
+                        <MudChip T="string" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Filled">
+                            @_currentTraining.Sets Set(s)
+                        </MudChip>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                            @($"{_currentTraining.TotalDistance / 1000.0:0.0} km")
+                        </MudChip>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
+                            @_currentTraining.Distances.Count Intervall(e)
+                        </MudChip>
+                    </MudStack>
+
+                    <MudDivider />
+
+                    <MudStack Spacing="0">
+                        @foreach (var row in TableRows)
+                        {
+                            <div class="@GetIntervalRowClass(row)">
                                 <div class="pl-training-icon">
-                                    <MudIcon Icon="@Icons.Material.Filled.Timeline" Size="Size.Medium" />
+                                    <MudIcon Icon="@(row.IsPause ? Icons.Material.Filled.SelfImprovement : Icons.Material.Filled.Speed)"
+                                             Size="Size.Small" />
                                 </div>
 
                                 <MudStack Spacing="0" Style="min-width:0;">
-                                    <MudText Typo="Typo.h6">
-                                        @_currentTraining.Name
-                                    </MudText>
+                                    <MudText Typo="Typo.body2">@GetRowTitle(row)</MudText>
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                        ID: @_currentTraining.Id / @L["PlannedOn"] @_currentTraining.Date.ToString("dd.MM.yyyy")
+                                        @(row.IsPause ? "Recovery" : "Intervall")
                                     </MudText>
                                 </MudStack>
-                            </MudStack>
-                        </MudStack>
 
-                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Wrap="Wrap.Wrap">
-                            <MudChip T="string" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Filled">
-                                @_currentTraining.Sets Set(s)
-                            </MudChip>
-                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
-                                @($"{_currentTraining.TotalDistance / 1000.0:0.0} km")
-                            </MudChip>
-                            <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
-                                @_currentTraining.Distances.Count Intervall(e)
-                            </MudChip>
-                        </MudStack>
-
-                        <MudDivider />
-
-                        <MudStack Spacing="0">
-                            @foreach (var row in TableRows)
-                            {
-                                <div class="@GetIntervalRowClass(row)">
-                                    <div class="pl-training-icon">
-                                        <MudIcon Icon="@(row.IsPause ? Icons.Material.Filled.SelfImprovement : Icons.Material.Filled.Speed)"
-                                                 Size="Size.Small" />
-                                    </div>
-
-                                    <MudStack Spacing="0" Style="min-width:0;">
-                                        <MudText Typo="Typo.body2">@GetRowTitle(row)</MudText>
-                                        <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                            @(row.IsPause ? "Recovery" : "Intervall")
-                                        </MudText>
-                                    </MudStack>
-
-                                    <MudText Typo="Typo.body2" Color="Color.Secondary">
-                                        @($"{GetRowDistance(row)} m")
-                                    </MudText>
-                                </div>
-                            }
-                        </MudStack>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    @($"{GetRowDistance(row)} m")
+                                </MudText>
+                            </div>
+                        }
                     </MudStack>
-                </MudPaper>
-            }
-        </MudStack>
-    }
+                </MudStack>
+            </MudPaper>
+        }
+    </MudStack>
 
 </MudContainer>
 
 @code {
-    private bool _isLoading = true;
-
     private AthleteModel? _athlete;
     private IntervallSession? _currentTraining;
 
@@ -149,7 +141,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
+        await Loading.RunAsync(L["Loading"], async () =>
         {
             var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
             var userID = authState.User.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
@@ -179,11 +171,7 @@
                 .FirstOrDefault();
 
             _currentTraining = upcoming ?? sessions.OrderByDescending(t => t.Date).FirstOrDefault();
-        }
-        finally
-        {
-            _isLoading = false;
-        }
+        });
 
 
     }

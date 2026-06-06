@@ -11,28 +11,23 @@
 @inject IAthleteData AthleteData
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
+@inject LoadingStateService Loading
 @inject IStringLocalizer<CourseManagement> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
-    @if (_isLoading)
+    <PageHeader Title="@L["Title"]"
+                Subtitle="@L["Subtitle"]" />
+
+    <MudDivider Class="my-4" />
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
-        <LoadingScreen Label="@L["Loading"]" />
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
     }
-    else
-    {
-        <PageHeader Title="@L["Title"]"
-                    Subtitle="@L["Subtitle"]" />
 
-        <MudDivider Class="my-4" />
-
-        @if (!string.IsNullOrWhiteSpace(_errorMessage))
-        {
-            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
-        }
-
-        <MudStack Spacing="4">
+    <MudStack Spacing="4">
             <MudPaper Elevation="1" Class="pa-4">
                 <MudStack Spacing="3">
                     <MudText Typo="Typo.h6">@L["CreateCourseTitle"]</MudText>
@@ -412,12 +407,10 @@
                     </MudStack>
                 </MudPaper>
             }
-        </MudStack>
-    }
+    </MudStack>
 </MudContainer>
 
 @code {
-    private bool _isLoading = true;
     private string? _userId;
     private string _displayName = string.Empty;
     private string? _errorMessage;
@@ -481,47 +474,45 @@
 
     private async Task LoadAsync()
     {
-        try
+        await Loading.RunAsync(L["Loading"], async () =>
         {
-            _isLoading = true;
-            _errorMessage = null;
+            try
+            {
+                _errorMessage = null;
 
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-            _userId = user.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+                var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                var user = authState.User;
+                _userId = user.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
 
-            if (string.IsNullOrWhiteSpace(_userId))
-                throw new InvalidOperationException(L["TrainerNotResolved"]);
+                if (string.IsNullOrWhiteSpace(_userId))
+                    throw new InvalidOperationException(L["TrainerNotResolved"]);
 
-            var athlete = await AthleteData.GetAthlete(_userId);
-            _displayName = GetDisplayName(athlete, user.Identity?.Name ?? _userId);
+                var athlete = await AthleteData.GetAthlete(_userId);
+                _displayName = GetDisplayName(athlete, user.Identity?.Name ?? _userId);
 
-            var athletes = (await AthleteData.GetAthletes()).ToList();
-            _athleteDisplayNamesById = athletes
-                .ToDictionary(athlete => athlete.Id, athlete => GetDisplayName(athlete, athlete.Id), StringComparer.OrdinalIgnoreCase);
+                var athletes = (await AthleteData.GetAthletes()).ToList();
+                _athleteDisplayNamesById = athletes
+                    .ToDictionary(athlete => athlete.Id, athlete => GetDisplayName(athlete, athlete.Id), StringComparer.OrdinalIgnoreCase);
 
-            _trainerCandidates = athletes
-                .Where(athlete => athlete.Id != _userId
-                    && athlete.Roles.AssignedRoles.Contains(ApplicationRoles.Trainer))
-                .Select(athlete => new TrainerCandidate(athlete.Id, GetDisplayName(athlete, athlete.Id)))
-                .OrderBy(trainer => trainer.DisplayName)
-                .ToList();
+                _trainerCandidates = athletes
+                    .Where(athlete => athlete.Id != _userId
+                        && athlete.Roles.AssignedRoles.Contains(ApplicationRoles.Trainer))
+                    .Select(athlete => new TrainerCandidate(athlete.Id, GetDisplayName(athlete, athlete.Id)))
+                    .OrderBy(trainer => trainer.DisplayName)
+                    .ToList();
 
-            _courses = (await CourseService.GetCoursesForTrainerAsync(_userId)).ToList();
-            _trainingPlans = TrainingPlanService.LoadTrainingPlans().ToList();
-            EnsureSelection();
-            await LoadSelectedCourseEventsAsync();
-        }
-        catch (Exception ex)
-        {
-            _errorMessage = ex.Message;
-            _courses = new();
-            _selectedCourseEvents = new();
-        }
-        finally
-        {
-            _isLoading = false;
-        }
+                _courses = (await CourseService.GetCoursesForTrainerAsync(_userId)).ToList();
+                _trainingPlans = TrainingPlanService.LoadTrainingPlans().ToList();
+                EnsureSelection();
+                await LoadSelectedCourseEventsAsync();
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+                _courses = new();
+                _selectedCourseEvents = new();
+            }
+        });
     }
 
     private void EnsureSelection()

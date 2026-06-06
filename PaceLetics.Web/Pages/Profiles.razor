@@ -3,16 +3,13 @@
 @using AthleteDataAccessLibrary.Contracts
 @using PaceLetics.AthleteModule.CodeBase.Models
 @inject IAthleteData AthleteData
+@inject LoadingStateService Loading
 @inject IStringLocalizer<Profiles> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
-    @if (_isLoading)
-    {
-        <LoadingScreen Label="@L["Loading"]" />
-    }
-    else if (_selectedProfile is not null)
+    @if (_selectedProfile is not null)
     {
         <PageHeader Title="@_selectedProfile.PublicUserName" Subtitle="@GetRoleDisplayName(_selectedProfile.PublicRole)">
             <Actions>
@@ -135,35 +132,34 @@
     [Parameter]
     public string? PublicUserName { get; set; }
 
-    private bool _isLoading = true;
     private bool _profileNotFound;
     private List<PublicProfileModel> _profiles = new();
     private PublicProfileModel? _selectedProfile;
 
     protected override async Task OnParametersSetAsync()
     {
-        _isLoading = true;
-        _profileNotFound = false;
-        _selectedProfile = null;
-
-        _profiles = (await AthleteData.GetAthletes())
-            .Select(athlete => athlete.PublicProfile)
-            .Where(profile => profile is not null
-                && profile.IsProfileVisible
-                && !string.IsNullOrWhiteSpace(profile.PublicUserName)
-                && profile.PublicUserName != "NA")
-            .OrderBy(profile => profile.PublicUserName)
-            .ToList();
-
-        if (!string.IsNullOrWhiteSpace(PublicUserName))
+        await Loading.RunAsync(L["Loading"], async () =>
         {
-            var normalizedPublicUserName = NormalizePublicUserName(PublicUserName);
-            _selectedProfile = _profiles.FirstOrDefault(profile =>
-                profile.NormalizedPublicUserName == normalizedPublicUserName);
-            _profileNotFound = _selectedProfile is null;
-        }
+            _profileNotFound = false;
+            _selectedProfile = null;
 
-        _isLoading = false;
+            _profiles = (await AthleteData.GetAthletes())
+                .Select(athlete => athlete.PublicProfile)
+                .Where(profile => profile is not null
+                    && profile.IsProfileVisible
+                    && !string.IsNullOrWhiteSpace(profile.PublicUserName)
+                    && profile.PublicUserName != "NA")
+                .OrderBy(profile => profile.PublicUserName)
+                .ToList();
+
+            if (!string.IsNullOrWhiteSpace(PublicUserName))
+            {
+                var normalizedPublicUserName = NormalizePublicUserName(PublicUserName);
+                _selectedProfile = _profiles.FirstOrDefault(profile =>
+                    profile.NormalizedPublicUserName == normalizedPublicUserName);
+                _profileNotFound = _selectedProfile is null;
+            }
+        });
     }
 
     private static string GetProfileHref(PublicProfileModel profile)

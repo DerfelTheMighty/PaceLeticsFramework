@@ -1,28 +1,23 @@
-﻿@using MudBlazor;
-@using MudBlazor.Extensions.Core;
+@using MudBlazor
 
-<MudGrid Class="d-flex justify-center">
-    <MudCard>
-        <MudAlert Severity="Severity.Info">
-            @Label
-        </MudAlert>
-        <MudExGradientText Palette="palette" Align="Align.Center">
-            |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-        </MudExGradientText>
-    </MudCard>
-</MudGrid>
+<div class="pl-loading">
+    <MudPaper Elevation="0" Class="pl-loading-panel">
+        <MudProgressCircular Class="pl-loading-symbol"
+                             Color="Color.Primary"
+                             Size="@Size.Large"
+                             StrokeWidth="4"
+                             Indeterminate="true" />
+
+        @if (!string.IsNullOrWhiteSpace(Label))
+        {
+            <MudText Class="pl-loading-label" Typo="Typo.body2" Align="Align.Center">
+                @Label
+            </MudText>
+        }
+    </MudPaper>
+</div>
 
 @code {
-
     [Parameter]
     public string Label { get; set; } = string.Empty;
-
-    List<MudExColor> palette = new List<MudExColor>()
-    {
-        MudExColor.DrawerBackground,
-        MudExColor.Primary,
-        MudExColor.DrawerBackground,
-        MudExColor.DrawerBackground,
-        MudExColor.Secondary
-    };
 }

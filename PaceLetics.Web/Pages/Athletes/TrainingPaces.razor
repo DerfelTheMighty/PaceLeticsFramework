@@ -9,42 +9,36 @@
 @inject IAthleteData AthleteData
 @inject IDialogService dialogService
 @inject IJSRuntime JSRuntime
+@inject LoadingStateService Loading
 @inject IStringLocalizer<TrainingPaces> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-8 pb-8" MaxWidth="MaxWidth.Small">
-    @if (_isLoading)
-    {
-        <LoadingScreen Label="@L["Loading"]" />
-    }
-    else
-    {
-        <PageHeader Title="@L["Title"]"
-                    Subtitle="@L["Subtitle"]" />
+    <PageHeader Title="@L["Title"]"
+                Subtitle="@L["Subtitle"]" />
 
-        <MudDivider Class="my-4" />
+    <MudDivider Class="my-4" />
 
-        <MudStack Spacing="3">
-            @if (_athlete?.Vdot < 1)
-            {
-                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                    @L["NoRaceWarning"]
-                </MudAlert>
-            }
+    <MudStack Spacing="3">
+        @if (_athlete?.Vdot < 1)
+        {
+            <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                @L["NoRaceWarning"]
+            </MudAlert>
+        }
 
-            <PaceInfo EPaceLow="@_lowerPace.Easy"
-                      EPaceHigh="@_upperPace.Easy"
-                      RecoveryPaceLow="@_lowerPace.Easy.Add(TimeSpan.FromSeconds(30))"
-                      RecoveryPaceHigh="@_upperPace.Easy.Add(TimeSpan.FromSeconds(30))"
-                      MPaceLow="@_lowerPace.Marathon"
-                      MPaceHigh="@_upperPace.Marathon"
-                      TPaceLow="@_lowerPace.Threshold"
-                      TPaceHigh="@_upperPace.Threshold"
-                      IPaceLow="@_lowerPace.Intervall"
-                      IPaceHigh="@_upperPace.Intervall"
-                      RPaceLow="@_lowerPace.Repetition"
-                      RPaceHigh="@_upperPace.Repetition" />
-        </MudStack>
-    }
+        <PaceInfo EPaceLow="@_lowerPace.Easy"
+                  EPaceHigh="@_upperPace.Easy"
+                  RecoveryPaceLow="@_lowerPace.Easy.Add(TimeSpan.FromSeconds(30))"
+                  RecoveryPaceHigh="@_upperPace.Easy.Add(TimeSpan.FromSeconds(30))"
+                  MPaceLow="@_lowerPace.Marathon"
+                  MPaceHigh="@_upperPace.Marathon"
+                  TPaceLow="@_lowerPace.Threshold"
+                  TPaceHigh="@_upperPace.Threshold"
+                  IPaceLow="@_lowerPace.Intervall"
+                  IPaceHigh="@_upperPace.Intervall"
+                  RPaceLow="@_lowerPace.Repetition"
+                  RPaceHigh="@_upperPace.Repetition" />
+    </MudStack>
 </MudContainer>
