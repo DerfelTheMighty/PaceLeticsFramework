@@ -38,6 +38,7 @@
   <data name="EventType" xml:space="preserve"><value>Eventtyp</value></data>
   <data name="EventType_General" xml:space="preserve"><value>Allgemein</value></data>
   <data name="EventType_RunningAnalysis" xml:space="preserve"><value>Laufanalyse</value></data>
+  <data name="StartRunningAnalysis" xml:space="preserve"><value>Analyse starten</value></data>
   <data name="AddEvent" xml:space="preserve"><value>Event hinzufuegen</value></data>
   <data name="TrainingPlans" xml:space="preserve"><value>Trainingsplaene</value></data>
   <data name="NoPublishedPlan" xml:space="preserve"><value>Noch kein Plan veroeffentlicht.</value></data>

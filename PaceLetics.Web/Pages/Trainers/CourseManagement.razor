@@ -10,6 +10,7 @@
 @inject ITrainingPlanService TrainingPlanService
 @inject IAthleteData AthleteData
 @inject IJSRuntime JS
+@inject NavigationManager Navigation
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
 @inject IStringLocalizer<CourseManagement> L
@@ -269,6 +270,16 @@
                                                                 }
                                                             </MudStack>
                                                             <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:4px;">
+                                                                @if (IsRunningAnalysisEvent(courseEvent))
+                                                                {
+                                                                    <MudButton Size="Size.Small"
+                                                                               Variant="Variant.Text"
+                                                                               Color="Color.Primary"
+                                                                               StartIcon="@Icons.Material.Filled.Videocam"
+                                                                               OnClick="@(() => OpenRunningAnalysis(course, courseEvent))">
+                                                                        @L["StartRunningAnalysis"]
+                                                                    </MudButton>
+                                                                }
                                                                 <MudButton Size="Size.Small"
                                                                            Variant="Variant.Text"
                                                                            Color="Color.Primary"
@@ -886,6 +897,16 @@
         return string.Equals(eventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase)
             ? Color.Primary
             : Color.Default;
+    }
+
+    private static bool IsRunningAnalysisEvent(CourseEventDocument courseEvent)
+    {
+        return string.Equals(courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void OpenRunningAnalysis(CourseDocument course, CourseEventDocument courseEvent)
+    {
+        Navigation.NavigateTo($"/Trainers/courses/{course.Id}/events/{courseEvent.Id}/running-analysis");
     }
 
     private string GetTrainingPlanName(string trainingPlanId)

@@ -24,13 +24,53 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         _clock = clock;
     }
 
+    public async Task<RunningAnalysisEvent> PrepareEventAsync(
+        RunningAnalysisEventRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        ValidateEventRequest(request);
+
+        var analysisEvent = await _repository.GetEventByExternalEventIdAsync(
+            request.ExternalEventId,
+            cancellationToken);
+
+        if (analysisEvent is null)
+        {
+            analysisEvent = new RunningAnalysisEvent
+            {
+                ExternalEventId = request.ExternalEventId.Trim(),
+                CourseId = request.CourseId.Trim(),
+                CreatedAt = _clock.UtcNow
+            };
+        }
+
+        analysisEvent.CourseId = request.CourseId.Trim();
+        analysisEvent.Title = request.Title.Trim();
+        analysisEvent.StartsAt = request.StartsAt;
+        analysisEvent.EndsAt = request.EndsAt;
+        analysisEvent.UpdatedAt = _clock.UtcNow;
+
+        if (analysisEvent.Status == RunningAnalysisEventStatus.Draft)
+            analysisEvent.Status = RunningAnalysisEventStatus.Prepared;
+
+        await _repository.UpsertEventAsync(analysisEvent, cancellationToken);
+        return analysisEvent;
+    }
+
     public async Task<RunningAnalysisParticipant> RegisterParticipantAsync(
         RunningAnalysisRegistration registration,
         CancellationToken cancellationToken = default)
     {
         ValidateRegistration(registration);
 
-        var analysisEvent = await GetOrCreateEventAsync(registration, cancellationToken);
+        var analysisEvent = await PrepareEventAsync(
+            new RunningAnalysisEventRequest(
+                registration.ExternalEventId,
+                registration.CourseId,
+                registration.EventTitle,
+                registration.StartsAt,
+                registration.EndsAt),
+            cancellationToken);
         var participant = await _repository.GetParticipantAsync(
             analysisEvent.Id,
             registration.AthleteUserId,
@@ -208,32 +248,6 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         }
     }
 
-    private async Task<RunningAnalysisEvent> GetOrCreateEventAsync(
-        RunningAnalysisRegistration registration,
-        CancellationToken cancellationToken)
-    {
-        var analysisEvent = await _repository.GetEventByExternalEventIdAsync(
-            registration.ExternalEventId,
-            cancellationToken);
-
-        if (analysisEvent is null)
-        {
-            analysisEvent = new RunningAnalysisEvent
-            {
-                ExternalEventId = registration.ExternalEventId.Trim(),
-                CourseId = registration.CourseId.Trim(),
-                CreatedAt = _clock.UtcNow
-            };
-        }
-
-        analysisEvent.Title = registration.EventTitle.Trim();
-        analysisEvent.StartsAt = registration.StartsAt;
-        analysisEvent.EndsAt = registration.EndsAt;
-        analysisEvent.UpdatedAt = _clock.UtcNow;
-        await _repository.UpsertEventAsync(analysisEvent, cancellationToken);
-        return analysisEvent;
-    }
-
     private async Task ProvisionParticipantFolderAsync(
         RunningAnalysisEvent analysisEvent,
         RunningAnalysisParticipant participant,
@@ -339,6 +353,21 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
 
         if (string.IsNullOrWhiteSpace(registration.AthleteUserId))
             throw new InvalidOperationException("An athlete user id is required.");
+    }
+
+    private static void ValidateEventRequest(RunningAnalysisEventRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.ExternalEventId))
+            throw new InvalidOperationException("A source event id is required.");
+
+        if (string.IsNullOrWhiteSpace(request.CourseId))
+            throw new InvalidOperationException("A course id is required.");
+
+        if (string.IsNullOrWhiteSpace(request.Title))
+            throw new InvalidOperationException("A running analysis title is required.");
+
+        if (request.EndsAt <= request.StartsAt)
+            throw new InvalidOperationException("The running analysis end must be after the start.");
     }
 
     private static string Normalize(string value, string fallback)
