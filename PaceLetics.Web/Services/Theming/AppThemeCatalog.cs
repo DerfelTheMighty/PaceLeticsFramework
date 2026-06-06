@@ -142,13 +142,13 @@ public static class AppThemeCatalog
     private static PaceZonePalette CreateGoldenHourPaceZones()
     {
         return new(
-            Free: "#8E7B71",
-            Recovery: "#4C7CC7",
-            Easy: "#2F9A71",
-            Marathon: "#7B5FE8",
-            Threshold: "#F4A62A",
-            Intervall: "#D94F4A",
-            Repetition: "#C63F8D");
+            Free: "#8C7762",
+            Recovery: "#4F8CFF",
+            Easy: "#2EAD78",
+            Marathon: "#2F66D0",
+            Threshold: "#FBBF24",
+            Intervall: "#F97316",
+            Repetition: "#E65A78");
     }
 
     private static PaceZonePalette CreateStellarForgePaceZones()
@@ -398,22 +398,22 @@ public static class AppThemeCatalog
         return CreateTheme(
             light: new PaletteLight
             {
-                Primary = "#D94F4A",
-                Secondary = "#7B5FE8",
-                Tertiary = "#F4A62A",
-                Info = "#4C7CC7",
-                Success = "#2F9A71",
-                Warning = "#D98417",
-                Error = "#C63F5E",
-                Background = "#FFF8EF",
-                BackgroundGray = "#F5E8DC",
+                Primary = "#F97316",
+                Secondary = "#2563EB",
+                Tertiary = "#FBBF24",
+                Info = "#3B82F6",
+                Success = "#2EAD78",
+                Warning = "#F59E0B",
+                Error = "#E65A78",
+                Background = "#FFF5E3",
+                BackgroundGray = "#FFE1A8",
                 Surface = "#FFFFFF",
-                AppbarBackground = "#743C6F",
+                AppbarBackground = "#3267A8",
                 AppbarText = "#FFFFFF",
                 DrawerBackground = "#FFFFFF",
-                DrawerText = "#3E2B35",
-                TextPrimary = "#36272F",
-                TextSecondary = "#806A73"
+                DrawerText = "#344054",
+                TextPrimary = "#2E2A25",
+                TextSecondary = "#70604E"
             });
     }
 
