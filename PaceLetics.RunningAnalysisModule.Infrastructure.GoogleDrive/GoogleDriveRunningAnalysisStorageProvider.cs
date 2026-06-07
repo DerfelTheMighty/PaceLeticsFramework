@@ -10,7 +10,9 @@ using System.Text;
 
 namespace PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
 
-public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysisStorageProvider
+public sealed class GoogleDriveRunningAnalysisStorageProvider :
+    IRunningAnalysisStorageProvider,
+    IUserDriveFolderStorageProvider
 {
     private const string FolderMimeType = "application/vnd.google-apps.folder";
     private readonly GoogleDriveRunningAnalysisOptions _options;
@@ -65,6 +67,38 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysis
         await request.ExecuteAsync(cancellationToken);
     }
 
+    public async Task<DriveFolderReference> EnsureUserFolderAsync(
+        UserDriveFolderRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var drive = CreateDriveService();
+        var rootFolder = await EnsureRootFolderAsync(drive, cancellationToken);
+        var folderName = BuildUserFolderName(request);
+
+        return await EnsureFolderAsync(drive, folderName, rootFolder.FolderId, cancellationToken);
+    }
+
+    public Task GrantUserWriteAccessAsync(
+        DriveFolderReference userFolder,
+        string userEmail,
+        CancellationToken cancellationToken = default)
+    {
+        return GrantWriteAccessAsync(userFolder, userEmail, cancellationToken);
+    }
+
+    public async Task DeleteFolderAsync(
+        DriveFolderReference userFolder,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(userFolder.FolderId))
+            throw new InvalidOperationException("The Drive folder id is required.");
+
+        var drive = CreateDriveService();
+        var request = drive.Files.Delete(userFolder.FolderId);
+        request.SupportsAllDrives = true;
+        await request.ExecuteAsync(cancellationToken);
+    }
+
     public async Task<DriveFileReference> UploadRecordingAsync(
         UploadRecordingRequest request,
         CancellationToken cancellationToken = default)
@@ -94,6 +128,28 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysis
             throw result.Exception ?? new InvalidOperationException("Google Drive upload failed.");
 
         return new DriveFileReference(upload.ResponseBody.Id, upload.ResponseBody.WebViewLink);
+    }
+
+    private async Task GrantWriteAccessAsync(
+        DriveFolderReference folder,
+        string email,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new InvalidOperationException("A user email is required to grant Drive access.");
+
+        var drive = CreateDriveService();
+        var permission = new Permission
+        {
+            Type = "user",
+            Role = "writer",
+            EmailAddress = email.Trim()
+        };
+
+        var request = drive.Permissions.Create(permission, folder.FolderId);
+        request.SendNotificationEmail = false;
+        request.SupportsAllDrives = true;
+        await request.ExecuteAsync(cancellationToken);
     }
 
     private DriveService CreateDriveService()
@@ -214,6 +270,18 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysis
             : participant.AthleteUserId[^6..];
 
         return $"{SanitizeName(participant.DisplayName)} - {suffix}";
+    }
+
+    private static string BuildUserFolderName(UserDriveFolderRequest request)
+    {
+        var displayName = string.IsNullOrWhiteSpace(request.DisplayName)
+            ? request.Email
+            : request.DisplayName;
+        var suffix = request.AthleteUserId.Length <= 6
+            ? request.AthleteUserId
+            : request.AthleteUserId[^6..];
+
+        return $"PaceLetics - {SanitizeName(displayName)} - {suffix}";
     }
 
     private static string SanitizeName(string value)

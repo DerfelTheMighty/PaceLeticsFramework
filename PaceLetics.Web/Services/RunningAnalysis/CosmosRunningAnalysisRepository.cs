@@ -6,7 +6,10 @@ using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage;
 
 namespace PaceLetics.Web.Services.RunningAnalysis;
 
-public sealed class CosmosRunningAnalysisRepository : IRunningAnalysisRepository, IUserDriveFolderRegistry
+public sealed class CosmosRunningAnalysisRepository :
+    IRunningAnalysisRepository,
+    IUserDriveFolderRegistry,
+    IUserDriveFolderRepository
 {
     private readonly IDataAccess _db;
     private readonly AthleteDataOptions _options;
@@ -136,6 +139,56 @@ public sealed class CosmosRunningAnalysisRepository : IRunningAnalysisRepository
             document.CourseId);
     }
 
+    public async Task<DriveFolderReference?> FindUserFolderAsync(
+        string athleteUserId,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            return null;
+
+        var reference = await _db.LoadItem<UserDriveFolderReferenceDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            UserFolderReferenceId(athleteUserId.Trim()),
+            UserDriveFolderReferenceDocument.PartitionKeyValue);
+
+        return reference is null
+            ? null
+            : new DriveFolderReference(reference.FolderId, reference.FolderUrl);
+    }
+
+    public Task SaveUserFolderAsync(
+        SaveUserDriveFolderRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var document = new UserDriveFolderReferenceDocument
+        {
+            Id = UserFolderReferenceId(request.AthleteUserId),
+            AthleteUserId = request.AthleteUserId,
+            Email = request.Email,
+            FolderId = request.FolderId,
+            FolderUrl = request.FolderUrl,
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        return _db.UpsertItem(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            document,
+            UserDriveFolderReferenceDocument.PartitionKeyValue);
+    }
+
+    public Task DeleteUserFolderAsync(
+        string athleteUserId,
+        CancellationToken cancellationToken = default)
+    {
+        return _db.DeleteItem<UserDriveFolderReferenceDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            UserFolderReferenceId(athleteUserId),
+            UserDriveFolderReferenceDocument.PartitionKeyValue);
+    }
+
     private Task<List<T>> LoadAllAsync<T>(string documentType)
     {
         return _db.LoadData<T>(_options.DatabaseName, _options.CourseContainerName, documentType);
@@ -151,5 +204,10 @@ public sealed class CosmosRunningAnalysisRepository : IRunningAnalysisRepository
     private static string FolderReferenceId(string courseId, string externalEventId, string athleteUserId)
     {
         return $"running-analysis-folder:{courseId}:{externalEventId}:{athleteUserId}";
+    }
+
+    private static string UserFolderReferenceId(string athleteUserId)
+    {
+        return $"user-drive-folder:{athleteUserId.Trim()}";
     }
 }
