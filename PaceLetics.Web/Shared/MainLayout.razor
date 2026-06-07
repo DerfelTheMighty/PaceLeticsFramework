@@ -100,9 +100,14 @@
 
     private string GetLayoutClass()
     {
-        return ThemePreferences.ThemeName == AppThemeName.PaceLetics
-            ? "pl-synthwave-layout"
-            : string.Empty;
+        return ThemePreferences.ThemeName switch
+        {
+            AppThemeName.PaceLetics => "pl-synthwave-layout",
+            AppThemeName.Wildflowers => "pl-wildflowers-layout",
+            AppThemeName.DarkRomance => "pl-dark-romance-layout",
+            AppThemeName.StellarForge => "pl-stellar-forge-layout",
+            _ => string.Empty
+        };
     }
 
     private string GetThemeStyle()

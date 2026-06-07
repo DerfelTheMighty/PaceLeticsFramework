@@ -3,18 +3,30 @@
     --pl-overlay-background: color-mix(in srgb, var(--mud-palette-background) 18%, black 52%);
 }
 
-.pl-synthwave-layout {
+.pl-synthwave-layout,
+.pl-stellar-forge-layout,
+.pl-dark-romance-layout,
+.pl-wildflowers-layout {
     position: relative;
     isolation: isolate;
     min-height: 100vh;
     overflow-x: hidden;
+}
+
+.pl-synthwave-layout {
     background:
         radial-gradient(ellipse at 50% 52%, rgba(255, 43, 214, 0.12), transparent 42%),
         linear-gradient(180deg, #040013 0%, #12042D 48%, #090016 100%);
 }
 
 .pl-synthwave-layout::before,
-.pl-synthwave-layout::after {
+.pl-synthwave-layout::after,
+.pl-stellar-forge-layout::before,
+.pl-stellar-forge-layout::after,
+.pl-dark-romance-layout::before,
+.pl-dark-romance-layout::after,
+.pl-wildflowers-layout::before,
+.pl-wildflowers-layout::after {
     content: "";
     position: fixed;
     pointer-events: none;
@@ -23,10 +35,10 @@
 .pl-synthwave-layout::before {
     inset: 0;
     z-index: 0;
-    opacity: 0.18;
+    opacity: 0.22;
     background:
         url("../images/theme/paceletics-neon-track-background.png") center bottom / cover no-repeat;
-    filter: saturate(0.92) contrast(0.92);
+    filter: saturate(0.96) contrast(0.94) brightness(1.08);
 }
 
 .pl-synthwave-layout::after {
@@ -34,11 +46,89 @@
     z-index: 0;
     background:
         radial-gradient(ellipse at 50% 58%, rgba(255, 67, 209, 0.1), transparent 36%),
-        linear-gradient(180deg, rgba(4, 0, 19, 0.52) 0%, rgba(4, 0, 19, 0.76) 48%, rgba(4, 0, 19, 0.88) 100%),
-        linear-gradient(90deg, rgba(4, 0, 19, 0.84), transparent 28%, transparent 72%, rgba(4, 0, 19, 0.84));
+        linear-gradient(180deg, rgba(4, 0, 19, 0.46) 0%, rgba(4, 0, 19, 0.7) 48%, rgba(4, 0, 19, 0.84) 100%),
+        linear-gradient(90deg, rgba(4, 0, 19, 0.78), transparent 28%, transparent 72%, rgba(4, 0, 19, 0.78));
 }
 
-.pl-synthwave-layout .mud-main-content {
+.pl-stellar-forge-layout {
+    background:
+        radial-gradient(ellipse at 62% 18%, rgba(255, 232, 31, 0.1), transparent 34%),
+        radial-gradient(ellipse at 26% 70%, rgba(76, 201, 240, 0.1), transparent 38%),
+        linear-gradient(180deg, #151923 0%, #0B101B 48%, #05070D 100%);
+}
+
+.pl-stellar-forge-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.4;
+    background:
+        url("../images/theme/stellar-forge-tech-background.png") center center / cover no-repeat;
+    filter: saturate(0.9) contrast(0.92) brightness(0.68);
+}
+
+.pl-stellar-forge-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 58% 24%, rgba(255, 232, 31, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(2, 4, 10, 0.5) 0%, rgba(5, 7, 13, 0.7) 48%, rgba(5, 7, 13, 0.88) 100%),
+        linear-gradient(90deg, rgba(2, 4, 10, 0.78), transparent 30%, transparent 70%, rgba(2, 4, 10, 0.78));
+}
+
+.pl-dark-romance-layout {
+    background:
+        radial-gradient(ellipse at 32% 28%, rgba(255, 140, 171, 0.1), transparent 34%),
+        radial-gradient(ellipse at 70% 66%, rgba(198, 169, 255, 0.08), transparent 38%),
+        linear-gradient(180deg, #160910 0%, #1A0C14 46%, #12070D 100%);
+}
+
+.pl-dark-romance-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.32;
+    background:
+        url("../images/theme/dark-romance-background.png") center center / cover no-repeat;
+    filter: saturate(0.88) contrast(0.92) brightness(0.68);
+}
+
+.pl-dark-romance-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 48%, rgba(255, 140, 171, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(18, 7, 13, 0.52) 0%, rgba(18, 7, 13, 0.68) 48%, rgba(18, 7, 13, 0.88) 100%),
+        linear-gradient(90deg, rgba(18, 7, 13, 0.82), transparent 30%, transparent 70%, rgba(18, 7, 13, 0.82));
+}
+
+.pl-wildflowers-layout {
+    background:
+        radial-gradient(ellipse at 50% 44%, rgba(242, 109, 133, 0.08), transparent 36%),
+        radial-gradient(ellipse at 58% 56%, rgba(119, 168, 255, 0.08), transparent 34%),
+        linear-gradient(180deg, #FFF7D9 0%, #F7EDC3 48%, #FFF7D9 100%);
+}
+
+.pl-wildflowers-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.58;
+    background:
+        url("../images/theme/wildflowers-background.png") center center / cover no-repeat;
+    filter: saturate(0.9) contrast(0.94) brightness(1.02);
+}
+
+.pl-wildflowers-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 48%, rgba(255, 247, 217, 0.14), transparent 36%),
+        linear-gradient(180deg, rgba(255, 247, 217, 0.42) 0%, rgba(255, 247, 217, 0.58) 52%, rgba(255, 247, 217, 0.74) 100%),
+        linear-gradient(90deg, rgba(255, 247, 217, 0.82), transparent 30%, transparent 70%, rgba(255, 247, 217, 0.82));
+}
+
+.pl-synthwave-layout .mud-main-content,
+.pl-stellar-forge-layout .mud-main-content,
+.pl-dark-romance-layout .mud-main-content,
+.pl-wildflowers-layout .mud-main-content {
     position: relative;
     z-index: 1;
 }
@@ -54,6 +144,45 @@
     z-index: 2;
     background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 92%, transparent) !important;
     border-right: 1px solid rgba(255, 67, 209, 0.14);
+}
+
+.pl-stellar-forge-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 90%, transparent) !important;
+    border-bottom: 1px solid rgba(255, 232, 31, 0.22);
+    backdrop-filter: blur(12px);
+}
+
+.pl-stellar-forge-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 94%, transparent) !important;
+    border-right: 1px solid rgba(76, 201, 240, 0.16);
+}
+
+.pl-dark-romance-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 90%, transparent) !important;
+    border-bottom: 1px solid rgba(255, 140, 171, 0.18);
+    backdrop-filter: blur(12px);
+}
+
+.pl-dark-romance-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 94%, transparent) !important;
+    border-right: 1px solid rgba(198, 169, 255, 0.14);
+}
+
+.pl-wildflowers-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 94%, transparent) !important;
+    border-bottom: 1px solid rgba(242, 109, 133, 0.18);
+    backdrop-filter: blur(12px);
+}
+
+.pl-wildflowers-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 96%, transparent) !important;
+    border-right: 1px solid rgba(115, 182, 110, 0.16);
 }
 
 .pl-pageheader {
