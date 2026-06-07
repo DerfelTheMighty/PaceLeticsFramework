@@ -4,6 +4,8 @@
 }
 
 .pl-synthwave-layout,
+.pl-ocean-layout,
+.pl-forest-layout,
 .pl-stellar-forge-layout,
 .pl-dark-romance-layout,
 .pl-wildflowers-layout {
@@ -21,6 +23,10 @@
 
 .pl-synthwave-layout::before,
 .pl-synthwave-layout::after,
+.pl-ocean-layout::before,
+.pl-ocean-layout::after,
+.pl-forest-layout::before,
+.pl-forest-layout::after,
 .pl-stellar-forge-layout::before,
 .pl-stellar-forge-layout::after,
 .pl-dark-romance-layout::before,
@@ -48,6 +54,56 @@
         radial-gradient(ellipse at 50% 58%, rgba(255, 67, 209, 0.1), transparent 36%),
         linear-gradient(180deg, rgba(4, 0, 19, 0.46) 0%, rgba(4, 0, 19, 0.7) 48%, rgba(4, 0, 19, 0.84) 100%),
         linear-gradient(90deg, rgba(4, 0, 19, 0.78), transparent 28%, transparent 72%, rgba(4, 0, 19, 0.78));
+}
+
+.pl-ocean-layout {
+    background:
+        radial-gradient(ellipse at 54% 24%, rgba(56, 198, 255, 0.12), transparent 36%),
+        radial-gradient(ellipse at 28% 72%, rgba(67, 217, 184, 0.1), transparent 38%),
+        linear-gradient(180deg, #03101F 0%, #06172B 48%, #03101F 100%);
+}
+
+.pl-ocean-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.46;
+    background:
+        url("../images/theme/ocean-watercolor-background.png") center center / cover no-repeat;
+    filter: saturate(0.92) contrast(0.94) brightness(0.72);
+}
+
+.pl-ocean-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 58% 22%, rgba(122, 215, 240, 0.1), transparent 34%),
+        linear-gradient(180deg, rgba(3, 16, 31, 0.48) 0%, rgba(6, 23, 43, 0.68) 50%, rgba(3, 16, 31, 0.86) 100%),
+        linear-gradient(90deg, rgba(3, 16, 31, 0.78), transparent 30%, transparent 70%, rgba(3, 16, 31, 0.78));
+}
+
+.pl-forest-layout {
+    background:
+        radial-gradient(ellipse at 50% 44%, rgba(159, 230, 142, 0.08), transparent 34%),
+        radial-gradient(ellipse at 50% 72%, rgba(241, 201, 125, 0.08), transparent 38%),
+        linear-gradient(180deg, #120A05 0%, #1A1008 48%, #120A05 100%);
+}
+
+.pl-forest-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.48;
+    background:
+        url("../images/theme/forest-prune-background.png") center center / cover no-repeat;
+    filter: saturate(0.88) contrast(0.94) brightness(0.76);
+}
+
+.pl-forest-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 48%, rgba(159, 230, 142, 0.07), transparent 32%),
+        linear-gradient(180deg, rgba(18, 10, 5, 0.42) 0%, rgba(26, 16, 8, 0.62) 48%, rgba(18, 10, 5, 0.86) 100%),
+        linear-gradient(90deg, rgba(18, 10, 5, 0.82), transparent 30%, transparent 70%, rgba(18, 10, 5, 0.82));
 }
 
 .pl-stellar-forge-layout {
@@ -126,6 +182,8 @@
 }
 
 .pl-synthwave-layout .mud-main-content,
+.pl-ocean-layout .mud-main-content,
+.pl-forest-layout .mud-main-content,
 .pl-stellar-forge-layout .mud-main-content,
 .pl-dark-romance-layout .mud-main-content,
 .pl-wildflowers-layout .mud-main-content {
@@ -144,6 +202,32 @@
     z-index: 2;
     background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 92%, transparent) !important;
     border-right: 1px solid rgba(255, 67, 209, 0.14);
+}
+
+.pl-ocean-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 90%, transparent) !important;
+    border-bottom: 1px solid rgba(56, 198, 255, 0.18);
+    backdrop-filter: blur(12px);
+}
+
+.pl-ocean-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 94%, transparent) !important;
+    border-right: 1px solid rgba(67, 217, 184, 0.14);
+}
+
+.pl-forest-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 90%, transparent) !important;
+    border-bottom: 1px solid rgba(159, 230, 142, 0.16);
+    backdrop-filter: blur(12px);
+}
+
+.pl-forest-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 94%, transparent) !important;
+    border-right: 1px solid rgba(241, 201, 125, 0.14);
 }
 
 .pl-stellar-forge-layout .mud-appbar {

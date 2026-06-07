@@ -1,59 +1,48 @@
-# PR Report: Add Theme Background Artwork
+# PR Report: Add Ocean and Forest Theme Backgrounds
 
 ## Summary
-- Added generated background artwork for three app themes:
-  - `StellarForge`
-  - `DarkRomance`
-  - `Wildflowers`
-- Kept each background theme-specific by applying layout classes only for the selected theme.
-- Brightened the existing PaceLetics neon track background slightly so it remains visible behind the UI.
+- Added generated background artwork for the `Ocean` and `Forest` app themes.
+- Ocean uses a dark watercolor wash with layered currents and subtle teal/gold linework.
+- Forest uses a centered minimalist branching motif inspired by meditative botanical silhouette art, tuned for mobile center crops.
+- Kept backgrounds theme-specific by applying layout classes only for the selected theme.
 
 ## User Experience
-- **Stellar Forge** now uses a subtle rusty white sci-fi hull-panel texture with dark gradients and vignette overlays.
-- **Dark Romance** now uses a dim burgundy damask/satin background with abstract intertwined forms.
-- **Wildflowers** now uses a soft pastel poppy-and-cornflower background with a cream overlay.
-- **PaceLetics** keeps its neon track background, now slightly brighter and less heavily dimmed.
-- Content readability is preserved by rendering all images behind dark or light overlay gradients and keeping app bars/drawers translucent with blur.
+- **Ocean** now has a calm dark-blue watercolor background that supports the existing navy/teal palette.
+- **Forest** now has a warm dark-brown background with a central organic branch form, so the motif remains visible on smartphone viewports.
+- Both themes use fixed background image layers plus gradient/vignette overlays so cards, navigation, and text remain readable.
+- App bars and drawers are slightly translucent with blur to keep the theme artwork present without competing with the UI.
 
 ## Implementation Details
-- Updated `MainLayout.razor` to map selected themes to background layout classes:
-  - `pl-synthwave-layout`
-  - `pl-stellar-forge-layout`
-  - `pl-dark-romance-layout`
-  - `pl-wildflowers-layout`
-- Updated `app-theme.css` to define per-theme background layers:
-  - fixed `::before` image layer
-  - fixed `::after` overlay gradients and vignettes
+- Updated `MainLayout.razor` to map additional selected themes to layout classes:
+  - `AppThemeName.Ocean` -> `pl-ocean-layout`
+  - `AppThemeName.Forest` -> `pl-forest-layout`
+- Updated `app-theme.css` with:
+  - `pl-ocean-layout`
+  - `pl-forest-layout`
+  - fixed `::before` image layers
+  - fixed `::after` gradient and vignette overlays
   - theme-specific app bar and drawer transparency
 - Added generated image assets:
-  - `PaceLetics.Web/wwwroot/images/theme/stellar-forge-tech-background.png`
-  - `PaceLetics.Web/wwwroot/images/theme/dark-romance-background.png`
-  - `PaceLetics.Web/wwwroot/images/theme/wildflowers-background.png`
-- Adjusted the existing PaceLetics background treatment:
-  - image opacity `0.18` -> `0.22`
-  - slightly brighter image filter
-  - slightly lighter dark overlays
+  - `PaceLetics.Web/wwwroot/images/theme/ocean-watercolor-background.png`
+  - `PaceLetics.Web/wwwroot/images/theme/forest-prune-background.png`
 
 ## Compatibility Notes
 - No theme enum values changed.
 - No stored theme preferences are invalidated.
 - No new runtime dependencies were added.
-- Existing Identity page layout remains unchanged; these new theme-specific backgrounds apply to the Blazor app layout.
+- Existing Identity page layout remains unchanged; these theme-specific backgrounds apply to the Blazor app layout.
 
 ## Verification
 - Ran `dotnet build PaceLeticsFramework.sln --no-restore`.
 - Result: build succeeded.
 - Existing NuGet advisory warnings for `OpenMcdf` and `SharpCompress` still appear and are unrelated to this PR.
-- Verified local static asset delivery:
-  - `wildflowers-background.png` returned `200 image/png`.
-  - Earlier during implementation, `stellar-forge-tech-background.png` and `dark-romance-background.png` also returned `200 image/png`.
-- Confirmed `localhost:5218` is free after verification runs.
+- Confirmed the generated assets are valid PNG files with expected landscape dimensions.
 
 ## PR
-- Branch: `codex/neon-track-theme-background`
+- Branch: `codex/ocean-forest-theme-backgrounds`
 - Base: `main`
-- Suggested title: `Add generated backgrounds for app themes`
+- Suggested title: `Add Ocean and Forest theme backgrounds`
 - Suggested description:
-  - Adds subtle generated background artwork for Stellar Forge, Dark Romance, and Wildflowers.
-  - Slightly brightens the existing PaceLetics neon track background.
-  - Uses per-theme layout classes and overlay gradients to keep the UI readable.
+  - Adds watercolor-inspired Ocean background artwork.
+  - Adds a centered minimalist Forest branch background for better mobile visibility.
+  - Uses per-theme layout classes and overlays to keep the UI readable.
