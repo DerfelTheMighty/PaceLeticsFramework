@@ -7,10 +7,13 @@ using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage;
 using System.Text;
+using System.Text.Json;
 
 namespace PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
 
-public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysisStorageProvider
+public sealed class GoogleDriveRunningAnalysisStorageProvider :
+    IRunningAnalysisStorageProvider,
+    IUserDriveFolderStorageProvider
 {
     private const string FolderMimeType = "application/vnd.google-apps.folder";
     private readonly GoogleDriveRunningAnalysisOptions _options;
@@ -65,6 +68,38 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysis
         await request.ExecuteAsync(cancellationToken);
     }
 
+    public async Task<DriveFolderReference> EnsureUserFolderAsync(
+        UserDriveFolderRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var drive = CreateDriveService();
+        var rootFolder = await EnsureRootFolderAsync(drive, cancellationToken);
+        var folderName = BuildUserFolderName(request);
+
+        return await EnsureFolderAsync(drive, folderName, rootFolder.FolderId, cancellationToken);
+    }
+
+    public Task GrantUserReadAccessAsync(
+        DriveFolderReference userFolder,
+        string userEmail,
+        CancellationToken cancellationToken = default)
+    {
+        return GrantAccessAsync(userFolder, userEmail, role: "reader", cancellationToken);
+    }
+
+    public async Task DeleteFolderAsync(
+        DriveFolderReference userFolder,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(userFolder.FolderId))
+            throw new InvalidOperationException("The Drive folder id is required.");
+
+        var drive = CreateDriveService();
+        var request = drive.Files.Delete(userFolder.FolderId);
+        request.SupportsAllDrives = true;
+        await request.ExecuteAsync(cancellationToken);
+    }
+
     public async Task<DriveFileReference> UploadRecordingAsync(
         UploadRecordingRequest request,
         CancellationToken cancellationToken = default)
@@ -96,19 +131,51 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysis
         return new DriveFileReference(upload.ResponseBody.Id, upload.ResponseBody.WebViewLink);
     }
 
+    private async Task GrantAccessAsync(
+        DriveFolderReference folder,
+        string email,
+        string role,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new InvalidOperationException("A user email is required to grant Drive access.");
+
+        var drive = CreateDriveService();
+        var permission = new Permission
+        {
+            Type = "user",
+            Role = role,
+            EmailAddress = email.Trim()
+        };
+
+        var request = drive.Permissions.Create(permission, folder.FolderId);
+        request.SendNotificationEmail = false;
+        request.SupportsAllDrives = true;
+        await request.ExecuteAsync(cancellationToken);
+    }
+
     private DriveService CreateDriveService()
     {
         GoogleCredential credential;
 
-        if (!string.IsNullOrWhiteSpace(_options.ServiceAccountJson))
+        var serviceAccountJsonPath = _options.ServiceAccountJsonPath?.Trim();
+        var serviceAccountJson = _options.ServiceAccountJson?.Trim();
+
+        if (!string.IsNullOrWhiteSpace(serviceAccountJsonPath) && System.IO.File.Exists(serviceAccountJsonPath))
         {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(_options.ServiceAccountJson));
+            using var stream = System.IO.File.OpenRead(serviceAccountJsonPath);
             credential = ServiceAccountCredential.FromServiceAccountData(stream).ToGoogleCredential();
         }
-        else if (!string.IsNullOrWhiteSpace(_options.ServiceAccountJsonPath))
+        else if (!string.IsNullOrWhiteSpace(serviceAccountJson))
         {
-            using var stream = System.IO.File.OpenRead(_options.ServiceAccountJsonPath);
+            var normalizedJson = NormalizeServiceAccountJson(serviceAccountJson);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(normalizedJson));
             credential = ServiceAccountCredential.FromServiceAccountData(stream).ToGoogleCredential();
+        }
+        else if (!string.IsNullOrWhiteSpace(serviceAccountJsonPath))
+        {
+            throw new InvalidOperationException(
+                $"Google Drive service account credential file was not found: {serviceAccountJsonPath}");
         }
         else
         {
@@ -125,6 +192,64 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysis
                 ? "PaceLetics"
                 : _options.ApplicationName
         });
+    }
+
+    private static string NormalizeServiceAccountJson(string value)
+    {
+        var trimmed = value.Trim();
+
+        if (System.IO.File.Exists(trimmed))
+            return System.IO.File.ReadAllText(trimmed);
+
+        var unescaped = TryUnescapeJsonString(trimmed);
+        if (!string.Equals(unescaped, trimmed, StringComparison.Ordinal))
+            trimmed = unescaped.Trim();
+
+        if (!trimmed.StartsWith('{'))
+            trimmed = TryDecodeBase64(trimmed) ?? trimmed;
+
+        try
+        {
+            using var document = JsonDocument.Parse(trimmed);
+            if (document.RootElement.ValueKind != JsonValueKind.Object)
+                throw new InvalidOperationException("Google Drive service account credentials must be a JSON object.");
+        }
+        catch (JsonException ex)
+        {
+            throw new InvalidOperationException(
+                "Google Drive service account credentials are not valid JSON. Configure PaceLeticsUserData:GoogleDrive:ServiceAccountJsonPath with a readable credential file, or PaceLeticsUserData:GoogleDrive:ServiceAccountJson with raw or base64-encoded service account JSON.",
+                ex);
+        }
+
+        return trimmed;
+    }
+
+    private static string TryUnescapeJsonString(string value)
+    {
+        if (!value.StartsWith('"') || !value.EndsWith('"'))
+            return value;
+
+        try
+        {
+            return JsonSerializer.Deserialize<string>(value) ?? value;
+        }
+        catch (JsonException)
+        {
+            return value;
+        }
+    }
+
+    private static string? TryDecodeBase64(string value)
+    {
+        try
+        {
+            var decoded = Encoding.UTF8.GetString(Convert.FromBase64String(value));
+            return decoded.TrimStart().StartsWith('{') ? decoded : null;
+        }
+        catch (FormatException)
+        {
+            return null;
+        }
     }
 
     private async Task<DriveFolderReference> EnsureRootFolderAsync(
@@ -214,6 +339,15 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider : IRunningAnalysis
             : participant.AthleteUserId[^6..];
 
         return $"{SanitizeName(participant.DisplayName)} - {suffix}";
+    }
+
+    private static string BuildUserFolderName(UserDriveFolderRequest request)
+    {
+        var suffix = request.AthleteUserId.Length <= 6
+            ? request.AthleteUserId
+            : request.AthleteUserId[^6..];
+
+        return $"PaceLetics - User - {SanitizeName(suffix)}";
     }
 
     private static string SanitizeName(string value)

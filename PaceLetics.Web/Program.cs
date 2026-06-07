@@ -121,11 +121,16 @@ builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
 builder.Services.AddScoped<CosmosRunningAnalysisRepository>();
 builder.Services.AddScoped<IRunningAnalysisRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddScoped<IUserDriveFolderRegistry>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
+builder.Services.AddScoped<IUserDriveFolderRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddSingleton<IRunningAnalysisClock, SystemRunningAnalysisClock>();
 builder.Services.AddScoped<IRunningAnalysisStorageProvider>(x =>
     new GoogleDriveRunningAnalysisStorageProvider(
         x.GetRequiredService<IOptions<GoogleDriveRunningAnalysisOptions>>().Value));
+builder.Services.AddScoped<IUserDriveFolderStorageProvider>(x =>
+    new GoogleDriveRunningAnalysisStorageProvider(
+        x.GetRequiredService<IOptions<GoogleDriveRunningAnalysisOptions>>().Value));
 builder.Services.AddScoped<IRunningAnalysisService, RunningAnalysisService>();
+builder.Services.AddScoped<IUserDriveFolderService, UserDriveFolderService>();
 builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunningAnalysisRegistrationAdapter>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
