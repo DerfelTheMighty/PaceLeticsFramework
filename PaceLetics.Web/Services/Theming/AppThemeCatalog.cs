@@ -15,7 +15,7 @@ public static class AppThemeCatalog
         new(AppThemeName.DarkRomance, "Dark Romance", CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite, IsDarkMode: true, PaceZones: CreateDarkRomancePaceZones()),
         new(AppThemeName.Maritime, "Maritime", CreateMaritimeTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false, PaceZones: CreateMaritimePaceZones()),
         new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false, PaceZones: CreateTropicalPaceZones()),
-        new(AppThemeName.GoldenHour, "Golden Hour", CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false, PaceZones: CreateGoldenHourPaceZones()),
+        new(AppThemeName.GoldenHour, "Baltic Sunset", CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false, PaceZones: CreateGoldenHourPaceZones()),
         new(AppThemeName.StellarForge, "Stellar Forge", CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome, IsDarkMode: true, PaceZones: CreateStellarForgePaceZones()),
         new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false, PaceZones: CreateSummitBlazePaceZones())
     ];
