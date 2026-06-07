@@ -2,7 +2,8 @@ namespace PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
 
 public sealed class GoogleDriveRunningAnalysisOptions
 {
-    public const string SectionName = "PaceLeticsUserData";
+    public const string SectionName = "PaceLeticsUserData:GoogleDrive";
+    public const string FlatSectionName = "PaceLeticsUserData";
     public const string LegacySectionName = "RunningAnalysis:GoogleDrive";
 
     public string ApplicationName { get; set; } = "PaceLetics";

@@ -115,6 +115,7 @@ builder.Services.AddScoped<ICourseRepository, CosmosCourseRepository>();
 builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
 {
     builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.FlatSectionName).Bind(options);
     builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName).Bind(options);
 });
 builder.Services.AddScoped<CosmosRunningAnalysisRepository>();
