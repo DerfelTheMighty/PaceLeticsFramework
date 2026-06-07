@@ -7,6 +7,7 @@ using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage;
 using System.Text;
+using System.Text.Json;
 
 namespace PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
 
@@ -156,15 +157,24 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
     {
         GoogleCredential credential;
 
-        if (!string.IsNullOrWhiteSpace(_options.ServiceAccountJson))
+        var serviceAccountJsonPath = _options.ServiceAccountJsonPath?.Trim();
+        var serviceAccountJson = _options.ServiceAccountJson?.Trim();
+
+        if (!string.IsNullOrWhiteSpace(serviceAccountJsonPath) && System.IO.File.Exists(serviceAccountJsonPath))
         {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(_options.ServiceAccountJson));
+            using var stream = System.IO.File.OpenRead(serviceAccountJsonPath);
             credential = ServiceAccountCredential.FromServiceAccountData(stream).ToGoogleCredential();
         }
-        else if (!string.IsNullOrWhiteSpace(_options.ServiceAccountJsonPath))
+        else if (!string.IsNullOrWhiteSpace(serviceAccountJson))
         {
-            using var stream = System.IO.File.OpenRead(_options.ServiceAccountJsonPath);
+            var normalizedJson = NormalizeServiceAccountJson(serviceAccountJson);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(normalizedJson));
             credential = ServiceAccountCredential.FromServiceAccountData(stream).ToGoogleCredential();
+        }
+        else if (!string.IsNullOrWhiteSpace(serviceAccountJsonPath))
+        {
+            throw new InvalidOperationException(
+                $"Google Drive service account credential file was not found: {serviceAccountJsonPath}");
         }
         else
         {
@@ -181,6 +191,64 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
                 ? "PaceLetics"
                 : _options.ApplicationName
         });
+    }
+
+    private static string NormalizeServiceAccountJson(string value)
+    {
+        var trimmed = value.Trim();
+
+        if (System.IO.File.Exists(trimmed))
+            return System.IO.File.ReadAllText(trimmed);
+
+        var unescaped = TryUnescapeJsonString(trimmed);
+        if (!string.Equals(unescaped, trimmed, StringComparison.Ordinal))
+            trimmed = unescaped.Trim();
+
+        if (!trimmed.StartsWith('{'))
+            trimmed = TryDecodeBase64(trimmed) ?? trimmed;
+
+        try
+        {
+            using var document = JsonDocument.Parse(trimmed);
+            if (document.RootElement.ValueKind != JsonValueKind.Object)
+                throw new InvalidOperationException("Google Drive service account credentials must be a JSON object.");
+        }
+        catch (JsonException ex)
+        {
+            throw new InvalidOperationException(
+                "Google Drive service account credentials are not valid JSON. Configure PaceLeticsUserData:GoogleDrive:ServiceAccountJsonPath with a readable credential file, or PaceLeticsUserData:GoogleDrive:ServiceAccountJson with raw or base64-encoded service account JSON.",
+                ex);
+        }
+
+        return trimmed;
+    }
+
+    private static string TryUnescapeJsonString(string value)
+    {
+        if (!value.StartsWith('"') || !value.EndsWith('"'))
+            return value;
+
+        try
+        {
+            return JsonSerializer.Deserialize<string>(value) ?? value;
+        }
+        catch (JsonException)
+        {
+            return value;
+        }
+    }
+
+    private static string? TryDecodeBase64(string value)
+    {
+        try
+        {
+            var decoded = Encoding.UTF8.GetString(Convert.FromBase64String(value));
+            return decoded.TrimStart().StartsWith('{') ? decoded : null;
+        }
+        catch (FormatException)
+        {
+            return null;
+        }
     }
 
     private async Task<DriveFolderReference> EnsureRootFolderAsync(
