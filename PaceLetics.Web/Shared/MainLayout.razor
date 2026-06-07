@@ -14,7 +14,7 @@
 
 <PageTitle>PaceLetics</PageTitle>
 
-<MudLayout Style="@GetThemeStyle()">
+<MudLayout Class="@GetLayoutClass()" Style="@GetThemeStyle()">
     <MudAppBar Elevation="1">
 
         <MudIconButton Icon="@Icons.Material.Filled.Menu"
@@ -96,6 +96,13 @@
     private string GetThemeName(AppThemeName themeName)
     {
         return AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
+    }
+
+    private string GetLayoutClass()
+    {
+        return ThemePreferences.ThemeName == AppThemeName.PaceLetics
+            ? "pl-synthwave-layout"
+            : string.Empty;
     }
 
     private string GetThemeStyle()

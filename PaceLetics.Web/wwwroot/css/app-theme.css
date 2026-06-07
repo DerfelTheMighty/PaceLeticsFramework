@@ -3,6 +3,59 @@
     --pl-overlay-background: color-mix(in srgb, var(--mud-palette-background) 18%, black 52%);
 }
 
+.pl-synthwave-layout {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(ellipse at 50% 52%, rgba(255, 43, 214, 0.12), transparent 42%),
+        linear-gradient(180deg, #040013 0%, #12042D 48%, #090016 100%);
+}
+
+.pl-synthwave-layout::before,
+.pl-synthwave-layout::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+}
+
+.pl-synthwave-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.18;
+    background:
+        url("../images/theme/paceletics-neon-track-background.png") center bottom / cover no-repeat;
+    filter: saturate(0.92) contrast(0.92);
+}
+
+.pl-synthwave-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 58%, rgba(255, 67, 209, 0.1), transparent 36%),
+        linear-gradient(180deg, rgba(4, 0, 19, 0.52) 0%, rgba(4, 0, 19, 0.76) 48%, rgba(4, 0, 19, 0.88) 100%),
+        linear-gradient(90deg, rgba(4, 0, 19, 0.84), transparent 28%, transparent 72%, rgba(4, 0, 19, 0.84));
+}
+
+.pl-synthwave-layout .mud-main-content {
+    position: relative;
+    z-index: 1;
+}
+
+.pl-synthwave-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 88%, transparent) !important;
+    border-bottom: 1px solid rgba(255, 67, 209, 0.18);
+    backdrop-filter: blur(12px);
+}
+
+.pl-synthwave-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 92%, transparent) !important;
+    border-right: 1px solid rgba(255, 67, 209, 0.14);
+}
+
 .pl-pageheader {
     padding: 12px 14px;
     border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 22%, var(--mud-palette-lines-default));
