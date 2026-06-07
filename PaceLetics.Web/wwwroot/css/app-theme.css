@@ -7,6 +7,7 @@
 .pl-ocean-layout,
 .pl-forest-layout,
 .pl-stellar-forge-layout,
+.pl-afterglow-layout,
 .pl-dark-romance-layout,
 .pl-wildflowers-layout,
 .pl-maritime-layout {
@@ -30,6 +31,8 @@
 .pl-forest-layout::after,
 .pl-stellar-forge-layout::before,
 .pl-stellar-forge-layout::after,
+.pl-afterglow-layout::before,
+.pl-afterglow-layout::after,
 .pl-dark-romance-layout::before,
 .pl-dark-romance-layout::after,
 .pl-wildflowers-layout::before,
@@ -134,6 +137,32 @@
         linear-gradient(90deg, rgba(2, 4, 10, 0.78), transparent 30%, transparent 70%, rgba(2, 4, 10, 0.78));
 }
 
+.pl-afterglow-layout {
+    background:
+        radial-gradient(ellipse at 32% 78%, rgba(255, 112, 98, 0.13), transparent 34%),
+        radial-gradient(ellipse at 62% 36%, rgba(112, 186, 255, 0.1), transparent 38%),
+        linear-gradient(180deg, #05070D 0%, #0A1220 34%, #18121A 66%, #24101F 100%);
+}
+
+.pl-afterglow-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.68;
+    background:
+        url("../images/theme/afterglow-starfield-background.jpg") center center / cover no-repeat;
+    filter: saturate(0.92) contrast(0.96) brightness(0.88);
+}
+
+.pl-afterglow-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 30% 78%, rgba(255, 138, 112, 0.08), transparent 34%),
+        radial-gradient(ellipse at 62% 34%, rgba(112, 186, 255, 0.08), transparent 36%),
+        linear-gradient(180deg, rgba(5, 7, 13, 0.38) 0%, rgba(10, 18, 32, 0.52) 46%, rgba(24, 18, 26, 0.76) 100%),
+        linear-gradient(90deg, rgba(5, 7, 13, 0.76), transparent 30%, transparent 70%, rgba(5, 7, 13, 0.76));
+}
+
 .pl-dark-romance-layout {
     background:
         radial-gradient(ellipse at 32% 28%, rgba(255, 140, 171, 0.1), transparent 34%),
@@ -213,6 +242,7 @@
 .pl-ocean-layout .mud-main-content,
 .pl-forest-layout .mud-main-content,
 .pl-stellar-forge-layout .mud-main-content,
+.pl-afterglow-layout .mud-main-content,
 .pl-dark-romance-layout .mud-main-content,
 .pl-wildflowers-layout .mud-main-content,
 .pl-maritime-layout .mud-main-content {
@@ -270,6 +300,19 @@
     z-index: 2;
     background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 94%, transparent) !important;
     border-right: 1px solid rgba(76, 201, 240, 0.16);
+}
+
+.pl-afterglow-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 90%, transparent) !important;
+    border-bottom: 1px solid rgba(255, 138, 112, 0.18);
+    backdrop-filter: blur(12px);
+}
+
+.pl-afterglow-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 94%, transparent) !important;
+    border-right: 1px solid rgba(165, 160, 255, 0.14);
 }
 
 .pl-dark-romance-layout .mud-appbar {
