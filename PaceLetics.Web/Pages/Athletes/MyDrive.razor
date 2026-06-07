@@ -80,7 +80,6 @@
 @code {
     private string? _userId;
     private string? _email;
-    private string? _displayName;
     private string? _errorMessage;
     private DriveFolderReference? _folder;
     private bool _isBusy;
@@ -102,7 +101,6 @@
                 _email = authState.User.FindFirst(ClaimTypes.Email)?.Value
                     ?? authState.User.FindFirst("email")?.Value
                     ?? authState.User.Identity?.Name;
-                _displayName = authState.User.Identity?.Name ?? _email ?? _userId;
 
                 if (string.IsNullOrWhiteSpace(_userId))
                     throw new InvalidOperationException(L["AthleteNotResolved"]);
@@ -128,8 +126,7 @@
             _folder = await UserDriveFolderService.CreateFolderAsync(
                 new UserDriveFolderRequest(
                     _userId,
-                    _email ?? string.Empty,
-                    _displayName ?? string.Empty));
+                    _email ?? string.Empty));
             Snackbar.Add(L["CreateSuccess"], Severity.Success);
         }
         catch (Exception ex)

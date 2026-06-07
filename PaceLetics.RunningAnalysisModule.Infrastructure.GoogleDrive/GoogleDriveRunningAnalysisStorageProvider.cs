@@ -79,12 +79,12 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         return await EnsureFolderAsync(drive, folderName, rootFolder.FolderId, cancellationToken);
     }
 
-    public Task GrantUserWriteAccessAsync(
+    public Task GrantUserReadAccessAsync(
         DriveFolderReference userFolder,
         string userEmail,
         CancellationToken cancellationToken = default)
     {
-        return GrantWriteAccessAsync(userFolder, userEmail, cancellationToken);
+        return GrantAccessAsync(userFolder, userEmail, role: "reader", cancellationToken);
     }
 
     public async Task DeleteFolderAsync(
@@ -131,9 +131,10 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         return new DriveFileReference(upload.ResponseBody.Id, upload.ResponseBody.WebViewLink);
     }
 
-    private async Task GrantWriteAccessAsync(
+    private async Task GrantAccessAsync(
         DriveFolderReference folder,
         string email,
+        string role,
         CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(email))
@@ -143,7 +144,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var permission = new Permission
         {
             Type = "user",
-            Role = "writer",
+            Role = role,
             EmailAddress = email.Trim()
         };
 
@@ -342,14 +343,11 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
 
     private static string BuildUserFolderName(UserDriveFolderRequest request)
     {
-        var displayName = string.IsNullOrWhiteSpace(request.DisplayName)
-            ? request.Email
-            : request.DisplayName;
         var suffix = request.AthleteUserId.Length <= 6
             ? request.AthleteUserId
             : request.AthleteUserId[^6..];
 
-        return $"PaceLetics - {SanitizeName(displayName)} - {suffix}";
+        return $"PaceLetics - User - {SanitizeName(suffix)}";
     }
 
     private static string SanitizeName(string value)

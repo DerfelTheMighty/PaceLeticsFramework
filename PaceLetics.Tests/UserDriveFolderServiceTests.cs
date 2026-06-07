@@ -18,8 +18,7 @@ public sealed class UserDriveFolderServiceTests
 
         var folder = await service.CreateFolderAsync(new UserDriveFolderRequest(
             "athlete-1",
-            "athlete@example.com",
-            "Athlete One"));
+            "athlete@example.com"));
 
         Assert.Equal("existing-folder", folder.FolderId);
         Assert.Empty(storage.CreatedFolders);
@@ -35,12 +34,11 @@ public sealed class UserDriveFolderServiceTests
 
         var folder = await service.CreateFolderAsync(new UserDriveFolderRequest(
             "athlete-1",
-            "athlete@example.com",
-            "Athlete One"));
+            "athlete@example.com"));
 
         Assert.Equal("user-folder-athlete-1", folder.FolderId);
         Assert.Single(storage.CreatedFolders);
-        Assert.Single(storage.SharedFolders);
+        Assert.Single(storage.ReadableFolders);
         Assert.Single(repository.SavedFolders);
         Assert.Equal("athlete@example.com", repository.SavedFolders[0].Email);
     }
@@ -97,7 +95,7 @@ public sealed class UserDriveFolderServiceTests
     private sealed class FakeUserDriveFolderStorageProvider : IUserDriveFolderStorageProvider
     {
         public List<UserDriveFolderRequest> CreatedFolders { get; } = new();
-        public List<(DriveFolderReference Folder, string Email)> SharedFolders { get; } = new();
+        public List<(DriveFolderReference Folder, string Email)> ReadableFolders { get; } = new();
         public List<DriveFolderReference> DeletedFolders { get; } = new();
 
         public Task<DriveFolderReference> EnsureUserFolderAsync(
@@ -110,12 +108,12 @@ public sealed class UserDriveFolderServiceTests
                 $"https://drive.test/user-folder-{request.AthleteUserId}"));
         }
 
-        public Task GrantUserWriteAccessAsync(
+        public Task GrantUserReadAccessAsync(
             DriveFolderReference userFolder,
             string userEmail,
             CancellationToken cancellationToken = default)
         {
-            SharedFolders.Add((userFolder, userEmail));
+            ReadableFolders.Add((userFolder, userEmail));
             return Task.CompletedTask;
         }
 

@@ -8,7 +8,7 @@ public interface IUserDriveFolderStorageProvider
         UserDriveFolderRequest request,
         CancellationToken cancellationToken = default);
 
-    Task GrantUserWriteAccessAsync(
+    Task GrantUserReadAccessAsync(
         DriveFolderReference userFolder,
         string userEmail,
         CancellationToken cancellationToken = default);

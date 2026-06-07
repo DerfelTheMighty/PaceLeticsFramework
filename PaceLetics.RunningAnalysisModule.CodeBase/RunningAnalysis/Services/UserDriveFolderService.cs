@@ -37,7 +37,7 @@ public sealed class UserDriveFolderService : IUserDriveFolderService
             return existing;
 
         var userFolder = await _storageProvider.EnsureUserFolderAsync(request, cancellationToken);
-        await _storageProvider.GrantUserWriteAccessAsync(userFolder, request.Email, cancellationToken);
+        await _storageProvider.GrantUserReadAccessAsync(userFolder, request.Email, cancellationToken);
         await _repository.SaveUserFolderAsync(
             new SaveUserDriveFolderRequest(
                 request.AthleteUserId.Trim(),
