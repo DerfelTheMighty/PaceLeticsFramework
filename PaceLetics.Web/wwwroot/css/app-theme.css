@@ -46,7 +46,7 @@
     z-index: 0;
     opacity: 0.22;
     background:
-        url("../images/theme/paceletics-neon-track-background.png") center bottom / cover no-repeat;
+        url("../images/theme/paceletics-neon-track-background.jpg") center bottom / cover no-repeat;
     filter: saturate(0.96) contrast(0.94) brightness(1.08);
 }
 
@@ -71,7 +71,7 @@
     z-index: 0;
     opacity: 0.46;
     background:
-        url("../images/theme/ocean-watercolor-background.png") center center / cover no-repeat;
+        url("../images/theme/ocean-watercolor-background.jpg") center center / cover no-repeat;
     filter: saturate(0.92) contrast(0.94) brightness(0.72);
 }
 
@@ -96,7 +96,7 @@
     z-index: 0;
     opacity: 0.48;
     background:
-        url("../images/theme/forest-prune-background.png") center center / cover no-repeat;
+        url("../images/theme/forest-prune-background.jpg") center center / cover no-repeat;
     filter: saturate(0.88) contrast(0.94) brightness(0.76);
 }
 
@@ -121,7 +121,7 @@
     z-index: 0;
     opacity: 0.4;
     background:
-        url("../images/theme/stellar-forge-tech-background.png") center center / cover no-repeat;
+        url("../images/theme/stellar-forge-tech-background.jpg") center center / cover no-repeat;
     filter: saturate(0.9) contrast(0.92) brightness(0.68);
 }
 
@@ -146,7 +146,7 @@
     z-index: 0;
     opacity: 0.32;
     background:
-        url("../images/theme/dark-romance-background.png") center center / cover no-repeat;
+        url("../images/theme/dark-romance-background.jpg") center center / cover no-repeat;
     filter: saturate(0.88) contrast(0.92) brightness(0.68);
 }
 
@@ -171,7 +171,7 @@
     z-index: 0;
     opacity: 0.58;
     background:
-        url("../images/theme/wildflowers-background.png") center center / cover no-repeat;
+        url("../images/theme/wildflowers-background.jpg") center center / cover no-repeat;
     filter: saturate(0.9) contrast(0.94) brightness(1.02);
 }
 
@@ -196,7 +196,7 @@
     z-index: 0;
     opacity: 0.54;
     background:
-        url("../images/theme/maritime-dune-background.png") center center / cover no-repeat;
+        url("../images/theme/maritime-dune-background.jpg") center center / cover no-repeat;
     filter: saturate(0.86) contrast(0.92) brightness(1.04);
 }
 
