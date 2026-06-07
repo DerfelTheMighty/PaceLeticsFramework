@@ -1,0 +1,168 @@
+@page "/Trainers/running-analyses"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using Microsoft.Extensions.Options
+@using PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive
+@using PaceLetics.Web.Services.Courses
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ICourseService CourseService
+@inject NavigationManager Navigation
+@inject LoadingStateService Loading
+@inject IOptions<GoogleDriveRunningAnalysisOptions> DriveOptions
+@inject IStringLocalizer<RunningAnalyses> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+            <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Event"
+                       OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
+                @L["ManageCourses"]
+            </MudButton>
+        </MudStack>
+
+        @if (!HasDriveCredentials)
+        {
+            <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                @L["DriveCredentialsMissing"]
+            </MudAlert>
+        }
+
+        @if (!HasCentralDriveFolder)
+        {
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                @L["DriveRootFolderMissing"]
+            </MudAlert>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+        }
+        else if (_analyses.Count == 0)
+        {
+            <MudPaper Elevation="1" Class="pa-4">
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.subtitle1">@L["EmptyTitle"]</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["EmptyText"]</MudText>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
+                        @L["CreateEvent"]
+                    </MudButton>
+                </MudStack>
+            </MudPaper>
+        }
+        else
+        {
+            <MudStack Spacing="2">
+                @foreach (var analysis in _analyses)
+                {
+                    <MudPaper Elevation="1" Class="pa-4">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                            <MudStack Spacing="1" Style="min-width:0;">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                    <MudText Typo="Typo.subtitle1">@analysis.Event.Title</MudText>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                                        @L["RunningAnalysis"]
+                                    </MudChip>
+                                </MudStack>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">@analysis.Course.Name</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatEventDate(analysis.Event)</MudText>
+                                @if (!string.IsNullOrWhiteSpace(analysis.Event.Location))
+                                {
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@analysis.Event.Location</MudText>
+                                }
+                            </MudStack>
+
+                            <MudButton Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       StartIcon="@Icons.Material.Filled.PlayArrow"
+                                       OnClick="@(() => OpenAnalysis(analysis))">
+                                @L["StartAnalysis"]
+                            </MudButton>
+                        </MudStack>
+                    </MudPaper>
+                }
+            </MudStack>
+        }
+    </MudStack>
+</MudContainer>
+
+@code {
+    private string? _userId;
+    private string? _errorMessage;
+    private IReadOnlyList<RunningAnalysisCourseEvent> _analyses = Array.Empty<RunningAnalysisCourseEvent>();
+
+    private bool HasDriveCredentials =>
+        !string.IsNullOrWhiteSpace(DriveOptions.Value.ServiceAccountJsonPath)
+        || !string.IsNullOrWhiteSpace(DriveOptions.Value.ServiceAccountJson);
+
+    private bool HasCentralDriveFolder =>
+        !string.IsNullOrWhiteSpace(DriveOptions.Value.RootFolderId);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        await Loading.RunAsync(L["Loading"], async () =>
+        {
+            try
+            {
+                _errorMessage = null;
+                var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+
+                if (string.IsNullOrWhiteSpace(_userId))
+                    throw new InvalidOperationException(L["TrainerNotResolved"]);
+
+                var courses = await CourseService.GetCoursesForTrainerAsync(_userId);
+                var analyses = new List<RunningAnalysisCourseEvent>();
+
+                foreach (var course in courses.OrderBy(course => course.Name))
+                {
+                    var events = await CourseService.GetEventsAsync(course.Id);
+                    analyses.AddRange(events
+                        .Where(IsRunningAnalysisEvent)
+                        .Select(courseEvent => new RunningAnalysisCourseEvent(course, courseEvent)));
+                }
+
+                _analyses = analyses
+                    .OrderBy(analysis => analysis.Event.StartsAt.Date < DateTime.Today ? 1 : 0)
+                    .ThenBy(analysis => analysis.Event.StartsAt)
+                    .ThenBy(analysis => analysis.Event.Title)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+                _analyses = Array.Empty<RunningAnalysisCourseEvent>();
+            }
+        });
+    }
+
+    private static bool IsRunningAnalysisEvent(CourseEventDocument courseEvent)
+    {
+        return string.Equals(courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void OpenAnalysis(RunningAnalysisCourseEvent analysis)
+    {
+        Navigation.NavigateTo($"/Trainers/courses/{analysis.Course.Id}/events/{analysis.Event.Id}/running-analysis");
+    }
+
+    private string FormatEventDate(CourseEventDocument courseEvent)
+    {
+        return string.Format(L["EventDate"], courseEvent.StartsAt, courseEvent.EndsAt);
+    }
+
+    private sealed record RunningAnalysisCourseEvent(CourseDocument Course, CourseEventDocument Event);
+}

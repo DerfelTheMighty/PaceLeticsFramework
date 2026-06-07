@@ -364,3 +364,10 @@ FodyWeavers.xsd
 /WorkoutTest/WorkoutTest.csproj
 /WorkoutTest/Program.cs
 /ModelTests
+
+# Local app configuration and Google Drive secrets
+PaceLetics.Web/appsettings.Local.json
+PaceLetics.Web/appsettings.*.Local.json
+*service-account*.json
+*google-drive-credentials*.json
+.secrets/

@@ -35,6 +35,11 @@ using PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+}
+
 // Add services to the container.
 
 var sqlConnectionString = PaceLeticsConfiguration.GetRequiredEnvironmentVariable("PaceLeticsSqlConnString");
@@ -107,8 +112,12 @@ builder.Services.Configure<TrainerVerificationOptions>(options =>
 });
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<ICourseRepository, CosmosCourseRepository>();
-builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(
-    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName));
+builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
+{
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.FlatSectionName).Bind(options);
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName).Bind(options);
+});
 builder.Services.AddScoped<CosmosRunningAnalysisRepository>();
 builder.Services.AddScoped<IRunningAnalysisRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddScoped<IUserDriveFolderRegistry>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
