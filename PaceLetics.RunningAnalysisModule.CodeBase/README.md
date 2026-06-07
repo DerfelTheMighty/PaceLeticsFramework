@@ -296,30 +296,31 @@ Die Konfiguration liegt im Abschnitt:
 
 ```json
 {
-  "RunningAnalysis": {
-    "GoogleDrive": {
-      "ApplicationName": "PaceLetics",
-      "RootFolderId": "",
-      "RootFolderName": "PaceLetics Laufanalysen"
-    }
+  "PaceLeticsUserData": {
+    "ApplicationName": "PaceLetics",
+    "RootFolderId": "",
+    "RootFolderName": "paceletics_user_data"
   }
 }
 ```
 
 Echte Zugangsdaten duerfen nicht in `PaceLetics.Web/appsettings.json`.
 Die getrackte Datei enthaelt nur nicht-geheime Defaults.
+Die neue primaere Konfiguration heisst `PaceLeticsUserData`. Alte Werte unter
+`RunningAnalysis:GoogleDrive` werden noch als Fallback gelesen, damit bestehende
+Umgebungen nicht sofort brechen.
 
 ### Empfohlene lokale Konfiguration mit User-Secrets
 
 ```powershell
-dotnet user-secrets set "RunningAnalysis:GoogleDrive:RootFolderId" "<central-folder-id>" --project PaceLetics.Web
-dotnet user-secrets set "RunningAnalysis:GoogleDrive:ServiceAccountJsonPath" "C:\secure\paceletics-google-drive-service-account.json" --project PaceLetics.Web
+dotnet user-secrets set "PaceLeticsUserData:RootFolderId" "<central-folder-id>" --project PaceLetics.Web
+dotnet user-secrets set "PaceLeticsUserData:ServiceAccountJsonPath" "C:\secure\paceletics-google-drive-service-account.json" --project PaceLetics.Web
 ```
 
 Alternativ kann der komplette JSON-Inhalt gesetzt werden:
 
 ```powershell
-dotnet user-secrets set "RunningAnalysis:GoogleDrive:ServiceAccountJson" "<service-account-json>" --project PaceLetics.Web
+dotnet user-secrets set "PaceLeticsUserData:ServiceAccountJson" "<service-account-json>" --project PaceLetics.Web
 ```
 
 Das ist praktisch fuer Hosting-Umgebungen, aber fuer lokale Entwicklung ist ein
@@ -328,14 +329,14 @@ Dateipfad meist lesbarer.
 ### Konfiguration mit Environment-Variablen
 
 ```powershell
-$env:RunningAnalysis__GoogleDrive__RootFolderId = "<central-folder-id>"
-$env:RunningAnalysis__GoogleDrive__ServiceAccountJsonPath = "C:\secure\paceletics-google-drive-service-account.json"
+$env:PaceLeticsUserData__RootFolderId = "<central-folder-id>"
+$env:PaceLeticsUserData__ServiceAccountJsonPath = "C:\secure\paceletics-google-drive-service-account.json"
 ```
 
 oder:
 
 ```powershell
-$env:RunningAnalysis__GoogleDrive__ServiceAccountJson = "<service-account-json>"
+$env:PaceLeticsUserData__ServiceAccountJson = "<service-account-json>"
 ```
 
 ### Lokale Datei fuer Entwicklung
@@ -356,7 +357,7 @@ optional geladen.
 5. Zentralen Drive-Ordner erstellen.
 6. Zentralen Drive-Ordner mit der Service-Account-E-Mail teilen.
 7. Die Folder-ID des zentralen Ordners als
-   `RunningAnalysis:GoogleDrive:RootFolderId` konfigurieren.
+   `PaceLeticsUserData:RootFolderId` konfigurieren.
 
 Ohne `RootFolderId` versucht der Adapter, einen Root-Ordner ueber
 `RootFolderName` zu finden oder anzulegen. Fuer produktive Nutzung ist eine
