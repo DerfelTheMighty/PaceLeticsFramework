@@ -8,7 +8,8 @@
 .pl-forest-layout,
 .pl-stellar-forge-layout,
 .pl-dark-romance-layout,
-.pl-wildflowers-layout {
+.pl-wildflowers-layout,
+.pl-maritime-layout {
     position: relative;
     isolation: isolate;
     min-height: 100vh;
@@ -32,7 +33,9 @@
 .pl-dark-romance-layout::before,
 .pl-dark-romance-layout::after,
 .pl-wildflowers-layout::before,
-.pl-wildflowers-layout::after {
+.pl-wildflowers-layout::after,
+.pl-maritime-layout::before,
+.pl-maritime-layout::after {
     content: "";
     position: fixed;
     pointer-events: none;
@@ -181,12 +184,38 @@
         linear-gradient(90deg, rgba(255, 247, 217, 0.82), transparent 30%, transparent 70%, rgba(255, 247, 217, 0.82));
 }
 
+.pl-maritime-layout {
+    background:
+        radial-gradient(ellipse at 76% 44%, rgba(92, 191, 210, 0.1), transparent 34%),
+        radial-gradient(ellipse at 34% 70%, rgba(255, 155, 133, 0.08), transparent 38%),
+        linear-gradient(180deg, #EAF7F8 0%, #F3CC7C 54%, #FFFFFF 100%);
+}
+
+.pl-maritime-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.54;
+    background:
+        url("../images/theme/maritime-dune-background.png") center center / cover no-repeat;
+    filter: saturate(0.86) contrast(0.92) brightness(1.04);
+}
+
+.pl-maritime-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 72% 48%, rgba(92, 191, 210, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(234, 247, 248, 0.42) 0%, rgba(234, 247, 248, 0.58) 44%, rgba(255, 255, 255, 0.78) 100%),
+        linear-gradient(90deg, rgba(234, 247, 248, 0.76), transparent 28%, transparent 68%, rgba(255, 255, 255, 0.66));
+}
+
 .pl-synthwave-layout .mud-main-content,
 .pl-ocean-layout .mud-main-content,
 .pl-forest-layout .mud-main-content,
 .pl-stellar-forge-layout .mud-main-content,
 .pl-dark-romance-layout .mud-main-content,
-.pl-wildflowers-layout .mud-main-content {
+.pl-wildflowers-layout .mud-main-content,
+.pl-maritime-layout .mud-main-content {
     position: relative;
     z-index: 1;
 }
@@ -267,6 +296,19 @@
     z-index: 2;
     background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 96%, transparent) !important;
     border-right: 1px solid rgba(115, 182, 110, 0.16);
+}
+
+.pl-maritime-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 92%, transparent) !important;
+    border-bottom: 1px solid rgba(92, 191, 210, 0.2);
+    backdrop-filter: blur(12px);
+}
+
+.pl-maritime-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 96%, transparent) !important;
+    border-right: 1px solid rgba(255, 155, 133, 0.18);
 }
 
 .pl-pageheader {
