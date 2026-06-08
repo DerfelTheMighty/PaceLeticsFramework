@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -13,4 +13,7 @@
   <data name="RaceOldWarning" xml:space="preserve"><value>Your reference race is more than 6 months old. For optimal training, you should use a more recent reference race.</value></data>
   <data name="LoadError_Title" xml:space="preserve"><value>Loading error</value></data>
   <data name="LoadError_Message" xml:space="preserve"><value>Your data could not be loaded:</value></data>
+  <data name="PaceZonesTitle" xml:space="preserve"><value>Your Pace Zones</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Here you can find your optimal training pace zones based on your VDOT value.</value></data>
+
 </root>

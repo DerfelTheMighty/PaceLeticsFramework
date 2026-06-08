@@ -44,7 +44,7 @@ public sealed class UpcomingTrainingDashboardMessageProvider : IAthleteMessagePr
             "UpcomingTraining_Title",
             bodyKey,
             Icons.Material.Filled.EventAvailable,
-            "/Athletes/trainingplanpage",
+            "/Athletes/courses",
             "UpcomingTraining_Action",
             40,
             new object[] { upcoming.Name, upcoming.Date, daysUntil }));

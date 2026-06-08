@@ -8,6 +8,10 @@ main {
     flex: 1;
 }
 
+.pl-main-content {
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+}
+
 .sidebar {
     background: var(--mud-palette-drawer-background);
 }
@@ -46,6 +50,10 @@ main {
 }
 
 @media (min-width: 641px) {
+    .pl-main-content {
+        padding-bottom: 0;
+    }
+
     .page {
         flex-direction: row;
     }

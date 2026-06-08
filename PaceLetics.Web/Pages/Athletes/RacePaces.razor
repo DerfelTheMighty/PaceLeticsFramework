@@ -10,7 +10,6 @@
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
-@inject IJSRuntime js
 @inject IDialogService dialogService
 @inject IVdotService vdotService
 @inject IPaceModelProvider pmProvider
@@ -53,6 +52,29 @@
             }
 
             <VdotCard Data="@_vdotData" />
+        }
+
+        @if (_hasPaceModel)
+        {
+            <MudDivider Class="my-2" />
+
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.h6">@L["PaceZonesTitle"]</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["PaceZonesSubtitle"]</MudText>
+            </MudStack>
+
+            <PaceInfo EPaceLow="@_lowerPace.Easy"
+                      EPaceHigh="@_upperPace.Easy"
+                      RecoveryPaceLow="@_lowerPace.Easy.Add(TimeSpan.FromSeconds(30))"
+                      RecoveryPaceHigh="@_upperPace.Easy.Add(TimeSpan.FromSeconds(30))"
+                      MPaceLow="@_lowerPace.Marathon"
+                      MPaceHigh="@_upperPace.Marathon"
+                      TPaceLow="@_lowerPace.Threshold"
+                      TPaceHigh="@_upperPace.Threshold"
+                      IPaceLow="@_lowerPace.Intervall"
+                      IPaceHigh="@_upperPace.Intervall"
+                      RPaceLow="@_lowerPace.Repetition"
+                      RPaceHigh="@_upperPace.Repetition" />
         }
 
     </MudStack>
