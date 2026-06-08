@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Daten &amp; Analysen</value></data>
+  <data name="Title" xml:space="preserve"><value>Daten &amp; Analysen</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Deine Laufanalysen und dein Drive-Ordner an einem Ort</value></data>
+  <data name="Loading" xml:space="preserve"><value>Daten und Analysen werden geladen</value></data>
+  <data name="AthleteNotResolved" xml:space="preserve"><value>Athlet:in konnte nicht ermittelt werden.</value></data>
+  <data name="AnalysesTitle" xml:space="preserve"><value>Analysen</value></data>
+  <data name="AnalysesSubtitle" xml:space="preserve"><value>Deine freigegebenen Laufanalyse-Ordner</value></data>
+  <data name="DriveRequiredForAnalyses" xml:space="preserve"><value>Verlinke zuerst deinen Drive-Ordner, damit hier Analysen angezeigt werden koennen.</value></data>
+  <data name="NoAnalyses" xml:space="preserve"><value>Noch keine Analysen verfuegbar.</value></data>
+  <data name="DriveTitle" xml:space="preserve"><value>Drive-Ordner</value></data>
+  <data name="NoFolderText" xml:space="preserve"><value>Noch kein Drive-Ordner verlinkt.</value></data>
+  <data name="FolderReadyText" xml:space="preserve"><value>Dein Drive-Ordner ist verlinkt und bereit.</value></data>
+  <data name="CreateFolder" xml:space="preserve"><value>Ordner erstellen</value></data>
+  <data name="CreateSuccess" xml:space="preserve"><value>Drive-Ordner wurde erstellt.</value></data>
+  <data name="OpenFolder" xml:space="preserve"><value>Ordner oeffnen</value></data>
+  <data name="DeleteFolder" xml:space="preserve"><value>Ordner loeschen</value></data>
+  <data name="DeleteConfirm" xml:space="preserve"><value>Deinen PaceLetics-Drive-Ordner loeschen? Dadurch wird der Ordner aus Google Drive entfernt.</value></data>
+  <data name="DeleteSuccess" xml:space="preserve"><value>Drive-Ordner wurde geloescht.</value></data>
+</root>

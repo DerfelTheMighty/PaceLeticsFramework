@@ -1,0 +1,231 @@
+@page "/Athletes/data-analyses"
+@attribute [Authorize]
+@using System.Security.Claims
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage
+@using PaceLetics.RunningAnalysisModule.Components
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IRunningAnalysisService RunningAnalysisService
+@inject IUserDriveFolderService UserDriveFolderService
+@inject IJSRuntime JS
+@inject ISnackbar Snackbar
+@inject LoadingStateService Loading
+@inject IStringLocalizer<DataAndAnalyses> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    <MudStack Spacing="4" Class="mt-4">
+        <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+            <MudStack Spacing="3">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
+                    <MudIcon Icon="@Icons.Material.Filled.Analytics" Color="Color.Primary" />
+                    <div>
+                        <MudText Typo="Typo.subtitle2">@L["AnalysesTitle"]</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["AnalysesSubtitle"]</MudText>
+                    </div>
+                </MudStack>
+
+                @if (!string.IsNullOrWhiteSpace(_errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+                }
+                else if (_folder is null)
+                {
+                    <MudAlert Severity="Severity.Info"
+                              Variant="Variant.Outlined"
+                              Icon="@Icons.Material.Filled.FolderOff">
+                        @L["DriveRequiredForAnalyses"]
+                    </MudAlert>
+                }
+                else
+                {
+                    <RunningAnalysisLinks Items="_analyses"
+                                          EmptyText="@L["NoAnalyses"]"
+                                          OpenText="@L["OpenFolder"]" />
+                }
+            </MudStack>
+        </MudPaper>
+
+        <MudPaper Elevation="0" Class="pa-4 pl-panel">
+            <MudStack Spacing="3">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
+                    <MudIcon Icon="@GetDriveIcon()" Color="@GetDriveIconColor()" />
+                    <div style="min-width:0;">
+                        <MudText Typo="Typo.subtitle2">@L["DriveTitle"]</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@GetDriveDescription()</MudText>
+                    </div>
+                </MudStack>
+
+                @if (_folder is null)
+                {
+                    <MudStack Row="true" Justify="Justify.FlexEnd">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.CreateNewFolder"
+                                   Disabled="_isBusy || string.IsNullOrWhiteSpace(_userId)"
+                                   OnClick="CreateFolderAsync">
+                            @L["CreateFolder"]
+                        </MudButton>
+                    </MudStack>
+                }
+                else
+                {
+                    <MudLink Href="@_folder.Url" Target="_blank" Typo="Typo.body2">@L["OpenFolder"]</MudLink>
+
+                    <MudStack Row="true" Justify="Justify.FlexEnd" Style="gap:8px; flex-wrap:wrap;">
+                        <MudButton Variant="Variant.Outlined"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.OpenInNew"
+                                   Disabled="_isBusy"
+                                   OnClick="OpenFolderAsync">
+                            @L["OpenFolder"]
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined"
+                                   Color="Color.Error"
+                                   StartIcon="@Icons.Material.Filled.Delete"
+                                   Disabled="_isBusy"
+                                   OnClick="DeleteFolderAsync">
+                            @L["DeleteFolder"]
+                        </MudButton>
+                    </MudStack>
+                }
+            </MudStack>
+        </MudPaper>
+    </MudStack>
+</MudContainer>
+
+@code {
+    private string? _userId;
+    private string? _email;
+    private string? _errorMessage;
+    private DriveFolderReference? _folder;
+    private IReadOnlyList<RunningAnalysisLink> _analyses = Array.Empty<RunningAnalysisLink>();
+    private bool _isBusy;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        await Loading.RunAsync(L["Loading"], async () =>
+        {
+            try
+            {
+                _errorMessage = null;
+                _analyses = Array.Empty<RunningAnalysisLink>();
+
+                var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                _userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+                _email = authState.User.FindFirst(ClaimTypes.Email)?.Value
+                    ?? authState.User.FindFirst("email")?.Value
+                    ?? authState.User.Identity?.Name;
+
+                if (string.IsNullOrWhiteSpace(_userId))
+                    throw new InvalidOperationException(L["AthleteNotResolved"]);
+
+                _folder = await UserDriveFolderService.GetFolderAsync(_userId);
+                if (_folder is not null)
+                    await LoadAnalysesAsync();
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+                _folder = null;
+                _analyses = Array.Empty<RunningAnalysisLink>();
+            }
+        });
+    }
+
+    private async Task LoadAnalysesAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        _analyses = await RunningAnalysisService.GetAnalysesForAthleteAsync(_userId);
+    }
+
+    private async Task CreateFolderAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        try
+        {
+            _isBusy = true;
+            _folder = await UserDriveFolderService.CreateFolderAsync(
+                new UserDriveFolderRequest(
+                    _userId,
+                    _email ?? string.Empty));
+            await LoadAnalysesAsync();
+            Snackbar.Add(L["CreateSuccess"], Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private async Task DeleteFolderAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        try
+        {
+            var confirmed = await JS.InvokeAsync<bool>("confirm", L["DeleteConfirm"].Value);
+            if (!confirmed)
+                return;
+
+            _isBusy = true;
+            await UserDriveFolderService.DeleteFolderAsync(_userId);
+            _folder = null;
+            _analyses = Array.Empty<RunningAnalysisLink>();
+            Snackbar.Add(L["DeleteSuccess"], Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private Task OpenFolderAsync()
+    {
+        return _folder is null
+            ? Task.CompletedTask
+            : JS.InvokeVoidAsync("open", _folder.Url, "_blank").AsTask();
+    }
+
+    private string GetDriveIcon()
+    {
+        return _folder is null
+            ? Icons.Material.Filled.FolderOff
+            : Icons.Material.Filled.FolderOpen;
+    }
+
+    private Color GetDriveIconColor()
+    {
+        return _folder is null ? Color.Secondary : Color.Primary;
+    }
+
+    private string GetDriveDescription()
+    {
+        return _folder is null
+            ? L["NoFolderText"]
+            : L["FolderReadyText"];
+    }
+}
