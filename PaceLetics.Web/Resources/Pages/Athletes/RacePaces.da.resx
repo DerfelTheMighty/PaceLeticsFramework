@@ -1,16 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Dine løbsdata</value></data>
-  <data name="Loading" xml:space="preserve"><value>Indlæser dine data...</value></data>
-  <data name="Title" xml:space="preserve"><value>Dine løbsdata</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Indtast et nyt referenceløb, eller rediger det eksisterende.</value></data>
-  <data name="NoRaceWarning" xml:space="preserve"><value>Tilføj et referenceløb, så vi kan beregne dine træningszoner.</value></data>
-  <data name="AddRace" xml:space="preserve"><value>Tilføj referenceløb</value></data>
-  <data name="RaceOldWarning" xml:space="preserve"><value>Dit referenceløb er mere end 6 måneder gammelt. For optimal træning bør du bruge et nyere referenceløb.</value></data>
-  <data name="LoadError_Title" xml:space="preserve"><value>Indlæsningsfejl</value></data>
-  <data name="LoadError_Message" xml:space="preserve"><value>Dine data kunne ikke indlæses:</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Dine lÃ¸bsdata</value></data>
+  <data name="Loading" xml:space="preserve"><value>IndlÃ¦ser dine data...</value></data>
+  <data name="Title" xml:space="preserve"><value>Dine lÃ¸bsdata</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Indtast et nyt referencelÃ¸b, eller rediger det eksisterende.</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>TilfÃ¸j et referencelÃ¸b, sÃ¥ vi kan beregne dine trÃ¦ningszoner.</value></data>
+  <data name="AddRace" xml:space="preserve"><value>TilfÃ¸j referencelÃ¸b</value></data>
+  <data name="RaceOldWarning" xml:space="preserve"><value>Dit referencelÃ¸b er mere end 6 mÃ¥neder gammelt. For optimal trÃ¦ning bÃ¸r du bruge et nyere referencelÃ¸b.</value></data>
+  <data name="LoadError_Title" xml:space="preserve"><value>IndlÃ¦sningsfejl</value></data>
+  <data name="LoadError_Message" xml:space="preserve"><value>Dine data kunne ikke indlÃ¦ses:</value></data>
+  <data name="PaceZonesTitle" xml:space="preserve"><value>Dine tempozoner</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Her finder du dine optimale trÃƒÂ¦ningstempozoner baseret pÃƒÂ¥ din VDOT-vÃƒÂ¦rdi.</value></data>
+
 </root>

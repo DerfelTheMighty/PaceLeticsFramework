@@ -14,12 +14,23 @@
 @inject IDialogService dialogService
 @inject IStringLocalizer<TrainingPlanPage> L
 @inject ITrainingPlanService TrainingPlanService
+@inject NavigationManager Navigation
 
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="@ContainerClass" MaxWidth="MaxWidth.Small">
 
-<PageHeader Title="@L["Title"]"
-            Subtitle="@L["Subtitle"]" />
+@if (Embedded)
+{
+    <MudStack Spacing="1">
+        <MudText Typo="Typo.h6">@L["Title"]</MudText>
+        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["Subtitle"]</MudText>
+    </MudStack>
+}
+else
+{
+    <PageHeader Title="@L["Title"]"
+                Subtitle="@L["Subtitle"]" />
+}
 
 <MudDivider Class="my-4" />
 
@@ -214,6 +225,12 @@
 </MudContainer>
 
 @code {
+    [Parameter]
+    public bool Embedded { get; set; }
+
+    [Parameter]
+    public bool AutoScrollToNextSession { get; set; } = true;
+
     private TrainingPlan? Plan;
     private string? _nextSessionId;
     private AthleteModel? _athlete;
@@ -228,8 +245,18 @@
     private List<TrainingPlan> _plans = new();
     private string? _selectedPlanId;
 
+    private string ContainerClass => Embedded
+        ? "pa-0 pb-8"
+        : "pt-6 px-6 pb-8";
+
     protected override async Task OnInitializedAsync()
     {
+        if (!Embedded)
+        {
+            Navigation.NavigateTo("/Athletes/courses", replace: true);
+            return;
+        }
+
         try
         {
             // athlete laden
@@ -315,7 +342,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && _nextSessionId != null)
+        if (firstRender && AutoScrollToNextSession && _nextSessionId != null)
             await JS.InvokeVoidAsync("scrollToNextSession");
     }
 

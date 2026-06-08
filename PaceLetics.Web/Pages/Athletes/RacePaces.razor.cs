@@ -9,9 +9,12 @@ namespace PaceLetics.Web.Pages.Athletes
 {
     public partial class RacePaces
     {
-        private string _input = string.Empty;
         private AthleteModel _athlete = new AthleteModel();
+        private PaceModel _upperPace = new();
+        private PaceModel _lowerPace = new();
+        private bool _hasPaceModel;
         private double[] _vdotData { get; set; } = {0, 0};
+
         protected override async Task OnInitializedAsync()
         {
             await Loading.RunAsync(L["Loading"], async () =>
@@ -28,9 +31,7 @@ namespace PaceLetics.Web.Pages.Athletes
                         if (athlete is null)
                             return;
 
-                        _athlete = athlete;
-                        _vdotData[0] = _athlete.Vdot;
-                        _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
+                        ApplyAthleteData(athlete);
                     }
                 }
                 catch (Exception ex)
@@ -65,8 +66,38 @@ namespace PaceLetics.Web.Pages.Athletes
             _vdotData[0] = _athlete.Vdot;
             _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
             _athlete.PaceModel = pmProvider[_athlete.Vdot];
+            UpdatePaceModels();
 
             await Loading.RunAsync(L["Loading"], () => AthleteData.UpdateAthlete(_athlete));
+        }
+
+        private void ApplyAthleteData(AthleteModel athlete)
+        {
+            _athlete = athlete;
+            _vdotData[0] = _athlete.Vdot;
+            _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
+
+            if (_athlete.PaceModel is null && _athlete.Vdot > 0)
+            {
+                _athlete.PaceModel = pmProvider[_athlete.Vdot];
+            }
+
+            UpdatePaceModels();
+        }
+
+        private void UpdatePaceModels()
+        {
+            if (_athlete.Vdot < 1 || _athlete.PaceModel is null)
+            {
+                _upperPace = new PaceModel();
+                _lowerPace = new PaceModel();
+                _hasPaceModel = false;
+                return;
+            }
+
+            _upperPace = _athlete.PaceModel;
+            _lowerPace = _athlete.PaceModel.Reduce(0.975);
+            _hasPaceModel = true;
         }
     }
 }
