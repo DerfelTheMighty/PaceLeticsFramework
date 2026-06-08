@@ -33,10 +33,11 @@
                     </MudStack>
                 </MudMenuItem>
             }
+            <MudDivider />
+            <MudMenuItem OnClick="LogOutAsync" Icon="@Icons.Material.Outlined.Logout">
+                @L["LogOut"]
+            </MudMenuItem>
         </MudMenu>
-        <form method="post" action="Identity/Account/Logout">
-            <MudIconButton Icon="@Icons.Material.Outlined.Logout" ButtonType="ButtonType.Submit" Class="nav-link btn btn-link">@L["LogOut"]</MudIconButton>
-        </form>
     </Authorized>
     <NotAuthorized>
         <a href="Identity/Account/Register">@L["Register"]</a>
@@ -54,5 +55,18 @@
         await JS.InvokeVoidAsync("eval",
             $"document.cookie='.AspNetCore.Culture={cookieValue};path=/;max-age=31536000;samesite=lax'");
         NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+
+    private async Task LogOutAsync()
+    {
+        await JS.InvokeVoidAsync("eval", """
+            (() => {
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = '/Identity/Account/Logout';
+                document.body.appendChild(form);
+                form.submit();
+            })()
+            """);
     }
 }
