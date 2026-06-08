@@ -35,7 +35,7 @@
   <data name="Nav_Dashboard" xml:space="preserve"><value>Dashboard</value></data>
   <data name="Nav_RaceData" xml:space="preserve"><value>Laufdaten</value></data>
   <data name="Nav_PaceZones" xml:space="preserve"><value>Pacebereiche</value></data>
-  <data name="Nav_Courses" xml:space="preserve"><value>Meine Kurse</value></data>
+  <data name="Nav_Courses" xml:space="preserve"><value>Kurse &amp; Plaene</value></data>
   <data name="Nav_DataAnalyses" xml:space="preserve"><value>Daten &amp; Analysen</value></data>
   <data name="Nav_Analyses" xml:space="preserve"><value>Meine Analysen</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>

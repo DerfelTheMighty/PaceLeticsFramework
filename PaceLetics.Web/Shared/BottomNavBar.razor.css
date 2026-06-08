@@ -6,8 +6,8 @@
     z-index: 1200;
     display: flex;
     justify-content: center;
-    gap: 0.25rem;
-    padding: 0.5rem 0.45rem calc(0.5rem + env(safe-area-inset-bottom));
+    gap: 0.15rem;
+    padding: 0.45rem 0.35rem calc(0.45rem + env(safe-area-inset-bottom));
     background: color-mix(in srgb, var(--mud-palette-surface) 94%, black);
     border-top: 1px solid var(--mud-palette-lines-default);
     box-shadow: 0 -8px 24px color-mix(in srgb, var(--mud-palette-black) 20%, transparent);
@@ -19,9 +19,9 @@
     justify-content: center;
     flex: 1 1 0;
     min-width: 0;
-    max-width: 6.25rem;
+    max-width: 5.4rem;
     min-height: 3.75rem;
-    padding: 0.4rem 0.45rem;
+    padding: 0.35rem 0.25rem;
     color: var(--mud-palette-text-secondary);
     text-decoration: none;
     border-radius: 999px;
@@ -60,7 +60,7 @@
 
 .pl-bottom-nav__label {
     display: -webkit-box;
-    max-width: 5.4rem;
+    max-width: 4.9rem;
     overflow: hidden;
     font-size: 0.68rem;
     font-weight: 600;

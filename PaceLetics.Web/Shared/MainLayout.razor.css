@@ -12,6 +12,10 @@ main {
     padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
 }
 
+::deep .pl-mobile-more-menu {
+    display: none;
+}
+
 .sidebar {
     background: var(--mud-palette-drawer-background);
 }
@@ -36,6 +40,15 @@ main {
     }
 
 @media (max-width: 640.98px) {
+    ::deep .pl-desktop-only,
+    ::deep .pl-desktop-drawer {
+        display: none !important;
+    }
+
+    ::deep .pl-mobile-more-menu {
+        display: inline-flex;
+    }
+
     .top-row:not(.auth) {
         display: none;
     }

@@ -3,6 +3,7 @@
 @using MudBlazor
 @inject ThemePreferenceService ThemePreferences
 @inject IStringLocalizer<MainLayout> L
+@inject IStringLocalizer<NavMenu> NavL
 
 <MudThemeProvider @ref="_themeProvider"
                   Theme="@ThemePreferences.CurrentTheme"
@@ -20,10 +21,34 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu"
                        Color="Color.Inherit"
                        Edge="Edge.Start"
+                       Class="pl-desktop-only"
                        OnClick="@((e) => DrawerToggle())" />
         <MudText Align="Align.Start">PaceLetics - Team Running</MudText>
         <MudSpacer />
         <AthleteMessageFeedButton />
+        <MudMenu Icon="@Icons.Material.Filled.MoreVert"
+                 Color="Color.Inherit"
+                 Class="pl-mobile-more-menu"
+                 AnchorOrigin="Origin.BottomRight"
+                 TransformOrigin="Origin.TopRight">
+            <MudMenuItem Href="/profiles" Icon="@Icons.Material.Filled.AccountCircle">
+                @NavL["Nav_Profiles"]
+            </MudMenuItem>
+            <MudMenuItem Href="/impressum" Icon="@Icons.Material.Filled.Info">
+                @NavL["Nav_About"]
+            </MudMenuItem>
+            <AuthorizeView Roles="@ApplicationRoles.Trainer">
+                <Authorized>
+                    <MudDivider />
+                    <MudMenuItem Href="/Trainers/courses" Icon="@Icons.Material.Filled.School">
+                        @NavL["Nav_TrainerCourses"]
+                    </MudMenuItem>
+                    <MudMenuItem Href="/Trainers/running-analyses" Icon="@Icons.Material.Filled.Analytics">
+                        @NavL["Nav_TrainerRunningAnalyses"]
+                    </MudMenuItem>
+                </Authorized>
+            </AuthorizeView>
+        </MudMenu>
         <MudMenu Icon="@GetThemeMenuIcon()"
                  Color="Color.Inherit"
                  AnchorOrigin="Origin.BottomRight"
@@ -52,7 +77,8 @@
 
     <MudDrawer @bind-Open="@_drawerOpen"
                ClipMode="DrawerClipMode.Always"
-               Elevation="2">
+               Elevation="2"
+               Class="pl-desktop-drawer">
         <NavMenu />
     </MudDrawer>
 
