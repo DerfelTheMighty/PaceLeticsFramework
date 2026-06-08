@@ -4,8 +4,7 @@
     <MudNavLink Href="/Athletes/dashboard" Match="NavLinkMatch.All">@L["Nav_Dashboard"]</MudNavLink>
     <MudNavLink Href="/Athletes/racepaces" Match="NavLinkMatch.Prefix">@L["Nav_RaceData"]</MudNavLink>
     <MudNavLink Href="/Athletes/courses" Match="NavLinkMatch.Prefix">@L["Nav_Courses"]</MudNavLink>
-    <MudNavLink Href="/Athletes/analyses" Match="NavLinkMatch.Prefix">@L["Nav_Analyses"]</MudNavLink>
-    <MudNavLink Href="/Athletes/drive" Match="NavLinkMatch.Prefix">@L["Nav_MyDrive"]</MudNavLink>
+    <MudNavLink Href="/Athletes/data-analyses" Match="NavLinkMatch.Prefix">@L["Nav_DataAnalyses"]</MudNavLink>
     <AuthorizeView Roles="@ApplicationRoles.Trainer">
         <Authorized>
             <MudNavLink Href="/Trainers/courses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerCourses"]</MudNavLink>
