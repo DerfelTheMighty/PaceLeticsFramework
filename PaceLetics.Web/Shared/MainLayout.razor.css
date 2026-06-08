@@ -45,6 +45,10 @@ main {
         display: none !important;
     }
 
+    ::deep .mud-main-content {
+        margin-left: 0 !important;
+    }
+
     ::deep .pl-mobile-more-menu {
         display: inline-flex;
     }
