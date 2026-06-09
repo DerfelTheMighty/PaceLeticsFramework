@@ -22,6 +22,7 @@ public sealed class UserDriveFolderServiceTests
 
         Assert.Equal("existing-folder", folder.FolderId);
         Assert.Empty(storage.CreatedFolders);
+        Assert.Single(storage.ReadableFolders);
         Assert.Empty(repository.SavedFolders);
     }
 
