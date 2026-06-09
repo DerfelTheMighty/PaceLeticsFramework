@@ -71,7 +71,7 @@
     overflow-wrap: anywhere;
 }
 
-@media (min-width: 641px) {
+@media (min-width: 960px) {
     .pl-bottom-nav {
         display: none;
     }
