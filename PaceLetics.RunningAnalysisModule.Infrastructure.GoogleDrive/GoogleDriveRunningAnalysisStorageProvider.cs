@@ -79,12 +79,14 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         return await EnsureFolderAsync(drive, folderName, rootFolder.FolderId, cancellationToken);
     }
 
-    public Task GrantUserReadAccessAsync(
+    public async Task GrantUserReadAccessAsync(
         DriveFolderReference userFolder,
         string userEmail,
         CancellationToken cancellationToken = default)
     {
-        return GrantAccessAsync(userFolder, userEmail, role: "reader", cancellationToken);
+        var drive = CreateDriveService();
+        await EnsureAnyoneWithLinkCanReadAsync(drive, userFolder.FolderId, cancellationToken);
+        await GrantAccessAsync(drive, userFolder, userEmail, role: "reader", cancellationToken);
     }
 
     public async Task DeleteFolderAsync(
@@ -141,6 +143,16 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             throw new InvalidOperationException("A user email is required to grant Drive access.");
 
         var drive = CreateDriveService();
+        await GrantAccessAsync(drive, folder, email, role, cancellationToken);
+    }
+
+    private static async Task GrantAccessAsync(
+        DriveService drive,
+        DriveFolderReference folder,
+        string email,
+        string role,
+        CancellationToken cancellationToken)
+    {
         var permission = new Permission
         {
             Type = "user",
@@ -282,7 +294,10 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
     {
         var existing = await FindFolderAsync(drive, folderName, parentFolderId, cancellationToken);
         if (existing is not null)
+        {
+            await EnsureAnyoneWithLinkCanReadAsync(drive, existing.FolderId, cancellationToken);
             return existing;
+        }
 
         var metadata = new Google.Apis.Drive.v3.Data.File
         {
@@ -297,8 +312,55 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         create.Fields = "id,webViewLink";
         create.SupportsAllDrives = true;
         var created = await create.ExecuteAsync(cancellationToken);
+        await EnsureAnyoneWithLinkCanReadAsync(drive, created.Id, cancellationToken);
 
         return new DriveFolderReference(created.Id, created.WebViewLink);
+    }
+
+    private static async Task EnsureAnyoneWithLinkCanReadAsync(
+        DriveService drive,
+        string folderId,
+        CancellationToken cancellationToken)
+    {
+        var existingPermissions = drive.Permissions.List(folderId);
+        existingPermissions.Fields = "permissions(id,type,role,allowFileDiscovery)";
+        existingPermissions.SupportsAllDrives = true;
+
+        var permissions = await existingPermissions.ExecuteAsync(cancellationToken);
+        var anyonePermission = permissions.Permissions?
+            .FirstOrDefault(permission => string.Equals(permission.Type, "anyone", StringComparison.OrdinalIgnoreCase));
+
+        if (anyonePermission is null)
+        {
+            var create = drive.Permissions.Create(
+                new Permission
+                {
+                    Type = "anyone",
+                    Role = "reader",
+                    AllowFileDiscovery = false
+                },
+                folderId);
+
+            create.SupportsAllDrives = true;
+            await create.ExecuteAsync(cancellationToken);
+            return;
+        }
+
+        if (string.Equals(anyonePermission.Role, "reader", StringComparison.OrdinalIgnoreCase)
+            && anyonePermission.AllowFileDiscovery == false)
+            return;
+
+        var update = drive.Permissions.Update(
+            new Permission
+            {
+                Role = "reader",
+                AllowFileDiscovery = false
+            },
+            folderId,
+            anyonePermission.Id);
+
+        update.SupportsAllDrives = true;
+        await update.ExecuteAsync(cancellationToken);
     }
 
     private static async Task<DriveFolderReference?> FindFolderAsync(
