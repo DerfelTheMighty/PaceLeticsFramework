@@ -113,14 +113,30 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
                 ? "video/webm"
                 : request.Recording.ContentType);
 
-        upload.Fields = "id,webViewLink";
+        upload.Fields = "id,webViewLink,parents";
         upload.SupportsAllDrives = true;
 
         var result = await upload.UploadAsync(cancellationToken);
         if (result.Status != UploadStatus.Completed || upload.ResponseBody is null)
             throw result.Exception ?? new InvalidOperationException("Google Drive upload failed.");
 
-        return new DriveFileReference(upload.ResponseBody.Id, upload.ResponseBody.WebViewLink);
+        var uploadedFile = await EnsureFileIsInFolderAsync(
+            drive,
+            upload.ResponseBody,
+            request.Participant.DriveFolderId,
+            cancellationToken);
+
+        if (!string.IsNullOrWhiteSpace(request.Participant.Email))
+        {
+            await GrantAccessAsync(
+                drive,
+                new DriveFolderReference(uploadedFile.Id, uploadedFile.WebViewLink),
+                request.Participant.Email,
+                role: "writer",
+                cancellationToken);
+        }
+
+        return new DriveFileReference(uploadedFile.Id, uploadedFile.WebViewLink);
     }
 
     private async Task GrantAccessAsync(
@@ -189,6 +205,41 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
     private static bool HasAtLeastRole(string? existingRole, string requiredRole)
     {
         return RoleRank(existingRole) >= RoleRank(requiredRole);
+    }
+
+    private static async Task<Google.Apis.Drive.v3.Data.File> EnsureFileIsInFolderAsync(
+        DriveService drive,
+        Google.Apis.Drive.v3.Data.File uploadedFile,
+        string folderId,
+        CancellationToken cancellationToken)
+    {
+        var parents = uploadedFile.Parents?.ToList();
+        if (parents is null)
+        {
+            var get = drive.Files.Get(uploadedFile.Id);
+            get.Fields = "id,webViewLink,parents";
+            get.SupportsAllDrives = true;
+            var file = await get.ExecuteAsync(cancellationToken);
+            parents = file.Parents?.ToList() ?? new List<string>();
+            uploadedFile = file;
+        }
+
+        if (parents.Contains(folderId, StringComparer.Ordinal))
+            return uploadedFile;
+
+        var update = drive.Files.Update(new Google.Apis.Drive.v3.Data.File(), uploadedFile.Id);
+        update.AddParents = folderId;
+
+        var parentsToRemove = parents
+            .Where(parent => !string.Equals(parent, folderId, StringComparison.Ordinal))
+            .ToList();
+        if (parentsToRemove.Count > 0)
+            update.RemoveParents = string.Join(",", parentsToRemove);
+
+        update.Fields = "id,webViewLink,parents";
+        update.SupportsAllDrives = true;
+
+        return await update.ExecuteAsync(cancellationToken);
     }
 
     private static int RoleRank(string? role)

@@ -129,6 +129,36 @@ public sealed class RunningAnalysisServiceTests
     }
 
     [Fact]
+    public async Task UploadRecording_RefreshesPersonalFolderBeforeUpload()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var storage = new FakeRunningAnalysisStorageProvider();
+        var userDrive = new FakeUserDriveFolderService
+        {
+            ExistingFolder = new DriveFolderReference("personal-folder", "https://drive.test/personal-folder")
+        };
+        var service = CreateService(repository, storage, new FakeUserDriveFolderRegistry(), userDrive);
+        var participant = await service.RegisterParticipantAsync(CreateRegistration());
+        var analysisEvent = Assert.Single(repository.Events.Values);
+
+        participant.DriveFolderId = "stale-folder";
+        participant.DriveFolderUrl = "https://drive.test/stale-folder";
+        await repository.UpsertParticipantAsync(participant);
+
+        await service.UploadRecordingAsync(
+            analysisEvent.Id,
+            participant.Id,
+            "video.webm",
+            "video/webm",
+            new MemoryStream([1, 2, 3]),
+            isOnline: true);
+
+        var storedParticipant = await repository.GetParticipantByIdAsync(participant.Id);
+        Assert.Equal("personal-folder", storedParticipant?.DriveFolderId);
+        Assert.Equal("personal-folder", Assert.Single(storage.UploadedFolderIds));
+    }
+
+    [Fact]
     public async Task UploadRecording_DoesNotPromoteFailedUploadToPrimary()
     {
         var repository = new InMemoryRunningAnalysisRepository();
@@ -317,6 +347,7 @@ public sealed class RunningAnalysisServiceTests
         public bool FailUpload { get; set; }
         public int CreatedParticipantFolderCount { get; private set; }
         public List<string> GrantedEmails { get; } = new();
+        public List<string> UploadedFolderIds { get; } = new();
 
         public Task<DriveFolderReference> EnsureEventFolderAsync(
             RunningAnalysisEvent analysisEvent,
@@ -356,6 +387,7 @@ public sealed class RunningAnalysisServiceTests
             if (FailUpload)
                 throw new InvalidOperationException("upload failed");
 
+            UploadedFolderIds.Add(request.Participant.DriveFolderId!);
             return Task.FromResult(new DriveFileReference(
                 $"file-{request.Recording.AttemptNumber}",
                 $"https://drive.test/file-{request.Recording.AttemptNumber}"));

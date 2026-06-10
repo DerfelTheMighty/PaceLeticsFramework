@@ -210,6 +210,9 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         if (participant.AnalysisEventId != analysisEvent.Id)
             throw new InvalidOperationException("The participant does not belong to this running analysis.");
 
+        await EnsureParticipantPersonalFolderAsync(analysisEvent, participant, cancellationToken);
+        await _repository.UpsertParticipantAsync(participant, cancellationToken);
+
         if (participant.FolderStatus != RunningAnalysisFolderStatus.Ready || string.IsNullOrWhiteSpace(participant.DriveFolderId))
             throw new InvalidOperationException("The participant folder is not ready for uploads.");
 
@@ -262,34 +265,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
 
         try
         {
-            var participantFolder = await _userDriveFolderService.GetFolderAsync(
-                participant.AthleteUserId,
-                cancellationToken);
-
-            participantFolder ??= await _userDriveFolderService.CreateFolderAsync(
-                new UserDriveFolderRequest(participant.AthleteUserId, participant.Email),
-                cancellationToken);
-
-            await _folderRegistry.SaveFolderReferenceAsync(
-                new SaveDriveFolderReferenceRequest(
-                    analysisEvent.CourseId,
-                    analysisEvent.ExternalEventId,
-                    participant.AthleteUserId,
-                    participant.Email,
-                    participantFolder.FolderId,
-                    participantFolder.Url),
-                cancellationToken);
-
-            participant.DriveFolderId = participantFolder.FolderId;
-            participant.DriveFolderUrl = participantFolder.Url;
-            participant.FolderStatus = RunningAnalysisFolderStatus.Ready;
-            participant.PermissionStatus = RunningAnalysisPermissionStatus.Granting;
-
-            if (string.IsNullOrWhiteSpace(participant.Email))
-                throw new InvalidOperationException("A participant email is required to grant write access.");
-
-            await _storageProvider.GrantParticipantWriteAccessAsync(participantFolder, participant.Email, cancellationToken);
-            participant.PermissionStatus = RunningAnalysisPermissionStatus.Granted;
+            await EnsureParticipantPersonalFolderAsync(analysisEvent, participant, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -299,6 +275,42 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
             participant.PermissionStatus = RunningAnalysisPermissionStatus.Failed;
             participant.ProvisioningError = ex.Message;
         }
+    }
+
+    private async Task EnsureParticipantPersonalFolderAsync(
+        RunningAnalysisEvent analysisEvent,
+        RunningAnalysisParticipant participant,
+        CancellationToken cancellationToken)
+    {
+        var participantFolder = await _userDriveFolderService.GetFolderAsync(
+            participant.AthleteUserId,
+            cancellationToken);
+
+        participantFolder ??= await _userDriveFolderService.CreateFolderAsync(
+            new UserDriveFolderRequest(participant.AthleteUserId, participant.Email),
+            cancellationToken);
+
+        await _folderRegistry.SaveFolderReferenceAsync(
+            new SaveDriveFolderReferenceRequest(
+                analysisEvent.CourseId,
+                analysisEvent.ExternalEventId,
+                participant.AthleteUserId,
+                participant.Email,
+                participantFolder.FolderId,
+                participantFolder.Url),
+            cancellationToken);
+
+        participant.DriveFolderId = participantFolder.FolderId;
+        participant.DriveFolderUrl = participantFolder.Url;
+        participant.FolderStatus = RunningAnalysisFolderStatus.Ready;
+        participant.PermissionStatus = RunningAnalysisPermissionStatus.Granting;
+        participant.ProvisioningError = null;
+
+        if (string.IsNullOrWhiteSpace(participant.Email))
+            throw new InvalidOperationException("A participant email is required to grant write access.");
+
+        await _storageProvider.GrantParticipantWriteAccessAsync(participantFolder, participant.Email, cancellationToken);
+        participant.PermissionStatus = RunningAnalysisPermissionStatus.Granted;
     }
 
     private async Task SetPrimaryRecordingAsync(
