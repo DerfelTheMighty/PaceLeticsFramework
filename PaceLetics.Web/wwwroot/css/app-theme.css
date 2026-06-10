@@ -831,3 +831,24 @@
 .pl-identity-success {
     color: var(--mud-palette-success) !important;
 }
+
+.pl-mobile-more-menu {
+    display: none !important;
+}
+
+@media (max-width: 959.98px) {
+    .pl-desktop-only,
+    .pl-desktop-drawer,
+    .mud-drawer.pl-desktop-drawer {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .mud-main-content {
+        margin-left: 0 !important;
+    }
+
+    .pl-mobile-more-menu {
+        display: inline-flex !important;
+    }
+}
