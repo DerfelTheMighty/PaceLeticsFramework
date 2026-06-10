@@ -55,17 +55,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             throw new InvalidOperationException("A participant email is required to grant Drive access.");
 
         var drive = CreateDriveService();
-        var permission = new Permission
-        {
-            Type = "user",
-            Role = "writer",
-            EmailAddress = participantEmail.Trim()
-        };
-
-        var request = drive.Permissions.Create(permission, participantFolder.FolderId);
-        request.SendNotificationEmail = false;
-        request.SupportsAllDrives = true;
-        await request.ExecuteAsync(cancellationToken);
+        await GrantAccessAsync(drive, participantFolder, participantEmail, role: "writer", cancellationToken);
     }
 
     public async Task<DriveFolderReference> EnsureUserFolderAsync(
@@ -153,17 +143,66 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         string role,
         CancellationToken cancellationToken)
     {
+        var normalizedEmail = email.Trim();
+        var existingPermissions = drive.Permissions.List(folder.FolderId);
+        existingPermissions.Fields = "permissions(id,type,role,emailAddress,deleted)";
+        existingPermissions.SupportsAllDrives = true;
+
+        var permissions = await existingPermissions.ExecuteAsync(cancellationToken);
+        var existingPermission = permissions.Permissions?
+            .FirstOrDefault(permission =>
+                string.Equals(permission.Type, "user", StringComparison.OrdinalIgnoreCase)
+                && string.Equals(permission.EmailAddress, normalizedEmail, StringComparison.OrdinalIgnoreCase)
+                && permission.Deleted != true);
+
+        if (existingPermission is not null)
+        {
+            if (HasAtLeastRole(existingPermission.Role, role))
+                return;
+
+            var update = drive.Permissions.Update(
+                new Permission
+                {
+                    Role = role
+                },
+                folder.FolderId,
+                existingPermission.Id);
+
+            update.SupportsAllDrives = true;
+            await update.ExecuteAsync(cancellationToken);
+            return;
+        }
+
         var permission = new Permission
         {
             Type = "user",
             Role = role,
-            EmailAddress = email.Trim()
+            EmailAddress = normalizedEmail
         };
 
         var request = drive.Permissions.Create(permission, folder.FolderId);
         request.SendNotificationEmail = false;
         request.SupportsAllDrives = true;
         await request.ExecuteAsync(cancellationToken);
+    }
+
+    private static bool HasAtLeastRole(string? existingRole, string requiredRole)
+    {
+        return RoleRank(existingRole) >= RoleRank(requiredRole);
+    }
+
+    private static int RoleRank(string? role)
+    {
+        return role?.ToLowerInvariant() switch
+        {
+            "owner" => 4,
+            "organizer" => 3,
+            "fileorganizer" => 3,
+            "writer" => 2,
+            "commenter" => 1,
+            "reader" => 0,
+            _ => -1
+        };
     }
 
     private DriveService CreateDriveService()

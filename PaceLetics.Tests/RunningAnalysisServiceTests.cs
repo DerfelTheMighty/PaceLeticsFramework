@@ -44,34 +44,38 @@ public sealed class RunningAnalysisServiceTests
         var repository = new InMemoryRunningAnalysisRepository();
         var storage = new FakeRunningAnalysisStorageProvider();
         var registry = new FakeUserDriveFolderRegistry();
-        var service = CreateService(repository, storage, registry);
+        var userDrive = new FakeUserDriveFolderService();
+        var service = CreateService(repository, storage, registry, userDrive);
 
         var participant = await service.RegisterParticipantAsync(CreateRegistration());
 
         Assert.Equal(RunningAnalysisFolderStatus.Ready, participant.FolderStatus);
         Assert.Equal(RunningAnalysisPermissionStatus.Granted, participant.PermissionStatus);
         Assert.Equal("runner@example.com", Assert.Single(storage.GrantedEmails));
-        Assert.NotNull(participant.DriveFolderId);
-        Assert.NotNull(participant.DriveFolderUrl);
+        Assert.Equal("user-folder-runner-1", participant.DriveFolderId);
+        Assert.Equal("https://drive.test/user-folder-runner-1", participant.DriveFolderUrl);
+        Assert.Single(userDrive.CreatedFolders);
         Assert.Single(registry.SavedReferences);
     }
 
     [Fact]
-    public async Task RegisterParticipant_ReusesExistingFolderFromRegistry()
+    public async Task RegisterParticipant_ReusesExistingPersonalFolder()
     {
         var repository = new InMemoryRunningAnalysisRepository();
         var storage = new FakeRunningAnalysisStorageProvider();
-        var registry = new FakeUserDriveFolderRegistry
+        var registry = new FakeUserDriveFolderRegistry();
+        var userDrive = new FakeUserDriveFolderService
         {
-            ReusableFolder = new DriveFolderReference("existing-folder", "https://drive.test/existing-folder")
+            ExistingFolder = new DriveFolderReference("existing-folder", "https://drive.test/existing-folder")
         };
-        var service = CreateService(repository, storage, registry);
+        var service = CreateService(repository, storage, registry, userDrive);
 
         var participant = await service.RegisterParticipantAsync(CreateRegistration());
 
         Assert.Equal("existing-folder", participant.DriveFolderId);
         Assert.Equal(0, storage.CreatedParticipantFolderCount);
-        Assert.Empty(registry.SavedReferences);
+        Assert.Empty(userDrive.CreatedFolders);
+        Assert.Single(registry.SavedReferences);
         Assert.Equal(RunningAnalysisPermissionStatus.Granted, participant.PermissionStatus);
     }
 
@@ -79,8 +83,9 @@ public sealed class RunningAnalysisServiceTests
     public async Task RegisterParticipant_KeepsRegistrationWhenProvisioningFails()
     {
         var repository = new InMemoryRunningAnalysisRepository();
-        var storage = new FakeRunningAnalysisStorageProvider { FailFolderCreation = true };
-        var service = CreateService(repository, storage, new FakeUserDriveFolderRegistry());
+        var storage = new FakeRunningAnalysisStorageProvider();
+        var userDrive = new FakeUserDriveFolderService { FailCreate = true };
+        var service = CreateService(repository, storage, new FakeUserDriveFolderRegistry(), userDrive);
 
         var participant = await service.RegisterParticipantAsync(CreateRegistration());
 
@@ -211,12 +216,14 @@ public sealed class RunningAnalysisServiceTests
     private static RunningAnalysisService CreateService(
         InMemoryRunningAnalysisRepository repository,
         FakeRunningAnalysisStorageProvider storage,
-        FakeUserDriveFolderRegistry registry)
+        FakeUserDriveFolderRegistry registry,
+        FakeUserDriveFolderService? userDrive = null)
     {
         return new RunningAnalysisService(
             repository,
             storage,
             registry,
+            userDrive ?? new FakeUserDriveFolderService(),
             new FixedRunningAnalysisClock(new DateTime(2026, 6, 5, 10, 0, 0, DateTimeKind.Utc)));
     }
 
@@ -263,6 +270,43 @@ public sealed class RunningAnalysisServiceTests
             CancellationToken cancellationToken = default)
         {
             SavedReferences.Add(request);
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class FakeUserDriveFolderService : IUserDriveFolderService
+    {
+        public bool FailCreate { get; set; }
+        public DriveFolderReference? ExistingFolder { get; set; }
+        public List<UserDriveFolderRequest> CreatedFolders { get; } = new();
+
+        public Task<DriveFolderReference?> GetFolderAsync(
+            string athleteUserId,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(ExistingFolder);
+        }
+
+        public Task<DriveFolderReference> CreateFolderAsync(
+            UserDriveFolderRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (FailCreate)
+                throw new InvalidOperationException("folder failed");
+
+            CreatedFolders.Add(request);
+            ExistingFolder = new DriveFolderReference(
+                $"user-folder-{request.AthleteUserId}",
+                $"https://drive.test/user-folder-{request.AthleteUserId}");
+
+            return Task.FromResult(ExistingFolder);
+        }
+
+        public Task DeleteFolderAsync(
+            string athleteUserId,
+            CancellationToken cancellationToken = default)
+        {
+            ExistingFolder = null;
             return Task.CompletedTask;
         }
     }
