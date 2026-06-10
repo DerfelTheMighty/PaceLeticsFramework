@@ -10,17 +10,20 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
     private readonly IRunningAnalysisRepository _repository;
     private readonly IRunningAnalysisStorageProvider _storageProvider;
     private readonly IUserDriveFolderRegistry _folderRegistry;
+    private readonly IUserDriveFolderService _userDriveFolderService;
     private readonly IRunningAnalysisClock _clock;
 
     public RunningAnalysisService(
         IRunningAnalysisRepository repository,
         IRunningAnalysisStorageProvider storageProvider,
         IUserDriveFolderRegistry folderRegistry,
+        IUserDriveFolderService userDriveFolderService,
         IRunningAnalysisClock clock)
     {
         _repository = repository;
         _storageProvider = storageProvider;
         _folderRegistry = folderRegistry;
+        _userDriveFolderService = userDriveFolderService;
         _clock = clock;
     }
 
@@ -259,38 +262,23 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
 
         try
         {
-            var reusableFolder = await _folderRegistry.FindReusableFolderAsync(
-                new ReusableDriveFolderRequest(
+            var participantFolder = await _userDriveFolderService.GetFolderAsync(
+                participant.AthleteUserId,
+                cancellationToken);
+
+            participantFolder ??= await _userDriveFolderService.CreateFolderAsync(
+                new UserDriveFolderRequest(participant.AthleteUserId, participant.Email),
+                cancellationToken);
+
+            await _folderRegistry.SaveFolderReferenceAsync(
+                new SaveDriveFolderReferenceRequest(
                     analysisEvent.CourseId,
                     analysisEvent.ExternalEventId,
                     participant.AthleteUserId,
-                    participant.Email),
+                    participant.Email,
+                    participantFolder.FolderId,
+                    participantFolder.Url),
                 cancellationToken);
-
-            var participantFolder = reusableFolder;
-            if (participantFolder is null)
-            {
-                var eventFolder = await _storageProvider.EnsureEventFolderAsync(analysisEvent, cancellationToken);
-                analysisEvent.DriveFolderId = eventFolder.FolderId;
-                analysisEvent.DriveFolderUrl = eventFolder.Url;
-                await _repository.UpsertEventAsync(analysisEvent, cancellationToken);
-
-                participantFolder = await _storageProvider.EnsureParticipantFolderAsync(
-                    analysisEvent,
-                    participant,
-                    eventFolder,
-                    cancellationToken);
-
-                await _folderRegistry.SaveFolderReferenceAsync(
-                    new SaveDriveFolderReferenceRequest(
-                        analysisEvent.CourseId,
-                        analysisEvent.ExternalEventId,
-                        participant.AthleteUserId,
-                        participant.Email,
-                        participantFolder.FolderId,
-                        participantFolder.Url),
-                    cancellationToken);
-            }
 
             participant.DriveFolderId = participantFolder.FolderId;
             participant.DriveFolderUrl = participantFolder.Url;
