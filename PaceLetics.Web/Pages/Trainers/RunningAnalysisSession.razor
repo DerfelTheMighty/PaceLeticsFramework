@@ -319,13 +319,12 @@
 
         try
         {
-            using var content = new MemoryStream(video.Data);
             var recording = await RunningAnalysisService.UploadRecordingAsync(
                 _analysisEvent.Id,
                 CurrentParticipant.ParticipantId,
                 BuildFileName(CurrentParticipant, video.FileExtension),
                 video.ContentType,
-                content,
+                video.Data,
                 _isOnline);
 
             await LoadRosterAsync();

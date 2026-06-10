@@ -63,12 +63,12 @@ export async function stopRecording(videoElement) {
   recorders.delete(videoElement);
 
   const contentType = blob.type || state.contentType || "video/webm";
-  const buffer = await blob.arrayBuffer();
 
   return {
-    data: new Uint8Array(buffer),
+    data: blob,
     contentType,
-    fileExtension: contentType.includes("mp4") ? "mp4" : "webm"
+    fileExtension: contentType.includes("mp4") ? "mp4" : "webm",
+    size: blob.size
   };
 }
 
