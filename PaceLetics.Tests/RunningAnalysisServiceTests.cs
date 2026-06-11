@@ -364,6 +364,15 @@ public sealed class RunningAnalysisServiceTests
             return Task.FromResult(ExistingFolder);
         }
 
+        public Task<DriveFileReference> UploadAnalysisRecordingAsync(
+            UserDriveAnalysisRecordingUploadRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(new DriveFileReference(
+                $"file-{request.FileName}",
+                $"https://drive.test/file-{request.FileName}"));
+        }
+
         public Task DeleteFolderAsync(
             string athleteUserId,
             CancellationToken cancellationToken = default)

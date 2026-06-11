@@ -21,10 +21,16 @@
                 else
                 {
                     <RunningAnalysisMediaRecorder @ref="_mediaRecorder"
-                                                  AnalysisEventId="AnalysisEventId"
-                                                  ParticipantId="ParticipantId"
-                                                  ParticipantName="ParticipantName"
-                                                  FileNamePrefix="FileNamePrefix"
+                                                  AnalysisEventId="@AnalysisEventId"
+                                                  AnalysisExternalEventId="@AnalysisExternalEventId"
+                                                  CourseId="@CourseId"
+                                                  AnalysisTitle="@AnalysisTitle"
+                                                  AnalysisStartsAt="@AnalysisStartsAt"
+                                                  ParticipantId="@ParticipantId"
+                                                  AthleteUserId="@AthleteUserId"
+                                                  AthleteEmail="@AthleteEmail"
+                                                  ParticipantName="@ParticipantName"
+                                                  FileNamePrefix="@FileNamePrefix"
                                                   CanRecord="CanRecord"
                                                   ShowControls="false"
                                                   OnRecorded="OnRecorded"
@@ -98,7 +104,13 @@
     private bool _recorderIsRecording;
 
     [Parameter] public string AnalysisEventId { get; set; } = string.Empty;
+    [Parameter] public string AnalysisExternalEventId { get; set; } = string.Empty;
+    [Parameter] public string CourseId { get; set; } = string.Empty;
+    [Parameter] public string AnalysisTitle { get; set; } = string.Empty;
+    [Parameter] public DateTime? AnalysisStartsAt { get; set; }
     [Parameter] public string ParticipantId { get; set; } = string.Empty;
+    [Parameter] public string AthleteUserId { get; set; } = string.Empty;
+    [Parameter] public string AthleteEmail { get; set; } = string.Empty;
     [Parameter] public string ParticipantName { get; set; } = string.Empty;
     [Parameter] public string FileNamePrefix { get; set; } = string.Empty;
     [Parameter] public bool IsOnline { get; set; } = true;

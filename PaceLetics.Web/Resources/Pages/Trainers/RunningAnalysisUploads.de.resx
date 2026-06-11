@@ -47,8 +47,10 @@
   <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload-Queue wartet auf Zugriff auf den lokalen Aufnahmeordner.</value></data>
   <data name="UploadQueueOffline" xml:space="preserve"><value>Upload-Queue wartet auf Online-Verbindung.</value></data>
   <data name="UploadQueueReady" xml:space="preserve"><value>{0} Upload(s) warten. Automatischer Upload ist aktiv, solange diese Seite geoeffnet ist.</value></data>
+  <data name="UploadQueueFailed" xml:space="preserve"><value>{0} Upload(s) sind fehlgeschlagen. Stosse sie nach Pruefung der Metadaten manuell erneut an.</value></data>
   <data name="UploadQueueIdle" xml:space="preserve"><value>Upload-Queue ist leer.</value></data>
   <data name="UploadQueueIdleWithRefresh" xml:space="preserve"><value>Upload-Queue ist leer. Letzter Ordnerscan: {0:dd.MM.yyyy HH:mm:ss}.</value></data>
+  <data name="UploadMetadataIncomplete" xml:space="preserve"><value>Die lokalen Aufnahmemetadaten enthalten keine Athlete-User-ID.</value></data>
   <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>Die lokale Aufnahme ist zu gross fuer den Upload.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload fehlgeschlagen.</value></data>
 </root>

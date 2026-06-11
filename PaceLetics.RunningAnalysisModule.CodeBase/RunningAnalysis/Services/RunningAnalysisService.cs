@@ -116,6 +116,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
             result.Add(new RunningAnalysisRosterItem(
                 participant.Id,
                 participant.AthleteUserId,
+                participant.Email,
                 participant.DisplayName,
                 participant.SortOrder,
                 participant.FolderStatus,

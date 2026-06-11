@@ -324,11 +324,17 @@ function getSupportedContentType() {
 
 function createRecordingMetadata(metadata, contentType, localId, directoryHandle) {
   const analysisEventId = getMetadataValue(metadata, "analysisEventId");
+  const analysisExternalEventId = getMetadataValue(metadata, "analysisExternalEventId");
+  const courseId = getMetadataValue(metadata, "courseId");
+  const analysisTitle = getMetadataValue(metadata, "analysisTitle");
+  const analysisStartsAt = getMetadataValue(metadata, "analysisStartsAt");
   const participantId = getMetadataValue(metadata, "participantId");
+  const athleteUserId = getMetadataValue(metadata, "athleteUserId");
+  const athleteEmail = getMetadataValue(metadata, "athleteEmail");
   const participantName = getMetadataValue(metadata, "participantName");
   const fileNamePrefix = getMetadataValue(metadata, "fileNamePrefix");
 
-  if (!analysisEventId || !participantId || !fileNamePrefix) {
+  if (!athleteUserId || !participantId || !fileNamePrefix) {
     throw new Error("Recording metadata is incomplete.");
   }
 
@@ -341,7 +347,13 @@ function createRecordingMetadata(metadata, contentType, localId, directoryHandle
     artifactType: recordingArtifactType,
     localId,
     analysisEventId,
+    analysisExternalEventId,
+    courseId,
+    analysisTitle,
+    analysisStartsAt,
     participantId,
+    athleteUserId,
+    athleteEmail,
     participantName,
     fileName,
     contentType,
@@ -455,7 +467,7 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
     const metadata = JSON.parse(await metadataFile.text());
 
     if (!metadata.localId
-      || !metadata.analysisEventId
+      || !metadata.athleteUserId
       || !metadata.participantId
       || !metadata.fileName) {
       return null;
@@ -474,8 +486,14 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
 
     return {
       localId: metadata.localId,
-      analysisEventId: metadata.analysisEventId,
+      analysisEventId: metadata.analysisEventId || "",
+      analysisExternalEventId: metadata.analysisExternalEventId || "",
+      courseId: metadata.courseId || "",
+      analysisTitle: metadata.analysisTitle || "",
+      analysisStartsAt: metadata.analysisStartsAt || null,
       participantId: metadata.participantId,
+      athleteUserId: metadata.athleteUserId,
+      athleteEmail: metadata.athleteEmail || "",
       participantName: metadata.participantName || "",
       fileName: metadata.fileName,
       contentType,
@@ -590,8 +608,14 @@ function transactionToPromise(transaction) {
 function toRecordingPayload(recording) {
   return {
     localId: recording.localId,
-    analysisEventId: recording.analysisEventId,
+    analysisEventId: recording.analysisEventId || "",
+    analysisExternalEventId: recording.analysisExternalEventId || "",
+    courseId: recording.courseId || "",
+    analysisTitle: recording.analysisTitle || "",
+    analysisStartsAt: recording.analysisStartsAt || null,
     participantId: recording.participantId,
+    athleteUserId: recording.athleteUserId || "",
+    athleteEmail: recording.athleteEmail || "",
     participantName: recording.participantName || "",
     fileName: recording.fileName,
     contentType: recording.contentType,
@@ -611,8 +635,14 @@ function toRecordingMetadata(recording) {
   return {
     artifactType: recordingArtifactType,
     localId: recording.localId,
-    analysisEventId: recording.analysisEventId,
+    analysisEventId: recording.analysisEventId || "",
+    analysisExternalEventId: recording.analysisExternalEventId || "",
+    courseId: recording.courseId || "",
+    analysisTitle: recording.analysisTitle || "",
+    analysisStartsAt: recording.analysisStartsAt || null,
     participantId: recording.participantId,
+    athleteUserId: recording.athleteUserId || "",
+    athleteEmail: recording.athleteEmail || "",
     participantName: recording.participantName || "",
     fileName: recording.fileName,
     contentType: recording.contentType,
@@ -720,7 +750,8 @@ function sanitizeFileName(value) {
 
 function getMetadataValue(metadata, camelCaseName) {
   const pascalCaseName = `${camelCaseName[0].toUpperCase()}${camelCaseName.slice(1)}`;
-  return (metadata?.[camelCaseName] || metadata?.[pascalCaseName] || "").trim();
+  const value = metadata?.[camelCaseName] ?? metadata?.[pascalCaseName] ?? "";
+  return value === null || value === undefined ? "" : `${value}`.trim();
 }
 
 function createLocalId() {

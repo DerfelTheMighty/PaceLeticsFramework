@@ -12,6 +12,10 @@ public interface IUserDriveFolderService
         UserDriveFolderRequest request,
         CancellationToken cancellationToken = default);
 
+    Task<DriveFileReference> UploadAnalysisRecordingAsync(
+        UserDriveAnalysisRecordingUploadRequest request,
+        CancellationToken cancellationToken = default);
+
     Task DeleteFolderAsync(
         string athleteUserId,
         CancellationToken cancellationToken = default);

@@ -2,10 +2,10 @@
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
 @implements IAsyncDisposable
 @using System.Threading
-@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage
 @using PaceLetics.RunningAnalysisModule.Components
-@inject IRunningAnalysisService RunningAnalysisService
+@inject IUserDriveFolderService UserDriveFolderService
 @inject IJSRuntime JS
 @inject NavigationManager Navigation
 @inject ISnackbar Snackbar
@@ -116,7 +116,10 @@
                                     </MudStack>
 
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                        @recording.ParticipantName
+                                        @GetRecordingOwnerText(recording)
+                                    </MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @GetRecordingAnalysisText(recording)
                                     </MudText>
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">
                                         @($"{L["QueueRecordedAt"]}: {recording.RecordedAt.ToLocalTime():dd.MM.yyyy HH:mm:ss}")
@@ -295,7 +298,7 @@
         }
     }
 
-    private async Task UploadPendingRecordingsAsync(bool showSummary = true)
+    private async Task UploadPendingRecordingsAsync(bool showSummary = true, bool includeFailed = true)
     {
         if (_pendingRecordings.Count == 0)
             return;
@@ -314,7 +317,7 @@
         try
         {
             var candidates = _pendingRecordings
-                .Where(recording => !IsUploaded(recording))
+                .Where(recording => includeFailed ? !IsUploaded(recording) : IsQueued(recording))
                 .ToList();
             if (candidates.Count == 0)
             {
@@ -354,7 +357,7 @@
             || !_isOnline
             || !IsLocalRecordingStorageReady
             || _pendingRecordings.Count == 0
-            || _pendingRecordings.All(IsUploaded))
+            || !_pendingRecordings.Any(IsQueued))
         {
             return;
         }
@@ -364,7 +367,7 @@
         {
             try
             {
-                await UploadPendingRecordingsAsync(showSummary: false);
+                await UploadPendingRecordingsAsync(showSummary: false, includeFailed: false);
             }
             finally
             {
@@ -420,9 +423,11 @@
         bool showSnackbar = true)
     {
         if (string.IsNullOrWhiteSpace(pendingRecording.LocalId)
-            || string.IsNullOrWhiteSpace(pendingRecording.AnalysisEventId)
-            || string.IsNullOrWhiteSpace(pendingRecording.ParticipantId))
+            || string.IsNullOrWhiteSpace(pendingRecording.AthleteUserId))
         {
+            if (showSnackbar)
+                Snackbar.Add(L["UploadMetadataIncomplete"], Severity.Warning);
+
             return false;
         }
 
@@ -452,20 +457,23 @@
                 "openSavedRecording",
                 pendingRecording.LocalId);
             await using var content = await streamReference.OpenReadStreamAsync(MaxQueuedRecordingBytes);
-            var recording = await RunningAnalysisService.UploadRecordingAsync(
-                pendingRecording.AnalysisEventId,
-                pendingRecording.ParticipantId,
-                pendingRecording.FileName,
-                pendingRecording.ContentType,
-                content,
-                isOnline: true);
+            var driveFile = await UserDriveFolderService.UploadAnalysisRecordingAsync(
+                new UserDriveAnalysisRecordingUploadRequest(
+                    pendingRecording.AthleteUserId,
+                    pendingRecording.AthleteEmail,
+                    GetAnalysisFolderTitle(pendingRecording),
+                    pendingRecording.AnalysisStartsAt,
+                    pendingRecording.FileName,
+                    pendingRecording.ContentType,
+                    content),
+                cancellationToken: default);
 
-            if (recording.UploadStatus == RunningAnalysisUploadStatus.Uploaded)
+            if (!string.IsNullOrWhiteSpace(driveFile.FileId))
             {
                 await module.InvokeVoidAsync(
                     "markSavedRecordingUploadSucceeded",
                     pendingRecording.LocalId,
-                    recording.DriveFileUrl ?? string.Empty);
+                    driveFile.Url ?? string.Empty);
                 await LoadPendingRecordingsAsync();
 
                 if (showSnackbar)
@@ -474,7 +482,7 @@
                 return true;
             }
 
-            var errorMessage = recording.ErrorMessage ?? L["UploadFailed"].ToString();
+            var errorMessage = L["UploadFailed"].ToString();
             await module.InvokeVoidAsync("markSavedRecordingUploadFailed", pendingRecording.LocalId, errorMessage);
             await LoadPendingRecordingsAsync();
 
@@ -536,6 +544,38 @@
         return $"{value:0.##} {units[unitIndex]}";
     }
 
+    private static string GetRecordingOwnerText(RunningAnalysisRecordedVideo recording)
+    {
+        if (string.IsNullOrWhiteSpace(recording.ParticipantName))
+            return recording.AthleteUserId;
+
+        return string.IsNullOrWhiteSpace(recording.AthleteUserId)
+            ? recording.ParticipantName
+            : $"{recording.ParticipantName} ({recording.AthleteUserId})";
+    }
+
+    private static string GetRecordingAnalysisText(RunningAnalysisRecordedVideo recording)
+    {
+        var title = GetAnalysisFolderTitle(recording);
+        return recording.AnalysisStartsAt is { } startsAt
+            ? $"{title}, {startsAt.ToLocalTime():dd.MM.yyyy HH:mm}"
+            : title;
+    }
+
+    private static string GetAnalysisFolderTitle(RunningAnalysisRecordedVideo recording)
+    {
+        if (!string.IsNullOrWhiteSpace(recording.AnalysisTitle))
+            return recording.AnalysisTitle.Trim();
+
+        if (!string.IsNullOrWhiteSpace(recording.AnalysisExternalEventId))
+            return recording.AnalysisExternalEventId.Trim();
+
+        if (!string.IsNullOrWhiteSpace(recording.AnalysisEventId))
+            return recording.AnalysisEventId.Trim();
+
+        return "Laufanalyse";
+    }
+
     private string GetLocalRecordingsText()
     {
         return string.Format(
@@ -582,8 +622,11 @@
         if (!_isOnline && PendingUploadCount > 0)
             return L["UploadQueueOffline"];
 
-        if (PendingUploadCount > 0)
-            return string.Format(L["UploadQueueReady"], PendingUploadCount);
+        if (QueuedUploadCount > 0)
+            return string.Format(L["UploadQueueReady"], QueuedUploadCount);
+
+        if (FailedUploadCount > 0)
+            return string.Format(L["UploadQueueFailed"], FailedUploadCount);
 
         if (_lastQueueRefreshAt is not null)
             return string.Format(L["UploadQueueIdleWithRefresh"], _lastQueueRefreshAt.Value);

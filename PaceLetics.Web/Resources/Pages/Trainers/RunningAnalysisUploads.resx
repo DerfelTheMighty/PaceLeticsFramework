@@ -47,8 +47,10 @@
   <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload queue is waiting for access to the local recording folder.</value></data>
   <data name="UploadQueueOffline" xml:space="preserve"><value>Upload queue is waiting for an online connection.</value></data>
   <data name="UploadQueueReady" xml:space="preserve"><value>{0} upload(s) are waiting. Automatic upload is active while this page is open.</value></data>
+  <data name="UploadQueueFailed" xml:space="preserve"><value>{0} upload(s) failed. Retry them manually after checking the metadata.</value></data>
   <data name="UploadQueueIdle" xml:space="preserve"><value>Upload queue is empty.</value></data>
   <data name="UploadQueueIdleWithRefresh" xml:space="preserve"><value>Upload queue is empty. Last folder scan: {0:MM/dd/yyyy HH:mm:ss}.</value></data>
+  <data name="UploadMetadataIncomplete" xml:space="preserve"><value>The local recording metadata does not contain an athlete user id.</value></data>
   <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>The local recording is too large to upload.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload failed.</value></data>
 </root>

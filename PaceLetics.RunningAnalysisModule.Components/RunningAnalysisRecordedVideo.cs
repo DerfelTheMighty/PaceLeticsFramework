@@ -3,7 +3,13 @@ namespace PaceLetics.RunningAnalysisModule.Components;
 public sealed record RunningAnalysisRecordedVideo(
     string LocalId,
     string AnalysisEventId,
+    string AnalysisExternalEventId,
+    string CourseId,
+    string AnalysisTitle,
+    DateTime? AnalysisStartsAt,
     string ParticipantId,
+    string AthleteUserId,
+    string AthleteEmail,
     string ParticipantName,
     string FileName,
     string ContentType,

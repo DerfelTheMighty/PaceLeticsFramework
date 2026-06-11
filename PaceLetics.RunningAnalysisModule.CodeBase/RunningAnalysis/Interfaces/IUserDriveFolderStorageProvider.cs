@@ -13,6 +13,18 @@ public interface IUserDriveFolderStorageProvider
         string userEmail,
         CancellationToken cancellationToken = default);
 
+    Task<DriveFolderReference> EnsureChildFolderAsync(
+        DriveFolderReference parentFolder,
+        string folderName,
+        CancellationToken cancellationToken = default);
+
+    Task<DriveFileReference> UploadFileAsync(
+        DriveFolderReference folder,
+        string fileName,
+        string contentType,
+        Stream content,
+        CancellationToken cancellationToken = default);
+
     Task DeleteFolderAsync(
         DriveFolderReference userFolder,
         CancellationToken cancellationToken = default);

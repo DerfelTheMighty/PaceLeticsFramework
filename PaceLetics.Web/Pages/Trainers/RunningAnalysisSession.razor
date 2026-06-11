@@ -111,7 +111,13 @@
             @if (_isCaptureMode && CurrentParticipant is not null)
             {
                 <RunningAnalysisCapturePanel AnalysisEventId="@_analysisEvent.Id"
+                                             AnalysisExternalEventId="@_analysisEvent.ExternalEventId"
+                                             CourseId="@_analysisEvent.CourseId"
+                                             AnalysisTitle="@_analysisEvent.Title"
+                                             AnalysisStartsAt="@_analysisEvent.StartsAt"
                                              ParticipantId="@CurrentParticipant.ParticipantId"
+                                             AthleteUserId="@CurrentParticipant.AthleteUserId"
+                                             AthleteEmail="@CurrentParticipant.AthleteEmail"
                                              ParticipantName="@CurrentParticipant.DisplayName"
                                              FileNamePrefix="@BuildFileNamePrefix(CurrentParticipant)"
                                              IsOnline="_isOnline"

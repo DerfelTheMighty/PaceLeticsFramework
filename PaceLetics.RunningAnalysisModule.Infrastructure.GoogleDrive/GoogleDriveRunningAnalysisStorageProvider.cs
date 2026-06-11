@@ -79,6 +79,65 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         await GrantAccessAsync(drive, userFolder, userEmail, role: "reader", cancellationToken);
     }
 
+    public async Task<DriveFolderReference> EnsureChildFolderAsync(
+        DriveFolderReference parentFolder,
+        string folderName,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(parentFolder.FolderId))
+            throw new InvalidOperationException("The parent Drive folder id is required.");
+
+        if (string.IsNullOrWhiteSpace(folderName))
+            throw new InvalidOperationException("The child Drive folder name is required.");
+
+        var drive = CreateDriveService();
+        return await EnsureFolderAsync(drive, SanitizeName(folderName), parentFolder.FolderId, cancellationToken);
+    }
+
+    public async Task<DriveFileReference> UploadFileAsync(
+        DriveFolderReference folder,
+        string fileName,
+        string contentType,
+        Stream content,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(folder.FolderId))
+            throw new InvalidOperationException("The Drive folder id is required for uploads.");
+
+        if (string.IsNullOrWhiteSpace(fileName))
+            throw new InvalidOperationException("The upload file name is required.");
+
+        if (content is null)
+            throw new ArgumentNullException(nameof(content));
+
+        var drive = CreateDriveService();
+        var metadata = new Google.Apis.Drive.v3.Data.File
+        {
+            Name = fileName.Trim(),
+            Parents = new List<string> { folder.FolderId }
+        };
+
+        var upload = drive.Files.Create(
+            metadata,
+            content,
+            string.IsNullOrWhiteSpace(contentType) ? "video/webm" : contentType.Trim());
+
+        upload.Fields = "id,webViewLink,parents";
+        upload.SupportsAllDrives = true;
+
+        var result = await upload.UploadAsync(cancellationToken);
+        if (result.Status != UploadStatus.Completed || upload.ResponseBody is null)
+            throw result.Exception ?? new InvalidOperationException("Google Drive upload failed.");
+
+        var uploadedFile = await EnsureFileIsInFolderAsync(
+            drive,
+            upload.ResponseBody,
+            folder.FolderId,
+            cancellationToken);
+
+        return new DriveFileReference(uploadedFile.Id, uploadedFile.WebViewLink);
+    }
+
     public async Task DeleteFolderAsync(
         DriveFolderReference userFolder,
         CancellationToken cancellationToken = default)

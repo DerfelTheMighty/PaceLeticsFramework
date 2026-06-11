@@ -61,6 +61,35 @@ public sealed class UserDriveFolderServiceTests
         Assert.Equal("athlete-1", repository.DeletedAthleteUserIds.Single());
     }
 
+    [Fact]
+    public async Task UploadAnalysisRecordingAsync_UploadsIntoAnalysisFolderInUserDrive()
+    {
+        var repository = new FakeUserDriveFolderRepository
+        {
+            ExistingFolder = new DriveFolderReference("user-folder", "https://drive.test/user-folder")
+        };
+        var storage = new FakeUserDriveFolderStorageProvider();
+        var service = new UserDriveFolderService(repository, storage);
+
+        var file = await service.UploadAnalysisRecordingAsync(
+            new UserDriveAnalysisRecordingUploadRequest(
+                "athlete-1",
+                "athlete@example.com",
+                "Laufanalyse Bahn",
+                new DateTime(2026, 6, 11, 8, 0, 0, DateTimeKind.Utc),
+                "video.webm",
+                "video/webm",
+                new MemoryStream([1, 2, 3])));
+
+        Assert.Equal("https://drive.test/file-video.webm", file.Url);
+        var childFolder = Assert.Single(storage.CreatedChildFolders);
+        Assert.Equal("user-folder", childFolder.Parent.FolderId);
+        Assert.Equal("2026-06-11 Laufanalyse Bahn", childFolder.FolderName);
+        var uploaded = Assert.Single(storage.UploadedFiles);
+        Assert.Equal("analysis-folder-1", uploaded.Folder.FolderId);
+        Assert.Equal("video.webm", uploaded.FileName);
+    }
+
     private sealed class FakeUserDriveFolderRepository : IUserDriveFolderRepository
     {
         public DriveFolderReference? ExistingFolder { get; set; }
@@ -97,6 +126,8 @@ public sealed class UserDriveFolderServiceTests
     {
         public List<UserDriveFolderRequest> CreatedFolders { get; } = new();
         public List<(DriveFolderReference Folder, string Email)> ReadableFolders { get; } = new();
+        public List<(DriveFolderReference Parent, string FolderName)> CreatedChildFolders { get; } = new();
+        public List<(DriveFolderReference Folder, string FileName, string ContentType)> UploadedFiles { get; } = new();
         public List<DriveFolderReference> DeletedFolders { get; } = new();
 
         public Task<DriveFolderReference> EnsureUserFolderAsync(
@@ -116,6 +147,30 @@ public sealed class UserDriveFolderServiceTests
         {
             ReadableFolders.Add((userFolder, userEmail));
             return Task.CompletedTask;
+        }
+
+        public Task<DriveFolderReference> EnsureChildFolderAsync(
+            DriveFolderReference parentFolder,
+            string folderName,
+            CancellationToken cancellationToken = default)
+        {
+            CreatedChildFolders.Add((parentFolder, folderName));
+            return Task.FromResult(new DriveFolderReference(
+                $"analysis-folder-{CreatedChildFolders.Count}",
+                $"https://drive.test/analysis-folder-{CreatedChildFolders.Count}"));
+        }
+
+        public Task<DriveFileReference> UploadFileAsync(
+            DriveFolderReference folder,
+            string fileName,
+            string contentType,
+            Stream content,
+            CancellationToken cancellationToken = default)
+        {
+            UploadedFiles.Add((folder, fileName, contentType));
+            return Task.FromResult(new DriveFileReference(
+                $"file-{fileName}",
+                $"https://drive.test/file-{fileName}"));
         }
 
         public Task DeleteFolderAsync(
