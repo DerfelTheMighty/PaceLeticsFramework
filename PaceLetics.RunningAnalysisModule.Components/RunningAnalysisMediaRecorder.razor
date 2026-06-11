@@ -79,7 +79,14 @@
         {
             _errorMessage = null;
             var module = await GetModuleAsync();
-            await module.InvokeVoidAsync("startRecording", _videoElement);
+            await module.InvokeVoidAsync(
+                "startRecording",
+                _videoElement,
+                new RecordingMetadata(
+                    AnalysisEventId,
+                    ParticipantId,
+                    ParticipantName,
+                    FileNamePrefix));
             _isRecording = true;
             await IsRecordingChanged.InvokeAsync(true);
         }
@@ -101,12 +108,7 @@
             var module = await GetModuleAsync();
             var payload = await module.InvokeAsync<RecordedVideoPayload>(
                 "stopRecording",
-                _videoElement,
-                new RecordingMetadata(
-                    AnalysisEventId,
-                    ParticipantId,
-                    ParticipantName,
-                    FileNamePrefix));
+                _videoElement);
             _isRecording = false;
             await IsRecordingChanged.InvokeAsync(false);
             await OnRecorded.InvokeAsync(new RunningAnalysisRecordedVideo(

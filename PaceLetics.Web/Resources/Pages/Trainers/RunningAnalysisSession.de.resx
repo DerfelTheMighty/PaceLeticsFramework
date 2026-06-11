@@ -32,6 +32,14 @@
   <data name="NoNextParticipant" xml:space="preserve"><value>Keine weiteren Teilnehmenden.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Lokale Aufnahmen</value></data>
   <data name="LocalRecordingsText" xml:space="preserve"><value>{0} Aufnahme(n) sind auf diesem Geraet gespeichert.</value></data>
+  <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmeordner</value></data>
+  <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner waehlen</value></data>
+  <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmeordner ist bereit.</value></data>
+  <data name="LocalStorageReadyText" xml:space="preserve"><value>Aufnahmen werden direkt im Ordner "{0}" gespeichert. Speicherort: {1}</value></data>
+  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprueft.</value></data>
+  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser unterstuetzt keine direkte Speicherung in einen lokalen Geraeteordner.</value></data>
+  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Waehle zuerst einen lokalen Ordner auf diesem Geraet. Danach werden neue Aufnahmen dort als Videodatei gespeichert.</value></data>
+  <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewaehlten lokalen Aufnahmeordner.</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
   <data name="RefreshQueue" xml:space="preserve"><value>Aktualisieren</value></data>
   <data name="UploadSingle" xml:space="preserve"><value>Upload starten</value></data>

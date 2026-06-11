@@ -4,8 +4,9 @@ const databaseVersion = 2;
 const recordingStoreName = "recordings";
 const settingsStoreName = "settings";
 const recordingDirectoryKey = "recordingDirectory";
+const metadataFileSuffix = ".paceletics.json";
 
-export async function startRecording(videoElement) {
+export async function startRecording(videoElement, metadata = {}) {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     throw new Error("Camera access is not supported by this browser.");
   }
@@ -14,61 +15,125 @@ export async function startRecording(videoElement) {
     throw new Error("Video recording is not supported by this browser.");
   }
 
-  disposeRecorder(videoElement);
-
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: { facingMode: "environment" },
-    audio: false
-  });
+  await disposeRecorder(videoElement);
 
   const contentType = getSupportedContentType();
-  const chunks = [];
-  const recorder = new MediaRecorder(
-    stream,
-    contentType ? { mimeType: contentType } : undefined
-  );
+  let stream = null;
+  let writable = null;
 
-  recorder.addEventListener("dataavailable", event => {
-    if (event.data && event.data.size > 0) {
-      chunks.push(event.data);
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" },
+      audio: false
+    });
+
+    const directoryHandle = await requireRecordingDirectory();
+    const localId = createLocalId();
+    const recording = createRecordingMetadata(
+      metadata,
+      contentType || "video/webm",
+      localId,
+      directoryHandle);
+    const fileHandle = await directoryHandle.getFileHandle(recording.fileName, { create: true });
+    writable = await fileHandle.createWritable();
+    recording.fileHandle = fileHandle;
+
+    const recorder = new MediaRecorder(
+      stream,
+      contentType ? { mimeType: contentType } : undefined
+    );
+    recording.contentType = recording.contentType || recorder.mimeType || "video/webm";
+
+    const state = {
+      recorder,
+      stream,
+      directoryHandle,
+      writable,
+      recording,
+      writeChain: Promise.resolve(),
+      writeError: null
+    };
+
+    recorder.addEventListener("dataavailable", event => {
+      if (!event.data || event.data.size === 0) {
+        return;
+      }
+
+      const chunk = event.data;
+      state.writeChain = state.writeChain
+        .then(async () => {
+          await state.writable.write(chunk);
+          state.recording.size += chunk.size;
+        })
+        .catch(error => {
+          state.writeError = error;
+        });
+    });
+
+    videoElement.srcObject = stream;
+    await videoElement.play();
+    recorder.start(1000);
+
+    recorders.set(videoElement, state);
+  } catch (error) {
+    if (writable?.abort) {
+      try {
+        await writable.abort();
+      } catch {
+        // Best-effort cleanup after a failed start.
+      }
     }
-  });
 
-  videoElement.srcObject = stream;
-  await videoElement.play();
-  recorder.start();
-
-  recorders.set(videoElement, {
-    recorder,
-    stream,
-    chunks,
-    contentType: contentType || recorder.mimeType || "video/webm"
-  });
+    stopStream(videoElement, stream);
+    throw error;
+  }
 }
 
-export async function stopRecording(videoElement, metadata = {}) {
+export async function stopRecording(videoElement) {
   const state = recorders.get(videoElement);
   if (!state) {
     throw new Error("No active recording was found.");
   }
 
-  const blob = await new Promise((resolve, reject) => {
-    state.recorder.addEventListener("stop", () => {
-      resolve(new Blob(state.chunks, { type: state.contentType }));
-    }, { once: true });
+  if (state.recorder.state !== "inactive") {
+    await new Promise((resolve, reject) => {
+      state.recorder.addEventListener("stop", () => {
+        resolve();
+      }, { once: true });
 
-    state.recorder.addEventListener("error", event => {
-      reject(event.error || new Error("Recording failed."));
-    }, { once: true });
+      state.recorder.addEventListener("error", event => {
+        reject(event.error || new Error("Recording failed."));
+      }, { once: true });
 
-    state.recorder.stop();
-  });
+      state.recorder.stop();
+    });
+  }
 
   stopStream(videoElement, state.stream);
   recorders.delete(videoElement);
 
-  const contentType = blob.type || state.contentType || "video/webm";
-  return await saveRecording(blob, contentType, metadata);
+  try {
+    await state.writeChain;
+    if (state.writeError) {
+      throw state.writeError;
+    }
+
+    await state.writable.close();
+    await writeRecordingMetadataFile(state.directoryHandle, state.recording);
+    await storeRecording(state.recording);
+  } catch (error) {
+    if (state.writable?.abort) {
+      try {
+        await state.writable.abort();
+      } catch {
+        // Best-effort cleanup after a failed stop.
+      }
+    }
+
+    throw error;
+  }
+
+  return toRecordingPayload(state.recording);
 }
 
 export async function chooseRecordingDirectory() {
@@ -82,6 +147,7 @@ export async function chooseRecordingDirectory() {
   });
   await ensureHandlePermission(directoryHandle, "readwrite", true);
   await saveSetting(recordingDirectoryKey, directoryHandle);
+  await importRecordingsFromDirectory(directoryHandle);
 
   return await getRecordingStorageStatus();
 }
@@ -131,6 +197,8 @@ export async function getRecordingStorageStatus() {
 }
 
 export async function listSavedRecordings(analysisEventId) {
+  await importRecordingsFromConfiguredDirectory();
+
   const database = await openDatabase();
   const transaction = database.transaction(recordingStoreName, "readonly");
   const store = transaction.objectStore(recordingStoreName);
@@ -197,14 +265,27 @@ export async function deleteSavedRecording(localId) {
   await transactionToPromise(transaction);
 }
 
-export function disposeRecorder(videoElement) {
+export async function disposeRecorder(videoElement) {
   const state = recorders.get(videoElement);
   if (!state) {
     return;
   }
 
   if (state.recorder && state.recorder.state !== "inactive") {
-    state.recorder.stop();
+    try {
+      await stopRecording(videoElement);
+      return;
+    } catch {
+      // Fall through to best-effort cleanup below.
+    }
+  }
+
+  if (state.writable?.abort) {
+    try {
+      await state.writable.abort();
+    } catch {
+      // Best-effort cleanup during component disposal.
+    }
   }
 
   stopStream(videoElement, state.stream);
@@ -239,7 +320,7 @@ function getSupportedContentType() {
   return candidates.find(candidate => MediaRecorder.isTypeSupported(candidate)) || "";
 }
 
-async function saveRecording(blob, contentType, metadata) {
+function createRecordingMetadata(metadata, contentType, localId, directoryHandle) {
   const analysisEventId = getMetadataValue(metadata, "analysisEventId");
   const participantId = getMetadataValue(metadata, "participantId");
   const participantName = getMetadataValue(metadata, "participantName");
@@ -250,16 +331,11 @@ async function saveRecording(blob, contentType, metadata) {
   }
 
   const fileExtension = contentType.includes("mp4") ? "mp4" : "webm";
-  const localId = createLocalId();
   const recordedAt = new Date().toISOString();
   const fileName = buildFileName(fileNamePrefix, fileExtension, localId);
-  const directoryHandle = await requireRecordingDirectory();
-  const fileHandle = await directoryHandle.getFileHandle(fileName, { create: true });
-  const writable = await fileHandle.createWritable();
-  await writable.write(blob);
-  await writable.close();
+  const metadataFileName = `${fileName}${metadataFileSuffix}`;
 
-  const recording = {
+  return {
     localId,
     analysisEventId,
     participantId,
@@ -267,25 +343,25 @@ async function saveRecording(blob, contentType, metadata) {
     fileName,
     contentType,
     fileExtension,
-    size: blob.size,
+    size: 0,
     recordedAt,
     storageMode: "file-system",
     folderName: directoryHandle.name || "",
-    fileHandle,
+    metadataFileName,
     uploadStatus: "queued",
     uploadAttempts: 0,
     lastUploadAt: null,
     lastError: "",
     driveFileUrl: ""
   };
+}
 
+async function storeRecording(recording) {
   const database = await openDatabase();
   const transaction = database.transaction(recordingStoreName, "readwrite");
   const store = transaction.objectStore(recordingStoreName);
   store.put(recording);
   await transactionToPromise(transaction);
-
-  return toRecordingPayload(recording);
 }
 
 async function getSavedRecording(localId) {
@@ -320,19 +396,140 @@ async function getFileHandleFromDirectory(fileName) {
   return await directoryHandle.getFileHandle(fileName, { create: false });
 }
 
-async function updateSavedRecording(localId, updater) {
+async function importRecordingsFromConfiguredDirectory() {
+  if (!window.showDirectoryPicker) {
+    return;
+  }
+
+  const directoryHandle = await loadSetting(recordingDirectoryKey);
+  if (!directoryHandle) {
+    return;
+  }
+
+  await importRecordingsFromDirectory(directoryHandle, false);
+}
+
+async function importRecordingsFromDirectory(directoryHandle, requestPermission = false) {
+  if (!directoryHandle?.entries) {
+    return;
+  }
+
+  const permissionState = await ensureHandlePermission(directoryHandle, "readwrite", requestPermission);
+  if (permissionState !== "granted") {
+    return;
+  }
+
+  const recordings = [];
+  for await (const [metadataFileName, handle] of directoryHandle.entries()) {
+    if (handle.kind !== "file" || !metadataFileName.endsWith(metadataFileSuffix)) {
+      continue;
+    }
+
+    const recording = await readRecordingMetadataFile(directoryHandle, metadataFileName, handle);
+    if (recording) {
+      recordings.push(recording);
+    }
+  }
+
+  if (recordings.length === 0) {
+    return;
+  }
+
   const database = await openDatabase();
   const transaction = database.transaction(recordingStoreName, "readwrite");
   const store = transaction.objectStore(recordingStoreName);
-  const recording = await requestToPromise(store.get(localId));
+  for (const recording of recordings) {
+    store.put(recording);
+  }
 
+  await transactionToPromise(transaction);
+}
+
+async function readRecordingMetadataFile(directoryHandle, metadataFileName, metadataHandle) {
+  try {
+    const metadataFile = await metadataHandle.getFile();
+    const metadata = JSON.parse(await metadataFile.text());
+
+    if (!metadata.localId
+      || !metadata.analysisEventId
+      || !metadata.participantId
+      || !metadata.fileName) {
+      return null;
+    }
+
+    const fileHandle = await directoryHandle.getFileHandle(metadata.fileName, { create: false });
+    const videoFile = await fileHandle.getFile();
+    return {
+      localId: metadata.localId,
+      analysisEventId: metadata.analysisEventId,
+      participantId: metadata.participantId,
+      participantName: metadata.participantName || "",
+      fileName: metadata.fileName,
+      contentType: metadata.contentType || videoFile.type || "video/webm",
+      fileExtension: metadata.fileExtension || getFileExtension(metadata.fileName),
+      size: metadata.size || videoFile.size,
+      recordedAt: metadata.recordedAt || new Date(videoFile.lastModified || Date.now()).toISOString(),
+      storageMode: "file-system",
+      folderName: directoryHandle.name || metadata.folderName || "",
+      metadataFileName,
+      fileHandle,
+      uploadStatus: metadata.uploadStatus || "queued",
+      uploadAttempts: metadata.uploadAttempts || 0,
+      lastUploadAt: metadata.lastUploadAt || null,
+      lastError: metadata.lastError || "",
+      driveFileUrl: metadata.driveFileUrl || ""
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function writeRecordingMetadataFile(directoryHandle, recording) {
+  const metadataFileName = recording.metadataFileName || `${recording.fileName}${metadataFileSuffix}`;
+  recording.metadataFileName = metadataFileName;
+
+  const metadataHandle = await directoryHandle.getFileHandle(metadataFileName, { create: true });
+  const writable = await metadataHandle.createWritable();
+  await writable.write(JSON.stringify(toRecordingMetadata(recording), null, 2));
+  await writable.close();
+}
+
+async function tryWriteRecordingMetadataFile(recording) {
+  if (recording.storageMode !== "file-system") {
+    return;
+  }
+
+  try {
+    const directoryHandle = await loadSetting(recordingDirectoryKey);
+    if (!directoryHandle) {
+      return;
+    }
+
+    const permissionState = await ensureHandlePermission(directoryHandle, "readwrite", false);
+    if (permissionState !== "granted") {
+      return;
+    }
+
+    await writeRecordingMetadataFile(directoryHandle, recording);
+  } catch {
+    // IndexedDB remains the live status store when the browser cannot update the sidecar file.
+  }
+}
+
+async function updateSavedRecording(localId, updater) {
+  const recording = await getSavedRecording(localId);
   if (!recording) {
     throw new Error("The saved recording was not found on this device.");
   }
 
   updater(recording);
+
+  const database = await openDatabase();
+  const transaction = database.transaction(recordingStoreName, "readwrite");
+  const store = transaction.objectStore(recordingStoreName);
   store.put(recording);
   await transactionToPromise(transaction);
+  await tryWriteRecordingMetadataFile(recording);
 
   return toRecordingPayload(recording);
 }
@@ -397,6 +594,28 @@ function toRecordingPayload(recording) {
   };
 }
 
+function toRecordingMetadata(recording) {
+  return {
+    localId: recording.localId,
+    analysisEventId: recording.analysisEventId,
+    participantId: recording.participantId,
+    participantName: recording.participantName || "",
+    fileName: recording.fileName,
+    contentType: recording.contentType,
+    fileExtension: recording.fileExtension,
+    size: recording.size,
+    recordedAt: recording.recordedAt,
+    storageMode: "file-system",
+    folderName: recording.folderName || "",
+    metadataFileName: recording.metadataFileName || `${recording.fileName}${metadataFileSuffix}`,
+    uploadStatus: recording.uploadStatus || "queued",
+    uploadAttempts: recording.uploadAttempts || 0,
+    lastUploadAt: recording.lastUploadAt || null,
+    lastError: recording.lastError || "",
+    driveFileUrl: recording.driveFileUrl || ""
+  };
+}
+
 async function saveSetting(key, value) {
   const database = await openDatabase();
   const transaction = database.transaction(settingsStoreName, "readwrite");
@@ -448,6 +667,15 @@ function buildFileName(fileNamePrefix, fileExtension, localId) {
   const safePrefix = sanitizeFileName(fileNamePrefix || "recording");
   const safeExtension = sanitizeFileName(fileExtension || "webm").replaceAll(".", "");
   return `${safePrefix}-${localId.slice(0, 8)}.${safeExtension || "webm"}`;
+}
+
+function getFileExtension(fileName) {
+  const extensionStart = fileName.lastIndexOf(".");
+  if (extensionStart < 0 || extensionStart === fileName.length - 1) {
+    return "";
+  }
+
+  return sanitizeFileName(fileName.slice(extensionStart + 1));
 }
 
 function sanitizeFileName(value) {

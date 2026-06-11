@@ -82,6 +82,24 @@
                 </MudAlert>
             }
 
+            <MudPaper Elevation="1" Class="pa-4">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                    <MudStack Spacing="0" Style="min-width:0;">
+                        <MudText Typo="Typo.h6">@L["LocalStorageTitle"]</MudText>
+                        <MudText Typo="Typo.body2" Color="@GetLocalStorageTextColor()" Style="word-break:break-word;">
+                            @GetLocalStorageText()
+                        </MudText>
+                    </MudStack>
+
+                    <MudButton Color="Color.Primary"
+                               Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Filled.FolderOpen"
+                               OnClick="ChooseRecordingDirectoryAsync">
+                        @L["ChooseLocalStorageFolder"]
+                    </MudButton>
+                </MudStack>
+            </MudPaper>
+
             @if (_pendingRecordings.Count > 0)
             {
                 <MudPaper Elevation="1" Class="pa-4">
@@ -97,7 +115,7 @@
                             <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
                                 <MudButton Variant="Variant.Outlined"
                                            StartIcon="@Icons.Material.Filled.Refresh"
-                                           OnClick="LoadPendingRecordingsAsync">
+                                           OnClick="RefreshPendingRecordingsAsync">
                                     @L["RefreshQueue"]
                                 </MudButton>
 
@@ -105,7 +123,7 @@
                                            Variant="Variant.Filled"
                                            StartIcon="@Icons.Material.Filled.CloudUpload"
                                            Disabled="@(!_isOnline || _isUploadingQueuedRecordings)"
-                                           OnClick="UploadPendingRecordingsAsync">
+                                           OnClick="@(() => UploadPendingRecordingsAsync())">
                                     @L["UploadPendingRecordings"]
                                 </MudButton>
                             </MudStack>
@@ -189,7 +207,7 @@
                                              ParticipantName="@CurrentParticipant.DisplayName"
                                              FileNamePrefix="@BuildFileNamePrefix(CurrentParticipant)"
                                              IsOnline="_isOnline"
-                                             CanRecord="@(_analysisEvent.Status != RunningAnalysisEventStatus.Completed)"
+                                             CanRecord="@(_analysisEvent.Status != RunningAnalysisEventStatus.Completed && IsLocalRecordingStorageReady)"
                                              IsRecording="_isRecording"
                                              OnStartRecording="EnsureAnalysisStartedAsync"
                                              OnStopRecording="OnStopRecordingAsync"
@@ -228,11 +246,13 @@
     private RunningAnalysisEvent? _analysisEvent;
     private IReadOnlyList<RunningAnalysisRosterItem> _roster = Array.Empty<RunningAnalysisRosterItem>();
     private IReadOnlyList<RunningAnalysisRecordedVideo> _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
+    private BrowserRecordingStorageStatus? _recordingStorageStatus;
     private string? _selectedParticipantId;
     private bool _isCaptureMode;
     private bool _isRecording;
     private bool _isOnline = true;
     private bool _isUploadingQueuedRecordings;
+    private bool _isAutomaticUploadQueued;
     private readonly HashSet<string> _uploadingRecordingIds = new(StringComparer.Ordinal);
     private IJSObjectReference? _recorderModule;
 
@@ -240,6 +260,8 @@
         string.IsNullOrWhiteSpace(_selectedParticipantId)
             ? null
             : _roster.FirstOrDefault(participant => participant.ParticipantId == _selectedParticipantId);
+
+    private bool IsLocalRecordingStorageReady => _recordingStorageStatus?.IsReady == true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -254,6 +276,7 @@
             {
                 _errorMessage = null;
                 await RefreshOnlineStateAsync();
+                await LoadRecordingStorageStatusAsync();
 
                 var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
                 _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
@@ -282,12 +305,14 @@
 
                 await LoadRosterAsync();
                 await LoadPendingRecordingsAsync();
+                QueueAutomaticUploadIfReady();
             }
             catch (Exception ex)
             {
                 _errorMessage = ex.Message;
                 _roster = Array.Empty<RunningAnalysisRosterItem>();
                 _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
+                _recordingStorageStatus = null;
             }
         });
     }
@@ -322,6 +347,53 @@
         catch
         {
             _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
+        }
+    }
+
+    private async Task RefreshPendingRecordingsAsync()
+    {
+        await LoadPendingRecordingsAsync();
+        QueueAutomaticUploadIfReady();
+    }
+
+    private async Task LoadRecordingStorageStatusAsync()
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            _recordingStorageStatus = await module.InvokeAsync<BrowserRecordingStorageStatus>(
+                "getRecordingStorageStatus");
+        }
+        catch (Exception ex)
+        {
+            _recordingStorageStatus = new BrowserRecordingStorageStatus
+            {
+                IsSupported = false,
+                IsConfigured = false,
+                IsReady = false,
+                ErrorMessage = ex.Message
+            };
+        }
+    }
+
+    private async Task ChooseRecordingDirectoryAsync()
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            _recordingStorageStatus = await module.InvokeAsync<BrowserRecordingStorageStatus>(
+                "chooseRecordingDirectory");
+            await LoadPendingRecordingsAsync();
+            QueueAutomaticUploadIfReady();
+
+            if (IsLocalRecordingStorageReady)
+                Snackbar.Add(L["LocalStorageReady"], Severity.Success);
+            else if (!string.IsNullOrWhiteSpace(_recordingStorageStatus?.ErrorMessage))
+                Snackbar.Add(_recordingStorageStatus.ErrorMessage, Severity.Warning);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
         }
     }
 
@@ -443,9 +515,10 @@
     {
         await LoadPendingRecordingsAsync();
         Snackbar.Add(string.Format(L["LocalSaveSuccess"], video.FileName), Severity.Success);
+        QueueAutomaticUploadIfReady();
     }
 
-    private async Task UploadPendingRecordingsAsync()
+    private async Task UploadPendingRecordingsAsync(bool showSummary = true)
     {
         if (_analysisEvent is null || _pendingRecordings.Count == 0)
             return;
@@ -468,7 +541,9 @@
                 .ToList();
             if (candidates.Count == 0)
             {
-                Snackbar.Add(L["NoPendingUploads"], Severity.Info);
+                if (showSummary)
+                    Snackbar.Add(L["NoPendingUploads"], Severity.Info);
+
                 return;
             }
 
@@ -484,16 +559,43 @@
             await LoadPendingRecordingsAsync();
             await LoadRosterAsync();
 
-            if (uploadedCount > 0)
+            if (showSummary && uploadedCount > 0)
                 Snackbar.Add(string.Format(L["UploadPendingSuccess"], uploadedCount), Severity.Success);
 
-            if (failedCount > 0)
+            if (showSummary && failedCount > 0)
                 Snackbar.Add(string.Format(L["UploadPendingFailed"], failedCount), Severity.Warning);
         }
         finally
         {
             _isUploadingQueuedRecordings = false;
         }
+    }
+
+    private void QueueAutomaticUploadIfReady()
+    {
+        if (_isAutomaticUploadQueued
+            || _isUploadingQueuedRecordings
+            || !_isOnline
+            || !IsLocalRecordingStorageReady
+            || _pendingRecordings.Count == 0
+            || _pendingRecordings.All(IsUploaded))
+        {
+            return;
+        }
+
+        _isAutomaticUploadQueued = true;
+        _ = InvokeAsync(async () =>
+        {
+            try
+            {
+                await UploadPendingRecordingsAsync(showSummary: false);
+            }
+            finally
+            {
+                _isAutomaticUploadQueued = false;
+                StateHasChanged();
+            }
+        });
     }
 
     private async Task<bool> UploadQueuedRecordingAsync(
@@ -644,6 +746,41 @@
         return $"{value:0.##} {units[unitIndex]}";
     }
 
+    private Color GetLocalStorageTextColor()
+    {
+        if (IsLocalRecordingStorageReady)
+            return Color.Success;
+
+        if (_recordingStorageStatus?.IsConfigured == true)
+            return Color.Warning;
+
+        return Color.Secondary;
+    }
+
+    private string GetLocalStorageText()
+    {
+        if (_recordingStorageStatus is null)
+            return L["LocalStorageUnknown"];
+
+        if (!_recordingStorageStatus.IsSupported)
+            return string.IsNullOrWhiteSpace(_recordingStorageStatus.ErrorMessage)
+                ? L["LocalStorageUnsupported"]
+                : _recordingStorageStatus.ErrorMessage;
+
+        if (!_recordingStorageStatus.IsConfigured)
+            return L["LocalStorageNotConfigured"];
+
+        if (_recordingStorageStatus.IsReady)
+            return string.Format(
+                L["LocalStorageReadyText"],
+                _recordingStorageStatus.FolderName,
+                _recordingStorageStatus.StorageLocation);
+
+        return string.IsNullOrWhiteSpace(_recordingStorageStatus.ErrorMessage)
+            ? L["LocalStoragePermissionMissing"]
+            : _recordingStorageStatus.ErrorMessage;
+    }
+
     private bool IsUploading(RunningAnalysisRecordedVideo recording)
     {
         return _uploadingRecordingIds.Contains(recording.LocalId);
@@ -686,6 +823,17 @@
         safeName = string.IsNullOrWhiteSpace(safeName) ? participant.ParticipantId : safeName;
 
         return $"{DateTime.UtcNow:yyyyMMdd-HHmmss}-{safeName}";
+    }
+
+    private sealed class BrowserRecordingStorageStatus
+    {
+        public bool IsSupported { get; set; }
+        public bool IsConfigured { get; set; }
+        public bool IsReady { get; set; }
+        public string FolderName { get; set; } = string.Empty;
+        public string PermissionState { get; set; } = string.Empty;
+        public string StorageLocation { get; set; } = string.Empty;
+        public string ErrorMessage { get; set; } = string.Empty;
     }
 
     public async ValueTask DisposeAsync()

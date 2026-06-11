@@ -32,6 +32,14 @@
   <data name="NoNextParticipant" xml:space="preserve"><value>No more participants.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Local recordings</value></data>
   <data name="LocalRecordingsText" xml:space="preserve"><value>{0} recording(s) are saved on this device.</value></data>
+  <data name="LocalStorageTitle" xml:space="preserve"><value>Local recording folder</value></data>
+  <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Choose folder</value></data>
+  <data name="LocalStorageReady" xml:space="preserve"><value>Local recording folder is ready.</value></data>
+  <data name="LocalStorageReadyText" xml:space="preserve"><value>Recordings are saved directly in "{0}". Storage location: {1}</value></data>
+  <data name="LocalStorageUnknown" xml:space="preserve"><value>Checking local recording folder.</value></data>
+  <data name="LocalStorageUnsupported" xml:space="preserve"><value>This browser cannot save recordings directly to a local device folder.</value></data>
+  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Choose a local folder on this device first. New recordings will then be saved there as video files.</value></data>
+  <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>The browser needs access to the selected local recording folder again.</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Upload recordings</value></data>
   <data name="RefreshQueue" xml:space="preserve"><value>Refresh</value></data>
   <data name="UploadSingle" xml:space="preserve"><value>Start upload</value></data>
