@@ -1,7 +1,9 @@
 const recorders = new WeakMap();
 const databaseName = "paceletics-running-analysis";
-const databaseVersion = 1;
+const databaseVersion = 2;
 const recordingStoreName = "recordings";
+const settingsStoreName = "settings";
+const recordingDirectoryKey = "recordingDirectory";
 
 export async function startRecording(videoElement) {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -69,6 +71,65 @@ export async function stopRecording(videoElement, metadata = {}) {
   return await saveRecording(blob, contentType, metadata);
 }
 
+export async function chooseRecordingDirectory() {
+  if (!window.showDirectoryPicker) {
+    return getUnsupportedStorageStatus();
+  }
+
+  const directoryHandle = await window.showDirectoryPicker({
+    id: "paceletics-running-analysis",
+    mode: "readwrite"
+  });
+  await ensureHandlePermission(directoryHandle, "readwrite", true);
+  await saveSetting(recordingDirectoryKey, directoryHandle);
+
+  return await getRecordingStorageStatus();
+}
+
+export async function getRecordingStorageStatus() {
+  if (!window.showDirectoryPicker) {
+    return getUnsupportedStorageStatus();
+  }
+
+  const directoryHandle = await loadSetting(recordingDirectoryKey);
+  if (!directoryHandle) {
+    return {
+      isSupported: true,
+      isConfigured: false,
+      isReady: false,
+      folderName: "",
+      permissionState: "",
+      storageLocation: "",
+      errorMessage: ""
+    };
+  }
+
+  try {
+    const permissionState = await ensureHandlePermission(directoryHandle, "readwrite", false);
+    return {
+      isSupported: true,
+      isConfigured: true,
+      isReady: permissionState === "granted",
+      folderName: directoryHandle.name || "",
+      permissionState,
+      storageLocation: `Device folder selected in browser: ${directoryHandle.name || "(unnamed folder)"}`,
+      errorMessage: permissionState === "granted"
+        ? ""
+        : "The browser needs permission to read and write the selected folder."
+    };
+  } catch (error) {
+    return {
+      isSupported: true,
+      isConfigured: true,
+      isReady: false,
+      folderName: directoryHandle.name || "",
+      permissionState: "denied",
+      storageLocation: `Device folder selected in browser: ${directoryHandle.name || "(unnamed folder)"}`,
+      errorMessage: error?.message || "The selected recording folder is not available."
+    };
+  }
+}
+
 export async function listSavedRecordings(analysisEventId) {
   const database = await openDatabase();
   const transaction = database.transaction(recordingStoreName, "readonly");
@@ -84,11 +145,22 @@ export async function listSavedRecordings(analysisEventId) {
 
 export async function openSavedRecording(localId) {
   const recording = await getSavedRecording(localId);
-  if (!recording || !recording.blob) {
+  if (!recording) {
     throw new Error("The saved recording was not found on this device.");
   }
 
-  return recording.blob;
+  if (recording.storageMode === "file-system") {
+    const fileHandle = recording.fileHandle
+      || await getFileHandleFromDirectory(recording.fileName);
+    await ensureHandlePermission(fileHandle, "read", true);
+    return await fileHandle.getFile();
+  }
+
+  if (recording.blob) {
+    return recording.blob;
+  }
+
+  throw new Error("The saved recording file was not found on this device.");
 }
 
 export async function markSavedRecordingUploadStarted(localId) {
@@ -180,22 +252,31 @@ async function saveRecording(blob, contentType, metadata) {
   const fileExtension = contentType.includes("mp4") ? "mp4" : "webm";
   const localId = createLocalId();
   const recordedAt = new Date().toISOString();
+  const fileName = buildFileName(fileNamePrefix, fileExtension, localId);
+  const directoryHandle = await requireRecordingDirectory();
+  const fileHandle = await directoryHandle.getFileHandle(fileName, { create: true });
+  const writable = await fileHandle.createWritable();
+  await writable.write(blob);
+  await writable.close();
+
   const recording = {
     localId,
     analysisEventId,
     participantId,
     participantName,
-    fileName: `${fileNamePrefix}.${fileExtension}`,
+    fileName,
     contentType,
     fileExtension,
     size: blob.size,
     recordedAt,
+    storageMode: "file-system",
+    folderName: directoryHandle.name || "",
+    fileHandle,
     uploadStatus: "queued",
     uploadAttempts: 0,
     lastUploadAt: null,
     lastError: "",
-    driveFileUrl: "",
-    blob
+    driveFileUrl: ""
   };
 
   const database = await openDatabase();
@@ -214,6 +295,29 @@ async function getSavedRecording(localId) {
   const recording = await requestToPromise(store.get(localId));
   await transactionToPromise(transaction);
   return recording;
+}
+
+async function requireRecordingDirectory() {
+  if (!window.showDirectoryPicker) {
+    throw new Error("This browser cannot save recordings directly to a device folder.");
+  }
+
+  const directoryHandle = await loadSetting(recordingDirectoryKey);
+  if (!directoryHandle) {
+    throw new Error("Select a local recording folder before recording.");
+  }
+
+  const permissionState = await ensureHandlePermission(directoryHandle, "readwrite", true);
+  if (permissionState !== "granted") {
+    throw new Error("The browser does not have permission to write to the selected recording folder.");
+  }
+
+  return directoryHandle;
+}
+
+async function getFileHandleFromDirectory(fileName) {
+  const directoryHandle = await requireRecordingDirectory();
+  return await directoryHandle.getFileHandle(fileName, { create: false });
 }
 
 async function updateSavedRecording(localId, updater) {
@@ -246,6 +350,10 @@ function openDatabase() {
       if (!database.objectStoreNames.contains(recordingStoreName)) {
         const store = database.createObjectStore(recordingStoreName, { keyPath: "localId" });
         store.createIndex("analysisEventId", "analysisEventId", { unique: false });
+      }
+
+      if (!database.objectStoreNames.contains(settingsStoreName)) {
+        database.createObjectStore(settingsStoreName);
       }
     });
 
@@ -280,13 +388,75 @@ function toRecordingPayload(recording) {
     fileExtension: recording.fileExtension,
     size: recording.size,
     recordedAt: recording.recordedAt,
-    storageLocation: `Browser IndexedDB: ${databaseName}/${recordingStoreName}/${recording.localId}`,
+    storageLocation: getRecordingStorageLocation(recording),
     uploadStatus: recording.uploadStatus || "queued",
     uploadAttempts: recording.uploadAttempts || 0,
     lastUploadAt: recording.lastUploadAt || null,
     lastError: recording.lastError || "",
     driveFileUrl: recording.driveFileUrl || ""
   };
+}
+
+async function saveSetting(key, value) {
+  const database = await openDatabase();
+  const transaction = database.transaction(settingsStoreName, "readwrite");
+  const store = transaction.objectStore(settingsStoreName);
+  store.put(value, key);
+  await transactionToPromise(transaction);
+}
+
+async function loadSetting(key) {
+  const database = await openDatabase();
+  const transaction = database.transaction(settingsStoreName, "readonly");
+  const store = transaction.objectStore(settingsStoreName);
+  const value = await requestToPromise(store.get(key));
+  await transactionToPromise(transaction);
+  return value;
+}
+
+async function ensureHandlePermission(handle, mode, requestIfNeeded) {
+  const options = { mode };
+  let permissionState = await handle.queryPermission(options);
+  if (permissionState !== "granted" && requestIfNeeded) {
+    permissionState = await handle.requestPermission(options);
+  }
+
+  return permissionState;
+}
+
+function getUnsupportedStorageStatus() {
+  return {
+    isSupported: false,
+    isConfigured: false,
+    isReady: false,
+    folderName: "",
+    permissionState: "",
+    storageLocation: "",
+    errorMessage: "This browser does not support direct recording to a device folder."
+  };
+}
+
+function getRecordingStorageLocation(recording) {
+  if (recording.storageMode === "file-system") {
+    return `Device folder: ${recording.folderName || "(selected folder)"}/${recording.fileName}`;
+  }
+
+  return `Browser IndexedDB: ${databaseName}/${recordingStoreName}/${recording.localId}`;
+}
+
+function buildFileName(fileNamePrefix, fileExtension, localId) {
+  const safePrefix = sanitizeFileName(fileNamePrefix || "recording");
+  const safeExtension = sanitizeFileName(fileExtension || "webm").replaceAll(".", "");
+  return `${safePrefix}-${localId.slice(0, 8)}.${safeExtension || "webm"}`;
+}
+
+function sanitizeFileName(value) {
+  return value
+    .trim()
+    .replace(/[<>:"/\\|?*\u0000-\u001F]/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 function getMetadataValue(metadata, camelCaseName) {
