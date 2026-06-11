@@ -32,6 +32,8 @@
   <data name="NoNextParticipant" xml:space="preserve"><value>Keine weiteren Teilnehmenden.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Lokale Aufnahmen</value></data>
   <data name="LocalRecordingsText" xml:space="preserve"><value>{0} Aufnahme(n) sind auf diesem Geraet gespeichert.</value></data>
+  <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} lokal, {1} offen, {2} fehlgeschlagen, {3} hochgeladen.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine lokalen Aufnahmen im gewaehlten Ordner gefunden.</value></data>
   <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmeordner</value></data>
   <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner waehlen</value></data>
   <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmeordner ist bereit.</value></data>
@@ -61,6 +63,12 @@
   <data name="UploadPendingFailed" xml:space="preserve"><value>{0} Aufnahme(n) konnten nicht hochgeladen werden.</value></data>
   <data name="UploadSingleSuccess" xml:space="preserve"><value>{0} wurde hochgeladen.</value></data>
   <data name="NoPendingUploads" xml:space="preserve"><value>Keine ausstehenden Uploads.</value></data>
+  <data name="UploadQueueUploading" xml:space="preserve"><value>Upload-Queue laeuft. Lokale Dateien werden in die jeweiligen Teilnehmerordner hochgeladen.</value></data>
+  <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload-Queue wartet auf Zugriff auf den lokalen Aufnahmeordner.</value></data>
+  <data name="UploadQueueOffline" xml:space="preserve"><value>Upload-Queue wartet auf Online-Verbindung.</value></data>
+  <data name="UploadQueueReady" xml:space="preserve"><value>{0} Upload(s) warten. Automatischer Upload ist aktiv.</value></data>
+  <data name="UploadQueueIdle" xml:space="preserve"><value>Upload-Queue ist leer. Neue lokale Aufnahmen werden automatisch hochgeladen.</value></data>
+  <data name="UploadQueueIdleWithRefresh" xml:space="preserve"><value>Upload-Queue ist leer. Letzter Ordnerscan: {0:dd.MM.yyyy HH:mm:ss}.</value></data>
   <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>Die lokale Aufnahme ist zu gross fuer den Upload.</value></data>
   <data name="UploadSuccess" xml:space="preserve"><value>Aufnahme wurde hochgeladen.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload fehlgeschlagen.</value></data>

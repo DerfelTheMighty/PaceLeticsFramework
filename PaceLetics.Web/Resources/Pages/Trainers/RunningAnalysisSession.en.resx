@@ -32,6 +32,8 @@
   <data name="NoNextParticipant" xml:space="preserve"><value>No more participants.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Local recordings</value></data>
   <data name="LocalRecordingsText" xml:space="preserve"><value>{0} recording(s) are saved on this device.</value></data>
+  <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} local, {1} pending, {2} failed, {3} uploaded.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>No local recordings were found in the selected folder.</value></data>
   <data name="LocalStorageTitle" xml:space="preserve"><value>Local recording folder</value></data>
   <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Choose folder</value></data>
   <data name="LocalStorageReady" xml:space="preserve"><value>Local recording folder is ready.</value></data>
@@ -61,6 +63,12 @@
   <data name="UploadPendingFailed" xml:space="preserve"><value>{0} recording(s) could not be uploaded.</value></data>
   <data name="UploadSingleSuccess" xml:space="preserve"><value>{0} was uploaded.</value></data>
   <data name="NoPendingUploads" xml:space="preserve"><value>No pending uploads.</value></data>
+  <data name="UploadQueueUploading" xml:space="preserve"><value>Upload queue is running. Local files are being uploaded to the matching participant folders.</value></data>
+  <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload queue is waiting for access to the local recording folder.</value></data>
+  <data name="UploadQueueOffline" xml:space="preserve"><value>Upload queue is waiting for an online connection.</value></data>
+  <data name="UploadQueueReady" xml:space="preserve"><value>{0} upload(s) are waiting. Automatic upload is active.</value></data>
+  <data name="UploadQueueIdle" xml:space="preserve"><value>Upload queue is empty. New local recordings will be uploaded automatically.</value></data>
+  <data name="UploadQueueIdleWithRefresh" xml:space="preserve"><value>Upload queue is empty. Last folder scan: {0:MM/dd/yyyy HH:mm:ss}.</value></data>
   <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>The local recording is too large to upload.</value></data>
   <data name="UploadSuccess" xml:space="preserve"><value>Recording was uploaded.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload failed.</value></data>
