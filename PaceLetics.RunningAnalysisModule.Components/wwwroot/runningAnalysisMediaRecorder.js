@@ -6,6 +6,7 @@ const settingsStoreName = "settings";
 const recordingDirectoryKey = "recordingDirectory";
 const metadataFileSuffix = ".paceletics.json";
 const recordingArtifactType = "paceletics-running-analysis-recording";
+const missingAthleteUserIdMessage = "The local recording metadata does not contain an athlete user id.";
 
 export async function startRecording(videoElement, metadata = {}) {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -467,7 +468,6 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
     const metadata = JSON.parse(await metadataFile.text());
 
     if (!metadata.localId
-      || !metadata.athleteUserId
       || !metadata.participantId
       || !metadata.fileName) {
       return null;
@@ -483,6 +483,7 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
     }
 
     const contentType = detectedContentType || (fileExtension === "mp4" ? "video/mp4" : "video/webm");
+    const isMissingAthleteUserId = !metadata.athleteUserId;
 
     return {
       localId: metadata.localId,
@@ -504,10 +505,10 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
       folderName: directoryHandle.name || metadata.folderName || "",
       metadataFileName,
       fileHandle,
-      uploadStatus: metadata.uploadStatus || "queued",
+      uploadStatus: isMissingAthleteUserId ? "failed" : metadata.uploadStatus || "queued",
       uploadAttempts: metadata.uploadAttempts || 0,
       lastUploadAt: metadata.lastUploadAt || null,
-      lastError: metadata.lastError || "",
+      lastError: isMissingAthleteUserId ? missingAthleteUserIdMessage : metadata.lastError || "",
       driveFileUrl: metadata.driveFileUrl || ""
     };
   } catch {

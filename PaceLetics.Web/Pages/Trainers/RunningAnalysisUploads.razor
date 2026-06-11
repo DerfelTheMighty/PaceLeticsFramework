@@ -91,6 +91,13 @@
                     </MudChip>
                 </MudStack>
 
+                @if (!string.IsNullOrWhiteSpace(_lastUploadErrorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">
+                        @GetLastUploadErrorText()
+                    </MudAlert>
+                }
+
                 @if (_pendingRecordings.Count == 0)
                 {
                     <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
@@ -142,7 +149,7 @@
                                     @if (!string.IsNullOrWhiteSpace(recording.LastError))
                                     {
                                         <MudText Typo="Typo.caption" Color="Color.Error" Style="word-break:break-word;">
-                                            @($"{L["QueueLastError"]}: {recording.LastError}")
+                                            @($"{L["QueueLastError"]}: {GetRecordingLastError(recording)}")
                                         </MudText>
                                     }
                                 </MudStack>
@@ -183,6 +190,8 @@
     private BrowserRecordingStorageStatus? _recordingStorageStatus;
     private string? _errorMessage;
     private string? _queueScanErrorMessage;
+    private string? _lastUploadErrorFileName;
+    private string? _lastUploadErrorMessage;
     private DateTime? _lastQueueRefreshAt;
     private bool _isOnline = true;
     private bool _isUploadingQueuedRecordings;
@@ -311,6 +320,8 @@
         }
 
         _isUploadingQueuedRecordings = true;
+        _lastUploadErrorFileName = null;
+        _lastUploadErrorMessage = null;
         var uploadedCount = 0;
         var failedCount = 0;
 
@@ -331,9 +342,13 @@
             {
                 var uploaded = await UploadQueuedRecordingAsync(pendingRecording, showSnackbar: false);
                 if (uploaded)
+                {
                     uploadedCount++;
+                }
                 else
+                {
                     failedCount++;
+                }
             }
 
             await LoadPendingRecordingsAsync();
@@ -342,7 +357,7 @@
                 Snackbar.Add(string.Format(L["UploadPendingSuccess"], uploadedCount), Severity.Success);
 
             if (showSummary && failedCount > 0)
-                Snackbar.Add(string.Format(L["UploadPendingFailed"], failedCount), Severity.Warning);
+                Snackbar.Add(GetUploadPendingFailedText(failedCount), Severity.Warning);
         }
         finally
         {
@@ -426,7 +441,9 @@
             || string.IsNullOrWhiteSpace(pendingRecording.AthleteUserId))
         {
             if (showSnackbar)
-                Snackbar.Add(L["UploadMetadataIncomplete"], Severity.Warning);
+                Snackbar.Add(GetUploadSingleFailedText(pendingRecording, L["UploadMetadataIncomplete"].ToString()), Severity.Warning);
+
+            SetLastUploadError(pendingRecording, L["UploadMetadataIncomplete"].ToString());
 
             return false;
         }
@@ -475,6 +492,7 @@
                     pendingRecording.LocalId,
                     driveFile.Url ?? string.Empty);
                 await LoadPendingRecordingsAsync();
+                ClearLastUploadError();
 
                 if (showSnackbar)
                     Snackbar.Add(string.Format(L["UploadSingleSuccess"], pendingRecording.FileName), Severity.Success);
@@ -489,15 +507,17 @@
             if (showSnackbar)
                 Snackbar.Add(errorMessage, Severity.Warning);
 
+            SetLastUploadError(pendingRecording, errorMessage);
             return false;
         }
         catch (Exception ex)
         {
+            SetLastUploadError(pendingRecording, ex.Message);
             await module.InvokeVoidAsync("markSavedRecordingUploadFailed", pendingRecording.LocalId, ex.Message);
             await LoadPendingRecordingsAsync();
 
             if (showSnackbar)
-                Snackbar.Add(ex.Message, Severity.Error);
+                Snackbar.Add(GetUploadSingleFailedText(pendingRecording, ex.Message), Severity.Error);
 
             return false;
         }
@@ -574,6 +594,55 @@
             return recording.AnalysisEventId.Trim();
 
         return "Laufanalyse";
+    }
+
+    private string GetRecordingLastError(RunningAnalysisRecordedVideo recording)
+    {
+        if (string.IsNullOrWhiteSpace(recording.AthleteUserId))
+            return L["UploadMetadataIncomplete"].ToString();
+
+        return recording.LastError ?? string.Empty;
+    }
+
+    private void SetLastUploadError(RunningAnalysisRecordedVideo recording, string errorMessage)
+    {
+        _lastUploadErrorFileName = string.IsNullOrWhiteSpace(recording.FileName)
+            ? null
+            : recording.FileName;
+        _lastUploadErrorMessage = string.IsNullOrWhiteSpace(errorMessage)
+            ? L["UploadFailed"].ToString()
+            : errorMessage;
+    }
+
+    private void ClearLastUploadError()
+    {
+        _lastUploadErrorFileName = null;
+        _lastUploadErrorMessage = null;
+    }
+
+    private string GetLastUploadErrorText()
+    {
+        if (string.IsNullOrWhiteSpace(_lastUploadErrorMessage))
+            return string.Empty;
+
+        return string.IsNullOrWhiteSpace(_lastUploadErrorFileName)
+            ? string.Format(L["LastUploadError"], _lastUploadErrorMessage)
+            : string.Format(L["LastUploadErrorWithFile"], _lastUploadErrorFileName, _lastUploadErrorMessage);
+    }
+
+    private string GetUploadPendingFailedText(int failedCount)
+    {
+        return string.IsNullOrWhiteSpace(_lastUploadErrorMessage)
+            ? string.Format(L["UploadPendingFailed"], failedCount)
+            : string.Format(L["UploadPendingFailedWithError"], failedCount, _lastUploadErrorMessage);
+    }
+
+    private string GetUploadSingleFailedText(RunningAnalysisRecordedVideo recording, string errorMessage)
+    {
+        return string.Format(
+            L["UploadSingleFailedWithError"],
+            string.IsNullOrWhiteSpace(recording.FileName) ? L["Recording"].ToString() : recording.FileName,
+            errorMessage);
     }
 
     private string GetLocalRecordingsText()
