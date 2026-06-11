@@ -301,7 +301,11 @@ Die Konfiguration liegt im Abschnitt:
       "ApplicationName": "PaceLetics",
       "RootFolderId": "",
       "RootFolderName": "paceletics_user_data",
-      "DelegatedUserEmail": ""
+      "DelegatedUserEmail": "",
+      "OAuthClientId": "",
+      "OAuthClientSecret": "",
+      "OAuthRefreshToken": "",
+      "OAuthUserEmail": ""
     }
   }
 }
@@ -328,6 +332,17 @@ Drive-Speicherquote:
 dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:DelegatedUserEmail" "drive-owner@example.com" --project PaceLetics.Web
 ```
 
+Ohne Google Workspace kann der Provider stattdessen mit einem normalen
+Google-OAuth-Refresh-Token arbeiten. Dann gehoeren hochgeladene Dateien dem
+Google-Konto, das den OAuth-Zugriff erlaubt hat:
+
+```powershell
+dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:OAuthClientId" "<oauth-client-id>" --project PaceLetics.Web
+dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:OAuthClientSecret" "<oauth-client-secret>" --project PaceLetics.Web
+dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:OAuthRefreshToken" "<oauth-refresh-token>" --project PaceLetics.Web
+dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:OAuthUserEmail" "drive-owner@gmail.com" --project PaceLetics.Web
+```
+
 Alternativ kann der komplette JSON-Inhalt gesetzt werden:
 
 ```powershell
@@ -349,6 +364,15 @@ oder:
 
 ```powershell
 $env:PaceLeticsUserData__GoogleDrive__ServiceAccountJson = "<service-account-json>"
+```
+
+oder fuer OAuth mit einem echten Google-Drive-Konto:
+
+```powershell
+$env:PaceLeticsUserData__GoogleDrive__OAuthClientId = "<oauth-client-id>"
+$env:PaceLeticsUserData__GoogleDrive__OAuthClientSecret = "<oauth-client-secret>"
+$env:PaceLeticsUserData__GoogleDrive__OAuthRefreshToken = "<oauth-refresh-token>"
+$env:PaceLeticsUserData__GoogleDrive__OAuthUserEmail = "drive-owner@gmail.com"
 ```
 
 ### Lokale Datei fuer Entwicklung
@@ -374,6 +398,26 @@ optional geladen.
    Workspace-User teilen.
 8. Die Folder-ID des zentralen Ordners als
    `PaceLeticsUserData:GoogleDrive:RootFolderId` konfigurieren.
+
+### Google-Drive-OAuth ohne Workspace
+
+Wenn kein Google Workspace vorhanden ist, wird kein Service Account fuer
+Uploads in normale My-Drive-Ordner verwendet. Stattdessen wird ein OAuth-Client
+in Google Cloud erstellt und einmalig mit dem echten Google-Konto autorisiert,
+das den PaceLetics-Ordner besitzt.
+
+1. Google Cloud Projekt mit Drive API vorbereiten.
+2. OAuth Consent Screen konfigurieren.
+3. OAuth Client vom Typ Web Application oder Desktop App erstellen.
+4. Das Google-Konto autorisieren und einen Refresh Token mit Scope
+   `https://www.googleapis.com/auth/drive` erzeugen.
+5. `OAuthClientId`, `OAuthClientSecret`, `OAuthRefreshToken` und optional
+   `OAuthUserEmail` konfigurieren.
+6. Die Folder-ID des PaceLetics-Ordners aus diesem Google Drive als
+   `PaceLeticsUserData:GoogleDrive:RootFolderId` setzen.
+
+Sind vollstaendige OAuth-Werte gesetzt, verwendet der Provider automatisch
+OAuth statt Service-Account-Zugangsdaten.
 
 Ohne `RootFolderId` versucht der Adapter, einen Root-Ordner ueber
 `RootFolderName` zu finden oder anzulegen. Fuer produktive Nutzung ist eine

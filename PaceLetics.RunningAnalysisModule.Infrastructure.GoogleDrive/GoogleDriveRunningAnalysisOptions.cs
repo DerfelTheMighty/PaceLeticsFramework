@@ -12,4 +12,8 @@ public sealed class GoogleDriveRunningAnalysisOptions
     public string ServiceAccountJsonPath { get; set; } = string.Empty;
     public string ServiceAccountJson { get; set; } = string.Empty;
     public string DelegatedUserEmail { get; set; } = string.Empty;
+    public string OAuthClientId { get; set; } = string.Empty;
+    public string OAuthClientSecret { get; set; } = string.Empty;
+    public string OAuthRefreshToken { get; set; } = string.Empty;
+    public string OAuthUserEmail { get; set; } = string.Empty;
 }

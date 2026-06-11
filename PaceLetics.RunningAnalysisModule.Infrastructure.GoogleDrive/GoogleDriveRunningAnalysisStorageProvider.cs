@@ -1,6 +1,9 @@
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
+using Google.Apis.Http;
 using Google.Apis.Services;
 using Google.Apis.Upload;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
@@ -318,8 +321,54 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
 
     private DriveService CreateDriveService()
     {
-        GoogleCredential credential;
+        var credential = CreateCredential();
 
+        return new DriveService(new BaseClientService.Initializer
+        {
+            HttpClientInitializer = credential,
+            ApplicationName = string.IsNullOrWhiteSpace(_options.ApplicationName)
+                ? "PaceLetics"
+                : _options.ApplicationName
+        });
+    }
+
+    private IConfigurableHttpClientInitializer CreateCredential()
+    {
+        if (HasOAuthCredentials())
+            return CreateOAuthCredential();
+
+        if (HasPartialOAuthCredentials())
+            throw new InvalidOperationException("Google Drive OAuth credentials are incomplete. Configure OAuthClientId, OAuthClientSecret and OAuthRefreshToken.");
+
+        return CreateServiceAccountCredential();
+    }
+
+    private UserCredential CreateOAuthCredential()
+    {
+        var clientSecrets = new ClientSecrets
+        {
+            ClientId = _options.OAuthClientId.Trim(),
+            ClientSecret = _options.OAuthClientSecret.Trim()
+        };
+        var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
+        {
+            ClientSecrets = clientSecrets,
+            Scopes = new[] { DriveService.Scope.Drive }
+        });
+        var token = new TokenResponse
+        {
+            RefreshToken = _options.OAuthRefreshToken.Trim()
+        };
+        var userId = string.IsNullOrWhiteSpace(_options.OAuthUserEmail)
+            ? "paceletics-drive-oauth-user"
+            : _options.OAuthUserEmail.Trim();
+
+        return new UserCredential(flow, userId, token);
+    }
+
+    private GoogleCredential CreateServiceAccountCredential()
+    {
+        GoogleCredential credential;
         var serviceAccountJsonPath = _options.ServiceAccountJsonPath?.Trim();
         var serviceAccountJson = _options.ServiceAccountJson?.Trim();
 
@@ -362,13 +411,22 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             }
         }
 
-        return new DriveService(new BaseClientService.Initializer
-        {
-            HttpClientInitializer = credential,
-            ApplicationName = string.IsNullOrWhiteSpace(_options.ApplicationName)
-                ? "PaceLetics"
-                : _options.ApplicationName
-        });
+        return credential;
+    }
+
+    private bool HasOAuthCredentials()
+    {
+        return !string.IsNullOrWhiteSpace(_options.OAuthClientId)
+            && !string.IsNullOrWhiteSpace(_options.OAuthClientSecret)
+            && !string.IsNullOrWhiteSpace(_options.OAuthRefreshToken);
+    }
+
+    private bool HasPartialOAuthCredentials()
+    {
+        return !string.IsNullOrWhiteSpace(_options.OAuthClientId)
+            || !string.IsNullOrWhiteSpace(_options.OAuthClientSecret)
+            || !string.IsNullOrWhiteSpace(_options.OAuthRefreshToken)
+            || !string.IsNullOrWhiteSpace(_options.OAuthUserEmail);
     }
 
     private static string NormalizeServiceAccountJson(string value)

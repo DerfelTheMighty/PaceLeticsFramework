@@ -110,7 +110,13 @@
 
     private bool HasDriveCredentials =>
         !string.IsNullOrWhiteSpace(DriveOptions.Value.ServiceAccountJsonPath)
-        || !string.IsNullOrWhiteSpace(DriveOptions.Value.ServiceAccountJson);
+        || !string.IsNullOrWhiteSpace(DriveOptions.Value.ServiceAccountJson)
+        || HasGoogleDriveOAuthCredentials;
+
+    private bool HasGoogleDriveOAuthCredentials =>
+        !string.IsNullOrWhiteSpace(DriveOptions.Value.OAuthClientId)
+        && !string.IsNullOrWhiteSpace(DriveOptions.Value.OAuthClientSecret)
+        && !string.IsNullOrWhiteSpace(DriveOptions.Value.OAuthRefreshToken);
 
     private bool HasCentralDriveFolder =>
         !string.IsNullOrWhiteSpace(DriveOptions.Value.RootFolderId);
