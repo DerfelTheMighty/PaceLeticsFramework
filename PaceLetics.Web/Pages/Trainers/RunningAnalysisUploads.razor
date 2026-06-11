@@ -512,12 +512,13 @@
         }
         catch (Exception ex)
         {
-            SetLastUploadError(pendingRecording, ex.Message);
-            await module.InvokeVoidAsync("markSavedRecordingUploadFailed", pendingRecording.LocalId, ex.Message);
+            var errorMessage = GetFriendlyUploadErrorMessage(ex.Message);
+            SetLastUploadError(pendingRecording, errorMessage);
+            await module.InvokeVoidAsync("markSavedRecordingUploadFailed", pendingRecording.LocalId, errorMessage);
             await LoadPendingRecordingsAsync();
 
             if (showSnackbar)
-                Snackbar.Add(GetUploadSingleFailedText(pendingRecording, ex.Message), Severity.Error);
+                Snackbar.Add(GetUploadSingleFailedText(pendingRecording, errorMessage), Severity.Error);
 
             return false;
         }
@@ -601,7 +602,7 @@
         if (string.IsNullOrWhiteSpace(recording.AthleteUserId))
             return L["UploadMetadataIncomplete"].ToString();
 
-        return recording.LastError ?? string.Empty;
+        return GetFriendlyUploadErrorMessage(recording.LastError ?? string.Empty);
     }
 
     private void SetLastUploadError(RunningAnalysisRecordedVideo recording, string errorMessage)
@@ -643,6 +644,21 @@
             L["UploadSingleFailedWithError"],
             string.IsNullOrWhiteSpace(recording.FileName) ? L["Recording"].ToString() : recording.FileName,
             errorMessage);
+    }
+
+    private string GetFriendlyUploadErrorMessage(string errorMessage)
+    {
+        if (ContainsServiceAccountQuotaError(errorMessage))
+            return L["DriveServiceAccountQuotaError"].ToString();
+
+        return errorMessage;
+    }
+
+    private static bool ContainsServiceAccountQuotaError(string errorMessage)
+    {
+        return errorMessage.Contains("Service Accounts do not have storage quota", StringComparison.OrdinalIgnoreCase)
+            || errorMessage.Contains("service account has no storage quota", StringComparison.OrdinalIgnoreCase)
+            || errorMessage.Contains("service-account storage quota", StringComparison.OrdinalIgnoreCase);
     }
 
     private string GetLocalRecordingsText()

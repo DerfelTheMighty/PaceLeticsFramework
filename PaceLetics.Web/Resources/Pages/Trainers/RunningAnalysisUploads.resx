@@ -58,4 +58,5 @@
   <data name="UploadMetadataIncomplete" xml:space="preserve"><value>The local recording metadata does not contain an athlete user id.</value></data>
   <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>The local recording is too large to upload.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload failed.</value></data>
+  <data name="DriveServiceAccountQuotaError" xml:space="preserve"><value>Google Drive rejected the upload because the service account has no storage quota. Use a shared drive as the root folder or set PaceLeticsUserData:GoogleDrive:DelegatedUserEmail with domain-wide delegation.</value></data>
 </root>

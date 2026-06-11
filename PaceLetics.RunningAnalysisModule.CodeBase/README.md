@@ -300,7 +300,8 @@ Die Konfiguration liegt im Abschnitt:
     "GoogleDrive": {
       "ApplicationName": "PaceLetics",
       "RootFolderId": "",
-      "RootFolderName": "paceletics_user_data"
+      "RootFolderName": "paceletics_user_data",
+      "DelegatedUserEmail": ""
     }
   }
 }
@@ -319,6 +320,14 @@ dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:RootFolderId" "<central-
 dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:ServiceAccountJsonPath" "C:\secure\paceletics-google-drive-service-account.json" --project PaceLetics.Web
 ```
 
+Wenn der Root-Ordner in einem normalen Google-My-Drive liegt, benoetigt der
+Service Account Domain-wide Delegation auf einen echten Workspace-User mit
+Drive-Speicherquote:
+
+```powershell
+dotnet user-secrets set "PaceLeticsUserData:GoogleDrive:DelegatedUserEmail" "drive-owner@example.com" --project PaceLetics.Web
+```
+
 Alternativ kann der komplette JSON-Inhalt gesetzt werden:
 
 ```powershell
@@ -333,6 +342,7 @@ Dateipfad meist lesbarer.
 ```powershell
 $env:PaceLeticsUserData__GoogleDrive__RootFolderId = "<central-folder-id>"
 $env:PaceLeticsUserData__GoogleDrive__ServiceAccountJsonPath = "C:\secure\paceletics-google-drive-service-account.json"
+$env:PaceLeticsUserData__GoogleDrive__DelegatedUserEmail = "drive-owner@example.com"
 ```
 
 oder:
@@ -357,8 +367,12 @@ optional geladen.
 3. Service-Account-Key als JSON erzeugen.
 4. JSON ausserhalb des Repositories speichern.
 5. Zentralen Drive-Ordner erstellen.
-6. Zentralen Drive-Ordner mit der Service-Account-E-Mail teilen.
-7. Die Folder-ID des zentralen Ordners als
+6. Fuer produktive Uploads entweder einen Shared Drive verwenden oder
+   Domain-wide Delegation fuer den Service Account aktivieren und
+   `DelegatedUserEmail` auf einen Workspace-User mit Drive-Speicherquote setzen.
+7. Zentralen Drive-Ordner mit der Service-Account-E-Mail oder dem delegierten
+   Workspace-User teilen.
+8. Die Folder-ID des zentralen Ordners als
    `PaceLeticsUserData:GoogleDrive:RootFolderId` konfigurieren.
 
 Ohne `RootFolderId` versucht der Adapter, einen Root-Ordner ueber

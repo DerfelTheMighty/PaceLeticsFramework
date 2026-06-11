@@ -16,6 +16,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
     IUserDriveFolderStorageProvider
 {
     private const string FolderMimeType = "application/vnd.google-apps.folder";
+    private const string ServiceAccountQuotaFailureMessage = "Google Drive upload failed because the service account has no storage quota. Configure PaceLeticsUserData:GoogleDrive:DelegatedUserEmail for domain-wide delegation or use a shared-drive RootFolderId.";
     private readonly GoogleDriveRunningAnalysisOptions _options;
 
     public GoogleDriveRunningAnalysisStorageProvider(GoogleDriveRunningAnalysisOptions options)
@@ -127,7 +128,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
 
         var result = await upload.UploadAsync(cancellationToken);
         if (result.Status != UploadStatus.Completed || upload.ResponseBody is null)
-            throw result.Exception ?? new InvalidOperationException("Google Drive upload failed.");
+            throw CreateDriveUploadException(result);
 
         var uploadedFile = await EnsureFileIsInFolderAsync(
             drive,
@@ -177,7 +178,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
 
         var result = await upload.UploadAsync(cancellationToken);
         if (result.Status != UploadStatus.Completed || upload.ResponseBody is null)
-            throw result.Exception ?? new InvalidOperationException("Google Drive upload failed.");
+            throw CreateDriveUploadException(result);
 
         var uploadedFile = await EnsureFileIsInFolderAsync(
             drive,
@@ -346,6 +347,21 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         if (credential.IsCreateScopedRequired)
             credential = credential.CreateScoped(DriveService.Scope.Drive);
 
+        var delegatedUserEmail = _options.DelegatedUserEmail?.Trim();
+        if (!string.IsNullOrWhiteSpace(delegatedUserEmail))
+        {
+            try
+            {
+                credential = credential.CreateWithUser(delegatedUserEmail);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException(
+                    "Google Drive delegated user can only be used with service-account credentials.",
+                    ex);
+            }
+        }
+
         return new DriveService(new BaseClientService.Initializer
         {
             HttpClientInitializer = credential,
@@ -460,7 +476,16 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var create = drive.Files.Create(metadata);
         create.Fields = "id,webViewLink";
         create.SupportsAllDrives = true;
-        var created = await create.ExecuteAsync(cancellationToken);
+        Google.Apis.Drive.v3.Data.File created;
+        try
+        {
+            created = await create.ExecuteAsync(cancellationToken);
+        }
+        catch (Exception ex) when (IsServiceAccountQuotaException(ex))
+        {
+            throw CreateServiceAccountQuotaException(ex);
+        }
+
         await EnsureAnyoneWithLinkCanReadAsync(drive, created.Id, cancellationToken);
 
         return new DriveFolderReference(created.Id, created.WebViewLink);
@@ -578,5 +603,25 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
     {
         return value.Replace("\\", "\\\\", StringComparison.Ordinal)
             .Replace("'", "\\'", StringComparison.Ordinal);
+    }
+
+    private static Exception CreateDriveUploadException(IUploadProgress result)
+    {
+        if (IsServiceAccountQuotaException(result.Exception))
+            return CreateServiceAccountQuotaException(result.Exception);
+
+        return result.Exception ?? new InvalidOperationException("Google Drive upload failed.");
+    }
+
+    private static InvalidOperationException CreateServiceAccountQuotaException(Exception? innerException)
+    {
+        return new InvalidOperationException(ServiceAccountQuotaFailureMessage, innerException);
+    }
+
+    private static bool IsServiceAccountQuotaException(Exception? exception)
+    {
+        var message = exception?.Message ?? string.Empty;
+        return message.Contains("Service Accounts do not have storage quota", StringComparison.OrdinalIgnoreCase)
+            || message.Contains("service account has no storage quota", StringComparison.OrdinalIgnoreCase);
     }
 }
