@@ -13,6 +13,9 @@
   <data name="AnalysesSubtitle" xml:space="preserve"><value>Deine freigegebenen Laufanalyse-Ordner</value></data>
   <data name="DriveRequiredForAnalyses" xml:space="preserve"><value>Verlinke zuerst deinen Drive-Ordner, damit hier Analysen angezeigt werden koennen.</value></data>
   <data name="NoAnalyses" xml:space="preserve"><value>Noch keine Analysen verfuegbar.</value></data>
+  <data name="RemoveAnalysis" xml:space="preserve"><value>Entfernen</value></data>
+  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>"{0}" aus deiner Analyse-Uebersicht entfernen? Die Drive-Dateien werden nicht geloescht.</value></data>
+  <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Analyse wurde aus deiner Uebersicht entfernt.</value></data>
   <data name="DriveTitle" xml:space="preserve"><value>Drive-Ordner</value></data>
   <data name="NoFolderText" xml:space="preserve"><value>Noch kein Drive-Ordner verlinkt.</value></data>
   <data name="FolderReadyText" xml:space="preserve"><value>Dein Drive-Ordner ist verlinkt und bereit.</value></data>
