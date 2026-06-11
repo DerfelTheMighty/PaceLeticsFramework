@@ -91,6 +91,32 @@ export async function openSavedRecording(localId) {
   return recording.blob;
 }
 
+export async function markSavedRecordingUploadStarted(localId) {
+  return await updateSavedRecording(localId, recording => {
+    recording.uploadStatus = "uploading";
+    recording.uploadAttempts = (recording.uploadAttempts || 0) + 1;
+    recording.lastUploadAt = new Date().toISOString();
+    recording.lastError = "";
+  });
+}
+
+export async function markSavedRecordingUploadSucceeded(localId, driveFileUrl) {
+  return await updateSavedRecording(localId, recording => {
+    recording.uploadStatus = "uploaded";
+    recording.lastUploadAt = new Date().toISOString();
+    recording.lastError = "";
+    recording.driveFileUrl = driveFileUrl || "";
+  });
+}
+
+export async function markSavedRecordingUploadFailed(localId, errorMessage) {
+  return await updateSavedRecording(localId, recording => {
+    recording.uploadStatus = "failed";
+    recording.lastUploadAt = new Date().toISOString();
+    recording.lastError = errorMessage || "Upload failed.";
+  });
+}
+
 export async function deleteSavedRecording(localId) {
   const database = await openDatabase();
   const transaction = database.transaction(recordingStoreName, "readwrite");
@@ -164,6 +190,11 @@ async function saveRecording(blob, contentType, metadata) {
     fileExtension,
     size: blob.size,
     recordedAt,
+    uploadStatus: "queued",
+    uploadAttempts: 0,
+    lastUploadAt: null,
+    lastError: "",
+    driveFileUrl: "",
     blob
   };
 
@@ -183,6 +214,23 @@ async function getSavedRecording(localId) {
   const recording = await requestToPromise(store.get(localId));
   await transactionToPromise(transaction);
   return recording;
+}
+
+async function updateSavedRecording(localId, updater) {
+  const database = await openDatabase();
+  const transaction = database.transaction(recordingStoreName, "readwrite");
+  const store = transaction.objectStore(recordingStoreName);
+  const recording = await requestToPromise(store.get(localId));
+
+  if (!recording) {
+    throw new Error("The saved recording was not found on this device.");
+  }
+
+  updater(recording);
+  store.put(recording);
+  await transactionToPromise(transaction);
+
+  return toRecordingPayload(recording);
 }
 
 function openDatabase() {
@@ -226,11 +274,18 @@ function toRecordingPayload(recording) {
     localId: recording.localId,
     analysisEventId: recording.analysisEventId,
     participantId: recording.participantId,
+    participantName: recording.participantName || "",
     fileName: recording.fileName,
     contentType: recording.contentType,
     fileExtension: recording.fileExtension,
     size: recording.size,
-    recordedAt: recording.recordedAt
+    recordedAt: recording.recordedAt,
+    storageLocation: `Browser IndexedDB: ${databaseName}/${recordingStoreName}/${recording.localId}`,
+    uploadStatus: recording.uploadStatus || "queued",
+    uploadAttempts: recording.uploadAttempts || 0,
+    lastUploadAt: recording.lastUploadAt || null,
+    lastError: recording.lastError || "",
+    driveFileUrl: recording.driveFileUrl || ""
   };
 }
 

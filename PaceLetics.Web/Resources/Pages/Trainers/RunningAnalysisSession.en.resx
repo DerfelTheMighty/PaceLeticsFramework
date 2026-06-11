@@ -33,10 +33,27 @@
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Local recordings</value></data>
   <data name="LocalRecordingsText" xml:space="preserve"><value>{0} recording(s) are saved on this device.</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Upload recordings</value></data>
+  <data name="RefreshQueue" xml:space="preserve"><value>Refresh</value></data>
+  <data name="UploadSingle" xml:space="preserve"><value>Start upload</value></data>
+  <data name="RetryUpload" xml:space="preserve"><value>Upload again</value></data>
+  <data name="OpenUploadedRecording" xml:space="preserve"><value>Open file</value></data>
+  <data name="QueueRecordedAt" xml:space="preserve"><value>Recorded</value></data>
+  <data name="QueueSize" xml:space="preserve"><value>Size</value></data>
+  <data name="QueueStorageLocation" xml:space="preserve"><value>Local storage location</value></data>
+  <data name="QueueAttempts" xml:space="preserve"><value>Upload attempts</value></data>
+  <data name="QueueLastUpload" xml:space="preserve"><value>Last upload attempt</value></data>
+  <data name="QueueLastError" xml:space="preserve"><value>Last error</value></data>
+  <data name="UploadStatus_Queued" xml:space="preserve"><value>Queued</value></data>
+  <data name="UploadStatus_Uploading" xml:space="preserve"><value>Uploading</value></data>
+  <data name="UploadStatus_Uploaded" xml:space="preserve"><value>Uploaded</value></data>
+  <data name="UploadStatus_Failed" xml:space="preserve"><value>Failed</value></data>
   <data name="LocalSaveSuccess" xml:space="preserve"><value>{0} was saved on this device.</value></data>
   <data name="UploadPendingOffline" xml:space="preserve"><value>Uploads are only available while online.</value></data>
   <data name="UploadPendingSuccess" xml:space="preserve"><value>{0} recording(s) were uploaded.</value></data>
   <data name="UploadPendingFailed" xml:space="preserve"><value>{0} recording(s) could not be uploaded.</value></data>
+  <data name="UploadSingleSuccess" xml:space="preserve"><value>{0} was uploaded.</value></data>
+  <data name="NoPendingUploads" xml:space="preserve"><value>No pending uploads.</value></data>
+  <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>The local recording is too large to upload.</value></data>
   <data name="UploadSuccess" xml:space="preserve"><value>Recording was uploaded.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload failed.</value></data>
 </root>
