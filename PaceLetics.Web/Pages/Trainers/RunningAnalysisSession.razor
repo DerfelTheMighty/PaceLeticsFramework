@@ -82,14 +82,40 @@
                 </MudAlert>
             }
 
+            @if (_pendingRecordings.Count > 0)
+            {
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.h6">@L["LocalRecordingsTitle"]</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                @string.Format(L["LocalRecordingsText"], _pendingRecordings.Count)
+                            </MudText>
+                        </MudStack>
+
+                        <MudButton Color="Color.Primary"
+                                   Variant="Variant.Filled"
+                                   StartIcon="@Icons.Material.Filled.CloudUpload"
+                                   Disabled="@(!_isOnline || _isUploadingQueuedRecordings)"
+                                   OnClick="UploadPendingRecordingsAsync">
+                            @L["UploadPendingRecordings"]
+                        </MudButton>
+                    </MudStack>
+                </MudPaper>
+            }
+
             @if (_isCaptureMode && CurrentParticipant is not null)
             {
-                <RunningAnalysisCapturePanel ParticipantName="@CurrentParticipant.DisplayName"
-                                             IsOnline="@(_isOnline && _analysisEvent.Status != RunningAnalysisEventStatus.Completed)"
+                <RunningAnalysisCapturePanel AnalysisEventId="@_analysisEvent.Id"
+                                             ParticipantId="@CurrentParticipant.ParticipantId"
+                                             ParticipantName="@CurrentParticipant.DisplayName"
+                                             FileNamePrefix="@BuildFileNamePrefix(CurrentParticipant)"
+                                             IsOnline="_isOnline"
+                                             CanRecord="@(_analysisEvent.Status != RunningAnalysisEventStatus.Completed)"
                                              IsRecording="_isRecording"
                                              OnStartRecording="EnsureAnalysisStartedAsync"
                                              OnStopRecording="OnStopRecordingAsync"
-                                             OnRecorded="UploadRecordingAsync"
+                                             OnRecorded="OnRecordingSavedAsync"
                                              IsRecordingChanged="OnRecordingChangedAsync"
                                              OnRetake="RetakeAsync"
                                              OnNextParticipant="NextParticipantAsync"
@@ -112,6 +138,8 @@
 </MudContainer>
 
 @code {
+    private const long MaxQueuedRecordingBytes = 1024L * 1024L * 1024L;
+
     [Parameter] public string? CourseId { get; set; }
     [Parameter] public string? EventId { get; set; }
 
@@ -121,10 +149,12 @@
     private CourseEventDocument? _courseEvent;
     private RunningAnalysisEvent? _analysisEvent;
     private IReadOnlyList<RunningAnalysisRosterItem> _roster = Array.Empty<RunningAnalysisRosterItem>();
+    private IReadOnlyList<RunningAnalysisRecordedVideo> _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
     private string? _selectedParticipantId;
     private bool _isCaptureMode;
     private bool _isRecording;
     private bool _isOnline = true;
+    private bool _isUploadingQueuedRecordings;
     private IJSObjectReference? _recorderModule;
 
     private RunningAnalysisRosterItem? CurrentParticipant =>
@@ -172,11 +202,13 @@
                         _courseEvent.EndsAt));
 
                 await LoadRosterAsync();
+                await LoadPendingRecordingsAsync();
             }
             catch (Exception ex)
             {
                 _errorMessage = ex.Message;
                 _roster = Array.Empty<RunningAnalysisRosterItem>();
+                _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
             }
         });
     }
@@ -193,6 +225,24 @@
         {
             _selectedParticipantId = null;
             _isCaptureMode = false;
+        }
+    }
+
+    private async Task LoadPendingRecordingsAsync()
+    {
+        if (_analysisEvent is null)
+            return;
+
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            _pendingRecordings = await module.InvokeAsync<RunningAnalysisRecordedVideo[]>(
+                "listSavedRecordings",
+                _analysisEvent.Id);
+        }
+        catch
+        {
+            _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
         }
     }
 
@@ -310,37 +360,84 @@
         await OpenCaptureAsync(next.ParticipantId);
     }
 
-    private async Task UploadRecordingAsync(RunningAnalysisRecordedVideo video)
+    private async Task OnRecordingSavedAsync(RunningAnalysisRecordedVideo video)
     {
-        if (_analysisEvent is null || CurrentParticipant is null)
+        await LoadPendingRecordingsAsync();
+        Snackbar.Add(string.Format(L["LocalSaveSuccess"], video.FileName), Severity.Success);
+    }
+
+    private async Task UploadPendingRecordingsAsync()
+    {
+        if (_analysisEvent is null || _pendingRecordings.Count == 0)
             return;
 
         await RefreshOnlineStateAsync();
+        if (!_isOnline)
+        {
+            Snackbar.Add(L["UploadPendingOffline"], Severity.Warning);
+            return;
+        }
+
+        _isUploadingQueuedRecordings = true;
+        var uploadedCount = 0;
+        var failedCount = 0;
 
         try
         {
-            var recording = await RunningAnalysisService.UploadRecordingAsync(
-                _analysisEvent.Id,
-                CurrentParticipant.ParticipantId,
-                BuildFileName(CurrentParticipant, video.FileExtension),
-                video.ContentType,
-                video.Data,
-                _isOnline);
+            var module = await GetRecorderModuleAsync();
 
+            foreach (var pendingRecording in _pendingRecordings.ToList())
+            {
+                try
+                {
+                    if (pendingRecording.Size > MaxQueuedRecordingBytes)
+                    {
+                        failedCount++;
+                        continue;
+                    }
+
+                    await using var streamReference = await module.InvokeAsync<IJSStreamReference>(
+                        "openSavedRecording",
+                        pendingRecording.LocalId);
+                    await using var content = await streamReference.OpenReadStreamAsync(MaxQueuedRecordingBytes);
+                    var recording = await RunningAnalysisService.UploadRecordingAsync(
+                        pendingRecording.AnalysisEventId,
+                        pendingRecording.ParticipantId,
+                        pendingRecording.FileName,
+                        pendingRecording.ContentType,
+                        content,
+                        isOnline: true);
+
+                    if (recording.UploadStatus == RunningAnalysisUploadStatus.Uploaded)
+                    {
+                        await module.InvokeVoidAsync("deleteSavedRecording", pendingRecording.LocalId);
+                        uploadedCount++;
+                    }
+                    else
+                    {
+                        failedCount++;
+                        Snackbar.Add(recording.ErrorMessage ?? L["UploadFailed"], Severity.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    failedCount++;
+                    Snackbar.Add(ex.Message, Severity.Error);
+                }
+            }
+
+            await LoadPendingRecordingsAsync();
             await LoadRosterAsync();
 
-            if (recording.UploadStatus == RunningAnalysisUploadStatus.Uploaded)
-            {
-                Snackbar.Add(L["UploadSuccess"], Severity.Success);
-            }
-            else
-            {
-                Snackbar.Add(recording.ErrorMessage ?? L["UploadFailed"], Severity.Warning);
-            }
+            if (uploadedCount > 0)
+                Snackbar.Add(string.Format(L["UploadPendingSuccess"], uploadedCount), Severity.Success);
+
+            if (failedCount > 0)
+                Snackbar.Add(string.Format(L["UploadPendingFailed"], failedCount), Severity.Warning);
         }
-        catch (Exception ex)
+        finally
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            _isUploadingQueuedRecordings = false;
         }
     }
 
@@ -348,15 +445,22 @@
     {
         try
         {
-            _recorderModule ??= await JS.InvokeAsync<IJSObjectReference>(
-                "import",
-                "./_content/PaceLetics.RunningAnalysisModule.Components/runningAnalysisMediaRecorder.js");
-            _isOnline = await _recorderModule.InvokeAsync<bool>("isOnline");
+            var module = await GetRecorderModuleAsync();
+            _isOnline = await module.InvokeAsync<bool>("isOnline");
         }
         catch
         {
             _isOnline = true;
         }
+    }
+
+    private async Task<IJSObjectReference> GetRecorderModuleAsync()
+    {
+        _recorderModule ??= await JS.InvokeAsync<IJSObjectReference>(
+            "import",
+            "./_content/PaceLetics.RunningAnalysisModule.Components/runningAnalysisMediaRecorder.js");
+
+        return _recorderModule;
     }
 
     private string GetHeaderSubtitle()
@@ -389,7 +493,7 @@
         };
     }
 
-    private static string BuildFileName(RunningAnalysisRosterItem participant, string extension)
+    private static string BuildFileNamePrefix(RunningAnalysisRosterItem participant)
     {
         var safeName = new string(participant.DisplayName
             .Trim()
@@ -397,9 +501,8 @@
             .ToArray());
 
         safeName = string.IsNullOrWhiteSpace(safeName) ? participant.ParticipantId : safeName;
-        extension = string.IsNullOrWhiteSpace(extension) ? "webm" : extension.Trim().TrimStart('.');
 
-        return $"{DateTime.UtcNow:yyyyMMdd-HHmmss}-{safeName}.{extension}";
+        return $"{DateTime.UtcNow:yyyyMMdd-HHmmss}-{safeName}";
     }
 
     public async ValueTask DisposeAsync()

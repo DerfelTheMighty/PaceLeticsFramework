@@ -21,7 +21,11 @@
                 else
                 {
                     <RunningAnalysisMediaRecorder @ref="_mediaRecorder"
-                                                  IsOnline="IsOnline"
+                                                  AnalysisEventId="AnalysisEventId"
+                                                  ParticipantId="ParticipantId"
+                                                  ParticipantName="ParticipantName"
+                                                  FileNamePrefix="FileNamePrefix"
+                                                  CanRecord="CanRecord"
                                                   ShowControls="false"
                                                   OnRecorded="OnRecorded"
                                                   IsRecordingChanged="OnRecorderStateChangedAsync" />
@@ -42,7 +46,7 @@
             {
                 <MudButton Color="Color.Primary"
                            Variant="Variant.Filled"
-                           Disabled="@(!IsOnline)"
+                           Disabled="@(!CanRecord)"
                            StartIcon="@Icons.Material.Filled.FiberManualRecord"
                            OnClick="StartRecordingAsync">
                     Start
@@ -93,8 +97,12 @@
     private RunningAnalysisMediaRecorder? _mediaRecorder;
     private bool _recorderIsRecording;
 
+    [Parameter] public string AnalysisEventId { get; set; } = string.Empty;
+    [Parameter] public string ParticipantId { get; set; } = string.Empty;
     [Parameter] public string ParticipantName { get; set; } = string.Empty;
+    [Parameter] public string FileNamePrefix { get; set; } = string.Empty;
     [Parameter] public bool IsOnline { get; set; } = true;
+    [Parameter] public bool CanRecord { get; set; } = true;
     [Parameter] public bool IsRecording { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public EventCallback OnStartRecording { get; set; }
@@ -109,7 +117,7 @@
 
     private async Task StartRecordingAsync()
     {
-        if (!IsOnline)
+        if (!CanRecord)
             return;
 
         await OnStartRecording.InvokeAsync();

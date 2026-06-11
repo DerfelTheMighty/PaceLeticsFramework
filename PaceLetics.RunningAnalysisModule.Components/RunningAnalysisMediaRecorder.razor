@@ -19,7 +19,7 @@
             {
                 <MudButton Color="Color.Primary"
                            Variant="Variant.Filled"
-                           Disabled="@(!IsOnline)"
+                           Disabled="@(!CanRecord)"
                            StartIcon="@Icons.Material.Filled.FiberManualRecord"
                            OnClick="StartAsync">
                     Start
@@ -56,20 +56,23 @@
 </style>
 
 @code {
-    private const long MaxRecordingBytes = 512L * 1024L * 1024L;
     private ElementReference _videoElement;
     private IJSObjectReference? _module;
     private bool _isRecording;
     private string? _errorMessage;
 
-    [Parameter] public bool IsOnline { get; set; } = true;
+    [Parameter] public string AnalysisEventId { get; set; } = string.Empty;
+    [Parameter] public string ParticipantId { get; set; } = string.Empty;
+    [Parameter] public string ParticipantName { get; set; } = string.Empty;
+    [Parameter] public string FileNamePrefix { get; set; } = string.Empty;
+    [Parameter] public bool CanRecord { get; set; } = true;
     [Parameter] public bool ShowControls { get; set; } = true;
     [Parameter] public EventCallback<RunningAnalysisRecordedVideo> OnRecorded { get; set; }
     [Parameter] public EventCallback<bool> IsRecordingChanged { get; set; }
 
     public async Task StartAsync()
     {
-        if (!IsOnline)
+        if (!CanRecord)
             return;
 
         try
@@ -96,15 +99,25 @@
         try
         {
             var module = await GetModuleAsync();
-            var payload = await module.InvokeAsync<RecordedVideoPayload>("stopRecording", _videoElement);
+            var payload = await module.InvokeAsync<RecordedVideoPayload>(
+                "stopRecording",
+                _videoElement,
+                new RecordingMetadata(
+                    AnalysisEventId,
+                    ParticipantId,
+                    ParticipantName,
+                    FileNamePrefix));
             _isRecording = false;
             await IsRecordingChanged.InvokeAsync(false);
-            await using var stream = await payload.Data.OpenReadStreamAsync(MaxRecordingBytes);
             await OnRecorded.InvokeAsync(new RunningAnalysisRecordedVideo(
-                stream,
+                payload.LocalId,
+                payload.AnalysisEventId,
+                payload.ParticipantId,
+                payload.FileName,
                 payload.ContentType,
                 payload.FileExtension,
-                payload.Size));
+                payload.Size,
+                payload.RecordedAt));
         }
         catch (Exception ex)
         {
@@ -139,11 +152,21 @@
         }
     }
 
+    private sealed record RecordingMetadata(
+        string AnalysisEventId,
+        string ParticipantId,
+        string ParticipantName,
+        string FileNamePrefix);
+
     private sealed class RecordedVideoPayload
     {
-        public IJSStreamReference Data { get; set; } = null!;
+        public string LocalId { get; set; } = string.Empty;
+        public string AnalysisEventId { get; set; } = string.Empty;
+        public string ParticipantId { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
         public string ContentType { get; set; } = "video/webm";
         public string FileExtension { get; set; } = "webm";
         public long Size { get; set; }
+        public DateTime RecordedAt { get; set; }
     }
 }

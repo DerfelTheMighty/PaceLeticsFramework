@@ -30,6 +30,13 @@
   <data name="CompletedCannotRecord" xml:space="preserve"><value>A completed analysis cannot record again.</value></data>
   <data name="RetakeHint" xml:space="preserve"><value>Start recording again for this participant.</value></data>
   <data name="NoNextParticipant" xml:space="preserve"><value>No more participants.</value></data>
+  <data name="LocalRecordingsTitle" xml:space="preserve"><value>Local recordings</value></data>
+  <data name="LocalRecordingsText" xml:space="preserve"><value>{0} recording(s) are saved on this device.</value></data>
+  <data name="UploadPendingRecordings" xml:space="preserve"><value>Upload recordings</value></data>
+  <data name="LocalSaveSuccess" xml:space="preserve"><value>{0} was saved on this device.</value></data>
+  <data name="UploadPendingOffline" xml:space="preserve"><value>Uploads are only available while online.</value></data>
+  <data name="UploadPendingSuccess" xml:space="preserve"><value>{0} recording(s) were uploaded.</value></data>
+  <data name="UploadPendingFailed" xml:space="preserve"><value>{0} recording(s) could not be uploaded.</value></data>
   <data name="UploadSuccess" xml:space="preserve"><value>Recording was uploaded.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload failed.</value></data>
 </root>

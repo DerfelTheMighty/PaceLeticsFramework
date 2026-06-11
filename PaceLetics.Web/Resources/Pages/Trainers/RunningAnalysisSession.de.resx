@@ -30,6 +30,13 @@
   <data name="CompletedCannotRecord" xml:space="preserve"><value>Eine abgeschlossene Analyse kann nicht erneut aufnehmen.</value></data>
   <data name="RetakeHint" xml:space="preserve"><value>Starte die Aufnahme erneut fuer diesen Teilnehmenden.</value></data>
   <data name="NoNextParticipant" xml:space="preserve"><value>Keine weiteren Teilnehmenden.</value></data>
+  <data name="LocalRecordingsTitle" xml:space="preserve"><value>Lokale Aufnahmen</value></data>
+  <data name="LocalRecordingsText" xml:space="preserve"><value>{0} Aufnahme(n) sind auf diesem Geraet gespeichert.</value></data>
+  <data name="UploadPendingRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
+  <data name="LocalSaveSuccess" xml:space="preserve"><value>{0} wurde auf diesem Geraet gespeichert.</value></data>
+  <data name="UploadPendingOffline" xml:space="preserve"><value>Upload ist nur online moeglich.</value></data>
+  <data name="UploadPendingSuccess" xml:space="preserve"><value>{0} Aufnahme(n) wurden hochgeladen.</value></data>
+  <data name="UploadPendingFailed" xml:space="preserve"><value>{0} Aufnahme(n) konnten nicht hochgeladen werden.</value></data>
   <data name="UploadSuccess" xml:space="preserve"><value>Aufnahme wurde hochgeladen.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload fehlgeschlagen.</value></data>
 </root>
