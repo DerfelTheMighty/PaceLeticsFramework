@@ -5,6 +5,7 @@
 @using PaceLetics.RunningAnalysisModule.Components
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IRunningAnalysisService RunningAnalysisService
+@inject IJSRuntime JS
 @inject LoadingStateService Loading
 @inject IStringLocalizer<MyAnalyses> L
 
@@ -23,7 +24,9 @@
     {
         <RunningAnalysisLinks Items="_analyses"
                               EmptyText="@L["NoAnalyses"]"
-                              OpenText="@L["OpenFolder"]" />
+                              OpenText="@L["OpenFolder"]"
+                              DeleteText="@L["RemoveAnalysis"]"
+                              OnDelete="RemoveAnalysisAsync" />
     }
 </MudContainer>
 
@@ -58,5 +61,29 @@
                 _analyses = Array.Empty<RunningAnalysisLink>();
             }
         });
+    }
+
+    private async Task RemoveAnalysisAsync(RunningAnalysisLink analysis)
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        var confirmed = await JS.InvokeAsync<bool>(
+            "confirm",
+            string.Format(L["RemoveAnalysisConfirm"], analysis.Title));
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await RunningAnalysisService.HideAnalysisForAthleteAsync(_userId, analysis.AnalysisEventId);
+            _analyses = _analyses
+                .Where(existing => existing.AnalysisEventId != analysis.AnalysisEventId)
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message;
+        }
     }
 }

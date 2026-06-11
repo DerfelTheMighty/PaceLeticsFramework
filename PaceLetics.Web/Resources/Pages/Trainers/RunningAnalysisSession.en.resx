@@ -14,7 +14,7 @@
   <data name="Offline" xml:space="preserve"><value>Offline</value></data>
   <data name="StartAnalysis" xml:space="preserve"><value>Start analysis</value></data>
   <data name="CompleteAnalysis" xml:space="preserve"><value>Complete analysis</value></data>
-  <data name="CompletedMessage" xml:space="preserve"><value>Analysis completed.</value></data>
+  <data name="CompletedMessage" xml:space="preserve"><value>Analysis completed. You can start it again and record another attempt.</value></data>
   <data name="Roster" xml:space="preserve"><value>Participants</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>The coach could not be resolved.</value></data>
   <data name="CourseNotFound" xml:space="preserve"><value>The course was not found.</value></data>
@@ -34,8 +34,12 @@
   <data name="LocalRecordingsText" xml:space="preserve"><value>{0} recording(s) are saved on this device.</value></data>
   <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} local, {1} pending, {2} failed, {3} uploaded.</value></data>
   <data name="NoLocalRecordings" xml:space="preserve"><value>No local recordings were found in the selected folder.</value></data>
+  <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>The local folder is still selected, but the browser needs access again after reload. Click "Renew access" so the existing video and JSON files can be scanned again.</value></data>
+  <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>The local folder could not be scanned: {0}</value></data>
   <data name="LocalStorageTitle" xml:space="preserve"><value>Local recording folder</value></data>
   <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Choose folder</value></data>
+  <data name="OpenUploadPage" xml:space="preserve"><value>Upload queue</value></data>
+  <data name="RefreshFolderAccess" xml:space="preserve"><value>Renew access</value></data>
   <data name="LocalStorageReady" xml:space="preserve"><value>Local recording folder is ready.</value></data>
   <data name="LocalStorageReadyText" xml:space="preserve"><value>Recordings are saved directly in "{0}". Storage location: {1}</value></data>
   <data name="LocalStorageUnknown" xml:space="preserve"><value>Checking local recording folder.</value></data>

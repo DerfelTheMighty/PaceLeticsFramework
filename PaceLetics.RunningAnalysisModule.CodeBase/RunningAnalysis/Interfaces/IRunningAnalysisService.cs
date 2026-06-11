@@ -20,6 +20,11 @@ public interface IRunningAnalysisService
         string athleteUserId,
         CancellationToken cancellationToken = default);
 
+    Task HideAnalysisForAthleteAsync(
+        string athleteUserId,
+        string analysisEventId,
+        CancellationToken cancellationToken = default);
+
     Task<RunningAnalysisEvent> StartAnalysisAsync(
         string analysisEventId,
         CancellationToken cancellationToken = default);

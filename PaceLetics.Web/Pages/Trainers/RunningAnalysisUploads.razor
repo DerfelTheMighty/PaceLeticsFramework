@@ -1,0 +1,704 @@
+@page "/Trainers/running-analysis/uploads"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@implements IAsyncDisposable
+@using System.Threading
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.Components
+@inject IRunningAnalysisService RunningAnalysisService
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+@inject LoadingStateService Loading
+@inject IStringLocalizer<RunningAnalysisUploads> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+            <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+            <MudButton Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analyses"))">
+                @L["BackToAnalyses"]
+            </MudButton>
+        </MudStack>
+
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+        }
+
+        <MudPaper Elevation="1" Class="pa-4">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                <MudStack Spacing="0" Style="min-width:0;">
+                    <MudText Typo="Typo.h6">@L["LocalStorageTitle"]</MudText>
+                    <MudText Typo="Typo.body2" Color="@GetLocalStorageTextColor()" Style="word-break:break-word;">
+                        @GetLocalStorageText()
+                    </MudText>
+                </MudStack>
+
+                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                    <MudButton Color="Color.Primary"
+                               Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Filled.FolderOpen"
+                               OnClick="ChooseRecordingDirectoryAsync">
+                        @L["ChooseLocalStorageFolder"]
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Filled.Refresh"
+                               OnClick="RefreshPendingRecordingsAsync">
+                        @(IsLocalRecordingStorageReady ? L["RefreshQueue"] : L["RefreshFolderAccess"])
+                    </MudButton>
+                </MudStack>
+            </MudStack>
+        </MudPaper>
+
+        <MudPaper Elevation="1" Class="pa-4">
+            <MudStack Spacing="2">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                    <MudStack Spacing="0">
+                        <MudText Typo="Typo.h6">@L["LocalRecordingsTitle"]</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">
+                            @GetLocalRecordingsText()
+                        </MudText>
+                        <MudText Typo="Typo.caption" Color="@GetUploadQueueTextColor()">
+                            @GetUploadQueueStatusText()
+                        </MudText>
+                    </MudStack>
+
+                    <MudButton Color="Color.Primary"
+                               Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.CloudUpload"
+                               Disabled="@(!_isOnline || _isUploadingQueuedRecordings || PendingUploadCount == 0)"
+                               OnClick="@(() => UploadPendingRecordingsAsync())">
+                        @L["UploadPendingRecordings"]
+                    </MudButton>
+                </MudStack>
+
+                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                    <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
+                        @($"{L["UploadStatus_Queued"]}: {QueuedUploadCount}")
+                    </MudChip>
+                    <MudChip T="string" Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined">
+                        @($"{L["UploadStatus_Failed"]}: {FailedUploadCount}")
+                    </MudChip>
+                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                        @($"{L["UploadStatus_Uploaded"]}: {UploadedUploadCount}")
+                    </MudChip>
+                </MudStack>
+
+                @if (_pendingRecordings.Count == 0)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        @GetNoLocalRecordingsText()
+                    </MudAlert>
+                }
+                else
+                {
+                    @foreach (var recording in _pendingRecordings)
+                    {
+                        var isUploading = IsUploading(recording);
+                        <div style="border:1px solid var(--mud-palette-lines-default); border-radius:8px; padding:12px;">
+                            <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                <MudStack Spacing="1" Style="min-width:0; flex:1 1 360px;">
+                                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                        <MudText Typo="Typo.body1">@recording.FileName</MudText>
+                                        <MudChip T="string"
+                                                 Size="Size.Small"
+                                                 Color="@GetQueueStatusColor(recording)"
+                                                 Variant="Variant.Outlined">
+                                            @FormatQueueStatus(recording)
+                                        </MudChip>
+                                    </MudStack>
+
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @recording.ParticipantName
+                                    </MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @($"{L["QueueRecordedAt"]}: {recording.RecordedAt.ToLocalTime():dd.MM.yyyy HH:mm:ss}")
+                                    </MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @($"{L["QueueSize"]}: {FormatFileSize(recording.Size)}")
+                                    </MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary" Style="word-break:break-all;">
+                                        @($"{L["QueueStorageLocation"]}: {recording.StorageLocation}")
+                                    </MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @($"{L["QueueAttempts"]}: {recording.UploadAttempts}")
+                                    </MudText>
+                                    @if (recording.LastUploadAt is not null)
+                                    {
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                            @($"{L["QueueLastUpload"]}: {recording.LastUploadAt.Value.ToLocalTime():dd.MM.yyyy HH:mm:ss}")
+                                        </MudText>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(recording.LastError))
+                                    {
+                                        <MudText Typo="Typo.caption" Color="Color.Error" Style="word-break:break-word;">
+                                            @($"{L["QueueLastError"]}: {recording.LastError}")
+                                        </MudText>
+                                    }
+                                </MudStack>
+
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                    @if (!string.IsNullOrWhiteSpace(recording.DriveFileUrl))
+                                    {
+                                        <MudButton Variant="Variant.Text"
+                                                   Href="@recording.DriveFileUrl"
+                                                   Target="_blank"
+                                                   StartIcon="@Icons.Material.Filled.OpenInNew">
+                                            @L["OpenUploadedRecording"]
+                                        </MudButton>
+                                    }
+
+                                    <MudButton Color="Color.Primary"
+                                               Variant="Variant.Outlined"
+                                               StartIcon="@Icons.Material.Filled.CloudUpload"
+                                               Disabled="@(!_isOnline || isUploading)"
+                                               OnClick="@(() => UploadQueuedRecordingAsync(recording))">
+                                        @(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])
+                                    </MudButton>
+                                </MudStack>
+                            </MudStack>
+                        </div>
+                    }
+                }
+            </MudStack>
+        </MudPaper>
+    </MudStack>
+</MudContainer>
+
+@code {
+    private const long MaxQueuedRecordingBytes = 1024L * 1024L * 1024L;
+    private static readonly TimeSpan UploadQueuePumpInterval = TimeSpan.FromSeconds(30);
+
+    private IReadOnlyList<RunningAnalysisRecordedVideo> _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
+    private BrowserRecordingStorageStatus? _recordingStorageStatus;
+    private string? _errorMessage;
+    private string? _queueScanErrorMessage;
+    private DateTime? _lastQueueRefreshAt;
+    private bool _isOnline = true;
+    private bool _isUploadingQueuedRecordings;
+    private bool _isAutomaticUploadQueued;
+    private bool _isDisposed;
+    private CancellationTokenSource? _uploadQueuePumpCancellation;
+    private Task? _uploadQueuePumpTask;
+    private readonly HashSet<string> _uploadingRecordingIds = new(StringComparer.Ordinal);
+    private IJSObjectReference? _recorderModule;
+
+    private bool IsLocalRecordingStorageReady => _recordingStorageStatus?.IsReady == true;
+    private int QueuedUploadCount => _pendingRecordings.Count(IsQueued);
+    private int FailedUploadCount => _pendingRecordings.Count(IsFailed);
+    private int UploadedUploadCount => _pendingRecordings.Count(IsUploaded);
+    private int PendingUploadCount => _pendingRecordings.Count(recording => !IsUploaded(recording));
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        await Loading.RunAsync(L["Loading"], async () =>
+        {
+            try
+            {
+                _errorMessage = null;
+                await RefreshOnlineStateAsync();
+                await LoadRecordingStorageStatusAsync();
+                await LoadPendingRecordingsAsync();
+                QueueAutomaticUploadIfReady();
+                StartUploadQueuePump();
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+                _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
+                _recordingStorageStatus = null;
+            }
+        });
+    }
+
+    private async Task LoadPendingRecordingsAsync(bool requestDirectoryPermission = false)
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            _pendingRecordings = await module.InvokeAsync<RunningAnalysisRecordedVideo[]>(
+                "listSavedRecordings",
+                string.Empty,
+                requestDirectoryPermission,
+                true);
+            _queueScanErrorMessage = null;
+            _lastQueueRefreshAt = DateTime.Now;
+        }
+        catch (Exception ex)
+        {
+            _queueScanErrorMessage = ex.Message;
+            if (_pendingRecordings.Count == 0)
+                _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
+
+            _lastQueueRefreshAt = DateTime.Now;
+        }
+    }
+
+    private async Task RefreshPendingRecordingsAsync()
+    {
+        await LoadPendingRecordingsAsync(requestDirectoryPermission: true);
+        await LoadRecordingStorageStatusAsync();
+        QueueAutomaticUploadIfReady();
+    }
+
+    private async Task LoadRecordingStorageStatusAsync()
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            _recordingStorageStatus = await module.InvokeAsync<BrowserRecordingStorageStatus>(
+                "getRecordingStorageStatus");
+        }
+        catch (Exception ex)
+        {
+            _recordingStorageStatus = new BrowserRecordingStorageStatus
+            {
+                IsSupported = false,
+                IsConfigured = false,
+                IsReady = false,
+                ErrorMessage = ex.Message
+            };
+        }
+    }
+
+    private async Task ChooseRecordingDirectoryAsync()
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            _recordingStorageStatus = await module.InvokeAsync<BrowserRecordingStorageStatus>(
+                "chooseRecordingDirectory");
+            await LoadPendingRecordingsAsync(requestDirectoryPermission: true);
+            await LoadRecordingStorageStatusAsync();
+            QueueAutomaticUploadIfReady();
+
+            if (IsLocalRecordingStorageReady)
+                Snackbar.Add(L["LocalStorageReady"], Severity.Success);
+            else if (!string.IsNullOrWhiteSpace(_recordingStorageStatus?.ErrorMessage))
+                Snackbar.Add(_recordingStorageStatus.ErrorMessage, Severity.Warning);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task UploadPendingRecordingsAsync(bool showSummary = true)
+    {
+        if (_pendingRecordings.Count == 0)
+            return;
+
+        await RefreshOnlineStateAsync();
+        if (!_isOnline)
+        {
+            Snackbar.Add(L["UploadPendingOffline"], Severity.Warning);
+            return;
+        }
+
+        _isUploadingQueuedRecordings = true;
+        var uploadedCount = 0;
+        var failedCount = 0;
+
+        try
+        {
+            var candidates = _pendingRecordings
+                .Where(recording => !IsUploaded(recording))
+                .ToList();
+            if (candidates.Count == 0)
+            {
+                if (showSummary)
+                    Snackbar.Add(L["NoPendingUploads"], Severity.Info);
+
+                return;
+            }
+
+            foreach (var pendingRecording in candidates)
+            {
+                var uploaded = await UploadQueuedRecordingAsync(pendingRecording, showSnackbar: false);
+                if (uploaded)
+                    uploadedCount++;
+                else
+                    failedCount++;
+            }
+
+            await LoadPendingRecordingsAsync();
+
+            if (showSummary && uploadedCount > 0)
+                Snackbar.Add(string.Format(L["UploadPendingSuccess"], uploadedCount), Severity.Success);
+
+            if (showSummary && failedCount > 0)
+                Snackbar.Add(string.Format(L["UploadPendingFailed"], failedCount), Severity.Warning);
+        }
+        finally
+        {
+            _isUploadingQueuedRecordings = false;
+        }
+    }
+
+    private void QueueAutomaticUploadIfReady()
+    {
+        if (_isAutomaticUploadQueued
+            || _isUploadingQueuedRecordings
+            || !_isOnline
+            || !IsLocalRecordingStorageReady
+            || _pendingRecordings.Count == 0
+            || _pendingRecordings.All(IsUploaded))
+        {
+            return;
+        }
+
+        _isAutomaticUploadQueued = true;
+        _ = InvokeAsync(async () =>
+        {
+            try
+            {
+                await UploadPendingRecordingsAsync(showSummary: false);
+            }
+            finally
+            {
+                _isAutomaticUploadQueued = false;
+                StateHasChanged();
+            }
+        });
+    }
+
+    private void StartUploadQueuePump()
+    {
+        if (_isDisposed || _uploadQueuePumpTask is { IsCompleted: false })
+            return;
+
+        _uploadQueuePumpCancellation?.Dispose();
+        _uploadQueuePumpCancellation = new CancellationTokenSource();
+        _uploadQueuePumpTask = RunUploadQueuePumpAsync(_uploadQueuePumpCancellation.Token);
+    }
+
+    private async Task RunUploadQueuePumpAsync(CancellationToken cancellationToken)
+    {
+        using var timer = new PeriodicTimer(UploadQueuePumpInterval);
+
+        try
+        {
+            while (await timer.WaitForNextTickAsync(cancellationToken))
+            {
+                await InvokeAsync(async () =>
+                {
+                    if (_isDisposed)
+                        return;
+
+                    await RefreshOnlineStateAsync();
+                    await LoadRecordingStorageStatusAsync();
+                    await LoadPendingRecordingsAsync();
+                    QueueAutomaticUploadIfReady();
+                    StateHasChanged();
+                });
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected when the page is closed.
+        }
+        catch (ObjectDisposedException)
+        {
+            // Expected when the page is closed.
+        }
+    }
+
+    private async Task<bool> UploadQueuedRecordingAsync(
+        RunningAnalysisRecordedVideo pendingRecording,
+        bool showSnackbar = true)
+    {
+        if (string.IsNullOrWhiteSpace(pendingRecording.LocalId)
+            || string.IsNullOrWhiteSpace(pendingRecording.AnalysisEventId)
+            || string.IsNullOrWhiteSpace(pendingRecording.ParticipantId))
+        {
+            return false;
+        }
+
+        await RefreshOnlineStateAsync();
+        if (!_isOnline)
+        {
+            if (showSnackbar)
+                Snackbar.Add(L["UploadPendingOffline"], Severity.Warning);
+
+            return false;
+        }
+
+        if (!_uploadingRecordingIds.Add(pendingRecording.LocalId))
+            return false;
+
+        var module = await GetRecorderModuleAsync();
+
+        try
+        {
+            await module.InvokeVoidAsync("markSavedRecordingUploadStarted", pendingRecording.LocalId);
+            await LoadPendingRecordingsAsync();
+
+            if (pendingRecording.Size > MaxQueuedRecordingBytes)
+                throw new InvalidOperationException(L["QueuedRecordingTooLarge"].ToString());
+
+            await using var streamReference = await module.InvokeAsync<IJSStreamReference>(
+                "openSavedRecording",
+                pendingRecording.LocalId);
+            await using var content = await streamReference.OpenReadStreamAsync(MaxQueuedRecordingBytes);
+            var recording = await RunningAnalysisService.UploadRecordingAsync(
+                pendingRecording.AnalysisEventId,
+                pendingRecording.ParticipantId,
+                pendingRecording.FileName,
+                pendingRecording.ContentType,
+                content,
+                isOnline: true);
+
+            if (recording.UploadStatus == RunningAnalysisUploadStatus.Uploaded)
+            {
+                await module.InvokeVoidAsync(
+                    "markSavedRecordingUploadSucceeded",
+                    pendingRecording.LocalId,
+                    recording.DriveFileUrl ?? string.Empty);
+                await LoadPendingRecordingsAsync();
+
+                if (showSnackbar)
+                    Snackbar.Add(string.Format(L["UploadSingleSuccess"], pendingRecording.FileName), Severity.Success);
+
+                return true;
+            }
+
+            var errorMessage = recording.ErrorMessage ?? L["UploadFailed"].ToString();
+            await module.InvokeVoidAsync("markSavedRecordingUploadFailed", pendingRecording.LocalId, errorMessage);
+            await LoadPendingRecordingsAsync();
+
+            if (showSnackbar)
+                Snackbar.Add(errorMessage, Severity.Warning);
+
+            return false;
+        }
+        catch (Exception ex)
+        {
+            await module.InvokeVoidAsync("markSavedRecordingUploadFailed", pendingRecording.LocalId, ex.Message);
+            await LoadPendingRecordingsAsync();
+
+            if (showSnackbar)
+                Snackbar.Add(ex.Message, Severity.Error);
+
+            return false;
+        }
+        finally
+        {
+            _uploadingRecordingIds.Remove(pendingRecording.LocalId);
+        }
+    }
+
+    private async Task RefreshOnlineStateAsync()
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            _isOnline = await module.InvokeAsync<bool>("isOnline");
+        }
+        catch
+        {
+            _isOnline = true;
+        }
+    }
+
+    private async Task<IJSObjectReference> GetRecorderModuleAsync()
+    {
+        _recorderModule ??= await JS.InvokeAsync<IJSObjectReference>(
+            "import",
+            "./_content/PaceLetics.RunningAnalysisModule.Components/runningAnalysisMediaRecorder.js");
+
+        return _recorderModule;
+    }
+
+    private static string FormatFileSize(long size)
+    {
+        string[] units = ["B", "KB", "MB", "GB"];
+        var value = (double)Math.Max(0, size);
+        var unitIndex = 0;
+
+        while (value >= 1024 && unitIndex < units.Length - 1)
+        {
+            value /= 1024;
+            unitIndex++;
+        }
+
+        return $"{value:0.##} {units[unitIndex]}";
+    }
+
+    private string GetLocalRecordingsText()
+    {
+        return string.Format(
+            L["LocalRecordingsQueueText"],
+            _pendingRecordings.Count,
+            PendingUploadCount,
+            FailedUploadCount,
+            UploadedUploadCount);
+    }
+
+    private string GetNoLocalRecordingsText()
+    {
+        if (!string.IsNullOrWhiteSpace(_queueScanErrorMessage))
+            return string.Format(L["LocalRecordingsScanFailed"], _queueScanErrorMessage);
+
+        if (_recordingStorageStatus?.IsConfigured == true && !IsLocalRecordingStorageReady)
+            return L["LocalRecordingsNeedFolderAccess"];
+
+        return L["NoLocalRecordings"];
+    }
+
+    private Color GetUploadQueueTextColor()
+    {
+        if (_isUploadingQueuedRecordings || _isAutomaticUploadQueued)
+            return Color.Info;
+
+        if (!IsLocalRecordingStorageReady || (!_isOnline && PendingUploadCount > 0))
+            return Color.Warning;
+
+        if (FailedUploadCount > 0)
+            return Color.Error;
+
+        return Color.Secondary;
+    }
+
+    private string GetUploadQueueStatusText()
+    {
+        if (_isUploadingQueuedRecordings || _isAutomaticUploadQueued)
+            return L["UploadQueueUploading"];
+
+        if (!IsLocalRecordingStorageReady)
+            return L["UploadQueueNeedsFolder"];
+
+        if (!_isOnline && PendingUploadCount > 0)
+            return L["UploadQueueOffline"];
+
+        if (PendingUploadCount > 0)
+            return string.Format(L["UploadQueueReady"], PendingUploadCount);
+
+        if (_lastQueueRefreshAt is not null)
+            return string.Format(L["UploadQueueIdleWithRefresh"], _lastQueueRefreshAt.Value);
+
+        return L["UploadQueueIdle"];
+    }
+
+    private Color GetLocalStorageTextColor()
+    {
+        if (IsLocalRecordingStorageReady)
+            return Color.Success;
+
+        if (_recordingStorageStatus?.IsConfigured == true)
+            return Color.Warning;
+
+        return Color.Secondary;
+    }
+
+    private string GetLocalStorageText()
+    {
+        if (_recordingStorageStatus is null)
+            return L["LocalStorageUnknown"];
+
+        if (!_recordingStorageStatus.IsSupported)
+            return string.IsNullOrWhiteSpace(_recordingStorageStatus.ErrorMessage)
+                ? L["LocalStorageUnsupported"]
+                : _recordingStorageStatus.ErrorMessage;
+
+        if (!_recordingStorageStatus.IsConfigured)
+            return L["LocalStorageNotConfigured"];
+
+        if (_recordingStorageStatus.IsReady)
+            return string.Format(
+                L["LocalStorageReadyText"],
+                _recordingStorageStatus.FolderName,
+                _recordingStorageStatus.StorageLocation);
+
+        return string.IsNullOrWhiteSpace(_recordingStorageStatus.ErrorMessage)
+            ? L["LocalStoragePermissionMissing"]
+            : _recordingStorageStatus.ErrorMessage;
+    }
+
+    private bool IsUploading(RunningAnalysisRecordedVideo recording)
+    {
+        return _uploadingRecordingIds.Contains(recording.LocalId);
+    }
+
+    private static bool IsUploaded(RunningAnalysisRecordedVideo recording)
+    {
+        return string.Equals(recording.UploadStatus, "uploaded", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsFailed(RunningAnalysisRecordedVideo recording)
+    {
+        return string.Equals(recording.UploadStatus, "failed", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsQueued(RunningAnalysisRecordedVideo recording)
+    {
+        return !IsUploaded(recording) && !IsFailed(recording);
+    }
+
+    private Color GetQueueStatusColor(RunningAnalysisRecordedVideo recording)
+    {
+        return recording.UploadStatus?.ToLowerInvariant() switch
+        {
+            "uploaded" => Color.Success,
+            "uploading" => Color.Info,
+            "failed" => Color.Error,
+            _ => Color.Warning
+        };
+    }
+
+    private string FormatQueueStatus(RunningAnalysisRecordedVideo recording)
+    {
+        return recording.UploadStatus?.ToLowerInvariant() switch
+        {
+            "uploaded" => L["UploadStatus_Uploaded"],
+            "uploading" => L["UploadStatus_Uploading"],
+            "failed" => L["UploadStatus_Failed"],
+            _ => L["UploadStatus_Queued"]
+        };
+    }
+
+    private sealed class BrowserRecordingStorageStatus
+    {
+        public bool IsSupported { get; set; }
+        public bool IsConfigured { get; set; }
+        public bool IsReady { get; set; }
+        public string FolderName { get; set; } = string.Empty;
+        public string PermissionState { get; set; } = string.Empty;
+        public string StorageLocation { get; set; } = string.Empty;
+        public string ErrorMessage { get; set; } = string.Empty;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _isDisposed = true;
+        _uploadQueuePumpCancellation?.Cancel();
+
+        if (_uploadQueuePumpTask is not null)
+        {
+            try
+            {
+                await _uploadQueuePumpTask;
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected when the page is closed.
+            }
+        }
+
+        _uploadQueuePumpCancellation?.Dispose();
+
+        if (_recorderModule is not null)
+            await _recorderModule.DisposeAsync();
+    }
+}

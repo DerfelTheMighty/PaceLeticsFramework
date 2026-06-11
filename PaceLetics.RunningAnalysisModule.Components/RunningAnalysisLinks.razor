@@ -16,23 +16,35 @@
                         <MudText Typo="Typo.caption" Color="Color.Secondary">@item.StartsAt.ToString("g")</MudText>
                     </MudStack>
 
-                    @if (!string.IsNullOrWhiteSpace(item.DriveFolderUrl)
-                         && item.FolderStatus == RunningAnalysisFolderStatus.Ready)
-                    {
-                        <MudButton Href="@item.DriveFolderUrl"
-                                   Target="_blank"
-                                   Color="Color.Primary"
-                                   Variant="Variant.Outlined"
-                                   StartIcon="@Icons.Material.Filled.FolderOpen">
-                            @OpenText
-                        </MudButton>
-                    }
-                    else
-                    {
-                        <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
-                            @item.FolderStatus
-                        </MudChip>
-                    }
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                        @if (!string.IsNullOrWhiteSpace(item.DriveFolderUrl)
+                             && item.FolderStatus == RunningAnalysisFolderStatus.Ready)
+                        {
+                            <MudButton Href="@item.DriveFolderUrl"
+                                       Target="_blank"
+                                       Color="Color.Primary"
+                                       Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.FolderOpen">
+                                @OpenText
+                            </MudButton>
+                        }
+                        else
+                        {
+                            <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
+                                @item.FolderStatus
+                            </MudChip>
+                        }
+
+                        @if (OnDelete.HasDelegate)
+                        {
+                            <MudButton Variant="Variant.Text"
+                                       Color="Color.Error"
+                                       StartIcon="@Icons.Material.Filled.DeleteOutline"
+                                       OnClick="@(() => OnDelete.InvokeAsync(item))">
+                                @DeleteText
+                            </MudButton>
+                        }
+                    </MudStack>
                 </MudStack>
             </MudPaper>
         }
@@ -43,4 +55,6 @@
     [Parameter] public IReadOnlyList<RunningAnalysisLink> Items { get; set; } = Array.Empty<RunningAnalysisLink>();
     [Parameter] public string EmptyText { get; set; } = "No analyses available.";
     [Parameter] public string OpenText { get; set; } = "Open";
+    [Parameter] public string DeleteText { get; set; } = "Remove";
+    [Parameter] public EventCallback<RunningAnalysisLink> OnDelete { get; set; }
 }

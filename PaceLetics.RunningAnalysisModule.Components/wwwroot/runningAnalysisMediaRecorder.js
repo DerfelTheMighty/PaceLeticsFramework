@@ -5,6 +5,7 @@ const recordingStoreName = "recordings";
 const settingsStoreName = "settings";
 const recordingDirectoryKey = "recordingDirectory";
 const metadataFileSuffix = ".paceletics.json";
+const recordingArtifactType = "paceletics-running-analysis-recording";
 
 export async function startRecording(videoElement, metadata = {}) {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -196,8 +197,8 @@ export async function getRecordingStorageStatus() {
   }
 }
 
-export async function listSavedRecordings(analysisEventId) {
-  await importRecordingsFromConfiguredDirectory();
+export async function listSavedRecordings(analysisEventId, requestDirectoryPermission = false, folderOnly = false) {
+  const scannedLocalIds = await importRecordingsFromConfiguredDirectory(requestDirectoryPermission);
 
   const database = await openDatabase();
   const transaction = database.transaction(recordingStoreName, "readonly");
@@ -206,6 +207,7 @@ export async function listSavedRecordings(analysisEventId) {
   await transactionToPromise(transaction);
 
   return recordings
+    .filter(recording => !folderOnly || (Array.isArray(scannedLocalIds) && scannedLocalIds.includes(recording.localId)))
     .filter(recording => !analysisEventId || recording.analysisEventId === analysisEventId)
     .map(toRecordingPayload)
     .sort((left, right) => left.recordedAt.localeCompare(right.recordedAt));
@@ -336,6 +338,7 @@ function createRecordingMetadata(metadata, contentType, localId, directoryHandle
   const metadataFileName = `${fileName}${metadataFileSuffix}`;
 
   return {
+    artifactType: recordingArtifactType,
     localId,
     analysisEventId,
     participantId,
@@ -396,27 +399,27 @@ async function getFileHandleFromDirectory(fileName) {
   return await directoryHandle.getFileHandle(fileName, { create: false });
 }
 
-async function importRecordingsFromConfiguredDirectory() {
+async function importRecordingsFromConfiguredDirectory(requestPermission = false) {
   if (!window.showDirectoryPicker) {
-    return;
+    return null;
   }
 
   const directoryHandle = await loadSetting(recordingDirectoryKey);
   if (!directoryHandle) {
-    return;
+    return null;
   }
 
-  await importRecordingsFromDirectory(directoryHandle, false);
+  return await importRecordingsFromDirectory(directoryHandle, requestPermission);
 }
 
 async function importRecordingsFromDirectory(directoryHandle, requestPermission = false) {
   if (!directoryHandle?.entries) {
-    return;
+    return null;
   }
 
   const permissionState = await ensureHandlePermission(directoryHandle, "readwrite", requestPermission);
   if (permissionState !== "granted") {
-    return;
+    return null;
   }
 
   const recordings = [];
@@ -432,7 +435,7 @@ async function importRecordingsFromDirectory(directoryHandle, requestPermission 
   }
 
   if (recordings.length === 0) {
-    return;
+    return [];
   }
 
   const database = await openDatabase();
@@ -443,6 +446,7 @@ async function importRecordingsFromDirectory(directoryHandle, requestPermission 
   }
 
   await transactionToPromise(transaction);
+  return recordings.map(recording => recording.localId);
 }
 
 async function readRecordingMetadataFile(directoryHandle, metadataFileName, metadataHandle) {
@@ -459,14 +463,23 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
 
     const fileHandle = await directoryHandle.getFileHandle(metadata.fileName, { create: false });
     const videoFile = await fileHandle.getFile();
+    const detectedContentType = metadata.contentType || videoFile.type || "";
+    const fileExtension = metadata.fileExtension || getFileExtension(metadata.fileName);
+
+    if (!isSupportedVideoRecording(metadata, videoFile, detectedContentType, fileExtension)) {
+      return null;
+    }
+
+    const contentType = detectedContentType || (fileExtension === "mp4" ? "video/mp4" : "video/webm");
+
     return {
       localId: metadata.localId,
       analysisEventId: metadata.analysisEventId,
       participantId: metadata.participantId,
       participantName: metadata.participantName || "",
       fileName: metadata.fileName,
-      contentType: metadata.contentType || videoFile.type || "video/webm",
-      fileExtension: metadata.fileExtension || getFileExtension(metadata.fileName),
+      contentType,
+      fileExtension,
       size: metadata.size || videoFile.size,
       recordedAt: metadata.recordedAt || new Date(videoFile.lastModified || Date.now()).toISOString(),
       storageMode: "file-system",
@@ -596,6 +609,7 @@ function toRecordingPayload(recording) {
 
 function toRecordingMetadata(recording) {
   return {
+    artifactType: recordingArtifactType,
     localId: recording.localId,
     analysisEventId: recording.analysisEventId,
     participantId: recording.participantId,
@@ -676,6 +690,23 @@ function getFileExtension(fileName) {
   }
 
   return sanitizeFileName(fileName.slice(extensionStart + 1));
+}
+
+function isSupportedVideoRecording(metadata, videoFile, contentType, fileExtension) {
+  if (metadata.artifactType && metadata.artifactType !== recordingArtifactType) {
+    return false;
+  }
+
+  if (!videoFile || videoFile.size <= 0) {
+    return false;
+  }
+
+  const normalizedContentType = (contentType || videoFile.type || "").toLowerCase();
+  const normalizedExtension = (fileExtension || getFileExtension(videoFile.name || "")).toLowerCase();
+
+  return normalizedContentType.startsWith("video/")
+    || normalizedExtension === "webm"
+    || normalizedExtension === "mp4";
 }
 
 function sanitizeFileName(value) {

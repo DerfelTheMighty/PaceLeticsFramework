@@ -225,6 +225,20 @@ public sealed class RunningAnalysisServiceTests
     }
 
     [Fact]
+    public async Task StartAnalysis_AllowsRestartingCompletedAnalysis()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var service = CreateService(repository, new FakeRunningAnalysisStorageProvider(), new FakeUserDriveFolderRegistry());
+        await service.RegisterParticipantAsync(CreateRegistration());
+        var analysisEvent = Assert.Single(repository.Events.Values);
+
+        await service.CompleteAnalysisAsync(analysisEvent.Id);
+        var restarted = await service.StartAnalysisAsync(analysisEvent.Id);
+
+        Assert.Equal(RunningAnalysisEventStatus.InProgress, restarted.Status);
+    }
+
+    [Fact]
     public async Task GetAnalysesForAthlete_ReturnsFolderLinksForParticipant()
     {
         var repository = new InMemoryRunningAnalysisRepository();
@@ -241,6 +255,24 @@ public sealed class RunningAnalysisServiceTests
         Assert.Equal(participant.DriveFolderUrl, analysis.DriveFolderUrl);
         Assert.Equal(RunningAnalysisFolderStatus.Ready, analysis.FolderStatus);
         Assert.Equal(RunningAnalysisPermissionStatus.Granted, analysis.PermissionStatus);
+    }
+
+    [Fact]
+    public async Task HideAnalysisForAthlete_RemovesAnalysisFromAthleteOverview()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var service = CreateService(
+            repository,
+            new FakeRunningAnalysisStorageProvider(),
+            new FakeUserDriveFolderRegistry());
+        var participant = await service.RegisterParticipantAsync(CreateRegistration());
+
+        await service.HideAnalysisForAthleteAsync("runner-1", participant.AnalysisEventId);
+
+        var analyses = await service.GetAnalysesForAthleteAsync("runner-1");
+        var storedParticipant = await repository.GetParticipantByIdAsync(participant.Id);
+        Assert.Empty(analyses);
+        Assert.True(storedParticipant?.IsHiddenFromAthlete);
     }
 
     private static RunningAnalysisService CreateService(

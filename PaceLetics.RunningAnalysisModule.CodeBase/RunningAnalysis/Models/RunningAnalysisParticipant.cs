@@ -19,4 +19,5 @@ public sealed class RunningAnalysisParticipant
     public string? CreatedFromRegistrationId { get; set; }
     public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;
     public string? ProvisioningError { get; set; }
+    public bool IsHiddenFromAthlete { get; set; }
 }

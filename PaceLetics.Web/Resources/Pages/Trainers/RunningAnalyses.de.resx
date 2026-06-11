@@ -8,6 +8,7 @@
   <data name="Title" xml:space="preserve"><value>Laufanalysen</value></data>
   <data name="Subtitle" xml:space="preserve"><value>Analyse-Events fuer deine Kurse starten und durchfuehren.</value></data>
   <data name="ManageCourses" xml:space="preserve"><value>Kurse verwalten</value></data>
+  <data name="UploadRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
   <data name="DriveCredentialsMissing" xml:space="preserve"><value>Google Drive ist noch nicht konfiguriert. Hinterlege die Zugangsdaten ueber User-Secrets, Environment-Variablen oder die ignorierte appsettings.Local.json, bevor Teilnehmende registriert oder Aufnahmen hochgeladen werden.</value></data>
   <data name="DriveRootFolderMissing" xml:space="preserve"><value>Es ist keine zentrale Google-Drive-Ordner-ID konfiguriert. Der Adapter nutzt stattdessen den konfigurierten Root-Ordnernamen.</value></data>
   <data name="EmptyTitle" xml:space="preserve"><value>Noch keine Laufanalysen</value></data>

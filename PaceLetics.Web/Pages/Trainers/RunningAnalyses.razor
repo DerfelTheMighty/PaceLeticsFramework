@@ -17,12 +17,21 @@
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
             <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-            <MudButton Variant="Variant.Outlined"
-                       Color="Color.Primary"
-                       StartIcon="@Icons.Material.Filled.Event"
-                       OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
-                @L["ManageCourses"]
-            </MudButton>
+            <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                <MudButton Variant="Variant.Outlined"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.CloudUpload"
+                           OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))">
+                    @L["UploadRecordings"]
+                </MudButton>
+
+                <MudButton Variant="Variant.Outlined"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Event"
+                           OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
+                    @L["ManageCourses"]
+                </MudButton>
+            </MudStack>
         </MudStack>
 
         @if (!HasDriveCredentials)

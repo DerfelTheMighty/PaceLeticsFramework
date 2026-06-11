@@ -137,7 +137,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         var participants = await _repository.GetParticipantsForAthleteAsync(athleteUserId, cancellationToken);
         var result = new List<RunningAnalysisLink>();
 
-        foreach (var participant in participants)
+        foreach (var participant in participants.Where(participant => !participant.IsHiddenFromAthlete))
         {
             var analysisEvent = await _repository.GetEventAsync(participant.AnalysisEventId, cancellationToken);
             if (analysisEvent is null)
@@ -160,13 +160,31 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
             .ToList();
     }
 
+    public async Task HideAnalysisForAthleteAsync(
+        string athleteUserId,
+        string analysisEventId,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            throw new InvalidOperationException("The athlete user id is required.");
+
+        if (string.IsNullOrWhiteSpace(analysisEventId))
+            throw new InvalidOperationException("The running analysis id is required.");
+
+        var participant = await _repository.GetParticipantAsync(
+            analysisEventId.Trim(),
+            athleteUserId.Trim(),
+            cancellationToken) ?? throw new InvalidOperationException("The running analysis was not found for this athlete.");
+
+        participant.IsHiddenFromAthlete = true;
+        await _repository.UpsertParticipantAsync(participant, cancellationToken);
+    }
+
     public async Task<RunningAnalysisEvent> StartAnalysisAsync(
         string analysisEventId,
         CancellationToken cancellationToken = default)
     {
         var analysisEvent = await RequireEventAsync(analysisEventId, cancellationToken);
-        if (analysisEvent.Status == RunningAnalysisEventStatus.Completed)
-            throw new InvalidOperationException("A completed running analysis cannot be restarted.");
 
         analysisEvent.Status = RunningAnalysisEventStatus.InProgress;
         analysisEvent.UpdatedAt = _clock.UtcNow;
