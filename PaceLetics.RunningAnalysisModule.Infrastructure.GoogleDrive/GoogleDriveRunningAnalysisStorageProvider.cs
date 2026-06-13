@@ -353,7 +353,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
         {
             ClientSecrets = clientSecrets,
-            Scopes = new[] { DriveService.Scope.Drive }
+            Scopes = new[] { DriveService.Scope.DriveFile }
         });
         var token = new TokenResponse
         {
