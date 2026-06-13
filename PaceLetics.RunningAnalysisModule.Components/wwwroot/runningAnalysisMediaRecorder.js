@@ -7,6 +7,7 @@ const recordingDirectoryKey = "recordingDirectory";
 const metadataFileSuffix = ".paceletics.json";
 const recordingArtifactType = "paceletics-running-analysis-recording";
 const missingAthleteUserIdMessage = "The local recording metadata does not contain an athlete user id.";
+let cachedRecordingDirectoryHandle = null;
 
 export async function startRecording(videoElement, metadata = {}) {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -148,6 +149,7 @@ export async function chooseRecordingDirectory() {
     mode: "readwrite"
   });
   await ensureHandlePermission(directoryHandle, "readwrite", true);
+  cachedRecordingDirectoryHandle = directoryHandle;
   await saveSetting(recordingDirectoryKey, directoryHandle);
   await importRecordingsFromDirectory(directoryHandle);
 
@@ -159,7 +161,7 @@ export async function getRecordingStorageStatus() {
     return getUnsupportedStorageStatus();
   }
 
-  const directoryHandle = await loadSetting(recordingDirectoryKey);
+  const directoryHandle = await loadRecordingDirectoryHandle();
   if (!directoryHandle) {
     return {
       isSupported: true,
@@ -394,7 +396,7 @@ async function requireRecordingDirectory() {
     throw new Error("This browser cannot save recordings directly to a device folder.");
   }
 
-  const directoryHandle = await loadSetting(recordingDirectoryKey);
+  const directoryHandle = await loadRecordingDirectoryHandle();
   if (!directoryHandle) {
     throw new Error("Select a local recording folder before recording.");
   }
@@ -417,7 +419,7 @@ async function importRecordingsFromConfiguredDirectory(requestPermission = false
     return null;
   }
 
-  const directoryHandle = await loadSetting(recordingDirectoryKey);
+  const directoryHandle = await loadRecordingDirectoryHandle();
   if (!directoryHandle) {
     return null;
   }
@@ -532,7 +534,7 @@ async function tryWriteRecordingMetadataFile(recording) {
   }
 
   try {
-    const directoryHandle = await loadSetting(recordingDirectoryKey);
+    const directoryHandle = await loadRecordingDirectoryHandle();
     if (!directoryHandle) {
       return;
     }
@@ -659,6 +661,16 @@ function toRecordingMetadata(recording) {
     lastError: recording.lastError || "",
     driveFileUrl: recording.driveFileUrl || ""
   };
+}
+
+async function loadRecordingDirectoryHandle() {
+  if (cachedRecordingDirectoryHandle) {
+    return cachedRecordingDirectoryHandle;
+  }
+
+  const directoryHandle = await loadSetting(recordingDirectoryKey);
+  cachedRecordingDirectoryHandle = directoryHandle || null;
+  return cachedRecordingDirectoryHandle;
 }
 
 async function saveSetting(key, value) {
