@@ -35,7 +35,12 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var rootFolder = await EnsureRootFolderAsync(drive, cancellationToken);
         var folderName = BuildEventFolderName(analysisEvent);
 
-        return await EnsureFolderAsync(drive, folderName, rootFolder.FolderId, cancellationToken);
+        return await EnsureFolderAsync(
+            drive,
+            folderName,
+            rootFolder.FolderId,
+            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            cancellationToken);
     }
 
     public Task<DriveFolderReference> EnsureParticipantFolderAsync(
@@ -47,7 +52,12 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var drive = CreateDriveService();
         var folderName = BuildParticipantFolderName(participant);
 
-        return EnsureFolderAsync(drive, folderName, eventFolder.FolderId, cancellationToken);
+        return EnsureFolderAsync(
+            drive,
+            folderName,
+            eventFolder.FolderId,
+            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            cancellationToken);
     }
 
     public async Task GrantParticipantWriteAccessAsync(
@@ -55,6 +65,9 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         string participantEmail,
         CancellationToken cancellationToken = default)
     {
+        if (HasOAuthCredentials())
+            return;
+
         if (string.IsNullOrWhiteSpace(participantEmail))
             throw new InvalidOperationException("A participant email is required to grant Drive access.");
 
@@ -70,7 +83,12 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var rootFolder = await EnsureRootFolderAsync(drive, cancellationToken);
         var folderName = BuildUserFolderName(request);
 
-        return await EnsureFolderAsync(drive, folderName, rootFolder.FolderId, cancellationToken);
+        return await EnsureFolderAsync(
+            drive,
+            folderName,
+            rootFolder.FolderId,
+            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            cancellationToken);
     }
 
     public async Task GrantUserReadAccessAsync(
@@ -78,6 +96,9 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         string userEmail,
         CancellationToken cancellationToken = default)
     {
+        if (HasOAuthCredentials())
+            return;
+
         var drive = CreateDriveService();
         await EnsureAnyoneWithLinkCanReadAsync(drive, userFolder.FolderId, cancellationToken);
         await GrantAccessAsync(drive, userFolder, userEmail, role: "reader", cancellationToken);
@@ -95,7 +116,12 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             throw new InvalidOperationException("The child Drive folder name is required.");
 
         var drive = CreateDriveService();
-        return await EnsureFolderAsync(drive, SanitizeName(folderName), parentFolder.FolderId, cancellationToken);
+        return await EnsureFolderAsync(
+            drive,
+            SanitizeName(folderName),
+            parentFolder.FolderId,
+            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            cancellationToken);
     }
 
     public async Task<DriveFileReference> UploadFileAsync(
@@ -506,6 +532,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
                 ? "PaceLetics Laufanalysen"
                 : _options.RootFolderName,
             parentFolderId: null,
+            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
             cancellationToken);
     }
 
@@ -513,12 +540,15 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         DriveService drive,
         string folderName,
         string? parentFolderId,
+        bool grantAnyoneWithLinkReadAccess,
         CancellationToken cancellationToken)
     {
         var existing = await FindFolderAsync(drive, folderName, parentFolderId, cancellationToken);
         if (existing is not null)
         {
-            await EnsureAnyoneWithLinkCanReadAsync(drive, existing.FolderId, cancellationToken);
+            if (grantAnyoneWithLinkReadAccess)
+                await EnsureAnyoneWithLinkCanReadAsync(drive, existing.FolderId, cancellationToken);
+
             return existing;
         }
 
@@ -544,7 +574,8 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             throw CreateServiceAccountQuotaException(ex);
         }
 
-        await EnsureAnyoneWithLinkCanReadAsync(drive, created.Id, cancellationToken);
+        if (grantAnyoneWithLinkReadAccess)
+            await EnsureAnyoneWithLinkCanReadAsync(drive, created.Id, cancellationToken);
 
         return new DriveFolderReference(created.Id, created.WebViewLink);
     }
