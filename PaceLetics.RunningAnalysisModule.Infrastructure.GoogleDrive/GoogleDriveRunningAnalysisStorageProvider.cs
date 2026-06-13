@@ -31,7 +31,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         RunningAnalysisEvent analysisEvent,
         CancellationToken cancellationToken = default)
     {
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         var rootFolder = await EnsureRootFolderAsync(drive, cancellationToken);
         var folderName = BuildEventFolderName(analysisEvent);
 
@@ -39,7 +39,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             drive,
             folderName,
             rootFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -49,14 +49,14 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         DriveFolderReference eventFolder,
         CancellationToken cancellationToken = default)
     {
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         var folderName = BuildParticipantFolderName(participant);
 
         return EnsureFolderAsync(
             drive,
             folderName,
             eventFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -65,13 +65,13 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         string participantEmail,
         CancellationToken cancellationToken = default)
     {
-        if (HasOAuthCredentials())
+        if (!CanManageDrivePermissions())
             return;
 
         if (string.IsNullOrWhiteSpace(participantEmail))
             throw new InvalidOperationException("A participant email is required to grant Drive access.");
 
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         await GrantAccessAsync(drive, participantFolder, participantEmail, role: "writer", cancellationToken);
     }
 
@@ -79,7 +79,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         UserDriveFolderRequest request,
         CancellationToken cancellationToken = default)
     {
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         var rootFolder = await EnsureRootFolderAsync(drive, cancellationToken);
         var folderName = BuildUserFolderName(request);
 
@@ -87,7 +87,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             drive,
             folderName,
             rootFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -96,10 +96,10 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         string userEmail,
         CancellationToken cancellationToken = default)
     {
-        if (HasOAuthCredentials())
+        if (!CanManageDrivePermissions())
             return;
 
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         await EnsureAnyoneWithLinkCanReadAsync(drive, userFolder.FolderId, cancellationToken);
         await GrantAccessAsync(drive, userFolder, userEmail, role: "reader", cancellationToken);
     }
@@ -115,12 +115,12 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         if (string.IsNullOrWhiteSpace(folderName))
             throw new InvalidOperationException("The child Drive folder name is required.");
 
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         return await EnsureFolderAsync(
             drive,
             SanitizeName(folderName),
             parentFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -140,7 +140,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         if (content is null)
             throw new ArgumentNullException(nameof(content));
 
-        var drive = CreateDriveService();
+        var drive = CreateUploadDriveService();
         var metadata = new Google.Apis.Drive.v3.Data.File
         {
             Name = fileName.Trim(),
@@ -175,7 +175,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         if (string.IsNullOrWhiteSpace(userFolder.FolderId))
             throw new InvalidOperationException("The Drive folder id is required.");
 
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         var request = drive.Files.Delete(userFolder.FolderId);
         request.SupportsAllDrives = true;
         await request.ExecuteAsync(cancellationToken);
@@ -188,7 +188,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         if (string.IsNullOrWhiteSpace(request.Participant.DriveFolderId))
             throw new InvalidOperationException("The participant Drive folder is required for uploads.");
 
-        var drive = CreateDriveService();
+        var drive = CreateUploadDriveService();
         var metadata = new Google.Apis.Drive.v3.Data.File
         {
             Name = request.Recording.FileName,
@@ -217,12 +217,15 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
 
         if (!string.IsNullOrWhiteSpace(request.Participant.Email))
         {
-            await GrantAccessAsync(
-                drive,
-                new DriveFolderReference(uploadedFile.Id, uploadedFile.WebViewLink),
-                request.Participant.Email,
-                role: "writer",
-                cancellationToken);
+            if (CanManageDrivePermissions())
+            {
+                await GrantAccessAsync(
+                    CreateFolderManagementDriveService(),
+                    new DriveFolderReference(uploadedFile.Id, uploadedFile.WebViewLink),
+                    request.Participant.Email,
+                    role: "writer",
+                    cancellationToken);
+            }
         }
 
         return new DriveFileReference(uploadedFile.Id, uploadedFile.WebViewLink);
@@ -237,7 +240,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         if (string.IsNullOrWhiteSpace(email))
             throw new InvalidOperationException("A user email is required to grant Drive access.");
 
-        var drive = CreateDriveService();
+        var drive = CreateFolderManagementDriveService();
         await GrantAccessAsync(drive, folder, email, role, cancellationToken);
     }
 
@@ -358,6 +361,30 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         });
     }
 
+    private DriveService CreateUploadDriveService()
+    {
+        return CreateDriveService();
+    }
+
+    private DriveService CreateFolderManagementDriveService()
+    {
+        if (!HasServiceAccountCredentials())
+            return CreateDriveService();
+
+        return CreateDriveService(CreateServiceAccountCredential());
+    }
+
+    private DriveService CreateDriveService(IConfigurableHttpClientInitializer credential)
+    {
+        return new DriveService(new BaseClientService.Initializer
+        {
+            HttpClientInitializer = credential,
+            ApplicationName = string.IsNullOrWhiteSpace(_options.ApplicationName)
+                ? "PaceLetics"
+                : _options.ApplicationName
+        });
+    }
+
     private IConfigurableHttpClientInitializer CreateCredential()
     {
         if (HasOAuthCredentials())
@@ -447,6 +474,17 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             && !string.IsNullOrWhiteSpace(_options.OAuthRefreshToken);
     }
 
+    private bool HasServiceAccountCredentials()
+    {
+        return !string.IsNullOrWhiteSpace(_options.ServiceAccountJsonPath)
+            || !string.IsNullOrWhiteSpace(_options.ServiceAccountJson);
+    }
+
+    private bool CanManageDrivePermissions()
+    {
+        return HasServiceAccountCredentials();
+    }
+
     private bool HasPartialOAuthCredentials()
     {
         return !string.IsNullOrWhiteSpace(_options.OAuthClientId)
@@ -532,7 +570,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
                 ? "PaceLetics Laufanalysen"
                 : _options.RootFolderName,
             parentFolderId: null,
-            grantAnyoneWithLinkReadAccess: !HasOAuthCredentials(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
