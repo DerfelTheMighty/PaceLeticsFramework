@@ -172,6 +172,18 @@
             styles.Add("--pl-icon-accent:30%");
         }
 
+        if (theme.Name == AppThemeName.Tropical)
+        {
+            styles.Add("--pl-pageheader-background:rgba(255,255,255,.58)");
+            styles.Add("--pl-panel-background:rgba(255,255,255,.66)");
+            styles.Add("--pl-accent-soft-base:rgba(204,241,223,.5)");
+            styles.Add("--pl-card-accent:14%");
+            styles.Add("--pl-feed-tile-accent:14%");
+            styles.Add("--pl-feed-tile-unread-accent:22%");
+            styles.Add("--pl-course-detail-accent:12%");
+            styles.Add("--pl-icon-accent:24%");
+        }
+
         return string.Join(";", styles);
     }
 

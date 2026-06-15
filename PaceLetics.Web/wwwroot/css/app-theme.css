@@ -395,6 +395,75 @@
     border-right: 1px solid rgba(255, 144, 120, 0.18);
 }
 
+.pl-tropical-layout {
+    --pl-tropical-glass-surface: rgba(255, 255, 255, .66);
+    --pl-tropical-glass-surface-strong: rgba(255, 255, 255, .78);
+    --pl-tropical-glass-tint: rgba(204, 241, 223, .42);
+    --pl-tropical-glass-border: rgba(27, 199, 170, .22);
+}
+
+.pl-tropical-layout .pl-pageheader,
+.pl-tropical-layout .pl-panel,
+.pl-tropical-layout .pl-surface-card,
+.pl-tropical-layout .pl-loading-panel,
+.pl-tropical-layout .pl-modal-panel,
+.pl-tropical-layout .pl-bottom-sheet,
+.pl-tropical-layout .pl-bottom-sheet-item,
+.pl-tropical-layout .pl-course-card,
+.pl-tropical-layout .pl-course-detail,
+.pl-tropical-layout .pl-message-menu-panel {
+    border-color: var(--pl-tropical-glass-border);
+    background: var(--pl-tropical-glass-surface);
+    backdrop-filter: blur(12px) saturate(1.16);
+    box-shadow: 0 14px 36px rgba(31, 52, 48, .1);
+}
+
+.pl-tropical-layout .mud-main-content :where(.mud-paper) {
+    border-color: var(--pl-tropical-glass-border);
+    background: var(--pl-tropical-glass-surface);
+    backdrop-filter: blur(12px) saturate(1.16);
+}
+
+.pl-tropical-layout .pl-surface-card,
+.pl-tropical-layout .pl-loading-panel,
+.pl-tropical-layout .pl-modal-panel,
+.pl-tropical-layout .pl-bottom-sheet {
+    background: var(--pl-tropical-glass-surface-strong);
+}
+
+.pl-tropical-layout .pl-metric-tile,
+.pl-tropical-layout .pl-feed-tile,
+.pl-tropical-layout .pl-vdot-card,
+.pl-tropical-layout .pl-race-card,
+.pl-tropical-layout .pl-pace-card,
+.pl-tropical-layout .pl-training-panel {
+    backdrop-filter: blur(10px) saturate(1.14);
+    box-shadow: 0 10px 28px rgba(31, 52, 48, .08);
+}
+
+.pl-tropical-layout .pl-metric-tile {
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-metric-tile-accent, 10%), rgba(255, 255, 255, .64));
+}
+
+.pl-tropical-layout .pl-feed-tile {
+    background: color-mix(in srgb, var(--pl-feed-accent) var(--pl-feed-tile-accent, 7%), rgba(255, 255, 255, .66));
+}
+
+.pl-tropical-layout .pl-feed-tile-unread {
+    background: color-mix(in srgb, var(--pl-feed-accent) var(--pl-feed-tile-unread-accent, 12%), rgba(255, 255, 255, .68));
+}
+
+.pl-tropical-layout .pl-vdot-card,
+.pl-tropical-layout .pl-race-card,
+.pl-tropical-layout .pl-pace-card,
+.pl-tropical-layout .pl-training-panel {
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-card-accent, 8%), rgba(255, 255, 255, .68));
+}
+
+.pl-tropical-layout .pl-course-card-selected {
+    background: color-mix(in srgb, var(--mud-palette-primary) 12%, rgba(255, 255, 255, .68));
+}
+
 .pl-pageheader {
     padding: 12px 14px;
     border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 22%, var(--mud-palette-lines-default));
