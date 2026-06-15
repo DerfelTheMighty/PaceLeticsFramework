@@ -34,13 +34,13 @@
         {
             <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
         }
-        else if (_analysisEvent is not null)
+        else if (_captureSession is not null)
         {
             <MudPaper Elevation="1" Class="pa-4">
                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
                         <MudChip T="string" Size="Size.Small" Color="@GetStatusColor()" Variant="Variant.Outlined">
-                            @FormatStatus(_analysisEvent.Status)
+                            @FormatStatus(_captureSession.Status)
                         </MudChip>
                         <MudChip T="string"
                                  Size="Size.Small"
@@ -51,30 +51,30 @@
                     </MudStack>
 
                     <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                        @if (_analysisEvent.Status != RunningAnalysisEventStatus.InProgress)
+                        @if (_captureSession.Status != RunningAnalysisEventStatus.InProgress)
                         {
                             <MudButton Color="Color.Primary"
                                        Variant="Variant.Filled"
                                        StartIcon="@Icons.Material.Filled.PlayArrow"
-                                       OnClick="StartAnalysisAsync">
-                                @L["StartAnalysis"]
+                                       OnClick="StartCaptureAsync">
+                                @L["StartCapture"]
                             </MudButton>
                         }
 
-                        @if (_analysisEvent.Status == RunningAnalysisEventStatus.InProgress)
+                        @if (_captureSession.Status == RunningAnalysisEventStatus.InProgress)
                         {
                             <MudButton Color="Color.Primary"
                                        Variant="Variant.Outlined"
                                        StartIcon="@Icons.Material.Filled.DoneAll"
-                                       OnClick="CompleteAnalysisAsync">
-                                @L["CompleteAnalysis"]
+                                       OnClick="CompleteCaptureAsync">
+                                @L["CompleteCapture"]
                             </MudButton>
                         }
                     </MudStack>
                 </MudStack>
             </MudPaper>
 
-            @if (_analysisEvent.Status == RunningAnalysisEventStatus.Completed)
+            @if (_captureSession.Status == RunningAnalysisEventStatus.Completed)
             {
                 <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
                     @L["CompletedMessage"]
@@ -110,11 +110,11 @@
 
             @if (_isCaptureMode && CurrentParticipant is not null)
             {
-                <RunningAnalysisCapturePanel AnalysisEventId="@_analysisEvent.Id"
-                                             AnalysisExternalEventId="@_analysisEvent.ExternalEventId"
-                                             CourseId="@_analysisEvent.CourseId"
-                                             AnalysisTitle="@_analysisEvent.Title"
-                                             AnalysisStartsAt="@_analysisEvent.StartsAt"
+                <RunningAnalysisCapturePanel CaptureSessionId="@_captureSession.Id"
+                                             CaptureExternalEventId="@_captureSession.ExternalEventId"
+                                             CourseId="@_captureSession.CourseId"
+                                             CaptureTitle="@_captureSession.Title"
+                                             CaptureStartsAt="@_captureSession.StartsAt"
                                              ParticipantId="@CurrentParticipant.ParticipantId"
                                              AthleteUserId="@CurrentParticipant.AthleteUserId"
                                              AthleteEmail="@CurrentParticipant.AthleteEmail"
@@ -155,7 +155,7 @@
     private string? _errorMessage;
     private CourseDocument? _course;
     private CourseEventDocument? _courseEvent;
-    private RunningAnalysisEvent? _analysisEvent;
+    private RunningAnalysisCaptureSession? _captureSession;
     private IReadOnlyList<RunningAnalysisRosterItem> _roster = Array.Empty<RunningAnalysisRosterItem>();
     private BrowserRecordingStorageStatus? _recordingStorageStatus;
     private string? _selectedParticipantId;
@@ -203,11 +203,11 @@
                 if (!string.Equals(_courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase))
                     throw new InvalidOperationException(L["NotRunningAnalysis"]);
 
-                _analysisEvent = await RunningAnalysisService.PrepareEventAsync(
-                    new RunningAnalysisEventRequest(
+                _captureSession = await RunningAnalysisService.PrepareCaptureSessionAsync(
+                    new RunningAnalysisCaptureSessionRequest(
                         _courseEvent.Id,
                         _course.Id,
-                        _courseEvent.Title,
+                        _course.Name,
                         _courseEvent.StartsAt,
                         _courseEvent.EndsAt));
 
@@ -224,10 +224,10 @@
 
     private async Task LoadRosterAsync()
     {
-        if (_analysisEvent is null)
+        if (_captureSession is null)
             return;
 
-        _roster = await RunningAnalysisService.GetRosterAsync(_analysisEvent.Id);
+        _roster = await RunningAnalysisService.GetRosterAsync(_captureSession.Id);
 
         if (!string.IsNullOrWhiteSpace(_selectedParticipantId)
             && _roster.All(participant => participant.ParticipantId != _selectedParticipantId))
@@ -277,14 +277,14 @@
         }
     }
 
-    private async Task StartAnalysisAsync()
+    private async Task StartCaptureAsync()
     {
-        if (_analysisEvent is null)
+        if (_captureSession is null)
             return;
 
         try
         {
-            _analysisEvent = await RunningAnalysisService.StartAnalysisAsync(_analysisEvent.Id);
+            _captureSession = await RunningAnalysisService.StartCaptureAsync(_captureSession.Id);
             Snackbar.Add(L["StartSuccess"], Severity.Success);
         }
         catch (Exception ex)
@@ -297,18 +297,18 @@
     {
         await RefreshOnlineStateAsync();
 
-        if (_analysisEvent is null
-            || _analysisEvent.Status == RunningAnalysisEventStatus.InProgress)
+        if (_captureSession is null
+            || _captureSession.Status == RunningAnalysisEventStatus.InProgress)
         {
             return;
         }
 
-        _analysisEvent = await RunningAnalysisService.StartAnalysisAsync(_analysisEvent.Id);
+        _captureSession = await RunningAnalysisService.StartCaptureAsync(_captureSession.Id);
     }
 
-    private async Task CompleteAnalysisAsync()
+    private async Task CompleteCaptureAsync()
     {
-        if (_analysisEvent is null)
+        if (_captureSession is null)
             return;
 
         var confirmed = await JS.InvokeAsync<bool>("confirm", L["CompleteConfirm"].ToString());
@@ -317,7 +317,7 @@
 
         try
         {
-            _analysisEvent = await RunningAnalysisService.CompleteAnalysisAsync(_analysisEvent.Id);
+            _captureSession = await RunningAnalysisService.CompleteCaptureAsync(_captureSession.Id);
             _isCaptureMode = false;
             _isRecording = false;
             Snackbar.Add(L["CompleteSuccess"], Severity.Success);
@@ -427,7 +427,7 @@
 
     private Color GetStatusColor()
     {
-        return _analysisEvent?.Status switch
+        return _captureSession?.Status switch
         {
             RunningAnalysisEventStatus.InProgress => Color.Primary,
             RunningAnalysisEventStatus.Completed => Color.Success,

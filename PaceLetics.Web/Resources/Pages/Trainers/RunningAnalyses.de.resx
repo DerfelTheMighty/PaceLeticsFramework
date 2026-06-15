@@ -4,19 +4,19 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Laufanalysen</value></data>
-  <data name="Title" xml:space="preserve"><value>Laufanalysen</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Analyse-Events fuer deine Kurse starten und durchfuehren.</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Laufaufnahmen</value></data>
+  <data name="Title" xml:space="preserve"><value>Laufaufnahmen</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Aufnahmetermine fuer deine Kurse starten und durchfuehren.</value></data>
   <data name="ManageCourses" xml:space="preserve"><value>Kurse verwalten</value></data>
   <data name="UploadRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
   <data name="DriveCredentialsMissing" xml:space="preserve"><value>Google Drive ist noch nicht konfiguriert. Hinterlege die Zugangsdaten ueber User-Secrets, Environment-Variablen oder die ignorierte appsettings.Local.json, bevor Teilnehmende registriert oder Aufnahmen hochgeladen werden.</value></data>
   <data name="DriveRootFolderMissing" xml:space="preserve"><value>Es ist keine zentrale Google-Drive-Ordner-ID konfiguriert. Der Adapter nutzt stattdessen den konfigurierten Root-Ordnernamen.</value></data>
-  <data name="EmptyTitle" xml:space="preserve"><value>Noch keine Laufanalysen</value></data>
+  <data name="EmptyTitle" xml:space="preserve"><value>Noch keine Laufaufnahmen</value></data>
   <data name="EmptyText" xml:space="preserve"><value>Erstelle in der Kursverwaltung ein Event vom Typ Laufanalyse.</value></data>
   <data name="CreateEvent" xml:space="preserve"><value>Event erstellen</value></data>
-  <data name="RunningAnalysis" xml:space="preserve"><value>Laufanalyse</value></data>
-  <data name="StartAnalysis" xml:space="preserve"><value>Analyse starten</value></data>
-  <data name="Loading" xml:space="preserve"><value>Laufanalysen werden geladen</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>Laufaufnahme</value></data>
+  <data name="StartAnalysis" xml:space="preserve"><value>Aufnahme oeffnen</value></data>
+  <data name="Loading" xml:space="preserve"><value>Laufaufnahmen werden geladen</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>Trainer:in konnte nicht ermittelt werden.</value></data>
   <data name="EventDate" xml:space="preserve"><value>{0:dd.MM.yyyy HH:mm} bis {1:HH:mm} Uhr</value></data>
 </root>

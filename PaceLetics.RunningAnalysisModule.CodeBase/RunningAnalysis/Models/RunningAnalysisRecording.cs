@@ -7,6 +7,7 @@ public sealed class RunningAnalysisRecording
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
     public string DocumentType { get; set; } = string.Empty;
     public string CourseId { get; set; } = string.Empty;
+    public string CaptureSessionId { get; set; } = string.Empty;
     public string AnalysisEventId { get; set; } = string.Empty;
     public string ParticipantId { get; set; } = string.Empty;
     public int AttemptNumber { get; set; }

@@ -21,11 +21,11 @@
                 else
                 {
                     <RunningAnalysisMediaRecorder @ref="_mediaRecorder"
-                                                  AnalysisEventId="@AnalysisEventId"
-                                                  AnalysisExternalEventId="@AnalysisExternalEventId"
+                                                  CaptureSessionId="@EffectiveCaptureSessionId"
+                                                  CaptureExternalEventId="@EffectiveCaptureExternalEventId"
                                                   CourseId="@CourseId"
-                                                  AnalysisTitle="@AnalysisTitle"
-                                                  AnalysisStartsAt="@AnalysisStartsAt"
+                                                  CaptureTitle="@EffectiveCaptureTitle"
+                                                  CaptureStartsAt="@EffectiveCaptureStartsAt"
                                                   ParticipantId="@ParticipantId"
                                                   AthleteUserId="@AthleteUserId"
                                                   AthleteEmail="@AthleteEmail"
@@ -103,9 +103,13 @@
     private RunningAnalysisMediaRecorder? _mediaRecorder;
     private bool _recorderIsRecording;
 
+    [Parameter] public string CaptureSessionId { get; set; } = string.Empty;
+    [Parameter] public string CaptureExternalEventId { get; set; } = string.Empty;
+    [Parameter] public string CourseId { get; set; } = string.Empty;
+    [Parameter] public string CaptureTitle { get; set; } = string.Empty;
+    [Parameter] public DateTime? CaptureStartsAt { get; set; }
     [Parameter] public string AnalysisEventId { get; set; } = string.Empty;
     [Parameter] public string AnalysisExternalEventId { get; set; } = string.Empty;
-    [Parameter] public string CourseId { get; set; } = string.Empty;
     [Parameter] public string AnalysisTitle { get; set; } = string.Empty;
     [Parameter] public DateTime? AnalysisStartsAt { get; set; }
     [Parameter] public string ParticipantId { get; set; } = string.Empty;
@@ -126,6 +130,10 @@
     [Parameter] public EventCallback OnBackToRoster { get; set; }
 
     private bool IsRecordingActive => IsRecording || _recorderIsRecording;
+    private string EffectiveCaptureSessionId => string.IsNullOrWhiteSpace(CaptureSessionId) ? AnalysisEventId : CaptureSessionId;
+    private string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
+    private string EffectiveCaptureTitle => string.IsNullOrWhiteSpace(CaptureTitle) ? AnalysisTitle : CaptureTitle;
+    private DateTime? EffectiveCaptureStartsAt => CaptureStartsAt ?? AnalysisStartsAt;
 
     private async Task StartRecordingAsync()
     {

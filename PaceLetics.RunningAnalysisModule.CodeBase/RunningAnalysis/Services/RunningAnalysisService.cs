@@ -27,19 +27,19 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         _clock = clock;
     }
 
-    public async Task<RunningAnalysisEvent> PrepareEventAsync(
-        RunningAnalysisEventRequest request,
+    public async Task<RunningAnalysisCaptureSession> PrepareCaptureSessionAsync(
+        RunningAnalysisCaptureSessionRequest request,
         CancellationToken cancellationToken = default)
     {
-        ValidateEventRequest(request);
+        ValidateCaptureSessionRequest(request);
 
-        var analysisEvent = await _repository.GetEventByExternalEventIdAsync(
-            request.ExternalEventId,
+        var captureSession = await _repository.GetCaptureSessionByExternalEventIdAsync(
+            request.ExternalEventId.Trim(),
             cancellationToken);
 
-        if (analysisEvent is null)
+        if (captureSession is null)
         {
-            analysisEvent = new RunningAnalysisEvent
+            captureSession = new RunningAnalysisCaptureSession
             {
                 ExternalEventId = request.ExternalEventId.Trim(),
                 CourseId = request.CourseId.Trim(),
@@ -47,17 +47,34 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
             };
         }
 
-        analysisEvent.CourseId = request.CourseId.Trim();
-        analysisEvent.Title = request.Title.Trim();
-        analysisEvent.StartsAt = request.StartsAt;
-        analysisEvent.EndsAt = request.EndsAt;
-        analysisEvent.UpdatedAt = _clock.UtcNow;
+        captureSession.CourseId = request.CourseId.Trim();
+        captureSession.CourseName = request.CourseName.Trim();
+        captureSession.Title = BuildCaptureTitle(request.StartsAt, request.CourseName);
+        captureSession.StartsAt = request.StartsAt;
+        captureSession.EndsAt = request.EndsAt;
+        captureSession.UpdatedAt = _clock.UtcNow;
 
-        if (analysisEvent.Status == RunningAnalysisEventStatus.Draft)
-            analysisEvent.Status = RunningAnalysisEventStatus.Prepared;
+        if (captureSession.Status == RunningAnalysisEventStatus.Draft)
+            captureSession.Status = RunningAnalysisEventStatus.Prepared;
 
-        await _repository.UpsertEventAsync(analysisEvent, cancellationToken);
-        return analysisEvent;
+        await _repository.UpsertCaptureSessionAsync(captureSession, cancellationToken);
+        return captureSession;
+    }
+
+    public async Task<RunningAnalysisEvent> PrepareEventAsync(
+        RunningAnalysisEventRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var captureSession = await PrepareCaptureSessionAsync(
+            new RunningAnalysisCaptureSessionRequest(
+                request.ExternalEventId,
+                request.CourseId,
+                request.Title,
+                request.StartsAt,
+                request.EndsAt),
+            cancellationToken);
+
+        return ToLegacyEvent(captureSession);
     }
 
     public async Task<RunningAnalysisParticipant> RegisterParticipantAsync(
@@ -66,47 +83,55 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
     {
         ValidateRegistration(registration);
 
-        var analysisEvent = await PrepareEventAsync(
-            new RunningAnalysisEventRequest(
+        var courseName = string.IsNullOrWhiteSpace(registration.CourseName)
+            ? registration.EventTitle
+            : registration.CourseName;
+
+        var captureSession = await PrepareCaptureSessionAsync(
+            new RunningAnalysisCaptureSessionRequest(
                 registration.ExternalEventId,
                 registration.CourseId,
-                registration.EventTitle,
+                courseName,
                 registration.StartsAt,
                 registration.EndsAt),
             cancellationToken);
+
         var participant = await _repository.GetParticipantAsync(
-            analysisEvent.Id,
+            captureSession.Id,
             registration.AthleteUserId,
             cancellationToken);
 
         if (participant is null)
         {
-            var participants = await _repository.GetParticipantsAsync(analysisEvent.Id, cancellationToken);
+            var participants = await _repository.GetParticipantsAsync(captureSession.Id, cancellationToken);
             participant = new RunningAnalysisParticipant
             {
-                CourseId = analysisEvent.CourseId,
-                AnalysisEventId = analysisEvent.Id,
+                CourseId = captureSession.CourseId,
+                CaptureSessionId = captureSession.Id,
+                AnalysisEventId = captureSession.Id,
                 AthleteUserId = registration.AthleteUserId.Trim(),
                 SortOrder = participants.Count + 1,
                 RegisteredAt = registration.RegisteredAt ?? _clock.UtcNow
             };
         }
 
-        participant.CourseId = analysisEvent.CourseId;
+        participant.CourseId = captureSession.CourseId;
+        participant.CaptureSessionId = captureSession.Id;
+        participant.AnalysisEventId = captureSession.Id;
         participant.DisplayName = Normalize(registration.DisplayName, registration.AthleteUserId);
         participant.Email = registration.Email.Trim();
         participant.CreatedFromRegistrationId = registration.RegistrationId;
-        await ProvisionParticipantFolderAsync(analysisEvent, participant, cancellationToken);
+        await ProvisionParticipantFolderAsync(captureSession, participant, cancellationToken);
         await _repository.UpsertParticipantAsync(participant, cancellationToken);
 
         return participant;
     }
 
     public async Task<IReadOnlyList<RunningAnalysisRosterItem>> GetRosterAsync(
-        string analysisEventId,
+        string captureSessionId,
         CancellationToken cancellationToken = default)
     {
-        var participants = await _repository.GetParticipantsAsync(analysisEventId, cancellationToken);
+        var participants = await _repository.GetParticipantsAsync(captureSessionId, cancellationToken);
         var result = new List<RunningAnalysisRosterItem>();
 
         foreach (var participant in participants.OrderBy(participant => participant.SortOrder).ThenBy(participant => participant.DisplayName))
@@ -128,84 +153,125 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         return result;
     }
 
-    public async Task<IReadOnlyList<RunningAnalysisLink>> GetAnalysesForAthleteAsync(
+    public async Task<IReadOnlyList<RunningAnalysisCaptureLink>> GetCapturesForAthleteAsync(
         string athleteUserId,
         CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(athleteUserId))
-            return Array.Empty<RunningAnalysisLink>();
+            return Array.Empty<RunningAnalysisCaptureLink>();
 
         var participants = await _repository.GetParticipantsForAthleteAsync(athleteUserId, cancellationToken);
-        var result = new List<RunningAnalysisLink>();
+        var result = new List<RunningAnalysisCaptureLink>();
 
         foreach (var participant in participants.Where(participant => !participant.IsHiddenFromAthlete))
         {
-            var analysisEvent = await _repository.GetEventAsync(participant.AnalysisEventId, cancellationToken);
-            if (analysisEvent is null)
+            var captureSessionId = GetParticipantCaptureSessionId(participant);
+            var captureSession = await _repository.GetCaptureSessionAsync(captureSessionId, cancellationToken);
+            if (captureSession is null)
                 continue;
 
-            result.Add(new RunningAnalysisLink(
-                analysisEvent.Id,
-                analysisEvent.ExternalEventId,
-                analysisEvent.Title,
-                analysisEvent.StartsAt,
-                analysisEvent.Status,
+            result.Add(new RunningAnalysisCaptureLink(
+                captureSession.Id,
+                captureSession.ExternalEventId,
+                captureSession.Title,
+                captureSession.StartsAt,
+                captureSession.Status,
                 participant.FolderStatus,
                 participant.PermissionStatus,
                 participant.DriveFolderUrl));
         }
 
         return result
-            .OrderByDescending(analysis => analysis.StartsAt)
-            .ThenBy(analysis => analysis.Title)
+            .OrderByDescending(capture => capture.StartsAt)
+            .ThenBy(capture => capture.Title)
             .ToList();
     }
 
-    public async Task HideAnalysisForAthleteAsync(
+    public async Task<IReadOnlyList<RunningAnalysisLink>> GetAnalysesForAthleteAsync(
         string athleteUserId,
-        string analysisEventId,
+        CancellationToken cancellationToken = default)
+    {
+        var captures = await GetCapturesForAthleteAsync(athleteUserId, cancellationToken);
+        return captures
+            .Select(capture => new RunningAnalysisLink(
+                capture.CaptureSessionId,
+                capture.ExternalEventId,
+                capture.Title,
+                capture.StartsAt,
+                capture.CaptureStatus,
+                capture.FolderStatus,
+                capture.PermissionStatus,
+                capture.DriveFolderUrl))
+            .ToList();
+    }
+
+    public async Task HideCaptureForAthleteAsync(
+        string athleteUserId,
+        string captureSessionId,
         CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(athleteUserId))
             throw new InvalidOperationException("The athlete user id is required.");
 
-        if (string.IsNullOrWhiteSpace(analysisEventId))
-            throw new InvalidOperationException("The running analysis id is required.");
+        if (string.IsNullOrWhiteSpace(captureSessionId))
+            throw new InvalidOperationException("The running capture id is required.");
 
         var participant = await _repository.GetParticipantAsync(
-            analysisEventId.Trim(),
+            captureSessionId.Trim(),
             athleteUserId.Trim(),
-            cancellationToken) ?? throw new InvalidOperationException("The running analysis was not found for this athlete.");
+            cancellationToken) ?? throw new InvalidOperationException("The running capture was not found for this athlete.");
 
         participant.IsHiddenFromAthlete = true;
         await _repository.UpsertParticipantAsync(participant, cancellationToken);
+    }
+
+    public Task HideAnalysisForAthleteAsync(
+        string athleteUserId,
+        string analysisEventId,
+        CancellationToken cancellationToken = default)
+    {
+        return HideCaptureForAthleteAsync(athleteUserId, analysisEventId, cancellationToken);
+    }
+
+    public async Task<RunningAnalysisCaptureSession> StartCaptureAsync(
+        string captureSessionId,
+        CancellationToken cancellationToken = default)
+    {
+        var captureSession = await RequireCaptureSessionAsync(captureSessionId, cancellationToken);
+
+        captureSession.Status = RunningAnalysisEventStatus.InProgress;
+        captureSession.UpdatedAt = _clock.UtcNow;
+        await _repository.UpsertCaptureSessionAsync(captureSession, cancellationToken);
+        return captureSession;
     }
 
     public async Task<RunningAnalysisEvent> StartAnalysisAsync(
         string analysisEventId,
         CancellationToken cancellationToken = default)
     {
-        var analysisEvent = await RequireEventAsync(analysisEventId, cancellationToken);
+        return ToLegacyEvent(await StartCaptureAsync(analysisEventId, cancellationToken));
+    }
 
-        analysisEvent.Status = RunningAnalysisEventStatus.InProgress;
-        analysisEvent.UpdatedAt = _clock.UtcNow;
-        await _repository.UpsertEventAsync(analysisEvent, cancellationToken);
-        return analysisEvent;
+    public async Task<RunningAnalysisCaptureSession> CompleteCaptureAsync(
+        string captureSessionId,
+        CancellationToken cancellationToken = default)
+    {
+        var captureSession = await RequireCaptureSessionAsync(captureSessionId, cancellationToken);
+        captureSession.Status = RunningAnalysisEventStatus.Completed;
+        captureSession.UpdatedAt = _clock.UtcNow;
+        await _repository.UpsertCaptureSessionAsync(captureSession, cancellationToken);
+        return captureSession;
     }
 
     public async Task<RunningAnalysisEvent> CompleteAnalysisAsync(
         string analysisEventId,
         CancellationToken cancellationToken = default)
     {
-        var analysisEvent = await RequireEventAsync(analysisEventId, cancellationToken);
-        analysisEvent.Status = RunningAnalysisEventStatus.Completed;
-        analysisEvent.UpdatedAt = _clock.UtcNow;
-        await _repository.UpsertEventAsync(analysisEvent, cancellationToken);
-        return analysisEvent;
+        return ToLegacyEvent(await CompleteCaptureAsync(analysisEventId, cancellationToken));
     }
 
     public async Task<RunningAnalysisRecording> UploadRecordingAsync(
-        string analysisEventId,
+        string captureSessionId,
         string participantId,
         string fileName,
         string contentType,
@@ -214,7 +280,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         CancellationToken cancellationToken = default)
     {
         if (!isOnline)
-            throw new InvalidOperationException("Running analysis recordings can only be uploaded while online.");
+            throw new InvalidOperationException("Running capture recordings can only be uploaded while online.");
 
         if (content is null)
             throw new ArgumentNullException(nameof(content));
@@ -222,14 +288,14 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         if (string.IsNullOrWhiteSpace(fileName))
             throw new InvalidOperationException("A recording file name is required.");
 
-        var analysisEvent = await RequireEventAsync(analysisEventId, cancellationToken);
+        var captureSession = await RequireCaptureSessionAsync(captureSessionId, cancellationToken);
         var participant = await _repository.GetParticipantByIdAsync(participantId, cancellationToken)
-            ?? throw new InvalidOperationException("The running analysis participant was not found.");
+            ?? throw new InvalidOperationException("The running capture participant was not found.");
 
-        if (participant.AnalysisEventId != analysisEvent.Id)
-            throw new InvalidOperationException("The participant does not belong to this running analysis.");
+        if (GetParticipantCaptureSessionId(participant) != captureSession.Id)
+            throw new InvalidOperationException("The participant does not belong to this running capture.");
 
-        await EnsureParticipantPersonalFolderAsync(analysisEvent, participant, cancellationToken);
+        await EnsureParticipantPersonalFolderAsync(captureSession, participant, cancellationToken);
         await _repository.UpsertParticipantAsync(participant, cancellationToken);
 
         if (participant.FolderStatus != RunningAnalysisFolderStatus.Ready || string.IsNullOrWhiteSpace(participant.DriveFolderId))
@@ -238,8 +304,9 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         var recordings = await _repository.GetRecordingsForParticipantAsync(participant.Id, cancellationToken);
         var recording = new RunningAnalysisRecording
         {
-            CourseId = analysisEvent.CourseId,
-            AnalysisEventId = analysisEvent.Id,
+            CourseId = captureSession.CourseId,
+            CaptureSessionId = captureSession.Id,
+            AnalysisEventId = captureSession.Id,
             ParticipantId = participant.Id,
             AttemptNumber = recordings.Count + 1,
             RecordedAt = _clock.UtcNow,
@@ -253,7 +320,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         try
         {
             var driveFile = await _storageProvider.UploadRecordingAsync(
-                new UploadRecordingRequest(analysisEvent, participant, recording, content),
+                new UploadRecordingRequest(ToLegacyEvent(captureSession), participant, recording, content),
                 cancellationToken);
 
             recording.DriveFileId = driveFile.FileId;
@@ -274,7 +341,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
     }
 
     private async Task ProvisionParticipantFolderAsync(
-        RunningAnalysisEvent analysisEvent,
+        RunningAnalysisCaptureSession captureSession,
         RunningAnalysisParticipant participant,
         CancellationToken cancellationToken)
     {
@@ -284,7 +351,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
 
         try
         {
-            await EnsureParticipantPersonalFolderAsync(analysisEvent, participant, cancellationToken);
+            await EnsureParticipantPersonalFolderAsync(captureSession, participant, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -297,7 +364,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
     }
 
     private async Task EnsureParticipantPersonalFolderAsync(
-        RunningAnalysisEvent analysisEvent,
+        RunningAnalysisCaptureSession captureSession,
         RunningAnalysisParticipant participant,
         CancellationToken cancellationToken)
     {
@@ -311,14 +378,16 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
 
         await _folderRegistry.SaveFolderReferenceAsync(
             new SaveDriveFolderReferenceRequest(
-                analysisEvent.CourseId,
-                analysisEvent.ExternalEventId,
+                captureSession.CourseId,
+                captureSession.ExternalEventId,
                 participant.AthleteUserId,
                 participant.Email,
                 participantFolder.FolderId,
                 participantFolder.Url),
             cancellationToken);
 
+        participant.CaptureSessionId = captureSession.Id;
+        participant.AnalysisEventId = captureSession.Id;
         participant.DriveFolderId = participantFolder.FolderId;
         participant.DriveFolderUrl = participantFolder.Url;
         participant.FolderStatus = RunningAnalysisFolderStatus.Ready;
@@ -345,15 +414,15 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         }
     }
 
-    private async Task<RunningAnalysisEvent> RequireEventAsync(
-        string analysisEventId,
+    private async Task<RunningAnalysisCaptureSession> RequireCaptureSessionAsync(
+        string captureSessionId,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(analysisEventId))
-            throw new InvalidOperationException("A running analysis event id is required.");
+        if (string.IsNullOrWhiteSpace(captureSessionId))
+            throw new InvalidOperationException("A running capture session id is required.");
 
-        return await _repository.GetEventAsync(analysisEventId, cancellationToken)
-            ?? throw new InvalidOperationException("The running analysis event was not found.");
+        return await _repository.GetCaptureSessionAsync(captureSessionId, cancellationToken)
+            ?? throw new InvalidOperationException("The running capture session was not found.");
     }
 
     private static void ValidateRegistration(RunningAnalysisRegistration registration)
@@ -364,17 +433,20 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         if (string.IsNullOrWhiteSpace(registration.CourseId))
             throw new InvalidOperationException("A course id is required.");
 
-        if (string.IsNullOrWhiteSpace(registration.EventTitle))
-            throw new InvalidOperationException("A running analysis title is required.");
+        if (string.IsNullOrWhiteSpace(registration.EventTitle)
+            && string.IsNullOrWhiteSpace(registration.CourseName))
+        {
+            throw new InvalidOperationException("A running capture title source is required.");
+        }
 
         if (registration.EndsAt <= registration.StartsAt)
-            throw new InvalidOperationException("The running analysis end must be after the start.");
+            throw new InvalidOperationException("The running capture end must be after the start.");
 
         if (string.IsNullOrWhiteSpace(registration.AthleteUserId))
             throw new InvalidOperationException("An athlete user id is required.");
     }
 
-    private static void ValidateEventRequest(RunningAnalysisEventRequest request)
+    private static void ValidateCaptureSessionRequest(RunningAnalysisCaptureSessionRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.ExternalEventId))
             throw new InvalidOperationException("A source event id is required.");
@@ -382,11 +454,42 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         if (string.IsNullOrWhiteSpace(request.CourseId))
             throw new InvalidOperationException("A course id is required.");
 
-        if (string.IsNullOrWhiteSpace(request.Title))
-            throw new InvalidOperationException("A running analysis title is required.");
+        if (string.IsNullOrWhiteSpace(request.CourseName))
+            throw new InvalidOperationException("A course name is required.");
 
         if (request.EndsAt <= request.StartsAt)
-            throw new InvalidOperationException("The running analysis end must be after the start.");
+            throw new InvalidOperationException("The running capture end must be after the start.");
+    }
+
+    private static string BuildCaptureTitle(DateTime startsAt, string courseName)
+    {
+        return $"{startsAt:yyyy-MM-dd} {courseName.Trim()}";
+    }
+
+    private static string GetParticipantCaptureSessionId(RunningAnalysisParticipant participant)
+    {
+        return string.IsNullOrWhiteSpace(participant.CaptureSessionId)
+            ? participant.AnalysisEventId
+            : participant.CaptureSessionId;
+    }
+
+    private static RunningAnalysisEvent ToLegacyEvent(RunningAnalysisCaptureSession captureSession)
+    {
+        return new RunningAnalysisEvent
+        {
+            Id = captureSession.Id,
+            DocumentType = captureSession.DocumentType,
+            ExternalEventId = captureSession.ExternalEventId,
+            CourseId = captureSession.CourseId,
+            Title = captureSession.Title,
+            StartsAt = captureSession.StartsAt,
+            EndsAt = captureSession.EndsAt,
+            Status = captureSession.Status,
+            DriveFolderId = captureSession.DriveFolderId,
+            DriveFolderUrl = captureSession.DriveFolderUrl,
+            CreatedAt = captureSession.CreatedAt,
+            UpdatedAt = captureSession.UpdatedAt
+        };
     }
 
     private static string Normalize(string value, string fallback)

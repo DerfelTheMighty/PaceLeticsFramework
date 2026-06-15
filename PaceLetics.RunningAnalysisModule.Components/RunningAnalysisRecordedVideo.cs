@@ -21,4 +21,14 @@ public sealed record RunningAnalysisRecordedVideo(
     int UploadAttempts,
     DateTime? LastUploadAt,
     string? LastError,
-    string? DriveFileUrl);
+    string? DriveFileUrl,
+    string CaptureSessionId = "",
+    string CaptureExternalEventId = "",
+    string CaptureTitle = "",
+    DateTime? CaptureStartsAt = null)
+{
+    public string EffectiveCaptureSessionId => string.IsNullOrWhiteSpace(CaptureSessionId) ? AnalysisEventId : CaptureSessionId;
+    public string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
+    public string EffectiveCaptureTitle => string.IsNullOrWhiteSpace(CaptureTitle) ? AnalysisTitle : CaptureTitle;
+    public DateTime? EffectiveCaptureStartsAt => CaptureStartsAt ?? AnalysisStartsAt;
+}

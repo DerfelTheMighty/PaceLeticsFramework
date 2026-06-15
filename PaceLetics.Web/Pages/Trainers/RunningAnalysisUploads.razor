@@ -478,8 +478,8 @@
                 new UserDriveAnalysisRecordingUploadRequest(
                     pendingRecording.AthleteUserId,
                     pendingRecording.AthleteEmail,
-                    GetAnalysisFolderTitle(pendingRecording),
-                    pendingRecording.AnalysisStartsAt,
+                    GetCaptureFolderTitle(pendingRecording),
+                    pendingRecording.EffectiveCaptureStartsAt,
                     pendingRecording.FileName,
                     pendingRecording.ContentType,
                     content),
@@ -577,24 +577,24 @@
 
     private static string GetRecordingAnalysisText(RunningAnalysisRecordedVideo recording)
     {
-        var title = GetAnalysisFolderTitle(recording);
-        return recording.AnalysisStartsAt is { } startsAt
+        var title = GetCaptureFolderTitle(recording);
+        return recording.EffectiveCaptureStartsAt is { } startsAt
             ? $"{title}, {startsAt.ToLocalTime():dd.MM.yyyy HH:mm}"
             : title;
     }
 
-    private static string GetAnalysisFolderTitle(RunningAnalysisRecordedVideo recording)
+    private static string GetCaptureFolderTitle(RunningAnalysisRecordedVideo recording)
     {
-        if (!string.IsNullOrWhiteSpace(recording.AnalysisTitle))
-            return recording.AnalysisTitle.Trim();
+        if (!string.IsNullOrWhiteSpace(recording.EffectiveCaptureTitle))
+            return recording.EffectiveCaptureTitle.Trim();
 
-        if (!string.IsNullOrWhiteSpace(recording.AnalysisExternalEventId))
-            return recording.AnalysisExternalEventId.Trim();
+        if (!string.IsNullOrWhiteSpace(recording.EffectiveCaptureExternalEventId))
+            return recording.EffectiveCaptureExternalEventId.Trim();
 
-        if (!string.IsNullOrWhiteSpace(recording.AnalysisEventId))
-            return recording.AnalysisEventId.Trim();
+        if (!string.IsNullOrWhiteSpace(recording.EffectiveCaptureSessionId))
+            return recording.EffectiveCaptureSessionId.Trim();
 
-        return "Laufanalyse";
+        return "Laufaufnahme";
     }
 
     private string GetRecordingLastError(RunningAnalysisRecordedVideo recording)

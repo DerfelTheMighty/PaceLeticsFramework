@@ -1,6 +1,6 @@
 const recorders = new WeakMap();
 const databaseName = "paceletics-running-analysis";
-const databaseVersion = 2;
+const databaseVersion = 3;
 const recordingStoreName = "recordings";
 const settingsStoreName = "settings";
 const recordingDirectoryKey = "recordingDirectory";
@@ -200,7 +200,7 @@ export async function getRecordingStorageStatus() {
   }
 }
 
-export async function listSavedRecordings(analysisEventId, requestDirectoryPermission = false, folderOnly = false) {
+export async function listSavedRecordings(captureSessionId, requestDirectoryPermission = false, folderOnly = false) {
   const scannedLocalIds = await importRecordingsFromConfiguredDirectory(requestDirectoryPermission);
 
   const database = await openDatabase();
@@ -211,7 +211,7 @@ export async function listSavedRecordings(analysisEventId, requestDirectoryPermi
 
   return recordings
     .filter(recording => !folderOnly || (Array.isArray(scannedLocalIds) && scannedLocalIds.includes(recording.localId)))
-    .filter(recording => !analysisEventId || recording.analysisEventId === analysisEventId)
+    .filter(recording => !captureSessionId || getRecordingCaptureSessionId(recording) === captureSessionId)
     .map(toRecordingPayload)
     .sort((left, right) => left.recordedAt.localeCompare(right.recordedAt));
 }
@@ -326,11 +326,11 @@ function getSupportedContentType() {
 }
 
 function createRecordingMetadata(metadata, contentType, localId, directoryHandle) {
-  const analysisEventId = getMetadataValue(metadata, "analysisEventId");
-  const analysisExternalEventId = getMetadataValue(metadata, "analysisExternalEventId");
+  const captureSessionId = getMetadataValue(metadata, "captureSessionId") || getMetadataValue(metadata, "analysisEventId");
+  const captureExternalEventId = getMetadataValue(metadata, "captureExternalEventId") || getMetadataValue(metadata, "analysisExternalEventId");
   const courseId = getMetadataValue(metadata, "courseId");
-  const analysisTitle = getMetadataValue(metadata, "analysisTitle");
-  const analysisStartsAt = getMetadataValue(metadata, "analysisStartsAt");
+  const captureTitle = getMetadataValue(metadata, "captureTitle") || getMetadataValue(metadata, "analysisTitle");
+  const captureStartsAt = getMetadataValue(metadata, "captureStartsAt") || getMetadataValue(metadata, "analysisStartsAt");
   const participantId = getMetadataValue(metadata, "participantId");
   const athleteUserId = getMetadataValue(metadata, "athleteUserId");
   const athleteEmail = getMetadataValue(metadata, "athleteEmail");
@@ -349,11 +349,15 @@ function createRecordingMetadata(metadata, contentType, localId, directoryHandle
   return {
     artifactType: recordingArtifactType,
     localId,
-    analysisEventId,
-    analysisExternalEventId,
+    captureSessionId,
+    captureExternalEventId,
+    analysisEventId: captureSessionId,
+    analysisExternalEventId: captureExternalEventId,
     courseId,
-    analysisTitle,
-    analysisStartsAt,
+    captureTitle,
+    captureStartsAt,
+    analysisTitle: captureTitle,
+    analysisStartsAt: captureStartsAt,
     participantId,
     athleteUserId,
     athleteEmail,
@@ -489,11 +493,15 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
 
     return {
       localId: metadata.localId,
-      analysisEventId: metadata.analysisEventId || "",
-      analysisExternalEventId: metadata.analysisExternalEventId || "",
+      captureSessionId: metadata.captureSessionId || metadata.analysisEventId || "",
+      captureExternalEventId: metadata.captureExternalEventId || metadata.analysisExternalEventId || "",
+      analysisEventId: metadata.analysisEventId || metadata.captureSessionId || "",
+      analysisExternalEventId: metadata.analysisExternalEventId || metadata.captureExternalEventId || "",
       courseId: metadata.courseId || "",
-      analysisTitle: metadata.analysisTitle || "",
-      analysisStartsAt: metadata.analysisStartsAt || null,
+      captureTitle: metadata.captureTitle || metadata.analysisTitle || "",
+      captureStartsAt: metadata.captureStartsAt || metadata.analysisStartsAt || null,
+      analysisTitle: metadata.analysisTitle || metadata.captureTitle || "",
+      analysisStartsAt: metadata.analysisStartsAt || metadata.captureStartsAt || null,
       participantId: metadata.participantId,
       athleteUserId: metadata.athleteUserId,
       athleteEmail: metadata.athleteEmail || "",
@@ -578,9 +586,16 @@ function openDatabase() {
 
     request.addEventListener("upgradeneeded", () => {
       const database = request.result;
+      let store = null;
       if (!database.objectStoreNames.contains(recordingStoreName)) {
-        const store = database.createObjectStore(recordingStoreName, { keyPath: "localId" });
+        store = database.createObjectStore(recordingStoreName, { keyPath: "localId" });
         store.createIndex("analysisEventId", "analysisEventId", { unique: false });
+      } else {
+        store = request.transaction.objectStore(recordingStoreName);
+      }
+
+      if (store && !store.indexNames.contains("captureSessionId")) {
+        store.createIndex("captureSessionId", "captureSessionId", { unique: false });
       }
 
       if (!database.objectStoreNames.contains(settingsStoreName)) {
@@ -609,13 +624,22 @@ function transactionToPromise(transaction) {
 }
 
 function toRecordingPayload(recording) {
+  const captureSessionId = getRecordingCaptureSessionId(recording);
+  const captureExternalEventId = recording.captureExternalEventId || recording.analysisExternalEventId || "";
+  const captureTitle = recording.captureTitle || recording.analysisTitle || "";
+  const captureStartsAt = recording.captureStartsAt || recording.analysisStartsAt || null;
+
   return {
     localId: recording.localId,
-    analysisEventId: recording.analysisEventId || "",
-    analysisExternalEventId: recording.analysisExternalEventId || "",
+    captureSessionId,
+    captureExternalEventId,
+    analysisEventId: recording.analysisEventId || captureSessionId,
+    analysisExternalEventId: recording.analysisExternalEventId || captureExternalEventId,
     courseId: recording.courseId || "",
-    analysisTitle: recording.analysisTitle || "",
-    analysisStartsAt: recording.analysisStartsAt || null,
+    captureTitle,
+    captureStartsAt,
+    analysisTitle: recording.analysisTitle || captureTitle,
+    analysisStartsAt: recording.analysisStartsAt || captureStartsAt,
     participantId: recording.participantId,
     athleteUserId: recording.athleteUserId || "",
     athleteEmail: recording.athleteEmail || "",
@@ -635,14 +659,23 @@ function toRecordingPayload(recording) {
 }
 
 function toRecordingMetadata(recording) {
+  const captureSessionId = getRecordingCaptureSessionId(recording);
+  const captureExternalEventId = recording.captureExternalEventId || recording.analysisExternalEventId || "";
+  const captureTitle = recording.captureTitle || recording.analysisTitle || "";
+  const captureStartsAt = recording.captureStartsAt || recording.analysisStartsAt || null;
+
   return {
     artifactType: recordingArtifactType,
     localId: recording.localId,
-    analysisEventId: recording.analysisEventId || "",
-    analysisExternalEventId: recording.analysisExternalEventId || "",
+    captureSessionId,
+    captureExternalEventId,
+    analysisEventId: recording.analysisEventId || captureSessionId,
+    analysisExternalEventId: recording.analysisExternalEventId || captureExternalEventId,
     courseId: recording.courseId || "",
-    analysisTitle: recording.analysisTitle || "",
-    analysisStartsAt: recording.analysisStartsAt || null,
+    captureTitle,
+    captureStartsAt,
+    analysisTitle: recording.analysisTitle || captureTitle,
+    analysisStartsAt: recording.analysisStartsAt || captureStartsAt,
     participantId: recording.participantId,
     athleteUserId: recording.athleteUserId || "",
     athleteEmail: recording.athleteEmail || "",
@@ -661,6 +694,10 @@ function toRecordingMetadata(recording) {
     lastError: recording.lastError || "",
     driveFileUrl: recording.driveFileUrl || ""
   };
+}
+
+function getRecordingCaptureSessionId(recording) {
+  return recording.captureSessionId || recording.analysisEventId || "";
 }
 
 async function loadRecordingDirectoryHandle() {

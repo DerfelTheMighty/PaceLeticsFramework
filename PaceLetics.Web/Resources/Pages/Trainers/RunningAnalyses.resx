@@ -4,19 +4,19 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Running analyses</value></data>
-  <data name="Title" xml:space="preserve"><value>Running analyses</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Start and run analysis events for your courses.</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Running recordings</value></data>
+  <data name="Title" xml:space="preserve"><value>Running recordings</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Start and run recording sessions for your courses.</value></data>
   <data name="ManageCourses" xml:space="preserve"><value>Manage courses</value></data>
   <data name="UploadRecordings" xml:space="preserve"><value>Upload recordings</value></data>
   <data name="DriveCredentialsMissing" xml:space="preserve"><value>Google Drive credentials are not configured. Add them through user-secrets, environment variables, or the ignored appsettings.Local.json before participants register or recordings are uploaded.</value></data>
   <data name="DriveRootFolderMissing" xml:space="preserve"><value>No central Google Drive folder id is configured. The adapter will use the configured root folder name instead.</value></data>
-  <data name="EmptyTitle" xml:space="preserve"><value>No running analyses yet</value></data>
+  <data name="EmptyTitle" xml:space="preserve"><value>No running recordings yet</value></data>
   <data name="EmptyText" xml:space="preserve"><value>Create an event with the running analysis type in course management.</value></data>
   <data name="CreateEvent" xml:space="preserve"><value>Create event</value></data>
-  <data name="RunningAnalysis" xml:space="preserve"><value>Running analysis</value></data>
-  <data name="StartAnalysis" xml:space="preserve"><value>Start analysis</value></data>
-  <data name="Loading" xml:space="preserve"><value>Loading running analyses</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>Running recording</value></data>
+  <data name="StartAnalysis" xml:space="preserve"><value>Open recording</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading running recordings</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>The coach could not be resolved.</value></data>
   <data name="EventDate" xml:space="preserve"><value>{0:MM/dd/yyyy HH:mm} to {1:HH:mm}</value></data>
 </root>

@@ -4,11 +4,11 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Running analysis uploads</value></data>
-  <data name="Title" xml:space="preserve"><value>Running analysis uploads</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Running recording uploads</value></data>
+  <data name="Title" xml:space="preserve"><value>Running recording uploads</value></data>
   <data name="Subtitle" xml:space="preserve"><value>Upload saved local recordings to the matching participant folders.</value></data>
   <data name="Loading" xml:space="preserve"><value>Loading upload queue</value></data>
-  <data name="BackToAnalyses" xml:space="preserve"><value>Back to analyses</value></data>
+  <data name="BackToAnalyses" xml:space="preserve"><value>Back to recordings</value></data>
   <data name="LocalStorageTitle" xml:space="preserve"><value>Local recording folder</value></data>
   <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Choose folder</value></data>
   <data name="RefreshQueue" xml:space="preserve"><value>Refresh</value></data>
@@ -17,11 +17,11 @@
   <data name="LocalStorageReadyText" xml:space="preserve"><value>Recordings are loaded from "{0}". Storage location: {1}</value></data>
   <data name="LocalStorageUnknown" xml:space="preserve"><value>Checking local recording folder.</value></data>
   <data name="LocalStorageUnsupported" xml:space="preserve"><value>This browser cannot read recordings directly from a local device folder.</value></data>
-  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Choose the local folder that contains the saved analysis video and JSON files.</value></data>
+  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Choose the local folder that contains the saved recording video and JSON files.</value></data>
   <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>The browser needs access to the selected local recording folder again.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Upload queue</value></data>
   <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} local, {1} pending, {2} failed, {3} uploaded.</value></data>
-  <data name="NoLocalRecordings" xml:space="preserve"><value>No complete analysis recordings were found in the selected folder.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>No complete recordings were found in the selected folder.</value></data>
   <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>The local folder is still selected, but the browser needs access again after reload. Click "Renew access" so the existing video and JSON files can be scanned again.</value></data>
   <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>The local folder could not be scanned: {0}</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Upload recordings</value></data>

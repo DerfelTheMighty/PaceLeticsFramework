@@ -10,4 +10,5 @@ public sealed record RunningAnalysisRegistration(
     string DisplayName,
     string Email,
     string? RegistrationId = null,
-    DateTime? RegisteredAt = null);
+    DateTime? RegisteredAt = null,
+    string CourseName = "");

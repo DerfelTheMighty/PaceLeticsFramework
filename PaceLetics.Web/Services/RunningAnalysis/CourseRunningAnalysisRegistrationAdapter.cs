@@ -50,7 +50,8 @@ public sealed class CourseRunningAnalysisRegistrationAdapter : ICourseRunningAna
                     DisplayName: GetDisplayName(athlete, user?.UserName ?? registration.AthleteUserId),
                     Email: email,
                     RegistrationId: registration.Id,
-                    RegisteredAt: registration.RegisteredAt),
+                    RegisteredAt: registration.RegisteredAt,
+                    CourseName: course.Name),
                 cancellationToken);
         }
         catch (Exception ex)

@@ -4,6 +4,12 @@ namespace PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 
 public interface IRunningAnalysisRepository
 {
+    Task<RunningAnalysisCaptureSession?> GetCaptureSessionAsync(string captureSessionId, CancellationToken cancellationToken = default);
+
+    Task<RunningAnalysisCaptureSession?> GetCaptureSessionByExternalEventIdAsync(string externalEventId, CancellationToken cancellationToken = default);
+
+    Task UpsertCaptureSessionAsync(RunningAnalysisCaptureSession captureSession, CancellationToken cancellationToken = default);
+
     Task<RunningAnalysisEvent?> GetEventAsync(string analysisEventId, CancellationToken cancellationToken = default);
 
     Task<RunningAnalysisEvent?> GetEventByExternalEventIdAsync(string externalEventId, CancellationToken cancellationToken = default);

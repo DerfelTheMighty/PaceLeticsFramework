@@ -18,6 +18,7 @@ public sealed class RunningAnalysisServiceTests
 
         Assert.Equal("course-event-1", analysisEvent.ExternalEventId);
         Assert.Equal("course-1", analysisEvent.CourseId);
+        Assert.Equal("2026-06-05 Running analysis", analysisEvent.Title);
         Assert.Equal(RunningAnalysisEventStatus.Prepared, analysisEvent.Status);
         Assert.Single(repository.Events.Values);
     }
@@ -30,10 +31,10 @@ public sealed class RunningAnalysisServiceTests
         var analysisEvent = await service.PrepareEventAsync(CreateEventRequest());
         await service.StartAnalysisAsync(analysisEvent.Id);
 
-        var updated = await service.PrepareEventAsync(CreateEventRequest(title: "Updated analysis"));
+        var updated = await service.PrepareEventAsync(CreateEventRequest(title: "Updated course"));
 
         Assert.Equal(analysisEvent.Id, updated.Id);
-        Assert.Equal("Updated analysis", updated.Title);
+        Assert.Equal("2026-06-05 Updated course", updated.Title);
         Assert.Equal(RunningAnalysisEventStatus.InProgress, updated.Status);
         Assert.Single(repository.Events.Values);
     }
@@ -216,8 +217,8 @@ public sealed class RunningAnalysisServiceTests
         await service.RegisterParticipantAsync(CreateRegistration());
         var analysisEvent = Assert.Single(repository.Events.Values);
 
-        await service.StartAnalysisAsync(analysisEvent.Id);
-        Assert.Equal(RunningAnalysisEventStatus.InProgress, analysisEvent.Status);
+        var started = await service.StartAnalysisAsync(analysisEvent.Id);
+        Assert.Equal(RunningAnalysisEventStatus.InProgress, started.Status);
 
         var completed = await service.CompleteAnalysisAsync(analysisEvent.Id);
 
@@ -300,7 +301,8 @@ public sealed class RunningAnalysisServiceTests
             AthleteUserId: "runner-1",
             DisplayName: "Runner One",
             Email: "runner@example.com",
-            RegistrationId: "registration-1");
+            RegistrationId: "registration-1",
+            CourseName: "Lauftechnik Kurs");
     }
 
     private static RunningAnalysisEventRequest CreateEventRequest(string title = "Running analysis")
@@ -437,9 +439,46 @@ public sealed class RunningAnalysisServiceTests
 
     private sealed class InMemoryRunningAnalysisRepository : IRunningAnalysisRepository
     {
+        public Dictionary<string, RunningAnalysisCaptureSession> CaptureSessions { get; } = new(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, RunningAnalysisEvent> Events { get; } = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, RunningAnalysisParticipant> _participants = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, RunningAnalysisRecording> _recordings = new(StringComparer.OrdinalIgnoreCase);
+
+        public Task<RunningAnalysisCaptureSession?> GetCaptureSessionAsync(
+            string captureSessionId,
+            CancellationToken cancellationToken = default)
+        {
+            if (CaptureSessions.TryGetValue(captureSessionId, out var captureSession))
+                return Task.FromResult<RunningAnalysisCaptureSession?>(captureSession);
+
+            return Events.TryGetValue(captureSessionId, out var analysisEvent)
+                ? Task.FromResult<RunningAnalysisCaptureSession?>(FromLegacyEvent(analysisEvent))
+                : Task.FromResult<RunningAnalysisCaptureSession?>(null);
+        }
+
+        public Task<RunningAnalysisCaptureSession?> GetCaptureSessionByExternalEventIdAsync(
+            string externalEventId,
+            CancellationToken cancellationToken = default)
+        {
+            var captureSession = CaptureSessions.Values.FirstOrDefault(captureSession =>
+                captureSession.ExternalEventId == externalEventId);
+
+            if (captureSession is not null)
+                return Task.FromResult<RunningAnalysisCaptureSession?>(captureSession);
+
+            var analysisEvent = Events.Values.FirstOrDefault(analysisEvent =>
+                analysisEvent.ExternalEventId == externalEventId);
+            return Task.FromResult(analysisEvent is null ? null : FromLegacyEvent(analysisEvent));
+        }
+
+        public Task UpsertCaptureSessionAsync(
+            RunningAnalysisCaptureSession captureSession,
+            CancellationToken cancellationToken = default)
+        {
+            CaptureSessions[captureSession.Id] = captureSession;
+            Events[captureSession.Id] = ToLegacyEvent(captureSession);
+            return Task.CompletedTask;
+        }
 
         public Task<RunningAnalysisEvent?> GetEventAsync(
             string analysisEventId,
@@ -463,6 +502,7 @@ public sealed class RunningAnalysisServiceTests
             CancellationToken cancellationToken = default)
         {
             Events[analysisEvent.Id] = analysisEvent;
+            CaptureSessions[analysisEvent.Id] = FromLegacyEvent(analysisEvent);
             return Task.CompletedTask;
         }
 
@@ -471,7 +511,7 @@ public sealed class RunningAnalysisServiceTests
             CancellationToken cancellationToken = default)
         {
             return Task.FromResult<IReadOnlyList<RunningAnalysisParticipant>>(
-                _participants.Values.Where(participant => participant.AnalysisEventId == analysisEventId).ToList());
+                _participants.Values.Where(participant => GetParticipantCaptureSessionId(participant) == analysisEventId).ToList());
         }
 
         public Task<IReadOnlyList<RunningAnalysisParticipant>> GetParticipantsForAthleteAsync(
@@ -488,7 +528,7 @@ public sealed class RunningAnalysisServiceTests
             CancellationToken cancellationToken = default)
         {
             var participant = _participants.Values.FirstOrDefault(participant =>
-                participant.AnalysisEventId == analysisEventId
+                GetParticipantCaptureSessionId(participant) == analysisEventId
                 && participant.AthleteUserId == athleteUserId);
             return Task.FromResult(participant);
         }
@@ -523,6 +563,50 @@ public sealed class RunningAnalysisServiceTests
         {
             _recordings[recording.Id] = recording;
             return Task.CompletedTask;
+        }
+
+        private static string GetParticipantCaptureSessionId(RunningAnalysisParticipant participant)
+        {
+            return string.IsNullOrWhiteSpace(participant.CaptureSessionId)
+                ? participant.AnalysisEventId
+                : participant.CaptureSessionId;
+        }
+
+        private static RunningAnalysisCaptureSession FromLegacyEvent(RunningAnalysisEvent analysisEvent)
+        {
+            return new RunningAnalysisCaptureSession
+            {
+                Id = analysisEvent.Id,
+                ExternalEventId = analysisEvent.ExternalEventId,
+                CourseId = analysisEvent.CourseId,
+                CourseName = analysisEvent.Title,
+                Title = analysisEvent.Title,
+                StartsAt = analysisEvent.StartsAt,
+                EndsAt = analysisEvent.EndsAt,
+                Status = analysisEvent.Status,
+                DriveFolderId = analysisEvent.DriveFolderId,
+                DriveFolderUrl = analysisEvent.DriveFolderUrl,
+                CreatedAt = analysisEvent.CreatedAt,
+                UpdatedAt = analysisEvent.UpdatedAt
+            };
+        }
+
+        private static RunningAnalysisEvent ToLegacyEvent(RunningAnalysisCaptureSession captureSession)
+        {
+            return new RunningAnalysisEvent
+            {
+                Id = captureSession.Id,
+                ExternalEventId = captureSession.ExternalEventId,
+                CourseId = captureSession.CourseId,
+                Title = captureSession.Title,
+                StartsAt = captureSession.StartsAt,
+                EndsAt = captureSession.EndsAt,
+                Status = captureSession.Status,
+                DriveFolderId = captureSession.DriveFolderId,
+                DriveFolderUrl = captureSession.DriveFolderUrl,
+                CreatedAt = captureSession.CreatedAt,
+                UpdatedAt = captureSession.UpdatedAt
+            };
         }
     }
 }

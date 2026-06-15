@@ -61,9 +61,13 @@
     private bool _isRecording;
     private string? _errorMessage;
 
+    [Parameter] public string CaptureSessionId { get; set; } = string.Empty;
+    [Parameter] public string CaptureExternalEventId { get; set; } = string.Empty;
+    [Parameter] public string CourseId { get; set; } = string.Empty;
+    [Parameter] public string CaptureTitle { get; set; } = string.Empty;
+    [Parameter] public DateTime? CaptureStartsAt { get; set; }
     [Parameter] public string AnalysisEventId { get; set; } = string.Empty;
     [Parameter] public string AnalysisExternalEventId { get; set; } = string.Empty;
-    [Parameter] public string CourseId { get; set; } = string.Empty;
     [Parameter] public string AnalysisTitle { get; set; } = string.Empty;
     [Parameter] public DateTime? AnalysisStartsAt { get; set; }
     [Parameter] public string ParticipantId { get; set; } = string.Empty;
@@ -75,6 +79,11 @@
     [Parameter] public bool ShowControls { get; set; } = true;
     [Parameter] public EventCallback<RunningAnalysisRecordedVideo> OnRecorded { get; set; }
     [Parameter] public EventCallback<bool> IsRecordingChanged { get; set; }
+
+    private string EffectiveCaptureSessionId => string.IsNullOrWhiteSpace(CaptureSessionId) ? AnalysisEventId : CaptureSessionId;
+    private string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
+    private string EffectiveCaptureTitle => string.IsNullOrWhiteSpace(CaptureTitle) ? AnalysisTitle : CaptureTitle;
+    private DateTime? EffectiveCaptureStartsAt => CaptureStartsAt ?? AnalysisStartsAt;
 
     public async Task StartAsync()
     {
@@ -89,11 +98,11 @@
                 "startRecording",
                 _videoElement,
                 new RecordingMetadata(
-                    AnalysisEventId,
-                    AnalysisExternalEventId,
+                    EffectiveCaptureSessionId,
+                    EffectiveCaptureExternalEventId,
                     CourseId,
-                    AnalysisTitle,
-                    AnalysisStartsAt,
+                    EffectiveCaptureTitle,
+                    EffectiveCaptureStartsAt,
                     ParticipantId,
                     AthleteUserId,
                     AthleteEmail,
@@ -125,11 +134,11 @@
             await IsRecordingChanged.InvokeAsync(false);
             await OnRecorded.InvokeAsync(new RunningAnalysisRecordedVideo(
                 payload.LocalId,
-                payload.AnalysisEventId,
-                payload.AnalysisExternalEventId,
+                payload.EffectiveCaptureSessionId,
+                payload.EffectiveCaptureExternalEventId,
                 payload.CourseId,
-                payload.AnalysisTitle,
-                payload.AnalysisStartsAt,
+                payload.EffectiveCaptureTitle,
+                payload.EffectiveCaptureStartsAt,
                 payload.ParticipantId,
                 payload.AthleteUserId,
                 payload.AthleteEmail,
@@ -144,7 +153,11 @@
                 payload.UploadAttempts,
                 payload.LastUploadAt,
                 payload.LastError,
-                payload.DriveFileUrl));
+                payload.DriveFileUrl,
+                payload.EffectiveCaptureSessionId,
+                payload.EffectiveCaptureExternalEventId,
+                payload.EffectiveCaptureTitle,
+                payload.EffectiveCaptureStartsAt));
         }
         catch (Exception ex)
         {
@@ -180,11 +193,11 @@
     }
 
     private sealed record RecordingMetadata(
-        string AnalysisEventId,
-        string AnalysisExternalEventId,
+        string CaptureSessionId,
+        string CaptureExternalEventId,
         string CourseId,
-        string AnalysisTitle,
-        DateTime? AnalysisStartsAt,
+        string CaptureTitle,
+        DateTime? CaptureStartsAt,
         string ParticipantId,
         string AthleteUserId,
         string AthleteEmail,
@@ -194,9 +207,13 @@
     private sealed class RecordedVideoPayload
     {
         public string LocalId { get; set; } = string.Empty;
+        public string CaptureSessionId { get; set; } = string.Empty;
+        public string CaptureExternalEventId { get; set; } = string.Empty;
         public string AnalysisEventId { get; set; } = string.Empty;
         public string AnalysisExternalEventId { get; set; } = string.Empty;
         public string CourseId { get; set; } = string.Empty;
+        public string CaptureTitle { get; set; } = string.Empty;
+        public DateTime? CaptureStartsAt { get; set; }
         public string AnalysisTitle { get; set; } = string.Empty;
         public DateTime? AnalysisStartsAt { get; set; }
         public string ParticipantId { get; set; } = string.Empty;
@@ -214,5 +231,9 @@
         public DateTime? LastUploadAt { get; set; }
         public string? LastError { get; set; }
         public string? DriveFileUrl { get; set; }
+        public string EffectiveCaptureSessionId => string.IsNullOrWhiteSpace(CaptureSessionId) ? AnalysisEventId : CaptureSessionId;
+        public string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
+        public string EffectiveCaptureTitle => string.IsNullOrWhiteSpace(CaptureTitle) ? AnalysisTitle : CaptureTitle;
+        public DateTime? EffectiveCaptureStartsAt => CaptureStartsAt ?? AnalysisStartsAt;
     }
 }

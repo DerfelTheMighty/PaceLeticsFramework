@@ -122,6 +122,12 @@ public sealed class UserDriveFolderService : IUserDriveFolderService
     private static string BuildAnalysisFolderName(UserDriveAnalysisRecordingUploadRequest request)
     {
         var title = SanitizeName(request.AnalysisTitle);
+        if (request.AnalysisStartsAt is { } captureStartsAt
+            && title.StartsWith($"{captureStartsAt:yyyy-MM-dd} ", StringComparison.Ordinal))
+        {
+            return title;
+        }
+
         if (request.AnalysisStartsAt is { } startsAt)
             return $"{startsAt:yyyy-MM-dd} {title}";
 
@@ -137,7 +143,7 @@ public sealed class UserDriveFolderService : IUserDriveFolderService
             .ToArray());
 
         return string.IsNullOrWhiteSpace(sanitized)
-            ? "Laufanalyse"
+            ? "Laufaufnahme"
             : sanitized;
     }
 }

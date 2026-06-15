@@ -21,32 +21,71 @@ public sealed class CosmosRunningAnalysisRepository :
         _options.Validate();
     }
 
+    public async Task<RunningAnalysisCaptureSession?> GetCaptureSessionAsync(string captureSessionId, CancellationToken cancellationToken = default)
+    {
+        var captureSessions = await LoadAllAsync<RunningAnalysisCaptureSession>(RunningAnalysisDocumentTypes.CaptureSession);
+        var captureSession = captureSessions.FirstOrDefault(captureSession => captureSession.Id == captureSessionId);
+        if (captureSession is not null)
+            return captureSession;
+
+        var legacyEvent = await GetEventAsync(captureSessionId, cancellationToken);
+        return legacyEvent is null ? null : FromLegacyEvent(legacyEvent);
+    }
+
+    public async Task<RunningAnalysisCaptureSession?> GetCaptureSessionByExternalEventIdAsync(string externalEventId, CancellationToken cancellationToken = default)
+    {
+        var captureSessions = await LoadAllAsync<RunningAnalysisCaptureSession>(RunningAnalysisDocumentTypes.CaptureSession);
+        var captureSession = captureSessions.FirstOrDefault(captureSession => captureSession.ExternalEventId == externalEventId);
+        if (captureSession is not null)
+            return captureSession;
+
+        var legacyEvent = await GetEventByExternalEventIdAsync(externalEventId, cancellationToken);
+        return legacyEvent is null ? null : FromLegacyEvent(legacyEvent);
+    }
+
+    public Task UpsertCaptureSessionAsync(RunningAnalysisCaptureSession captureSession, CancellationToken cancellationToken = default)
+    {
+        return _db.UpsertItem(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            WithDocumentType(captureSession, RunningAnalysisDocumentTypes.CaptureSession),
+            captureSession.CourseId);
+    }
+
     public async Task<RunningAnalysisEvent?> GetEventAsync(string analysisEventId, CancellationToken cancellationToken = default)
     {
         var events = await LoadAllAsync<RunningAnalysisEvent>(RunningAnalysisDocumentTypes.Event);
-        return events.FirstOrDefault(analysisEvent => analysisEvent.Id == analysisEventId);
+        var analysisEvent = events.FirstOrDefault(analysisEvent => analysisEvent.Id == analysisEventId);
+        if (analysisEvent is not null)
+            return analysisEvent;
+
+        var captureSessions = await LoadAllAsync<RunningAnalysisCaptureSession>(RunningAnalysisDocumentTypes.CaptureSession);
+        var captureSession = captureSessions.FirstOrDefault(captureSession => captureSession.Id == analysisEventId);
+        return captureSession is null ? null : ToLegacyEvent(captureSession);
     }
 
     public async Task<RunningAnalysisEvent?> GetEventByExternalEventIdAsync(string externalEventId, CancellationToken cancellationToken = default)
     {
         var events = await LoadAllAsync<RunningAnalysisEvent>(RunningAnalysisDocumentTypes.Event);
-        return events.FirstOrDefault(analysisEvent => analysisEvent.ExternalEventId == externalEventId);
+        var analysisEvent = events.FirstOrDefault(analysisEvent => analysisEvent.ExternalEventId == externalEventId);
+        if (analysisEvent is not null)
+            return analysisEvent;
+
+        var captureSessions = await LoadAllAsync<RunningAnalysisCaptureSession>(RunningAnalysisDocumentTypes.CaptureSession);
+        var captureSession = captureSessions.FirstOrDefault(captureSession => captureSession.ExternalEventId == externalEventId);
+        return captureSession is null ? null : ToLegacyEvent(captureSession);
     }
 
     public Task UpsertEventAsync(RunningAnalysisEvent analysisEvent, CancellationToken cancellationToken = default)
     {
-        return _db.UpsertItem(
-            _options.DatabaseName,
-            _options.CourseContainerName,
-            WithDocumentType(analysisEvent, RunningAnalysisDocumentTypes.Event),
-            analysisEvent.CourseId);
+        return UpsertCaptureSessionAsync(FromLegacyEvent(analysisEvent), cancellationToken);
     }
 
     public async Task<IReadOnlyList<RunningAnalysisParticipant>> GetParticipantsAsync(string analysisEventId, CancellationToken cancellationToken = default)
     {
         var participants = await LoadAllAsync<RunningAnalysisParticipant>(RunningAnalysisDocumentTypes.Participant);
         return participants
-            .Where(participant => participant.AnalysisEventId == analysisEventId)
+            .Where(participant => GetParticipantCaptureSessionId(participant) == analysisEventId)
             .OrderBy(participant => participant.SortOrder)
             .ThenBy(participant => participant.DisplayName)
             .ToList();
@@ -209,5 +248,51 @@ public sealed class CosmosRunningAnalysisRepository :
     private static string UserFolderReferenceId(string athleteUserId)
     {
         return $"user-drive-folder:{athleteUserId.Trim()}";
+    }
+
+    private static string GetParticipantCaptureSessionId(RunningAnalysisParticipant participant)
+    {
+        return string.IsNullOrWhiteSpace(participant.CaptureSessionId)
+            ? participant.AnalysisEventId
+            : participant.CaptureSessionId;
+    }
+
+    private static RunningAnalysisCaptureSession FromLegacyEvent(RunningAnalysisEvent analysisEvent)
+    {
+        return new RunningAnalysisCaptureSession
+        {
+            Id = analysisEvent.Id,
+            DocumentType = RunningAnalysisDocumentTypes.CaptureSession,
+            ExternalEventId = analysisEvent.ExternalEventId,
+            CourseId = analysisEvent.CourseId,
+            CourseName = analysisEvent.Title,
+            Title = analysisEvent.Title,
+            StartsAt = analysisEvent.StartsAt,
+            EndsAt = analysisEvent.EndsAt,
+            Status = analysisEvent.Status,
+            DriveFolderId = analysisEvent.DriveFolderId,
+            DriveFolderUrl = analysisEvent.DriveFolderUrl,
+            CreatedAt = analysisEvent.CreatedAt,
+            UpdatedAt = analysisEvent.UpdatedAt
+        };
+    }
+
+    private static RunningAnalysisEvent ToLegacyEvent(RunningAnalysisCaptureSession captureSession)
+    {
+        return new RunningAnalysisEvent
+        {
+            Id = captureSession.Id,
+            DocumentType = RunningAnalysisDocumentTypes.Event,
+            ExternalEventId = captureSession.ExternalEventId,
+            CourseId = captureSession.CourseId,
+            Title = captureSession.Title,
+            StartsAt = captureSession.StartsAt,
+            EndsAt = captureSession.EndsAt,
+            Status = captureSession.Status,
+            DriveFolderId = captureSession.DriveFolderId,
+            DriveFolderUrl = captureSession.DriveFolderUrl,
+            CreatedAt = captureSession.CreatedAt,
+            UpdatedAt = captureSession.UpdatedAt
+        };
     }
 }

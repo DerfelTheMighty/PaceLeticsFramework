@@ -4,11 +4,11 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Laufanalyse-Uploads</value></data>
-  <data name="Title" xml:space="preserve"><value>Laufanalyse-Uploads</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Laufaufnahme-Uploads</value></data>
+  <data name="Title" xml:space="preserve"><value>Laufaufnahme-Uploads</value></data>
   <data name="Subtitle" xml:space="preserve"><value>Lokal gespeicherte Aufnahmen in die passenden Teilnehmerordner hochladen.</value></data>
   <data name="Loading" xml:space="preserve"><value>Upload-Queue wird geladen</value></data>
-  <data name="BackToAnalyses" xml:space="preserve"><value>Zurueck zu Analysen</value></data>
+  <data name="BackToAnalyses" xml:space="preserve"><value>Zurueck zu Aufnahmen</value></data>
   <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmeordner</value></data>
   <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner waehlen</value></data>
   <data name="RefreshQueue" xml:space="preserve"><value>Aktualisieren</value></data>
@@ -17,11 +17,11 @@
   <data name="LocalStorageReadyText" xml:space="preserve"><value>Aufnahmen werden aus "{0}" geladen. Speicherort: {1}</value></data>
   <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprueft.</value></data>
   <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser kann Aufnahmen nicht direkt aus einem lokalen Geraeteordner lesen.</value></data>
-  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Waehle den lokalen Ordner mit den gespeicherten Analyse-Video- und JSON-Dateien.</value></data>
+  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Waehle den lokalen Ordner mit den gespeicherten Aufnahme-Video- und JSON-Dateien.</value></data>
   <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewaehlten lokalen Aufnahmeordner.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Upload-Queue</value></data>
   <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} lokal, {1} offen, {2} fehlgeschlagen, {3} hochgeladen.</value></data>
-  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine vollstaendigen Analyseaufnahmen im gewaehlten Ordner gefunden.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine vollstaendigen Aufnahmen im gewaehlten Ordner gefunden.</value></data>
   <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>Der lokale Ordner ist noch gewaehlt, aber der Browser braucht nach dem Reload erneut Zugriff. Klicke auf "Zugriff erneuern", damit die vorhandenen Video- und JSON-Dateien wieder gescannt werden.</value></data>
   <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>Der lokale Ordner konnte nicht gescannt werden: {0}</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
