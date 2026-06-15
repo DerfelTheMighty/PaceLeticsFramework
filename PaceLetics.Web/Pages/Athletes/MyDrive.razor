@@ -35,13 +35,14 @@
                 </MudStack>
 
                 <MudStack Row="true" Justify="Justify.FlexEnd">
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Filled.CreateNewFolder"
-                               Disabled="_isBusy"
-                               OnClick="CreateFolderAsync">
-                        @L["CreateFolder"]
-                    </MudButton>
+                    <MudTooltip Text="@L["CreateFolder"]">
+                        <MudIconButton Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       Icon="@Icons.Material.Filled.CreateNewFolder"
+                                       Disabled="_isBusy"
+                                       OnClick="CreateFolderAsync"
+                                       aria-label="@L["CreateFolder"]" />
+                    </MudTooltip>
                 </MudStack>
             </MudStack>
         }
@@ -57,20 +58,22 @@
                 </MudStack>
 
                 <MudStack Row="true" Justify="Justify.FlexEnd" Style="gap:8px;">
-                    <MudButton Variant="Variant.Outlined"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Filled.OpenInNew"
-                               Disabled="_isBusy"
-                               OnClick="OpenFolderAsync">
-                        @L["OpenFolder"]
-                    </MudButton>
-                    <MudButton Variant="Variant.Outlined"
-                               Color="Color.Error"
-                               StartIcon="@Icons.Material.Filled.Delete"
-                               Disabled="_isBusy"
-                               OnClick="DeleteFolderAsync">
-                        @L["DeleteFolder"]
-                    </MudButton>
+                    <MudTooltip Text="@L["OpenFolder"]">
+                        <MudIconButton Variant="Variant.Outlined"
+                                       Color="Color.Primary"
+                                       Icon="@Icons.Material.Filled.OpenInNew"
+                                       Disabled="_isBusy"
+                                       OnClick="OpenFolderAsync"
+                                       aria-label="@L["OpenFolder"]" />
+                    </MudTooltip>
+                    <MudTooltip Text="@L["DeleteFolder"]">
+                        <MudIconButton Variant="Variant.Outlined"
+                                       Color="Color.Error"
+                                       Icon="@Icons.Material.Filled.Delete"
+                                       Disabled="_isBusy"
+                                       OnClick="DeleteFolderAsync"
+                                       aria-label="@L["DeleteFolder"]" />
+                    </MudTooltip>
                 </MudStack>
             </MudStack>
         }

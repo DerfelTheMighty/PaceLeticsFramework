@@ -69,12 +69,13 @@
                     </MudGrid>
 
                     <MudStack Row="true" Justify="Justify.FlexEnd">
-                        <MudButton Color="Color.Primary"
-                                   Variant="Variant.Filled"
-                                   StartIcon="@Icons.Material.Filled.Add"
-                                   OnClick="CreateCourseAsync">
-                            @L["CreateCourse"]
-                        </MudButton>
+                        <MudTooltip Text="@L["CreateCourse"]">
+                            <MudIconButton Color="Color.Primary"
+                                           Variant="Variant.Filled"
+                                           Icon="@Icons.Material.Filled.Add"
+                                           OnClick="CreateCourseAsync"
+                                           aria-label="@L["CreateCourse"]" />
+                        </MudTooltip>
                     </MudStack>
                 </MudStack>
             </MudPaper>
@@ -118,19 +119,23 @@
 
                                     @if (isCreator)
                                     {
-                                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                                                       Color="Color.Error"
-                                                       OnClick="@(() => DeleteCourseAsync(course))" />
+                                        <MudTooltip Text="@L["Delete"]">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                           Color="Color.Error"
+                                                           OnClick="@(() => DeleteCourseAsync(course))"
+                                                           aria-label="@L["Delete"]" />
+                                        </MudTooltip>
                                     }
                                     else if (canLeave)
                                     {
-                                        <MudButton Size="Size.Small"
-                                                   Color="Color.Default"
-                                                   Variant="Variant.Outlined"
-                                                   StartIcon="@Icons.Material.Filled.Logout"
-                                                   OnClick="@(() => LeaveTrainerAsync(course))">
-                                            @L["Leave"]
-                                        </MudButton>
+                                        <MudTooltip Text="@L["Leave"]">
+                                            <MudIconButton Size="Size.Small"
+                                                           Color="Color.Default"
+                                                           Variant="Variant.Outlined"
+                                                           Icon="@Icons.Material.Filled.Logout"
+                                                           OnClick="@(() => LeaveTrainerAsync(course))"
+                                                           aria-label="@L["Leave"]" />
+                                        </MudTooltip>
                                     }
                                 </MudStack>
 
@@ -147,9 +152,12 @@
 
                                                 @if (isCreator && trainer.TrainerUserId != course.CreatedByTrainerUserId)
                                                 {
-                                                    <MudIconButton Icon="@Icons.Material.Filled.PersonRemove"
-                                                                   Color="Color.Default"
-                                                                   OnClick="@(() => RemoveTrainerAsync(course, trainer))" />
+                                                    <MudTooltip Text="@L["Remove"]">
+                                                        <MudIconButton Icon="@Icons.Material.Filled.PersonRemove"
+                                                                       Color="Color.Default"
+                                                                       OnClick="@(() => RemoveTrainerAsync(course, trainer))"
+                                                                       aria-label="@L["Remove"]" />
+                                                    </MudTooltip>
                                                 }
                                             </MudStack>
                                         </MudPaper>
@@ -171,13 +179,14 @@
                                         }
                                     </MudSelect>
 
-                                    <MudButton Color="Color.Primary"
-                                               Variant="Variant.Filled"
-                                               StartIcon="@Icons.Material.Filled.PersonAdd"
-                                               Disabled="@string.IsNullOrWhiteSpace(_selectedTrainerToAddId)"
-                                               OnClick="@(() => AddTrainerAsync(course))">
-                                        @L["Add"]
-                                    </MudButton>
+                                    <MudTooltip Text="@L["Add"]">
+                                        <MudIconButton Color="Color.Primary"
+                                                       Variant="Variant.Filled"
+                                                       Icon="@Icons.Material.Filled.PersonAdd"
+                                                       Disabled="@string.IsNullOrWhiteSpace(_selectedTrainerToAddId)"
+                                                       OnClick="@(() => AddTrainerAsync(course))"
+                                                       aria-label="@L["Add"]" />
+                                    </MudTooltip>
                                 </MudStack>
 
                                 <MudTabs Elevation="0" Rounded="false" Class="mt-2">
@@ -201,9 +210,12 @@
                                                                     <MudText Typo="Typo.caption" Color="Color.Secondary">@date.Location</MudText>
                                                                 }
                                                             </MudStack>
-                                                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                                                                           Color="Color.Default"
-                                                                           OnClick="@(() => RemoveCourseDateAsync(course, date))" />
+                                                            <MudTooltip Text="@L["Delete"]">
+                                                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                               Color="Color.Default"
+                                                                               OnClick="@(() => RemoveCourseDateAsync(course, date))"
+                                                                               aria-label="@L["Delete"]" />
+                                                            </MudTooltip>
                                                         </MudStack>
                                                     </MudPaper>
                                                 }
@@ -231,12 +243,13 @@
                                                 </MudItem>
                                             </MudGrid>
                                             <MudStack Row="true" Justify="Justify.FlexEnd">
-                                                <MudButton Color="Color.Primary"
-                                                           Variant="Variant.Filled"
-                                                           StartIcon="@Icons.Material.Filled.Event"
-                                                           OnClick="@(() => AddCourseDateAsync(course))">
-                                                    @L["AddDate"]
-                                                </MudButton>
+                                                <MudTooltip Text="@L["AddDate"]">
+                                                    <MudIconButton Color="Color.Primary"
+                                                                   Variant="Variant.Filled"
+                                                                   Icon="@Icons.Material.Filled.Event"
+                                                                   OnClick="@(() => AddCourseDateAsync(course))"
+                                                                   aria-label="@L["AddDate"]" />
+                                                </MudTooltip>
                                             </MudStack>
                                         </MudStack>
                                     </MudTabPanel>
@@ -272,24 +285,27 @@
                                                             <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:4px;">
                                                                 @if (IsRunningAnalysisEvent(courseEvent))
                                                                 {
-                                                                    <MudButton Size="Size.Small"
-                                                                               Variant="Variant.Text"
-                                                                               Color="Color.Primary"
-                                                                               StartIcon="@Icons.Material.Filled.Videocam"
-                                                                               OnClick="@(() => OpenRunningAnalysis(course, courseEvent))">
-                                                                        @L["StartRunningAnalysis"]
-                                                                    </MudButton>
+                                                                    <MudTooltip Text="@L["StartRunningAnalysis"]">
+                                                                        <MudIconButton Size="Size.Small"
+                                                                                       Color="Color.Primary"
+                                                                                       Icon="@Icons.Material.Filled.Videocam"
+                                                                                       OnClick="@(() => OpenRunningAnalysis(course, courseEvent))"
+                                                                                       aria-label="@L["StartRunningAnalysis"]" />
+                                                                    </MudTooltip>
                                                                 }
-                                                                <MudButton Size="Size.Small"
-                                                                           Variant="Variant.Text"
-                                                                           Color="Color.Primary"
-                                                                           StartIcon="@Icons.Material.Filled.People"
-                                                                           OnClick="@(() => ToggleEventParticipantsAsync(course, courseEvent))">
-                                                                    @GetParticipantsButtonText(courseEvent.Id)
-                                                                </MudButton>
-                                                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                                                                               Color="Color.Default"
-                                                                               OnClick="@(() => DeleteEventAsync(course, courseEvent))" />
+                                                                <MudTooltip Text="@GetParticipantsButtonText(courseEvent.Id)">
+                                                                    <MudIconButton Size="Size.Small"
+                                                                                   Color="Color.Primary"
+                                                                                   Icon="@Icons.Material.Filled.People"
+                                                                                   OnClick="@(() => ToggleEventParticipantsAsync(course, courseEvent))"
+                                                                                   aria-label="@GetParticipantsButtonText(courseEvent.Id)" />
+                                                                </MudTooltip>
+                                                                <MudTooltip Text="@L["Delete"]">
+                                                                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                                   Color="Color.Default"
+                                                                                   OnClick="@(() => DeleteEventAsync(course, courseEvent))"
+                                                                                   aria-label="@L["Delete"]" />
+                                                                </MudTooltip>
                                                             </MudStack>
                                                         </MudStack>
 
@@ -355,12 +371,13 @@
                                                 </MudItem>
                                             </MudGrid>
                                             <MudStack Row="true" Justify="Justify.FlexEnd">
-                                                <MudButton Color="Color.Primary"
-                                                           Variant="Variant.Filled"
-                                                           StartIcon="@Icons.Material.Filled.EventAvailable"
-                                                           OnClick="@(() => CreateEventAsync(course))">
-                                                    @L["AddEvent"]
-                                                </MudButton>
+                                                <MudTooltip Text="@L["AddEvent"]">
+                                                    <MudIconButton Color="Color.Primary"
+                                                                   Variant="Variant.Filled"
+                                                                   Icon="@Icons.Material.Filled.EventAvailable"
+                                                                   OnClick="@(() => CreateEventAsync(course))"
+                                                                   aria-label="@L["AddEvent"]" />
+                                                </MudTooltip>
                                             </MudStack>
                                         </MudStack>
                                     </MudTabPanel>
@@ -381,9 +398,12 @@
                                                                 <MudText Typo="Typo.body2">@GetTrainingPlanName(publication.TrainingPlanId)</MudText>
                                                                 <MudText Typo="Typo.caption" Color="Color.Secondary">Seit @publication.PublishedAt.ToString("dd.MM.yyyy")</MudText>
                                                             </MudStack>
-                                                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                                                                           Color="Color.Default"
-                                                                           OnClick="@(() => RemoveTrainingPlanAsync(course, publication.TrainingPlanId))" />
+                                                            <MudTooltip Text="@L["Delete"]">
+                                                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                               Color="Color.Default"
+                                                                               OnClick="@(() => RemoveTrainingPlanAsync(course, publication.TrainingPlanId))"
+                                                                               aria-label="@L["Delete"]" />
+                                                            </MudTooltip>
                                                         </MudStack>
                                                     </MudPaper>
                                                 }
@@ -402,13 +422,14 @@
                                                         <MudSelectItem T="string" Value="@plan.Id">@plan.Name</MudSelectItem>
                                                     }
                                                 </MudSelect>
-                                                <MudButton Color="Color.Primary"
-                                                           Variant="Variant.Filled"
-                                                           StartIcon="@Icons.Material.Filled.Publish"
-                                                           Disabled="@string.IsNullOrWhiteSpace(_selectedTrainingPlanId)"
-                                                           OnClick="@(() => PublishTrainingPlanAsync(course))">
-                                                    @L["AddPlan"]
-                                                </MudButton>
+                                                <MudTooltip Text="@L["AddPlan"]">
+                                                    <MudIconButton Color="Color.Primary"
+                                                                   Variant="Variant.Filled"
+                                                                   Icon="@Icons.Material.Filled.Publish"
+                                                                   Disabled="@string.IsNullOrWhiteSpace(_selectedTrainingPlanId)"
+                                                                   OnClick="@(() => PublishTrainingPlanAsync(course))"
+                                                                   aria-label="@L["AddPlan"]" />
+                                                </MudTooltip>
                                             </MudStack>
                                         </MudStack>
                                     </MudTabPanel>

@@ -46,8 +46,17 @@
             <MudNumericField Label="@L["Preview_TotalReps"]" @bind-Value="@_rounds" Min="1" Max="1000" />
         </MudStack>
         <MudStack>
-            <MudButton OnClick="@OpenWorkout" Variant="Variant.Text" Color="Color.Primary">@L["Preview_Open"]</MudButton>
-            <MudButton Variant="Variant.Text" Color="Color.Primary">@L["Preview_MoreInfo"]</MudButton>
+            <MudTooltip Text="@L["Preview_Open"]">
+                <MudIconButton OnClick="@OpenWorkout"
+                               Icon="@Icons.Material.Filled.OpenInNew"
+                               Color="Color.Primary"
+                               aria-label="@L["Preview_Open"]" />
+            </MudTooltip>
+            <MudTooltip Text="@L["Preview_MoreInfo"]">
+                <MudIconButton Icon="@Icons.Material.Filled.Info"
+                               Color="Color.Primary"
+                               aria-label="@L["Preview_MoreInfo"]" />
+            </MudTooltip>
             </MudStack>
         </MudStack>
     </MudCardActions>

@@ -33,12 +33,13 @@
                 @L["NoRaceWarning"]
             </MudAlert>
 
-            <MudButton Variant="Variant.Filled"
-                       Color="Color.Warning"
-                       StartIcon="@Icons.Material.Filled.AddCircle"
-                       OnClick="AddAthlete">
-                @L["AddRace"]
-            </MudButton>
+            <MudTooltip Text="@L["AddRace"]">
+                <MudIconButton Variant="Variant.Filled"
+                               Color="Color.Warning"
+                               Icon="@Icons.Material.Filled.AddCircle"
+                               OnClick="AddAthlete"
+                               aria-label="@L["AddRace"]" />
+            </MudTooltip>
         }
         else
         {

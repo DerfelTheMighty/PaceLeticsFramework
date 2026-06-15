@@ -54,15 +54,23 @@
             else
             {            
                 <MudStack Spacing="2">
-                    <MudButton FullWidth="true" Variant="Variant.Filled" Color="@GetColor(SelectedLevel.Value)" OnClick="StartSelected">
-                        @L["DifficultyDialog_Start"]
-                    </MudButton>
+                    <MudTooltip Text="@L["DifficultyDialog_Start"]">
+                        <MudIconButton Variant="Variant.Filled"
+                                       Color="@GetColor(SelectedLevel.Value)"
+                                       Icon="@Icons.Material.Filled.PlayArrow"
+                                       OnClick="StartSelected"
+                                       aria-label="@L["DifficultyDialog_Start"]" />
+                    </MudTooltip>
                 </MudStack>
             }
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Text" OnClick="Cancel">@L["DifficultyDialog_Cancel"]</MudButton>
+        <MudTooltip Text="@L["DifficultyDialog_Cancel"]">
+            <MudIconButton Icon="@Icons.Material.Filled.Close"
+                           OnClick="Cancel"
+                           aria-label="@L["DifficultyDialog_Cancel"]" />
+        </MudTooltip>
     </DialogActions>
 </MudDialog>
 

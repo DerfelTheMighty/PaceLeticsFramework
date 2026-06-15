@@ -30,12 +30,13 @@
                 </MudText>
             </MudStack>
 
-            <MudButton Href="/Athletes/courses"
-                       Variant="Variant.Filled"
-                       Color="Color.Primary"
-                       StartIcon="@Icons.Material.Filled.OpenInNew">
-                @(Session is null ? L["Courses"] : L["Open"])
-            </MudButton>
+            <MudTooltip Text="@(Session is null ? L["Courses"] : L["Open"])">
+                <MudIconButton Href="/Athletes/courses"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Icon="@(Session is null ? Icons.Material.Filled.School : Icons.Material.Filled.OpenInNew)"
+                               aria-label="@(Session is null ? L["Courses"] : L["Open"])" />
+            </MudTooltip>
         </MudStack>
 
         @if (Session is not null)

@@ -18,6 +18,8 @@
   <data name="NoTrainerCourses" xml:space="preserve"><value>Du bist aktuell keinem Kurs als Trainer:in zugeordnet.</value></data>
   <data name="Course" xml:space="preserve"><value>Kurs</value></data>
   <data name="Leave" xml:space="preserve"><value>Austreten</value></data>
+  <data name="Delete" xml:space="preserve"><value>Loeschen</value></data>
+  <data name="Remove" xml:space="preserve"><value>Entfernen</value></data>
   <data name="Trainers" xml:space="preserve"><value>Trainer:innen</value></data>
   <data name="AddTrainerLabel" xml:space="preserve"><value>Trainer:in hinzufuegen</value></data>
   <data name="Add" xml:space="preserve"><value>Hinzufuegen</value></data>

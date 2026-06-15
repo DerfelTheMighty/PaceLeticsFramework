@@ -29,8 +29,13 @@
         <MudDatePicker Label="@L["AddRaceDialog_Date"]" @bind-Date="_date" PickerVariant="PickerVariant.Dialog" ShowToolbar="false" />
     </DialogContent>
     <DialogActions>
-        <MudButton Disabled="@string.IsNullOrWhiteSpace(this._id)" OnClick="@this.OK" Size="@Size.Small">
-            @L["AddRaceDialog_Ok"]
-        </MudButton>
+        <MudTooltip Text="@L["AddRaceDialog_Ok"]">
+            <MudIconButton Icon="@Icons.Material.Filled.Check"
+                           Color="Color.Primary"
+                           Disabled="@string.IsNullOrWhiteSpace(this._id)"
+                           OnClick="@this.OK"
+                           Size="@Size.Small"
+                           aria-label="@L["AddRaceDialog_Ok"]" />
+        </MudTooltip>
     </DialogActions>
 </MudDialog>

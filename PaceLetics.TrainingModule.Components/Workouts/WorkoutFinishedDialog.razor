@@ -12,7 +12,12 @@
         
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="Submit">@L["FinishedDialog_Confirm"]</MudButton>
+        <MudTooltip Text="@L["FinishedDialog_Confirm"]">
+            <MudIconButton Icon="@Icons.Material.Filled.Check"
+                           Color="Color.Primary"
+                           OnClick="Submit"
+                           aria-label="@L["FinishedDialog_Confirm"]" />
+        </MudTooltip>
     </DialogActions>
 </MudDialog>
 @code {

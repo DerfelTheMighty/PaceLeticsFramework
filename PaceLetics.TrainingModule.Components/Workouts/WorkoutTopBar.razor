@@ -22,19 +22,21 @@
         }
 
         <MudStack Row="true" Spacing="2" Justify="Justify.Center" Class="mt-1">
-            <MudButton Variant="Variant.Filled"
-                       Color="@(IsToggled ? Color.Warning : Color.Success)"
-                       OnClick="ToggleWorkout"
-                       StartIcon="@(IsToggled ? Icons.Material.Filled.Pause : Icons.Material.Filled.PlayArrow)">
-                @(IsToggled ? L["TopBar_Pause"] : L["TopBar_Start"])
-            </MudButton>
+            <MudTooltip Text="@(IsToggled ? L["TopBar_Pause"] : L["TopBar_Start"])">
+                <MudIconButton Variant="Variant.Filled"
+                               Color="@(IsToggled ? Color.Warning : Color.Success)"
+                               OnClick="ToggleWorkout"
+                               Icon="@(IsToggled ? Icons.Material.Filled.Pause : Icons.Material.Filled.PlayArrow)"
+                               aria-label="@(IsToggled ? L["TopBar_Pause"] : L["TopBar_Start"])" />
+            </MudTooltip>
 
-            <MudButton Variant="Variant.Outlined"
-                       Color="Color.Default"
-                       OnClick="ResetAndStopWorkout"
-                       StartIcon="@Icons.Material.Filled.Refresh">
-                @L["TopBar_Reset"]
-            </MudButton>
+            <MudTooltip Text="@L["TopBar_Reset"]">
+                <MudIconButton Variant="Variant.Outlined"
+                               Color="Color.Default"
+                               OnClick="ResetAndStopWorkout"
+                               Icon="@Icons.Material.Filled.Refresh"
+                               aria-label="@L["TopBar_Reset"]" />
+            </MudTooltip>
         </MudStack>
     </MudStack>
 </MudPaper>

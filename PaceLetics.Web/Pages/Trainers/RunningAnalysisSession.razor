@@ -23,11 +23,11 @@
             <PageHeader Title="@(_courseEvent?.Title ?? L["Title"].ToString())"
                         Subtitle="@GetHeaderSubtitle()" />
 
-            <MudButton Variant="Variant.Text"
-                       StartIcon="@Icons.Material.Filled.ArrowBack"
-                       OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
-                @L["BackToCourses"]
-            </MudButton>
+            <MudTooltip Text="@L["BackToCourses"]">
+                <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
+                               OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))"
+                               aria-label="@L["BackToCourses"]" />
+            </MudTooltip>
         </MudStack>
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
@@ -53,22 +53,24 @@
                     <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
                         @if (_captureSession.Status != RunningAnalysisEventStatus.InProgress)
                         {
-                            <MudButton Color="Color.Primary"
-                                       Variant="Variant.Filled"
-                                       StartIcon="@Icons.Material.Filled.PlayArrow"
-                                       OnClick="StartCaptureAsync">
-                                @L["StartCapture"]
-                            </MudButton>
+                            <MudTooltip Text="@L["StartCapture"]">
+                                <MudIconButton Color="Color.Primary"
+                                               Variant="Variant.Filled"
+                                               Icon="@Icons.Material.Filled.PlayArrow"
+                                               OnClick="StartCaptureAsync"
+                                               aria-label="@L["StartCapture"]" />
+                            </MudTooltip>
                         }
 
                         @if (_captureSession.Status == RunningAnalysisEventStatus.InProgress)
                         {
-                            <MudButton Color="Color.Primary"
-                                       Variant="Variant.Outlined"
-                                       StartIcon="@Icons.Material.Filled.DoneAll"
-                                       OnClick="CompleteCaptureAsync">
-                                @L["CompleteCapture"]
-                            </MudButton>
+                            <MudTooltip Text="@L["CompleteCapture"]">
+                                <MudIconButton Color="Color.Primary"
+                                               Variant="Variant.Outlined"
+                                               Icon="@Icons.Material.Filled.DoneAll"
+                                               OnClick="CompleteCaptureAsync"
+                                               aria-label="@L["CompleteCapture"]" />
+                            </MudTooltip>
                         }
                     </MudStack>
                 </MudStack>
@@ -91,19 +93,20 @@
                     </MudStack>
 
                     <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                        <MudButton Color="Color.Primary"
-                                   Variant="Variant.Outlined"
-                                   StartIcon="@Icons.Material.Filled.FolderOpen"
-                                   OnClick="ChooseRecordingDirectoryAsync">
-                            @L["ChooseLocalStorageFolder"]
-                        </MudButton>
+                        <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
+                            <MudIconButton Color="Color.Primary"
+                                           Variant="Variant.Outlined"
+                                           Icon="@Icons.Material.Filled.FolderOpen"
+                                           OnClick="ChooseRecordingDirectoryAsync"
+                                           aria-label="@L["ChooseLocalStorageFolder"]" />
+                        </MudTooltip>
 
-                        <MudButton Color="Color.Primary"
-                                   Variant="Variant.Text"
-                                   StartIcon="@Icons.Material.Filled.CloudUpload"
-                                   OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))">
-                            @L["OpenUploadPage"]
-                        </MudButton>
+                        <MudTooltip Text="@L["OpenUploadPage"]">
+                            <MudIconButton Color="Color.Primary"
+                                           Icon="@Icons.Material.Filled.CloudUpload"
+                                           OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))"
+                                           aria-label="@L["OpenUploadPage"]" />
+                        </MudTooltip>
                     </MudStack>
                 </MudStack>
             </MudPaper>

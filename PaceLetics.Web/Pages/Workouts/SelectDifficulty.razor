@@ -13,7 +13,11 @@
         <MudStack Spacing="3">
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
                 <MudText Typo="Typo.h4">@L["Title"]</MudText>
-                <MudButton Variant="Variant.Text" StartIcon="Icons.Material.Filled.ArrowBack" OnClick="@Back">@L["Back"]</MudButton>
+                <MudTooltip Text="@L["Back"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
+                                   OnClick="@Back"
+                                   aria-label="@L["Back"]" />
+                </MudTooltip>
             </MudStack>
 
             <MudDivider />

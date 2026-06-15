@@ -20,13 +20,14 @@
                         @if (!string.IsNullOrWhiteSpace(item.DriveFolderUrl)
                              && item.FolderStatus == RunningAnalysisFolderStatus.Ready)
                         {
-                            <MudButton Href="@item.DriveFolderUrl"
-                                       Target="_blank"
-                                       Color="Color.Primary"
-                                       Variant="Variant.Outlined"
-                                       StartIcon="@Icons.Material.Filled.FolderOpen">
-                                @OpenText
-                            </MudButton>
+                            <MudTooltip Text="@OpenText">
+                                <MudIconButton Href="@item.DriveFolderUrl"
+                                               Target="_blank"
+                                               Icon="@Icons.Material.Filled.FolderOpen"
+                                               Color="Color.Primary"
+                                               Variant="Variant.Outlined"
+                                               aria-label="@OpenText" />
+                            </MudTooltip>
                         }
                         else
                         {
@@ -37,12 +38,12 @@
 
                         @if (OnDelete.HasDelegate)
                         {
-                            <MudButton Variant="Variant.Text"
-                                       Color="Color.Error"
-                                       StartIcon="@Icons.Material.Filled.DeleteOutline"
-                                       OnClick="@(() => OnDelete.InvokeAsync(item))">
-                                @DeleteText
-                            </MudButton>
+                            <MudTooltip Text="@DeleteText">
+                                <MudIconButton Icon="@Icons.Material.Filled.DeleteOutline"
+                                               Color="Color.Error"
+                                               OnClick="@(() => OnDelete.InvokeAsync(item))"
+                                               aria-label="@DeleteText" />
+                            </MudTooltip>
                         }
                     </MudStack>
                 </MudStack>

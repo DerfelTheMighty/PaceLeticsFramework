@@ -17,22 +17,24 @@
         <MudStack Row="true" Justify="Justify.Center" Style="gap:8px; flex-wrap:wrap;">
             @if (!_isRecording)
             {
-                <MudButton Color="Color.Primary"
-                           Variant="Variant.Filled"
-                           Disabled="@(!CanRecord)"
-                           StartIcon="@Icons.Material.Filled.FiberManualRecord"
-                           OnClick="StartAsync">
-                    Start
-                </MudButton>
+                <MudTooltip Text="Start">
+                    <MudIconButton Color="Color.Primary"
+                                   Variant="Variant.Filled"
+                                   Disabled="@(!CanRecord)"
+                                   Icon="@Icons.Material.Filled.FiberManualRecord"
+                                   OnClick="StartAsync"
+                                   aria-label="Start" />
+                </MudTooltip>
             }
             else
             {
-                <MudButton Color="Color.Error"
-                           Variant="Variant.Filled"
-                           StartIcon="@Icons.Material.Filled.Stop"
-                           OnClick="StopAsync">
-                    Stop
-                </MudButton>
+                <MudTooltip Text="Stop">
+                    <MudIconButton Color="Color.Error"
+                                   Variant="Variant.Filled"
+                                   Icon="@Icons.Material.Filled.Stop"
+                                   OnClick="StopAsync"
+                                   aria-label="Stop" />
+                </MudTooltip>
             }
         </MudStack>
     }

@@ -18,19 +18,21 @@
             <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
             <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                <MudButton Variant="Variant.Outlined"
-                           Color="Color.Primary"
-                           StartIcon="@Icons.Material.Filled.CloudUpload"
-                           OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))">
-                    @L["UploadRecordings"]
-                </MudButton>
+                <MudTooltip Text="@L["UploadRecordings"]">
+                    <MudIconButton Variant="Variant.Outlined"
+                                   Color="Color.Primary"
+                                   Icon="@Icons.Material.Filled.CloudUpload"
+                                   OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))"
+                                   aria-label="@L["UploadRecordings"]" />
+                </MudTooltip>
 
-                <MudButton Variant="Variant.Outlined"
-                           Color="Color.Primary"
-                           StartIcon="@Icons.Material.Filled.Event"
-                           OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
-                    @L["ManageCourses"]
-                </MudButton>
+                <MudTooltip Text="@L["ManageCourses"]">
+                    <MudIconButton Variant="Variant.Outlined"
+                                   Color="Color.Primary"
+                                   Icon="@Icons.Material.Filled.Event"
+                                   OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))"
+                                   aria-label="@L["ManageCourses"]" />
+                </MudTooltip>
             </MudStack>
         </MudStack>
 
@@ -58,12 +60,13 @@
                 <MudStack Spacing="2">
                     <MudText Typo="Typo.subtitle1">@L["EmptyTitle"]</MudText>
                     <MudText Typo="Typo.body2" Color="Color.Secondary">@L["EmptyText"]</MudText>
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Filled.Add"
-                               OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))">
-                        @L["CreateEvent"]
-                    </MudButton>
+                    <MudTooltip Text="@L["CreateEvent"]">
+                        <MudIconButton Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       Icon="@Icons.Material.Filled.Add"
+                                       OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))"
+                                       aria-label="@L["CreateEvent"]" />
+                    </MudTooltip>
                 </MudStack>
             </MudPaper>
         }
@@ -89,12 +92,13 @@
                                 }
                             </MudStack>
 
-                            <MudButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       StartIcon="@Icons.Material.Filled.PlayArrow"
-                                       OnClick="@(() => OpenAnalysis(analysis))">
-                                @L["StartAnalysis"]
-                            </MudButton>
+                            <MudTooltip Text="@L["StartAnalysis"]">
+                                <MudIconButton Variant="Variant.Filled"
+                                               Color="Color.Primary"
+                                               Icon="@Icons.Material.Filled.PlayArrow"
+                                               OnClick="@(() => OpenAnalysis(analysis))"
+                                               aria-label="@L["StartAnalysis"]" />
+                            </MudTooltip>
                         </MudStack>
                     </MudPaper>
                 }

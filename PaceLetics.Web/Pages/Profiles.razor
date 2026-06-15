@@ -13,12 +13,13 @@
     {
         <PageHeader Title="@_selectedProfile.PublicUserName" Subtitle="@GetRoleDisplayName(_selectedProfile.PublicRole)">
             <Actions>
-                <MudButton Href="/profiles"
-                           Variant="Variant.Outlined"
-                           Color="Color.Default"
-                           StartIcon="@Icons.Material.Filled.ArrowBack">
-                    @L["Back"]
-                </MudButton>
+                <MudTooltip Text="@L["Back"]">
+                    <MudIconButton Href="/profiles"
+                                   Variant="Variant.Outlined"
+                                   Color="Color.Default"
+                                   Icon="@Icons.Material.Filled.ArrowBack"
+                                   aria-label="@L["Back"]" />
+                </MudTooltip>
             </Actions>
         </PageHeader>
 

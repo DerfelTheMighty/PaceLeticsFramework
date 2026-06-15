@@ -11,7 +11,7 @@
         <MudChip T="Level" Color="Color.Info" Variant="Variant.Filled">@Exercise?.Level</MudChip>
     </div>
 
-    <!-- Bild groß -->
+    <!-- Bild gross -->
     <div style="height:260px; max-width:520px; margin:16px auto; display:flex; align-items:center; justify-content:center;">
         <MudImage Src="@GetImagePath(Exercise?.ImageFilename)"
                   Alt="@Exercise?.Name"
@@ -25,9 +25,12 @@
 
     <!-- CTA unten -->
     <div class="d-flex justify-center mt-4">
-        <MudButton Variant="Variant.Text" OnClick="@OnOpenDetails" Style="letter-spacing:.08em;">
-            @L["WorkoutNow_Details"]
-        </MudButton>
+        <MudTooltip Text="@L["WorkoutNow_Details"]">
+            <MudIconButton Icon="@Icons.Material.Filled.Info"
+                           Color="Color.Primary"
+                           OnClick="@OnOpenDetails"
+                           aria-label="@L["WorkoutNow_Details"]" />
+        </MudTooltip>
     </div>
 </MudPaper>
 

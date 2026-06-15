@@ -171,12 +171,13 @@
                                     <MudText Typo="Typo.subtitle2">@L["Dates"]</MudText>
                                     @if (upcomingDates.Count > 1)
                                     {
-                                        <MudButton Size="Size.Small"
-                                                   Variant="Variant.Text"
-                                                   Color="Color.Primary"
-                                                   OnClick="@(() => _showAllDates = !_showAllDates)">
-                                            @(_showAllDates ? L["ShowLess"] : L["ShowAll"])
-                                        </MudButton>
+                                        <MudTooltip Text="@(_showAllDates ? L["ShowLess"] : L["ShowAll"])">
+                                            <MudIconButton Size="Size.Small"
+                                                           Color="Color.Primary"
+                                                           Icon="@(_showAllDates ? Icons.Material.Filled.ExpandLess : Icons.Material.Filled.ExpandMore)"
+                                                           OnClick="@(() => _showAllDates = !_showAllDates)"
+                                                           aria-label="@(_showAllDates ? L["ShowLess"] : L["ShowAll"])" />
+                                        </MudTooltip>
                                     }
                                 </MudStack>
 
@@ -206,12 +207,13 @@
                                     <MudText Typo="Typo.subtitle2">Events</MudText>
                                     @if (courseEvents.Count > 2)
                                     {
-                                        <MudButton Size="Size.Small"
-                                                   Variant="Variant.Text"
-                                                   Color="Color.Primary"
-                                                   OnClick="@(() => _showAllEvents = !_showAllEvents)">
-                                            @(_showAllEvents ? L["ShowLess"] : L["ShowAll"])
-                                        </MudButton>
+                                        <MudTooltip Text="@(_showAllEvents ? L["ShowLess"] : L["ShowAll"])">
+                                            <MudIconButton Size="Size.Small"
+                                                           Color="Color.Primary"
+                                                           Icon="@(_showAllEvents ? Icons.Material.Filled.ExpandLess : Icons.Material.Filled.ExpandMore)"
+                                                           OnClick="@(() => _showAllEvents = !_showAllEvents)"
+                                                           aria-label="@(_showAllEvents ? L["ShowLess"] : L["ShowAll"])" />
+                                        </MudTooltip>
                                     }
                                 </MudStack>
 
@@ -286,12 +288,13 @@
                                     <MudText Typo="Typo.subtitle2">@L["TrainingPlans"]</MudText>
                                     @if (trainingPlanPublications.Count > 2)
                                     {
-                                        <MudButton Size="Size.Small"
-                                                   Variant="Variant.Text"
-                                                   Color="Color.Primary"
-                                                   OnClick="@(() => _showAllTrainingPlans = !_showAllTrainingPlans)">
-                                            @(_showAllTrainingPlans ? L["ShowLess"] : L["ShowAll"])
-                                        </MudButton>
+                                        <MudTooltip Text="@(_showAllTrainingPlans ? L["ShowLess"] : L["ShowAll"])">
+                                            <MudIconButton Size="Size.Small"
+                                                           Color="Color.Primary"
+                                                           Icon="@(_showAllTrainingPlans ? Icons.Material.Filled.ExpandLess : Icons.Material.Filled.ExpandMore)"
+                                                           OnClick="@(() => _showAllTrainingPlans = !_showAllTrainingPlans)"
+                                                           aria-label="@(_showAllTrainingPlans ? L["ShowLess"] : L["ShowAll"])" />
+                                        </MudTooltip>
                                     }
                                 </MudStack>
 

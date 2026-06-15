@@ -19,11 +19,11 @@
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
             <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-            <MudButton Variant="Variant.Text"
-                       StartIcon="@Icons.Material.Filled.ArrowBack"
-                       OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analyses"))">
-                @L["BackToAnalyses"]
-            </MudButton>
+            <MudTooltip Text="@L["BackToAnalyses"]">
+                <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
+                               OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analyses"))"
+                               aria-label="@L["BackToAnalyses"]" />
+            </MudTooltip>
         </MudStack>
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
@@ -41,18 +41,20 @@
                 </MudStack>
 
                 <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                    <MudButton Color="Color.Primary"
-                               Variant="Variant.Outlined"
-                               StartIcon="@Icons.Material.Filled.FolderOpen"
-                               OnClick="ChooseRecordingDirectoryAsync">
-                        @L["ChooseLocalStorageFolder"]
-                    </MudButton>
+                    <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
+                        <MudIconButton Color="Color.Primary"
+                                       Variant="Variant.Outlined"
+                                       Icon="@Icons.Material.Filled.FolderOpen"
+                                       OnClick="ChooseRecordingDirectoryAsync"
+                                       aria-label="@L["ChooseLocalStorageFolder"]" />
+                    </MudTooltip>
 
-                    <MudButton Variant="Variant.Outlined"
-                               StartIcon="@Icons.Material.Filled.Refresh"
-                               OnClick="RefreshPendingRecordingsAsync">
-                        @(IsLocalRecordingStorageReady ? L["RefreshQueue"] : L["RefreshFolderAccess"])
-                    </MudButton>
+                    <MudTooltip Text="@(IsLocalRecordingStorageReady ? L["RefreshQueue"] : L["RefreshFolderAccess"])">
+                        <MudIconButton Variant="Variant.Outlined"
+                                       Icon="@Icons.Material.Filled.Refresh"
+                                       OnClick="RefreshPendingRecordingsAsync"
+                                       aria-label="@(IsLocalRecordingStorageReady ? L["RefreshQueue"] : L["RefreshFolderAccess"])" />
+                    </MudTooltip>
                 </MudStack>
             </MudStack>
         </MudPaper>
@@ -70,13 +72,14 @@
                         </MudText>
                     </MudStack>
 
-                    <MudButton Color="Color.Primary"
-                               Variant="Variant.Filled"
-                               StartIcon="@Icons.Material.Filled.CloudUpload"
-                               Disabled="@(!_isOnline || _isUploadingQueuedRecordings || PendingUploadCount == 0)"
-                               OnClick="@(() => UploadPendingRecordingsAsync())">
-                        @L["UploadPendingRecordings"]
-                    </MudButton>
+                    <MudTooltip Text="@L["UploadPendingRecordings"]">
+                        <MudIconButton Color="Color.Primary"
+                                       Variant="Variant.Filled"
+                                       Icon="@Icons.Material.Filled.CloudUpload"
+                                       Disabled="@(!_isOnline || _isUploadingQueuedRecordings || PendingUploadCount == 0)"
+                                       OnClick="@(() => UploadPendingRecordingsAsync())"
+                                       aria-label="@L["UploadPendingRecordings"]" />
+                    </MudTooltip>
                 </MudStack>
 
                 <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
@@ -157,21 +160,22 @@
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
                                     @if (!string.IsNullOrWhiteSpace(recording.DriveFileUrl))
                                     {
-                                        <MudButton Variant="Variant.Text"
-                                                   Href="@recording.DriveFileUrl"
-                                                   Target="_blank"
-                                                   StartIcon="@Icons.Material.Filled.OpenInNew">
-                                            @L["OpenUploadedRecording"]
-                                        </MudButton>
+                                        <MudTooltip Text="@L["OpenUploadedRecording"]">
+                                            <MudIconButton Href="@recording.DriveFileUrl"
+                                                           Target="_blank"
+                                                           Icon="@Icons.Material.Filled.OpenInNew"
+                                                           aria-label="@L["OpenUploadedRecording"]" />
+                                        </MudTooltip>
                                     }
 
-                                    <MudButton Color="Color.Primary"
-                                               Variant="Variant.Outlined"
-                                               StartIcon="@Icons.Material.Filled.CloudUpload"
-                                               Disabled="@(!_isOnline || isUploading)"
-                                               OnClick="@(() => UploadQueuedRecordingAsync(recording))">
-                                        @(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])
-                                    </MudButton>
+                                    <MudTooltip Text="@(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])">
+                                        <MudIconButton Color="Color.Primary"
+                                                       Variant="Variant.Outlined"
+                                                       Icon="@(IsUploaded(recording) ? Icons.Material.Filled.Refresh : Icons.Material.Filled.CloudUpload)"
+                                                       Disabled="@(!_isOnline || isUploading)"
+                                                       OnClick="@(() => UploadQueuedRecordingAsync(recording))"
+                                                       aria-label="@(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])" />
+                                    </MudTooltip>
                                 </MudStack>
                             </MudStack>
                         </div>

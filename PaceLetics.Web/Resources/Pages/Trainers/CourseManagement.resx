@@ -18,6 +18,8 @@
   <data name="NoTrainerCourses" xml:space="preserve"><value>You are not assigned to any course as a coach.</value></data>
   <data name="Course" xml:space="preserve"><value>Course</value></data>
   <data name="Leave" xml:space="preserve"><value>Leave</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Remove" xml:space="preserve"><value>Remove</value></data>
   <data name="Trainers" xml:space="preserve"><value>Coaches</value></data>
   <data name="AddTrainerLabel" xml:space="preserve"><value>Add coach</value></data>
   <data name="Add" xml:space="preserve"><value>Add</value></data>
@@ -38,6 +40,7 @@
   <data name="EventType" xml:space="preserve"><value>Event type</value></data>
   <data name="EventType_General" xml:space="preserve"><value>General</value></data>
   <data name="EventType_RunningAnalysis" xml:space="preserve"><value>Running analysis</value></data>
+  <data name="StartRunningAnalysis" xml:space="preserve"><value>Start analysis</value></data>
   <data name="AddEvent" xml:space="preserve"><value>Add event</value></data>
   <data name="TrainingPlans" xml:space="preserve"><value>Training plans</value></data>
   <data name="NoPublishedPlan" xml:space="preserve"><value>No plan published yet.</value></data>
