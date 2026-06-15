@@ -11,7 +11,7 @@ public static class AppThemeCatalog
         new(AppThemeName.Forest, "Forest", CreateForestTheme(), Icons.Material.Filled.Park, IsDarkMode: true, PaceZones: CreateForestPaceZones()),
         new(AppThemeName.HighContrast, "High Contrast", CreateHighContrastTheme(), Icons.Material.Filled.Contrast, IsDarkMode: false, PaceZones: CreateHighContrastPaceZones()),
         new(AppThemeName.Wildflowers, "Wildflowers", CreateWildflowersTheme(), Icons.Material.Filled.LocalFlorist, IsDarkMode: false, PaceZones: CreateWildflowersPaceZones()),
-        new(AppThemeName.Afterglow, "Afterglow", CreateAfterglowTheme(), Icons.Material.Filled.WbTwilight, IsDarkMode: true, PaceZones: CreateAfterglowPaceZones()),
+        new(AppThemeName.CoteDAzur, "Cote d'Azur", CreateCoteDAzurTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false, PaceZones: CreateCoteDAzurPaceZones()),
         new(AppThemeName.DarkRomance, "Dark Romance", CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite, IsDarkMode: true, PaceZones: CreateDarkRomancePaceZones()),
         new(AppThemeName.Maritime, "Maritime", CreateMaritimeTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false, PaceZones: CreateMaritimePaceZones()),
         new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false, PaceZones: CreateTropicalPaceZones()),
@@ -91,16 +91,16 @@ public static class AppThemeCatalog
             Repetition: "#F26D9B");
     }
 
-    private static PaceZonePalette CreateAfterglowPaceZones()
+    private static PaceZonePalette CreateCoteDAzurPaceZones()
     {
         return new(
-            Free: "#A899B0",
-            Recovery: "#A5A0FF",
-            Easy: "#6ED4A8",
-            Marathon: "#FFC857",
-            Threshold: "#FF9F5A",
-            Intervall: "#FF6B70",
-            Repetition: "#E56AD6");
+            Free: "#7E8582",
+            Recovery: "#45BFD8",
+            Easy: "#2FA36F",
+            Marathon: "#2D8DBE",
+            Threshold: "#F1B45D",
+            Intervall: "#E97854",
+            Repetition: "#9B5BC0");
     }
 
     private static PaceZonePalette CreateDarkRomancePaceZones()
@@ -297,27 +297,27 @@ public static class AppThemeCatalog
             });
     }
 
-    private static MudTheme CreateAfterglowTheme()
+    private static MudTheme CreateCoteDAzurTheme()
     {
         return CreateTheme(
-            dark: new PaletteDark
+            light: new PaletteLight
             {
-                Primary = "#FF8A70",
-                Secondary = "#A5A0FF",
-                Tertiary = "#FFC857",
-                Info = "#A5A0FF",
-                Success = "#6ED4A8",
-                Warning = "#FFC857",
-                Error = "#FF8A70",
-                Background = "#18121A",
-                BackgroundGray = "#241C27",
-                Surface = "#2A202E",
-                AppbarBackground = "#100B13",
-                AppbarText = "#FFF1EC",
-                DrawerBackground = "#1D1621",
-                DrawerText = "#F0E2EA",
-                TextPrimary = "#FFF5F0",
-                TextSecondary = "#CDB9C4"
+                Primary = "#1C9FC2",
+                Secondary = "#F27A55",
+                Tertiary = "#F4C46F",
+                Info = "#45BFD8",
+                Success = "#2FA36F",
+                Warning = "#E6A23B",
+                Error = "#D9554F",
+                Background = "#EAF7F6",
+                BackgroundGray = "#D7ECEA",
+                Surface = "#FFFDF8",
+                AppbarBackground = "#188FB2",
+                AppbarText = "#FFFDF8",
+                DrawerBackground = "#FFFDF8",
+                DrawerText = "#243C42",
+                TextPrimary = "#243C42",
+                TextSecondary = "#657E81"
             });
     }
 

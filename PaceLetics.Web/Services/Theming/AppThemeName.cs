@@ -7,7 +7,7 @@ public enum AppThemeName
     Forest,
     HighContrast,
     Wildflowers,
-    Afterglow,
+    CoteDAzur,
     DarkRomance,
     Maritime,
     Tropical,
