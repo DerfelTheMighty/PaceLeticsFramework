@@ -83,6 +83,37 @@ public sealed class UserDriveFolderService : IUserDriveFolderService
             cancellationToken);
     }
 
+    public async Task<DriveFileReference> UploadAnalysisResultAsync(
+        UserDriveAnalysisResultUploadRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        ValidateUploadRequest(request);
+
+        var athleteUserId = request.AthleteUserId.Trim();
+        var userFolder = await _repository.FindUserFolderAsync(athleteUserId, cancellationToken);
+        if (userFolder is null)
+        {
+            if (string.IsNullOrWhiteSpace(request.AthleteEmail))
+                throw new InvalidOperationException("The athlete Drive folder was not found and the result metadata does not contain an email address to create it.");
+
+            userFolder = await CreateFolderAsync(
+                new UserDriveFolderRequest(athleteUserId, request.AthleteEmail.Trim()),
+                cancellationToken);
+        }
+
+        var analysisFolder = await _storageProvider.EnsureChildFolderAsync(
+            userFolder,
+            BuildAnalysisFolderName(request),
+            cancellationToken);
+
+        return await _storageProvider.UploadFileAsync(
+            analysisFolder,
+            request.FileName.Trim(),
+            string.IsNullOrWhiteSpace(request.ContentType) ? "application/json" : request.ContentType.Trim(),
+            request.Content,
+            cancellationToken);
+    }
+
     public async Task DeleteFolderAsync(
         string athleteUserId,
         CancellationToken cancellationToken = default)
@@ -119,16 +150,38 @@ public sealed class UserDriveFolderService : IUserDriveFolderService
             throw new ArgumentNullException(nameof(request.Content));
     }
 
+    private static void ValidateUploadRequest(UserDriveAnalysisResultUploadRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.AthleteUserId))
+            throw new InvalidOperationException("The analysis result metadata does not contain an athlete user id.");
+
+        if (string.IsNullOrWhiteSpace(request.FileName))
+            throw new InvalidOperationException("The analysis result metadata does not contain a file name.");
+
+        if (request.Content is null)
+            throw new ArgumentNullException(nameof(request.Content));
+    }
+
     private static string BuildAnalysisFolderName(UserDriveAnalysisRecordingUploadRequest request)
     {
-        var title = SanitizeName(request.AnalysisTitle);
-        if (request.AnalysisStartsAt is { } captureStartsAt
+        return BuildAnalysisFolderName(request.AnalysisTitle, request.AnalysisStartsAt);
+    }
+
+    private static string BuildAnalysisFolderName(UserDriveAnalysisResultUploadRequest request)
+    {
+        return BuildAnalysisFolderName(request.AnalysisTitle, request.AnalysisStartsAt);
+    }
+
+    private static string BuildAnalysisFolderName(string analysisTitle, DateTime? analysisStartsAt)
+    {
+        var title = SanitizeName(analysisTitle);
+        if (analysisStartsAt is { } captureStartsAt
             && title.StartsWith($"{captureStartsAt:yyyy-MM-dd} ", StringComparison.Ordinal))
         {
             return title;
         }
 
-        if (request.AnalysisStartsAt is { } startsAt)
+        if (analysisStartsAt is { } startsAt)
             return $"{startsAt:yyyy-MM-dd} {title}";
 
         return title;

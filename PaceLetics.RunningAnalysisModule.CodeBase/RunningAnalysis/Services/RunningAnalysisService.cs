@@ -2,11 +2,34 @@ using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Services;
 
 public sealed class RunningAnalysisService : IRunningAnalysisService
 {
+    private static readonly RunningAnalysisCriterion[] SideCriteria =
+    [
+        RunningAnalysisCriterion.Overstride,
+        RunningAnalysisCriterion.TrunkPosture,
+        RunningAnalysisCriterion.HipExtension,
+        RunningAnalysisCriterion.ArmSwingSide
+    ];
+
+    private static readonly RunningAnalysisCriterion[] RearCriteria =
+    [
+        RunningAnalysisCriterion.InternalRotation,
+        RunningAnalysisCriterion.PelvicDrop,
+        RunningAnalysisCriterion.ArmSwingRear
+    ];
+
+    private static readonly JsonSerializerOptions ResultJsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        WriteIndented = true,
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     private readonly IRunningAnalysisRepository _repository;
     private readonly IRunningAnalysisStorageProvider _storageProvider;
     private readonly IUserDriveFolderRegistry _folderRegistry;
@@ -138,6 +161,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         {
             var recordings = await _repository.GetRecordingsForParticipantAsync(participant.Id, cancellationToken);
             var primaryRecordingUrl = recordings.FirstOrDefault(recording => recording.IsPrimary)?.DriveFileUrl;
+            var analysisResult = await _repository.GetResultForParticipantAsync(captureSessionId, participant.Id, cancellationToken);
             result.Add(new RunningAnalysisRosterItem(
                 participant.Id,
                 participant.AthleteUserId,
@@ -147,7 +171,13 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
                 participant.FolderStatus,
                 participant.PermissionStatus,
                 recordings.Count,
-                primaryRecordingUrl));
+                primaryRecordingUrl,
+                participant.DriveFolderUrl,
+                GetLatestUploadedRecordingUrl(recordings, RunningAnalysisPerspective.Side),
+                GetLatestUploadedRecordingUrl(recordings, RunningAnalysisPerspective.Rear),
+                analysisResult?.Status,
+                analysisResult?.TotalScore,
+                analysisResult?.TotalMaxScore));
         }
 
         return result;
@@ -191,17 +221,53 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         string athleteUserId,
         CancellationToken cancellationToken = default)
     {
-        var captures = await GetCapturesForAthleteAsync(athleteUserId, cancellationToken);
-        return captures
-            .Select(capture => new RunningAnalysisLink(
-                capture.CaptureSessionId,
-                capture.ExternalEventId,
-                capture.Title,
-                capture.StartsAt,
-                capture.CaptureStatus,
-                capture.FolderStatus,
-                capture.PermissionStatus,
-                capture.DriveFolderUrl))
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            return Array.Empty<RunningAnalysisLink>();
+
+        var participants = await _repository.GetParticipantsForAthleteAsync(athleteUserId.Trim(), cancellationToken);
+        var links = new List<RunningAnalysisLink>();
+
+        foreach (var participant in participants.Where(participant => !participant.IsHiddenFromAthlete))
+        {
+            var captureSessionId = GetParticipantCaptureSessionId(participant);
+            var captureSession = await _repository.GetCaptureSessionAsync(captureSessionId, cancellationToken);
+            if (captureSession is null)
+                continue;
+
+            var recordings = await _repository.GetRecordingsForParticipantAsync(participant.Id, cancellationToken);
+            var analysisResult = await _repository.GetResultForParticipantAsync(captureSession.Id, participant.Id, cancellationToken);
+            if (analysisResult?.Status != RunningAnalysisResultStatus.Completed)
+                analysisResult = null;
+
+            links.Add(new RunningAnalysisLink(
+                captureSession.Id,
+                captureSession.ExternalEventId,
+                captureSession.Title,
+                captureSession.StartsAt,
+                captureSession.Status,
+                participant.FolderStatus,
+                participant.PermissionStatus,
+                participant.DriveFolderUrl,
+                analysisResult?.Id,
+                analysisResult?.Status,
+                analysisResult?.AnalyzedAt,
+                analysisResult?.Summary ?? string.Empty,
+                analysisResult?.SideScore,
+                analysisResult?.SideMaxScore,
+                analysisResult?.RearScore,
+                analysisResult?.RearMaxScore,
+                analysisResult?.TotalScore,
+                analysisResult?.TotalMaxScore,
+                analysisResult?.SideRecordingUrl ?? GetLatestUploadedRecordingUrl(recordings, RunningAnalysisPerspective.Side),
+                analysisResult?.RearRecordingUrl ?? GetLatestUploadedRecordingUrl(recordings, RunningAnalysisPerspective.Rear),
+                analysisResult?.ResultDriveFileUrl,
+                analysisResult?.SideAssessment,
+                analysisResult?.RearAssessment));
+        }
+
+        return links
+            .OrderByDescending(link => link.AnalyzedAt ?? link.StartsAt)
+            .ThenBy(link => link.Title)
             .ToList();
     }
 
@@ -231,6 +297,21 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         CancellationToken cancellationToken = default)
     {
         return HideCaptureForAthleteAsync(athleteUserId, analysisEventId, cancellationToken);
+    }
+
+    public async Task<RunningAnalysisResult?> GetAnalysisResultForParticipantAsync(
+        string captureSessionId,
+        string participantId,
+        CancellationToken cancellationToken = default)
+    {
+        var captureSession = await RequireCaptureSessionAsync(captureSessionId, cancellationToken);
+        var participant = await _repository.GetParticipantByIdAsync(participantId, cancellationToken)
+            ?? throw new InvalidOperationException("The running capture participant was not found.");
+
+        if (GetParticipantCaptureSessionId(participant) != captureSession.Id)
+            throw new InvalidOperationException("The participant does not belong to this running capture.");
+
+        return await _repository.GetResultForParticipantAsync(captureSession.Id, participant.Id, cancellationToken);
     }
 
     public async Task<RunningAnalysisCaptureSession> StartCaptureAsync(
@@ -340,6 +421,229 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
             await _repository.UpsertRecordingAsync(recording, cancellationToken);
             return recording;
         }
+    }
+
+    public async Task<RunningAnalysisRecording> RegisterUploadedRecordingAsync(
+        string captureSessionId,
+        string participantId,
+        string fileName,
+        string contentType,
+        DriveFileReference driveFile,
+        RunningAnalysisPerspective perspective = RunningAnalysisPerspective.Side,
+        DateTime? recordedAt = null,
+        CancellationToken cancellationToken = default)
+    {
+        if (driveFile is null)
+            throw new ArgumentNullException(nameof(driveFile));
+
+        if (string.IsNullOrWhiteSpace(fileName))
+            throw new InvalidOperationException("A recording file name is required.");
+
+        var captureSession = await RequireCaptureSessionAsync(captureSessionId, cancellationToken);
+        var participant = await _repository.GetParticipantByIdAsync(participantId, cancellationToken)
+            ?? throw new InvalidOperationException("The running capture participant was not found.");
+
+        if (GetParticipantCaptureSessionId(participant) != captureSession.Id)
+            throw new InvalidOperationException("The participant does not belong to this running capture.");
+
+        var recordings = await _repository.GetRecordingsForParticipantAsync(participant.Id, cancellationToken);
+        var recording = recordings.FirstOrDefault(recording =>
+            !string.IsNullOrWhiteSpace(driveFile.FileId)
+            && string.Equals(recording.DriveFileId, driveFile.FileId, StringComparison.Ordinal));
+
+        recording ??= new RunningAnalysisRecording
+        {
+            CourseId = captureSession.CourseId,
+            CaptureSessionId = captureSession.Id,
+            AnalysisEventId = captureSession.Id,
+            ParticipantId = participant.Id,
+            AttemptNumber = recordings.Count + 1
+        };
+
+        recording.CourseId = captureSession.CourseId;
+        recording.CaptureSessionId = captureSession.Id;
+        recording.AnalysisEventId = captureSession.Id;
+        recording.ParticipantId = participant.Id;
+        recording.Perspective = NormalizePerspective(perspective);
+        recording.RecordedAt = recordedAt ?? _clock.UtcNow;
+        recording.FileName = fileName.Trim();
+        recording.ContentType = string.IsNullOrWhiteSpace(contentType) ? "video/webm" : contentType.Trim();
+        recording.DriveFileId = driveFile.FileId;
+        recording.DriveFileUrl = driveFile.Url;
+        recording.UploadStatus = RunningAnalysisUploadStatus.Uploaded;
+        recording.ErrorMessage = null;
+
+        await _repository.UpsertRecordingAsync(recording, cancellationToken);
+        await SetPrimaryRecordingAsync(participant.Id, recording, cancellationToken);
+        return recording;
+    }
+
+    public async Task<RunningAnalysisResult> SaveAnalysisResultAsync(
+        RunningAnalysisResultRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        ValidateResultRequest(request);
+
+        var captureSession = await RequireCaptureSessionAsync(request.CaptureSessionId, cancellationToken);
+        var participant = await _repository.GetParticipantByIdAsync(request.ParticipantId, cancellationToken)
+            ?? throw new InvalidOperationException("The running capture participant was not found.");
+
+        if (GetParticipantCaptureSessionId(participant) != captureSession.Id)
+            throw new InvalidOperationException("The participant does not belong to this running capture.");
+
+        var result = await _repository.GetResultForParticipantAsync(captureSession.Id, participant.Id, cancellationToken)
+            ?? new RunningAnalysisResult
+            {
+                CaptureSessionId = captureSession.Id,
+                CourseId = captureSession.CourseId,
+                ExternalEventId = captureSession.ExternalEventId,
+                ParticipantId = participant.Id,
+                AthleteUserId = participant.AthleteUserId,
+                CreatedAt = _clock.UtcNow
+            };
+
+        var sideAssessment = NormalizeAssessmentItems(
+            request.SideAssessment,
+            RunningAnalysisPerspective.Side,
+            SideCriteria);
+        var rearAssessment = NormalizeAssessmentItems(
+            request.RearAssessment,
+            RunningAnalysisPerspective.Rear,
+            RearCriteria);
+        var recordings = await _repository.GetRecordingsForParticipantAsync(participant.Id, cancellationToken);
+
+        result.CaptureSessionId = captureSession.Id;
+        result.CourseId = captureSession.CourseId;
+        result.ExternalEventId = captureSession.ExternalEventId;
+        result.ParticipantId = participant.Id;
+        result.AthleteUserId = participant.AthleteUserId;
+        result.AthleteDisplayName = participant.DisplayName;
+        result.AnalyzerTrainerUserId = request.TrainerUserId.Trim();
+        result.AnalyzerDisplayName = Normalize(request.TrainerDisplayName, request.TrainerUserId);
+        result.Title = captureSession.Title;
+        result.Status = request.Complete ? RunningAnalysisResultStatus.Completed : RunningAnalysisResultStatus.Draft;
+        result.SideAssessment = sideAssessment;
+        result.RearAssessment = rearAssessment;
+        result.Summary = request.Summary.Trim();
+        result.SideScore = CalculateScore(sideAssessment);
+        result.SideMaxScore = CalculateMaxScore(sideAssessment);
+        result.RearScore = CalculateScore(rearAssessment);
+        result.RearMaxScore = CalculateMaxScore(rearAssessment);
+        result.TotalScore = result.SideScore + result.RearScore;
+        result.TotalMaxScore = result.SideMaxScore + result.RearMaxScore;
+        result.SideRecordingUrl = GetLatestUploadedRecordingUrl(recordings, RunningAnalysisPerspective.Side);
+        result.RearRecordingUrl = GetLatestUploadedRecordingUrl(recordings, RunningAnalysisPerspective.Rear);
+        result.UpdatedAt = _clock.UtcNow;
+
+        if (request.Complete)
+        {
+            result.AnalyzedAt ??= _clock.UtcNow;
+            result.PublishedAt = _clock.UtcNow;
+            var driveFile = await UploadResultDocumentAsync(captureSession, participant, result, cancellationToken);
+            result.ResultDriveFileId = driveFile.FileId;
+            result.ResultDriveFileUrl = driveFile.Url;
+        }
+        else
+        {
+            result.PublishedAt = null;
+        }
+
+        await _repository.UpsertResultAsync(result, cancellationToken);
+        return result;
+    }
+
+    private async Task<DriveFileReference> UploadResultDocumentAsync(
+        RunningAnalysisCaptureSession captureSession,
+        RunningAnalysisParticipant participant,
+        RunningAnalysisResult result,
+        CancellationToken cancellationToken)
+    {
+        var json = JsonSerializer.SerializeToUtf8Bytes(result, ResultJsonOptions);
+        await using var content = new MemoryStream(json);
+
+        return await _userDriveFolderService.UploadAnalysisResultAsync(
+            new UserDriveAnalysisResultUploadRequest(
+                participant.AthleteUserId,
+                participant.Email,
+                captureSession.Title,
+                captureSession.StartsAt,
+                BuildResultFileName(captureSession, participant),
+                "application/json",
+                content),
+            cancellationToken);
+    }
+
+    private static List<RunningAnalysisAssessmentItem> NormalizeAssessmentItems(
+        IEnumerable<RunningAnalysisAssessmentItem> items,
+        RunningAnalysisPerspective perspective,
+        IReadOnlyCollection<RunningAnalysisCriterion> expectedCriteria)
+    {
+        var byCriterion = items
+            .GroupBy(item => item.Criterion)
+            .ToDictionary(group => group.Key, group => group.Last());
+
+        return expectedCriteria
+            .Select(criterion =>
+            {
+                byCriterion.TryGetValue(criterion, out var item);
+                return new RunningAnalysisAssessmentItem
+                {
+                    Criterion = criterion,
+                    Perspective = perspective,
+                    Rating = NormalizeRating(item?.Rating ?? RunningAnalysisAssessmentRating.NotAssessable),
+                    Confidence = NormalizeConfidence(item?.Confidence ?? RunningAnalysisAssessmentConfidence.Medium),
+                    Notes = item?.Notes?.Trim() ?? string.Empty
+                };
+            })
+            .ToList();
+    }
+
+    private static int CalculateScore(IEnumerable<RunningAnalysisAssessmentItem> items)
+    {
+        return items
+            .Where(item => item.Rating >= RunningAnalysisAssessmentRating.Normal)
+            .Sum(item => (int)item.Rating);
+    }
+
+    private static int CalculateMaxScore(IEnumerable<RunningAnalysisAssessmentItem> items)
+    {
+        return items.Count(item => item.Rating >= RunningAnalysisAssessmentRating.Normal) * 2;
+    }
+
+    private static string? GetLatestUploadedRecordingUrl(
+        IEnumerable<RunningAnalysisRecording> recordings,
+        RunningAnalysisPerspective perspective)
+    {
+        return recordings
+            .Where(recording =>
+                recording.UploadStatus == RunningAnalysisUploadStatus.Uploaded
+                && recording.Perspective == perspective
+                && !string.IsNullOrWhiteSpace(recording.DriveFileUrl))
+            .OrderByDescending(recording => recording.RecordedAt)
+            .ThenByDescending(recording => recording.AttemptNumber)
+            .Select(recording => recording.DriveFileUrl)
+            .FirstOrDefault();
+    }
+
+    private static string BuildResultFileName(
+        RunningAnalysisCaptureSession captureSession,
+        RunningAnalysisParticipant participant)
+    {
+        var athleteName = SanitizeFileName(participant.DisplayName);
+        return $"{captureSession.StartsAt:yyyyMMdd}-{athleteName}-laufanalyse-ergebnis.json";
+    }
+
+    private static string SanitizeFileName(string value)
+    {
+        var invalid = Path.GetInvalidFileNameChars().ToHashSet();
+        var sanitized = new string((value ?? string.Empty)
+            .Trim()
+            .Select(character => invalid.Contains(character) || char.IsWhiteSpace(character) ? '-' : character)
+            .ToArray());
+
+        return string.IsNullOrWhiteSpace(sanitized)
+            ? "athlet"
+            : sanitized;
     }
 
     private async Task ProvisionParticipantFolderAsync(
@@ -463,6 +767,18 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
             throw new InvalidOperationException("The running capture end must be after the start.");
     }
 
+    private static void ValidateResultRequest(RunningAnalysisResultRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.CaptureSessionId))
+            throw new InvalidOperationException("A running capture session id is required.");
+
+        if (string.IsNullOrWhiteSpace(request.ParticipantId))
+            throw new InvalidOperationException("A running capture participant id is required.");
+
+        if (string.IsNullOrWhiteSpace(request.TrainerUserId))
+            throw new InvalidOperationException("A trainer user id is required.");
+    }
+
     private static string BuildCaptureTitle(DateTime startsAt, string courseName)
     {
         return $"{startsAt:yyyy-MM-dd} {courseName.Trim()}";
@@ -480,6 +796,20 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         return perspective == RunningAnalysisPerspective.Rear
             ? RunningAnalysisPerspective.Rear
             : RunningAnalysisPerspective.Side;
+    }
+
+    private static RunningAnalysisAssessmentRating NormalizeRating(RunningAnalysisAssessmentRating rating)
+    {
+        return Enum.IsDefined(typeof(RunningAnalysisAssessmentRating), rating)
+            ? rating
+            : RunningAnalysisAssessmentRating.NotAssessable;
+    }
+
+    private static RunningAnalysisAssessmentConfidence NormalizeConfidence(RunningAnalysisAssessmentConfidence confidence)
+    {
+        return Enum.IsDefined(typeof(RunningAnalysisAssessmentConfidence), confidence)
+            ? confidence
+            : RunningAnalysisAssessmentConfidence.Medium;
     }
 
     private static RunningAnalysisEvent ToLegacyEvent(RunningAnalysisCaptureSession captureSession)

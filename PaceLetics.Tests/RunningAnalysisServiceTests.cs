@@ -299,6 +299,106 @@ public sealed class RunningAnalysisServiceTests
         Assert.True(storedParticipant?.IsHiddenFromAthlete);
     }
 
+    [Fact]
+    public async Task RegisterUploadedRecording_MakesPerspectiveVideoAvailableInRoster()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var service = CreateService(
+            repository,
+            new FakeRunningAnalysisStorageProvider(),
+            new FakeUserDriveFolderRegistry());
+        var participant = await service.RegisterParticipantAsync(CreateRegistration());
+        var analysisEvent = Assert.Single(repository.Events.Values);
+
+        await service.RegisterUploadedRecordingAsync(
+            analysisEvent.Id,
+            participant.Id,
+            "side.webm",
+            "video/webm",
+            new DriveFileReference("side-file", "https://drive.test/side.webm"),
+            RunningAnalysisPerspective.Side);
+        await service.RegisterUploadedRecordingAsync(
+            analysisEvent.Id,
+            participant.Id,
+            "rear.webm",
+            "video/webm",
+            new DriveFileReference("rear-file", "https://drive.test/rear.webm"),
+            RunningAnalysisPerspective.Rear);
+
+        var roster = await service.GetRosterAsync(analysisEvent.Id);
+
+        var item = Assert.Single(roster);
+        Assert.Equal("https://drive.test/side.webm", item.SideRecordingUrl);
+        Assert.Equal("https://drive.test/rear.webm", item.RearRecordingUrl);
+    }
+
+    [Fact]
+    public async Task SaveAnalysisResult_StoresDraftWithoutPublishingToAthlete()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var userDrive = new FakeUserDriveFolderService();
+        var service = CreateService(
+            repository,
+            new FakeRunningAnalysisStorageProvider(),
+            new FakeUserDriveFolderRegistry(),
+            userDrive);
+        var participant = await service.RegisterParticipantAsync(CreateRegistration());
+        var analysisEvent = Assert.Single(repository.Events.Values);
+
+        var result = await service.SaveAnalysisResultAsync(CreateResultRequest(
+            analysisEvent.Id,
+            participant.Id,
+            complete: false));
+        var analyses = await service.GetAnalysesForAthleteAsync("runner-1");
+
+        Assert.Equal(RunningAnalysisResultStatus.Draft, result.Status);
+        Assert.Null(result.ResultDriveFileUrl);
+        Assert.Empty(userDrive.UploadedResults);
+        Assert.Null(Assert.Single(analyses).ResultId);
+    }
+
+    [Fact]
+    public async Task SaveAnalysisResult_CompletesUploadsAndReturnsStructuredAthleteResult()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var userDrive = new FakeUserDriveFolderService();
+        var service = CreateService(
+            repository,
+            new FakeRunningAnalysisStorageProvider(),
+            new FakeUserDriveFolderRegistry(),
+            userDrive);
+        var participant = await service.RegisterParticipantAsync(CreateRegistration());
+        var analysisEvent = Assert.Single(repository.Events.Values);
+        await service.RegisterUploadedRecordingAsync(
+            analysisEvent.Id,
+            participant.Id,
+            "side.webm",
+            "video/webm",
+            new DriveFileReference("side-file", "https://drive.test/side.webm"),
+            RunningAnalysisPerspective.Side);
+
+        var result = await service.SaveAnalysisResultAsync(CreateResultRequest(
+            analysisEvent.Id,
+            participant.Id,
+            complete: true));
+        var analyses = await service.GetAnalysesForAthleteAsync("runner-1");
+
+        Assert.Equal(RunningAnalysisResultStatus.Completed, result.Status);
+        Assert.NotNull(result.AnalyzedAt);
+        Assert.Equal("https://drive.test/result-20260605-Runner-One-laufanalyse-ergebnis.json", result.ResultDriveFileUrl);
+        Assert.Single(userDrive.UploadedResults);
+
+        var analysis = Assert.Single(analyses);
+        Assert.Equal(result.Id, analysis.ResultId);
+        Assert.Equal(RunningAnalysisResultStatus.Completed, analysis.ResultStatus);
+        Assert.Equal(3, analysis.TotalScore);
+        Assert.Equal(14, analysis.TotalMaxScore);
+        Assert.Equal("https://drive.test/side.webm", analysis.SideRecordingUrl);
+        Assert.Equal("Trainer notes", analysis.Summary);
+        Assert.Equal(4, analysis.SideAssessment?.Count);
+        Assert.Equal(3, analysis.RearAssessment?.Count);
+    }
+
     private static RunningAnalysisService CreateService(
         InMemoryRunningAnalysisRepository repository,
         FakeRunningAnalysisStorageProvider storage,
@@ -338,6 +438,49 @@ public sealed class RunningAnalysisServiceTests
             EndsAt: new DateTime(2026, 6, 5, 20, 0, 0, DateTimeKind.Utc));
     }
 
+    private static RunningAnalysisResultRequest CreateResultRequest(
+        string captureSessionId,
+        string participantId,
+        bool complete)
+    {
+        return new RunningAnalysisResultRequest
+        {
+            CaptureSessionId = captureSessionId,
+            ParticipantId = participantId,
+            TrainerUserId = "trainer-1",
+            TrainerDisplayName = "Coach One",
+            Summary = "Trainer notes",
+            Complete = complete,
+            SideAssessment =
+            [
+                CreateAssessment(RunningAnalysisCriterion.Overstride, RunningAnalysisPerspective.Side, RunningAnalysisAssessmentRating.Mild),
+                CreateAssessment(RunningAnalysisCriterion.TrunkPosture, RunningAnalysisPerspective.Side, RunningAnalysisAssessmentRating.Normal),
+                CreateAssessment(RunningAnalysisCriterion.HipExtension, RunningAnalysisPerspective.Side, RunningAnalysisAssessmentRating.Significant),
+                CreateAssessment(RunningAnalysisCriterion.ArmSwingSide, RunningAnalysisPerspective.Side, RunningAnalysisAssessmentRating.Normal)
+            ],
+            RearAssessment =
+            [
+                CreateAssessment(RunningAnalysisCriterion.InternalRotation, RunningAnalysisPerspective.Rear, RunningAnalysisAssessmentRating.Normal),
+                CreateAssessment(RunningAnalysisCriterion.PelvicDrop, RunningAnalysisPerspective.Rear, RunningAnalysisAssessmentRating.Normal),
+                CreateAssessment(RunningAnalysisCriterion.ArmSwingRear, RunningAnalysisPerspective.Rear, RunningAnalysisAssessmentRating.Normal)
+            ]
+        };
+    }
+
+    private static RunningAnalysisAssessmentItem CreateAssessment(
+        RunningAnalysisCriterion criterion,
+        RunningAnalysisPerspective perspective,
+        RunningAnalysisAssessmentRating rating)
+    {
+        return new RunningAnalysisAssessmentItem
+        {
+            Criterion = criterion,
+            Perspective = perspective,
+            Rating = rating,
+            Confidence = RunningAnalysisAssessmentConfidence.Medium
+        };
+    }
+
     private sealed record FixedRunningAnalysisClock(DateTime UtcNow) : IRunningAnalysisClock;
 
     private sealed class FakeUserDriveFolderRegistry : IUserDriveFolderRegistry
@@ -366,6 +509,7 @@ public sealed class RunningAnalysisServiceTests
         public bool FailCreate { get; set; }
         public DriveFolderReference? ExistingFolder { get; set; }
         public List<UserDriveFolderRequest> CreatedFolders { get; } = new();
+        public List<UserDriveAnalysisResultUploadRequest> UploadedResults { get; } = new();
 
         public Task<DriveFolderReference?> GetFolderAsync(
             string athleteUserId,
@@ -396,6 +540,16 @@ public sealed class RunningAnalysisServiceTests
             return Task.FromResult(new DriveFileReference(
                 $"file-{request.FileName}",
                 $"https://drive.test/file-{request.FileName}"));
+        }
+
+        public Task<DriveFileReference> UploadAnalysisResultAsync(
+            UserDriveAnalysisResultUploadRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            UploadedResults.Add(request);
+            return Task.FromResult(new DriveFileReference(
+                $"result-{request.FileName}",
+                $"https://drive.test/result-{request.FileName}"));
         }
 
         public Task DeleteFolderAsync(
@@ -466,6 +620,7 @@ public sealed class RunningAnalysisServiceTests
         public Dictionary<string, RunningAnalysisEvent> Events { get; } = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, RunningAnalysisParticipant> _participants = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, RunningAnalysisRecording> _recordings = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, RunningAnalysisResult> _results = new(StringComparer.OrdinalIgnoreCase);
 
         public Task<RunningAnalysisCaptureSession?> GetCaptureSessionAsync(
             string captureSessionId,
@@ -585,6 +740,35 @@ public sealed class RunningAnalysisServiceTests
             CancellationToken cancellationToken = default)
         {
             _recordings[recording.Id] = recording;
+            return Task.CompletedTask;
+        }
+
+        public Task<RunningAnalysisResult?> GetResultForParticipantAsync(
+            string captureSessionId,
+            string participantId,
+            CancellationToken cancellationToken = default)
+        {
+            var result = _results.Values
+                .OrderByDescending(result => result.UpdatedAt)
+                .FirstOrDefault(result =>
+                    result.CaptureSessionId == captureSessionId
+                    && result.ParticipantId == participantId);
+            return Task.FromResult(result);
+        }
+
+        public Task<IReadOnlyList<RunningAnalysisResult>> GetResultsForAthleteAsync(
+            string athleteUserId,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<IReadOnlyList<RunningAnalysisResult>>(
+                _results.Values.Where(result => result.AthleteUserId == athleteUserId).ToList());
+        }
+
+        public Task UpsertResultAsync(
+            RunningAnalysisResult result,
+            CancellationToken cancellationToken = default)
+        {
+            _results[result.Id] = result;
             return Task.CompletedTask;
         }
 

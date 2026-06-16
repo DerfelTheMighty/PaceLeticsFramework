@@ -92,13 +92,23 @@
                                 }
                             </MudStack>
 
-                            <MudTooltip Text="@L["StartAnalysis"]">
-                                <MudIconButton Variant="Variant.Filled"
-                                               Color="Color.Primary"
-                                               Icon="@Icons.Material.Filled.PlayArrow"
-                                               OnClick="@(() => OpenAnalysis(analysis))"
-                                               aria-label="@L["StartAnalysis"]" />
-                            </MudTooltip>
+                            <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                                <MudTooltip Text="@L["StartAnalysis"]">
+                                    <MudIconButton Variant="Variant.Filled"
+                                                   Color="Color.Primary"
+                                                   Icon="@Icons.Material.Filled.Videocam"
+                                                   OnClick="@(() => OpenRecording(analysis))"
+                                                   aria-label="@L["StartAnalysis"]" />
+                                </MudTooltip>
+
+                                <MudTooltip Text="Analyse auswerten">
+                                    <MudIconButton Variant="Variant.Outlined"
+                                                   Color="Color.Primary"
+                                                   Icon="@Icons.Material.Filled.RateReview"
+                                                   OnClick="@(() => OpenReview(analysis))"
+                                                   aria-label="Analyse auswerten" />
+                                </MudTooltip>
+                            </MudStack>
                         </MudStack>
                     </MudPaper>
                 }
@@ -173,9 +183,14 @@
         return string.Equals(courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase);
     }
 
-    private void OpenAnalysis(RunningAnalysisCourseEvent analysis)
+    private void OpenRecording(RunningAnalysisCourseEvent analysis)
     {
         Navigation.NavigateTo($"/Trainers/courses/{analysis.Course.Id}/events/{analysis.Event.Id}/running-analysis");
+    }
+
+    private void OpenReview(RunningAnalysisCourseEvent analysis)
+    {
+        Navigation.NavigateTo($"/Trainers/courses/{analysis.Course.Id}/events/{analysis.Event.Id}/running-analysis/analysis");
     }
 
     private string FormatEventDate(CourseEventDocument courseEvent)

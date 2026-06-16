@@ -138,6 +138,39 @@ public sealed class CosmosRunningAnalysisRepository :
             recording.CourseId);
     }
 
+    public async Task<RunningAnalysisResult?> GetResultForParticipantAsync(
+        string captureSessionId,
+        string participantId,
+        CancellationToken cancellationToken = default)
+    {
+        var results = await LoadAllAsync<RunningAnalysisResult>(RunningAnalysisDocumentTypes.Result);
+        return results
+            .OrderByDescending(result => result.UpdatedAt)
+            .FirstOrDefault(result =>
+                result.CaptureSessionId == captureSessionId
+                && result.ParticipantId == participantId);
+    }
+
+    public async Task<IReadOnlyList<RunningAnalysisResult>> GetResultsForAthleteAsync(
+        string athleteUserId,
+        CancellationToken cancellationToken = default)
+    {
+        var results = await LoadAllAsync<RunningAnalysisResult>(RunningAnalysisDocumentTypes.Result);
+        return results
+            .Where(result => result.AthleteUserId == athleteUserId)
+            .OrderByDescending(result => result.AnalyzedAt ?? result.UpdatedAt)
+            .ToList();
+    }
+
+    public Task UpsertResultAsync(RunningAnalysisResult result, CancellationToken cancellationToken = default)
+    {
+        return _db.UpsertItem(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            WithDocumentType(result, RunningAnalysisDocumentTypes.Result),
+            result.CourseId);
+    }
+
     public async Task<DriveFolderReference?> FindReusableFolderAsync(
         ReusableDriveFolderRequest request,
         CancellationToken cancellationToken = default)

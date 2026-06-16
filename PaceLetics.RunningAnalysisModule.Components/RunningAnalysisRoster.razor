@@ -28,9 +28,30 @@
                                 </MudChip>
                             }
 
-                            <MudIconButton Icon="@Icons.Material.Filled.Videocam"
-                                           Color="@(selected ? Color.Primary : Color.Default)"
-                                           OnClick="@(() => RecordAsync(item.ParticipantId))" />
+                            @if (item.ResultStatus is not null)
+                            {
+                                <MudChip T="string"
+                                         Size="Size.Small"
+                                         Color="@GetResultColor(item)"
+                                         Variant="Variant.Outlined">
+                                    @GetResultText(item)
+                                </MudChip>
+                            }
+
+                            @if (OnRecord.HasDelegate)
+                            {
+                                <MudIconButton Icon="@Icons.Material.Filled.Videocam"
+                                               Color="@(selected ? Color.Primary : Color.Default)"
+                                               OnClick="@(() => RecordAsync(item.ParticipantId))" />
+                            }
+
+                            @if (OnAnalyze.HasDelegate)
+                            {
+                                <MudIconButton Icon="@Icons.Material.Filled.RateReview"
+                                               Color="@(HasVideoAccess(item) ? Color.Primary : Color.Default)"
+                                               Disabled="@(!HasVideoAccess(item))"
+                                               OnClick="@(() => AnalyzeAsync(item.ParticipantId))" />
+                            }
                         </MudStack>
                     </MudStack>
                 </MudPaper>
@@ -44,6 +65,7 @@
     [Parameter] public string? SelectedParticipantId { get; set; }
     [Parameter] public EventCallback<string> SelectedParticipantIdChanged { get; set; }
     [Parameter] public EventCallback<string> OnRecord { get; set; }
+    [Parameter] public EventCallback<string> OnAnalyze { get; set; }
 
     private async Task SelectAsync(string participantId)
     {
@@ -57,6 +79,12 @@
         await OnRecord.InvokeAsync(participantId);
     }
 
+    private async Task AnalyzeAsync(string participantId)
+    {
+        await SelectAsync(participantId);
+        await OnAnalyze.InvokeAsync(participantId);
+    }
+
     private static string GetStatusText(RunningAnalysisRosterItem item)
     {
         if (item.FolderStatus != RunningAnalysisFolderStatus.Ready)
@@ -67,7 +95,44 @@
 
         return item.RecordingCount == 0
             ? "Ready"
-            : "Recorded";
+            : GetRecordingText(item);
+    }
+
+    private static string GetRecordingText(RunningAnalysisRosterItem item)
+    {
+        var side = string.IsNullOrWhiteSpace(item.SideRecordingUrl) ? "Seite fehlt" : "Seite";
+        var rear = string.IsNullOrWhiteSpace(item.RearRecordingUrl) ? "Hinten fehlt" : "Hinten";
+        return $"{side}, {rear}";
+    }
+
+    private static bool HasVideoAccess(RunningAnalysisRosterItem item)
+    {
+        return !string.IsNullOrWhiteSpace(item.SideRecordingUrl)
+            || !string.IsNullOrWhiteSpace(item.RearRecordingUrl)
+            || !string.IsNullOrWhiteSpace(item.PrimaryRecordingUrl)
+            || !string.IsNullOrWhiteSpace(item.DriveFolderUrl);
+    }
+
+    private static Color GetResultColor(RunningAnalysisRosterItem item)
+    {
+        return item.ResultStatus == RunningAnalysisResultStatus.Completed
+            ? Color.Success
+            : Color.Warning;
+    }
+
+    private static string GetResultText(RunningAnalysisRosterItem item)
+    {
+        if (item.ResultStatus == RunningAnalysisResultStatus.Completed
+            && item.ResultScore is not null
+            && item.ResultMaxScore is not null
+            && item.ResultMaxScore > 0)
+        {
+            return $"{item.ResultScore}/{item.ResultMaxScore}";
+        }
+
+        return item.ResultStatus == RunningAnalysisResultStatus.Completed
+            ? "Fertig"
+            : "Entwurf";
     }
 
     private static string GetRowStyle(bool selected)

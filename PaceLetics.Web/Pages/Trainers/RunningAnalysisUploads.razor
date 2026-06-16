@@ -2,10 +2,12 @@
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
 @implements IAsyncDisposable
 @using System.Threading
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage
 @using PaceLetics.RunningAnalysisModule.Components
 @inject IUserDriveFolderService UserDriveFolderService
+@inject IRunningAnalysisService RunningAnalysisService
 @inject IJSRuntime JS
 @inject NavigationManager Navigation
 @inject ISnackbar Snackbar
@@ -497,6 +499,19 @@
 
             if (!string.IsNullOrWhiteSpace(driveFile.FileId))
             {
+                if (!string.IsNullOrWhiteSpace(pendingRecording.EffectiveCaptureSessionId)
+                    && !string.IsNullOrWhiteSpace(pendingRecording.ParticipantId))
+                {
+                    await RunningAnalysisService.RegisterUploadedRecordingAsync(
+                        pendingRecording.EffectiveCaptureSessionId,
+                        pendingRecording.ParticipantId,
+                        pendingRecording.FileName,
+                        pendingRecording.ContentType,
+                        driveFile,
+                        ParsePerspective(pendingRecording.Perspective),
+                        pendingRecording.RecordedAt);
+                }
+
                 await module.InvokeVoidAsync(
                     "markSavedRecordingUploadSucceeded",
                     pendingRecording.LocalId,
@@ -811,6 +826,13 @@
         return string.Equals(recording.Perspective, "rear", StringComparison.OrdinalIgnoreCase)
             ? "Hinten"
             : "Seite";
+    }
+
+    private static RunningAnalysisPerspective ParsePerspective(string? perspective)
+    {
+        return string.Equals(perspective, "rear", StringComparison.OrdinalIgnoreCase)
+            ? RunningAnalysisPerspective.Rear
+            : RunningAnalysisPerspective.Side;
     }
 
     private sealed class BrowserRecordingStorageStatus

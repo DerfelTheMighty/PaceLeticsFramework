@@ -1,5 +1,6 @@
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums;
+using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage;
 
 namespace PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 
@@ -39,6 +40,11 @@ public interface IRunningAnalysisService
         string analysisEventId,
         CancellationToken cancellationToken = default);
 
+    Task<RunningAnalysisResult?> GetAnalysisResultForParticipantAsync(
+        string captureSessionId,
+        string participantId,
+        CancellationToken cancellationToken = default);
+
     Task<RunningAnalysisCaptureSession> StartCaptureAsync(
         string captureSessionId,
         CancellationToken cancellationToken = default);
@@ -63,5 +69,19 @@ public interface IRunningAnalysisService
         Stream content,
         bool isOnline,
         RunningAnalysisPerspective perspective = RunningAnalysisPerspective.Side,
+        CancellationToken cancellationToken = default);
+
+    Task<RunningAnalysisRecording> RegisterUploadedRecordingAsync(
+        string captureSessionId,
+        string participantId,
+        string fileName,
+        string contentType,
+        DriveFileReference driveFile,
+        RunningAnalysisPerspective perspective = RunningAnalysisPerspective.Side,
+        DateTime? recordedAt = null,
+        CancellationToken cancellationToken = default);
+
+    Task<RunningAnalysisResult> SaveAnalysisResultAsync(
+        RunningAnalysisResultRequest request,
         CancellationToken cancellationToken = default);
 }

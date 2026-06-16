@@ -11,4 +11,10 @@ public sealed record RunningAnalysisRosterItem(
     RunningAnalysisFolderStatus FolderStatus,
     RunningAnalysisPermissionStatus PermissionStatus,
     int RecordingCount,
-    string? PrimaryRecordingUrl);
+    string? PrimaryRecordingUrl,
+    string? DriveFolderUrl = null,
+    string? SideRecordingUrl = null,
+    string? RearRecordingUrl = null,
+    RunningAnalysisResultStatus? ResultStatus = null,
+    int? ResultScore = null,
+    int? ResultMaxScore = null);
