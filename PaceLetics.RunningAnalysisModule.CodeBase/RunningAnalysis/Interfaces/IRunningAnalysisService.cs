@@ -1,4 +1,5 @@
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models;
+using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums;
 
 namespace PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 
@@ -61,5 +62,6 @@ public interface IRunningAnalysisService
         string contentType,
         Stream content,
         bool isOnline,
+        RunningAnalysisPerspective perspective = RunningAnalysisPerspective.Side,
         CancellationToken cancellationToken = default);
 }

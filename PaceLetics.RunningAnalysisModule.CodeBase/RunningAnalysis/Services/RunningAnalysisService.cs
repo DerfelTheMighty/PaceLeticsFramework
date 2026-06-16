@@ -277,6 +277,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         string contentType,
         Stream content,
         bool isOnline,
+        RunningAnalysisPerspective perspective = RunningAnalysisPerspective.Side,
         CancellationToken cancellationToken = default)
     {
         if (!isOnline)
@@ -308,6 +309,7 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
             CaptureSessionId = captureSession.Id,
             AnalysisEventId = captureSession.Id,
             ParticipantId = participant.Id,
+            Perspective = NormalizePerspective(perspective),
             AttemptNumber = recordings.Count + 1,
             RecordedAt = _clock.UtcNow,
             FileName = fileName.Trim(),
@@ -471,6 +473,13 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         return string.IsNullOrWhiteSpace(participant.CaptureSessionId)
             ? participant.AnalysisEventId
             : participant.CaptureSessionId;
+    }
+
+    private static RunningAnalysisPerspective NormalizePerspective(RunningAnalysisPerspective perspective)
+    {
+        return perspective == RunningAnalysisPerspective.Rear
+            ? RunningAnalysisPerspective.Rear
+            : RunningAnalysisPerspective.Side;
     }
 
     private static RunningAnalysisEvent ToLegacyEvent(RunningAnalysisCaptureSession captureSession)

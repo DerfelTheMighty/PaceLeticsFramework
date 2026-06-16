@@ -123,6 +123,12 @@
                                                  Variant="Variant.Outlined">
                                             @FormatQueueStatus(recording)
                                         </MudChip>
+                                        <MudChip T="string"
+                                                 Size="Size.Small"
+                                                 Color="Color.Info"
+                                                 Variant="Variant.Outlined">
+                                            @FormatPerspective(recording)
+                                        </MudChip>
                                     </MudStack>
 
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">
@@ -798,6 +804,13 @@
             "failed" => L["UploadStatus_Failed"],
             _ => L["UploadStatus_Queued"]
         };
+    }
+
+    private static string FormatPerspective(RunningAnalysisRecordedVideo recording)
+    {
+        return string.Equals(recording.Perspective, "rear", StringComparison.OrdinalIgnoreCase)
+            ? "Hinten"
+            : "Seite";
     }
 
     private sealed class BrowserRecordingStorageStatus

@@ -6,6 +6,7 @@ const settingsStoreName = "settings";
 const recordingDirectoryKey = "recordingDirectory";
 const metadataFileSuffix = ".paceletics.json";
 const recordingArtifactType = "paceletics-running-analysis-recording";
+const defaultPerspective = "side";
 const missingAthleteUserIdMessage = "The local recording metadata does not contain an athlete user id.";
 let cachedRecordingDirectoryHandle = null;
 
@@ -336,6 +337,7 @@ function createRecordingMetadata(metadata, contentType, localId, directoryHandle
   const athleteEmail = getMetadataValue(metadata, "athleteEmail");
   const participantName = getMetadataValue(metadata, "participantName");
   const fileNamePrefix = getMetadataValue(metadata, "fileNamePrefix");
+  const perspective = normalizePerspective(getMetadataValue(metadata, "perspective"));
 
   if (!athleteUserId || !participantId || !fileNamePrefix) {
     throw new Error("Recording metadata is incomplete.");
@@ -343,7 +345,7 @@ function createRecordingMetadata(metadata, contentType, localId, directoryHandle
 
   const fileExtension = contentType.includes("mp4") ? "mp4" : "webm";
   const recordedAt = new Date().toISOString();
-  const fileName = buildFileName(fileNamePrefix, fileExtension, localId);
+  const fileName = buildFileName(fileNamePrefix, fileExtension, localId, perspective);
   const metadataFileName = `${fileName}${metadataFileSuffix}`;
 
   return {
@@ -362,6 +364,7 @@ function createRecordingMetadata(metadata, contentType, localId, directoryHandle
     athleteUserId,
     athleteEmail,
     participantName,
+    perspective,
     fileName,
     contentType,
     fileExtension,
@@ -506,6 +509,7 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
       athleteUserId: metadata.athleteUserId,
       athleteEmail: metadata.athleteEmail || "",
       participantName: metadata.participantName || "",
+      perspective: normalizePerspective(metadata.perspective),
       fileName: metadata.fileName,
       contentType,
       fileExtension,
@@ -644,6 +648,7 @@ function toRecordingPayload(recording) {
     athleteUserId: recording.athleteUserId || "",
     athleteEmail: recording.athleteEmail || "",
     participantName: recording.participantName || "",
+    perspective: normalizePerspective(recording.perspective),
     fileName: recording.fileName,
     contentType: recording.contentType,
     fileExtension: recording.fileExtension,
@@ -680,6 +685,7 @@ function toRecordingMetadata(recording) {
     athleteUserId: recording.athleteUserId || "",
     athleteEmail: recording.athleteEmail || "",
     participantName: recording.participantName || "",
+    perspective: normalizePerspective(recording.perspective),
     fileName: recording.fileName,
     contentType: recording.contentType,
     fileExtension: recording.fileExtension,
@@ -757,10 +763,11 @@ function getRecordingStorageLocation(recording) {
   return `Browser IndexedDB: ${databaseName}/${recordingStoreName}/${recording.localId}`;
 }
 
-function buildFileName(fileNamePrefix, fileExtension, localId) {
+function buildFileName(fileNamePrefix, fileExtension, localId, perspective = defaultPerspective) {
   const safePrefix = sanitizeFileName(fileNamePrefix || "recording");
+  const safePerspective = sanitizeFileName(normalizePerspective(perspective));
   const safeExtension = sanitizeFileName(fileExtension || "webm").replaceAll(".", "");
-  return `${safePrefix}-${localId.slice(0, 8)}.${safeExtension || "webm"}`;
+  return `${safePrefix}-${safePerspective}-${localId.slice(0, 8)}.${safeExtension || "webm"}`;
 }
 
 function getFileExtension(fileName) {
@@ -796,6 +803,13 @@ function sanitizeFileName(value) {
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function normalizePerspective(value) {
+  const normalized = `${value || ""}`.trim().toLowerCase();
+  return normalized === "rear" || normalized === "back" || normalized === "hinten"
+    ? "rear"
+    : defaultPerspective;
 }
 
 function getMetadataValue(metadata, camelCaseName) {

@@ -31,12 +31,33 @@
                                                   AthleteEmail="@AthleteEmail"
                                                   ParticipantName="@ParticipantName"
                                                   FileNamePrefix="@FileNamePrefix"
+                                                  Perspective="@_selectedPerspective"
                                                   CanRecord="CanRecord"
                                                   ShowControls="false"
                                                   OnRecorded="OnRecorded"
                                                   IsRecordingChanged="OnRecorderStateChangedAsync" />
                 }
             </div>
+
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:8px; flex-wrap:wrap;">
+                <MudText Typo="Typo.caption" Color="Color.Secondary">Perspektive</MudText>
+                <MudStack Row="true" Class="running-analysis-perspective-control">
+                    <MudButton Size="Size.Small"
+                               Variant="@GetPerspectiveVariant(RunningAnalysisPerspective.Side)"
+                               Color="@GetPerspectiveColor(RunningAnalysisPerspective.Side)"
+                               Disabled="@IsRecordingActive"
+                               OnClick="@(() => SelectPerspective(RunningAnalysisPerspective.Side))">
+                        Seite
+                    </MudButton>
+                    <MudButton Size="Size.Small"
+                               Variant="@GetPerspectiveVariant(RunningAnalysisPerspective.Rear)"
+                               Color="@GetPerspectiveColor(RunningAnalysisPerspective.Rear)"
+                               Disabled="@IsRecordingActive"
+                               OnClick="@(() => SelectPerspective(RunningAnalysisPerspective.Rear))">
+                        Hinten
+                    </MudButton>
+                </MudStack>
+            </MudStack>
         </MudStack>
     </MudPaper>
 
@@ -101,11 +122,21 @@
         border-radius: 8px;
         overflow: hidden;
     }
+
+    .running-analysis-perspective-control {
+        gap: 4px;
+        flex-wrap: nowrap;
+    }
+
+    .running-analysis-perspective-control .mud-button-root {
+        min-width: 84px;
+    }
 </style>
 
 @code {
     private RunningAnalysisMediaRecorder? _mediaRecorder;
     private bool _recorderIsRecording;
+    private RunningAnalysisPerspective _selectedPerspective = RunningAnalysisPerspective.Side;
 
     [Parameter] public string CaptureSessionId { get; set; } = string.Empty;
     [Parameter] public string CaptureExternalEventId { get; set; } = string.Empty;
@@ -138,6 +169,26 @@
     private string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
     private string EffectiveCaptureTitle => string.IsNullOrWhiteSpace(CaptureTitle) ? AnalysisTitle : CaptureTitle;
     private DateTime? EffectiveCaptureStartsAt => CaptureStartsAt ?? AnalysisStartsAt;
+
+    private void SelectPerspective(RunningAnalysisPerspective perspective)
+    {
+        if (IsRecordingActive)
+            return;
+
+        _selectedPerspective = perspective == RunningAnalysisPerspective.Rear
+            ? RunningAnalysisPerspective.Rear
+            : RunningAnalysisPerspective.Side;
+    }
+
+    private Variant GetPerspectiveVariant(RunningAnalysisPerspective perspective)
+    {
+        return _selectedPerspective == perspective ? Variant.Filled : Variant.Outlined;
+    }
+
+    private Color GetPerspectiveColor(RunningAnalysisPerspective perspective)
+    {
+        return _selectedPerspective == perspective ? Color.Primary : Color.Default;
+    }
 
     private async Task StartRecordingAsync()
     {

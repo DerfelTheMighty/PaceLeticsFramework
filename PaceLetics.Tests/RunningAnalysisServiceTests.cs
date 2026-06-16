@@ -192,6 +192,29 @@ public sealed class RunningAnalysisServiceTests
     }
 
     [Fact]
+    public async Task UploadRecording_StoresPerspective()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var storage = new FakeRunningAnalysisStorageProvider();
+        var service = CreateService(repository, storage, new FakeUserDriveFolderRegistry());
+        var participant = await service.RegisterParticipantAsync(CreateRegistration());
+        var analysisEvent = Assert.Single(repository.Events.Values);
+
+        var recording = await service.UploadRecordingAsync(
+            analysisEvent.Id,
+            participant.Id,
+            "rear.webm",
+            "video/webm",
+            new MemoryStream([1]),
+            isOnline: true,
+            perspective: RunningAnalysisPerspective.Rear);
+
+        Assert.Equal(RunningAnalysisPerspective.Rear, recording.Perspective);
+        var storedRecording = Assert.Single(await repository.GetRecordingsForParticipantAsync(participant.Id));
+        Assert.Equal(RunningAnalysisPerspective.Rear, storedRecording.Perspective);
+    }
+
+    [Fact]
     public async Task UploadRecording_RequiresOnlineConnection()
     {
         var repository = new InMemoryRunningAnalysisRepository();

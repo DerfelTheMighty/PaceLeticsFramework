@@ -10,6 +10,7 @@ public sealed class RunningAnalysisRecording
     public string CaptureSessionId { get; set; } = string.Empty;
     public string AnalysisEventId { get; set; } = string.Empty;
     public string ParticipantId { get; set; } = string.Empty;
+    public RunningAnalysisPerspective Perspective { get; set; } = RunningAnalysisPerspective.Side;
     public int AttemptNumber { get; set; }
     public DateTime RecordedAt { get; set; } = DateTime.UtcNow;
     public bool IsPrimary { get; set; }
