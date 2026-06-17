@@ -477,15 +477,28 @@
     background: var(--pl-panel-background, linear-gradient(180deg, var(--mud-palette-surface), var(--mud-palette-background)));
 }
 
+.pl-data-analyses-page {
+    padding-top: 58px;
+}
+
 .pl-data-analyses-tabs {
     margin-top: 0;
 }
 
 .pl-data-analyses-tabs .mud-tabs-toolbar {
+    position: fixed;
+    top: 64px;
+    right: 0;
+    left: 0;
+    z-index: 1200;
     min-height: 44px;
     border: 1px solid var(--mud-palette-lines-default);
-    border-radius: var(--pl-radius);
-    background: var(--pl-panel-background, var(--mud-palette-surface));
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    background: color-mix(in srgb, var(--mud-palette-surface) 94%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--mud-palette-black) 14%, transparent);
 }
 
 .pl-data-analyses-tabs .mud-tab {
@@ -496,6 +509,16 @@
 
 .pl-data-analyses-tabs .mud-tab .mud-icon-root {
     margin-bottom: 0;
+}
+
+@media (max-width: 959.98px) {
+    .pl-data-analyses-page {
+        padding-top: 54px;
+    }
+
+    .pl-data-analyses-tabs .mud-tabs-toolbar {
+        top: 56px;
+    }
 }
 
 .pl-surface-card {
