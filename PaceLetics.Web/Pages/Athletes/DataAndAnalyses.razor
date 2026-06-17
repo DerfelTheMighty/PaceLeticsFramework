@@ -16,133 +16,157 @@
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pl-data-analyses-page px-6 pb-8" MaxWidth="MaxWidth.Small">
-    <MudTabs Elevation="0"
-             Rounded="false"
-             Centered="true"
-             Class="pl-data-analyses-tabs">
-        <MudTabPanel Text="@L["TabDrive"]" Icon="@Icons.Material.Filled.FolderOpen">
-            <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+    <nav class="pl-data-analyses-nav" aria-label="@L["Title"]">
+        <button type="button"
+                class="@GetSectionButtonClass(DataAnalysesSection.Drive)"
+                aria-pressed="@(_activeSection == DataAnalysesSection.Drive)"
+                @onclick="@(() => SelectSection(DataAnalysesSection.Drive))">
+            <MudIcon Icon="@Icons.Material.Filled.FolderOpen" Size="Size.Small" />
+            <span>@L["TabDrive"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(DataAnalysesSection.Recordings)"
+                aria-pressed="@(_activeSection == DataAnalysesSection.Recordings)"
+                @onclick="@(() => SelectSection(DataAnalysesSection.Recordings))">
+            <MudIcon Icon="@Icons.Material.Filled.VideoLibrary" Size="Size.Small" />
+            <span>@L["TabRecordings"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(DataAnalysesSection.Analyses)"
+                aria-pressed="@(_activeSection == DataAnalysesSection.Analyses)"
+                @onclick="@(() => SelectSection(DataAnalysesSection.Analyses))">
+            <MudIcon Icon="@Icons.Material.Filled.Assessment" Size="Size.Small" />
+            <span>@L["TabAnalyses"]</span>
+        </button>
+    </nav>
 
-            <MudPaper Elevation="0" Class="pa-4 pl-panel mt-4">
-                <MudStack Spacing="3">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
-                        <MudIcon Icon="@GetDriveIcon()" Color="@GetDriveIconColor()" />
-                        <div style="min-width:0;">
-                            <MudText Typo="Typo.subtitle2">@L["DriveTitle"]</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetDriveDescription()</MudText>
-                        </div>
-                    </MudStack>
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-                    @if (_folder is null)
-                    {
-                        <MudStack Row="true" Justify="Justify.FlexEnd">
-                            <MudTooltip Text="@L["CreateFolder"]">
-                                <MudIconButton Variant="Variant.Filled"
-                                               Color="Color.Primary"
-                                               Icon="@Icons.Material.Filled.CreateNewFolder"
-                                               Disabled="_isBusy || string.IsNullOrWhiteSpace(_userId)"
-                                               OnClick="CreateFolderAsync"
-                                               aria-label="@L["CreateFolder"]" />
-                            </MudTooltip>
-                        </MudStack>
-                    }
-                    else
-                    {
-                        <MudLink Href="@_folder.Url" Target="_blank" Typo="Typo.body2">@L["OpenFolder"]</MudLink>
-
-                        <MudStack Row="true" Justify="Justify.FlexEnd" Style="gap:8px; flex-wrap:wrap;">
-                            <MudTooltip Text="@L["OpenFolder"]">
-                                <MudIconButton Variant="Variant.Outlined"
-                                               Color="Color.Primary"
-                                               Icon="@Icons.Material.Filled.OpenInNew"
-                                               Disabled="_isBusy"
-                                               OnClick="OpenFolderAsync"
-                                               aria-label="@L["OpenFolder"]" />
-                            </MudTooltip>
-                            <MudTooltip Text="@L["DeleteFolder"]">
-                                <MudIconButton Variant="Variant.Outlined"
-                                               Color="Color.Error"
-                                               Icon="@Icons.Material.Filled.Delete"
-                                               Disabled="_isBusy"
-                                               OnClick="DeleteFolderAsync"
-                                               aria-label="@L["DeleteFolder"]" />
-                            </MudTooltip>
-                        </MudStack>
-                    }
+    @if (_activeSection == DataAnalysesSection.Drive)
+    {
+        <MudPaper Elevation="0" Class="pa-4 pl-panel mt-4">
+            <MudStack Spacing="3">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
+                    <MudIcon Icon="@GetDriveIcon()" Color="@GetDriveIconColor()" />
+                    <div style="min-width:0;">
+                        <MudText Typo="Typo.subtitle2">@L["DriveTitle"]</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@GetDriveDescription()</MudText>
+                    </div>
                 </MudStack>
-            </MudPaper>
-        </MudTabPanel>
 
-        <MudTabPanel Text="@L["TabRecordings"]" Icon="@Icons.Material.Filled.VideoLibrary">
-            <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
-
-            <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
-                <MudStack Spacing="3">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
-                        <MudIcon Icon="@Icons.Material.Filled.VideoLibrary" Color="Color.Primary" />
-                        <div>
-                            <MudText Typo="Typo.subtitle2">@L["AnalysesTitle"]</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["AnalysesSubtitle"]</MudText>
-                        </div>
+                @if (_folder is null)
+                {
+                    <MudStack Row="true" Justify="Justify.FlexEnd">
+                        <MudTooltip Text="@L["CreateFolder"]">
+                            <MudIconButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           Icon="@Icons.Material.Filled.CreateNewFolder"
+                                           Disabled="_isBusy || string.IsNullOrWhiteSpace(_userId)"
+                                           OnClick="CreateFolderAsync"
+                                           aria-label="@L["CreateFolder"]" />
+                        </MudTooltip>
                     </MudStack>
+                }
+                else
+                {
+                    <MudLink Href="@_folder.Url" Target="_blank" Typo="Typo.body2">@L["OpenFolder"]</MudLink>
 
-                    @if (!string.IsNullOrWhiteSpace(_errorMessage))
-                    {
-                        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
-                    }
-                    else if (_folder is null)
-                    {
-                        <MudAlert Severity="Severity.Info"
-                                  Variant="Variant.Outlined"
-                                  Icon="@Icons.Material.Filled.FolderOff">
-                            @L["DriveRequiredForAnalyses"]
-                        </MudAlert>
-                    }
-                    else
-                    {
-                        <RunningAnalysisLinks Items="_analyses"
-                                              EmptyText="@L["NoAnalyses"]"
-                                              OpenText="@L["OpenFolder"]"
-                                              DeleteText="@L["RemoveAnalysis"]"
-                                              OnDelete="RemoveAnalysisAsync" />
-                    }
-                </MudStack>
-            </MudPaper>
-        </MudTabPanel>
-
-        <MudTabPanel Text="@L["TabAnalyses"]" Icon="@Icons.Material.Filled.Assessment">
-            <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
-
-            <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
-                <MudStack Spacing="3">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
-                        <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Primary" />
-                        <div>
-                            <MudText Typo="Typo.subtitle2">@L["CompletedAnalysesTitle"]</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["CompletedAnalysesSubtitle"]</MudText>
-                        </div>
+                    <MudStack Row="true" Justify="Justify.FlexEnd" Style="gap:8px; flex-wrap:wrap;">
+                        <MudTooltip Text="@L["OpenFolder"]">
+                            <MudIconButton Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           Icon="@Icons.Material.Filled.OpenInNew"
+                                           Disabled="_isBusy"
+                                           OnClick="OpenFolderAsync"
+                                           aria-label="@L["OpenFolder"]" />
+                        </MudTooltip>
+                        <MudTooltip Text="@L["DeleteFolder"]">
+                            <MudIconButton Variant="Variant.Outlined"
+                                           Color="Color.Error"
+                                           Icon="@Icons.Material.Filled.Delete"
+                                           Disabled="_isBusy"
+                                           OnClick="DeleteFolderAsync"
+                                           aria-label="@L["DeleteFolder"]" />
+                        </MudTooltip>
                     </MudStack>
-
-                    @if (!string.IsNullOrWhiteSpace(_errorMessage))
-                    {
-                        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
-                    }
-                    else
-                    {
-                        <AthleteAnalysisOverview Items="_analyses" OnDelete="RemoveAnalysisAsync" />
-                    }
+                }
+            </MudStack>
+        </MudPaper>
+    }
+    else if (_activeSection == DataAnalysesSection.Recordings)
+    {
+        <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
+            <MudStack Spacing="3">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
+                    <MudIcon Icon="@Icons.Material.Filled.VideoLibrary" Color="Color.Primary" />
+                    <div>
+                        <MudText Typo="Typo.subtitle2">@L["AnalysesTitle"]</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["AnalysesSubtitle"]</MudText>
+                    </div>
                 </MudStack>
-            </MudPaper>
-        </MudTabPanel>
-    </MudTabs>
+
+                @if (!string.IsNullOrWhiteSpace(_errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+                }
+                else if (_folder is null)
+                {
+                    <MudAlert Severity="Severity.Info"
+                              Variant="Variant.Outlined"
+                              Icon="@Icons.Material.Filled.FolderOff">
+                        @L["DriveRequiredForAnalyses"]
+                    </MudAlert>
+                }
+                else
+                {
+                    <RunningAnalysisLinks Items="_analyses"
+                                          EmptyText="@L["NoAnalyses"]"
+                                          OpenText="@L["OpenFolder"]"
+                                          DeleteText="@L["RemoveAnalysis"]"
+                                          OnDelete="RemoveAnalysisAsync" />
+                }
+            </MudStack>
+        </MudPaper>
+    }
+    else
+    {
+        <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
+            <MudStack Spacing="3">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
+                    <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Primary" />
+                    <div>
+                        <MudText Typo="Typo.subtitle2">@L["CompletedAnalysesTitle"]</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["CompletedAnalysesSubtitle"]</MudText>
+                    </div>
+                </MudStack>
+
+                @if (!string.IsNullOrWhiteSpace(_errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+                }
+                else
+                {
+                    <AthleteAnalysisOverview Items="_analyses" OnDelete="RemoveAnalysisAsync" />
+                }
+            </MudStack>
+        </MudPaper>
+    }
 </MudContainer>
 
 @code {
+    private enum DataAnalysesSection
+    {
+        Drive,
+        Recordings,
+        Analyses
+    }
+
     private string? _userId;
     private string? _email;
     private string? _errorMessage;
     private DriveFolderReference? _folder;
     private IReadOnlyList<RunningAnalysisLink> _analyses = Array.Empty<RunningAnalysisLink>();
+    private DataAnalysesSection _activeSection = DataAnalysesSection.Drive;
     private bool _isBusy;
 
     protected override async Task OnInitializedAsync()
@@ -187,6 +211,18 @@
             return;
 
         _analyses = await RunningAnalysisService.GetAnalysesForAthleteAsync(_userId);
+    }
+
+    private void SelectSection(DataAnalysesSection section)
+    {
+        _activeSection = section;
+    }
+
+    private string GetSectionButtonClass(DataAnalysesSection section)
+    {
+        return _activeSection == section
+            ? "pl-data-analyses-nav__item pl-data-analyses-nav__item--active"
+            : "pl-data-analyses-nav__item";
     }
 
     private async Task CreateFolderAsync()

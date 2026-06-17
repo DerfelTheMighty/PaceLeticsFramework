@@ -481,42 +481,71 @@
     padding-top: 58px;
 }
 
-.pl-data-analyses-tabs {
-    margin-top: 0;
-}
-
-.pl-data-analyses-tabs .mud-tabs-toolbar {
+.pl-data-analyses-nav {
     position: fixed;
     top: 64px;
     right: 0;
     left: 0;
     z-index: 1200;
-    min-height: 44px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    min-height: 48px;
+    padding: 6px 10px;
     border: 1px solid var(--mud-palette-lines-default);
     border-right: 0;
     border-left: 0;
-    border-radius: 0;
     background: color-mix(in srgb, var(--mud-palette-surface) 94%, transparent);
     backdrop-filter: blur(12px);
     box-shadow: 0 8px 24px color-mix(in srgb, var(--mud-palette-black) 14%, transparent);
 }
 
-.pl-data-analyses-tabs .mud-tab {
-    min-height: 42px;
-    padding: 6px 12px;
-    gap: 4px;
+.pl-data-analyses-nav__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 36px;
+    gap: 5px;
+    padding: 5px 8px;
+    overflow: hidden;
+    color: var(--mud-palette-text-secondary);
+    font: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
 }
 
-.pl-data-analyses-tabs .mud-tab .mud-icon-root {
-    margin-bottom: 0;
+.pl-data-analyses-nav__item:hover,
+.pl-data-analyses-nav__item:focus-visible {
+    color: var(--mud-palette-primary);
+    background: var(--mud-palette-action-default-hover);
+    outline: none;
+}
+
+.pl-data-analyses-nav__item--active {
+    color: var(--mud-palette-primary);
+    background: color-mix(in srgb, var(--mud-palette-primary) 16%, transparent);
+}
+
+.pl-data-analyses-nav__item span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media (max-width: 959.98px) {
     .pl-data-analyses-page {
-        padding-top: 54px;
+        padding-top: 58px;
     }
 
-    .pl-data-analyses-tabs .mud-tabs-toolbar {
+    .pl-data-analyses-nav {
         top: 56px;
     }
 }
