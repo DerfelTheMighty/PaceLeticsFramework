@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Oeffentlichen Nutzernamen festlegen</value></data>
+  <data name="Text" xml:space="preserve"><value>Dein oeffentlicher Nutzername wird in Kursen, Aufnahmen und Analysen statt deiner E-Mail-Adresse angezeigt.</value></data>
+  <data name="PublicUserName" xml:space="preserve"><value>Oeffentlicher Nutzername</value></data>
+  <data name="HelpText" xml:space="preserve"><value>Nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche.</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Abbrechen</value></data>
+  <data name="Save" xml:space="preserve"><value>Speichern</value></data>
+  <data name="Required" xml:space="preserve"><value>Bitte gib einen oeffentlichen Nutzernamen ein.</value></data>
+  <data name="InvalidCharacters" xml:space="preserve"><value>Der oeffentliche Nutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.</value></data>
+  <data name="AlreadyTaken" xml:space="preserve"><value>Dieser oeffentliche Nutzername ist bereits vergeben.</value></data>
+  <data name="Saved" xml:space="preserve"><value>Oeffentlicher Nutzername gespeichert.</value></data>
+</root>

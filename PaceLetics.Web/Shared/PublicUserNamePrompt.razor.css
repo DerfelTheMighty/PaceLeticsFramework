@@ -1,0 +1,17 @@
+.pl-public-username-prompt {
+    position: fixed;
+    inset: 0;
+    z-index: 1400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: color-mix(in srgb, var(--mud-palette-background) 24%, rgba(0, 0, 0, .62));
+    backdrop-filter: blur(8px);
+}
+
+.pl-public-username-prompt__panel {
+    width: min(440px, 100%);
+    border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 26%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+}
