@@ -14,22 +14,41 @@
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <nav class="pl-section-nav" aria-label="@L["Title"]">
+        <button type="button"
+                class="@GetSectionButtonClass(CoursesSection.Courses)"
+                aria-pressed="@(_activeSection == CoursesSection.Courses)"
+                @onclick="@(() => SelectSection(CoursesSection.Courses))">
+            <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Small" />
+            <span>@L["TabCourses"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(CoursesSection.TrainingPlans)"
+                aria-pressed="@(_activeSection == CoursesSection.TrainingPlans)"
+                @onclick="@(() => SelectSection(CoursesSection.TrainingPlans))">
+            <MudIcon Icon="@Icons.Material.Filled.EventNote" Size="Size.Small" />
+            <span>@L["TabTrainingPlans"]</span>
+        </button>
+    </nav>
+
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    <MudDivider Class="my-4" />
+    @if (_activeSection == CoursesSection.Courses)
+    {
+        <MudDivider Class="my-4" />
 
-    @if (!string.IsNullOrWhiteSpace(_errorMessage))
-    {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
-    }
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
+        }
 
-    @if (_courses.Count == 0)
-    {
-        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoPublishedCourses"]</MudText>
-    }
-    else
-    {
+        @if (_courses.Count == 0)
+        {
+            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoPublishedCourses"]</MudText>
+        }
+        else
+        {
             var selected = SelectedOverview;
             var joinedCourses = JoinedCourses.ToList();
             var availableCourses = AvailableCourses.ToList();
@@ -318,15 +337,24 @@
                     </MudPaper>
                 }
             </MudStack>
+        }
     }
+    else
+    {
+        <MudDivider Class="my-4" />
 
-    <MudDivider Class="my-4" />
-
-    <TrainingPlanPage Embedded="true"
-                      AutoScrollToNextSession="false" />
+        <TrainingPlanPage Embedded="true"
+                          AutoScrollToNextSession="false" />
+    }
 </MudContainer>
 
 @code {
+    private enum CoursesSection
+    {
+        Courses,
+        TrainingPlans
+    }
+
     private string? _userId;
     private string? _errorMessage;
     private string? _selectedCourseId;
@@ -338,6 +366,7 @@
     private bool _showAllDates;
     private bool _showAllEvents;
     private bool _showAllTrainingPlans;
+    private CoursesSection _activeSection = CoursesSection.Courses;
 
     private CourseOverview? SelectedOverview =>
         JoinedCourses.FirstOrDefault(course => course.Course.Id == _selectedCourseId)
@@ -417,6 +446,18 @@
 
         _selectedCourseId = courseId;
         ResetDetailExpansion();
+    }
+
+    private void SelectSection(CoursesSection section)
+    {
+        _activeSection = section;
+    }
+
+    private string GetSectionButtonClass(CoursesSection section)
+    {
+        return _activeSection == section
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
     }
 
     private void OpenCoursePicker()

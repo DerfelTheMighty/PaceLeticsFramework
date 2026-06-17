@@ -18,7 +18,24 @@
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
+
+    <nav class="pl-section-nav" aria-label="@L["Title"]">
+        <button type="button"
+                class="@GetSectionButtonClass(RacePacesSection.RaceData)"
+                aria-pressed="@(_activeSection == RacePacesSection.RaceData)"
+                @onclick="@(() => SelectSection(RacePacesSection.RaceData))">
+            <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" />
+            <span>@L["TabRaceData"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(RacePacesSection.PaceZones)"
+                aria-pressed="@(_activeSection == RacePacesSection.PaceZones)"
+                @onclick="@(() => SelectSection(RacePacesSection.PaceZones))">
+            <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
+            <span>@L["TabPaceZones"]</span>
+        </button>
+    </nav>
 
     <PageHeader Title="@L["Title"]"
                 Subtitle="@L["Subtitle"]" />
@@ -27,60 +44,90 @@
 
     <MudStack Spacing="3">
 
-        @if (_athlete?.ActiveReferenceResult is null)
+        @if (_activeSection == RacePacesSection.RaceData)
         {
-            <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                @L["NoRaceWarning"]
-            </MudAlert>
+            @if (_athlete?.ActiveReferenceResult is null)
+            {
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                    @L["NoRaceWarning"]
+                </MudAlert>
 
-            <MudTooltip Text="@L["AddRace"]">
-                <MudIconButton Variant="Variant.Filled"
-                               Color="Color.Warning"
-                               Icon="@Icons.Material.Filled.AddCircle"
-                               OnClick="AddAthlete"
-                               aria-label="@L["AddRace"]" />
-            </MudTooltip>
+                <MudTooltip Text="@L["AddRace"]">
+                    <MudIconButton Variant="Variant.Filled"
+                                   Color="Color.Warning"
+                                   Icon="@Icons.Material.Filled.AddCircle"
+                                   OnClick="AddAthlete"
+                                   aria-label="@L["AddRace"]" />
+                </MudTooltip>
+            }
+            else
+            {
+                <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
+
+                @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        @L["RaceOldWarning"]
+                    </MudAlert>
+                }
+
+                <VdotCard Data="@_vdotData" />
+            }
         }
         else
         {
-            <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
-
-            @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
-            {
-                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                    @L["RaceOldWarning"]
-                </MudAlert>
-            }
-
-            <VdotCard Data="@_vdotData" />
-        }
-
-        @if (_hasPaceModel)
-        {
-            <MudDivider Class="my-2" />
-
             <MudStack Spacing="1">
                 <MudText Typo="Typo.h6">@L["PaceZonesTitle"]</MudText>
                 <MudText Typo="Typo.body2" Color="Color.Secondary">@L["PaceZonesSubtitle"]</MudText>
             </MudStack>
 
-            <PaceInfo EPaceLow="@_lowerPace.Easy"
-                      EPaceHigh="@_upperPace.Easy"
-                      RecoveryPaceLow="@_lowerPace.Easy.Add(TimeSpan.FromSeconds(30))"
-                      RecoveryPaceHigh="@_upperPace.Easy.Add(TimeSpan.FromSeconds(30))"
-                      MPaceLow="@_lowerPace.Marathon"
-                      MPaceHigh="@_upperPace.Marathon"
-                      TPaceLow="@_lowerPace.Threshold"
-                      TPaceHigh="@_upperPace.Threshold"
-                      IPaceLow="@_lowerPace.Intervall"
-                      IPaceHigh="@_upperPace.Intervall"
-                      RPaceLow="@_lowerPace.Repetition"
-                      RPaceHigh="@_upperPace.Repetition" />
+            @if (_hasPaceModel)
+            {
+                <PaceInfo EPaceLow="@_lowerPace.Easy"
+                          EPaceHigh="@_upperPace.Easy"
+                          RecoveryPaceLow="@_lowerPace.Easy.Add(TimeSpan.FromSeconds(30))"
+                          RecoveryPaceHigh="@_upperPace.Easy.Add(TimeSpan.FromSeconds(30))"
+                          MPaceLow="@_lowerPace.Marathon"
+                          MPaceHigh="@_upperPace.Marathon"
+                          TPaceLow="@_lowerPace.Threshold"
+                          TPaceHigh="@_upperPace.Threshold"
+                          IPaceLow="@_lowerPace.Intervall"
+                          IPaceHigh="@_upperPace.Intervall"
+                          RPaceLow="@_lowerPace.Repetition"
+                          RPaceHigh="@_upperPace.Repetition" />
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                    @L["NoRaceWarning"]
+                </MudAlert>
+            }
         }
 
     </MudStack>
 
 </MudContainer>
 
+@code {
+    private enum RacePacesSection
+    {
+        RaceData,
+        PaceZones
+    }
+
+    private RacePacesSection _activeSection = RacePacesSection.RaceData;
+
+    private void SelectSection(RacePacesSection section)
+    {
+        _activeSection = section;
+    }
+
+    private string GetSectionButtonClass(RacePacesSection section)
+    {
+        return _activeSection == section
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
+    }
+}
 
 

@@ -15,8 +15,8 @@
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
-<MudContainer Class="pl-data-analyses-page px-6 pb-8" MaxWidth="MaxWidth.Small">
-    <nav class="pl-data-analyses-nav" aria-label="@L["Title"]">
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <nav class="pl-section-nav" aria-label="@L["Title"]">
         <button type="button"
                 class="@GetSectionButtonClass(DataAnalysesSection.Drive)"
                 aria-pressed="@(_activeSection == DataAnalysesSection.Drive)"
@@ -221,8 +221,8 @@
     private string GetSectionButtonClass(DataAnalysesSection section)
     {
         return _activeSection == section
-            ? "pl-data-analyses-nav__item pl-data-analyses-nav__item--active"
-            : "pl-data-analyses-nav__item";
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
     }
 
     private async Task CreateFolderAsync()
