@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="NoCompletedAnalyses" xml:space="preserve"><value>No completed analyses available yet.</value></data>
+  <data name="AnalyzedAt" xml:space="preserve"><value>Assessed on {0}</value></data>
+  <data name="CompletedStatus" xml:space="preserve"><value>Analysis completed</value></data>
+  <data name="OpenAnalysis" xml:space="preserve"><value>Open analysis</value></data>
+  <data name="OpenResultFile" xml:space="preserve"><value>Open result file</value></data>
+  <data name="OpenFolder" xml:space="preserve"><value>Open folder</value></data>
+  <data name="RemoveAnalysis" xml:space="preserve"><value>Remove</value></data>
+  <data name="OverallScore" xml:space="preserve"><value>Overall</value></data>
+  <data name="SideScore" xml:space="preserve"><value>Side</value></data>
+  <data name="RearScore" xml:space="preserve"><value>Rear</value></data>
+  <data name="NotRated" xml:space="preserve"><value>not rated</value></data>
+</root>

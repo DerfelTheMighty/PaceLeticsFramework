@@ -1,0 +1,138 @@
+@using System.Globalization
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
+@inject NavigationManager Navigation
+@inject IStringLocalizer<AthleteAnalysisOverview> L
+
+<MudStack Spacing="2">
+    @if (_completedAnalyses.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NoCompletedAnalyses"]</MudAlert>
+    }
+    else
+    {
+        @foreach (var analysis in _completedAnalyses)
+        {
+            <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
+                <MudStack Spacing="2">
+                    <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="0" Style="min-width:0;">
+                            <MudText Typo="Typo.subtitle1">@analysis.Title</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@analysis.StartsAt.ToString("g", CultureInfo.CurrentCulture)</MudText>
+                            @if (analysis.AnalyzedAt is not null)
+                            {
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @string.Format(CultureInfo.CurrentCulture, L["AnalyzedAt"].Value, analysis.AnalyzedAt.Value.ToLocalTime().ToString("g", CultureInfo.CurrentCulture))
+                                </MudText>
+                            }
+                        </MudStack>
+
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                            <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                                @L["CompletedStatus"]
+                            </MudChip>
+
+                            <MudButton Size="Size.Small"
+                                       Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       StartIcon="@Icons.Material.Filled.Assessment"
+                                       Disabled="@string.IsNullOrWhiteSpace(analysis.ResultId)"
+                                       OnClick="@(() => OpenAnalysis(analysis))">
+                                @L["OpenAnalysis"]
+                            </MudButton>
+
+                            @if (!string.IsNullOrWhiteSpace(analysis.ResultDriveFileUrl))
+                            {
+                                <MudTooltip Text="@L["OpenResultFile"]">
+                                    <MudIconButton Href="@analysis.ResultDriveFileUrl"
+                                                   Target="_blank"
+                                                   Icon="@Icons.Material.Filled.Description"
+                                                   Color="Color.Primary"
+                                                   Variant="Variant.Outlined"
+                                                   aria-label="@L["OpenResultFile"]" />
+                                </MudTooltip>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(analysis.DriveFolderUrl))
+                            {
+                                <MudTooltip Text="@L["OpenFolder"]">
+                                    <MudIconButton Href="@analysis.DriveFolderUrl"
+                                                   Target="_blank"
+                                                   Icon="@Icons.Material.Filled.FolderOpen"
+                                                   Color="Color.Primary"
+                                                   Variant="Variant.Outlined"
+                                                   aria-label="@L["OpenFolder"]" />
+                                </MudTooltip>
+                            }
+
+                            @if (OnDelete.HasDelegate)
+                            {
+                                <MudTooltip Text="@L["RemoveAnalysis"]">
+                                    <MudIconButton Icon="@Icons.Material.Filled.DeleteOutline"
+                                                   Color="Color.Error"
+                                                   OnClick="@(() => OnDelete.InvokeAsync(analysis))"
+                                                   aria-label="@L["RemoveAnalysis"]" />
+                                </MudTooltip>
+                            }
+                        </MudStack>
+                    </MudStack>
+
+                    <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                        <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                            @FormatScoreLabel(L["OverallScore"].Value, analysis.TotalScore, analysis.TotalMaxScore)
+                        </MudChip>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                            @FormatScoreLabel(L["SideScore"].Value, analysis.SideScore, analysis.SideMaxScore)
+                        </MudChip>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                            @FormatScoreLabel(L["RearScore"].Value, analysis.RearScore, analysis.RearMaxScore)
+                        </MudChip>
+                    </MudStack>
+
+                    @if (!string.IsNullOrWhiteSpace(analysis.Summary))
+                    {
+                        <MudText Typo="Typo.body2">@analysis.Summary</MudText>
+                    }
+                </MudStack>
+            </MudPaper>
+        }
+    }
+</MudStack>
+
+@code {
+    [Parameter] public IReadOnlyList<RunningAnalysisLink> Items { get; set; } = Array.Empty<RunningAnalysisLink>();
+    [Parameter] public EventCallback<RunningAnalysisLink> OnDelete { get; set; }
+
+    private IReadOnlyList<RunningAnalysisLink> _completedAnalyses = Array.Empty<RunningAnalysisLink>();
+
+    protected override void OnParametersSet()
+    {
+        _completedAnalyses = Items
+            .Where(analysis =>
+                analysis.ResultStatus == RunningAnalysisResultStatus.Completed
+                && !string.IsNullOrWhiteSpace(analysis.ResultId))
+            .OrderByDescending(analysis => analysis.AnalyzedAt ?? analysis.StartsAt)
+            .ThenBy(analysis => analysis.Title)
+            .ToList();
+    }
+
+    private void OpenAnalysis(RunningAnalysisLink analysis)
+    {
+        if (string.IsNullOrWhiteSpace(analysis.ResultId))
+            return;
+
+        Navigation.NavigateTo($"/Athletes/analyses/{Uri.EscapeDataString(analysis.ResultId)}");
+    }
+
+    private string FormatScoreLabel(string label, int? score, int? maxScore)
+    {
+        return string.Format(CultureInfo.CurrentCulture, "{0} {1}", label, FormatScore(score, maxScore));
+    }
+
+    private string FormatScore(int? score, int? maxScore)
+    {
+        return score is not null && maxScore is not null && maxScore > 0
+            ? string.Format(CultureInfo.CurrentCulture, "{0}/{1}", score, maxScore)
+            : L["NotRated"].Value;
+    }
+}

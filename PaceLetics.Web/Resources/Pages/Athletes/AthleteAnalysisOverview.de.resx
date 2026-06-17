@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="NoCompletedAnalyses" xml:space="preserve"><value>Noch keine fertigen Analysen verfuegbar.</value></data>
+  <data name="AnalyzedAt" xml:space="preserve"><value>Bewertet am {0}</value></data>
+  <data name="CompletedStatus" xml:space="preserve"><value>Analyse abgeschlossen</value></data>
+  <data name="OpenAnalysis" xml:space="preserve"><value>Analyse oeffnen</value></data>
+  <data name="OpenResultFile" xml:space="preserve"><value>Ergebnisdatei oeffnen</value></data>
+  <data name="OpenFolder" xml:space="preserve"><value>Ordner oeffnen</value></data>
+  <data name="RemoveAnalysis" xml:space="preserve"><value>Entfernen</value></data>
+  <data name="OverallScore" xml:space="preserve"><value>Gesamt</value></data>
+  <data name="SideScore" xml:space="preserve"><value>Seite</value></data>
+  <data name="RearScore" xml:space="preserve"><value>Hinten</value></data>
+  <data name="NotRated" xml:space="preserve"><value>nicht bewertet</value></data>
+</root>

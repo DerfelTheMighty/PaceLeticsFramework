@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Analysis</value></data>
+  <data name="Back" xml:space="preserve"><value>Back</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading analysis</value></data>
+  <data name="NotFound" xml:space="preserve"><value>This completed analysis was not found.</value></data>
+  <data name="AthleteNotResolved" xml:space="preserve"><value>The athlete could not be resolved.</value></data>
+  <data name="AnalyzedAt" xml:space="preserve"><value>Assessed on {0}</value></data>
+  <data name="CompletedStatus" xml:space="preserve"><value>Analysis completed</value></data>
+  <data name="OverallScore" xml:space="preserve"><value>Overall</value></data>
+  <data name="SideScore" xml:space="preserve"><value>Side</value></data>
+  <data name="RearScore" xml:space="preserve"><value>Rear</value></data>
+  <data name="NotRated" xml:space="preserve"><value>not rated</value></data>
+  <data name="SummaryTitle" xml:space="preserve"><value>Summary</value></data>
+  <data name="FilesTitle" xml:space="preserve"><value>Files</value></data>
+  <data name="SideVideo" xml:space="preserve"><value>Side video</value></data>
+  <data name="RearVideo" xml:space="preserve"><value>Rear video</value></data>
+  <data name="ResultFile" xml:space="preserve"><value>Result file</value></data>
+  <data name="Folder" xml:space="preserve"><value>Folder</value></data>
+  <data name="SideView" xml:space="preserve"><value>Side view</value></data>
+  <data name="RearView" xml:space="preserve"><value>Rear view</value></data>
+  <data name="NoAssessmentItems" xml:space="preserve"><value>No ratings available.</value></data>
+  <data name="Confidence" xml:space="preserve"><value>Confidence: {0}</value></data>
+  <data name="ConfidenceLow" xml:space="preserve"><value>low</value></data>
+  <data name="ConfidenceMedium" xml:space="preserve"><value>medium</value></data>
+  <data name="ConfidenceHigh" xml:space="preserve"><value>high</value></data>
+  <data name="RatingNormal" xml:space="preserve"><value>0 normal</value></data>
+  <data name="RatingMild" xml:space="preserve"><value>1 mildly notable</value></data>
+  <data name="RatingSignificant" xml:space="preserve"><value>2 clearly notable</value></data>
+  <data name="RatingNotAssessable" xml:space="preserve"><value>Not assessable</value></data>
+  <data name="CriterionOverstride" xml:space="preserve"><value>Overstride</value></data>
+  <data name="CriterionTrunkPosture" xml:space="preserve"><value>Trunk posture</value></data>
+  <data name="CriterionHipExtension" xml:space="preserve"><value>Hip extension</value></data>
+  <data name="CriterionArmSwing" xml:space="preserve"><value>Arm swing</value></data>
+  <data name="CriterionInternalRotation" xml:space="preserve"><value>Internal rotation</value></data>
+  <data name="CriterionPelvicDrop" xml:space="preserve"><value>Pelvic drop</value></data>
+</root>

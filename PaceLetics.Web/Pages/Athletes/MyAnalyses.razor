@@ -1,9 +1,8 @@
 @page "/Athletes/analyses"
 @attribute [Authorize]
-@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
+@using System.Security.Claims
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
-@using PaceLetics.RunningAnalysisModule.Components
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IRunningAnalysisService RunningAnalysisService
 @inject IJSRuntime JS
@@ -23,126 +22,7 @@
     }
     else
     {
-        @if (_analyses.Count == 0)
-        {
-            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NoAnalyses"]</MudAlert>
-        }
-        else
-        {
-            <MudStack Spacing="2">
-                @foreach (var analysis in _analyses)
-                {
-                    <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                        <MudStack Spacing="2">
-                            <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                                <MudStack Spacing="0" Style="min-width:0;">
-                                    <MudText Typo="Typo.subtitle1">@analysis.Title</MudText>
-                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@analysis.StartsAt.ToString("g")</MudText>
-                                    @if (analysis.AnalyzedAt is not null)
-                                    {
-                                        <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                            Bewertet am @analysis.AnalyzedAt.Value.ToLocalTime().ToString("g")
-                                        </MudText>
-                                    }
-                                </MudStack>
-
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
-                                    <MudChip T="string"
-                                             Size="Size.Small"
-                                             Color="@GetResultStatusColor(analysis)"
-                                             Variant="Variant.Outlined">
-                                        @GetResultStatusText(analysis)
-                                    </MudChip>
-
-                                    @if (!string.IsNullOrWhiteSpace(analysis.ResultDriveFileUrl))
-                                    {
-                                        <MudTooltip Text="Ergebnisdatei öffnen">
-                                            <MudIconButton Href="@analysis.ResultDriveFileUrl"
-                                                           Target="_blank"
-                                                           Icon="@Icons.Material.Filled.Assessment"
-                                                           Color="Color.Primary"
-                                                           Variant="Variant.Outlined"
-                                                           aria-label="Ergebnisdatei öffnen" />
-                                        </MudTooltip>
-                                    }
-
-                                    @if (!string.IsNullOrWhiteSpace(analysis.DriveFolderUrl))
-                                    {
-                                        <MudTooltip Text="@L["OpenFolder"]">
-                                            <MudIconButton Href="@analysis.DriveFolderUrl"
-                                                           Target="_blank"
-                                                           Icon="@Icons.Material.Filled.FolderOpen"
-                                                           Color="Color.Primary"
-                                                           Variant="Variant.Outlined"
-                                                           aria-label="@L["OpenFolder"]" />
-                                        </MudTooltip>
-                                    }
-
-                                    <MudTooltip Text="@L["RemoveAnalysis"]">
-                                        <MudIconButton Icon="@Icons.Material.Filled.DeleteOutline"
-                                                       Color="Color.Error"
-                                                       OnClick="@(() => RemoveAnalysisAsync(analysis))"
-                                                       aria-label="@L["RemoveAnalysis"]" />
-                                    </MudTooltip>
-                                </MudStack>
-                            </MudStack>
-
-                            @if (analysis.ResultStatus == RunningAnalysisResultStatus.Completed)
-                            {
-                                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
-                                        Gesamt @FormatScore(analysis.TotalScore, analysis.TotalMaxScore)
-                                    </MudChip>
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
-                                        Seite @FormatScore(analysis.SideScore, analysis.SideMaxScore)
-                                    </MudChip>
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
-                                        Hinten @FormatScore(analysis.RearScore, analysis.RearMaxScore)
-                                    </MudChip>
-                                </MudStack>
-
-                                @if (!string.IsNullOrWhiteSpace(analysis.Summary))
-                                {
-                                    <MudText Typo="Typo.body2">@analysis.Summary</MudText>
-                                }
-
-                                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                                    @if (!string.IsNullOrWhiteSpace(analysis.SideRecordingUrl))
-                                    {
-                                        <MudButton Href="@analysis.SideRecordingUrl"
-                                                   Target="_blank"
-                                                   Size="Size.Small"
-                                                   Variant="Variant.Outlined"
-                                                   StartIcon="@Icons.Material.Filled.OpenInNew">
-                                            Seitenvideo
-                                        </MudButton>
-                                    }
-                                    @if (!string.IsNullOrWhiteSpace(analysis.RearRecordingUrl))
-                                    {
-                                        <MudButton Href="@analysis.RearRecordingUrl"
-                                                   Target="_blank"
-                                                   Size="Size.Small"
-                                                   Variant="Variant.Outlined"
-                                                   StartIcon="@Icons.Material.Filled.OpenInNew">
-                                            Rückvideo
-                                        </MudButton>
-                                    }
-                                </MudStack>
-
-                                @RenderAssessmentGroup("Seitenansicht", analysis.SideAssessment)
-                                @RenderAssessmentGroup("Rückansicht", analysis.RearAssessment)
-                            }
-                            else
-                            {
-                                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                                    Für diese Aufnahme liegt noch kein abgeschlossenes Analyseergebnis vor.
-                                </MudAlert>
-                            }
-                        </MudStack>
-                    </MudPaper>
-                }
-            </MudStack>
-        }
+        <AthleteAnalysisOverview Items="_analyses" OnDelete="RemoveAnalysisAsync" />
     }
 </MudContainer>
 
@@ -164,10 +44,11 @@
             {
                 _errorMessage = null;
                 var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-                _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+                _userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
 
                 if (string.IsNullOrWhiteSpace(_userId))
-                    throw new InvalidOperationException(L["AthleteNotResolved"]);
+                    throw new InvalidOperationException(L["AthleteNotResolved"].Value);
 
                 _analyses = await RunningAnalysisService.GetAnalysesForAthleteAsync(_userId);
             }
@@ -201,138 +82,5 @@
         {
             _errorMessage = ex.Message;
         }
-    }
-
-    private static Color GetResultStatusColor(RunningAnalysisLink analysis)
-    {
-        return analysis.ResultStatus == RunningAnalysisResultStatus.Completed
-            ? Color.Success
-            : Color.Warning;
-    }
-
-    private static string GetResultStatusText(RunningAnalysisLink analysis)
-    {
-        return analysis.ResultStatus == RunningAnalysisResultStatus.Completed
-            ? "Analyse abgeschlossen"
-            : "Aufnahme";
-    }
-
-    private static string FormatScore(int? score, int? maxScore)
-    {
-        return score is not null && maxScore is not null && maxScore > 0
-            ? $"{score}/{maxScore}"
-            : "nicht bewertet";
-    }
-
-    private static RenderFragment RenderAssessmentGroup(
-        string title,
-        IReadOnlyList<RunningAnalysisAssessmentItem>? items)
-    {
-        return builder =>
-        {
-            if (items is null || items.Count == 0)
-                return;
-
-            var sequence = 0;
-            builder.OpenComponent<MudText>(sequence++);
-            builder.AddAttribute(sequence++, "Typo", Typo.subtitle2);
-            builder.AddAttribute(sequence++, "ChildContent", (RenderFragment)(textBuilder =>
-            {
-                textBuilder.AddContent(0, title);
-            }));
-            builder.CloseComponent();
-
-            foreach (var item in items)
-            {
-                builder.OpenElement(sequence++, "div");
-                builder.AddAttribute(sequence++, "style", "border:1px solid var(--mud-palette-lines-default); border-radius:8px; padding:10px;");
-
-                builder.OpenComponent<MudStack>(sequence++);
-                builder.AddAttribute(sequence++, "Spacing", 1);
-                builder.AddAttribute(sequence++, "ChildContent", (RenderFragment)(stackBuilder =>
-                {
-                    var inner = 0;
-                    stackBuilder.OpenComponent<MudStack>(inner++);
-                    stackBuilder.AddAttribute(inner++, "Row", true);
-                    stackBuilder.AddAttribute(inner++, "AlignItems", AlignItems.Center);
-                    stackBuilder.AddAttribute(inner++, "Justify", Justify.SpaceBetween);
-                    stackBuilder.AddAttribute(inner++, "Style", "gap:8px; flex-wrap:wrap;");
-                    stackBuilder.AddAttribute(inner++, "ChildContent", (RenderFragment)(rowBuilder =>
-                    {
-                        var row = 0;
-                        rowBuilder.OpenComponent<MudText>(row++);
-                        rowBuilder.AddAttribute(row++, "Typo", Typo.body2);
-                        rowBuilder.AddAttribute(row++, "ChildContent", (RenderFragment)(textBuilder =>
-                        {
-                            textBuilder.AddContent(0, GetCriterionTitle(item.Criterion));
-                        }));
-                        rowBuilder.CloseComponent();
-
-                        rowBuilder.OpenComponent<MudChip<string>>(row++);
-                        rowBuilder.AddAttribute(row++, "Size", Size.Small);
-                        rowBuilder.AddAttribute(row++, "Color", GetRatingColor(item.Rating));
-                        rowBuilder.AddAttribute(row++, "Variant", Variant.Outlined);
-                        rowBuilder.AddAttribute(row++, "ChildContent", (RenderFragment)(chipBuilder =>
-                        {
-                            chipBuilder.AddContent(0, GetRatingText(item.Rating));
-                        }));
-                        rowBuilder.CloseComponent();
-                    }));
-                    stackBuilder.CloseComponent();
-
-                    if (!string.IsNullOrWhiteSpace(item.Notes))
-                    {
-                        stackBuilder.OpenComponent<MudText>(inner++);
-                        stackBuilder.AddAttribute(inner++, "Typo", Typo.caption);
-                        stackBuilder.AddAttribute(inner++, "Color", Color.Secondary);
-                        stackBuilder.AddAttribute(inner++, "ChildContent", (RenderFragment)(textBuilder =>
-                        {
-                            textBuilder.AddContent(0, item.Notes);
-                        }));
-                        stackBuilder.CloseComponent();
-                    }
-                }));
-                builder.CloseComponent();
-
-                builder.CloseElement();
-            }
-        };
-    }
-
-    private static Color GetRatingColor(RunningAnalysisAssessmentRating rating)
-    {
-        return rating switch
-        {
-            RunningAnalysisAssessmentRating.Normal => Color.Success,
-            RunningAnalysisAssessmentRating.Mild => Color.Warning,
-            RunningAnalysisAssessmentRating.Significant => Color.Error,
-            _ => Color.Default
-        };
-    }
-
-    private static string GetRatingText(RunningAnalysisAssessmentRating rating)
-    {
-        return rating switch
-        {
-            RunningAnalysisAssessmentRating.Normal => "0 unauffällig",
-            RunningAnalysisAssessmentRating.Mild => "1 leicht auffällig",
-            RunningAnalysisAssessmentRating.Significant => "2 deutlich auffällig",
-            _ => "Nicht bewertbar"
-        };
-    }
-
-    private static string GetCriterionTitle(RunningAnalysisCriterion criterion)
-    {
-        return criterion switch
-        {
-            RunningAnalysisCriterion.Overstride => "Overstride",
-            RunningAnalysisCriterion.TrunkPosture => "Oberkörperhaltung",
-            RunningAnalysisCriterion.HipExtension => "Hüftstreckung",
-            RunningAnalysisCriterion.ArmSwingSide => "Armschwung",
-            RunningAnalysisCriterion.InternalRotation => "Innenrotation",
-            RunningAnalysisCriterion.PelvicDrop => "Absinken des Beckens",
-            RunningAnalysisCriterion.ArmSwingRear => "Armschwung",
-            _ => criterion.ToString()
-        };
     }
 }

@@ -1,0 +1,343 @@
+@page "/Athletes/analyses/{ResultId}"
+@attribute [Authorize]
+@using System.Globalization
+@using System.Security.Claims
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IRunningAnalysisService RunningAnalysisService
+@inject LoadingStateService Loading
+@inject IStringLocalizer<AthleteAnalysisDetail> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <MudButton Href="/Athletes/data-analyses"
+               Variant="Variant.Text"
+               Color="Color.Primary"
+               StartIcon="@Icons.Material.Filled.ArrowBack"
+               Class="mb-3">
+        @L["Back"]
+    </MudButton>
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+    }
+    else if (_analysis is null)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NotFound"]</MudAlert>
+    }
+    else
+    {
+        <PageHeader Title="@_analysis.Title" Subtitle="@GetSubtitle(_analysis)" />
+
+        <MudStack Spacing="3" Class="mt-4">
+            <MudPaper Elevation="0" Class="pa-4 pl-panel">
+                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                        @L["CompletedStatus"]
+                    </MudChip>
+                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                        @FormatScoreLabel(L["OverallScore"].Value, _analysis.TotalScore, _analysis.TotalMaxScore)
+                    </MudChip>
+                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                        @FormatScoreLabel(L["SideScore"].Value, _analysis.SideScore, _analysis.SideMaxScore)
+                    </MudChip>
+                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                        @FormatScoreLabel(L["RearScore"].Value, _analysis.RearScore, _analysis.RearMaxScore)
+                    </MudChip>
+                </MudStack>
+            </MudPaper>
+
+            @if (!string.IsNullOrWhiteSpace(_analysis.Summary))
+            {
+                <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+                    <MudStack Spacing="1">
+                        <MudText Typo="Typo.subtitle2">@L["SummaryTitle"]</MudText>
+                        <MudText Typo="Typo.body2">@_analysis.Summary</MudText>
+                    </MudStack>
+                </MudPaper>
+            }
+
+            <MudPaper Elevation="0" Class="pa-4 pl-panel">
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.subtitle2">@L["FilesTitle"]</MudText>
+                    <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                        @if (!string.IsNullOrWhiteSpace(_analysis.SideRecordingUrl))
+                        {
+                            <MudButton Href="@_analysis.SideRecordingUrl"
+                                       Target="_blank"
+                                       Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.OpenInNew">
+                                @L["SideVideo"]
+                            </MudButton>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(_analysis.RearRecordingUrl))
+                        {
+                            <MudButton Href="@_analysis.RearRecordingUrl"
+                                       Target="_blank"
+                                       Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.OpenInNew">
+                                @L["RearVideo"]
+                            </MudButton>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(_analysis.ResultDriveFileUrl))
+                        {
+                            <MudButton Href="@_analysis.ResultDriveFileUrl"
+                                       Target="_blank"
+                                       Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.Description">
+                                @L["ResultFile"]
+                            </MudButton>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(_analysis.DriveFolderUrl))
+                        {
+                            <MudButton Href="@_analysis.DriveFolderUrl"
+                                       Target="_blank"
+                                       Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.FolderOpen">
+                                @L["Folder"]
+                            </MudButton>
+                        }
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+
+            <MudGrid Spacing="3">
+                <MudItem xs="12" md="6">
+                    @RenderAssessmentGroup(L["SideView"].Value, _analysis.SideAssessment)
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    @RenderAssessmentGroup(L["RearView"].Value, _analysis.RearAssessment)
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    }
+</MudContainer>
+
+@code {
+    [Parameter] public string? ResultId { get; set; }
+
+    private string? _errorMessage;
+    private RunningAnalysisLink? _analysis;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        await Loading.RunAsync(L["Loading"], async () =>
+        {
+            try
+            {
+                _errorMessage = null;
+                _analysis = null;
+
+                var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                var userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+
+                if (string.IsNullOrWhiteSpace(userId))
+                    throw new InvalidOperationException(L["AthleteNotResolved"].Value);
+
+                var analyses = await RunningAnalysisService.GetAnalysesForAthleteAsync(userId);
+                _analysis = analyses.FirstOrDefault(analysis =>
+                    analysis.ResultStatus == RunningAnalysisResultStatus.Completed
+                    && string.Equals(analysis.ResultId, ResultId, StringComparison.OrdinalIgnoreCase));
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+            }
+        });
+    }
+
+    private string GetSubtitle(RunningAnalysisLink analysis)
+    {
+        if (analysis.AnalyzedAt is null)
+            return L["CompletedStatus"].Value;
+
+        return string.Format(
+            CultureInfo.CurrentCulture,
+            L["AnalyzedAt"].Value,
+            analysis.AnalyzedAt.Value.ToLocalTime().ToString("g", CultureInfo.CurrentCulture));
+    }
+
+    private RenderFragment RenderAssessmentGroup(
+        string title,
+        IReadOnlyList<RunningAnalysisAssessmentItem>? items)
+    {
+        return builder =>
+        {
+            var sequence = 0;
+
+            builder.OpenComponent<MudPaper>(sequence++);
+            builder.AddAttribute(sequence++, "Elevation", 0);
+            builder.AddAttribute(sequence++, "Class", "pa-4 pl-panel");
+            builder.AddAttribute(sequence++, "ChildContent", (RenderFragment)(paperBuilder =>
+            {
+                var paper = 0;
+                paperBuilder.OpenComponent<MudStack>(paper++);
+                paperBuilder.AddAttribute(paper++, "Spacing", 2);
+                paperBuilder.AddAttribute(paper++, "ChildContent", (RenderFragment)(stackBuilder =>
+                {
+                    var stack = 0;
+                    stackBuilder.OpenComponent<MudText>(stack++);
+                    stackBuilder.AddAttribute(stack++, "Typo", Typo.subtitle2);
+                    stackBuilder.AddAttribute(stack++, "ChildContent", (RenderFragment)(textBuilder =>
+                    {
+                        textBuilder.AddContent(0, title);
+                    }));
+                    stackBuilder.CloseComponent();
+
+                    if (items is null || items.Count == 0)
+                    {
+                        stackBuilder.OpenComponent<MudAlert>(stack++);
+                        stackBuilder.AddAttribute(stack++, "Severity", Severity.Info);
+                        stackBuilder.AddAttribute(stack++, "Variant", Variant.Outlined);
+                        stackBuilder.AddAttribute(stack++, "ChildContent", (RenderFragment)(alertBuilder =>
+                        {
+                            alertBuilder.AddContent(0, L["NoAssessmentItems"].Value);
+                        }));
+                        stackBuilder.CloseComponent();
+                        return;
+                    }
+
+                    foreach (var item in items)
+                    {
+                        stackBuilder.OpenElement(stack++, "div");
+                        stackBuilder.AddAttribute(stack++, "style", "border:1px solid var(--mud-palette-lines-default); border-radius:8px; padding:10px;");
+
+                        stackBuilder.OpenComponent<MudStack>(stack++);
+                        stackBuilder.AddAttribute(stack++, "Spacing", 1);
+                        stackBuilder.AddAttribute(stack++, "ChildContent", (RenderFragment)(itemBuilder =>
+                        {
+                            var itemSequence = 0;
+                            itemBuilder.OpenComponent<MudStack>(itemSequence++);
+                            itemBuilder.AddAttribute(itemSequence++, "Row", true);
+                            itemBuilder.AddAttribute(itemSequence++, "AlignItems", AlignItems.Center);
+                            itemBuilder.AddAttribute(itemSequence++, "Justify", Justify.SpaceBetween);
+                            itemBuilder.AddAttribute(itemSequence++, "Style", "gap:8px; flex-wrap:wrap;");
+                            itemBuilder.AddAttribute(itemSequence++, "ChildContent", (RenderFragment)(rowBuilder =>
+                            {
+                                var row = 0;
+                                rowBuilder.OpenComponent<MudText>(row++);
+                                rowBuilder.AddAttribute(row++, "Typo", Typo.body2);
+                                rowBuilder.AddAttribute(row++, "ChildContent", (RenderFragment)(textBuilder =>
+                                {
+                                    textBuilder.AddContent(0, GetCriterionTitle(item.Criterion));
+                                }));
+                                rowBuilder.CloseComponent();
+
+                                rowBuilder.OpenComponent<MudChip<string>>(row++);
+                                rowBuilder.AddAttribute(row++, "Size", Size.Small);
+                                rowBuilder.AddAttribute(row++, "Color", GetRatingColor(item.Rating));
+                                rowBuilder.AddAttribute(row++, "Variant", Variant.Outlined);
+                                rowBuilder.AddAttribute(row++, "ChildContent", (RenderFragment)(chipBuilder =>
+                                {
+                                    chipBuilder.AddContent(0, GetRatingText(item.Rating));
+                                }));
+                                rowBuilder.CloseComponent();
+                            }));
+                            itemBuilder.CloseComponent();
+
+                            itemBuilder.OpenComponent<MudText>(itemSequence++);
+                            itemBuilder.AddAttribute(itemSequence++, "Typo", Typo.caption);
+                            itemBuilder.AddAttribute(itemSequence++, "Color", Color.Secondary);
+                            itemBuilder.AddAttribute(itemSequence++, "ChildContent", (RenderFragment)(textBuilder =>
+                            {
+                                textBuilder.AddContent(
+                                    0,
+                                    string.Format(
+                                        CultureInfo.CurrentCulture,
+                                        L["Confidence"].Value,
+                                        GetConfidenceText(item.Confidence)));
+                            }));
+                            itemBuilder.CloseComponent();
+
+                            if (!string.IsNullOrWhiteSpace(item.Notes))
+                            {
+                                itemBuilder.OpenComponent<MudText>(itemSequence++);
+                                itemBuilder.AddAttribute(itemSequence++, "Typo", Typo.body2);
+                                itemBuilder.AddAttribute(itemSequence++, "ChildContent", (RenderFragment)(textBuilder =>
+                                {
+                                    textBuilder.AddContent(0, item.Notes);
+                                }));
+                                itemBuilder.CloseComponent();
+                            }
+                        }));
+                        stackBuilder.CloseComponent();
+
+                        stackBuilder.CloseElement();
+                    }
+                }));
+                paperBuilder.CloseComponent();
+            }));
+            builder.CloseComponent();
+        };
+    }
+
+    private string FormatScoreLabel(string label, int? score, int? maxScore)
+    {
+        return string.Format(CultureInfo.CurrentCulture, "{0} {1}", label, FormatScore(score, maxScore));
+    }
+
+    private string FormatScore(int? score, int? maxScore)
+    {
+        return score is not null && maxScore is not null && maxScore > 0
+            ? string.Format(CultureInfo.CurrentCulture, "{0}/{1}", score, maxScore)
+            : L["NotRated"].Value;
+    }
+
+    private static Color GetRatingColor(RunningAnalysisAssessmentRating rating)
+    {
+        return rating switch
+        {
+            RunningAnalysisAssessmentRating.Normal => Color.Success,
+            RunningAnalysisAssessmentRating.Mild => Color.Warning,
+            RunningAnalysisAssessmentRating.Significant => Color.Error,
+            _ => Color.Default
+        };
+    }
+
+    private string GetRatingText(RunningAnalysisAssessmentRating rating)
+    {
+        return rating switch
+        {
+            RunningAnalysisAssessmentRating.Normal => L["RatingNormal"].Value,
+            RunningAnalysisAssessmentRating.Mild => L["RatingMild"].Value,
+            RunningAnalysisAssessmentRating.Significant => L["RatingSignificant"].Value,
+            _ => L["RatingNotAssessable"].Value
+        };
+    }
+
+    private string GetConfidenceText(RunningAnalysisAssessmentConfidence confidence)
+    {
+        return confidence switch
+        {
+            RunningAnalysisAssessmentConfidence.Low => L["ConfidenceLow"].Value,
+            RunningAnalysisAssessmentConfidence.Medium => L["ConfidenceMedium"].Value,
+            RunningAnalysisAssessmentConfidence.High => L["ConfidenceHigh"].Value,
+            _ => L["ConfidenceMedium"].Value
+        };
+    }
+
+    private string GetCriterionTitle(RunningAnalysisCriterion criterion)
+    {
+        return criterion switch
+        {
+            RunningAnalysisCriterion.Overstride => L["CriterionOverstride"].Value,
+            RunningAnalysisCriterion.TrunkPosture => L["CriterionTrunkPosture"].Value,
+            RunningAnalysisCriterion.HipExtension => L["CriterionHipExtension"].Value,
+            RunningAnalysisCriterion.ArmSwingSide => L["CriterionArmSwing"].Value,
+            RunningAnalysisCriterion.InternalRotation => L["CriterionInternalRotation"].Value,
+            RunningAnalysisCriterion.PelvicDrop => L["CriterionPelvicDrop"].Value,
+            RunningAnalysisCriterion.ArmSwingRear => L["CriterionArmSwing"].Value,
+            _ => criterion.ToString()
+        };
+    }
+}

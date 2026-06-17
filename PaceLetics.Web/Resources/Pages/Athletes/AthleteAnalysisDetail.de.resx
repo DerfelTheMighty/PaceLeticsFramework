@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Analyse</value></data>
+  <data name="Back" xml:space="preserve"><value>Zurueck</value></data>
+  <data name="Loading" xml:space="preserve"><value>Analyse wird geladen</value></data>
+  <data name="NotFound" xml:space="preserve"><value>Diese fertige Analyse wurde nicht gefunden.</value></data>
+  <data name="AthleteNotResolved" xml:space="preserve"><value>Athlet:in konnte nicht ermittelt werden.</value></data>
+  <data name="AnalyzedAt" xml:space="preserve"><value>Bewertet am {0}</value></data>
+  <data name="CompletedStatus" xml:space="preserve"><value>Analyse abgeschlossen</value></data>
+  <data name="OverallScore" xml:space="preserve"><value>Gesamt</value></data>
+  <data name="SideScore" xml:space="preserve"><value>Seite</value></data>
+  <data name="RearScore" xml:space="preserve"><value>Hinten</value></data>
+  <data name="NotRated" xml:space="preserve"><value>nicht bewertet</value></data>
+  <data name="SummaryTitle" xml:space="preserve"><value>Zusammenfassung</value></data>
+  <data name="FilesTitle" xml:space="preserve"><value>Dateien</value></data>
+  <data name="SideVideo" xml:space="preserve"><value>Seitenvideo</value></data>
+  <data name="RearVideo" xml:space="preserve"><value>Rueckvideo</value></data>
+  <data name="ResultFile" xml:space="preserve"><value>Ergebnisdatei</value></data>
+  <data name="Folder" xml:space="preserve"><value>Ordner</value></data>
+  <data name="SideView" xml:space="preserve"><value>Seitenansicht</value></data>
+  <data name="RearView" xml:space="preserve"><value>Rueckansicht</value></data>
+  <data name="NoAssessmentItems" xml:space="preserve"><value>Keine Bewertungen vorhanden.</value></data>
+  <data name="Confidence" xml:space="preserve"><value>Sicherheit: {0}</value></data>
+  <data name="ConfidenceLow" xml:space="preserve"><value>niedrig</value></data>
+  <data name="ConfidenceMedium" xml:space="preserve"><value>mittel</value></data>
+  <data name="ConfidenceHigh" xml:space="preserve"><value>hoch</value></data>
+  <data name="RatingNormal" xml:space="preserve"><value>0 unauffaellig</value></data>
+  <data name="RatingMild" xml:space="preserve"><value>1 leicht auffaellig</value></data>
+  <data name="RatingSignificant" xml:space="preserve"><value>2 deutlich auffaellig</value></data>
+  <data name="RatingNotAssessable" xml:space="preserve"><value>Nicht bewertbar</value></data>
+  <data name="CriterionOverstride" xml:space="preserve"><value>Overstride</value></data>
+  <data name="CriterionTrunkPosture" xml:space="preserve"><value>Oberkoerperhaltung</value></data>
+  <data name="CriterionHipExtension" xml:space="preserve"><value>Hueftstreckung</value></data>
+  <data name="CriterionArmSwing" xml:space="preserve"><value>Armschwung</value></data>
+  <data name="CriterionInternalRotation" xml:space="preserve"><value>Innenrotation</value></data>
+  <data name="CriterionPelvicDrop" xml:space="preserve"><value>Absinken des Beckens</value></data>
+</root>
