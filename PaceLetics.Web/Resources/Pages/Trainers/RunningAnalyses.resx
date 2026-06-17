@@ -16,6 +16,7 @@
   <data name="CreateEvent" xml:space="preserve"><value>Create event</value></data>
   <data name="RunningAnalysis" xml:space="preserve"><value>Running recording</value></data>
   <data name="StartAnalysis" xml:space="preserve"><value>Open recording</value></data>
+  <data name="Recordings" xml:space="preserve"><value>Recordings</value></data>
   <data name="CaptureCompleted" xml:space="preserve"><value>Recording completed</value></data>
   <data name="CaptureOpen" xml:space="preserve"><value>Recording open</value></data>
   <data name="Uploads" xml:space="preserve"><value>Uploads</value></data>

@@ -38,62 +38,6 @@
         {
             <MudPaper Elevation="1" Class="pa-4">
                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
-                        <MudChip T="string" Size="Size.Small" Color="@GetStatusColor()" Variant="Variant.Outlined">
-                            @FormatStatus(_captureSession.Status)
-                        </MudChip>
-                        <MudChip T="string"
-                                 Size="Size.Small"
-                                 Color="@(_isOnline ? Color.Success : Color.Error)"
-                                 Variant="Variant.Outlined">
-                            @(_isOnline ? L["Online"] : L["Offline"])
-                        </MudChip>
-                    </MudStack>
-
-                    <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                        @if (_captureSession.Status != RunningAnalysisEventStatus.InProgress)
-                        {
-                            <MudTooltip Text="@L["StartCapture"]">
-                                <MudIconButton Color="Color.Primary"
-                                               Variant="Variant.Filled"
-                                               Icon="@Icons.Material.Filled.PlayArrow"
-                                               OnClick="StartCaptureAsync"
-                                               aria-label="@L["StartCapture"]" />
-                            </MudTooltip>
-                        }
-
-                        @if (_captureSession.Status == RunningAnalysisEventStatus.InProgress)
-                        {
-                            <MudTooltip Text="@L["CompleteCapture"]">
-                                <MudIconButton Color="Color.Primary"
-                                               Variant="Variant.Outlined"
-                                               Icon="@Icons.Material.Filled.DoneAll"
-                                               OnClick="CompleteCaptureAsync"
-                                               aria-label="@L["CompleteCapture"]" />
-                            </MudTooltip>
-                        }
-                    </MudStack>
-                </MudStack>
-            </MudPaper>
-
-            @if (_captureSession.Status == RunningAnalysisEventStatus.Completed)
-            {
-                <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                        <MudText Typo="Typo.body2">@L["CompletedMessage"]</MudText>
-                        <MudButton Size="Size.Small"
-                                   Variant="Variant.Outlined"
-                                   Color="Color.Primary"
-                                   StartIcon="@Icons.Material.Filled.RateReview"
-                                   OnClick="OpenReview">
-                            Analyse auswerten
-                        </MudButton>
-                    </MudStack>
-                </MudAlert>
-            }
-
-            <MudPaper Elevation="1" Class="pa-4">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
                     <MudStack Spacing="0" Style="min-width:0;">
                         <MudText Typo="Typo.h6">@L["LocalStorageTitle"]</MudText>
                         <MudText Typo="Typo.body2" Color="@GetLocalStorageTextColor()" Style="word-break:break-word;">
@@ -474,22 +418,6 @@
         }
     }
 
-    private async Task StartCaptureAsync()
-    {
-        if (_captureSession is null)
-            return;
-
-        try
-        {
-            _captureSession = await RunningAnalysisService.StartCaptureAsync(_captureSession.Id);
-            Snackbar.Add(L["StartSuccess"], Severity.Success);
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add(ex.Message, Severity.Error);
-        }
-    }
-
     private async Task EnsureAnalysisStartedAsync()
     {
         await RefreshOnlineStateAsync();
@@ -501,28 +429,6 @@
         }
 
         _captureSession = await RunningAnalysisService.StartCaptureAsync(_captureSession.Id);
-    }
-
-    private async Task CompleteCaptureAsync()
-    {
-        if (_captureSession is null)
-            return;
-
-        var confirmed = await JS.InvokeAsync<bool>("confirm", L["CompleteConfirm"].ToString());
-        if (!confirmed)
-            return;
-
-        try
-        {
-            _captureSession = await RunningAnalysisService.CompleteCaptureAsync(_captureSession.Id);
-            _isCaptureMode = false;
-            _isRecording = false;
-            Snackbar.Add(L["CompleteSuccess"], Severity.Success);
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add(ex.Message, Severity.Error);
-        }
     }
 
     private Task OnParticipantSelectedAsync(string participantId)
@@ -543,14 +449,6 @@
     {
         _isCaptureMode = false;
         return Task.CompletedTask;
-    }
-
-    private void OpenReview()
-    {
-        if (_course is null || _courseEvent is null)
-            return;
-
-        Navigation.NavigateTo($"/Trainers/courses/{_course.Id}/events/{_courseEvent.Id}/running-analysis/analysis");
     }
 
     private async Task OpenParticipantAnalysisAsync(string participantId)
@@ -825,28 +723,6 @@
             RunningAnalysisCriterion.PelvicDrop => "Becken sinkt auf der Gegenseite in der mittleren Stützphase ab.",
             RunningAnalysisCriterion.ArmSwingRear => "Symmetrischer Armschwung ohne starkes Cross-over oder Schulterhochstand.",
             _ => string.Empty
-        };
-    }
-
-    private Color GetStatusColor()
-    {
-        return _captureSession?.Status switch
-        {
-            RunningAnalysisEventStatus.InProgress => Color.Primary,
-            RunningAnalysisEventStatus.Completed => Color.Success,
-            RunningAnalysisEventStatus.Prepared => Color.Info,
-            _ => Color.Default
-        };
-    }
-
-    private string FormatStatus(RunningAnalysisEventStatus status)
-    {
-        return status switch
-        {
-            RunningAnalysisEventStatus.Prepared => L["Status_Prepared"],
-            RunningAnalysisEventStatus.InProgress => L["Status_InProgress"],
-            RunningAnalysisEventStatus.Completed => L["Status_Completed"],
-            _ => L["Status_Draft"]
         };
     }
 

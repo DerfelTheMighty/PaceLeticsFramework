@@ -101,10 +101,10 @@
                                     <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
                                         <MudChip T="string"
                                                  Size="Size.Small"
-                                                 Color="@GetCaptureStatusColor(analysis.Status)"
+                                                 Color="@GetRecordingStatusColor(analysis.Status)"
                                                  Variant="Variant.Outlined"
-                                                 Icon="@Icons.Material.Filled.DoneAll">
-                                            @GetCaptureStatusText(analysis.Status)
+                                                 Icon="@Icons.Material.Filled.Videocam">
+                                            @FormatProgress(L["Recordings"].ToString(), analysis.Status.RecordedParticipantCount, analysis.Status.ParticipantCount)
                                         </MudChip>
                                         <MudChip T="string"
                                                  Size="Size.Small"
@@ -229,7 +229,6 @@
         if (captureSession is null)
         {
             return new RunningAnalysisListStatus(
-                RunningAnalysisEventStatus.Prepared,
                 0,
                 0,
                 0,
@@ -242,7 +241,6 @@
             .ToList();
 
         return new RunningAnalysisListStatus(
-            captureSession.Status,
             roster.Count,
             recordedParticipants.Count,
             recordedParticipants.Count(HasUploadedRecording),
@@ -282,16 +280,12 @@
         return $"{label} {current}/{total}";
     }
 
-    private string GetCaptureStatusText(RunningAnalysisListStatus status)
+    private static Color GetRecordingStatusColor(RunningAnalysisListStatus status)
     {
-        return status.CaptureStatus == RunningAnalysisEventStatus.Completed
-            ? L["CaptureCompleted"]
-            : L["CaptureOpen"];
-    }
+        if (status.ParticipantCount == 0)
+            return Color.Default;
 
-    private static Color GetCaptureStatusColor(RunningAnalysisListStatus status)
-    {
-        return status.CaptureStatus == RunningAnalysisEventStatus.Completed
+        return status.RecordedParticipantCount >= status.ParticipantCount
             ? Color.Success
             : Color.Warning;
     }
@@ -340,7 +334,6 @@
         RunningAnalysisListStatus? Status);
 
     private sealed record RunningAnalysisListStatus(
-        RunningAnalysisEventStatus CaptureStatus,
         int ParticipantCount,
         int RecordedParticipantCount,
         int UploadedParticipantCount,
