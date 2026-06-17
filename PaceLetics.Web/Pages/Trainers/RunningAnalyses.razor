@@ -1,10 +1,15 @@
 @page "/Trainers/running-analyses"
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
 @using Microsoft.Extensions.Options
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Enums
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
+@using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
 @using PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive
 @using PaceLetics.Web.Services.Courses
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ICourseService CourseService
+@inject IRunningAnalysisService RunningAnalysisService
+@inject IRunningAnalysisRepository RunningAnalysisRepository
 @inject NavigationManager Navigation
 @inject LoadingStateService Loading
 @inject IOptions<GoogleDriveRunningAnalysisOptions> DriveOptions
@@ -90,6 +95,37 @@
                                 {
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">@analysis.Event.Location</MudText>
                                 }
+
+                                @if (analysis.Status is not null)
+                                {
+                                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                        <MudChip T="string"
+                                                 Size="Size.Small"
+                                                 Color="@GetCaptureStatusColor(analysis.Status)"
+                                                 Variant="Variant.Outlined"
+                                                 Icon="@Icons.Material.Filled.DoneAll">
+                                            @GetCaptureStatusText(analysis.Status)
+                                        </MudChip>
+                                        <MudChip T="string"
+                                                 Size="Size.Small"
+                                                 Color="@GetUploadStatusColor(analysis.Status)"
+                                                 Variant="Variant.Outlined"
+                                                 Icon="@Icons.Material.Filled.CloudDone">
+                                            @FormatProgress(L["Uploads"].ToString(), analysis.Status.UploadedParticipantCount, analysis.Status.RecordedParticipantCount)
+                                        </MudChip>
+                                        <MudChip T="string"
+                                                 Size="Size.Small"
+                                                 Color="@GetReviewStatusColor(analysis.Status)"
+                                                 Variant="Variant.Outlined"
+                                                 Icon="@Icons.Material.Filled.RateReview">
+                                            @FormatProgress(L["Review"].ToString(), analysis.Status.CompletedReviewCount, analysis.Status.RecordedParticipantCount)
+                                        </MudChip>
+                                    </MudStack>
+
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @FormatParticipantSummary(analysis.Status)
+                                    </MudText>
+                                }
                             </MudStack>
 
                             <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
@@ -159,9 +195,13 @@
                 foreach (var course in courses.OrderBy(course => course.Name))
                 {
                     var events = await CourseService.GetEventsAsync(course.Id);
-                    analyses.AddRange(events
-                        .Where(IsRunningAnalysisEvent)
-                        .Select(courseEvent => new RunningAnalysisCourseEvent(course, courseEvent)));
+                    foreach (var courseEvent in events.Where(IsRunningAnalysisEvent))
+                    {
+                        analyses.Add(new RunningAnalysisCourseEvent(
+                            course,
+                            courseEvent,
+                            await LoadAnalysisStatusAsync(courseEvent)));
+                    }
                 }
 
                 _analyses = analyses
@@ -183,6 +223,32 @@
         return string.Equals(courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase);
     }
 
+    private async Task<RunningAnalysisListStatus?> LoadAnalysisStatusAsync(CourseEventDocument courseEvent)
+    {
+        var captureSession = await RunningAnalysisRepository.GetCaptureSessionByExternalEventIdAsync(courseEvent.Id);
+        if (captureSession is null)
+        {
+            return new RunningAnalysisListStatus(
+                RunningAnalysisEventStatus.Prepared,
+                0,
+                0,
+                0,
+                0);
+        }
+
+        var roster = await RunningAnalysisService.GetRosterAsync(captureSession.Id);
+        var recordedParticipants = roster
+            .Where(HasRecording)
+            .ToList();
+
+        return new RunningAnalysisListStatus(
+            captureSession.Status,
+            roster.Count,
+            recordedParticipants.Count,
+            recordedParticipants.Count(HasUploadedRecording),
+            recordedParticipants.Count(HasCompletedReview));
+    }
+
     private void OpenRecording(RunningAnalysisCourseEvent analysis)
     {
         Navigation.NavigateTo($"/Trainers/courses/{analysis.Course.Id}/events/{analysis.Event.Id}/running-analysis");
@@ -198,5 +264,85 @@
         return string.Format(L["EventDate"], courseEvent.StartsAt, courseEvent.EndsAt);
     }
 
-    private sealed record RunningAnalysisCourseEvent(CourseDocument Course, CourseEventDocument Event);
+    private string FormatParticipantSummary(RunningAnalysisListStatus status)
+    {
+        var missingParticipantCount = Math.Max(0, status.ParticipantCount - status.RecordedParticipantCount);
+        var summary = string.Format(
+            L["ParticipantSummary"],
+            status.ParticipantCount,
+            status.RecordedParticipantCount);
+
+        return missingParticipantCount > 0
+            ? $"{summary} - {string.Format(L["NotRecorded"], missingParticipantCount)}"
+            : summary;
+    }
+
+    private string FormatProgress(string label, int current, int total)
+    {
+        return $"{label} {current}/{total}";
+    }
+
+    private string GetCaptureStatusText(RunningAnalysisListStatus status)
+    {
+        return status.CaptureStatus == RunningAnalysisEventStatus.Completed
+            ? L["CaptureCompleted"]
+            : L["CaptureOpen"];
+    }
+
+    private static Color GetCaptureStatusColor(RunningAnalysisListStatus status)
+    {
+        return status.CaptureStatus == RunningAnalysisEventStatus.Completed
+            ? Color.Success
+            : Color.Warning;
+    }
+
+    private static Color GetUploadStatusColor(RunningAnalysisListStatus status)
+    {
+        if (status.RecordedParticipantCount == 0)
+            return Color.Default;
+
+        return status.UploadedParticipantCount >= status.RecordedParticipantCount
+            ? Color.Success
+            : Color.Warning;
+    }
+
+    private static Color GetReviewStatusColor(RunningAnalysisListStatus status)
+    {
+        if (status.RecordedParticipantCount == 0)
+            return Color.Default;
+
+        return status.CompletedReviewCount >= status.RecordedParticipantCount
+            ? Color.Success
+            : Color.Info;
+    }
+
+    private static bool HasRecording(RunningAnalysisRosterItem participant)
+    {
+        return participant.RecordingCount > 0
+            || !string.IsNullOrWhiteSpace(participant.SideRecordingUrl)
+            || !string.IsNullOrWhiteSpace(participant.RearRecordingUrl);
+    }
+
+    private static bool HasUploadedRecording(RunningAnalysisRosterItem participant)
+    {
+        return !string.IsNullOrWhiteSpace(participant.SideRecordingUrl)
+            || !string.IsNullOrWhiteSpace(participant.RearRecordingUrl);
+    }
+
+    private static bool HasCompletedReview(RunningAnalysisRosterItem participant)
+    {
+        return participant.ResultStatus == RunningAnalysisResultStatus.Completed;
+    }
+
+    private sealed record RunningAnalysisCourseEvent(
+        CourseDocument Course,
+        CourseEventDocument Event,
+        RunningAnalysisListStatus? Status);
+
+    private sealed record RunningAnalysisListStatus(
+        RunningAnalysisEventStatus CaptureStatus,
+        int ParticipantCount,
+        int RecordedParticipantCount,
+        int UploadedParticipantCount,
+        int CompletedReviewCount);
 }
