@@ -1,0 +1,101 @@
+@namespace PaceLetics.AthleteModule.Components
+@using MudBlazor
+@using PaceLetics.CoreModule.Infrastructure.Models
+@inject IStringLocalizer<AthleteResources> L
+
+<MudStack Spacing="3" Class="pl-cs-budget">
+    <MudPaper Class="pa-4 pl-training-panel pl-cs-budget-summary" Elevation="0">
+        <MudStack Spacing="2">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                <MudStack Spacing="1" Style="min-width:0;">
+                    <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedBudget_Title"]</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CriticalSpeedBudget_Subtitle"]</MudText>
+                </MudStack>
+
+                <div class="pl-pace-zone-mark" aria-hidden="true">CS</div>
+            </MudStack>
+
+            <div class="pl-cs-budget-metrics">
+                <div>
+                    <MudText Typo="Typo.caption" Class="pl-pace-comparison-label">@L["CriticalSpeedBudget_CriticalSpeed"]</MudText>
+                    <MudText Typo="Typo.body2" Class="fw-bold">@($"{Model.CriticalSpeedMps:0.00} m/s")</MudText>
+                </div>
+
+                <div>
+                    <MudText Typo="Typo.caption" Class="pl-pace-comparison-label">@L["CriticalSpeedBudget_DPrime"]</MudText>
+                    <MudText Typo="Typo.body2" Class="fw-bold">@FormatDPrime(Model.DPrimeMeters)</MudText>
+                </div>
+            </div>
+        </MudStack>
+    </MudPaper>
+
+    @foreach (var zone in Zones)
+    {
+        <MudPaper Class="@($"pa-4 pl-pace-card pl-cs-budget-zone pl-pace-zone-{zone.ZoneKey}")" Elevation="0">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                <MudStack Spacing="1" Style="min-width:0;">
+                    <MudText Typo="Typo.subtitle1" Class="fw-bold">@zone.Title</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@zone.PaceText</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@zone.Description</MudText>
+                    <MudText Typo="Typo.caption" Class="pl-cs-budget-note">@zone.BudgetText</MudText>
+                </MudStack>
+
+                <div class="pl-pace-zone-mark" aria-hidden="true">
+                    @zone.Code
+                </div>
+            </MudStack>
+        </MudPaper>
+    }
+
+    @if (LongIntervals.Count > 0)
+    {
+        <MudPaper Class="pa-4 pl-training-panel pl-cs-interval-table" Elevation="0">
+            <MudStack Spacing="2">
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedBudget_LongIntervals_Title"]</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CriticalSpeedBudget_LongIntervals_Subtitle"]</MudText>
+                </MudStack>
+
+                @foreach (var item in LongIntervals)
+                {
+                    <div class="pl-cs-interval-row">
+                        <div class="pl-pace-zone-mark pl-pace-zone-mark-small" aria-hidden="true">@item.DistanceMeters</div>
+                        <div>
+                            <MudText Typo="Typo.body2" Class="fw-bold">@FormatPace(item.TargetPace)</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                @($"{L["CriticalSpeedBudget_Work"]}: {FormatDuration(item.WorkTime)} | {L["CriticalSpeedBudget_Recovery"]}: {FormatDuration(item.RecoveryTime)}")
+                            </MudText>
+                        </div>
+                        <MudText Typo="Typo.caption" Class="pl-cs-budget-pill">@FormatBudget(item)</MudText>
+                    </div>
+                }
+            </MudStack>
+        </MudPaper>
+    }
+
+    @if (FastIntervals.Count > 0)
+    {
+        <MudPaper Class="pa-4 pl-training-panel pl-cs-interval-table" Elevation="0">
+            <MudStack Spacing="2">
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedBudget_FastIntervals_Title"]</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CriticalSpeedBudget_FastIntervals_Subtitle"]</MudText>
+                </MudStack>
+
+                @foreach (var item in FastIntervals)
+                {
+                    <div class="pl-cs-interval-row">
+                        <div class="pl-pace-zone-mark pl-pace-zone-mark-small" aria-hidden="true">@item.DistanceMeters</div>
+                        <div>
+                            <MudText Typo="Typo.body2" Class="fw-bold">@FormatPace(item.TargetPace)</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                @($"{L["CriticalSpeedBudget_Work"]}: {FormatDuration(item.WorkTime)} | {L["CriticalSpeedBudget_Recovery"]}: {FormatDuration(item.RecoveryTime)}")
+                            </MudText>
+                        </div>
+                        <MudText Typo="Typo.caption" Class="pl-cs-budget-pill">@FormatBudget(item)</MudText>
+                    </div>
+                }
+            </MudStack>
+        </MudPaper>
+    }
+</MudStack>

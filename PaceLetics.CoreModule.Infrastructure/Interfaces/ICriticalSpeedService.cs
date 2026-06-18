@@ -7,5 +7,7 @@ namespace PaceLetics.CoreModule.Infrastructure.Interfaces
         CriticalSpeedModel Estimate(IEnumerable<RaceResultModel> results);
 
         PaceModel BuildPaceModel(CriticalSpeedModel model);
+
+        IReadOnlyList<CriticalSpeedIntervalRecommendation> BuildIntervalRecommendations(CriticalSpeedModel model);
     }
 }

@@ -14,11 +14,9 @@ namespace PaceLetics.Web.Pages.Athletes
         private AthleteModel _athlete = new AthleteModel();
         private PaceModel _upperPace = new();
         private PaceModel _lowerPace = new();
-        private PaceModel _upperCriticalSpeedPace = new();
-        private PaceModel _lowerCriticalSpeedPace = new();
         private CriticalSpeedModel _criticalSpeed = new();
+        private IReadOnlyList<CriticalSpeedIntervalRecommendation> _criticalSpeedIntervals = [];
         private bool _hasDanielsPaceModel;
-        private bool _hasCriticalSpeedPaceModel;
         private double[] _vdotData { get; set; } = {0, 0};
 
         [Parameter]
@@ -126,15 +124,11 @@ namespace PaceLetics.Web.Pages.Athletes
             _criticalSpeed = criticalSpeedService.Estimate(GetCriticalSpeedResults());
             if (!_criticalSpeed.IsValid)
             {
-                _upperCriticalSpeedPace = new PaceModel();
-                _lowerCriticalSpeedPace = new PaceModel();
-                _hasCriticalSpeedPaceModel = false;
+                _criticalSpeedIntervals = [];
                 return;
             }
 
-            _upperCriticalSpeedPace = criticalSpeedService.BuildPaceModel(_criticalSpeed);
-            _lowerCriticalSpeedPace = _upperCriticalSpeedPace.Reduce(0.975);
-            _hasCriticalSpeedPaceModel = true;
+            _criticalSpeedIntervals = criticalSpeedService.BuildIntervalRecommendations(_criticalSpeed);
         }
 
         private void UpdateDanielsModel(RaceResultModel result)

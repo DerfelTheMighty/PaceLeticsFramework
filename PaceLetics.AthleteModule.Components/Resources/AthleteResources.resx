@@ -1,70 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="VdotCard_Title" xml:space="preserve"><value>Your VDOT</value></data>
-  <data name="VdotCard_Description" xml:space="preserve"><value>Great! From your reference race we can determine your individual VDOT. This forms the basis for your personal training zones.</value></data>
-  <data name="RaceCard_Result" xml:space="preserve"><value>Result:</value></data>
-  <data name="RaceCard_Edit" xml:space="preserve"><value>Edit race</value></data>
-  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>More info</value></data>
-  <data name="PaceInfo_Free_Title" xml:space="preserve"><value>Free Pace</value></data>
-  <data name="PaceInfo_Free_Value" xml:space="preserve"><value>No fixed target pace</value></data>
-  <data name="PaceInfo_Free_Description" xml:space="preserve"><value>Choose the pace freely. Use this zone for relaxed movement, drills, warm-ups, or runs where effort matters more than a target split.</value></data>
-  <data name="PaceInfo_Recovery_Title" xml:space="preserve"><value>Recovery Pace</value></data>
-  <data name="PaceInfo_Recovery_Description" xml:space="preserve"><value>Your deliberately relaxed recovery pace. Stay clearly below easy effort so your next quality session stays fresh.</value></data>
-  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Easy Pace (E-Pace)</value></data>
-  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Your easy run pace. Run at this pace for recovery or easy training. It builds aerobic endurance and aids recovery.</value></data>
-  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Marathon Pace (M-Pace)</value></data>
-  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Your marathon pace. Training in this zone improves your ability to maintain a steady pace over long distances.</value></data>
-  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Threshold Pace (T-Pace)</value></data>
-  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Your threshold pace. Training in this zone improves your lactate threshold and helps you run faster without accumulating too much lactic acid.</value></data>
-  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>Interval Pace (I-Pace)</value></data>
-  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>Your interval pace. Short, intense efforts in this zone improve your maximum oxygen uptake (VO2max).</value></data>
-  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Repetition Pace (R-Pace)</value></data>
-  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Your repetition pace. Very short, fast runs at this pace improve your running economy and speed.</value></data>
-  <data name="AddRaceDialog_Title" xml:space="preserve"><value>New Race</value></data>
-  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Name</value></data>
-  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Distance</value></data>
-  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Race time</value></data>
-  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
-  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Date</value></data>
-  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Attention</value></data>
-  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Please check that the race time is in the correct format (hh:mm:ss).</value></data>
-  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>Ok</value></data>
-  <data name="PaceComparison_Zone" xml:space="preserve"><value>Bereich</value></data>
-  <data name="PaceComparison_Daniels" xml:space="preserve"><value>Daniels</value></data>
-  <data name="PaceComparison_CriticalSpeed" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve"><value>Why pace-guided training?</value></data>
-  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve"><value>PaceLetics primarily controls training zones by pace because running speed is the most accessible proxy for external biomechanical load. The core problem is not mainly cardiovascular drift, but the mismatch between fast physiological adaptation and slower musculoskeletal adaptation: beginners can feel fitter within weeks while tendons, bones, joints, and muscle-tendon structures still need more gradual loading. If training is guided only by heart rate or generic zone systems, this mechanical exposure is easy to underestimate. Pace gives a stable external target for how much forceful running is being repeated, while heart rate remains useful as a complementary signal for internal strain and recovery. Our working hypothesis is that heart-rate-guided training can be valuable for athletes who have trained consistently for years and whose musculoskeletal system is already robust. For the broader population in the first training years, however, it can shift attention too strongly toward cardiovascular effort and away from mechanical load progression, which may be harmful over the long term. The model must therefore be simple, equipment-light, and consistent over several weeks. It should accept different input performances, support race prediction, and translate into practical domains such as Easy, Marathon, Threshold, Interval, and Repetition. Pace is the simplest shared language for this: measurable, comparable, and immediately actionable in daily training.</value></data>
-  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve"><value>Conceptual diagram comparing adaptation timelines of the nervous system, cardiovascular system, skeletal muscle, tendon, and bone.</value></data>
-  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve"><value>Daniels/VDOT</value></data>
-  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve"><value>Das Daniels/VDOT-Modell entstand aus den Arbeiten von Jack Daniels und Jimmy Gilbert, die 1979 in Oxygen Power: Performance Tables for Distance Runners veroeffentlicht wurden. VDOT ist dabei keine direkt gemessene VO2max, sondern eine aus realer Laufleistung abgeleitete effektive oder pseudo-VO2max: Eine Wettkampfzeit wird ueber Laufgeschwindigkeit, Sauerstoffkosten des Laufens und den ueber die jeweilige Dauer haltbaren Anteil der VO2max in einen einzelnen Leistungswert uebersetzt. Das Modell integriert damit Ausdauerleistungsfaehigkeit, Laufokonomie und Rennausfuehrung in einer praktischen Zahl. Es modelliert aequivalente Leistungen und Trainingspaces besonders gut, wenn der Eingabewert aktuell, maximal gelaufen und fuer das Leistungsprofil repraesentativ ist. Schwaecher wird es bei ungewoehnlicher Spezialisierung, sehr kurzen Tests, Hitze, Hoehenlage, Trailprofilen oder schlecht gepacten Laeufen. Die Staerke des Modells liegt in seiner coachingpraktischen Konsistenz: Aus einem bekannten VDOT werden standardisierte Bereiche wie Easy, Marathon, Threshold, Intervall und Repetition abgeleitet.</value></data>
-  <data name="PaceModelInfo_Cs_Title" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Cs_Text" xml:space="preserve"><value>Critical Speed (CS) ist die laufbezogene Form des Critical-Power-Konzepts. Es beschreibt die asymptotische Geschwindigkeit der Distanz-Zeit-Beziehung und wird physiologisch als Grenze zwischen heavy und severe intensity interpretiert: Unterhalb von CS kann sich eher ein metabolisches Gleichgewicht einstellen; oberhalb steigen zentrale Ermuedungsmarker progressiv an, bis die Belastung abgebrochen oder die Geschwindigkeit reduziert werden muss. Die endliche Distanzkapazitaet oberhalb von CS wird als D' modelliert. Anderson et al. (2026) fassen in einer Scoping Review die Mess- und Modellierungsverfahren fuer CS und D' im Laufen zusammen und bewerten CS als validierte Grenze zwischen Intensitaetsdomaenen, weisen aber auf Protokollabhaengigkeit und offene Fragen zur D'-Rekonstitution hin. Lipkova et al. (2025) zeigen in einer systematischen Review zu Feldtests, dass Time-Trials und der 3-Minute-All-Out-Test praktikable Verfahren fuer Laeufer sind, solange Testbedingungen und Auswertung standardisiert werden.</value></data>
-  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve"><value>Umrechnung in PaceLetics</value></data>
-  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve"><value>All calculations are performed internally with speed, because percentages on pace would be inverted. For Daniels, the entered performance is matched against the VDOT table; the nearest table value returns the Daniels PaceModel. For CS, we use the available running data directly: 1200 m is treated as a Repetition anchor, 3 km as an Interval anchor. A single 1200 m test estimates CS conservatively as 0.84 * v1200; a single 3 km test estimates CS as 0.90 * v3k and sets Interval pace close to 3 km speed. If 1200 m and 3600 m are available, we calculate CS = (3600 - 1200) / (t3600 - t1200) and D&apos; = 1200 - CS * t1200. With several distances, we estimate the line distance = D&apos; + CS * time by regression. Easy, Marathon, and Threshold remain anchored around CS. Interval uses the 3 km anchor when available, otherwise a fallback from CS or the 1200 m anchor; Repetition uses the 1200 m anchor when available, otherwise a bounded extrapolation from Interval. Each speed is finally converted back to min/km.</value></data>
-  <data name="PaceModelInfo_References_Title" xml:space="preserve"><value>Quellen</value></data>
-  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve"><value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value></data>
-  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve"><value> Die Arbeit ordnet Messprotokolle, Modellierungsansaetze, Leistungsbezug und Trainingsanwendung von CS und D' im Laufen ein.</value></data>
-  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve"><value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value></data>
-  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve"><value> Die systematische Review bewertet feldbasierte CS-Tests fuer Laeufer und hebt Time-Trials sowie 3MT als praktikable Verfahren hervor.</value></data>
-  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve"><value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value></data>
-  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve"><value> The review summarizes endurance and strength adaptations and includes the classic pattern of early neural strength gains followed by slower muscle mass changes.</value></data>
-  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve"><value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value></data>
-  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve"><value> This review describes aerobic and skeletal-muscle remodelling from endurance and interval training, including changes in VO2max and mitochondrial capacity.</value></data>
-  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve"><value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value></data>
-  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve"><value> The study shows that muscle function and neural activation adapt earlier than muscle morphology and tendon stiffness, creating a temporary mismatch.</value></data>
-  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve"><value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value></data>
-  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve"><value> The review explains tendon-specific adaptation, slower tendon response rates, and periods of imbalance between muscle and tendon capacities.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve"><value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve"><value> This mini-review frames running injuries through repetitive impact mechanics, tissue loading, and training-related stress-frequency problems.</value></data>
-  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve"><value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value></data>
-  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve"><value> This study measured GRF variables at seven running speeds and found significant speed-related changes and correlations.</value></data>
-  <data name="PaceModelInfo_Billat_Title" xml:space="preserve"><value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value></data>
-  <data name="PaceModelInfo_Billat_Text" xml:space="preserve"><value> The study links pacing, cardiac drift, speed decline, and marathon performance in real race data.</value></data>
-  <data name="PaceModelInfo_Warden_Title" xml:space="preserve"><value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value></data>
-  <data name="PaceModelInfo_Warden_Text" xml:space="preserve"><value> The review frames bone stress injury risk as a workload problem where repeated loading cycles can exceed bone tissue capacity.</value></data>
-  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve"><value>Diagramm einer Belastungskurve mit Daniels/VDOT-Pacebereichen und Critical-Speed-Grenze.</value></data>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="VdotCard_Title" xml:space="preserve">
+    <value>Your VDOT</value>
+  </data>
+  <data name="VdotCard_Description" xml:space="preserve">
+    <value>Great! From your reference race we can determine your individual VDOT. This forms the basis for your personal training zones.</value>
+  </data>
+  <data name="RaceCard_Result" xml:space="preserve">
+    <value>Result:</value>
+  </data>
+  <data name="RaceCard_Edit" xml:space="preserve">
+    <value>Edit race</value>
+  </data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve">
+    <value>More info</value>
+  </data>
+  <data name="PaceInfo_Free_Title" xml:space="preserve">
+    <value>Free Pace</value>
+  </data>
+  <data name="PaceInfo_Free_Value" xml:space="preserve">
+    <value>No fixed target pace</value>
+  </data>
+  <data name="PaceInfo_Free_Description" xml:space="preserve">
+    <value>Choose the pace freely. Use this zone for relaxed movement, drills, warm-ups, or runs where effort matters more than a target split.</value>
+  </data>
+  <data name="PaceInfo_Recovery_Title" xml:space="preserve">
+    <value>Recovery Pace</value>
+  </data>
+  <data name="PaceInfo_Recovery_Description" xml:space="preserve">
+    <value>Your deliberately relaxed recovery pace. Stay clearly below easy effort so your next quality session stays fresh.</value>
+  </data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve">
+    <value>Easy Pace (E-Pace)</value>
+  </data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve">
+    <value>Your easy run pace. Run at this pace for recovery or easy training. It builds aerobic endurance and aids recovery.</value>
+  </data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve">
+    <value>Marathon Pace (M-Pace)</value>
+  </data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve">
+    <value>Your marathon pace. Training in this zone improves your ability to maintain a steady pace over long distances.</value>
+  </data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve">
+    <value>Threshold Pace (T-Pace)</value>
+  </data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve">
+    <value>Your threshold pace. Training in this zone improves your lactate threshold and helps you run faster without accumulating too much lactic acid.</value>
+  </data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve">
+    <value>Interval Pace (I-Pace)</value>
+  </data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve">
+    <value>Your interval pace. Short, intense efforts in this zone improve your maximum oxygen uptake (VO2max).</value>
+  </data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve">
+    <value>Repetition Pace (R-Pace)</value>
+  </data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve">
+    <value>Your repetition pace. Very short, fast runs at this pace improve your running economy and speed.</value>
+  </data>
+  <data name="AddRaceDialog_Title" xml:space="preserve">
+    <value>New Race</value>
+  </data>
+  <data name="AddRaceDialog_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="AddRaceDialog_Time" xml:space="preserve">
+    <value>Race time</value>
+  </data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve">
+    <value>hh:mm:ss</value>
+  </data>
+  <data name="AddRaceDialog_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve">
+    <value>Please check that the race time is in the correct format (hh:mm:ss).</value>
+  </data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="PaceComparison_Zone" xml:space="preserve">
+    <value>Bereich</value>
+  </data>
+  <data name="PaceComparison_Daniels" xml:space="preserve">
+    <value>Daniels</value>
+  </data>
+  <data name="PaceComparison_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve">
+    <value>Why pace-guided training?</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
+    <value>PaceLetics primarily controls training zones by pace because running speed is the most accessible proxy for external biomechanical load. The core problem is not mainly cardiovascular drift, but the mismatch between fast physiological adaptation and slower musculoskeletal adaptation: beginners can feel fitter within weeks while tendons, bones, joints, and muscle-tendon structures still need more gradual loading. If training is guided only by heart rate or generic zone systems, this mechanical exposure is easy to underestimate. Pace gives a stable external target for how much forceful running is being repeated, while heart rate remains useful as a complementary signal for internal strain and recovery. Our working hypothesis is that heart-rate-guided training can be valuable for athletes who have trained consistently for years and whose musculoskeletal system is already robust. For the broader population in the first training years, however, it can shift attention too strongly toward cardiovascular effort and away from mechanical load progression, which may be harmful over the long term. The model must therefore be simple, equipment-light, and consistent over several weeks. It should accept different input performances, support race prediction, and translate into practical domains such as Easy, Marathon, Threshold, Interval, and Repetition. Pace is the simplest shared language for this: measurable, comparable, and immediately actionable in daily training.</value>
+  </data>
+  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
+    <value>Conceptual diagram comparing adaptation timelines of the nervous system, cardiovascular system, skeletal muscle, tendon, and bone.</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve">
+    <value>Daniels/VDOT</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve">
+    <value>Das Daniels/VDOT-Modell entstand aus den Arbeiten von Jack Daniels und Jimmy Gilbert, die 1979 in Oxygen Power: Performance Tables for Distance Runners veroeffentlicht wurden. VDOT ist dabei keine direkt gemessene VO2max, sondern eine aus realer Laufleistung abgeleitete effektive oder pseudo-VO2max: Eine Wettkampfzeit wird ueber Laufgeschwindigkeit, Sauerstoffkosten des Laufens und den ueber die jeweilige Dauer haltbaren Anteil der VO2max in einen einzelnen Leistungswert uebersetzt. Das Modell integriert damit Ausdauerleistungsfaehigkeit, Laufokonomie und Rennausfuehrung in einer praktischen Zahl. Es modelliert aequivalente Leistungen und Trainingspaces besonders gut, wenn der Eingabewert aktuell, maximal gelaufen und fuer das Leistungsprofil repraesentativ ist. Schwaecher wird es bei ungewoehnlicher Spezialisierung, sehr kurzen Tests, Hitze, Hoehenlage, Trailprofilen oder schlecht gepacten Laeufen. Die Staerke des Modells liegt in seiner coachingpraktischen Konsistenz: Aus einem bekannten VDOT werden standardisierte Bereiche wie Easy, Marathon, Threshold, Intervall und Repetition abgeleitet.</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Title" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Text" xml:space="preserve">
+    <value>Critical Speed (CS) ist die laufbezogene Form des Critical-Power-Konzepts. Es beschreibt die asymptotische Geschwindigkeit der Distanz-Zeit-Beziehung und wird physiologisch als Grenze zwischen heavy und severe intensity interpretiert: Unterhalb von CS kann sich eher ein metabolisches Gleichgewicht einstellen; oberhalb steigen zentrale Ermuedungsmarker progressiv an, bis die Belastung abgebrochen oder die Geschwindigkeit reduziert werden muss. Die endliche Distanzkapazitaet oberhalb von CS wird als D' modelliert. Anderson et al. (2026) fassen in einer Scoping Review die Mess- und Modellierungsverfahren fuer CS und D' im Laufen zusammen und bewerten CS als validierte Grenze zwischen Intensitaetsdomaenen, weisen aber auf Protokollabhaengigkeit und offene Fragen zur D'-Rekonstitution hin. Lipkova et al. (2025) zeigen in einer systematischen Review zu Feldtests, dass Time-Trials und der 3-Minute-All-Out-Test praktikable Verfahren fuer Laeufer sind, solange Testbedingungen und Auswertung standardisiert werden.</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve">
+    <value>Umrechnung in PaceLetics</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve">
+    <value>All calculations are performed internally with speed, because percentages on pace would be inverted. For Daniels, the entered performance is matched against the VDOT table; the nearest table value returns the classic pace table for Recovery, Easy, Marathon, Threshold, Interval, and Repetition. CS is no longer interpreted as a second Daniels table. From the running data we estimate Critical Speed and D': a single 1200 m test estimates CS conservatively as 0.84 * v1200, and a single 3 km test as 0.90 * v3k. If 1200 m and 3600 m are available, we calculate CS = (3600 - 1200) / (t3600 - t1200) and D' = 1200 - CS * t1200; with several distances we use regression. The CS system then controls intervals by budget: below CS no D' is used; above CS, the planned D' share per repetition determines target speed. Long intervals from 800 to 1600 m use smaller budgets with half recovery, while fast 200 and 400 m intervals use higher budgets with long recovery.</value>
+  </data>
+  <data name="PaceModelInfo_References_Title" xml:space="preserve">
+    <value>Quellen</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve">
+    <value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve">
+    <value> Die Arbeit ordnet Messprotokolle, Modellierungsansaetze, Leistungsbezug und Trainingsanwendung von CS und D' im Laufen ein.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve">
+    <value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve">
+    <value> Die systematische Review bewertet feldbasierte CS-Tests fuer Laeufer und hebt Time-Trials sowie 3MT als praktikable Verfahren hervor.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve">
+    <value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve">
+    <value> The review summarizes endurance and strength adaptations and includes the classic pattern of early neural strength gains followed by slower muscle mass changes.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve">
+    <value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve">
+    <value> This review describes aerobic and skeletal-muscle remodelling from endurance and interval training, including changes in VO2max and mitochondrial capacity.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve">
+    <value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve">
+    <value> The study shows that muscle function and neural activation adapt earlier than muscle morphology and tendon stiffness, creating a temporary mismatch.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve">
+    <value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
+    <value> The review explains tendon-specific adaptation, slower tendon response rates, and periods of imbalance between muscle and tendon capacities.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
+    <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve">
+    <value> This mini-review frames running injuries through repetitive impact mechanics, tissue loading, and training-related stress-frequency problems.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve">
+    <value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve">
+    <value> This study measured GRF variables at seven running speeds and found significant speed-related changes and correlations.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Title" xml:space="preserve">
+    <value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Text" xml:space="preserve">
+    <value> The study links pacing, cardiac drift, speed decline, and marathon performance in real race data.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Title" xml:space="preserve">
+    <value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Text" xml:space="preserve">
+    <value> The review frames bone stress injury risk as a workload problem where repeated loading cycles can exceed bone tissue capacity.</value>
+  </data>
+  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve">
+    <value>Diagramm einer Belastungskurve mit Daniels/VDOT-Pacebereichen und Critical-Speed-Grenze.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Title" xml:space="preserve">
+    <value>CS budget model</value>
+  </data>
+  <data name="CriticalSpeedBudget_Subtitle" xml:space="preserve">
+    <value>Intervals are calculated from Critical Speed and the available D' budget per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="CriticalSpeedBudget_DPrime" xml:space="preserve">
+    <value>D' budget</value>
+  </data>
+  <data name="CriticalSpeedBudget_NoDPrime" xml:space="preserve">
+    <value>D' use: 0 percent</value>
+  </data>
+  <data name="CriticalSpeedBudget_TableReference" xml:space="preserve">
+    <value>See interval suggestions below</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Title" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Description" xml:space="preserve">
+    <value>Very relaxed running clearly below CS. This zone should stay mechanically light and use no D' budget.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Title" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Description" xml:space="preserve">
+    <value>Relaxed aerobic running below Critical Speed. The pace remains controlled and budget-neutral.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Title" xml:space="preserve">
+    <value>Threshold</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Description" xml:space="preserve">
+    <value>Running just below CS. This sits at the stable boundary without deliberately emptying the finite capacity above CS.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Title" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Description" xml:space="preserve">
+    <value>800 to 1600 m above CS with half recovery. Pace is derived from a limited D' share per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Budget" xml:space="preserve">
+    <value>D' target: about 22 to 42 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Title" xml:space="preserve">
+    <value>Fast Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Description" xml:space="preserve">
+    <value>200 to 400 m fast with long recovery. Each repetition may use more D' so quality stays high.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
+    <value>D' target: about 20 to 33 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
+    <value>Long intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Subtitle" xml:space="preserve">
+    <value>800, 1000, 1200, and 1600 m with about half recovery.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Title" xml:space="preserve">
+    <value>Fast short intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Subtitle" xml:space="preserve">
+    <value>200 and 400 m with long recovery so the D' budget can mostly reconstitute between repetitions.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
 </root>

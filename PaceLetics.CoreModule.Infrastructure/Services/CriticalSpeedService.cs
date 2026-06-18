@@ -13,6 +13,8 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
         private const double RepetitionFallbackFactorOverInterval = 1.07;
         private const double IntervalFrom3000AnchorFactor = 0.985;
         private const double IntervalFrom1200AnchorFactor = 1 / RepetitionFallbackFactorOverInterval;
+        private const double LongIntervalFallbackSpeedFactor = 1.10;
+        private const double FastIntervalFallbackSpeedFactor = 1.18;
 
         public CriticalSpeedModel Estimate(IEnumerable<RaceResultModel> results)
         {
@@ -56,6 +58,29 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
                 Intervall = PaceFromSpeed(intervalSpeed),
                 Repetition = PaceFromSpeed(repetitionSpeed)
             };
+        }
+
+        public IReadOnlyList<CriticalSpeedIntervalRecommendation> BuildIntervalRecommendations(CriticalSpeedModel model)
+        {
+            if (!model.IsValid || model.DPrimeMeters is not > 0)
+                return [];
+
+            var longIntervalSpeedCap = model.IntervalSpeedMps is > 0
+                ? model.IntervalSpeedMps.Value
+                : model.CriticalSpeedMps * LongIntervalFallbackSpeedFactor;
+            var fastIntervalSpeedCap = model.RepetitionSpeedMps is > 0
+                ? model.RepetitionSpeedMps.Value
+                : model.CriticalSpeedMps * FastIntervalFallbackSpeedFactor;
+
+            return
+            [
+                BuildRecommendation("fast-200", "repetition", "Fast", 200, 0.20, true, fastIntervalSpeedCap, 3, model),
+                BuildRecommendation("fast-400", "repetition", "Fast", 400, 0.33, true, fastIntervalSpeedCap, 3, model),
+                BuildRecommendation("interval-800", "intervall", "Int", 800, 0.22, false, longIntervalSpeedCap, 0.5, model),
+                BuildRecommendation("interval-1000", "intervall", "Int", 1000, 0.27, false, longIntervalSpeedCap, 0.5, model),
+                BuildRecommendation("interval-1200", "intervall", "Int", 1200, 0.32, false, longIntervalSpeedCap, 0.5, model),
+                BuildRecommendation("interval-1600", "intervall", "Int", 1600, 0.42, false, longIntervalSpeedCap, 0.5, model)
+            ];
         }
 
         private static CriticalSpeedModel EstimateFromTwoPoint1200And3600(
@@ -189,6 +214,42 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
             return metersPerSecond <= 0
                 ? default
                 : TimeSpan.FromSeconds(Math.Round(1000 / metersPerSecond));
+        }
+
+        private static CriticalSpeedIntervalRecommendation BuildRecommendation(
+            string key,
+            string zoneKey,
+            string code,
+            int distanceMeters,
+            double dPrimeBudgetPercent,
+            bool isFastInterval,
+            double speedCap,
+            double recoveryMultiplier,
+            CriticalSpeedModel model)
+        {
+            var targetDPrimeMeters = model.DPrimeMeters!.Value * dPrimeBudgetPercent;
+            var availableDistanceAtCriticalSpeed = Math.Max(1, distanceMeters - targetDPrimeMeters);
+            var budgetSpeed = distanceMeters * model.CriticalSpeedMps / availableDistanceAtCriticalSpeed;
+            var targetSpeed = Math.Min(budgetSpeed, speedCap);
+            var workTime = TimeSpan.FromSeconds(Math.Round(distanceMeters / targetSpeed));
+            var dPrimeUseMeters = Math.Max(0, distanceMeters - model.CriticalSpeedMps * workTime.TotalSeconds);
+            var dPrimeUsePercent = dPrimeUseMeters / model.DPrimeMeters.Value;
+
+            return new CriticalSpeedIntervalRecommendation
+            {
+                Key = key,
+                ZoneKey = zoneKey,
+                Code = code,
+                DistanceMeters = distanceMeters,
+                TargetSpeedMps = targetSpeed,
+                TargetPace = PaceFromSpeed(targetSpeed),
+                WorkTime = workTime,
+                RecoveryTime = TimeSpan.FromSeconds(Math.Round(workTime.TotalSeconds * recoveryMultiplier)),
+                DPrimeUseMeters = dPrimeUseMeters,
+                DPrimeUsePercent = dPrimeUsePercent,
+                TargetDPrimeBudgetPercent = dPrimeBudgetPercent,
+                IsFastInterval = isFastInterval
+            };
         }
     }
 }

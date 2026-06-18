@@ -74,6 +74,50 @@ public class CriticalSpeedServiceTests
         Assert.Equal(TimeSpan.FromSeconds(198), paceModel.Repetition);
     }
 
+    [Fact]
+    public void BuildIntervalRecommendations_UsesDistanceSpecificDPrimeBudgets()
+    {
+        var model = new CriticalSpeedModel
+        {
+            CriticalSpeedMps = 4.0,
+            DPrimeMeters = 200,
+            IntervalSpeedMps = 4.4,
+            RepetitionSpeedMps = 4.8
+        };
+
+        var recommendations = _service.BuildIntervalRecommendations(model);
+
+        Assert.Equal([200, 400, 800, 1000, 1200, 1600], recommendations.Select(item => item.DistanceMeters));
+        Assert.All(recommendations.Where(item => item.DistanceMeters <= 400), item => Assert.True(item.IsFastInterval));
+        Assert.All(recommendations.Where(item => item.DistanceMeters >= 800), item => Assert.False(item.IsFastInterval));
+
+        var interval1200 = recommendations.Single(item => item.DistanceMeters == 1200);
+        Assert.Equal(TimeSpan.FromSeconds(284), interval1200.WorkTime);
+        Assert.Equal(TimeSpan.FromSeconds(142), interval1200.RecoveryTime);
+        Assert.Equal(64, interval1200.DPrimeUseMeters, precision: 3);
+        Assert.Equal(0.32, interval1200.DPrimeUsePercent, precision: 2);
+    }
+
+    [Fact]
+    public void BuildIntervalRecommendations_UsesLongRecoveryForFastIntervals()
+    {
+        var model = new CriticalSpeedModel
+        {
+            CriticalSpeedMps = 4.0,
+            DPrimeMeters = 200,
+            IntervalSpeedMps = 4.4,
+            RepetitionSpeedMps = 4.8
+        };
+
+        var recommendations = _service.BuildIntervalRecommendations(model);
+
+        var fast400 = recommendations.Single(item => item.DistanceMeters == 400);
+        Assert.Equal(TimeSpan.FromSeconds(84), fast400.WorkTime);
+        Assert.Equal(TimeSpan.FromSeconds(252), fast400.RecoveryTime);
+        Assert.Equal(64, fast400.DPrimeUseMeters, precision: 3);
+        Assert.True(fast400.TargetSpeedMps <= model.RepetitionSpeedMps);
+    }
+
     private static RaceResultModel CreateResult(string type, long distance, TimeSpan time)
     {
         return new RaceResultModel

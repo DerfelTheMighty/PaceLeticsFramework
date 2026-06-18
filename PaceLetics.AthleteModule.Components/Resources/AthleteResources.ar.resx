@@ -1,65 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="VdotCard_Title" xml:space="preserve"><value>VDOT الخاص بك</value></data>
-  <data name="VdotCard_Description" xml:space="preserve"><value>رائع! من سباقك المرجعي يمكننا تحديد قيمة VDOT الخاصة بك. وهذا هو أساس مناطق تدريبك الشخصية.</value></data>
-  <data name="RaceCard_Result" xml:space="preserve"><value>النتيجة:</value></data>
-  <data name="RaceCard_Edit" xml:space="preserve"><value>تعديل السباق</value></data>
-  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>مزيد من المعلومات</value></data>
-  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>الوتيرة السهلة (E-Pace)</value></data>
-  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>وتيرة الجري السهل لديك. اركض بهذه الوتيرة للاستشفاء أو التدريب السهل. تبني التحمل الهوائي وتساعد التعافي.</value></data>
-  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>وتيرة الماراثون (M-Pace)</value></data>
-  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>وتيرة الماراثون لديك. التدريب في هذه المنطقة يحسن قدرتك على الحفاظ على وتيرة ثابتة لمسافات طويلة.</value></data>
-  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>وتيرة العتبة (T-Pace)</value></data>
-  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>وتيرة العتبة لديك. التدريب في هذه المنطقة يحسن عتبة اللاكتات ويساعدك على الجري أسرع دون تراكم الكثير من حمض اللاكتيك.</value></data>
-  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>وتيرة الفواصل (I-Pace)</value></data>
-  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>وتيرة الفواصل لديك. الجهود القصيرة والمكثفة في هذه المنطقة تحسن الحد الأقصى لاستهلاك الأكسجين (VO2max).</value></data>
-  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>وتيرة التكرار (R-Pace)</value></data>
-  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>وتيرة التكرار لديك. الجريات القصيرة جدًا والسريعة بهذه الوتيرة تحسن اقتصاد الجري والسرعة.</value></data>
-  <data name="AddRaceDialog_Title" xml:space="preserve"><value>سباق جديد</value></data>
-  <data name="AddRaceDialog_Name" xml:space="preserve"><value>الاسم</value></data>
-  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>المسافة</value></data>
-  <data name="AddRaceDialog_Time" xml:space="preserve"><value>وقت السباق</value></data>
-  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
-  <data name="AddRaceDialog_Date" xml:space="preserve"><value>التاريخ</value></data>
-  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>تنبيه</value></data>
-  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>يرجى التأكد من أن وقت السباق بالتنسيق الصحيح (hh:mm:ss).</value></data>
-  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>حسنًا</value></data>
-  <data name="PaceComparison_Zone" xml:space="preserve"><value>&#x627;&#x644;&#x645;&#x646;&#x637;&#x642;&#x629;</value></data>
-  <data name="PaceComparison_Daniels" xml:space="preserve"><value>Daniels</value></data>
-  <data name="PaceComparison_CriticalSpeed" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve"><value>لماذا التدريب الموجه بالوتيرة؟</value></data>
-  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve"><value>يعتمد PaceLetics اساسا على الوتيرة لضبط مناطق التدريب، لان سرعة الجري هي ابسط مؤشر متاح للحمل البيوميكانيكي الخارجي. المشكلة الاساسية ليست الانجراف القلبي بحد ذاته، بل الفجوة بين التكيف الفسيولوجي السريع والتكيف العضلي الهيكلي الابطأ: قد يشعر المبتدئ بتحسن لياقته خلال اسابيع، بينما تحتاج الاوتار والعظام والمفاصل وبنى العضلات والاوتار الى تحميل اكثر تدرجا. اذا تم توجيه التدريب فقط بمعدل القلب او مناطق عامة، فمن السهل التقليل من هذه الجرعة الميكانيكية. الوتيرة تعطي هدفا خارجيا ثابتا لكمية الجري القوي المتكرر، بينما يبقى معدل القلب مفيدا كاشارة مكملة للحمل الداخلي والتعافي. فرضيتنا العملية هي أن التدريب الموجه بمعدل القلب قد يكون مفيدا للرياضيين الذين تدربوا بانتظام لسنوات وأصبح جهازهم العضلي الهيكلي قويا. أما لدى الغالبية في سنوات التدريب الأولى فقد ينقل التركيز أكثر من اللازم إلى الجهد القلبي الوعائي ويبعده عن التدرج في الحمل الميكانيكي، ما قد يكون ضارا على المدى الطويل. لذلك يجب ان يكون النموذج بسيطا، قليل الاعتماد على المعدات، ومتسقا لعدة اسابيع. كما يجب ان يقبل مدخلات اداء مختلفة، ويدعم توقعات السباقات، ويترجم الى مجالات مثل Easy وMarathon وThreshold وInterval وRepetition. الوتيرة هي اللغة المشتركة الابسط: قابلة للقياس والمقارنة والتطبيق المباشر.</value></data>
-  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve"><value>رسم مفاهيمي يقارن ازمنة تكيف الجهاز العصبي والقلب والدورة الدموية والعضلات الهيكلية والاوتار والعظام.</value></data>
-  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve"><value>Daniels/VDOT</value></data>
-  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve"><value>&#x646;&#x645;&#x648;&#x630;&#x62C; Daniels/VDOT &#x64A;&#x639;&#x648;&#x62F; &#x625;&#x644;&#x649; &#x639;&#x645;&#x644; Jack Daniels &#x648; Jimmy Gilbert &#x627;&#x644;&#x645;&#x646;&#x634;&#x648;&#x631; &#x639;&#x627;&#x645; 1979 &#x628;&#x639;&#x646;&#x648;&#x627;&#x646; Oxygen Power: Performance Tables for Distance Runners. &#x642;&#x64A;&#x645;&#x629; VDOT &#x644;&#x64A;&#x633;&#x62A; VO2max &#x645;&#x642;&#x627;&#x633;&#x629; &#x645;&#x628;&#x627;&#x634;&#x631;&#x629;&#x60C; &#x628;&#x644; VO2max &#x641;&#x639;&#x627;&#x644;&#x629; &#x623;&#x648; &#x634;&#x628;&#x647; &#x641;&#x633;&#x64A;&#x648;&#x644;&#x648;&#x62C;&#x64A;&#x629; &#x645;&#x633;&#x62A;&#x646;&#x62A;&#x62C;&#x629; &#x645;&#x646; &#x623;&#x62F;&#x627;&#x621; &#x627;&#x644;&#x631;&#x643;&#x636; &#x627;&#x644;&#x641;&#x639;&#x644;&#x64A;. &#x64A;&#x62A;&#x645; &#x62A;&#x62D;&#x648;&#x64A;&#x644; &#x646;&#x62A;&#x64A;&#x62C;&#x629; &#x627;&#x644;&#x633;&#x628;&#x627;&#x642; &#x625;&#x644;&#x649; &#x645;&#x624;&#x634;&#x631; &#x648;&#x627;&#x62D;&#x62F; &#x639;&#x628;&#x631; &#x627;&#x644;&#x633;&#x631;&#x639;&#x629;&#x60C; &#x648;&#x643;&#x644;&#x641;&#x629; &#x627;&#x644;&#x623;&#x643;&#x633;&#x62C;&#x64A;&#x646; &#x644;&#x644;&#x631;&#x643;&#x636;&#x60C; &#x648;&#x646;&#x633;&#x628;&#x629; VO2max &#x627;&#x644;&#x642;&#x627;&#x628;&#x644;&#x629; &#x644;&#x644;&#x627;&#x633;&#x62A;&#x645;&#x631;&#x627;&#x631; &#x644;&#x62A;&#x644;&#x643; &#x627;&#x644;&#x645;&#x62F;&#x629;. &#x644;&#x630;&#x644;&#x643; &#x64A;&#x62C;&#x645;&#x639; &#x627;&#x644;&#x646;&#x645;&#x648;&#x630;&#x62C; &#x628;&#x64A;&#x646; &#x627;&#x644;&#x642;&#x62F;&#x631;&#x629; &#x627;&#x644;&#x647;&#x648;&#x627;&#x626;&#x64A;&#x629;&#x60C; &#x648;&#x627;&#x642;&#x62A;&#x635;&#x627;&#x62F; &#x627;&#x644;&#x631;&#x643;&#x636;&#x60C; &#x648;&#x62A;&#x646;&#x641;&#x64A;&#x630; &#x627;&#x644;&#x633;&#x628;&#x627;&#x642;. &#x64A;&#x643;&#x648;&#x646; &#x623;&#x62F;&#x642; &#x639;&#x646;&#x62F;&#x645;&#x627; &#x62A;&#x643;&#x648;&#x646; &#x627;&#x644;&#x645;&#x62F;&#x62E;&#x644;&#x627;&#x62A; &#x62D;&#x62F;&#x64A;&#x62B;&#x629;&#x60C; &#x642;&#x635;&#x648;&#x649;&#x60C; &#x648;&#x645;&#x645;&#x62B;&#x644;&#x629; &#x644;&#x645;&#x644;&#x641; &#x627;&#x644;&#x631;&#x64A;&#x627;&#x636;&#x64A;.</value></data>
-  <data name="PaceModelInfo_Cs_Title" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Cs_Text" xml:space="preserve"><value>Critical Speed (CS) &#x647;&#x648; &#x627;&#x644;&#x62A;&#x637;&#x628;&#x64A;&#x642; &#x627;&#x644;&#x62E;&#x627;&#x635; &#x628;&#x627;&#x644;&#x631;&#x643;&#x636; &#x644;&#x645;&#x641;&#x647;&#x648;&#x645; critical power. &#x64A;&#x635;&#x641; &#x627;&#x644;&#x633;&#x631;&#x639;&#x629; &#x627;&#x644;&#x62A;&#x642;&#x627;&#x631;&#x628;&#x64A;&#x629; &#x644;&#x639;&#x644;&#x627;&#x642;&#x629; &#x627;&#x644;&#x645;&#x633;&#x627;&#x641;&#x629; &#x628;&#x627;&#x644;&#x632;&#x645;&#x646;&#x60C; &#x648;&#x64A;&#x641;&#x633;&#x631; &#x641;&#x633;&#x64A;&#x648;&#x644;&#x648;&#x62C;&#x64A;&#x627; &#x643;&#x62D;&#x62F; &#x628;&#x64A;&#x646; heavy &#x648; severe intensity: &#x62F;&#x648;&#x646; CS &#x64A;&#x643;&#x648;&#x646; &#x627;&#x644;&#x62B;&#x628;&#x627;&#x62A; &#x627;&#x644;&#x623;&#x64A;&#x636;&#x64A; &#x623;&#x643;&#x62B;&#x631; &#x627;&#x62D;&#x62A;&#x645;&#x627;&#x644;&#x627;&#x60C; &#x648;&#x641;&#x648;&#x642;&#x647; &#x62A;&#x631;&#x62A;&#x641;&#x639; &#x645;&#x624;&#x634;&#x631;&#x627;&#x62A; &#x627;&#x644;&#x62A;&#x639;&#x628; &#x62D;&#x62A;&#x649; &#x64A;&#x644;&#x632;&#x645; &#x625;&#x64A;&#x642;&#x627;&#x641; &#x627;&#x644;&#x62C;&#x647;&#x62F; &#x623;&#x648; &#x62E;&#x641;&#x636; &#x627;&#x644;&#x633;&#x631;&#x639;&#x629;. &#x627;&#x644;&#x633;&#x639;&#x629; &#x627;&#x644;&#x645;&#x62D;&#x62F;&#x648;&#x62F;&#x629; &#x641;&#x648;&#x642; CS &#x62A;&#x645;&#x62B;&#x644; &#x628;&#x640; D'. Anderson et al. (2026) &#x64A;&#x644;&#x62E;&#x635;&#x648;&#x646; &#x637;&#x631;&#x642; &#x642;&#x64A;&#x627;&#x633; &#x648;&#x646;&#x645;&#x630;&#x62C;&#x629; CS &#x648; D' &#x641;&#x64A; &#x627;&#x644;&#x631;&#x643;&#x636;&#x60C; &#x648;&#x64A;&#x634;&#x64A;&#x631;&#x648;&#x646; &#x625;&#x644;&#x649; &#x623;&#x646; CS &#x62D;&#x62F; &#x645;&#x62A;&#x62D;&#x642;&#x642; &#x628;&#x64A;&#x646; &#x645;&#x62C;&#x627;&#x644;&#x627;&#x62A; &#x627;&#x644;&#x634;&#x62F;&#x629;. Lipkova et al. (2025) &#x64A;&#x648;&#x636;&#x62D;&#x648;&#x646; &#x623;&#x646; &#x627;&#x62E;&#x62A;&#x628;&#x627;&#x631;&#x627;&#x62A; time trial &#x648; 3MT &#x639;&#x645;&#x644;&#x64A;&#x629; &#x639;&#x646;&#x62F; &#x62A;&#x648;&#x62D;&#x64A;&#x62F; &#x627;&#x644;&#x638;&#x631;&#x648;&#x641; &#x648;&#x627;&#x644;&#x62A;&#x62D;&#x644;&#x64A;&#x644;.</value></data>
-  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve"><value>&#x627;&#x644;&#x62A;&#x62D;&#x648;&#x64A;&#x644; &#x641;&#x64A; PaceLetics</value></data>
-  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve"><value>تتم كل الحسابات داخليا بالسرعة، لأن النسب على الوتيرة ستكون معكوسة. في Daniels تتم مطابقة الأداء المدخل مع جدول VDOT؛ وأقرب قيمة تعطي Daniels PaceModel. في CS نستخدم بيانات الجري مباشرة: 1200 م يعامل كمرساة Repetition، و3 كم كمرساة Interval. اختبار 1200 م واحد يقدر CS بشكل محافظ كـ 0.84 * v1200؛ واختبار 3 كم واحد يقدر CS كـ 0.90 * v3k ويضع Interval pace قريبا من سرعة 3 كم. إذا توفر 1200 م و3600 م نحسب CS = (3600 - 1200) / (t3600 - t1200) و D&apos; = 1200 - CS * t1200. مع عدة مسافات نقدر الخط distance = D&apos; + CS * time بالانحدار. تبقى Easy وMarathon وThreshold مرتبطة حول CS. يستخدم Interval مرساة 3 كم إذا توفرت، وإلا fallback من CS أو من مرساة 1200 م؛ ويستخدم Repetition مرساة 1200 م إذا توفرت، وإلا استقراء محدودا من Interval. وفي النهاية تحول كل سرعة إلى min/km.</value></data>
-  <data name="PaceModelInfo_References_Title" xml:space="preserve"><value>&#x627;&#x644;&#x645;&#x631;&#x627;&#x62C;&#x639;</value></data>
-  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve"><value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value></data>
-  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve"><value> &#x64A;&#x631;&#x627;&#x62C;&#x639; &#x627;&#x644;&#x639;&#x645;&#x644; &#x628;&#x631;&#x648;&#x62A;&#x648;&#x643;&#x648;&#x644;&#x627;&#x62A; &#x627;&#x644;&#x642;&#x64A;&#x627;&#x633;&#x60C; &#x648;&#x627;&#x644;&#x646;&#x645;&#x630;&#x62C;&#x629;&#x60C; &#x648;&#x639;&#x644;&#x627;&#x642;&#x629; CS &#x648; D' &#x628;&#x627;&#x644;&#x623;&#x62F;&#x627;&#x621; &#x648;&#x627;&#x644;&#x62A;&#x62F;&#x631;&#x64A;&#x628;.</value></data>
-  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve"><value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value></data>
-  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve"><value> &#x62A;&#x642;&#x64A;&#x645; &#x647;&#x630;&#x647; &#x627;&#x644;&#x645;&#x631;&#x627;&#x62C;&#x639;&#x629; &#x627;&#x644;&#x645;&#x646;&#x647;&#x62C;&#x64A;&#x629; &#x627;&#x62E;&#x62A;&#x628;&#x627;&#x631;&#x627;&#x62A; CS &#x627;&#x644;&#x645;&#x64A;&#x62F;&#x627;&#x646;&#x64A;&#x629; &#x648;&#x62A;&#x628;&#x631;&#x632; time trials &#x648; 3MT &#x643;&#x637;&#x631;&#x642; &#x639;&#x645;&#x644;&#x64A;&#x629;.</value></data>
-  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve"><value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value></data>
-  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve"><value> تلخص المراجعة تكيفات تدريب التحمل والقوة، بما في ذلك النمط الكلاسيكي لمكاسب عصبية مبكرة تسبق تغيرات ابطأ في كتلة العضلات.</value></data>
-  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve"><value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value></data>
-  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve"><value> تصف هذه المراجعة اعادة التشكيل الهوائي والعضلي الناتج عن تدريب التحمل والفواصل، بما في ذلك VO2max والقدرة الميتوكوندرية.</value></data>
-  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve"><value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value></data>
-  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve"><value> تظهر الدراسة ان وظيفة العضلات والتنشيط العصبي يتكيفان قبل مورفولوجيا العضلات وصلابة الوتر، مما يخلق عدم توازن مؤقتا.</value></data>
-  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve"><value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value></data>
-  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve"><value> تشرح المراجعة تكيف الوتر الخاص، وبطء استجابة الاوتار، وفترات عدم التوازن بين قدرات العضلات والاوتار.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve"><value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve"><value> تعرض هذه المراجعة المصغرة اصابات الجري من خلال ميكانيكا الصدمات المتكررة، وحمل الانسجة، ومشكلات علاقة الاجهاد بالتكرار في التدريب.</value></data>
-  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve"><value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value></data>
-  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve"><value> قاست الدراسة متغيرات GRF عند سبع سرعات جري ووجدت تغيرات وارتباطات معنوية مرتبطة بالسرعة.</value></data>
-  <data name="PaceModelInfo_Billat_Title" xml:space="preserve"><value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value></data>
-  <data name="PaceModelInfo_Billat_Text" xml:space="preserve"><value> تربط الدراسة بين استراتيجية الوتيرة والانجراف القلبي وانخفاض السرعة واداء الماراثون في بيانات سباقات حقيقية.</value></data>
-  <data name="PaceModelInfo_Warden_Title" xml:space="preserve"><value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value></data>
-  <data name="PaceModelInfo_Warden_Text" xml:space="preserve"><value> تعرض المراجعة اصابات اجهاد العظام كمشكلة حمل، حيث قد تتجاوز دورات التحميل المتكررة قدرة نسيج العظم.</value></data>
-  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve"><value>&#x645;&#x62E;&#x637;&#x637; &#x644;&#x645;&#x646;&#x62D;&#x646;&#x649; &#x627;&#x644;&#x62D;&#x645;&#x644; &#x645;&#x639; &#x645;&#x646;&#x627;&#x637;&#x642; &#x648;&#x62A;&#x64A;&#x631;&#x629; Daniels/VDOT &#x648;&#x62D;&#x62F; Critical Speed.</value></data>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="VdotCard_Title" xml:space="preserve">
+    <value>VDOT الخاص بك</value>
+  </data>
+  <data name="VdotCard_Description" xml:space="preserve">
+    <value>رائع! من سباقك المرجعي يمكننا تحديد قيمة VDOT الخاصة بك. وهذا هو أساس مناطق تدريبك الشخصية.</value>
+  </data>
+  <data name="RaceCard_Result" xml:space="preserve">
+    <value>النتيجة:</value>
+  </data>
+  <data name="RaceCard_Edit" xml:space="preserve">
+    <value>تعديل السباق</value>
+  </data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve">
+    <value>مزيد من المعلومات</value>
+  </data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve">
+    <value>الوتيرة السهلة (E-Pace)</value>
+  </data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve">
+    <value>وتيرة الجري السهل لديك. اركض بهذه الوتيرة للاستشفاء أو التدريب السهل. تبني التحمل الهوائي وتساعد التعافي.</value>
+  </data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve">
+    <value>وتيرة الماراثون (M-Pace)</value>
+  </data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve">
+    <value>وتيرة الماراثون لديك. التدريب في هذه المنطقة يحسن قدرتك على الحفاظ على وتيرة ثابتة لمسافات طويلة.</value>
+  </data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve">
+    <value>وتيرة العتبة (T-Pace)</value>
+  </data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve">
+    <value>وتيرة العتبة لديك. التدريب في هذه المنطقة يحسن عتبة اللاكتات ويساعدك على الجري أسرع دون تراكم الكثير من حمض اللاكتيك.</value>
+  </data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve">
+    <value>وتيرة الفواصل (I-Pace)</value>
+  </data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve">
+    <value>وتيرة الفواصل لديك. الجهود القصيرة والمكثفة في هذه المنطقة تحسن الحد الأقصى لاستهلاك الأكسجين (VO2max).</value>
+  </data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve">
+    <value>وتيرة التكرار (R-Pace)</value>
+  </data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve">
+    <value>وتيرة التكرار لديك. الجريات القصيرة جدًا والسريعة بهذه الوتيرة تحسن اقتصاد الجري والسرعة.</value>
+  </data>
+  <data name="AddRaceDialog_Title" xml:space="preserve">
+    <value>سباق جديد</value>
+  </data>
+  <data name="AddRaceDialog_Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve">
+    <value>المسافة</value>
+  </data>
+  <data name="AddRaceDialog_Time" xml:space="preserve">
+    <value>وقت السباق</value>
+  </data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve">
+    <value>hh:mm:ss</value>
+  </data>
+  <data name="AddRaceDialog_Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve">
+    <value>تنبيه</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve">
+    <value>يرجى التأكد من أن وقت السباق بالتنسيق الصحيح (hh:mm:ss).</value>
+  </data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve">
+    <value>حسنًا</value>
+  </data>
+  <data name="PaceComparison_Zone" xml:space="preserve">
+    <value>المنطقة</value>
+  </data>
+  <data name="PaceComparison_Daniels" xml:space="preserve">
+    <value>Daniels</value>
+  </data>
+  <data name="PaceComparison_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve">
+    <value>لماذا التدريب الموجه بالوتيرة؟</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
+    <value>يعتمد PaceLetics اساسا على الوتيرة لضبط مناطق التدريب، لان سرعة الجري هي ابسط مؤشر متاح للحمل البيوميكانيكي الخارجي. المشكلة الاساسية ليست الانجراف القلبي بحد ذاته، بل الفجوة بين التكيف الفسيولوجي السريع والتكيف العضلي الهيكلي الابطأ: قد يشعر المبتدئ بتحسن لياقته خلال اسابيع، بينما تحتاج الاوتار والعظام والمفاصل وبنى العضلات والاوتار الى تحميل اكثر تدرجا. اذا تم توجيه التدريب فقط بمعدل القلب او مناطق عامة، فمن السهل التقليل من هذه الجرعة الميكانيكية. الوتيرة تعطي هدفا خارجيا ثابتا لكمية الجري القوي المتكرر، بينما يبقى معدل القلب مفيدا كاشارة مكملة للحمل الداخلي والتعافي. فرضيتنا العملية هي أن التدريب الموجه بمعدل القلب قد يكون مفيدا للرياضيين الذين تدربوا بانتظام لسنوات وأصبح جهازهم العضلي الهيكلي قويا. أما لدى الغالبية في سنوات التدريب الأولى فقد ينقل التركيز أكثر من اللازم إلى الجهد القلبي الوعائي ويبعده عن التدرج في الحمل الميكانيكي، ما قد يكون ضارا على المدى الطويل. لذلك يجب ان يكون النموذج بسيطا، قليل الاعتماد على المعدات، ومتسقا لعدة اسابيع. كما يجب ان يقبل مدخلات اداء مختلفة، ويدعم توقعات السباقات، ويترجم الى مجالات مثل Easy وMarathon وThreshold وInterval وRepetition. الوتيرة هي اللغة المشتركة الابسط: قابلة للقياس والمقارنة والتطبيق المباشر.</value>
+  </data>
+  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
+    <value>رسم مفاهيمي يقارن ازمنة تكيف الجهاز العصبي والقلب والدورة الدموية والعضلات الهيكلية والاوتار والعظام.</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve">
+    <value>Daniels/VDOT</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve">
+    <value>نموذج Daniels/VDOT يعود إلى عمل Jack Daniels و Jimmy Gilbert المنشور عام 1979 بعنوان Oxygen Power: Performance Tables for Distance Runners. قيمة VDOT ليست VO2max مقاسة مباشرة، بل VO2max فعالة أو شبه فسيولوجية مستنتجة من أداء الركض الفعلي. يتم تحويل نتيجة السباق إلى مؤشر واحد عبر السرعة، وكلفة الأكسجين للركض، ونسبة VO2max القابلة للاستمرار لتلك المدة. لذلك يجمع النموذج بين القدرة الهوائية، واقتصاد الركض، وتنفيذ السباق. يكون أدق عندما تكون المدخلات حديثة، قصوى، وممثلة لملف الرياضي.</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Title" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Text" xml:space="preserve">
+    <value>Critical Speed (CS) هو التطبيق الخاص بالركض لمفهوم critical power. يصف السرعة التقاربية لعلاقة المسافة بالزمن، ويفسر فسيولوجيا كحد بين heavy و severe intensity: دون CS يكون الثبات الأيضي أكثر احتمالا، وفوقه ترتفع مؤشرات التعب حتى يلزم إيقاف الجهد أو خفض السرعة. السعة المحدودة فوق CS تمثل بـ D'. Anderson et al. (2026) يلخصون طرق قياس ونمذجة CS و D' في الركض، ويشيرون إلى أن CS حد متحقق بين مجالات الشدة. Lipkova et al. (2025) يوضحون أن اختبارات time trial و 3MT عملية عند توحيد الظروف والتحليل.</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve">
+    <value>التحويل في PaceLetics</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve">
+    <value>All calculations are performed internally with speed, because percentages on pace would be inverted. For Daniels, the entered performance is matched against the VDOT table; the nearest table value returns the classic pace table for Recovery, Easy, Marathon, Threshold, Interval, and Repetition. CS is no longer interpreted as a second Daniels table. From the running data we estimate Critical Speed and D': a single 1200 m test estimates CS conservatively as 0.84 * v1200, and a single 3 km test as 0.90 * v3k. If 1200 m and 3600 m are available, we calculate CS = (3600 - 1200) / (t3600 - t1200) and D' = 1200 - CS * t1200; with several distances we use regression. The CS system then controls intervals by budget: below CS no D' is used; above CS, the planned D' share per repetition determines target speed. Long intervals from 800 to 1600 m use smaller budgets with half recovery, while fast 200 and 400 m intervals use higher budgets with long recovery.</value>
+  </data>
+  <data name="PaceModelInfo_References_Title" xml:space="preserve">
+    <value>المراجع</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve">
+    <value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve">
+    <value> يراجع العمل بروتوكولات القياس، والنمذجة، وعلاقة CS و D' بالأداء والتدريب.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve">
+    <value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve">
+    <value> تقيم هذه المراجعة المنهجية اختبارات CS الميدانية وتبرز time trials و 3MT كطرق عملية.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve">
+    <value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve">
+    <value> تلخص المراجعة تكيفات تدريب التحمل والقوة، بما في ذلك النمط الكلاسيكي لمكاسب عصبية مبكرة تسبق تغيرات ابطأ في كتلة العضلات.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve">
+    <value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve">
+    <value> تصف هذه المراجعة اعادة التشكيل الهوائي والعضلي الناتج عن تدريب التحمل والفواصل، بما في ذلك VO2max والقدرة الميتوكوندرية.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve">
+    <value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve">
+    <value> تظهر الدراسة ان وظيفة العضلات والتنشيط العصبي يتكيفان قبل مورفولوجيا العضلات وصلابة الوتر، مما يخلق عدم توازن مؤقتا.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve">
+    <value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
+    <value> تشرح المراجعة تكيف الوتر الخاص، وبطء استجابة الاوتار، وفترات عدم التوازن بين قدرات العضلات والاوتار.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
+    <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve">
+    <value> تعرض هذه المراجعة المصغرة اصابات الجري من خلال ميكانيكا الصدمات المتكررة، وحمل الانسجة، ومشكلات علاقة الاجهاد بالتكرار في التدريب.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve">
+    <value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve">
+    <value> قاست الدراسة متغيرات GRF عند سبع سرعات جري ووجدت تغيرات وارتباطات معنوية مرتبطة بالسرعة.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Title" xml:space="preserve">
+    <value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Text" xml:space="preserve">
+    <value> تربط الدراسة بين استراتيجية الوتيرة والانجراف القلبي وانخفاض السرعة واداء الماراثون في بيانات سباقات حقيقية.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Title" xml:space="preserve">
+    <value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Text" xml:space="preserve">
+    <value> تعرض المراجعة اصابات اجهاد العظام كمشكلة حمل، حيث قد تتجاوز دورات التحميل المتكررة قدرة نسيج العظم.</value>
+  </data>
+  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve">
+    <value>مخطط لمنحنى الحمل مع مناطق وتيرة Daniels/VDOT وحد Critical Speed.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Title" xml:space="preserve">
+    <value>CS budget model</value>
+  </data>
+  <data name="CriticalSpeedBudget_Subtitle" xml:space="preserve">
+    <value>Intervals are calculated from Critical Speed and the available D' budget per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="CriticalSpeedBudget_DPrime" xml:space="preserve">
+    <value>D' budget</value>
+  </data>
+  <data name="CriticalSpeedBudget_NoDPrime" xml:space="preserve">
+    <value>D' use: 0 percent</value>
+  </data>
+  <data name="CriticalSpeedBudget_TableReference" xml:space="preserve">
+    <value>See interval suggestions below</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Title" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Description" xml:space="preserve">
+    <value>Very relaxed running clearly below CS. This zone should stay mechanically light and use no D' budget.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Title" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Description" xml:space="preserve">
+    <value>Relaxed aerobic running below Critical Speed. The pace remains controlled and budget-neutral.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Title" xml:space="preserve">
+    <value>Threshold</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Description" xml:space="preserve">
+    <value>Running just below CS. This sits at the stable boundary without deliberately emptying the finite capacity above CS.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Title" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Description" xml:space="preserve">
+    <value>800 to 1600 m above CS with half recovery. Pace is derived from a limited D' share per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Budget" xml:space="preserve">
+    <value>D' target: about 22 to 42 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Title" xml:space="preserve">
+    <value>Fast Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Description" xml:space="preserve">
+    <value>200 to 400 m fast with long recovery. Each repetition may use more D' so quality stays high.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
+    <value>D' target: about 20 to 33 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
+    <value>Long intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Subtitle" xml:space="preserve">
+    <value>800, 1000, 1200, and 1600 m with about half recovery.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Title" xml:space="preserve">
+    <value>Fast short intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Subtitle" xml:space="preserve">
+    <value>200 and 400 m with long recovery so the D' budget can mostly reconstitute between repetitions.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
 </root>

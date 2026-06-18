@@ -1,65 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="VdotCard_Title" xml:space="preserve"><value>Din VDOT</value></data>
-  <data name="VdotCard_Description" xml:space="preserve"><value>Godt! Ud fra dit referenceløb kan vi beregne din individuelle VDOT. Den danner grundlag for dine personlige træningszoner.</value></data>
-  <data name="RaceCard_Result" xml:space="preserve"><value>Resultat:</value></data>
-  <data name="RaceCard_Edit" xml:space="preserve"><value>Rediger løb</value></data>
-  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Mere info</value></data>
-  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Let tempo (E-Pace)</value></data>
-  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Dit lette løbetempo. Løb i dette tempo til restitution eller let træning. Det opbygger aerob udholdenhed og hjælper restitution.</value></data>
-  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Maratontempo (M-Pace)</value></data>
-  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Dit maratontempo. Træning i denne zone forbedrer din evne til at holde et stabilt tempo over lange distancer.</value></data>
-  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Tærskeltempo (T-Pace)</value></data>
-  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Dit tærskeltempo. Træning i denne zone forbedrer din laktattærskel og hjælper dig med at løbe hurtigere uden for meget mælkesyre.</value></data>
-  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>Intervaltempo (I-Pace)</value></data>
-  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>Dit intervaltempo. Korte, intensive indsatser i denne zone forbedrer din maksimale iltoptagelse (VO2max).</value></data>
-  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Gentagelsestempo (R-Pace)</value></data>
-  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Dit gentagelsestempo. Meget korte, hurtige løb i dette tempo forbedrer din løbeøkonomi og hastighed.</value></data>
-  <data name="AddRaceDialog_Title" xml:space="preserve"><value>Nyt løb</value></data>
-  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Navn</value></data>
-  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Distance</value></data>
-  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Løbstid</value></data>
-  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
-  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Dato</value></data>
-  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Bemærk</value></data>
-  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Kontrollér, at løbstiden er i korrekt format (hh:mm:ss).</value></data>
-  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>Ok</value></data>
-  <data name="PaceComparison_Zone" xml:space="preserve"><value>Zone</value></data>
-  <data name="PaceComparison_Daniels" xml:space="preserve"><value>Daniels</value></data>
-  <data name="PaceComparison_CriticalSpeed" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve"><value>Hvorfor pace-styret træning?</value></data>
-  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve"><value>PaceLetics styrer primært træningszoner efter pace, fordi løbehastighed er den mest tilgængelige proxy for ydre biomekanisk belastning. Kerneproblemet er ikke først og fremmest kardial drift, men forskellen mellem hurtig fysiologisk adaptation og langsommere muskuloskeletal adaptation: begyndere kan føle sig i bedre form efter få uger, mens sener, knogler, led og muskel-sene-strukturer stadig kræver mere gradvis belastning. Hvis træning kun styres efter puls eller generiske zoner, kan denne mekaniske eksponering let undervurderes. Pace giver et stabilt ydre mål for, hvor meget kraftfuldt løb der gentages, mens puls fortsat er nyttig som supplerende signal for intern belastning og restitution. Vores arbejdshypotese er, at pulsstyret træning kan være værdifuld for atleter, der har trænet stabilt i mange år, og hvis bevægeapparat allerede er robust. For den brede gruppe i de første træningsår kan det derimod flytte fokus for stærkt mod kardiovaskulær anstrengelse og væk fra mekanisk belastningsprogression, hvilket på lang sigt kan være skadeligt. Modellen skal derfor være enkel, kræve lidt udstyr og være konsistent over flere uger. Den skal acceptere forskellige inputpræstationer, understøtte konkurrenceprognoser og omsættes til områder som Easy, Marathon, Threshold, Interval og Repetition. Pace er det enkleste fælles sprog: målbart, sammenligneligt og direkte anvendeligt i træning.</value></data>
-  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve"><value>Konceptuelt diagram over adaptationstider for nervesystem, kredsløb, skeletmuskel, sene og knogle.</value></data>
-  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve"><value>Daniels/VDOT</value></data>
-  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve"><value>Daniels/VDOT-modellen udspringer af Jack Daniels' og Jimmy Gilberts arbejde, publiceret i 1979 som Oxygen Power: Performance Tables for Distance Runners. VDOT er ikke en direkte maalt VO2max, men en effektiv eller pseudo-VO2max udledt af faktisk loebepræstation. En konkurrencetid omsaettes til en samlet præstationsvaerdi via loebehastighed, iltomkostningen ved loeb og den andel af VO2max, der kan holdes over distancen. Modellen samler dermed aerob kapacitet, loebeoekonomi og konkurrenceudfoerelse i et praktisk indeks. Den modellerer aekvivalente præstationer og traeningspaces bedst, naar inputtet er aktuelt, maksimalt og repraesentativt for atleten. Den er svagere ved snaever specialisering, meget korte tests, varme, hoejde, trailprofiler eller daarlig pacing. Styrken er coachingmaessig konsistens: et kendt VDOT kan omsaettes til standardiserede zoner som Easy, Marathon, Threshold, Interval og Repetition.</value></data>
-  <data name="PaceModelInfo_Cs_Title" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Cs_Text" xml:space="preserve"><value>Critical Speed (CS) er den loebespecifikke variant af critical-power-konceptet. Den beskriver den asymptotiske hastighed i distance-tid-relationen og fortolkes fysiologisk som graensen mellem heavy og severe intensity: Under CS kan et metabolisk steady state oftere opretholdes; over CS stiger traethedsrelaterede markoerer gradvist, indtil indsatsen maa afbrydes eller hastigheden reduceres. Den endelige distancekapacitet over CS modelleres som D'. Anderson et al. (2026) sammenfatter maale- og modelleringsmetoder for CS og D' i loeb og vurderer CS som en valideret graense mellem intensitetsdomaener, men peger paa protokolafhaengighed og aabne spoergsmaal om D'-rekonstitution. Lipkova et al. (2025) viser i et systematisk review af felttests, at time trials og 3-minute all-out-testen er praktiske metoder for loebere, naar testbetingelser og analyse standardiseres.</value></data>
-  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve"><value>Omregning i PaceLetics</value></data>
-  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve"><value>Alle beregninger udføres internt med hastighed, fordi procenter på pace ville være omvendte. For Daniels matches den indtastede præstation mod VDOT-tabellen; den nærmeste tabelværdi returnerer Daniels PaceModel. For CS bruger vi løbedata direkte: 1200 m behandles som Repetition-anker, 3 km som Interval-anker. En enkelt 1200 m-test estimerer CS konservativt som 0,84 * v1200; en enkelt 3 km-test estimerer CS som 0,90 * v3k og sætter Interval-pace tæt på 3 km-hastigheden. Hvis 1200 m og 3600 m findes, beregner vi CS = (3600 - 1200) / (t3600 - t1200) og D&apos; = 1200 - CS * t1200. Med flere distancer estimerer vi linjen distance = D&apos; + CS * tid med regression. Easy, Marathon og Threshold forankres fortsat omkring CS. Interval bruger 3 km-ankeret, hvis det findes, ellers fallback fra CS eller 1200 m-ankeret; Repetition bruger 1200 m-ankeret, hvis det findes, ellers en begrænset ekstrapolation fra Interval. Hver hastighed konverteres til sidst tilbage til min/km.</value></data>
-  <data name="PaceModelInfo_References_Title" xml:space="preserve"><value>Kilder</value></data>
-  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve"><value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value></data>
-  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve"><value> Arbejdet gennemgaar maaleprotokoller, modelleringsmetoder, praestationsrelevans og traeningsanvendelser af CS og D' i loeb.</value></data>
-  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve"><value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value></data>
-  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve"><value> Dette systematiske review vurderer feltbaserede CS-tests for loebere og fremhaever time trials og 3MT som praktiske metoder.</value></data>
-  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve"><value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value></data>
-  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve"><value> Reviewet sammenfatter udholdenheds- og styrketilpasninger og viser mønsteret med tidlige neurale styrkegevinster før langsommere ændringer i muskelmasse.</value></data>
-  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve"><value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value></data>
-  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve"><value> Reviewet beskriver aerob og muskulær remodellering fra udholdenheds- og intervaltræning, inklusive ændringer i VO2max og mitokondriel kapacitet.</value></data>
-  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve"><value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value></data>
-  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve"><value> Studiet viser, at muskelfunktion og neural aktivering tilpasser sig tidligere end muskelmorfologi og senestivhed, hvilket skaber en midlertidig ubalance.</value></data>
-  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve"><value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value></data>
-  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve"><value> Reviewet forklarer senespecifik adaptation, langsommere senerespons og perioder med ubalance mellem muskel- og senekapacitet.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve"><value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve"><value> Mini-reviewet beskriver løbeskader gennem repetitiv impact-mekanik, vævsbelastning og træningsrelaterede stress-frekvens-problemer.</value></data>
-  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve"><value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value></data>
-  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve"><value> Studiet målte GRF-variable ved syv løbehastigheder og fandt signifikante hastighedsrelaterede ændringer og sammenhænge.</value></data>
-  <data name="PaceModelInfo_Billat_Title" xml:space="preserve"><value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value></data>
-  <data name="PaceModelInfo_Billat_Text" xml:space="preserve"><value> Studiet forbinder pacing, kardial drift, farttab og maratonpræstation i reelle løbsdata.</value></data>
-  <data name="PaceModelInfo_Warden_Title" xml:space="preserve"><value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value></data>
-  <data name="PaceModelInfo_Warden_Text" xml:space="preserve"><value> Reviewet beskriver knoglestresskader som et workload-problem, hvor gentagne belastningscyklusser kan overstige knoglevævets kapacitet.</value></data>
-  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve"><value>Diagram over en belastningskurve med Daniels/VDOT-pacezoner og Critical Speed-graensen.</value></data>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="VdotCard_Title" xml:space="preserve">
+    <value>Din VDOT</value>
+  </data>
+  <data name="VdotCard_Description" xml:space="preserve">
+    <value>Godt! Ud fra dit referenceløb kan vi beregne din individuelle VDOT. Den danner grundlag for dine personlige træningszoner.</value>
+  </data>
+  <data name="RaceCard_Result" xml:space="preserve">
+    <value>Resultat:</value>
+  </data>
+  <data name="RaceCard_Edit" xml:space="preserve">
+    <value>Rediger løb</value>
+  </data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve">
+    <value>Mere info</value>
+  </data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve">
+    <value>Let tempo (E-Pace)</value>
+  </data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve">
+    <value>Dit lette løbetempo. Løb i dette tempo til restitution eller let træning. Det opbygger aerob udholdenhed og hjælper restitution.</value>
+  </data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve">
+    <value>Maratontempo (M-Pace)</value>
+  </data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve">
+    <value>Dit maratontempo. Træning i denne zone forbedrer din evne til at holde et stabilt tempo over lange distancer.</value>
+  </data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve">
+    <value>Tærskeltempo (T-Pace)</value>
+  </data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve">
+    <value>Dit tærskeltempo. Træning i denne zone forbedrer din laktattærskel og hjælper dig med at løbe hurtigere uden for meget mælkesyre.</value>
+  </data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve">
+    <value>Intervaltempo (I-Pace)</value>
+  </data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve">
+    <value>Dit intervaltempo. Korte, intensive indsatser i denne zone forbedrer din maksimale iltoptagelse (VO2max).</value>
+  </data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve">
+    <value>Gentagelsestempo (R-Pace)</value>
+  </data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve">
+    <value>Dit gentagelsestempo. Meget korte, hurtige løb i dette tempo forbedrer din løbeøkonomi og hastighed.</value>
+  </data>
+  <data name="AddRaceDialog_Title" xml:space="preserve">
+    <value>Nyt løb</value>
+  </data>
+  <data name="AddRaceDialog_Name" xml:space="preserve">
+    <value>Navn</value>
+  </data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="AddRaceDialog_Time" xml:space="preserve">
+    <value>Løbstid</value>
+  </data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve">
+    <value>hh:mm:ss</value>
+  </data>
+  <data name="AddRaceDialog_Date" xml:space="preserve">
+    <value>Dato</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve">
+    <value>Bemærk</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve">
+    <value>Kontrollér, at løbstiden er i korrekt format (hh:mm:ss).</value>
+  </data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="PaceComparison_Zone" xml:space="preserve">
+    <value>Zone</value>
+  </data>
+  <data name="PaceComparison_Daniels" xml:space="preserve">
+    <value>Daniels</value>
+  </data>
+  <data name="PaceComparison_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve">
+    <value>Hvorfor pace-styret træning?</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
+    <value>PaceLetics styrer primært træningszoner efter pace, fordi løbehastighed er den mest tilgængelige proxy for ydre biomekanisk belastning. Kerneproblemet er ikke først og fremmest kardial drift, men forskellen mellem hurtig fysiologisk adaptation og langsommere muskuloskeletal adaptation: begyndere kan føle sig i bedre form efter få uger, mens sener, knogler, led og muskel-sene-strukturer stadig kræver mere gradvis belastning. Hvis træning kun styres efter puls eller generiske zoner, kan denne mekaniske eksponering let undervurderes. Pace giver et stabilt ydre mål for, hvor meget kraftfuldt løb der gentages, mens puls fortsat er nyttig som supplerende signal for intern belastning og restitution. Vores arbejdshypotese er, at pulsstyret træning kan være værdifuld for atleter, der har trænet stabilt i mange år, og hvis bevægeapparat allerede er robust. For den brede gruppe i de første træningsår kan det derimod flytte fokus for stærkt mod kardiovaskulær anstrengelse og væk fra mekanisk belastningsprogression, hvilket på lang sigt kan være skadeligt. Modellen skal derfor være enkel, kræve lidt udstyr og være konsistent over flere uger. Den skal acceptere forskellige inputpræstationer, understøtte konkurrenceprognoser og omsættes til områder som Easy, Marathon, Threshold, Interval og Repetition. Pace er det enkleste fælles sprog: målbart, sammenligneligt og direkte anvendeligt i træning.</value>
+  </data>
+  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
+    <value>Konceptuelt diagram over adaptationstider for nervesystem, kredsløb, skeletmuskel, sene og knogle.</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve">
+    <value>Daniels/VDOT</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve">
+    <value>Daniels/VDOT-modellen udspringer af Jack Daniels' og Jimmy Gilberts arbejde, publiceret i 1979 som Oxygen Power: Performance Tables for Distance Runners. VDOT er ikke en direkte maalt VO2max, men en effektiv eller pseudo-VO2max udledt af faktisk loebepræstation. En konkurrencetid omsaettes til en samlet præstationsvaerdi via loebehastighed, iltomkostningen ved loeb og den andel af VO2max, der kan holdes over distancen. Modellen samler dermed aerob kapacitet, loebeoekonomi og konkurrenceudfoerelse i et praktisk indeks. Den modellerer aekvivalente præstationer og traeningspaces bedst, naar inputtet er aktuelt, maksimalt og repraesentativt for atleten. Den er svagere ved snaever specialisering, meget korte tests, varme, hoejde, trailprofiler eller daarlig pacing. Styrken er coachingmaessig konsistens: et kendt VDOT kan omsaettes til standardiserede zoner som Easy, Marathon, Threshold, Interval og Repetition.</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Title" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Text" xml:space="preserve">
+    <value>Critical Speed (CS) er den loebespecifikke variant af critical-power-konceptet. Den beskriver den asymptotiske hastighed i distance-tid-relationen og fortolkes fysiologisk som graensen mellem heavy og severe intensity: Under CS kan et metabolisk steady state oftere opretholdes; over CS stiger traethedsrelaterede markoerer gradvist, indtil indsatsen maa afbrydes eller hastigheden reduceres. Den endelige distancekapacitet over CS modelleres som D'. Anderson et al. (2026) sammenfatter maale- og modelleringsmetoder for CS og D' i loeb og vurderer CS som en valideret graense mellem intensitetsdomaener, men peger paa protokolafhaengighed og aabne spoergsmaal om D'-rekonstitution. Lipkova et al. (2025) viser i et systematisk review af felttests, at time trials og 3-minute all-out-testen er praktiske metoder for loebere, naar testbetingelser og analyse standardiseres.</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve">
+    <value>Omregning i PaceLetics</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve">
+    <value>All calculations are performed internally with speed, because percentages on pace would be inverted. For Daniels, the entered performance is matched against the VDOT table; the nearest table value returns the classic pace table for Recovery, Easy, Marathon, Threshold, Interval, and Repetition. CS is no longer interpreted as a second Daniels table. From the running data we estimate Critical Speed and D': a single 1200 m test estimates CS conservatively as 0.84 * v1200, and a single 3 km test as 0.90 * v3k. If 1200 m and 3600 m are available, we calculate CS = (3600 - 1200) / (t3600 - t1200) and D' = 1200 - CS * t1200; with several distances we use regression. The CS system then controls intervals by budget: below CS no D' is used; above CS, the planned D' share per repetition determines target speed. Long intervals from 800 to 1600 m use smaller budgets with half recovery, while fast 200 and 400 m intervals use higher budgets with long recovery.</value>
+  </data>
+  <data name="PaceModelInfo_References_Title" xml:space="preserve">
+    <value>Kilder</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve">
+    <value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve">
+    <value> Arbejdet gennemgaar maaleprotokoller, modelleringsmetoder, praestationsrelevans og traeningsanvendelser af CS og D' i loeb.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve">
+    <value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve">
+    <value> Dette systematiske review vurderer feltbaserede CS-tests for loebere og fremhaever time trials og 3MT som praktiske metoder.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve">
+    <value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve">
+    <value> Reviewet sammenfatter udholdenheds- og styrketilpasninger og viser mønsteret med tidlige neurale styrkegevinster før langsommere ændringer i muskelmasse.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve">
+    <value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve">
+    <value> Reviewet beskriver aerob og muskulær remodellering fra udholdenheds- og intervaltræning, inklusive ændringer i VO2max og mitokondriel kapacitet.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve">
+    <value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve">
+    <value> Studiet viser, at muskelfunktion og neural aktivering tilpasser sig tidligere end muskelmorfologi og senestivhed, hvilket skaber en midlertidig ubalance.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve">
+    <value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
+    <value> Reviewet forklarer senespecifik adaptation, langsommere senerespons og perioder med ubalance mellem muskel- og senekapacitet.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
+    <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve">
+    <value> Mini-reviewet beskriver løbeskader gennem repetitiv impact-mekanik, vævsbelastning og træningsrelaterede stress-frekvens-problemer.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve">
+    <value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve">
+    <value> Studiet målte GRF-variable ved syv løbehastigheder og fandt signifikante hastighedsrelaterede ændringer og sammenhænge.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Title" xml:space="preserve">
+    <value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Text" xml:space="preserve">
+    <value> Studiet forbinder pacing, kardial drift, farttab og maratonpræstation i reelle løbsdata.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Title" xml:space="preserve">
+    <value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Text" xml:space="preserve">
+    <value> Reviewet beskriver knoglestresskader som et workload-problem, hvor gentagne belastningscyklusser kan overstige knoglevævets kapacitet.</value>
+  </data>
+  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve">
+    <value>Diagram over en belastningskurve med Daniels/VDOT-pacezoner og Critical Speed-graensen.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Title" xml:space="preserve">
+    <value>CS budget model</value>
+  </data>
+  <data name="CriticalSpeedBudget_Subtitle" xml:space="preserve">
+    <value>Intervals are calculated from Critical Speed and the available D' budget per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="CriticalSpeedBudget_DPrime" xml:space="preserve">
+    <value>D' budget</value>
+  </data>
+  <data name="CriticalSpeedBudget_NoDPrime" xml:space="preserve">
+    <value>D' use: 0 percent</value>
+  </data>
+  <data name="CriticalSpeedBudget_TableReference" xml:space="preserve">
+    <value>See interval suggestions below</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Title" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Description" xml:space="preserve">
+    <value>Very relaxed running clearly below CS. This zone should stay mechanically light and use no D' budget.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Title" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Description" xml:space="preserve">
+    <value>Relaxed aerobic running below Critical Speed. The pace remains controlled and budget-neutral.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Title" xml:space="preserve">
+    <value>Threshold</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Description" xml:space="preserve">
+    <value>Running just below CS. This sits at the stable boundary without deliberately emptying the finite capacity above CS.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Title" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Description" xml:space="preserve">
+    <value>800 to 1600 m above CS with half recovery. Pace is derived from a limited D' share per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Budget" xml:space="preserve">
+    <value>D' target: about 22 to 42 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Title" xml:space="preserve">
+    <value>Fast Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Description" xml:space="preserve">
+    <value>200 to 400 m fast with long recovery. Each repetition may use more D' so quality stays high.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
+    <value>D' target: about 20 to 33 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
+    <value>Long intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Subtitle" xml:space="preserve">
+    <value>800, 1000, 1200, and 1600 m with about half recovery.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Title" xml:space="preserve">
+    <value>Fast short intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Subtitle" xml:space="preserve">
+    <value>200 and 400 m with long recovery so the D' budget can mostly reconstitute between repetitions.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
 </root>

@@ -1,65 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="VdotCard_Title" xml:space="preserve"><value>Ваш VDOT</value></data>
-  <data name="VdotCard_Description" xml:space="preserve"><value>Отлично! По контрольному забегу мы можем определить ваш индивидуальный VDOT. Это основа ваших личных тренировочных зон.</value></data>
-  <data name="RaceCard_Result" xml:space="preserve"><value>Результат:</value></data>
-  <data name="RaceCard_Edit" xml:space="preserve"><value>Редактировать забег</value></data>
-  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Подробнее</value></data>
-  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Легкий темп (E-Pace)</value></data>
-  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Ваш легкий беговой темп. Бегайте в этом темпе для восстановления или легкой тренировки. Он развивает аэробную выносливость и помогает восстановлению.</value></data>
-  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Марафонский темп (M-Pace)</value></data>
-  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Ваш марафонский темп. Тренировки в этой зоне улучшают способность держать ровный темп на длинных дистанциях.</value></data>
-  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Пороговый темп (T-Pace)</value></data>
-  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Ваш пороговый темп. Тренировки в этой зоне улучшают лактатный порог и помогают бежать быстрее без чрезмерного накопления молочной кислоты.</value></data>
-  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>Интервальный темп (I-Pace)</value></data>
-  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>Ваш интервальный темп. Короткие интенсивные отрезки в этой зоне улучшают максимальное потребление кислорода (VO2max).</value></data>
-  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Темп повторений (R-Pace)</value></data>
-  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Ваш темп повторений. Очень короткие быстрые отрезки в этом темпе улучшают экономичность бега и скорость.</value></data>
-  <data name="AddRaceDialog_Title" xml:space="preserve"><value>Новый забег</value></data>
-  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Имя</value></data>
-  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Дистанция</value></data>
-  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Время забега</value></data>
-  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
-  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Дата</value></data>
-  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Внимание</value></data>
-  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Проверьте, что время забега указано в правильном формате (hh:mm:ss).</value></data>
-  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>ОК</value></data>
-  <data name="PaceComparison_Zone" xml:space="preserve"><value>&#x417;&#x43E;&#x43D;&#x430;</value></data>
-  <data name="PaceComparison_Daniels" xml:space="preserve"><value>Daniels</value></data>
-  <data name="PaceComparison_CriticalSpeed" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve"><value>Зачем тренироваться по темпу?</value></data>
-  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve"><value>PaceLetics в первую очередь задает зоны по темпу, потому что скорость бега является самым доступным показателем внешней биомеханической нагрузки. Главная проблема не столько в кардиоваскулярном дрейфе, сколько в различной скорости адаптации: новички могут почувствовать улучшение выносливости уже через несколько недель, тогда как сухожилия, кости, суставы и мышечно-сухожильные структуры требуют более постепенной нагрузки. Если тренировка управляется только пульсом или общими зонами, эту механическую экспозицию легко недооценить. Темп дает стабильную внешнюю цель для объема повторяемого силового бега, а пульс остается полезным дополнительным сигналом внутренней нагрузки и восстановления. Наша рабочая гипотеза такова: тренировки по пульсу могут быть полезны для спортсменов, которые много лет тренируются стабильно и уже имеют прочную опорно-двигательную базу. Но для большинства людей в первые годы тренировок такой подход может слишком сильно смещать внимание к сердечно-сосудистому усилию и отводить его от прогрессии механической нагрузки, что в долгосрочной перспективе может вредить. Поэтому модель должна быть простой, не требовать специального оборудования и давать согласованные значения на протяжении недель. Она должна принимать разные входные результаты, поддерживать прогнозы соревнований и переводиться в зоны Easy, Marathon, Threshold, Interval и Repetition. Темп — самый простой общий язык: измеримый, сопоставимый и сразу применимый в тренировке.</value></data>
-  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve"><value>Концептуальная диаграмма, сравнивающая сроки адаптации нервной системы, сердечно-сосудистой системы, скелетных мышц, сухожилий и костей.</value></data>
-  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve"><value>Daniels/VDOT</value></data>
-  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve"><value>&#x41C;&#x43E;&#x434;&#x435;&#x43B;&#x44C; Daniels/VDOT &#x432;&#x43E;&#x441;&#x445;&#x43E;&#x434;&#x438;&#x442; &#x43A; &#x440;&#x430;&#x431;&#x43E;&#x442;&#x435; &#x414;&#x436;&#x435;&#x43A;&#x430; &#x414;&#x44D;&#x43D;&#x438;&#x435;&#x43B;&#x441;&#x430; &#x438; &#x414;&#x436;&#x438;&#x43C;&#x43C;&#x438; &#x413;&#x438;&#x43B;&#x431;&#x435;&#x440;&#x442;&#x430;, &#x43E;&#x43F;&#x443;&#x431;&#x43B;&#x438;&#x43A;&#x43E;&#x432;&#x430;&#x43D;&#x43D;&#x43E;&#x439; &#x432; 1979 &#x433;&#x43E;&#x434;&#x443; &#x43A;&#x430;&#x43A; Oxygen Power: Performance Tables for Distance Runners. VDOT - &#x44D;&#x442;&#x43E; &#x43D;&#x435; &#x43F;&#x440;&#x44F;&#x43C;&#x43E; &#x438;&#x437;&#x43C;&#x435;&#x440;&#x435;&#x43D;&#x43D;&#x430;&#x44F; VO2max, &#x430; &#x44D;&#x444;&#x444;&#x435;&#x43A;&#x442;&#x438;&#x432;&#x43D;&#x430;&#x44F; &#x438;&#x43B;&#x438; pseudo-VO2max, &#x432;&#x44B;&#x432;&#x435;&#x434;&#x435;&#x43D;&#x43D;&#x430;&#x44F; &#x438;&#x437; &#x440;&#x435;&#x430;&#x43B;&#x44C;&#x43D;&#x43E;&#x433;&#x43E; &#x431;&#x435;&#x433;&#x43E;&#x432;&#x43E;&#x433;&#x43E; &#x440;&#x435;&#x437;&#x443;&#x43B;&#x44C;&#x442;&#x430;&#x442;&#x430;. &#x412;&#x440;&#x435;&#x43C;&#x44F; &#x433;&#x43E;&#x43D;&#x43A;&#x438; &#x43F;&#x435;&#x440;&#x435;&#x432;&#x43E;&#x434;&#x438;&#x442;&#x441;&#x44F; &#x432; &#x435;&#x434;&#x438;&#x43D;&#x44B;&#x439; &#x43F;&#x43E;&#x43A;&#x430;&#x437;&#x430;&#x442;&#x435;&#x43B;&#x44C; &#x447;&#x435;&#x440;&#x435;&#x437; &#x441;&#x43A;&#x43E;&#x440;&#x43E;&#x441;&#x442;&#x44C;, &#x43A;&#x438;&#x441;&#x43B;&#x43E;&#x440;&#x43E;&#x434;&#x43D;&#x443;&#x44E; &#x441;&#x442;&#x43E;&#x438;&#x43C;&#x43E;&#x441;&#x442;&#x44C; &#x431;&#x435;&#x433;&#x430; &#x438; &#x434;&#x43E;&#x43B;&#x44E; VO2max, &#x443;&#x434;&#x435;&#x440;&#x436;&#x438;&#x432;&#x430;&#x435;&#x43C;&#x443;&#x44E; &#x43D;&#x430; &#x434;&#x430;&#x43D;&#x43D;&#x43E;&#x439; &#x434;&#x43B;&#x438;&#x442;&#x435;&#x43B;&#x44C;&#x43D;&#x43E;&#x441;&#x442;&#x438;. &#x41C;&#x43E;&#x434;&#x435;&#x43B;&#x44C; &#x43E;&#x431;&#x44A;&#x435;&#x434;&#x438;&#x43D;&#x44F;&#x435;&#x442; &#x430;&#x44D;&#x440;&#x43E;&#x431;&#x43D;&#x443;&#x44E; &#x43C;&#x43E;&#x449;&#x43D;&#x43E;&#x441;&#x442;&#x44C;, &#x44D;&#x43A;&#x43E;&#x43D;&#x43E;&#x43C;&#x438;&#x447;&#x43D;&#x43E;&#x441;&#x442;&#x44C; &#x431;&#x435;&#x433;&#x430; &#x438; &#x43A;&#x430;&#x447;&#x435;&#x441;&#x442;&#x432;&#x43E; &#x438;&#x441;&#x43F;&#x43E;&#x43B;&#x43D;&#x435;&#x43D;&#x438;&#x44F;. &#x41E;&#x43D;&#x430; &#x43D;&#x430;&#x434;&#x435;&#x436;&#x43D;&#x435;&#x435; &#x43F;&#x440;&#x438; &#x441;&#x432;&#x435;&#x436;&#x435;&#x43C;, &#x43C;&#x430;&#x43A;&#x441;&#x438;&#x43C;&#x430;&#x43B;&#x44C;&#x43D;&#x43E;&#x43C; &#x438; &#x440;&#x435;&#x43F;&#x440;&#x435;&#x437;&#x435;&#x43D;&#x442;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x43E;&#x43C; &#x440;&#x435;&#x437;&#x443;&#x43B;&#x44C;&#x442;&#x430;&#x442;&#x435;, &#x43D;&#x43E; &#x441;&#x43B;&#x430;&#x431;&#x435;&#x435; &#x43F;&#x440;&#x438; &#x443;&#x437;&#x43A;&#x43E;&#x439; &#x441;&#x43F;&#x435;&#x446;&#x438;&#x430;&#x43B;&#x438;&#x437;&#x430;&#x446;&#x438;&#x438;, &#x436;&#x430;&#x440;&#x435;, &#x432;&#x44B;&#x441;&#x43E;&#x442;&#x435;, &#x442;&#x440;&#x435;&#x439;&#x43B;&#x435; &#x438;&#x43B;&#x438; &#x43F;&#x43B;&#x43E;&#x445;&#x43E;&#x43C; &#x43F;&#x435;&#x439;&#x441;&#x438;&#x43D;&#x433;&#x435;.</value></data>
-  <data name="PaceModelInfo_Cs_Title" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Cs_Text" xml:space="preserve"><value>Critical Speed (CS) - &#x431;&#x435;&#x433;&#x43E;&#x432;&#x43E;&#x439; &#x432;&#x430;&#x440;&#x438;&#x430;&#x43D;&#x442; &#x43A;&#x43E;&#x43D;&#x446;&#x435;&#x43F;&#x446;&#x438;&#x438; critical power. &#x41E;&#x43D; &#x43E;&#x43F;&#x438;&#x441;&#x44B;&#x432;&#x430;&#x435;&#x442; &#x430;&#x441;&#x438;&#x43C;&#x43F;&#x442;&#x43E;&#x442;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x443;&#x44E; &#x441;&#x43A;&#x43E;&#x440;&#x43E;&#x441;&#x442;&#x44C; &#x441;&#x432;&#x44F;&#x437;&#x438; &#x434;&#x438;&#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x438; &#x438; &#x432;&#x440;&#x435;&#x43C;&#x435;&#x43D;&#x438; &#x438; &#x444;&#x438;&#x437;&#x438;&#x43E;&#x43B;&#x43E;&#x433;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x438; &#x442;&#x440;&#x430;&#x43A;&#x442;&#x443;&#x435;&#x442;&#x441;&#x44F; &#x43A;&#x430;&#x43A; &#x433;&#x440;&#x430;&#x43D;&#x438;&#x446;&#x430; &#x43C;&#x435;&#x436;&#x434;&#x443; heavy &#x438; severe intensity. &#x41D;&#x438;&#x436;&#x435; CS &#x431;&#x43E;&#x43B;&#x435;&#x435; &#x432;&#x435;&#x440;&#x43E;&#x44F;&#x442;&#x43D;&#x43E; &#x43C;&#x435;&#x442;&#x430;&#x431;&#x43E;&#x43B;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x43E;&#x435; &#x440;&#x430;&#x432;&#x43D;&#x43E;&#x432;&#x435;&#x441;&#x438;&#x435;; &#x432;&#x44B;&#x448;&#x435; CS &#x43C;&#x430;&#x440;&#x43A;&#x435;&#x440;&#x44B; &#x443;&#x442;&#x43E;&#x43C;&#x43B;&#x435;&#x43D;&#x438;&#x44F; &#x440;&#x430;&#x441;&#x442;&#x443;&#x442;, &#x43F;&#x43E;&#x43A;&#x430; &#x441;&#x43A;&#x43E;&#x440;&#x43E;&#x441;&#x442;&#x44C; &#x43D;&#x435; &#x43F;&#x440;&#x438;&#x445;&#x43E;&#x434;&#x438;&#x442;&#x441;&#x44F; &#x441;&#x43D;&#x438;&#x437;&#x438;&#x442;&#x44C;. &#x41A;&#x43E;&#x43D;&#x435;&#x447;&#x43D;&#x430;&#x44F; &#x434;&#x438;&#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x43E;&#x43D;&#x43D;&#x430;&#x44F; &#x435;&#x43C;&#x43A;&#x43E;&#x441;&#x442;&#x44C; &#x432;&#x44B;&#x448;&#x435; CS &#x43C;&#x43E;&#x434;&#x435;&#x43B;&#x438;&#x440;&#x443;&#x435;&#x442;&#x441;&#x44F; &#x43A;&#x430;&#x43A; D'. Anderson et al. (2026) &#x43E;&#x431;&#x43E;&#x431;&#x449;&#x430;&#x44E;&#x442; &#x43C;&#x435;&#x442;&#x43E;&#x434;&#x44B; &#x438;&#x437;&#x43C;&#x435;&#x440;&#x435;&#x43D;&#x438;&#x44F; &#x438; &#x43C;&#x43E;&#x434;&#x435;&#x43B;&#x438;&#x440;&#x43E;&#x432;&#x430;&#x43D;&#x438;&#x44F; CS/D' &#x432; &#x431;&#x435;&#x433;&#x435; &#x438; &#x43F;&#x43E;&#x434;&#x447;&#x435;&#x440;&#x43A;&#x438;&#x432;&#x430;&#x44E;&#x442; &#x437;&#x430;&#x432;&#x438;&#x441;&#x438;&#x43C;&#x43E;&#x441;&#x442;&#x44C; &#x43E;&#x442; &#x43F;&#x440;&#x43E;&#x442;&#x43E;&#x43A;&#x43E;&#x43B;&#x430;. Lipkova et al. (2025) &#x43F;&#x43E;&#x43A;&#x430;&#x437;&#x44B;&#x432;&#x430;&#x44E;&#x442;, &#x447;&#x442;&#x43E; time trials &#x438; 3MT &#x43F;&#x440;&#x430;&#x43A;&#x442;&#x438;&#x447;&#x43D;&#x44B; &#x43F;&#x440;&#x438; &#x441;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x442;&#x43D;&#x44B;&#x445; &#x443;&#x441;&#x43B;&#x43E;&#x432;&#x438;&#x44F;&#x445;.</value></data>
-  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve"><value>&#x41F;&#x435;&#x440;&#x435;&#x441;&#x447;&#x435;&#x442; &#x432; PaceLetics</value></data>
-  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve"><value>Все расчеты внутри выполняются через скорость, потому что проценты от темпа были бы инвертированы. Для Daniels введенный результат сопоставляется с таблицей VDOT; ближайшее значение возвращает Daniels PaceModel. Для CS мы используем беговые данные напрямую: 1200 м рассматривается как якорь Repetition, 3 км как якорь Interval. Одиночный тест 1200 м консервативно оценивает CS как 0,84 * v1200; одиночный тест 3 км оценивает CS как 0,90 * v3k и ставит Interval pace близко к скорости 3 км. Если есть 1200 м и 3600 м, мы рассчитываем CS = (3600 - 1200) / (t3600 - t1200) и D&apos; = 1200 - CS * t1200. При нескольких дистанциях оцениваем прямую distance = D&apos; + CS * time регрессией. Easy, Marathon и Threshold остаются привязанными к CS. Interval использует якорь 3 км, если он есть, иначе fallback от CS или 1200 м; Repetition использует якорь 1200 м, если он есть, иначе ограниченную экстраполяцию от Interval. Затем каждая скорость переводится обратно в min/km.</value></data>
-  <data name="PaceModelInfo_References_Title" xml:space="preserve"><value>&#x418;&#x441;&#x442;&#x43E;&#x447;&#x43D;&#x438;&#x43A;&#x438;</value></data>
-  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve"><value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value></data>
-  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve"><value> &#x420;&#x430;&#x431;&#x43E;&#x442;&#x430; &#x43E;&#x431;&#x43E;&#x431;&#x449;&#x430;&#x435;&#x442; &#x43F;&#x440;&#x43E;&#x442;&#x43E;&#x43A;&#x43E;&#x43B;&#x44B; &#x438;&#x437;&#x43C;&#x435;&#x440;&#x435;&#x43D;&#x438;&#x44F;, &#x43C;&#x43E;&#x434;&#x435;&#x43B;&#x438;&#x440;&#x43E;&#x432;&#x430;&#x43D;&#x438;&#x435;, &#x441;&#x432;&#x44F;&#x437;&#x44C; &#x441; &#x440;&#x435;&#x437;&#x443;&#x43B;&#x44C;&#x442;&#x430;&#x442;&#x43E;&#x43C; &#x438; &#x442;&#x440;&#x435;&#x43D;&#x438;&#x440;&#x43E;&#x432;&#x43E;&#x447;&#x43D;&#x44B;&#x435; &#x43F;&#x440;&#x438;&#x43C;&#x435;&#x43D;&#x435;&#x43D;&#x438;&#x44F; CS &#x438; D'.</value></data>
-  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve"><value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value></data>
-  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve"><value> &#x421;&#x438;&#x441;&#x442;&#x435;&#x43C;&#x430;&#x442;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x438;&#x439; &#x43E;&#x431;&#x437;&#x43E;&#x440; &#x43E;&#x446;&#x435;&#x43D;&#x438;&#x432;&#x430;&#x435;&#x442; &#x43F;&#x43E;&#x43B;&#x435;&#x432;&#x44B;&#x435; CS-&#x442;&#x435;&#x441;&#x442;&#x44B; &#x438; &#x432;&#x44B;&#x434;&#x435;&#x43B;&#x44F;&#x435;&#x442; time trials &#x438; 3MT &#x43A;&#x430;&#x43A; &#x43F;&#x440;&#x430;&#x43A;&#x442;&#x438;&#x447;&#x43D;&#x44B;&#x435; &#x43C;&#x435;&#x442;&#x43E;&#x434;&#x44B;.</value></data>
-  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve"><value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value></data>
-  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve"><value> Обзор суммирует адаптации к тренировкам выносливости и силы, включая ранний нейронный прирост силы перед более медленными изменениями мышечной массы.</value></data>
-  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve"><value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value></data>
-  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve"><value> Этот обзор описывает аэробное и мышечное ремоделирование при интервальных и выносливостных тренировках, включая VO2max и митохондриальную емкость.</value></data>
-  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve"><value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value></data>
-  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve"><value> Исследование показывает, что мышечная функция и нейронная активация адаптируются раньше, чем морфология мышцы и жесткость сухожилия, создавая временный дисбаланс.</value></data>
-  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve"><value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value></data>
-  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve"><value> Обзор объясняет специфическую адаптацию сухожилий, более медленные ответы сухожильной ткани и периоды дисбаланса мышечно-сухожильной емкости.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve"><value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve"><value> Этот мини-обзор рассматривает беговые травмы через повторяющуюся ударную механику, тканевую нагрузку и тренировочные проблемы стресс-частоты.</value></data>
-  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve"><value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value></data>
-  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve"><value> Исследование измеряло параметры GRF на семи скоростях бега и выявило значимые изменения и корреляции, связанные со скоростью.</value></data>
-  <data name="PaceModelInfo_Billat_Title" xml:space="preserve"><value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value></data>
-  <data name="PaceModelInfo_Billat_Text" xml:space="preserve"><value> Исследование связывает пейсинг, кардиальный дрейф, снижение скорости и марафонский результат на реальных данных гонок.</value></data>
-  <data name="PaceModelInfo_Warden_Title" xml:space="preserve"><value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value></data>
-  <data name="PaceModelInfo_Warden_Text" xml:space="preserve"><value> Обзор рассматривает костные стрессовые травмы как проблему нагрузки, когда повторные циклы превышают способность костной ткани сопротивляться им.</value></data>
-  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve"><value>&#x414;&#x438;&#x430;&#x433;&#x440;&#x430;&#x43C;&#x43C;&#x430; &#x43A;&#x440;&#x438;&#x432;&#x43E;&#x439; &#x43D;&#x430;&#x433;&#x440;&#x443;&#x437;&#x43A;&#x438; &#x441; &#x437;&#x43E;&#x43D;&#x430;&#x43C;&#x438; Daniels/VDOT &#x438; &#x433;&#x440;&#x430;&#x43D;&#x438;&#x446;&#x435;&#x439; Critical Speed.</value></data>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="VdotCard_Title" xml:space="preserve">
+    <value>Ваш VDOT</value>
+  </data>
+  <data name="VdotCard_Description" xml:space="preserve">
+    <value>Отлично! По контрольному забегу мы можем определить ваш индивидуальный VDOT. Это основа ваших личных тренировочных зон.</value>
+  </data>
+  <data name="RaceCard_Result" xml:space="preserve">
+    <value>Результат:</value>
+  </data>
+  <data name="RaceCard_Edit" xml:space="preserve">
+    <value>Редактировать забег</value>
+  </data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve">
+    <value>Подробнее</value>
+  </data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve">
+    <value>Легкий темп (E-Pace)</value>
+  </data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve">
+    <value>Ваш легкий беговой темп. Бегайте в этом темпе для восстановления или легкой тренировки. Он развивает аэробную выносливость и помогает восстановлению.</value>
+  </data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve">
+    <value>Марафонский темп (M-Pace)</value>
+  </data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve">
+    <value>Ваш марафонский темп. Тренировки в этой зоне улучшают способность держать ровный темп на длинных дистанциях.</value>
+  </data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve">
+    <value>Пороговый темп (T-Pace)</value>
+  </data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve">
+    <value>Ваш пороговый темп. Тренировки в этой зоне улучшают лактатный порог и помогают бежать быстрее без чрезмерного накопления молочной кислоты.</value>
+  </data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve">
+    <value>Интервальный темп (I-Pace)</value>
+  </data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve">
+    <value>Ваш интервальный темп. Короткие интенсивные отрезки в этой зоне улучшают максимальное потребление кислорода (VO2max).</value>
+  </data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve">
+    <value>Темп повторений (R-Pace)</value>
+  </data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve">
+    <value>Ваш темп повторений. Очень короткие быстрые отрезки в этом темпе улучшают экономичность бега и скорость.</value>
+  </data>
+  <data name="AddRaceDialog_Title" xml:space="preserve">
+    <value>Новый забег</value>
+  </data>
+  <data name="AddRaceDialog_Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve">
+    <value>Дистанция</value>
+  </data>
+  <data name="AddRaceDialog_Time" xml:space="preserve">
+    <value>Время забега</value>
+  </data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve">
+    <value>hh:mm:ss</value>
+  </data>
+  <data name="AddRaceDialog_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve">
+    <value>Внимание</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve">
+    <value>Проверьте, что время забега указано в правильном формате (hh:mm:ss).</value>
+  </data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="PaceComparison_Zone" xml:space="preserve">
+    <value>Зона</value>
+  </data>
+  <data name="PaceComparison_Daniels" xml:space="preserve">
+    <value>Daniels</value>
+  </data>
+  <data name="PaceComparison_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve">
+    <value>Зачем тренироваться по темпу?</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
+    <value>PaceLetics в первую очередь задает зоны по темпу, потому что скорость бега является самым доступным показателем внешней биомеханической нагрузки. Главная проблема не столько в кардиоваскулярном дрейфе, сколько в различной скорости адаптации: новички могут почувствовать улучшение выносливости уже через несколько недель, тогда как сухожилия, кости, суставы и мышечно-сухожильные структуры требуют более постепенной нагрузки. Если тренировка управляется только пульсом или общими зонами, эту механическую экспозицию легко недооценить. Темп дает стабильную внешнюю цель для объема повторяемого силового бега, а пульс остается полезным дополнительным сигналом внутренней нагрузки и восстановления. Наша рабочая гипотеза такова: тренировки по пульсу могут быть полезны для спортсменов, которые много лет тренируются стабильно и уже имеют прочную опорно-двигательную базу. Но для большинства людей в первые годы тренировок такой подход может слишком сильно смещать внимание к сердечно-сосудистому усилию и отводить его от прогрессии механической нагрузки, что в долгосрочной перспективе может вредить. Поэтому модель должна быть простой, не требовать специального оборудования и давать согласованные значения на протяжении недель. Она должна принимать разные входные результаты, поддерживать прогнозы соревнований и переводиться в зоны Easy, Marathon, Threshold, Interval и Repetition. Темп — самый простой общий язык: измеримый, сопоставимый и сразу применимый в тренировке.</value>
+  </data>
+  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
+    <value>Концептуальная диаграмма, сравнивающая сроки адаптации нервной системы, сердечно-сосудистой системы, скелетных мышц, сухожилий и костей.</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve">
+    <value>Daniels/VDOT</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve">
+    <value>Модель Daniels/VDOT восходит к работе Джека Дэниелса и Джимми Гилберта, опубликованной в 1979 году как Oxygen Power: Performance Tables for Distance Runners. VDOT - это не прямо измеренная VO2max, а эффективная или pseudo-VO2max, выведенная из реального бегового результата. Время гонки переводится в единый показатель через скорость, кислородную стоимость бега и долю VO2max, удерживаемую на данной длительности. Модель объединяет аэробную мощность, экономичность бега и качество исполнения. Она надежнее при свежем, максимальном и репрезентативном результате, но слабее при узкой специализации, жаре, высоте, трейле или плохом пейсинге.</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Title" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Text" xml:space="preserve">
+    <value>Critical Speed (CS) - беговой вариант концепции critical power. Он описывает асимптотическую скорость связи дистанции и времени и физиологически трактуется как граница между heavy и severe intensity. Ниже CS более вероятно метаболическое равновесие; выше CS маркеры утомления растут, пока скорость не приходится снизить. Конечная дистанционная емкость выше CS моделируется как D'. Anderson et al. (2026) обобщают методы измерения и моделирования CS/D' в беге и подчеркивают зависимость от протокола. Lipkova et al. (2025) показывают, что time trials и 3MT практичны при стандартных условиях.</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve">
+    <value>Пересчет в PaceLetics</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve">
+    <value>All calculations are performed internally with speed, because percentages on pace would be inverted. For Daniels, the entered performance is matched against the VDOT table; the nearest table value returns the classic pace table for Recovery, Easy, Marathon, Threshold, Interval, and Repetition. CS is no longer interpreted as a second Daniels table. From the running data we estimate Critical Speed and D': a single 1200 m test estimates CS conservatively as 0.84 * v1200, and a single 3 km test as 0.90 * v3k. If 1200 m and 3600 m are available, we calculate CS = (3600 - 1200) / (t3600 - t1200) and D' = 1200 - CS * t1200; with several distances we use regression. The CS system then controls intervals by budget: below CS no D' is used; above CS, the planned D' share per repetition determines target speed. Long intervals from 800 to 1600 m use smaller budgets with half recovery, while fast 200 and 400 m intervals use higher budgets with long recovery.</value>
+  </data>
+  <data name="PaceModelInfo_References_Title" xml:space="preserve">
+    <value>Источники</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve">
+    <value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve">
+    <value> Работа обобщает протоколы измерения, моделирование, связь с результатом и тренировочные применения CS и D'.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve">
+    <value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve">
+    <value> Систематический обзор оценивает полевые CS-тесты и выделяет time trials и 3MT как практичные методы.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve">
+    <value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve">
+    <value> Обзор суммирует адаптации к тренировкам выносливости и силы, включая ранний нейронный прирост силы перед более медленными изменениями мышечной массы.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve">
+    <value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve">
+    <value> Этот обзор описывает аэробное и мышечное ремоделирование при интервальных и выносливостных тренировках, включая VO2max и митохондриальную емкость.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve">
+    <value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve">
+    <value> Исследование показывает, что мышечная функция и нейронная активация адаптируются раньше, чем морфология мышцы и жесткость сухожилия, создавая временный дисбаланс.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve">
+    <value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
+    <value> Обзор объясняет специфическую адаптацию сухожилий, более медленные ответы сухожильной ткани и периоды дисбаланса мышечно-сухожильной емкости.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
+    <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve">
+    <value> Этот мини-обзор рассматривает беговые травмы через повторяющуюся ударную механику, тканевую нагрузку и тренировочные проблемы стресс-частоты.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve">
+    <value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve">
+    <value> Исследование измеряло параметры GRF на семи скоростях бега и выявило значимые изменения и корреляции, связанные со скоростью.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Title" xml:space="preserve">
+    <value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Text" xml:space="preserve">
+    <value> Исследование связывает пейсинг, кардиальный дрейф, снижение скорости и марафонский результат на реальных данных гонок.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Title" xml:space="preserve">
+    <value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Text" xml:space="preserve">
+    <value> Обзор рассматривает костные стрессовые травмы как проблему нагрузки, когда повторные циклы превышают способность костной ткани сопротивляться им.</value>
+  </data>
+  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve">
+    <value>Диаграмма кривой нагрузки с зонами Daniels/VDOT и границей Critical Speed.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Title" xml:space="preserve">
+    <value>CS budget model</value>
+  </data>
+  <data name="CriticalSpeedBudget_Subtitle" xml:space="preserve">
+    <value>Intervals are calculated from Critical Speed and the available D' budget per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="CriticalSpeedBudget_DPrime" xml:space="preserve">
+    <value>D' budget</value>
+  </data>
+  <data name="CriticalSpeedBudget_NoDPrime" xml:space="preserve">
+    <value>D' use: 0 percent</value>
+  </data>
+  <data name="CriticalSpeedBudget_TableReference" xml:space="preserve">
+    <value>See interval suggestions below</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Title" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Description" xml:space="preserve">
+    <value>Very relaxed running clearly below CS. This zone should stay mechanically light and use no D' budget.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Title" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Description" xml:space="preserve">
+    <value>Relaxed aerobic running below Critical Speed. The pace remains controlled and budget-neutral.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Title" xml:space="preserve">
+    <value>Threshold</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Description" xml:space="preserve">
+    <value>Running just below CS. This sits at the stable boundary without deliberately emptying the finite capacity above CS.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Title" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Description" xml:space="preserve">
+    <value>800 to 1600 m above CS with half recovery. Pace is derived from a limited D' share per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Budget" xml:space="preserve">
+    <value>D' target: about 22 to 42 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Title" xml:space="preserve">
+    <value>Fast Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Description" xml:space="preserve">
+    <value>200 to 400 m fast with long recovery. Each repetition may use more D' so quality stays high.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
+    <value>D' target: about 20 to 33 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
+    <value>Long intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Subtitle" xml:space="preserve">
+    <value>800, 1000, 1200, and 1600 m with about half recovery.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Title" xml:space="preserve">
+    <value>Fast short intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Subtitle" xml:space="preserve">
+    <value>200 and 400 m with long recovery so the D' budget can mostly reconstitute between repetitions.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
 </root>

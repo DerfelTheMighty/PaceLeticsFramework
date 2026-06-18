@@ -108,20 +108,30 @@
                 <MudText Typo="Typo.body2" Color="Color.Secondary">@L["PaceZonesSubtitle"]</MudText>
             </MudStack>
 
-            @if (_hasDanielsPaceModel || _hasCriticalSpeedPaceModel)
+            @if (_hasDanielsPaceModel)
             {
-                <PaceComparisonInfo DanielsLower="@_lowerPace"
-                                    DanielsUpper="@_upperPace"
-                                    HasDaniels="@_hasDanielsPaceModel"
-                                    CriticalSpeedLower="@_lowerCriticalSpeedPace"
-                                    CriticalSpeedUpper="@_upperCriticalSpeedPace"
-                                    HasCriticalSpeed="@_hasCriticalSpeedPaceModel" />
+                <PaceInfo EPaceHigh="@_upperPace.Easy"
+                          EPaceLow="@_lowerPace.Easy"
+                          MPaceHigh="@_upperPace.Marathon"
+                          MPaceLow="@_lowerPace.Marathon"
+                          TPaceHigh="@_upperPace.Threshold"
+                          TPaceLow="@_lowerPace.Threshold"
+                          IPaceHigh="@_upperPace.Intervall"
+                          IPaceLow="@_lowerPace.Intervall"
+                          RPaceHigh="@_upperPace.Repetition"
+                          RPaceLow="@_lowerPace.Repetition" />
             }
             else
             {
                 <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
                     @L["NoRaceWarning"]
                 </MudAlert>
+            }
+
+            @if (_criticalSpeed.IsValid)
+            {
+                <CriticalSpeedBudgetInfo Model="@_criticalSpeed"
+                                         Recommendations="@_criticalSpeedIntervals" />
             }
         }
         else
@@ -167,4 +177,3 @@
         };
     }
 }
-

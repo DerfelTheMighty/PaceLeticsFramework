@@ -1,65 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="VdotCard_Title" xml:space="preserve"><value>VDOT değerin</value></data>
-  <data name="VdotCard_Description" xml:space="preserve"><value>Harika! Referans yarışından bireysel VDOT değerini belirleyebiliriz. Bu, kişisel antrenman bölgelerinin temelidir.</value></data>
-  <data name="RaceCard_Result" xml:space="preserve"><value>Sonuç:</value></data>
-  <data name="RaceCard_Edit" xml:space="preserve"><value>Yarışı düzenle</value></data>
-  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>Daha fazla bilgi</value></data>
-  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>Kolay tempo (E-Pace)</value></data>
-  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>Kolay koşu tempon. Bu tempoda toparlanma veya rahat antrenman yap. Aerobik dayanıklılığı geliştirir ve toparlanmaya yardımcı olur.</value></data>
-  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>Maraton temposu (M-Pace)</value></data>
-  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>Maraton tempon. Bu bölgede antrenman uzun mesafelerde sabit tempo koruma becerini geliştirir.</value></data>
-  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>Eşik temposu (T-Pace)</value></data>
-  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>Eşik tempon. Bu bölgede antrenman laktat eşiğini geliştirir ve fazla laktik asit biriktirmeden daha hızlı koşmana yardımcı olur.</value></data>
-  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>İnterval temposu (I-Pace)</value></data>
-  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>İnterval tempon. Bu bölgede kısa ve yoğun eforlar maksimum oksijen alımını (VO2max) geliştirir.</value></data>
-  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>Tekrar temposu (R-Pace)</value></data>
-  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>Tekrar tempon. Bu tempoda çok kısa ve hızlı koşular koşu ekonomini ve hızını geliştirir.</value></data>
-  <data name="AddRaceDialog_Title" xml:space="preserve"><value>Yeni yarış</value></data>
-  <data name="AddRaceDialog_Name" xml:space="preserve"><value>Ad</value></data>
-  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>Mesafe</value></data>
-  <data name="AddRaceDialog_Time" xml:space="preserve"><value>Yarış süresi</value></data>
-  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
-  <data name="AddRaceDialog_Date" xml:space="preserve"><value>Tarih</value></data>
-  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>Dikkat</value></data>
-  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>Lütfen yarış süresinin doğru formatta olduğundan emin ol (hh:mm:ss).</value></data>
-  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>Tamam</value></data>
-  <data name="PaceComparison_Zone" xml:space="preserve"><value>B&#xF6;lge</value></data>
-  <data name="PaceComparison_Daniels" xml:space="preserve"><value>Daniels</value></data>
-  <data name="PaceComparison_CriticalSpeed" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve"><value>Neden pace odaklı antrenman?</value></data>
-  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve"><value>PaceLetics antrenman bölgelerini öncelikle pace ile yönetir, çünkü koşu hızı dış biyomekanik yükün en erişilebilir göstergesidir. Temel sorun esas olarak kardiyovasküler drift değil, hızlı fizyolojik adaptasyon ile daha yavaş kas-iskelet adaptasyonu arasındaki uyumsuzluktur: başlangıç seviyesindeki koşucular birkaç hafta içinde daha fit hissedebilir, ancak tendonlar, kemikler, eklemler ve kas-tendon yapıları tekrarlayan darbeye daha kademeli uyum ister. Antrenman yalnızca nabız veya genel zon sistemleriyle yönetilirse bu mekanik maruziyet kolayca hafife alınabilir. Pace, ne kadar kuvvetli koşunun tekrarlandığına dair stabil bir dış hedef verir; nabız ise iç yük ve toparlanma için tamamlayıcı bir sinyal olarak yararlıdır. Çalışma hipotezimiz şudur: nabızla yönlendirilen antrenman, yıllardır düzenli çalışan ve kas-iskelet sistemi zaten dayanıklı olan sporcular için değerli olabilir. Ancak ilk antrenman yıllarındaki geniş kitle için odağı mekanik yük progresyonundan çok kardiyovasküler efora kaydırabilir ve uzun vadede zararlı olabilir. Model bu yüzden basit, az ekipman gerektiren ve haftalar boyunca tutarlı olmalıdır. Farklı giriş performanslarını kabul etmeli, yarış tahminini desteklemeli ve Easy, Marathon, Threshold, Interval ve Repetition gibi alanlara çevrilebilmelidir. Pace bunun için en sade ortak dildir: ölçülebilir, karşılaştırılabilir ve antrenmanda hemen uygulanabilir.</value></data>
-  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve"><value>Sinir sistemi, kardiyovasküler sistem, iskelet kası, tendon ve kemiğin adaptasyon zamanlarını karşılaştıran kavramsal diyagram.</value></data>
-  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve"><value>Daniels/VDOT</value></data>
-  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve"><value>Daniels/VDOT modeli, Jack Daniels ve Jimmy Gilbert'in 1979'da Oxygen Power: Performance Tables for Distance Runners adiyla yayimlanan calismasina dayanir. VDOT dogrudan olculen bir VO2max degil, gercek kosu performansindan turetilen etkili ya da pseudo-VO2max degeridir. Bir yaris sonucu; kosu hizi, kosunun oksijen maliyeti ve ilgili sure boyunca surdurulebilen VO2max orani uzerinden tek bir performans degerine cevrilir. Model boylece aerobik kapasiteyi, kosu ekonomisini ve yaris uygulamasini pratik bir endekste birlestirir. Girdi guncel, maksimum ve sporcunun profilini temsil ediyorsa esdeger performanslari ve antrenman tempolarini iyi modeller. Alisilmadik uzmanlasma, cok kisa testler, sicak, yukseklik, patika profilleri veya kotu pace dagilimi durumunda zayiflar. En guclu yani antrenor pratigi icin tutarliliktir: bilinen bir VDOT, Easy, Marathon, Threshold, Interval ve Repetition gibi standart bolgelere cevrilir.</value></data>
-  <data name="PaceModelInfo_Cs_Title" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Cs_Text" xml:space="preserve"><value>Critical Speed (CS), critical power kavraminin kosuya ozgu bicimidir. Mesafe-zaman iliskisinin asimptotik hizini tanimlar ve fizyolojik olarak heavy ile severe intensity arasindaki sinir olarak yorumlanir: CS altinda metabolik denge daha olasidir; CS ustunde yorgunlukla iliskili gostergeler giderek artar ve eforun bitmesi ya da hizin azaltilmasi gerekir. CS ustundeki sonlu mesafe kapasitesi D' olarak modellenir. Anderson et al. (2026), kosuda CS ve D' icin olcum ve modelleme yontemlerini ozetler ve CS'yi siddet alanlari arasinda dogrulanmis bir sinir olarak degerlendirirken protokol bagimliligina ve D' yeniden dolumu hakkindaki acik sorulara dikkat ceker. Lipkova et al. (2025), saha testleri uzerine sistematik incelemede, test kosullari ve analiz standartlastirildiginda time trial ve 3-minute all-out testinin kosucular icin pratik oldugunu gosterir.</value></data>
-  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve"><value>PaceLetics'te donusum</value></data>
-  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve"><value>Tüm hesaplamalar içeride hız üzerinden yapılır, çünkü pace üzerindeki yüzdeler ters çalışır. Daniels için girilen performans VDOT tablosuyla eşleştirilir; en yakın tablo değeri Daniels PaceModel&apos;i verir. CS için mevcut koşu verilerini doğrudan kullanırız: 1200 m Repetition çıpası, 3 km Interval çıpası olarak ele alınır. Tek bir 1200 m testi CS&apos;yi konservatif olarak 0,84 * v1200 tahmin eder; tek bir 3 km testi CS&apos;yi 0,90 * v3k tahmin eder ve Interval pace&apos;i 3 km hızına yakın kurar. 1200 m ve 3600 m varsa CS = (3600 - 1200) / (t3600 - t1200) ve D&apos; = 1200 - CS * t1200 hesaplanır. Birden fazla mesafede distance = D&apos; + CS * time doğrusu regresyonla tahmin edilir. Easy, Marathon ve Threshold CS çevresinde kalır. Interval varsa 3 km çıpasını, yoksa CS veya 1200 m çıpasından fallback kullanır; Repetition varsa 1200 m çıpasını, yoksa Interval&apos;den sınırlı ekstrapolasyon kullanır. Her hız sonunda tekrar min/km&apos;ye çevrilir.</value></data>
-  <data name="PaceModelInfo_References_Title" xml:space="preserve"><value>Kaynaklar</value></data>
-  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve"><value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value></data>
-  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve"><value> Bu calisma kosuda CS ve D' icin olcum protokollerini, modelleme yaklasimlarini, performansla iliskisini ve antrenman uygulamalarini inceler.</value></data>
-  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve"><value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value></data>
-  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve"><value> Bu sistematik inceleme kosucular icin saha temelli CS testlerini degerlendirir ve time trial ile 3MT'yi pratik yontemler olarak one cikarir.</value></data>
-  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve"><value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value></data>
-  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve"><value> Derleme dayanıklılık ve kuvvet adaptasyonlarını özetler; erken nöral kuvvet artışlarını, daha yavaş kas kütlesi değişimlerinden önce gösterir.</value></data>
-  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve"><value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value></data>
-  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve"><value> Bu derleme dayanıklılık ve interval antrenmanın VO2max ve mitokondriyal kapasite dahil aerobik ve kas remodelling etkilerini açıklar.</value></data>
-  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve"><value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value></data>
-  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve"><value> Çalışma kas fonksiyonu ve nöral aktivasyonun kas morfolojisi ve tendon sertliğinden önce adapte olduğunu, geçici bir uyumsuzluk yarattığını gösterir.</value></data>
-  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve"><value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value></data>
-  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve"><value> Derleme tendona özgü adaptasyonu, tendonun daha yavaş yanıtlarını ve kas-tendon kapasiteleri arasındaki dengesizlik dönemlerini açıklar.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve"><value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve"><value> Bu mini-derleme koşu sakatlıklarını tekrarlayan darbe mekaniği, doku yüklenmesi ve antrenmana bağlı stres-frekans sorunları üzerinden ele alır.</value></data>
-  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve"><value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value></data>
-  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve"><value> Çalışma yedi koşu hızında GRF değişkenlerini ölçmüş ve hıza bağlı anlamlı değişimler ile korelasyonlar bulmuştur.</value></data>
-  <data name="PaceModelInfo_Billat_Title" xml:space="preserve"><value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value></data>
-  <data name="PaceModelInfo_Billat_Text" xml:space="preserve"><value> Çalışma gerçek yarış verilerinde pacing, kardiyak drift, hız düşüşü ve maraton performansını ilişkilendirir.</value></data>
-  <data name="PaceModelInfo_Warden_Title" xml:space="preserve"><value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value></data>
-  <data name="PaceModelInfo_Warden_Text" xml:space="preserve"><value> Derleme kemik stres yaralanmalarını, tekrarlanan yükleme döngülerinin kemik dokusu kapasitesini aşabildiği bir workload problemi olarak ele alır.</value></data>
-  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve"><value>Daniels/VDOT tempo bolgeleri ve Critical Speed siniri bulunan yuklenme egrisi diyagrami.</value></data>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="VdotCard_Title" xml:space="preserve">
+    <value>VDOT değerin</value>
+  </data>
+  <data name="VdotCard_Description" xml:space="preserve">
+    <value>Harika! Referans yarışından bireysel VDOT değerini belirleyebiliriz. Bu, kişisel antrenman bölgelerinin temelidir.</value>
+  </data>
+  <data name="RaceCard_Result" xml:space="preserve">
+    <value>Sonuç:</value>
+  </data>
+  <data name="RaceCard_Edit" xml:space="preserve">
+    <value>Yarışı düzenle</value>
+  </data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve">
+    <value>Daha fazla bilgi</value>
+  </data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve">
+    <value>Kolay tempo (E-Pace)</value>
+  </data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve">
+    <value>Kolay koşu tempon. Bu tempoda toparlanma veya rahat antrenman yap. Aerobik dayanıklılığı geliştirir ve toparlanmaya yardımcı olur.</value>
+  </data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve">
+    <value>Maraton temposu (M-Pace)</value>
+  </data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve">
+    <value>Maraton tempon. Bu bölgede antrenman uzun mesafelerde sabit tempo koruma becerini geliştirir.</value>
+  </data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve">
+    <value>Eşik temposu (T-Pace)</value>
+  </data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve">
+    <value>Eşik tempon. Bu bölgede antrenman laktat eşiğini geliştirir ve fazla laktik asit biriktirmeden daha hızlı koşmana yardımcı olur.</value>
+  </data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve">
+    <value>İnterval temposu (I-Pace)</value>
+  </data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve">
+    <value>İnterval tempon. Bu bölgede kısa ve yoğun eforlar maksimum oksijen alımını (VO2max) geliştirir.</value>
+  </data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve">
+    <value>Tekrar temposu (R-Pace)</value>
+  </data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve">
+    <value>Tekrar tempon. Bu tempoda çok kısa ve hızlı koşular koşu ekonomini ve hızını geliştirir.</value>
+  </data>
+  <data name="AddRaceDialog_Title" xml:space="preserve">
+    <value>Yeni yarış</value>
+  </data>
+  <data name="AddRaceDialog_Name" xml:space="preserve">
+    <value>Ad</value>
+  </data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve">
+    <value>Mesafe</value>
+  </data>
+  <data name="AddRaceDialog_Time" xml:space="preserve">
+    <value>Yarış süresi</value>
+  </data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve">
+    <value>hh:mm:ss</value>
+  </data>
+  <data name="AddRaceDialog_Date" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve">
+    <value>Lütfen yarış süresinin doğru formatta olduğundan emin ol (hh:mm:ss).</value>
+  </data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve">
+    <value>Tamam</value>
+  </data>
+  <data name="PaceComparison_Zone" xml:space="preserve">
+    <value>Bölge</value>
+  </data>
+  <data name="PaceComparison_Daniels" xml:space="preserve">
+    <value>Daniels</value>
+  </data>
+  <data name="PaceComparison_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve">
+    <value>Neden pace odaklı antrenman?</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
+    <value>PaceLetics antrenman bölgelerini öncelikle pace ile yönetir, çünkü koşu hızı dış biyomekanik yükün en erişilebilir göstergesidir. Temel sorun esas olarak kardiyovasküler drift değil, hızlı fizyolojik adaptasyon ile daha yavaş kas-iskelet adaptasyonu arasındaki uyumsuzluktur: başlangıç seviyesindeki koşucular birkaç hafta içinde daha fit hissedebilir, ancak tendonlar, kemikler, eklemler ve kas-tendon yapıları tekrarlayan darbeye daha kademeli uyum ister. Antrenman yalnızca nabız veya genel zon sistemleriyle yönetilirse bu mekanik maruziyet kolayca hafife alınabilir. Pace, ne kadar kuvvetli koşunun tekrarlandığına dair stabil bir dış hedef verir; nabız ise iç yük ve toparlanma için tamamlayıcı bir sinyal olarak yararlıdır. Çalışma hipotezimiz şudur: nabızla yönlendirilen antrenman, yıllardır düzenli çalışan ve kas-iskelet sistemi zaten dayanıklı olan sporcular için değerli olabilir. Ancak ilk antrenman yıllarındaki geniş kitle için odağı mekanik yük progresyonundan çok kardiyovasküler efora kaydırabilir ve uzun vadede zararlı olabilir. Model bu yüzden basit, az ekipman gerektiren ve haftalar boyunca tutarlı olmalıdır. Farklı giriş performanslarını kabul etmeli, yarış tahminini desteklemeli ve Easy, Marathon, Threshold, Interval ve Repetition gibi alanlara çevrilebilmelidir. Pace bunun için en sade ortak dildir: ölçülebilir, karşılaştırılabilir ve antrenmanda hemen uygulanabilir.</value>
+  </data>
+  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
+    <value>Sinir sistemi, kardiyovasküler sistem, iskelet kası, tendon ve kemiğin adaptasyon zamanlarını karşılaştıran kavramsal diyagram.</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve">
+    <value>Daniels/VDOT</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve">
+    <value>Daniels/VDOT modeli, Jack Daniels ve Jimmy Gilbert'in 1979'da Oxygen Power: Performance Tables for Distance Runners adiyla yayimlanan calismasina dayanir. VDOT dogrudan olculen bir VO2max degil, gercek kosu performansindan turetilen etkili ya da pseudo-VO2max degeridir. Bir yaris sonucu; kosu hizi, kosunun oksijen maliyeti ve ilgili sure boyunca surdurulebilen VO2max orani uzerinden tek bir performans degerine cevrilir. Model boylece aerobik kapasiteyi, kosu ekonomisini ve yaris uygulamasini pratik bir endekste birlestirir. Girdi guncel, maksimum ve sporcunun profilini temsil ediyorsa esdeger performanslari ve antrenman tempolarini iyi modeller. Alisilmadik uzmanlasma, cok kisa testler, sicak, yukseklik, patika profilleri veya kotu pace dagilimi durumunda zayiflar. En guclu yani antrenor pratigi icin tutarliliktir: bilinen bir VDOT, Easy, Marathon, Threshold, Interval ve Repetition gibi standart bolgelere cevrilir.</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Title" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Text" xml:space="preserve">
+    <value>Critical Speed (CS), critical power kavraminin kosuya ozgu bicimidir. Mesafe-zaman iliskisinin asimptotik hizini tanimlar ve fizyolojik olarak heavy ile severe intensity arasindaki sinir olarak yorumlanir: CS altinda metabolik denge daha olasidir; CS ustunde yorgunlukla iliskili gostergeler giderek artar ve eforun bitmesi ya da hizin azaltilmasi gerekir. CS ustundeki sonlu mesafe kapasitesi D' olarak modellenir. Anderson et al. (2026), kosuda CS ve D' icin olcum ve modelleme yontemlerini ozetler ve CS'yi siddet alanlari arasinda dogrulanmis bir sinir olarak degerlendirirken protokol bagimliligina ve D' yeniden dolumu hakkindaki acik sorulara dikkat ceker. Lipkova et al. (2025), saha testleri uzerine sistematik incelemede, test kosullari ve analiz standartlastirildiginda time trial ve 3-minute all-out testinin kosucular icin pratik oldugunu gosterir.</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve">
+    <value>PaceLetics'te donusum</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve">
+    <value>All calculations are performed internally with speed, because percentages on pace would be inverted. For Daniels, the entered performance is matched against the VDOT table; the nearest table value returns the classic pace table for Recovery, Easy, Marathon, Threshold, Interval, and Repetition. CS is no longer interpreted as a second Daniels table. From the running data we estimate Critical Speed and D': a single 1200 m test estimates CS conservatively as 0.84 * v1200, and a single 3 km test as 0.90 * v3k. If 1200 m and 3600 m are available, we calculate CS = (3600 - 1200) / (t3600 - t1200) and D' = 1200 - CS * t1200; with several distances we use regression. The CS system then controls intervals by budget: below CS no D' is used; above CS, the planned D' share per repetition determines target speed. Long intervals from 800 to 1600 m use smaller budgets with half recovery, while fast 200 and 400 m intervals use higher budgets with long recovery.</value>
+  </data>
+  <data name="PaceModelInfo_References_Title" xml:space="preserve">
+    <value>Kaynaklar</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve">
+    <value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve">
+    <value> Bu calisma kosuda CS ve D' icin olcum protokollerini, modelleme yaklasimlarini, performansla iliskisini ve antrenman uygulamalarini inceler.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve">
+    <value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve">
+    <value> Bu sistematik inceleme kosucular icin saha temelli CS testlerini degerlendirir ve time trial ile 3MT'yi pratik yontemler olarak one cikarir.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve">
+    <value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve">
+    <value> Derleme dayanıklılık ve kuvvet adaptasyonlarını özetler; erken nöral kuvvet artışlarını, daha yavaş kas kütlesi değişimlerinden önce gösterir.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve">
+    <value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve">
+    <value> Bu derleme dayanıklılık ve interval antrenmanın VO2max ve mitokondriyal kapasite dahil aerobik ve kas remodelling etkilerini açıklar.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve">
+    <value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve">
+    <value> Çalışma kas fonksiyonu ve nöral aktivasyonun kas morfolojisi ve tendon sertliğinden önce adapte olduğunu, geçici bir uyumsuzluk yarattığını gösterir.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve">
+    <value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
+    <value> Derleme tendona özgü adaptasyonu, tendonun daha yavaş yanıtlarını ve kas-tendon kapasiteleri arasındaki dengesizlik dönemlerini açıklar.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
+    <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve">
+    <value> Bu mini-derleme koşu sakatlıklarını tekrarlayan darbe mekaniği, doku yüklenmesi ve antrenmana bağlı stres-frekans sorunları üzerinden ele alır.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve">
+    <value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve">
+    <value> Çalışma yedi koşu hızında GRF değişkenlerini ölçmüş ve hıza bağlı anlamlı değişimler ile korelasyonlar bulmuştur.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Title" xml:space="preserve">
+    <value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Text" xml:space="preserve">
+    <value> Çalışma gerçek yarış verilerinde pacing, kardiyak drift, hız düşüşü ve maraton performansını ilişkilendirir.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Title" xml:space="preserve">
+    <value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Text" xml:space="preserve">
+    <value> Derleme kemik stres yaralanmalarını, tekrarlanan yükleme döngülerinin kemik dokusu kapasitesini aşabildiği bir workload problemi olarak ele alır.</value>
+  </data>
+  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve">
+    <value>Daniels/VDOT tempo bolgeleri ve Critical Speed siniri bulunan yuklenme egrisi diyagrami.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Title" xml:space="preserve">
+    <value>CS budget model</value>
+  </data>
+  <data name="CriticalSpeedBudget_Subtitle" xml:space="preserve">
+    <value>Intervals are calculated from Critical Speed and the available D' budget per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="CriticalSpeedBudget_DPrime" xml:space="preserve">
+    <value>D' budget</value>
+  </data>
+  <data name="CriticalSpeedBudget_NoDPrime" xml:space="preserve">
+    <value>D' use: 0 percent</value>
+  </data>
+  <data name="CriticalSpeedBudget_TableReference" xml:space="preserve">
+    <value>See interval suggestions below</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Title" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Description" xml:space="preserve">
+    <value>Very relaxed running clearly below CS. This zone should stay mechanically light and use no D' budget.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Title" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Description" xml:space="preserve">
+    <value>Relaxed aerobic running below Critical Speed. The pace remains controlled and budget-neutral.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Title" xml:space="preserve">
+    <value>Threshold</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Description" xml:space="preserve">
+    <value>Running just below CS. This sits at the stable boundary without deliberately emptying the finite capacity above CS.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Title" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Description" xml:space="preserve">
+    <value>800 to 1600 m above CS with half recovery. Pace is derived from a limited D' share per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Budget" xml:space="preserve">
+    <value>D' target: about 22 to 42 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Title" xml:space="preserve">
+    <value>Fast Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Description" xml:space="preserve">
+    <value>200 to 400 m fast with long recovery. Each repetition may use more D' so quality stays high.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
+    <value>D' target: about 20 to 33 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
+    <value>Long intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Subtitle" xml:space="preserve">
+    <value>800, 1000, 1200, and 1600 m with about half recovery.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Title" xml:space="preserve">
+    <value>Fast short intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Subtitle" xml:space="preserve">
+    <value>200 and 400 m with long recovery so the D' budget can mostly reconstitute between repetitions.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
 </root>

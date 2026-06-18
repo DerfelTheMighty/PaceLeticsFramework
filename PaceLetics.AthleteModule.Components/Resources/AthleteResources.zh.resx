@@ -1,65 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
-  <resheader name="version"><value>2.0</value></resheader>
-  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="VdotCard_Title" xml:space="preserve"><value>你的 VDOT</value></data>
-  <data name="VdotCard_Description" xml:space="preserve"><value>太好了！通过参考比赛，我们可以确定你的个人 VDOT。这是个人训练区间的基础。</value></data>
-  <data name="RaceCard_Result" xml:space="preserve"><value>结果：</value></data>
-  <data name="RaceCard_Edit" xml:space="preserve"><value>编辑比赛</value></data>
-  <data name="PaceInfo_MoreInfo" xml:space="preserve"><value>更多信息</value></data>
-  <data name="PaceInfo_EPace_Title" xml:space="preserve"><value>轻松配速 (E-Pace)</value></data>
-  <data name="PaceInfo_EPace_Description" xml:space="preserve"><value>你的轻松跑配速。以此配速进行恢复或轻松训练，可建立有氧耐力并帮助恢复。</value></data>
-  <data name="PaceInfo_MPace_Title" xml:space="preserve"><value>马拉松配速 (M-Pace)</value></data>
-  <data name="PaceInfo_MPace_Description" xml:space="preserve"><value>你的马拉松配速。在该区间训练可提升长距离保持稳定配速的能力。</value></data>
-  <data name="PaceInfo_TPace_Title" xml:space="preserve"><value>阈值配速 (T-Pace)</value></data>
-  <data name="PaceInfo_TPace_Description" xml:space="preserve"><value>你的阈值配速。该区间训练可提高乳酸阈值，帮助你在不过度堆积乳酸的情况下跑得更快。</value></data>
-  <data name="PaceInfo_IPace_Title" xml:space="preserve"><value>间歇配速 (I-Pace)</value></data>
-  <data name="PaceInfo_IPace_Description" xml:space="preserve"><value>你的间歇配速。该区间短而强的努力可提升最大摄氧量 (VO2max)。</value></data>
-  <data name="PaceInfo_RPace_Title" xml:space="preserve"><value>重复配速 (R-Pace)</value></data>
-  <data name="PaceInfo_RPace_Description" xml:space="preserve"><value>你的重复配速。以此配速进行很短的快速跑可改善跑步经济性和速度。</value></data>
-  <data name="AddRaceDialog_Title" xml:space="preserve"><value>新比赛</value></data>
-  <data name="AddRaceDialog_Name" xml:space="preserve"><value>名称</value></data>
-  <data name="AddRaceDialog_Distance" xml:space="preserve"><value>距离</value></data>
-  <data name="AddRaceDialog_Time" xml:space="preserve"><value>比赛时间</value></data>
-  <data name="AddRaceDialog_TimeHelper" xml:space="preserve"><value>hh:mm:ss</value></data>
-  <data name="AddRaceDialog_Date" xml:space="preserve"><value>日期</value></data>
-  <data name="AddRaceDialog_Warning_Title" xml:space="preserve"><value>注意</value></data>
-  <data name="AddRaceDialog_Warning_Message" xml:space="preserve"><value>请检查比赛时间格式是否正确 (hh:mm:ss)。</value></data>
-  <data name="AddRaceDialog_Ok" xml:space="preserve"><value>确定</value></data>
-  <data name="PaceComparison_Zone" xml:space="preserve"><value>&#x533A;&#x95F4;</value></data>
-  <data name="PaceComparison_Daniels" xml:space="preserve"><value>Daniels</value></data>
-  <data name="PaceComparison_CriticalSpeed" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve"><value>为什么采用配速引导训练？</value></data>
-  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve"><value>PaceLetics 主要用配速控制训练区间，因为跑速是最容易获得的外部生物力学负荷指标。核心问题并不主要是心血管漂移，而是快速生理适应与较慢肌骨适应之间的不匹配：初学者可能几周内就觉得心肺更强，但肌腱、骨骼、关节和肌腱复合结构仍需要更渐进地适应重复冲击。如果只用心率或通用分区来指导训练，这种机械暴露很容易被低估。配速为重复的高力量跑步提供稳定的外部目标，而心率仍可作为内部负荷和恢复的补充信号。我们的工作假设是：心率引导训练对多年持续训练、肌骨系统已经足够稳健的运动员可能很有价值。但对训练初期几年的大众来说，它可能过度强调心血管努力，而忽视机械负荷的渐进管理，从长期看可能带来伤害。 因此，模型必须简单、少依赖设备，并在数周内保持一致。它应接受不同输入成绩，支持比赛预测，并映射到 Easy、Marathon、Threshold、Interval 和 Repetition 等训练领域。配速是最简单的共同语言：可测量、可比较，并能直接用于训练。</value></data>
-  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve"><value>概念图：比较神经系统、心血管系统、骨骼肌、肌腱和骨骼的训练适应时间。</value></data>
-  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve"><value>Daniels/VDOT</value></data>
-  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve"><value>Daniels/VDOT &#x6A21;&#x578B;&#x6E90;&#x81EA; Jack Daniels &#x548C; Jimmy Gilbert &#x7684;&#x7814;&#x7A76;&#xFF0C;&#x5176;&#x6210;&#x679C;&#x4E8E; 1979 &#x5E74;&#x4EE5; Oxygen Power: Performance Tables for Distance Runners &#x51FA;&#x7248;&#x3002;VDOT &#x4E0D;&#x662F;&#x76F4;&#x63A5;&#x6D4B;&#x5F97;&#x7684; VO2max&#xFF0C;&#x800C;&#x662F;&#x7531;&#x5B9E;&#x9645;&#x8DD1;&#x6B65;&#x8868;&#x73B0;&#x63A8;&#x5BFC;&#x7684;&#x6709;&#x6548;&#x6216;&#x4F2A; VO2max&#x3002;&#x4E00;&#x4E2A;&#x6BD4;&#x8D5B;&#x6210;&#x7EE9;&#x4F1A;&#x901A;&#x8FC7;&#x8DD1;&#x901F;&#x3001;&#x8DD1;&#x6B65;&#x7684;&#x6444;&#x6C27;&#x6210;&#x672C;&#xFF0C;&#x4EE5;&#x53CA;&#x8BE5;&#x65F6;&#x957F;&#x5185;&#x53EF;&#x7EF4;&#x6301;&#x7684; VO2max &#x6BD4;&#x4F8B;&#x8F6C;&#x6362;&#x4E3A;&#x5355;&#x4E00;&#x80FD;&#x529B;&#x503C;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x8BE5;&#x6A21;&#x578B;&#x5728;&#x4E00;&#x4E2A;&#x5B9E;&#x7528;&#x6307;&#x6807;&#x4E2D;&#x7EFC;&#x5408;&#x4E86;&#x6709;&#x6C27;&#x80FD;&#x529B;&#x3001;&#x8DD1;&#x6B65;&#x7ECF;&#x6D4E;&#x6027;&#x548C;&#x6BD4;&#x8D5B;&#x6267;&#x884C;&#x3002;&#x5F53;&#x8F93;&#x5165;&#x6570;&#x636E;&#x8DB3;&#x591F;&#x65B0;&#x3001;&#x5C3D;&#x529B;&#x4E14;&#x80FD;&#x4EE3;&#x8868;&#x8FD0;&#x52A8;&#x5458;&#x7279;&#x5F81;&#x65F6;&#xFF0C;&#x5B83;&#x5BF9;&#x7B49;&#x6548;&#x6210;&#x7EE9;&#x548C;&#x8BAD;&#x7EC3;&#x914D;&#x901F;&#x7684;&#x5EFA;&#x6A21;&#x8F83;&#x597D;&#xFF1B;&#x5728;&#x7279;&#x6B8A;&#x4E13;&#x9879;&#x3001;&#x5F88;&#x77ED;&#x6D4B;&#x8BD5;&#x3001;&#x9AD8;&#x6E29;&#x3001;&#x9AD8;&#x6D77;&#x62D4;&#x3001;&#x8D8A;&#x91CE;&#x8DEF;&#x7EBF;&#x6216;&#x914D;&#x901F;&#x5931;&#x8861;&#x65F6;&#x51C6;&#x786E;&#x6027;&#x4F1A;&#x4E0B;&#x964D;&#x3002;</value></data>
-  <data name="PaceModelInfo_Cs_Title" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="PaceModelInfo_Cs_Text" xml:space="preserve"><value>Critical Speed (CS) &#x662F; critical power &#x6982;&#x5FF5;&#x5728;&#x8DD1;&#x6B65;&#x4E2D;&#x7684;&#x7279;&#x5B9A;&#x5F62;&#x5F0F;&#x3002;&#x5B83;&#x63CF;&#x8FF0;&#x8DDD;&#x79BB;-&#x65F6;&#x95F4;&#x5173;&#x7CFB;&#x7684;&#x6E10;&#x8FD1;&#x901F;&#x5EA6;&#xFF0C;&#x5E76;&#x5728;&#x751F;&#x7406;&#x5B66;&#x4E0A;&#x88AB;&#x89E3;&#x91CA;&#x4E3A; heavy &#x4E0E; severe intensity &#x4E4B;&#x95F4;&#x7684;&#x8FB9;&#x754C;&#xFF1A;&#x4F4E;&#x4E8E; CS &#x65F6;&#x66F4;&#x53EF;&#x80FD;&#x8FBE;&#x5230;&#x4EE3;&#x8C22;&#x7A33;&#x6001;&#xFF1B;&#x9AD8;&#x4E8E; CS &#x65F6;&#xFF0C;&#x75B2;&#x52B3;&#x76F8;&#x5173;&#x6307;&#x6807;&#x4F1A;&#x6301;&#x7EED;&#x4E0A;&#x5347;&#xFF0C;&#x76F4;&#x5230;&#x5FC5;&#x987B;&#x505C;&#x6B62;&#x6216;&#x964D;&#x4F4E;&#x901F;&#x5EA6;&#x3002;&#x9AD8;&#x4E8E; CS &#x7684;&#x6709;&#x9650;&#x8DDD;&#x79BB;&#x80FD;&#x529B;&#x88AB;&#x5EFA;&#x6A21;&#x4E3A; D'&#x3002;Anderson et al. (2026) &#x7EFC;&#x8FF0;&#x4E86;&#x8DD1;&#x6B65;&#x4E2D; CS &#x548C; D' &#x7684;&#x6D4B;&#x91CF;&#x4E0E;&#x5EFA;&#x6A21;&#x65B9;&#x6CD5;&#xFF0C;&#x8BA4;&#x4E3A; CS &#x662F;&#x5F3A;&#x5EA6;&#x533A;&#x57DF;&#x95F4;&#x7ECF;&#x9A8C;&#x8BC1;&#x7684;&#x8FB9;&#x754C;&#xFF0C;&#x4F46;&#x4E5F;&#x6307;&#x51FA;&#x5B83;&#x53D7;&#x6D4B;&#x8BD5;&#x534F;&#x8BAE;&#x5F71;&#x54CD;&#xFF0C;D' &#x6062;&#x590D;&#x673A;&#x5236;&#x4ECD;&#x6709;&#x95EE;&#x9898;&#x672A;&#x89E3;&#x3002;Lipkova et al. (2025) &#x6307;&#x51FA;&#xFF0C;&#x5728;&#x6761;&#x4EF6;&#x548C;&#x5206;&#x6790;&#x6807;&#x51C6;&#x5316;&#x65F6;&#xFF0C;time trials &#x548C; 3-minute all-out test &#x662F;&#x5B9E;&#x7528;&#x7684;&#x7530;&#x91CE;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&#x3002;</value></data>
-  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve"><value>PaceLetics &#x4E2D;&#x7684;&#x6362;&#x7B97;</value></data>
-  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve"><value>所有计算都在内部使用速度，因为对配速直接取百分比会方向相反。Daniels 模型会把输入成绩与 VDOT 表匹配，最接近的表值返回 Daniels PaceModel。CS 模型直接使用跑步数据：1200 m 作为 Repetition 锚点，3 km 作为 Interval 锚点。单次 1200 m 测试会保守估计 CS = 0.84 * v1200；单次 3 km 测试估计 CS = 0.90 * v3k，并把 Interval 配速设在接近 3 km 速度的位置。如果有 1200 m 和 3600 m，则计算 CS = (3600 - 1200) / (t3600 - t1200)，D&apos; = 1200 - CS * t1200。多个距离时，通过回归估计 distance = D&apos; + CS * time。Easy、Marathon 和 Threshold 仍围绕 CS 锚定。Interval 优先使用 3 km 锚点，否则使用来自 CS 或 1200 m 锚点的 fallback；Repetition 优先使用 1200 m 锚点，否则从 Interval 做受限外推。最后把每个速度转换回 min/km。</value></data>
-  <data name="PaceModelInfo_References_Title" xml:space="preserve"><value>&#x53C2;&#x8003;&#x6587;&#x732E;</value></data>
-  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve"><value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value></data>
-  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve"><value> &#x8BE5;&#x6587;&#x7EFC;&#x8FF0;&#x4E86;&#x8DD1;&#x6B65;&#x4E2D; CS &#x548C; D' &#x7684;&#x6D4B;&#x91CF;&#x534F;&#x8BAE;&#x3001;&#x5EFA;&#x6A21;&#x65B9;&#x6CD5;&#x3001;&#x6210;&#x7EE9;&#x76F8;&#x5173;&#x6027;&#x548C;&#x8BAD;&#x7EC3;&#x5E94;&#x7528;&#x3002;</value></data>
-  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve"><value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value></data>
-  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve"><value> &#x8BE5;&#x7CFB;&#x7EDF;&#x7EFC;&#x8FF0;&#x8BC4;&#x4F30;&#x4E86;&#x8DD1;&#x8005;&#x7684;&#x7530;&#x91CE; CS &#x6D4B;&#x8BD5;&#xFF0C;&#x5E76;&#x5C06; time trials &#x548C; 3MT &#x5217;&#x4E3A;&#x5B9E;&#x7528;&#x65B9;&#x6CD5;&#x3002;</value></data>
-  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve"><value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value></data>
-  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve"><value> 该综述总结耐力和力量训练适应，并呈现早期神经性力量提升先于较慢肌肉量变化的经典模式。</value></data>
-  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve"><value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value></data>
-  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve"><value> 该综述描述耐力和间歇训练引起的有氧与骨骼肌重塑，包括 VO2max 和线粒体能力的变化。</value></data>
-  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve"><value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value></data>
-  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve"><value> 该研究显示肌肉功能和神经激活早于肌肉形态和肌腱刚度适应，从而形成暂时性不匹配。</value></data>
-  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve"><value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value></data>
-  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve"><value> 该综述解释肌腱特异性适应、较慢的肌腱反应，以及肌肉与肌腱能力之间的不平衡阶段。</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve"><value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value></data>
-  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve"><value> 这篇小综述从重复冲击力学、组织负荷和训练相关的应力-频率问题解释跑步损伤。</value></data>
-  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve"><value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value></data>
-  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve"><value> 该研究在七种跑速下测量 GRF 变量，发现与速度相关的显著变化和相关性。</value></data>
-  <data name="PaceModelInfo_Billat_Title" xml:space="preserve"><value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value></data>
-  <data name="PaceModelInfo_Billat_Text" xml:space="preserve"><value> 该研究用真实比赛数据关联了配速策略、心脏漂移、速度下降和马拉松表现。</value></data>
-  <data name="PaceModelInfo_Warden_Title" xml:space="preserve"><value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value></data>
-  <data name="PaceModelInfo_Warden_Text" xml:space="preserve"><value> 该综述将骨应力损伤视为负荷问题：重复加载循环可能超过骨组织承受能力。</value></data>
-  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve"><value>&#x663E;&#x793A; Daniels/VDOT &#x914D;&#x901F;&#x533A;&#x95F4;&#x548C; Critical Speed &#x8FB9;&#x754C;&#x7684;&#x8D1F;&#x8377;&#x66F2;&#x7EBF;&#x56FE;&#x3002;</value></data>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="VdotCard_Title" xml:space="preserve">
+    <value>你的 VDOT</value>
+  </data>
+  <data name="VdotCard_Description" xml:space="preserve">
+    <value>太好了！通过参考比赛，我们可以确定你的个人 VDOT。这是个人训练区间的基础。</value>
+  </data>
+  <data name="RaceCard_Result" xml:space="preserve">
+    <value>结果：</value>
+  </data>
+  <data name="RaceCard_Edit" xml:space="preserve">
+    <value>编辑比赛</value>
+  </data>
+  <data name="PaceInfo_MoreInfo" xml:space="preserve">
+    <value>更多信息</value>
+  </data>
+  <data name="PaceInfo_EPace_Title" xml:space="preserve">
+    <value>轻松配速 (E-Pace)</value>
+  </data>
+  <data name="PaceInfo_EPace_Description" xml:space="preserve">
+    <value>你的轻松跑配速。以此配速进行恢复或轻松训练，可建立有氧耐力并帮助恢复。</value>
+  </data>
+  <data name="PaceInfo_MPace_Title" xml:space="preserve">
+    <value>马拉松配速 (M-Pace)</value>
+  </data>
+  <data name="PaceInfo_MPace_Description" xml:space="preserve">
+    <value>你的马拉松配速。在该区间训练可提升长距离保持稳定配速的能力。</value>
+  </data>
+  <data name="PaceInfo_TPace_Title" xml:space="preserve">
+    <value>阈值配速 (T-Pace)</value>
+  </data>
+  <data name="PaceInfo_TPace_Description" xml:space="preserve">
+    <value>你的阈值配速。该区间训练可提高乳酸阈值，帮助你在不过度堆积乳酸的情况下跑得更快。</value>
+  </data>
+  <data name="PaceInfo_IPace_Title" xml:space="preserve">
+    <value>间歇配速 (I-Pace)</value>
+  </data>
+  <data name="PaceInfo_IPace_Description" xml:space="preserve">
+    <value>你的间歇配速。该区间短而强的努力可提升最大摄氧量 (VO2max)。</value>
+  </data>
+  <data name="PaceInfo_RPace_Title" xml:space="preserve">
+    <value>重复配速 (R-Pace)</value>
+  </data>
+  <data name="PaceInfo_RPace_Description" xml:space="preserve">
+    <value>你的重复配速。以此配速进行很短的快速跑可改善跑步经济性和速度。</value>
+  </data>
+  <data name="AddRaceDialog_Title" xml:space="preserve">
+    <value>新比赛</value>
+  </data>
+  <data name="AddRaceDialog_Name" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="AddRaceDialog_Distance" xml:space="preserve">
+    <value>距离</value>
+  </data>
+  <data name="AddRaceDialog_Time" xml:space="preserve">
+    <value>比赛时间</value>
+  </data>
+  <data name="AddRaceDialog_TimeHelper" xml:space="preserve">
+    <value>hh:mm:ss</value>
+  </data>
+  <data name="AddRaceDialog_Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Title" xml:space="preserve">
+    <value>注意</value>
+  </data>
+  <data name="AddRaceDialog_Warning_Message" xml:space="preserve">
+    <value>请检查比赛时间格式是否正确 (hh:mm:ss)。</value>
+  </data>
+  <data name="AddRaceDialog_Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="PaceComparison_Zone" xml:space="preserve">
+    <value>区间</value>
+  </data>
+  <data name="PaceComparison_Daniels" xml:space="preserve">
+    <value>Daniels</value>
+  </data>
+  <data name="PaceComparison_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Title" xml:space="preserve">
+    <value>为什么采用配速引导训练？</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
+    <value>PaceLetics 主要用配速控制训练区间，因为跑速是最容易获得的外部生物力学负荷指标。核心问题并不主要是心血管漂移，而是快速生理适应与较慢肌骨适应之间的不匹配：初学者可能几周内就觉得心肺更强，但肌腱、骨骼、关节和肌腱复合结构仍需要更渐进地适应重复冲击。如果只用心率或通用分区来指导训练，这种机械暴露很容易被低估。配速为重复的高力量跑步提供稳定的外部目标，而心率仍可作为内部负荷和恢复的补充信号。我们的工作假设是：心率引导训练对多年持续训练、肌骨系统已经足够稳健的运动员可能很有价值。但对训练初期几年的大众来说，它可能过度强调心血管努力，而忽视机械负荷的渐进管理，从长期看可能带来伤害。 因此，模型必须简单、少依赖设备，并在数周内保持一致。它应接受不同输入成绩，支持比赛预测，并映射到 Easy、Marathon、Threshold、Interval 和 Repetition 等训练领域。配速是最简单的共同语言：可测量、可比较，并能直接用于训练。</value>
+  </data>
+  <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
+    <value>概念图：比较神经系统、心血管系统、骨骼肌、肌腱和骨骼的训练适应时间。</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Title" xml:space="preserve">
+    <value>Daniels/VDOT</value>
+  </data>
+  <data name="PaceModelInfo_Daniels_Text" xml:space="preserve">
+    <value>Daniels/VDOT 模型源自 Jack Daniels 和 Jimmy Gilbert 的研究，其成果于 1979 年以 Oxygen Power: Performance Tables for Distance Runners 出版。VDOT 不是直接测得的 VO2max，而是由实际跑步表现推导的有效或伪 VO2max。一个比赛成绩会通过跑速、跑步的摄氧成本，以及该时长内可维持的 VO2max 比例转换为单一能力值。因此，该模型在一个实用指标中综合了有氧能力、跑步经济性和比赛执行。当输入数据足够新、尽力且能代表运动员特征时，它对等效成绩和训练配速的建模较好；在特殊专项、很短测试、高温、高海拔、越野路线或配速失衡时准确性会下降。</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Title" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="PaceModelInfo_Cs_Text" xml:space="preserve">
+    <value>Critical Speed (CS) 是 critical power 概念在跑步中的特定形式。它描述距离-时间关系的渐近速度，并在生理学上被解释为 heavy 与 severe intensity 之间的边界：低于 CS 时更可能达到代谢稳态；高于 CS 时，疲劳相关指标会持续上升，直到必须停止或降低速度。高于 CS 的有限距离能力被建模为 D'。Anderson et al. (2026) 综述了跑步中 CS 和 D' 的测量与建模方法，认为 CS 是强度区域间经验证的边界，但也指出它受测试协议影响，D' 恢复机制仍有问题未解。Lipkova et al. (2025) 指出，在条件和分析标准化时，time trials 和 3-minute all-out test 是实用的田野测试方法。</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Title" xml:space="preserve">
+    <value>PaceLetics 中的换算</value>
+  </data>
+  <data name="PaceModelInfo_Calculation_Text" xml:space="preserve">
+    <value>All calculations are performed internally with speed, because percentages on pace would be inverted. For Daniels, the entered performance is matched against the VDOT table; the nearest table value returns the classic pace table for Recovery, Easy, Marathon, Threshold, Interval, and Repetition. CS is no longer interpreted as a second Daniels table. From the running data we estimate Critical Speed and D': a single 1200 m test estimates CS conservatively as 0.84 * v1200, and a single 3 km test as 0.90 * v3k. If 1200 m and 3600 m are available, we calculate CS = (3600 - 1200) / (t3600 - t1200) and D' = 1200 - CS * t1200; with several distances we use regression. The CS system then controls intervals by budget: below CS no D' is used; above CS, the planned D' share per repetition determines target speed. Long intervals from 800 to 1600 m use smaller budgets with half recovery, while fast 200 and 400 m intervals use higher budgets with long recovery.</value>
+  </data>
+  <data name="PaceModelInfo_References_Title" xml:space="preserve">
+    <value>参考文献</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Title" xml:space="preserve">
+    <value>Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running.</value>
+  </data>
+  <data name="PaceModelInfo_Anderson_Text" xml:space="preserve">
+    <value> 该文综述了跑步中 CS 和 D' 的测量协议、建模方法、成绩相关性和训练应用。</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Title" xml:space="preserve">
+    <value>Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application.</value>
+  </data>
+  <data name="PaceModelInfo_Lipkova_Text" xml:space="preserve">
+    <value> 该系统综述评估了跑者的田野 CS 测试，并将 time trials 和 3MT 列为实用方法。</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Title" xml:space="preserve">
+    <value>Hawley et al. (2018): Adaptations to Endurance and Strength Training.</value>
+  </data>
+  <data name="PaceModelInfo_Hawley_Text" xml:space="preserve">
+    <value> 该综述总结耐力和力量训练适应，并呈现早期神经性力量提升先于较慢肌肉量变化的经典模式。</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Title" xml:space="preserve">
+    <value>MacInnis &amp; Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity.</value>
+  </data>
+  <data name="PaceModelInfo_MacInnis_Text" xml:space="preserve">
+    <value> 该综述描述耐力和间歇训练引起的有氧与骨骼肌重塑，包括 VO2max 和线粒体能力的变化。</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Title" xml:space="preserve">
+    <value>Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining.</value>
+  </data>
+  <data name="PaceModelInfo_Kubo_Text" xml:space="preserve">
+    <value> 该研究显示肌肉功能和神经激活早于肌肉形态和肌腱刚度适应，从而形成暂时性不匹配。</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Title" xml:space="preserve">
+    <value>Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
+    <value> 该综述解释肌腱特异性适应、较慢的肌腱反应，以及肌肉与肌腱能力之间的不平衡阶段。</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
+    <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
+  </data>
+  <data name="PaceModelInfo_Papagiannaki_Text" xml:space="preserve">
+    <value> 这篇小综述从重复冲击力学、组织负荷和训练相关的应力-频率问题解释跑步损伤。</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Title" xml:space="preserve">
+    <value>Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners.</value>
+  </data>
+  <data name="PaceModelInfo_Jiang_Text" xml:space="preserve">
+    <value> 该研究在七种跑速下测量 GRF 变量，发现与速度相关的显著变化和相关性。</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Title" xml:space="preserve">
+    <value>Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance.</value>
+  </data>
+  <data name="PaceModelInfo_Billat_Text" xml:space="preserve">
+    <value> 该研究用真实比赛数据关联了配速策略、心脏漂移、速度下降和马拉松表现。</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Title" xml:space="preserve">
+    <value>Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload.</value>
+  </data>
+  <data name="PaceModelInfo_Warden_Text" xml:space="preserve">
+    <value> 该综述将骨应力损伤视为负荷问题：重复加载循环可能超过骨组织承受能力。</value>
+  </data>
+  <data name="PaceModelInfo_DiagramAlt" xml:space="preserve">
+    <value>显示 Daniels/VDOT 配速区间和 Critical Speed 边界的负荷曲线图。</value>
+  </data>
+  <data name="CriticalSpeedBudget_Title" xml:space="preserve">
+    <value>CS budget model</value>
+  </data>
+  <data name="CriticalSpeedBudget_Subtitle" xml:space="preserve">
+    <value>Intervals are calculated from Critical Speed and the available D' budget per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_CriticalSpeed" xml:space="preserve">
+    <value>Critical Speed</value>
+  </data>
+  <data name="CriticalSpeedBudget_DPrime" xml:space="preserve">
+    <value>D' budget</value>
+  </data>
+  <data name="CriticalSpeedBudget_NoDPrime" xml:space="preserve">
+    <value>D' use: 0 percent</value>
+  </data>
+  <data name="CriticalSpeedBudget_TableReference" xml:space="preserve">
+    <value>See interval suggestions below</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Title" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery_Description" xml:space="preserve">
+    <value>Very relaxed running clearly below CS. This zone should stay mechanically light and use no D' budget.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Title" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="CriticalSpeedBudget_Easy_Description" xml:space="preserve">
+    <value>Relaxed aerobic running below Critical Speed. The pace remains controlled and budget-neutral.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Title" xml:space="preserve">
+    <value>Threshold</value>
+  </data>
+  <data name="CriticalSpeedBudget_Threshold_Description" xml:space="preserve">
+    <value>Running just below CS. This sits at the stable boundary without deliberately emptying the finite capacity above CS.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Title" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Description" xml:space="preserve">
+    <value>800 to 1600 m above CS with half recovery. Pace is derived from a limited D' share per repetition.</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongZone_Budget" xml:space="preserve">
+    <value>D' target: about 22 to 42 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Title" xml:space="preserve">
+    <value>Fast Interval</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Description" xml:space="preserve">
+    <value>200 to 400 m fast with long recovery. Each repetition may use more D' so quality stays high.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
+    <value>D' target: about 20 to 33 percent per repetition</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
+    <value>Long intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_LongIntervals_Subtitle" xml:space="preserve">
+    <value>800, 1000, 1200, and 1600 m with about half recovery.</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Title" xml:space="preserve">
+    <value>Fast short intervals</value>
+  </data>
+  <data name="CriticalSpeedBudget_FastIntervals_Subtitle" xml:space="preserve">
+    <value>200 and 400 m with long recovery so the D' budget can mostly reconstitute between repetitions.</value>
+  </data>
+  <data name="CriticalSpeedBudget_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
 </root>
