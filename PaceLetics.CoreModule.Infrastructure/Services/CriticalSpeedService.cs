@@ -74,8 +74,8 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
 
             return
             [
-                BuildRecommendation("fast-200", "repetition", "Fast", 200, 0.20, true, fastIntervalSpeedCap, 3, model),
-                BuildRecommendation("fast-400", "repetition", "Fast", 400, 0.33, true, fastIntervalSpeedCap, 3, model),
+                BuildRecommendation("fast-200", "repetition", "Fast", 200, 0.08, true, fastIntervalSpeedCap, 3, model),
+                BuildRecommendation("fast-400", "repetition", "Fast", 400, 0.12, true, fastIntervalSpeedCap, 3, model),
                 BuildRecommendation("interval-800", "intervall", "Int", 800, 0.22, false, longIntervalSpeedCap, 0.5, model),
                 BuildRecommendation("interval-1000", "intervall", "Int", 1000, 0.27, false, longIntervalSpeedCap, 0.5, model),
                 BuildRecommendation("interval-1200", "intervall", "Int", 1200, 0.32, false, longIntervalSpeedCap, 0.5, model),

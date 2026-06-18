@@ -253,7 +253,7 @@
     <value>200 bis 400 m schnell mit langer Pause. Hier darf pro Wiederholung mehr D' genutzt werden, damit die Qualität hoch bleibt.</value>
   </data>
   <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
-    <value>D'-Ziel: ca. 20 bis 33 Prozent pro Wiederholung</value>
+    <value>D'-Ziel: ca. 8 bis 12 Prozent pro Wiederholung</value>
   </data>
   <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
     <value>Lange Intervalle</value>

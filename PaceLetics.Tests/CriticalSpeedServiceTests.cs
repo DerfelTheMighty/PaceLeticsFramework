@@ -111,10 +111,17 @@ public class CriticalSpeedServiceTests
 
         var recommendations = _service.BuildIntervalRecommendations(model);
 
+        var fast200 = recommendations.Single(item => item.DistanceMeters == 200);
+        Assert.Equal(TimeSpan.FromSeconds(46), fast200.WorkTime);
+        Assert.Equal(TimeSpan.FromSeconds(138), fast200.RecoveryTime);
+        Assert.Equal(16, fast200.DPrimeUseMeters, precision: 3);
+        Assert.Equal(0.08, fast200.DPrimeUsePercent, precision: 2);
+
         var fast400 = recommendations.Single(item => item.DistanceMeters == 400);
-        Assert.Equal(TimeSpan.FromSeconds(84), fast400.WorkTime);
-        Assert.Equal(TimeSpan.FromSeconds(252), fast400.RecoveryTime);
-        Assert.Equal(64, fast400.DPrimeUseMeters, precision: 3);
+        Assert.Equal(TimeSpan.FromSeconds(94), fast400.WorkTime);
+        Assert.Equal(TimeSpan.FromSeconds(282), fast400.RecoveryTime);
+        Assert.Equal(24, fast400.DPrimeUseMeters, precision: 3);
+        Assert.Equal(0.12, fast400.DPrimeUsePercent, precision: 2);
         Assert.True(fast400.TargetSpeedMps <= model.RepetitionSpeedMps);
     }
 

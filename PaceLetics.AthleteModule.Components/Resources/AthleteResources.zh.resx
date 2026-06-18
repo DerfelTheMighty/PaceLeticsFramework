@@ -238,7 +238,7 @@
     <value>200 to 400 m fast with long recovery. Each repetition may use more D' so quality stays high.</value>
   </data>
   <data name="CriticalSpeedBudget_FastZone_Budget" xml:space="preserve">
-    <value>D' target: about 20 to 33 percent per repetition</value>
+    <value>D' target: about 8 to 12 percent per repetition</value>
   </data>
   <data name="CriticalSpeedBudget_LongIntervals_Title" xml:space="preserve">
     <value>Long intervals</value>
