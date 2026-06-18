@@ -36,7 +36,7 @@
                                      Detail="@GetReferenceDetail()"
                                      Icon="@Icons.Material.Filled.Speed"
                                      Accent="blue"
-                                     Href="/Athletes/racepaces?section=info" />
+                                     Href="/Athletes/racepaces?section=pacezones" />
             </MudItem>
 
             <MudItem xs="12" sm="6" lg="4">
@@ -46,6 +46,15 @@
                                      Icon="@Icons.Material.Filled.EventAvailable"
                                      Accent="green"
                                      Href="/Athletes/courses" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" lg="4">
+                <DashboardMetricTile Label="@L["Metric_TrainingSystem"]"
+                                     Value="@L["Metric_TrainingSystemValue"]"
+                                     Detail="@L["Metric_TrainingSystemDetail"]"
+                                     Icon="@Icons.Material.Filled.School"
+                                     Accent="orange"
+                                     Href="/Athletes/racepaces?section=info" />
             </MudItem>
         </MudGrid>
 

@@ -14,6 +14,9 @@
   <data name="WelcomeText" xml:space="preserve"><value>Hello {0}, here is your current training status.</value></data>
   <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
+  <data name="Metric_TrainingSystem" xml:space="preserve"><value>Training system</value></data>
+  <data name="Metric_TrainingSystemValue" xml:space="preserve"><value>Learn more</value></data>
+  <data name="Metric_TrainingSystemDetail" xml:space="preserve"><value>Why we train pace-guided</value></data>
   <data name="Metric_TrainingPlan" xml:space="preserve"><value>Training plan</value></data>
   <data name="Metric_NextSession" xml:space="preserve"><value>Next session</value></data>
   <data name="Metric_Messages" xml:space="preserve"><value>Messages</value></data>

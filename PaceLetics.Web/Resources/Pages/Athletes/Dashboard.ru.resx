@@ -14,6 +14,9 @@
   <data name="WelcomeText" xml:space="preserve"><value>Здравствуйте, {0}, вот ваш текущий статус тренировок.</value></data>
   <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
+  <data name="Metric_TrainingSystem" xml:space="preserve"><value>Система тренировок</value></data>
+  <data name="Metric_TrainingSystemValue" xml:space="preserve"><value>Узнать больше</value></data>
+  <data name="Metric_TrainingSystemDetail" xml:space="preserve"><value>Почему мы тренируемся по темпу</value></data>
   <data name="Metric_TrainingPlan" xml:space="preserve"><value>План тренировок</value></data>
   <data name="Metric_NextSession" xml:space="preserve"><value>Следующее занятие</value></data>
   <data name="Metric_Messages" xml:space="preserve"><value>Сообщения</value></data>
