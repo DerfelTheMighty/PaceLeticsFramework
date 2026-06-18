@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -10,19 +10,19 @@
   <data name="Subtitle" xml:space="preserve"><value>Einstufungslauf und Trainingspacebereiche an einem Ort.</value></data>
   <data name="TabRaceData" xml:space="preserve"><value>Laufdaten</value></data>
   <data name="TabPaceZones" xml:space="preserve"><value>Pacebereiche</value></data>
-  <data name="NoRaceWarning" xml:space="preserve"><value>FÃ¼ge einen aktuellen Einstufungslauf hinzu, damit wir deine Trainingsbereiche fÃ¼r dich ermitteln kÃ¶nnen.</value></data>
-  <data name="AddRace" xml:space="preserve"><value>Einstufungslauf hinzufÃ¼gen</value></data>
-  <data name="RaceOldWarning" xml:space="preserve"><value>Dein Einstufungslauf liegt schon mehr als 6 Monate zurÃ¼ck. FÃ¼r ein optimales Training solltest du einen aktuelleren Referenzlauf verwenden.</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>Füge einen aktuellen Einstufungslauf hinzu, damit wir deine Trainingsbereiche für dich ermitteln können.</value></data>
+  <data name="AddRace" xml:space="preserve"><value>Einstufungslauf hinzufügen</value></data>
+  <data name="RaceOldWarning" xml:space="preserve"><value>Dein Einstufungslauf liegt schon mehr als 6 Monate zurück. Für ein optimales Training solltest du einen aktuelleren Referenzlauf verwenden.</value></data>
   <data name="LoadError_Title" xml:space="preserve"><value>Fehler beim Laden</value></data>
   <data name="LoadError_Message" xml:space="preserve"><value>Deine Daten konnten nicht geladen werden:</value></data>
   <data name="PaceZonesTitle" xml:space="preserve"><value>Deine Pacebereiche</value></data>
   <data name="PaceZonesSubtitle" xml:space="preserve"><value>Hier findest du deine optimalen Trainingspacebereiche basierend auf deinem VDOT-Wert.</value></data>
   <data name="TabInfo" xml:space="preserve"><value>Infos</value></data>
   <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
-  <data name="CriticalSpeedCard_Method_1200" xml:space="preserve"><value>Geschaetzt aus einem 1200-m-Test.</value></data>
+  <data name="CriticalSpeedCard_Method_1200" xml:space="preserve"><value>Geschätzt aus einem 1200-m-Test.</value></data>
   <data name="CriticalSpeedCard_Method_1200_3600" xml:space="preserve"><value>Berechnet aus 1200 m plus 3600 m.</value></data>
   <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>Berechnet aus mehreren Laufdaten per Regression.</value></data>
-  <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>Geschaetzt aus einem einzelnen Lauf.</value></data>
-  <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>Noch keine Critical-Speed-Schaetzung verfuegbar.</value></data>
+  <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>Geschätzt aus einem einzelnen Lauf.</value></data>
+  <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>Noch keine Critical-Speed-Schätzung verfügbar.</value></data>
 
 </root>

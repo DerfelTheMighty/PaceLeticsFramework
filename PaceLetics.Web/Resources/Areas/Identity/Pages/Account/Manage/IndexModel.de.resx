@@ -5,10 +5,10 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="ProfileUpdated" xml:space="preserve"><value>Dein Profil wurde aktualisiert.</value></data>
-  <data name="PublicUserNameCharacters" xml:space="preserve"><value>Der oeffentliche Nutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.</value></data>
-  <data name="PublicUserNameExists" xml:space="preserve"><value>Dieser oeffentliche Nutzername ist bereits vergeben.</value></data>
+  <data name="PublicUserNameCharacters" xml:space="preserve"><value>Der öffentliche Nutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.</value></data>
+  <data name="PublicUserNameExists" xml:space="preserve"><value>Dieser öffentliche Nutzername ist bereits vergeben.</value></data>
   <data name="RoleAthlete" xml:space="preserve"><value>Athlet:in</value></data>
   <data name="RoleTrainer" xml:space="preserve"><value>Trainer:in</value></data>
-  <data name="TrainerVerificationInvalid" xml:space="preserve"><value>Der Trainer-Verifikationscode ist ungueltig.</value></data>
+  <data name="TrainerVerificationInvalid" xml:space="preserve"><value>Der Trainer-Verifikationscode ist ungültig.</value></data>
   <data name="TrainerVerificationNotConfigured" xml:space="preserve"><value>Die Trainer-Verifikation ist noch nicht konfiguriert.</value></data>
 </root>

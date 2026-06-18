@@ -5,7 +5,7 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="FeedTitle" xml:space="preserve"><value>Aktuelle Hinweise</value></data>
-  <data name="FeedSubtitle" xml:space="preserve"><value>Aktuelle Hinweise fuer dein Training</value></data>
+  <data name="FeedSubtitle" xml:space="preserve"><value>Aktuelle Hinweise für dein Training</value></data>
   <data name="NoMessages" xml:space="preserve"><value>Alles aktuell. Sobald etwas Wichtiges ansteht, erscheint es hier.</value></data>
   <data name="ReferenceRunMissing_Title" xml:space="preserve"><value>Einstufungslauf fehlt</value></data>
   <data name="ReferenceRunMissing_Body" xml:space="preserve"><value>Lege einen Einstufungslauf an, damit PaceLetics deine Trainingspaces sauber berechnen kann.</value></data>

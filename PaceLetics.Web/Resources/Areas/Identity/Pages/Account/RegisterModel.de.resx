@@ -13,10 +13,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfirmEmailSubject" xml:space="preserve">
-    <value>E-Mail bestaetigen</value>
+    <value>E-Mail bestätigen</value>
   </data>
   <data name="ConfirmEmailBody" xml:space="preserve">
-    <value>Bitte bestaetige deinen Account mit einem Klick auf &lt;a href='{0}'&gt;diesen Link&lt;/a&gt;.</value>
+    <value>Bitte bestätige deinen Account mit einem Klick auf &lt;a href='{0}'&gt;diesen Link&lt;/a&gt;.</value>
   </data>
   <data name="EmailAlreadyInUse" xml:space="preserve">
     <value>Diese E-Mail-Adresse wird bereits verwendet.</value>

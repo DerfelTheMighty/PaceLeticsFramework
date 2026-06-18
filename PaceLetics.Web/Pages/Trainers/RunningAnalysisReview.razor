@@ -28,10 +28,10 @@
                                    OnClick="OpenRecordingSession"
                                    aria-label="Zur Aufnahme" />
                 </MudTooltip>
-                <MudTooltip Text="Zurueck">
+                <MudTooltip Text="Zurück">
                     <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
                                    OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analyses"))"
-                                   aria-label="Zurueck" />
+                                   aria-label="Zurück" />
                 </MudTooltip>
             </MudStack>
         </MudStack>
@@ -54,7 +54,7 @@
                        Color="Color.Primary"
                        StartIcon="@Icons.Material.Filled.Videocam"
                        OnClick="OpenRecordingSession">
-                Aufnahmesession oeffnen
+                Aufnahmesession öffnen
             </MudButton>
         }
         else
@@ -84,7 +84,7 @@
             @if (CurrentParticipant is null)
             {
                 <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                    Waehle einen Teilnehmer zur Bewertung aus.
+                    Wähle einen Teilnehmer zur Bewertung aus.
                 </MudAlert>
             }
             else
@@ -101,13 +101,13 @@
 
                             @if (!string.IsNullOrWhiteSpace(CurrentParticipant.DriveFolderUrl))
                             {
-                                <MudTooltip Text="Athletenordner oeffnen">
+                                <MudTooltip Text="Athletenordner öffnen">
                                     <MudIconButton Href="@CurrentParticipant.DriveFolderUrl"
                                                    Target="_blank"
                                                    Icon="@Icons.Material.Filled.FolderOpen"
                                                    Color="Color.Primary"
                                                    Variant="Variant.Outlined"
-                                                   aria-label="Athletenordner oeffnen" />
+                                                   aria-label="Athletenordner öffnen" />
                                 </MudTooltip>
                             }
                         </MudStack>
@@ -132,13 +132,13 @@
                                 <MudText Typo="Typo.body2">@GetVideoAccessText()</MudText>
                                 @if (!string.IsNullOrWhiteSpace(CurrentVideoUrl))
                                 {
-                                    <MudTooltip Text="Video oeffnen">
+                                    <MudTooltip Text="Video öffnen">
                                         <MudIconButton Href="@CurrentVideoUrl"
                                                        Target="_blank"
                                                        Icon="@Icons.Material.Filled.OpenInNew"
                                                        Color="Color.Primary"
                                                        Variant="Variant.Outlined"
-                                                       aria-label="Video oeffnen" />
+                                                       aria-label="Video öffnen" />
                                     </MudTooltip>
                                 }
                             </MudStack>
@@ -473,9 +473,9 @@
             : "Seitenansicht";
 
         if (!string.IsNullOrWhiteSpace(CurrentVideoUrl))
-            return $"{perspective}: Videodatei verfuegbar.";
+            return $"{perspective}: Videodatei verfügbar.";
 
-        return $"{perspective}: Keine zugeordnete Videodatei gefunden. Bitte den Athletenordner oeffnen oder die Aufnahme hochladen.";
+        return $"{perspective}: Keine zugeordnete Videodatei gefunden. Bitte den Athletenordner öffnen oder die Aufnahme hochladen.";
     }
 
     private string GetCurrentScoreText()
@@ -537,8 +537,8 @@
         return criterion switch
         {
             RunningAnalysisCriterion.Overstride => "Overstride",
-            RunningAnalysisCriterion.TrunkPosture => "Oberkoerperhaltung",
-            RunningAnalysisCriterion.HipExtension => "Hueftstreckung",
+            RunningAnalysisCriterion.TrunkPosture => "Oberkörperhaltung",
+            RunningAnalysisCriterion.HipExtension => "Hüftstreckung",
             RunningAnalysisCriterion.ArmSwingSide => "Armschwung",
             RunningAnalysisCriterion.InternalRotation => "Innenrotation",
             RunningAnalysisCriterion.PelvicDrop => "Absinken des Beckens",
@@ -551,12 +551,12 @@
     {
         return criterion switch
         {
-            RunningAnalysisCriterion.Overstride => "Fussaufsatz deutlich vor dem Koerper, oft mit gestrecktem Knie.",
-            RunningAnalysisCriterion.TrunkPosture => "Stabile leichte Vorlage ohne starkes Aufrichten, Rundruecken oder Hohlkreuz.",
-            RunningAnalysisCriterion.HipExtension => "Ausreichende Streckung hinter dem Koerper ohne Ausweichen ueber die Lendenwirbelsaeule.",
+            RunningAnalysisCriterion.Overstride => "Fußaufsatz deutlich vor dem Körper, oft mit gestrecktem Knie.",
+            RunningAnalysisCriterion.TrunkPosture => "Stabile leichte Vorlage ohne starkes Aufrichten, Rundrücken oder Hohlkreuz.",
+            RunningAnalysisCriterion.HipExtension => "Ausreichende Streckung hinter dem Körper ohne Ausweichen über die Lendenwirbelsaeule.",
             RunningAnalysisCriterion.ArmSwingSide => "Rhythmischer Armschwung ohne starkes Kreuzen oder asymmetrisches Pendeln.",
-            RunningAnalysisCriterion.InternalRotation => "Knie oder Oberschenkel rotiert in der Stuetzphase sichtbar nach innen.",
-            RunningAnalysisCriterion.PelvicDrop => "Becken sinkt auf der Gegenseite in der mittleren Stuetzphase ab.",
+            RunningAnalysisCriterion.InternalRotation => "Knie oder Oberschenkel rotiert in der Stützphase sichtbar nach innen.",
+            RunningAnalysisCriterion.PelvicDrop => "Becken sinkt auf der Gegenseite in der mittleren Stützphase ab.",
             RunningAnalysisCriterion.ArmSwingRear => "Symmetrischer Armschwung ohne starkes Cross-over oder Schulterhochstand.",
             _ => string.Empty
         };

@@ -7,21 +7,21 @@
   <data name="PageTitle" xml:space="preserve"><value>Kurse &amp; Plaene</value></data>
   <data name="Loading" xml:space="preserve"><value>Kurse werden geladen</value></data>
   <data name="Title" xml:space="preserve"><value>Kurse &amp; Plaene</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Kursbeitritte, Termine, Events und Trainingsplaene</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Kursbeitritte, Termine, Events und Trainingspläne</value></data>
   <data name="TabCourses" xml:space="preserve"><value>Kurse</value></data>
   <data name="TabTrainingPlans" xml:space="preserve"><value>Plaene</value></data>
-  <data name="NoPublishedCourses" xml:space="preserve"><value>Aktuell sind keine Kurse veroeffentlicht.</value></data>
+  <data name="NoPublishedCourses" xml:space="preserve"><value>Aktuell sind keine Kurse veröffentlicht.</value></data>
   <data name="NoUpcomingDate" xml:space="preserve"><value>Kein kommender Termin</value></data>
   <data name="UpcomingDate" xml:space="preserve"><value>{0:dd.MM. HH:mm} Uhr</value></data>
   <data name="Leave" xml:space="preserve"><value>Austreten</value></data>
   <data name="AddCourse" xml:space="preserve"><value>Kurs hinzufuegen</value></data>
   <data name="NoJoinedCourses" xml:space="preserve"><value>Du bist noch keinem Kurs beigetreten.</value></data>
-  <data name="NoAvailableCourses" xml:space="preserve"><value>Aktuell sind keine weiteren Kurse verfuegbar.</value></data>
+  <data name="NoAvailableCourses" xml:space="preserve"><value>Aktuell sind keine weiteren Kurse verfügbar.</value></data>
   <data name="Join" xml:space="preserve"><value>Beitreten</value></data>
   <data name="Joined" xml:space="preserve"><value>Beigetreten</value></data>
   <data name="Dates" xml:space="preserve"><value>Termine</value></data>
   <data name="Events" xml:space="preserve"><value>Events</value></data>
-  <data name="TrainingPlans" xml:space="preserve"><value>Trainingsplaene</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>Trainingspläne</value></data>
   <data name="ShowAll" xml:space="preserve"><value>Alle</value></data>
   <data name="ShowLess" xml:space="preserve"><value>Weniger</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>Keine kommenden Termine.</value></data>
@@ -30,16 +30,16 @@
   <data name="AnalysisPreparing" xml:space="preserve"><value>Analyseordner wird vorbereitet.</value></data>
   <data name="AnalysisReady" xml:space="preserve"><value>Analyseordner ist bereit.</value></data>
   <data name="AnalysisFailed" xml:space="preserve"><value>Analyseordner konnte nicht vorbereitet werden.</value></data>
-  <data name="OpenAnalysisFolder" xml:space="preserve"><value>Analyseordner oeffnen</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>Analyseordner öffnen</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>Abmelden</value></data>
   <data name="Register" xml:space="preserve"><value>Anmelden</value></data>
-  <data name="NoTrainingPlans" xml:space="preserve"><value>Noch keine Trainingsplaene veroeffentlicht.</value></data>
+  <data name="NoTrainingPlans" xml:space="preserve"><value>Noch keine Trainingspläne veröffentlicht.</value></data>
   <data name="LoadError" xml:space="preserve"><value>Die Kurse konnten nicht aus Cosmos DB geladen werden.</value></data>
   <data name="JoinSuccess" xml:space="preserve"><value>Du bist dem Kurs beigetreten.</value></data>
   <data name="LeaveConfirm" xml:space="preserve"><value>Aus "{0}" austreten?</value></data>
   <data name="LeaveSuccess" xml:space="preserve"><value>Du bist aus dem Kurs ausgetreten.</value></data>
-  <data name="RegisterSuccess" xml:space="preserve"><value>Du bist fuer das Event angemeldet.</value></data>
-  <data name="CancelRegistrationSuccess" xml:space="preserve"><value>Du bist fuer das Event abgemeldet.</value></data>
+  <data name="RegisterSuccess" xml:space="preserve"><value>Du bist für das Event angemeldet.</value></data>
+  <data name="CancelRegistrationSuccess" xml:space="preserve"><value>Du bist für das Event abgemeldet.</value></data>
   <data name="Period" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
   <data name="ShortPeriod" xml:space="preserve"><value>{0:dd.MM.} bis {1:dd.MM.}</value></data>
   <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} bis {1:HH:mm} Uhr</value></data>

@@ -35,15 +35,15 @@
   <data name="Events" xml:space="preserve"><value>Events</value></data>
   <data name="NoEvents" xml:space="preserve"><value>Noch keine Events.</value></data>
   <data name="NoParticipants" xml:space="preserve"><value>Noch keine Teilnehmenden registriert.</value></data>
-  <data name="Capacity" xml:space="preserve"><value>Kapazitaet</value></data>
+  <data name="Capacity" xml:space="preserve"><value>Kapazität</value></data>
   <data name="RegistrationDeadline" xml:space="preserve"><value>Anmeldefrist</value></data>
   <data name="EventType" xml:space="preserve"><value>Eventtyp</value></data>
   <data name="EventType_General" xml:space="preserve"><value>Allgemein</value></data>
   <data name="EventType_RunningAnalysis" xml:space="preserve"><value>Laufanalyse</value></data>
   <data name="StartRunningAnalysis" xml:space="preserve"><value>Analyse starten</value></data>
   <data name="AddEvent" xml:space="preserve"><value>Event hinzufuegen</value></data>
-  <data name="TrainingPlans" xml:space="preserve"><value>Trainingsplaene</value></data>
-  <data name="NoPublishedPlan" xml:space="preserve"><value>Noch kein Plan veroeffentlicht.</value></data>
+  <data name="TrainingPlans" xml:space="preserve"><value>Trainingspläne</value></data>
+  <data name="NoPublishedPlan" xml:space="preserve"><value>Noch kein Plan veröffentlicht.</value></data>
   <data name="TrainingPlan" xml:space="preserve"><value>Trainingsplan</value></data>
   <data name="AddPlan" xml:space="preserve"><value>Plan hinzufuegen</value></data>
   <data name="Participants" xml:space="preserve"><value>Teilnehmende</value></data>
@@ -67,7 +67,7 @@
   <data name="RemovePlanSuccess" xml:space="preserve"><value>Trainingsplan wurde entfernt.</value></data>
   <data name="Period" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
   <data name="DateRange" xml:space="preserve"><value>{0:dd.MM.yyyy HH:mm} bis {1:HH:mm} Uhr</value></data>
-  <data name="ValidationDateRequired" xml:space="preserve"><value>Bitte ein Datum auswaehlen.</value></data>
+  <data name="ValidationDateRequired" xml:space="preserve"><value>Bitte ein Datum auswählen.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Bitte eine Uhrzeit im Format HH:mm eingeben.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>Trainer:in konnte nicht ermittelt werden.</value></data>
 </root>

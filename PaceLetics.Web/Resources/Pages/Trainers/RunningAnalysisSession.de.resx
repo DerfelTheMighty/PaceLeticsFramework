@@ -6,10 +6,10 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="PageTitle" xml:space="preserve"><value>Laufaufnahme</value></data>
   <data name="Title" xml:space="preserve"><value>Laufaufnahme</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Aufnahme durchfuehren</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Aufnahme durchführen</value></data>
   <data name="SubtitleWithCourse" xml:space="preserve"><value>{0}, {1:dd.MM.yyyy HH:mm} bis {2:HH:mm} Uhr</value></data>
   <data name="Loading" xml:space="preserve"><value>Laufaufnahme wird geladen</value></data>
-  <data name="BackToCourses" xml:space="preserve"><value>Zurueck zu Kursen</value></data>
+  <data name="BackToCourses" xml:space="preserve"><value>Zurück zu Kursen</value></data>
   <data name="Online" xml:space="preserve"><value>Online</value></data>
   <data name="Offline" xml:space="preserve"><value>Offline</value></data>
   <data name="StartCapture" xml:space="preserve"><value>Aufnahme starten</value></data>
@@ -22,35 +22,35 @@
   <data name="NotRunningAnalysis" xml:space="preserve"><value>Dieses Event ist keine Laufaufnahme.</value></data>
   <data name="Status_Draft" xml:space="preserve"><value>Entwurf</value></data>
   <data name="Status_Prepared" xml:space="preserve"><value>Vorbereitet</value></data>
-  <data name="Status_InProgress" xml:space="preserve"><value>Laeuft</value></data>
+  <data name="Status_InProgress" xml:space="preserve"><value>Läuft</value></data>
   <data name="Status_Completed" xml:space="preserve"><value>Abgeschlossen</value></data>
   <data name="StartSuccess" xml:space="preserve"><value>Aufnahme wurde gestartet.</value></data>
   <data name="CompleteConfirm" xml:space="preserve"><value>Aufnahme wirklich abschliessen?</value></data>
   <data name="CompleteSuccess" xml:space="preserve"><value>Aufnahme wurde abgeschlossen.</value></data>
   <data name="CompletedCannotRecord" xml:space="preserve"><value>Eine abgeschlossene Aufnahme kann nicht erneut aufnehmen.</value></data>
-  <data name="RetakeHint" xml:space="preserve"><value>Starte die Aufnahme erneut fuer diesen Teilnehmenden.</value></data>
+  <data name="RetakeHint" xml:space="preserve"><value>Starte die Aufnahme erneut für diesen Teilnehmenden.</value></data>
   <data name="NoNextParticipant" xml:space="preserve"><value>Keine weiteren Teilnehmenden.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Lokale Aufnahmen</value></data>
-  <data name="LocalRecordingsText" xml:space="preserve"><value>{0} Aufnahme(n) sind auf diesem Geraet gespeichert.</value></data>
+  <data name="LocalRecordingsText" xml:space="preserve"><value>{0} Aufnahme(n) sind auf diesem Gerät gespeichert.</value></data>
   <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} lokal, {1} offen, {2} fehlgeschlagen, {3} hochgeladen.</value></data>
-  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine lokalen Aufnahmen im gewaehlten Ordner gefunden.</value></data>
-  <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>Der lokale Ordner ist noch gewaehlt, aber der Browser braucht nach dem Reload erneut Zugriff. Klicke auf "Zugriff erneuern", damit die vorhandenen Video- und JSON-Dateien wieder gescannt werden.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine lokalen Aufnahmen im gewählten Ordner gefunden.</value></data>
+  <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>Der lokale Ordner ist noch gewählt, aber der Browser braucht nach dem Reload erneut Zugriff. Klicke auf "Zugriff erneuern", damit die vorhandenen Video- und JSON-Dateien wieder gescannt werden.</value></data>
   <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>Der lokale Ordner konnte nicht gescannt werden: {0}</value></data>
   <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmeordner</value></data>
-  <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner waehlen</value></data>
+  <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner wählen</value></data>
   <data name="OpenUploadPage" xml:space="preserve"><value>Upload-Queue</value></data>
   <data name="RefreshFolderAccess" xml:space="preserve"><value>Zugriff erneuern</value></data>
   <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmeordner ist bereit.</value></data>
   <data name="LocalStorageReadyText" xml:space="preserve"><value>Aufnahmen werden direkt im Ordner "{0}" gespeichert. Speicherort: {1}</value></data>
-  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprueft.</value></data>
-  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser unterstuetzt keine direkte Speicherung in einen lokalen Geraeteordner.</value></data>
-  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Waehle zuerst einen lokalen Ordner auf diesem Geraet. Danach werden neue Aufnahmen dort als Videodatei gespeichert.</value></data>
-  <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewaehlten lokalen Aufnahmeordner.</value></data>
+  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprüft.</value></data>
+  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser unterstützt keine direkte Speicherung in einen lokalen Geräteordner.</value></data>
+  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Wähle zuerst einen lokalen Ordner auf diesem Gerät. Danach werden neue Aufnahmen dort als Videodatei gespeichert.</value></data>
+  <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewählten lokalen Aufnahmeordner.</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
   <data name="RefreshQueue" xml:space="preserve"><value>Aktualisieren</value></data>
   <data name="UploadSingle" xml:space="preserve"><value>Upload starten</value></data>
   <data name="RetryUpload" xml:space="preserve"><value>Erneut uploaden</value></data>
-  <data name="OpenUploadedRecording" xml:space="preserve"><value>Datei oeffnen</value></data>
+  <data name="OpenUploadedRecording" xml:space="preserve"><value>Datei öffnen</value></data>
   <data name="QueueRecordedAt" xml:space="preserve"><value>Aufgenommen</value></data>
   <data name="QueueSize" xml:space="preserve"><value>Groesse</value></data>
   <data name="QueueStorageLocation" xml:space="preserve"><value>Lokaler Speicherort</value></data>
@@ -61,19 +61,19 @@
   <data name="UploadStatus_Uploading" xml:space="preserve"><value>Wird hochgeladen</value></data>
   <data name="UploadStatus_Uploaded" xml:space="preserve"><value>Hochgeladen</value></data>
   <data name="UploadStatus_Failed" xml:space="preserve"><value>Fehlgeschlagen</value></data>
-  <data name="LocalSaveSuccess" xml:space="preserve"><value>{0} wurde auf diesem Geraet gespeichert.</value></data>
+  <data name="LocalSaveSuccess" xml:space="preserve"><value>{0} wurde auf diesem Gerät gespeichert.</value></data>
   <data name="UploadPendingOffline" xml:space="preserve"><value>Upload ist nur online moeglich.</value></data>
   <data name="UploadPendingSuccess" xml:space="preserve"><value>{0} Aufnahme(n) wurden hochgeladen.</value></data>
   <data name="UploadPendingFailed" xml:space="preserve"><value>{0} Aufnahme(n) konnten nicht hochgeladen werden.</value></data>
   <data name="UploadSingleSuccess" xml:space="preserve"><value>{0} wurde hochgeladen.</value></data>
   <data name="NoPendingUploads" xml:space="preserve"><value>Keine ausstehenden Uploads.</value></data>
-  <data name="UploadQueueUploading" xml:space="preserve"><value>Upload-Queue laeuft. Lokale Dateien werden in die jeweiligen Teilnehmerordner hochgeladen.</value></data>
+  <data name="UploadQueueUploading" xml:space="preserve"><value>Upload-Queue läuft. Lokale Dateien werden in die jeweiligen Teilnehmerordner hochgeladen.</value></data>
   <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload-Queue wartet auf Zugriff auf den lokalen Aufnahmeordner.</value></data>
   <data name="UploadQueueOffline" xml:space="preserve"><value>Upload-Queue wartet auf Online-Verbindung.</value></data>
   <data name="UploadQueueReady" xml:space="preserve"><value>{0} Upload(s) warten. Automatischer Upload ist aktiv.</value></data>
   <data name="UploadQueueIdle" xml:space="preserve"><value>Upload-Queue ist leer. Neue lokale Aufnahmen werden automatisch hochgeladen.</value></data>
   <data name="UploadQueueIdleWithRefresh" xml:space="preserve"><value>Upload-Queue ist leer. Letzter Ordnerscan: {0:dd.MM.yyyy HH:mm:ss}.</value></data>
-  <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>Die lokale Aufnahme ist zu gross fuer den Upload.</value></data>
+  <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>Die lokale Aufnahme ist zu groß für den Upload.</value></data>
   <data name="UploadSuccess" xml:space="preserve"><value>Aufnahme wurde hochgeladen.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload fehlgeschlagen.</value></data>
 </root>

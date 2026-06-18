@@ -6,16 +6,16 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="PageTitle" xml:space="preserve"><value>Laufaufnahmen</value></data>
   <data name="Title" xml:space="preserve"><value>Laufaufnahmen</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Aufnahmetermine fuer deine Kurse starten und durchfuehren.</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Aufnahmetermine für deine Kurse starten und durchführen.</value></data>
   <data name="ManageCourses" xml:space="preserve"><value>Kurse verwalten</value></data>
   <data name="UploadRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
-  <data name="DriveCredentialsMissing" xml:space="preserve"><value>Google Drive ist noch nicht konfiguriert. Hinterlege die Zugangsdaten ueber User-Secrets, Environment-Variablen oder die ignorierte appsettings.Local.json, bevor Teilnehmende registriert oder Aufnahmen hochgeladen werden.</value></data>
+  <data name="DriveCredentialsMissing" xml:space="preserve"><value>Google Drive ist noch nicht konfiguriert. Hinterlege die Zugangsdaten über User-Secrets, Environment-Variablen oder die ignorierte appsettings.Local.json, bevor Teilnehmende registriert oder Aufnahmen hochgeladen werden.</value></data>
   <data name="DriveRootFolderMissing" xml:space="preserve"><value>Es ist keine zentrale Google-Drive-Ordner-ID konfiguriert. Der Adapter nutzt stattdessen den konfigurierten Root-Ordnernamen.</value></data>
   <data name="EmptyTitle" xml:space="preserve"><value>Noch keine Laufaufnahmen</value></data>
   <data name="EmptyText" xml:space="preserve"><value>Erstelle in der Kursverwaltung ein Event vom Typ Laufanalyse.</value></data>
   <data name="CreateEvent" xml:space="preserve"><value>Event erstellen</value></data>
   <data name="RunningAnalysis" xml:space="preserve"><value>Laufaufnahme</value></data>
-  <data name="StartAnalysis" xml:space="preserve"><value>Aufnahme oeffnen</value></data>
+  <data name="StartAnalysis" xml:space="preserve"><value>Aufnahme öffnen</value></data>
   <data name="Recordings" xml:space="preserve"><value>Aufnahmen</value></data>
   <data name="CaptureCompleted" xml:space="preserve"><value>Aufnahme abgeschlossen</value></data>
   <data name="CaptureOpen" xml:space="preserve"><value>Aufnahme offen</value></data>

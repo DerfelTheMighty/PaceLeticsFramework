@@ -14,9 +14,9 @@
   <data name="RegisterNewUser" xml:space="preserve"><value>Registriere dich als neuer Benutzer</value></data>
   <data name="ResendEmail" xml:space="preserve"><value>E-Mail erneut senden</value></data>
   <data name="WelcomeTitle" xml:space="preserve"><value>Willkommen bei PaceLetics</value></data>
-  <data name="WelcomeText" xml:space="preserve"><value>Dein persoenlicher Laufbegleiter. Erfasse deine Wettkampfergebnisse, berechne Trainingspaces und folge strukturierten Trainingsplaenen, die auf dein Fitnesslevel abgestimmt sind.</value></data>
+  <data name="WelcomeText" xml:space="preserve"><value>Dein persönlicher Laufbegleiter. Erfasse deine Wettkampfergebnisse, berechne Trainingspaces und folge strukturierten Trainingsplänen, die auf dein Fitnesslevel abgestimmt sind.</value></data>
   <data name="Feature1" xml:space="preserve"><value>Personalisierte Pace-Zonen basierend auf deinen Wettkampfleistungen</value></data>
-  <data name="Feature2" xml:space="preserve"><value>Strukturierte Trainingsplaene fuer deine Ziele</value></data>
-  <data name="Feature3" xml:space="preserve"><value>Gefuehrte Workouts fuer Kraft und Mobilitaet</value></data>
-  <data name="Feature4" xml:space="preserve"><value>Verfolge deinen Fortschritt ueber die Zeit</value></data>
+  <data name="Feature2" xml:space="preserve"><value>Strukturierte Trainingspläne für deine Ziele</value></data>
+  <data name="Feature3" xml:space="preserve"><value>Geführte Workouts für Kraft und Mobilität</value></data>
+  <data name="Feature4" xml:space="preserve"><value>Verfolge deinen Fortschritt über die Zeit</value></data>
 </root>

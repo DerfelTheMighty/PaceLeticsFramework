@@ -17,16 +17,16 @@
   <data name="AnalysesTitle" xml:space="preserve"><value>Aufnahmen</value></data>
   <data name="AnalysesSubtitle" xml:space="preserve"><value>Deine freigegebenen Laufaufnahme-Ordner</value></data>
   <data name="DriveRequiredForAnalyses" xml:space="preserve"><value>Verlinke zuerst deinen Drive-Ordner, damit hier Aufnahmen angezeigt werden koennen.</value></data>
-  <data name="NoAnalyses" xml:space="preserve"><value>Noch keine Aufnahmen verfuegbar.</value></data>
+  <data name="NoAnalyses" xml:space="preserve"><value>Noch keine Aufnahmen verfügbar.</value></data>
   <data name="RemoveAnalysis" xml:space="preserve"><value>Entfernen</value></data>
-  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>"{0}" aus deiner Uebersicht entfernen? Die Drive-Dateien werden nicht geloescht.</value></data>
-  <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Eintrag wurde aus deiner Uebersicht entfernt.</value></data>
+  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>"{0}" aus deiner Übersicht entfernen? Die Drive-Dateien werden nicht geloescht.</value></data>
+  <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Eintrag wurde aus deiner Übersicht entfernt.</value></data>
   <data name="DriveTitle" xml:space="preserve"><value>Drive-Ordner</value></data>
   <data name="NoFolderText" xml:space="preserve"><value>Noch kein Drive-Ordner verlinkt.</value></data>
   <data name="FolderReadyText" xml:space="preserve"><value>Dein Drive-Ordner ist verlinkt und bereit.</value></data>
   <data name="CreateFolder" xml:space="preserve"><value>Ordner erstellen</value></data>
   <data name="CreateSuccess" xml:space="preserve"><value>Drive-Ordner wurde erstellt.</value></data>
-  <data name="OpenFolder" xml:space="preserve"><value>Ordner oeffnen</value></data>
+  <data name="OpenFolder" xml:space="preserve"><value>Ordner öffnen</value></data>
   <data name="DeleteFolder" xml:space="preserve"><value>Ordner loeschen</value></data>
   <data name="DeleteConfirm" xml:space="preserve"><value>Deinen PaceLetics-Drive-Ordner loeschen? Dadurch wird der Ordner aus Google Drive entfernt.</value></data>
   <data name="DeleteSuccess" xml:space="preserve"><value>Drive-Ordner wurde geloescht.</value></data>

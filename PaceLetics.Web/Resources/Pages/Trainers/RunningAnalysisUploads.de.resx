@@ -8,26 +8,26 @@
   <data name="Title" xml:space="preserve"><value>Laufaufnahme-Uploads</value></data>
   <data name="Subtitle" xml:space="preserve"><value>Lokal gespeicherte Aufnahmen in die passenden Teilnehmerordner hochladen.</value></data>
   <data name="Loading" xml:space="preserve"><value>Upload-Queue wird geladen</value></data>
-  <data name="BackToAnalyses" xml:space="preserve"><value>Zurueck zu Aufnahmen</value></data>
+  <data name="BackToAnalyses" xml:space="preserve"><value>Zurück zu Aufnahmen</value></data>
   <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmeordner</value></data>
-  <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner waehlen</value></data>
+  <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner wählen</value></data>
   <data name="RefreshQueue" xml:space="preserve"><value>Aktualisieren</value></data>
   <data name="RefreshFolderAccess" xml:space="preserve"><value>Zugriff erneuern</value></data>
   <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmeordner ist bereit.</value></data>
   <data name="LocalStorageReadyText" xml:space="preserve"><value>Aufnahmen werden aus "{0}" geladen. Speicherort: {1}</value></data>
-  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprueft.</value></data>
-  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser kann Aufnahmen nicht direkt aus einem lokalen Geraeteordner lesen.</value></data>
-  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Waehle den lokalen Ordner mit den gespeicherten Aufnahme-Video- und JSON-Dateien.</value></data>
-  <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewaehlten lokalen Aufnahmeordner.</value></data>
+  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprüft.</value></data>
+  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser kann Aufnahmen nicht direkt aus einem lokalen Geräteordner lesen.</value></data>
+  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Wähle den lokalen Ordner mit den gespeicherten Aufnahme-Video- und JSON-Dateien.</value></data>
+  <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewählten lokalen Aufnahmeordner.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Upload-Queue</value></data>
   <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} lokal, {1} offen, {2} fehlgeschlagen, {3} hochgeladen.</value></data>
-  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine vollstaendigen Aufnahmen im gewaehlten Ordner gefunden.</value></data>
-  <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>Der lokale Ordner ist noch gewaehlt, aber der Browser braucht nach dem Reload erneut Zugriff. Klicke auf "Zugriff erneuern", damit die vorhandenen Video- und JSON-Dateien wieder gescannt werden.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine vollständigen Aufnahmen im gewählten Ordner gefunden.</value></data>
+  <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>Der lokale Ordner ist noch gewählt, aber der Browser braucht nach dem Reload erneut Zugriff. Klicke auf "Zugriff erneuern", damit die vorhandenen Video- und JSON-Dateien wieder gescannt werden.</value></data>
   <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>Der lokale Ordner konnte nicht gescannt werden: {0}</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
   <data name="UploadSingle" xml:space="preserve"><value>Upload starten</value></data>
   <data name="RetryUpload" xml:space="preserve"><value>Erneut uploaden</value></data>
-  <data name="OpenUploadedRecording" xml:space="preserve"><value>Datei oeffnen</value></data>
+  <data name="OpenUploadedRecording" xml:space="preserve"><value>Datei öffnen</value></data>
   <data name="QueueRecordedAt" xml:space="preserve"><value>Aufgenommen</value></data>
   <data name="QueueSize" xml:space="preserve"><value>Groesse</value></data>
   <data name="QueueStorageLocation" xml:space="preserve"><value>Lokaler Speicherort</value></data>
@@ -45,18 +45,18 @@
   <data name="UploadSingleSuccess" xml:space="preserve"><value>{0} wurde hochgeladen.</value></data>
   <data name="UploadSingleFailedWithError" xml:space="preserve"><value>{0} konnte nicht hochgeladen werden: {1}</value></data>
   <data name="NoPendingUploads" xml:space="preserve"><value>Keine ausstehenden Uploads.</value></data>
-  <data name="UploadQueueUploading" xml:space="preserve"><value>Upload-Queue laeuft. Lokale Dateien werden in die jeweiligen Teilnehmerordner hochgeladen.</value></data>
+  <data name="UploadQueueUploading" xml:space="preserve"><value>Upload-Queue läuft. Lokale Dateien werden in die jeweiligen Teilnehmerordner hochgeladen.</value></data>
   <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload-Queue wartet auf Zugriff auf den lokalen Aufnahmeordner.</value></data>
   <data name="UploadQueueOffline" xml:space="preserve"><value>Upload-Queue wartet auf Online-Verbindung.</value></data>
-  <data name="UploadQueueReady" xml:space="preserve"><value>{0} Upload(s) warten. Automatischer Upload ist aktiv, solange diese Seite geoeffnet ist.</value></data>
-  <data name="UploadQueueFailed" xml:space="preserve"><value>{0} Upload(s) sind fehlgeschlagen. Stosse sie nach Pruefung der Metadaten manuell erneut an.</value></data>
+  <data name="UploadQueueReady" xml:space="preserve"><value>{0} Upload(s) warten. Automatischer Upload ist aktiv, solange diese Seite geöffnet ist.</value></data>
+  <data name="UploadQueueFailed" xml:space="preserve"><value>{0} Upload(s) sind fehlgeschlagen. Stoße sie nach Prüfung der Metadaten manuell erneut an.</value></data>
   <data name="UploadQueueIdle" xml:space="preserve"><value>Upload-Queue ist leer.</value></data>
   <data name="UploadQueueIdleWithRefresh" xml:space="preserve"><value>Upload-Queue ist leer. Letzter Ordnerscan: {0:dd.MM.yyyy HH:mm:ss}.</value></data>
   <data name="LastUploadError" xml:space="preserve"><value>Letzter Upload-Fehler: {0}</value></data>
-  <data name="LastUploadErrorWithFile" xml:space="preserve"><value>Letzter Upload-Fehler fuer {0}: {1}</value></data>
+  <data name="LastUploadErrorWithFile" xml:space="preserve"><value>Letzter Upload-Fehler für {0}: {1}</value></data>
   <data name="Recording" xml:space="preserve"><value>Aufnahme</value></data>
   <data name="UploadMetadataIncomplete" xml:space="preserve"><value>Die lokalen Aufnahmemetadaten enthalten keine Athlete-User-ID.</value></data>
-  <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>Die lokale Aufnahme ist zu gross fuer den Upload.</value></data>
+  <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>Die lokale Aufnahme ist zu groß für den Upload.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload fehlgeschlagen.</value></data>
   <data name="DriveServiceAccountQuotaError" xml:space="preserve"><value>Google Drive lehnt den Upload ab, weil der Service Account keine Speicherquote hat. Nutze einen Shared Drive als Root-Ordner oder setze PaceLeticsUserData:GoogleDrive:DelegatedUserEmail mit Domain-weiter Delegation.</value></data>
 </root>

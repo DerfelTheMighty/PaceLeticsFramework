@@ -13,7 +13,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InvalidLoginAttempt" xml:space="preserve">
-    <value>Ungueltiger Anmeldeversuch.</value>
+    <value>Ungültiger Anmeldeversuch.</value>
   </data>
   <data name="UserNameOrEmail" xml:space="preserve">
     <value>Benutzername oder E-Mail</value>

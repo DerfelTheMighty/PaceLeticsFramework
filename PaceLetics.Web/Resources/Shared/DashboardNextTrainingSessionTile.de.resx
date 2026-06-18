@@ -5,9 +5,9 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="NoSessionTitle" xml:space="preserve"><value>Noch keine Trainingseinheit</value></data>
-  <data name="NoSessionDetail" xml:space="preserve"><value>Tritt einem Kurs bei, um veroeffentlichte Trainingsplaene zu sehen.</value></data>
+  <data name="NoSessionDetail" xml:space="preserve"><value>Tritt einem Kurs bei, um veröffentlichte Trainingspläne zu sehen.</value></data>
   <data name="Courses" xml:space="preserve"><value>Kurse</value></data>
-  <data name="Open" xml:space="preserve"><value>Oeffnen</value></data>
+  <data name="Open" xml:space="preserve"><value>Öffnen</value></data>
   <data name="PreviewTitle" xml:space="preserve"><value>Vorschau</value></data>
   <data name="PreviewDetail" xml:space="preserve"><value>Trainingsdetails und Struktur der Einheit.</value></data>
   <data name="WorkoutCount" xml:space="preserve"><value>{0} Workout(s)</value></data>
