@@ -23,8 +23,18 @@ namespace PaceLetics.Web.Pages.Athletes
         [SupplyParameterFromQuery(Name = "section")]
         public string? Section { get; set; }
 
+        [Inject] private NavigationManager Navigation { get; set; } = default!;
+
         protected override void OnParametersSet()
         {
+            if (Navigation.ToBaseRelativePath(Navigation.Uri)
+                .Split('?', '#')[0]
+                .Equals("Athletes/pacezones", StringComparison.OrdinalIgnoreCase))
+            {
+                _activeSection = RacePacesSection.PaceZones;
+                return;
+            }
+
             if (TryParseSection(Section, out var section))
                 _activeSection = section;
         }
