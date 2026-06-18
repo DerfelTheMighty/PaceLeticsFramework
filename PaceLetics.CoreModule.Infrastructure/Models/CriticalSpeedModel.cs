@@ -8,6 +8,8 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 
         public double? DPrimeMeters { get; set; }
 
+        public double? IntervalSpeedMps { get; set; }
+
         public double? RepetitionSpeedMps { get; set; }
 
         public bool Estimated { get; set; } = true;

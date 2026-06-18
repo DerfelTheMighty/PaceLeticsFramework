@@ -10,7 +10,7 @@ public class CriticalSpeedServiceTests
     private readonly CriticalSpeedService _service = new();
 
     [Fact]
-    public void Estimate_UsesNinetyPercentOf1200SpeedForSingle1200Test()
+    public void Estimate_Uses1200SpeedAsRepetitionAnchor()
     {
         var result = CreateResult(RaceKeys.D1200m, RaceDistances.D1200Meters, TimeSpan.FromMinutes(5));
 
@@ -18,8 +18,25 @@ public class CriticalSpeedServiceTests
 
         Assert.Equal(CriticalSpeedMethod.Single1200Estimate, model.Method);
         Assert.True(model.Estimated);
-        Assert.Equal(3.6, model.CriticalSpeedMps, precision: 3);
+        Assert.Equal(3.36, model.CriticalSpeedMps, precision: 3);
+        Assert.Equal(192, model.DPrimeMeters!.Value, precision: 3);
         Assert.Equal(4.0, model.RepetitionSpeedMps!.Value, precision: 3);
+    }
+
+    [Fact]
+    public void Estimate_Uses3kSpeedAsIntervalAnchor()
+    {
+        var result = CreateResult(RaceKeys.D3k, RaceDistances.D3000Meters, TimeSpan.FromMinutes(10.5));
+
+        var model = _service.Estimate([result]);
+        var paceModel = _service.BuildPaceModel(model);
+
+        Assert.Equal(CriticalSpeedMethod.SinglePerformanceEstimate, model.Method);
+        Assert.True(model.Estimated);
+        Assert.Equal(4.286, model.CriticalSpeedMps, precision: 3);
+        Assert.Equal(4.69, model.IntervalSpeedMps!.Value, precision: 3);
+        Assert.Equal(TimeSpan.FromSeconds(213), paceModel.Intervall);
+        Assert.Equal(TimeSpan.FromSeconds(199), paceModel.Repetition);
     }
 
     [Fact]
@@ -43,7 +60,8 @@ public class CriticalSpeedServiceTests
         var model = new CriticalSpeedModel
         {
             CriticalSpeedMps = 4.0,
-            RepetitionSpeedMps = 4.5,
+            IntervalSpeedMps = 4.69,
+            RepetitionSpeedMps = 5.05,
             Method = CriticalSpeedMethod.Single1200Estimate
         };
 
@@ -52,8 +70,8 @@ public class CriticalSpeedServiceTests
         Assert.Equal(TimeSpan.FromSeconds(287), paceModel.Easy);
         Assert.Equal(TimeSpan.FromSeconds(266), paceModel.Marathon);
         Assert.Equal(TimeSpan.FromSeconds(245), paceModel.Threshold);
-        Assert.Equal(TimeSpan.FromSeconds(229), paceModel.Intervall);
-        Assert.Equal(TimeSpan.FromSeconds(222), paceModel.Repetition);
+        Assert.Equal(TimeSpan.FromSeconds(213), paceModel.Intervall);
+        Assert.Equal(TimeSpan.FromSeconds(198), paceModel.Repetition);
     }
 
     private static RaceResultModel CreateResult(string type, long distance, TimeSpan time)
