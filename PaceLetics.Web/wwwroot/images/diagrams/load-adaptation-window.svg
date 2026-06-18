@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Bohm et al. 2015 tendon adaptation effect sizes</title>
+<desc id="desc">Effect-size diagram using pooled standardized mean differences and confidence intervals from Bohm et al. 2015.</desc>
+<rect width="1600" height="900" fill="#f8fafc"/>
+<text x="80.0" y="62.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="36" font-weight="860" fill="#102033" >Tendon Adaptation From Mechanical Loading</text>
+<text x="80.0" y="97.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="19" font-weight="400" fill="#64748b" >Bohm et al. 2015 meta-analysis: pooled SMDs with 95% confidence intervals.</text>
+<rect x="80.0" y="150.0" width="690.0" height="565.0" rx="16" fill="#ffffff" stroke="#d9e2ec" stroke-width="2"/>
+<text x="114.0" y="194.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="25" font-weight="850" fill="#0f172a" >What changes in the tendon?</text>
+<text x="114.0" y="224.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="400" fill="#64748b" >All pooled intervention effects were significant.</text>
+<line x1="387.9" y1="265.0" x2="387.9" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="387.9" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >-0.5</text>
+<line x1="477.4" y1="265.0" x2="477.4" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="477.4" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >0</text>
+<line x1="566.8" y1="265.0" x2="566.8" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="566.8" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >0.5</text>
+<line x1="656.3" y1="265.0" x2="656.3" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="656.3" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >1</text>
+<line x1="477.4" y1="265.0" x2="477.4" y2="643.0" stroke="#475569" stroke-width="3" stroke-dasharray="8 8"/>
+<text x="477.4" y="248.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" >no effect</text>
+<text x="114.0" y="326.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="19" font-weight="760" fill="#1e293b" >Tendon stiffness</text>
+<text x="114.0" y="354.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >N=37</text>
+<line x1="568.6" y1="319.0" x2="634.8" y2="319.0" stroke="#0891b2" stroke-width="6" stroke-linecap="round"/>
+<line x1="568.6" y1="306.0" x2="568.6" y2="332.0" stroke="#0891b2" stroke-width="4" stroke-linecap="round"/>
+<line x1="634.8" y1="306.0" x2="634.8" y2="332.0" stroke="#0891b2" stroke-width="4" stroke-linecap="round"/>
+<polygon points="602.6,304.0 617.6,319.0 602.6,334.0 587.6,319.0" fill="#0891b2"/>
+<text x="710.0" y="356.0" text-anchor="end" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#475569" >0.70 [0.51, 0.88]</text>
+<text x="114.0" y="431.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="19" font-weight="760" fill="#1e293b" >Young&#x27;s modulus</text>
+<text x="114.0" y="459.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >N=17</text>
+<line x1="541.8" y1="424.0" x2="661.7" y2="424.0" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/>
+<line x1="541.8" y1="411.0" x2="541.8" y2="437.0" stroke="#7c3aed" stroke-width="4" stroke-linecap="round"/>
+<line x1="661.7" y1="411.0" x2="661.7" y2="437.0" stroke="#7c3aed" stroke-width="4" stroke-linecap="round"/>
+<polygon points="600.8,409.0 615.8,424.0 600.8,439.0 585.8,424.0" fill="#7c3aed"/>
+<text x="710.0" y="461.0" text-anchor="end" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#475569" >0.69 [0.36, 1.03]</text>
+<text x="114.0" y="536.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="19" font-weight="760" fill="#1e293b" >Cross-sectional area</text>
+<text x="114.0" y="564.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >N=33</text>
+<line x1="489.9" y1="529.0" x2="552.5" y2="529.0" stroke="#64748b" stroke-width="6" stroke-linecap="round"/>
+<line x1="489.9" y1="516.0" x2="489.9" y2="542.0" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+<line x1="552.5" y1="516.0" x2="552.5" y2="542.0" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+<polygon points="520.3,514.0 535.3,529.0 520.3,544.0 505.3,529.0" fill="#64748b"/>
+<text x="710.0" y="566.0" text-anchor="end" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#475569" >0.24 [0.07, 0.42]</text>
+<line x1="370.0" y1="643.0" x2="710.0" y2="643.0" stroke="#243447" stroke-width="3"/>
+<text x="540.0" y="699.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#334155" >standardized mean difference (SMD, 95% CI)</text>
+<rect x="830.0" y="150.0" width="690.0" height="565.0" rx="16" fill="#ffffff" stroke="#d9e2ec" stroke-width="2"/>
+<text x="864.0" y="194.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="25" font-weight="850" fill="#0f172a" >Does loading intensity matter?</text>
+<text x="864.0" y="224.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="400" fill="#64748b" >Stiffness adaptation differed by intensity (p &lt; 0.00001).</text>
+<line x1="1137.9" y1="265.0" x2="1137.9" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="1137.9" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >-0.5</text>
+<line x1="1227.4" y1="265.0" x2="1227.4" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="1227.4" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >0</text>
+<line x1="1316.8" y1="265.0" x2="1316.8" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="1316.8" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >0.5</text>
+<line x1="1406.3" y1="265.0" x2="1406.3" y2="643.0" stroke="#e2e8f0" stroke-width="2"/>
+<text x="1406.3" y="676.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >1</text>
+<line x1="1227.4" y1="265.0" x2="1227.4" y2="643.0" stroke="#475569" stroke-width="3" stroke-dasharray="8 8"/>
+<text x="1227.4" y="248.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" >no effect</text>
+<text x="864.0" y="326.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="19" font-weight="760" fill="#1e293b" >High intensity &gt;70% MVC/RM</text>
+<text x="864.0" y="354.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >N=27</text>
+<line x1="1354.4" y1="319.0" x2="1420.6" y2="319.0" stroke="#059669" stroke-width="6" stroke-linecap="round"/>
+<line x1="1354.4" y1="306.0" x2="1354.4" y2="332.0" stroke="#059669" stroke-width="4" stroke-linecap="round"/>
+<line x1="1420.6" y1="306.0" x2="1420.6" y2="332.0" stroke="#059669" stroke-width="4" stroke-linecap="round"/>
+<polygon points="1388.4,304.0 1403.4,319.0 1388.4,334.0 1373.4,319.0" fill="#059669"/>
+<text x="1460.0" y="356.0" text-anchor="end" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#475569" >0.90 [0.71, 1.08]</text>
+<text x="864.0" y="431.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="19" font-weight="760" fill="#1e293b" >Low intensity &lt;70% MVC/RM</text>
+<text x="864.0" y="459.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >N=5</text>
+<line x1="1145.1" y1="424.0" x2="1322.2" y2="424.0" stroke="#e11d48" stroke-width="6" stroke-linecap="round"/>
+<line x1="1145.1" y1="411.0" x2="1145.1" y2="437.0" stroke="#e11d48" stroke-width="4" stroke-linecap="round"/>
+<line x1="1322.2" y1="411.0" x2="1322.2" y2="437.0" stroke="#e11d48" stroke-width="4" stroke-linecap="round"/>
+<polygon points="1234.5,409.0 1249.5,424.0 1234.5,439.0 1219.5,424.0" fill="#e11d48"/>
+<text x="1460.0" y="461.0" text-anchor="end" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#475569" >0.04 [-0.46, 0.53]</text>
+<line x1="1120.0" y1="643.0" x2="1460.0" y2="643.0" stroke="#243447" stroke-width="3"/>
+<text x="1290.0" y="699.0" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#334155" >standardized mean difference (SMD, 95% CI)</text>
+<rect x="80" y="745" width="1440" height="78" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+<rect x="80" y="745" width="8" height="78" rx="4" fill="#0891b2"/>
+<text x="106.0" y="779.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="20" font-weight="840" fill="#0f172a" >Interpretation</text>
+<text x="106.0" y="807.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="400" fill="#475569" >High mechanical loading is not inherently bad: in Bohm et al., tendon stiffness improved strongly with high intensity, while low intensity was near zero.</text>
+<text x="80.0" y="862.0" text-anchor="start" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#64748b" >Source data: Bohm, Mersmann &amp; Arampatzis 2015, Sports Medicine - Open; aggregate SMDs and 95% CIs reported in Results/Subgroup Analysis.</text>
+</svg>

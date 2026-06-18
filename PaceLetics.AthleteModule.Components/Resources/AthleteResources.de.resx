@@ -174,6 +174,12 @@
   <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
     <value> Die Review erklärt sehnenspezifische Anpassung, langsamere Antwortzeiten der Sehne und Phasen unausgeglichener Muskel-Sehnen-Kapazitäten.</value>
   </data>
+  <data name="PaceModelInfo_Bohm2015_Title" xml:space="preserve">
+    <value>Bohm et al. (2015): Human tendon adaptation in response to mechanical loading.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm2015_Text" xml:space="preserve">
+    <value> Die Meta-Analyse zeigt, dass Sehnen auf mechanische Belastung reagieren; besonders Lastintensität und längere Interventionen fördern Steifigkeit und Materialeigenschaften.</value>
+  </data>
   <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
     <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
   </data>
@@ -274,6 +280,24 @@
     <value>Pause</value>
   </data>
   <data name="PaceModelInfo_MechanicalLoadDiagramAlt" xml:space="preserve">
-    <value>Konzeptionelles Diagramm zum Zusammenhang zwischen schnellerer Laufpace und steigender mechanischer Belastung durch Impact, Loading Rate und Muskel-Sehnen-Beanspruchung.</value>
+    <value>Diagramm zum Zusammenhang zwischen Laufpace und normalisierten Bodenreaktionskraft-Variablen nach Jiang et al. 2024.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Title" xml:space="preserve">
+    <value>Ist hohe Pace grundsätzlich schlecht?</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Text" xml:space="preserve">
+    <value>Nein. Mechanische Last ist nicht nur Risiko, sondern auch Voraussetzung für Anpassung. Sehnen und Knochen reagieren auf ausreichend hohe Belastungsreize: Bohm et al. (2015) zeigen in einer Meta-Analyse, dass Sehnensteifigkeit und Materialeigenschaften besonders durch höhere Lastintensitäten zunehmen. Die Grafik darunter zeigt diese berichteten Effektgrößen: hohe Intensitäten über 70 Prozent MVC/RM erzeugten eine deutliche Anpassung der Sehnensteifigkeit, niedrige Intensitäten lagen nahe null. Warden et al. (2021) beschreiben Knochenstressverletzungen nicht als Folge von Belastung an sich, sondern als Fehler in der Workload-Dosierung. Für das Training heißt das: Wir wollen schnelle Paces nicht vermeiden, sondern dosieren.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptationDiagramAlt" xml:space="preserve">
+    <value>Datenbasiertes Effektgrößen-Diagramm zu Sehnenanpassungen nach mechanischer Belastung aus Bohm et al. 2015.</value>
+  </data>
+  <data name="PaceModelInfo_TrainingScenarios_Title" xml:space="preserve">
+    <value>Drei Trainingsszenarien über 12 Wochen</value>
+  </data>
+  <data name="PaceModelInfo_TrainingScenarios_Text" xml:space="preserve">
+    <value>Das folgende Modell übersetzt die Dosis-Idee in drei Trainingsverläufe. Sehr leichte Belastung erzeugt kaum Wear-off, liefert aber auch wenig Adaptationsreiz. Pace-gesteuertes Training setzt regelmäßige externe Belastungsspitzen, hält sie aber nahe an der aktuellen Gewebekapazität; dadurch steigt die Anpassung langsam, während Wear-off zwischen den Einheiten abklingt. In einem HF-gesteuerten Szenario kann die äußere mechanische Last mit wachsender kardiovaskulärer Fitness ansteigen, obwohl die Einheit intern ähnlich anstrengend wirkt. Dann laufen Belastungsspitzen der langsameren Sehnen- und Knochenanpassung davon und Wear-off akkumuliert.</value>
+  </data>
+  <data name="PaceModelInfo_TrainingScenariosDiagramAlt" xml:space="preserve">
+    <value>Didaktisches 12-Wochen-Modell mit drei Trainingsszenarien, Belastungsspitzen, Anpassung und Wear-off.</value>
   </data>
 </root>

@@ -159,6 +159,12 @@
   <data name="PaceModelInfo_Bohm_Text" xml:space="preserve">
     <value> La revue explique l’adaptation spécifique du tendon, ses réponses plus lentes et les périodes de déséquilibre entre capacités musculaires et tendineuses.</value>
   </data>
+  <data name="PaceModelInfo_Bohm2015_Title" xml:space="preserve">
+    <value>Bohm et al. (2015): Human tendon adaptation in response to mechanical loading.</value>
+  </data>
+  <data name="PaceModelInfo_Bohm2015_Text" xml:space="preserve">
+    <value> The meta-analysis shows that tendons respond to mechanical loading; loading intensity and longer interventions especially improve stiffness and material properties.</value>
+  </data>
   <data name="PaceModelInfo_Papagiannaki_Title" xml:space="preserve">
     <value>Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective.</value>
   </data>
@@ -259,6 +265,24 @@
     <value>Recovery</value>
   </data>
   <data name="PaceModelInfo_MechanicalLoadDiagramAlt" xml:space="preserve">
-    <value>Conceptual diagram showing how faster running pace increases mechanical load through impact, loading rate, and muscle-tendon demand.</value>
+    <value>Diagram showing the relationship between running pace and normalized ground reaction force variables based on Jiang et al. 2024.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Title" xml:space="preserve">
+    <value>Is high pace inherently bad?</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Text" xml:space="preserve">
+    <value>No. Mechanical load is not only a risk; it is also required for adaptation. Tendons and bone respond to sufficiently strong loading stimuli: Bohm et al. (2015) show in a meta-analysis that tendon stiffness and material properties improve especially with higher loading intensities and longer interventions. Warden et al. (2021) frame bone stress injuries not as a consequence of load itself, but as a workload dosing error where the number and magnitude of loading cycles exceed current tissue capacity. For training, this means we do not avoid fast paces; we dose them. Too little mechanical load provides little adaptive signal, a controlled window of load, progression, and recovery strengthens tissue, and overly rapid progression shifts the session toward overload.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptationDiagramAlt" xml:space="preserve">
+    <value>Data-based effect-size diagram of tendon adaptations after mechanical loading from Bohm et al. 2015.</value>
+  </data>
+  <data name="PaceModelInfo_TrainingScenarios_Title" xml:space="preserve">
+    <value>Three 12-week training scenarios</value>
+  </data>
+  <data name="PaceModelInfo_TrainingScenarios_Text" xml:space="preserve">
+    <value>The following model translates the dosing idea into three training trajectories. Very light loading creates little wear-off but also little adaptive stimulus. Pace-guided training creates regular external load peaks while keeping them close to current tissue capacity; adaptation rises gradually and wear-off decays between sessions. In a heart-rate-guided scenario, external mechanical load can rise as cardiovascular fitness improves even when the session feels internally similar. Load peaks then outpace slower tendon and bone adaptation, and wear-off accumulates.</value>
+  </data>
+  <data name="PaceModelInfo_TrainingScenariosDiagramAlt" xml:space="preserve">
+    <value>Didactic 12-week model with three training scenarios, load peaks, adaptation, and wear-off.</value>
   </data>
 </root>
