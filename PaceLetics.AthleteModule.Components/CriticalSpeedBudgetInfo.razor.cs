@@ -97,7 +97,7 @@ namespace PaceLetics.AthleteModule.Components
         {
             return duration.TotalMinutes >= 1
                 ? duration.ToString(@"m\:ss")
-                : duration.ToString(@"s") + "s";
+                : $"{Math.Round(duration.TotalSeconds)}s";
         }
 
         private static string FormatDPrime(double? dPrimeMeters)
