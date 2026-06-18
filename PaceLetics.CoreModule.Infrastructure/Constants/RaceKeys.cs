@@ -5,7 +5,9 @@ namespace PaceLetics.CoreModule.Infrastructure.Constants
     public static class RaceKeys
     {
         public const string D1k = "1 km";
+        public const string D1200m = "1200 m";
         public const string D3k = "3 km";
+        public const string D3600m = "3600 m";
         public const string D5k = "5 km";
         public const string D10k = "10 km";
         public const string D15k = "15 km";

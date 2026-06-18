@@ -18,7 +18,9 @@
         <MudTextField T="string" @bind-Value="_id" Immediate="@true" Label="@L["AddRaceDialog_Name"]" />
         <MudSelect Dense="true" T="string" Label="@L["AddRaceDialog_Distance"]" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)" Value="@_type">
             <MudSelectItem Value="@RaceKeys.D1k" />
+            <MudSelectItem Value="@RaceKeys.D1200m" />
             <MudSelectItem Value="@RaceKeys.D3k" />
+            <MudSelectItem Value="@RaceKeys.D3600m" />
             <MudSelectItem Value="@RaceKeys.D5k" />
             <MudSelectItem Value="@RaceKeys.D10k" />
             <MudSelectItem Value="@RaceKeys.D15k" />

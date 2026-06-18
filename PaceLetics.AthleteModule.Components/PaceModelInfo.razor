@@ -1,0 +1,52 @@
+@namespace PaceLetics.AthleteModule.Components
+@using MudBlazor
+@inject IStringLocalizer<AthleteResources> L
+
+<MudStack Spacing="3">
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_Daniels_Title"]</MudText>
+            <MudText Typo="Typo.body2">@L["PaceModelInfo_Daniels_Text"]</MudText>
+        </MudStack>
+    </MudPaper>
+
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_Cs_Title"]</MudText>
+            <MudText Typo="Typo.body2">@L["PaceModelInfo_Cs_Text"]</MudText>
+        </MudStack>
+    </MudPaper>
+
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_Calculation_Title"]</MudText>
+            <MudText Typo="Typo.body2">@L["PaceModelInfo_Calculation_Text"]</MudText>
+        </MudStack>
+    </MudPaper>
+
+    <MudPaper Class="pa-4" Elevation="0">
+        <img src="/images/diagrams/pace-model-belastungskurve.svg"
+             alt="@L["PaceModelInfo_DiagramAlt"]"
+             style="display:block;width:100%;height:auto;border-radius:8px;" />
+    </MudPaper>
+
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_References_Title"]</MudText>
+
+            <MudText Typo="Typo.body2">
+                <MudLink Href="https://link.springer.com/article/10.1007/s40279-026-02410-x" Target="_blank">
+                    @L["PaceModelInfo_Anderson_Title"]
+                </MudLink>
+                @L["PaceModelInfo_Anderson_Text"]
+            </MudText>
+
+            <MudText Typo="Typo.body2">
+                <MudLink Href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/" Target="_blank">
+                    @L["PaceModelInfo_Lipkova_Title"]
+                </MudLink>
+                @L["PaceModelInfo_Lipkova_Text"]
+            </MudText>
+        </MudStack>
+    </MudPaper>
+</MudStack>

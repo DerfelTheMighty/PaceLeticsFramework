@@ -17,5 +17,12 @@
   <data name="LoadError_Message" xml:space="preserve"><value>Deine Daten konnten nicht geladen werden:</value></data>
   <data name="PaceZonesTitle" xml:space="preserve"><value>Deine Pacebereiche</value></data>
   <data name="PaceZonesSubtitle" xml:space="preserve"><value>Hier findest du deine optimalen Trainingspacebereiche basierend auf deinem VDOT-Wert.</value></data>
+  <data name="TabInfo" xml:space="preserve"><value>Infos</value></data>
+  <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
+  <data name="CriticalSpeedCard_Method_1200" xml:space="preserve"><value>Geschaetzt aus einem 1200-m-Test.</value></data>
+  <data name="CriticalSpeedCard_Method_1200_3600" xml:space="preserve"><value>Berechnet aus 1200 m plus 3600 m.</value></data>
+  <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>Berechnet aus mehreren Laufdaten per Regression.</value></data>
+  <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>Geschaetzt aus einem einzelnen Lauf.</value></data>
+  <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>Noch keine Critical-Speed-Schaetzung verfuegbar.</value></data>
 
 </root>

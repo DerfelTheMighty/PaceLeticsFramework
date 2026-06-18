@@ -12,6 +12,7 @@
 @inject IAthleteData AthleteData
 @inject IDialogService dialogService
 @inject IVdotService vdotService
+@inject ICriticalSpeedService criticalSpeedService
 @inject IPaceModelProvider pmProvider
 @inject LoadingStateService Loading
 @inject IStringLocalizer<RacePaces> L
@@ -34,6 +35,13 @@
                 @onclick="@(() => SelectSection(RacePacesSection.PaceZones))">
             <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
             <span>@L["TabPaceZones"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(RacePacesSection.Info)"
+                aria-pressed="@(_activeSection == RacePacesSection.Info)"
+                @onclick="@(() => SelectSection(RacePacesSection.Info))">
+            <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+            <span>@L["TabInfo"]</span>
         </button>
     </nav>
 
@@ -64,6 +72,14 @@
             {
                 <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
 
+                <MudTooltip Text="@L["AddRace"]">
+                    <MudIconButton Variant="Variant.Outlined"
+                                   Color="Color.Primary"
+                                   Icon="@Icons.Material.Filled.AddCircle"
+                                   OnClick="AddReferenceRun"
+                                   aria-label="@L["AddRace"]" />
+                </MudTooltip>
+
                 @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
                 {
                     <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
@@ -72,29 +88,34 @@
                 }
 
                 <VdotCard Data="@_vdotData" />
+
+                @if (_criticalSpeed.IsValid)
+                {
+                    <MudPaper Class="pa-4 pl-vdot-card" Elevation="0">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedCard_Title"]</MudText>
+                            <MudText Typo="Typo.h5">@($"{_criticalSpeed.CriticalSpeedMps:0.00} m/s")</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetCriticalSpeedMethodText()</MudText>
+                        </MudStack>
+                    </MudPaper>
+                }
             }
         }
-        else
+        else if (_activeSection == RacePacesSection.PaceZones)
         {
             <MudStack Spacing="1">
                 <MudText Typo="Typo.h6">@L["PaceZonesTitle"]</MudText>
                 <MudText Typo="Typo.body2" Color="Color.Secondary">@L["PaceZonesSubtitle"]</MudText>
             </MudStack>
 
-            @if (_hasPaceModel)
+            @if (_hasDanielsPaceModel || _hasCriticalSpeedPaceModel)
             {
-                <PaceInfo EPaceLow="@_lowerPace.Easy"
-                          EPaceHigh="@_upperPace.Easy"
-                          RecoveryPaceLow="@_lowerPace.Easy.Add(TimeSpan.FromSeconds(30))"
-                          RecoveryPaceHigh="@_upperPace.Easy.Add(TimeSpan.FromSeconds(30))"
-                          MPaceLow="@_lowerPace.Marathon"
-                          MPaceHigh="@_upperPace.Marathon"
-                          TPaceLow="@_lowerPace.Threshold"
-                          TPaceHigh="@_upperPace.Threshold"
-                          IPaceLow="@_lowerPace.Intervall"
-                          IPaceHigh="@_upperPace.Intervall"
-                          RPaceLow="@_lowerPace.Repetition"
-                          RPaceHigh="@_upperPace.Repetition" />
+                <PaceComparisonInfo DanielsLower="@_lowerPace"
+                                    DanielsUpper="@_upperPace"
+                                    HasDaniels="@_hasDanielsPaceModel"
+                                    CriticalSpeedLower="@_lowerCriticalSpeedPace"
+                                    CriticalSpeedUpper="@_upperCriticalSpeedPace"
+                                    HasCriticalSpeed="@_hasCriticalSpeedPaceModel" />
             }
             else
             {
@@ -102,6 +123,10 @@
                     @L["NoRaceWarning"]
                 </MudAlert>
             }
+        }
+        else
+        {
+            <PaceModelInfo />
         }
 
     </MudStack>
@@ -112,7 +137,8 @@
     private enum RacePacesSection
     {
         RaceData,
-        PaceZones
+        PaceZones,
+        Info
     }
 
     private RacePacesSection _activeSection = RacePacesSection.RaceData;
@@ -128,6 +154,17 @@
             ? "pl-section-nav__item pl-section-nav__item--active"
             : "pl-section-nav__item";
     }
-}
 
+    private string GetCriticalSpeedMethodText()
+    {
+        return _criticalSpeed.Method switch
+        {
+            PaceLetics.CoreModule.Infrastructure.Enums.CriticalSpeedMethod.Single1200Estimate => L["CriticalSpeedCard_Method_1200"],
+            PaceLetics.CoreModule.Infrastructure.Enums.CriticalSpeedMethod.TwoPoint1200And3600 => L["CriticalSpeedCard_Method_1200_3600"],
+            PaceLetics.CoreModule.Infrastructure.Enums.CriticalSpeedMethod.MultiPointRegression => L["CriticalSpeedCard_Method_Regression"],
+            PaceLetics.CoreModule.Infrastructure.Enums.CriticalSpeedMethod.SinglePerformanceEstimate => L["CriticalSpeedCard_Method_Single"],
+            _ => L["CriticalSpeedCard_Method_None"]
+        };
+    }
+}
 

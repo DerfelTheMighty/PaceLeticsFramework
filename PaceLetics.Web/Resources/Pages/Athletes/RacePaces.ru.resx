@@ -16,4 +16,11 @@
   <data name="PaceZonesTitle" xml:space="preserve"><value>Ãâ€™ÃÂ°Ã‘Ë†ÃÂ¸ ÃÂ·ÃÂ¾ÃÂ½Ã‘â€¹ Ã‘â€šÃÂµÃÂ¼ÃÂ¿ÃÂ°</value></data>
   <data name="PaceZonesSubtitle" xml:space="preserve"><value>Ãâ€”ÃÂ´ÃÂµÃ‘ÂÃ‘Å’ ÃÂ²Ã‘â€¹ ÃÂ½ÃÂ°ÃÂ¹ÃÂ´ÃÂµÃ‘â€šÃÂµ ÃÂ¾ÃÂ¿Ã‘â€šÃÂ¸ÃÂ¼ÃÂ°ÃÂ»Ã‘Å’ÃÂ½Ã‘â€¹ÃÂµ ÃÂ·ÃÂ¾ÃÂ½Ã‘â€¹ Ã‘â€šÃ‘â‚¬ÃÂµÃÂ½ÃÂ¸Ã‘â‚¬ÃÂ¾ÃÂ²ÃÂ¾Ã‘â€¡ÃÂ½ÃÂ¾ÃÂ³ÃÂ¾ Ã‘â€šÃÂµÃÂ¼ÃÂ¿ÃÂ° ÃÂ½ÃÂ° ÃÂ¾Ã‘ÂÃÂ½ÃÂ¾ÃÂ²ÃÂµ ÃÂ²ÃÂ°Ã‘Ë†ÃÂµÃÂ³ÃÂ¾ VDOT.</value></data>
 
+  <data name="TabInfo" xml:space="preserve"><value>&#x418;&#x43D;&#x444;&#x43E;</value></data>
+  <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
+  <data name="CriticalSpeedCard_Method_1200" xml:space="preserve"><value>&#x41E;&#x446;&#x435;&#x43D;&#x435;&#x43D;&#x43E; &#x43F;&#x43E; &#x43E;&#x434;&#x43D;&#x43E;&#x43C;&#x443; &#x442;&#x435;&#x441;&#x442;&#x443; 1200 &#x43C;.</value></data>
+  <data name="CriticalSpeedCard_Method_1200_3600" xml:space="preserve"><value>&#x420;&#x430;&#x441;&#x441;&#x447;&#x438;&#x442;&#x430;&#x43D;&#x43E; &#x43F;&#x43E; 1200 &#x43C; &#x438; 3600 &#x43C;.</value></data>
+  <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>&#x420;&#x430;&#x441;&#x441;&#x447;&#x438;&#x442;&#x430;&#x43D;&#x43E; &#x43F;&#x43E; &#x43D;&#x435;&#x441;&#x43A;&#x43E;&#x43B;&#x44C;&#x43A;&#x438;&#x43C; &#x440;&#x435;&#x437;&#x443;&#x43B;&#x44C;&#x442;&#x430;&#x442;&#x430;&#x43C; &#x447;&#x435;&#x440;&#x435;&#x437; &#x440;&#x435;&#x433;&#x440;&#x435;&#x441;&#x441;&#x438;&#x44E;.</value></data>
+  <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>&#x41E;&#x446;&#x435;&#x43D;&#x435;&#x43D;&#x43E; &#x43F;&#x43E; &#x43E;&#x434;&#x43D;&#x43E;&#x43C;&#x443; &#x437;&#x430;&#x431;&#x435;&#x433;&#x443;.</value></data>
+  <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>&#x41E;&#x446;&#x435;&#x43D;&#x43A;&#x430; Critical Speed &#x43F;&#x43E;&#x43A;&#x430; &#x43D;&#x435;&#x434;&#x43E;&#x441;&#x442;&#x443;&#x43F;&#x43D;&#x430;.</value></data>
 </root>

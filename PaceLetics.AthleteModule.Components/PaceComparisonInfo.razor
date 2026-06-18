@@ -1,0 +1,24 @@
+@namespace PaceLetics.AthleteModule.Components
+@using MudBlazor
+@inject IStringLocalizer<AthleteResources> L
+
+<MudTable Items="@Items" Dense="true" Hover="true" Elevation="0" Class="pl-pace-comparison">
+    <HeaderContent>
+        <MudTh>@L["PaceComparison_Zone"]</MudTh>
+        <MudTh>@L["PaceComparison_Daniels"]</MudTh>
+        <MudTh>@L["PaceComparison_CriticalSpeed"]</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@L["PaceComparison_Zone"]" Class="@($"pl-pace-zone-{context.ZoneKey}")">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:10px;">
+                <div class="pl-pace-zone-mark" aria-hidden="true">@context.Code</div>
+                <MudStack Spacing="0">
+                    <MudText Typo="Typo.body1" Class="fw-bold">@context.Title</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@context.Description</MudText>
+                </MudStack>
+            </MudStack>
+        </MudTd>
+        <MudTd DataLabel="@L["PaceComparison_Daniels"]">@context.DanielsPaceText</MudTd>
+        <MudTd DataLabel="@L["PaceComparison_CriticalSpeed"]">@context.CriticalSpeedPaceText</MudTd>
+    </RowTemplate>
+</MudTable>

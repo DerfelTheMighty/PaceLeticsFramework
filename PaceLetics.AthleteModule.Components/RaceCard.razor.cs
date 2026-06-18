@@ -22,7 +22,9 @@ namespace PaceLetics.AthleteModule.Components
             return type switch
             {
                 RaceKeys.D1k => "1K",
+                RaceKeys.D1200m => "1200",
                 RaceKeys.D3k => "3K",
+                RaceKeys.D3600m => "3600",
                 RaceKeys.D5k => "5K",
                 RaceKeys.D10k => "10K",
                 RaceKeys.D15k => "15K",
@@ -37,7 +39,9 @@ namespace PaceLetics.AthleteModule.Components
             return type switch
             {
                 RaceKeys.D1k => "pl-race-distance-1k",
+                RaceKeys.D1200m => "pl-race-distance-1k",
                 RaceKeys.D3k => "pl-race-distance-3k",
+                RaceKeys.D3600m => "pl-race-distance-3k",
                 RaceKeys.D5k => "pl-race-distance-5k",
                 RaceKeys.D10k => "pl-race-distance-10k",
                 RaceKeys.D15k => "pl-race-distance-15k",

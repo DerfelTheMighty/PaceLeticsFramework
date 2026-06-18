@@ -16,4 +16,11 @@
   <data name="PaceZonesTitle" xml:space="preserve"><value>Ã™â€¦Ã™â€ Ã˜Â§Ã˜Â·Ã™â€š Ã™Ë†Ã˜ÂªÃ™Å Ã˜Â±Ã˜ÂªÃ™Æ’</value></data>
   <data name="PaceZonesSubtitle" xml:space="preserve"><value>Ã™â€¡Ã™â€ Ã˜Â§ Ã˜ÂªÃ˜Â¬Ã˜Â¯ Ã™â€¦Ã™â€ Ã˜Â§Ã˜Â·Ã™â€š Ã™Ë†Ã˜ÂªÃ™Å Ã˜Â±Ã˜Â© Ã˜Â§Ã™â€žÃ˜ÂªÃ˜Â¯Ã˜Â±Ã™Å Ã˜Â¨ Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â«Ã™â€žÃ™â€° Ã˜Â¨Ã™â€ Ã˜Â§Ã˜Â¡Ã™â€¹ Ã˜Â¹Ã™â€žÃ™â€° Ã™â€šÃ™Å Ã™â€¦Ã˜Â© VDOT Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â§Ã˜ÂµÃ˜Â© Ã˜Â¨Ã™Æ’.</value></data>
 
+  <data name="TabInfo" xml:space="preserve"><value>&#x645;&#x639;&#x644;&#x648;&#x645;&#x627;&#x62A;</value></data>
+  <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
+  <data name="CriticalSpeedCard_Method_1200" xml:space="preserve"><value>&#x62A;&#x642;&#x62F;&#x64A;&#x631; &#x645;&#x646; &#x627;&#x62E;&#x62A;&#x628;&#x627;&#x631; 1200 &#x645; &#x648;&#x627;&#x62D;&#x62F;.</value></data>
+  <data name="CriticalSpeedCard_Method_1200_3600" xml:space="preserve"><value>&#x645;&#x62D;&#x633;&#x648;&#x628; &#x645;&#x646; 1200 &#x645; &#x648; 3600 &#x645;.</value></data>
+  <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>&#x645;&#x62D;&#x633;&#x648;&#x628; &#x645;&#x646; &#x639;&#x62F;&#x629; &#x646;&#x62A;&#x627;&#x626;&#x62C; &#x628;&#x627;&#x644;&#x627;&#x646;&#x62D;&#x62F;&#x627;&#x631;.</value></data>
+  <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>&#x62A;&#x642;&#x62F;&#x64A;&#x631; &#x645;&#x646; &#x631;&#x643;&#x636;&#x629; &#x648;&#x627;&#x62D;&#x62F;&#x629;.</value></data>
+  <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>&#x644;&#x627; &#x64A;&#x648;&#x62C;&#x62F; &#x62A;&#x642;&#x62F;&#x64A;&#x631; Critical Speed &#x628;&#x639;&#x62F;.</value></data>
 </root>
