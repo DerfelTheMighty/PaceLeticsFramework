@@ -1,16 +1,23 @@
 .pl-bottom-nav {
+    --pl-bottom-nav-safe-area: env(safe-area-inset-bottom, 0px);
+
     position: fixed;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: 1200;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     gap: 0.15rem;
-    padding: 0.45rem 0.35rem calc(0.45rem + env(safe-area-inset-bottom));
+    height: calc(4.65rem + var(--pl-bottom-nav-safe-area));
+    padding: 0.45rem 0.35rem calc(0.45rem + var(--pl-bottom-nav-safe-area));
     background: color-mix(in srgb, var(--mud-palette-surface) 94%, black);
     border-top: 1px solid var(--mud-palette-lines-default);
     box-shadow: 0 -8px 24px color-mix(in srgb, var(--mud-palette-black) 20%, transparent);
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    contain: layout paint;
 }
 
 .pl-bottom-nav ::deep .pl-bottom-nav__item {
