@@ -273,4 +273,7 @@
   <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
     <value>Pause</value>
   </data>
+  <data name="PaceModelInfo_MechanicalLoadDiagramAlt" xml:space="preserve">
+    <value>Konzeptionelles Diagramm zum Zusammenhang zwischen schnellerer Laufpace und steigender mechanischer Belastung durch Impact, Loading Rate und Muskel-Sehnen-Beanspruchung.</value>
+  </data>
 </root>

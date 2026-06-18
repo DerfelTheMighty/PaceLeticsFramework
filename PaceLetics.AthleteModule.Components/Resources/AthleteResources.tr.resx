@@ -258,4 +258,7 @@
   <data name="CriticalSpeedBudget_Recovery" xml:space="preserve">
     <value>Recovery</value>
   </data>
+  <data name="PaceModelInfo_MechanicalLoadDiagramAlt" xml:space="preserve">
+    <value>Conceptual diagram showing how faster running pace increases mechanical load through impact, loading rate, and muscle-tendon demand.</value>
+  </data>
 </root>
