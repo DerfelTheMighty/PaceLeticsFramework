@@ -1,6 +1,7 @@
 
 using MudBlazor;
 using MudBlazor.Extensions;
+using Microsoft.AspNetCore.Components;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.AthleteModule.Components;
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
@@ -19,6 +20,16 @@ namespace PaceLetics.Web.Pages.Athletes
         private bool _hasDanielsPaceModel;
         private bool _hasCriticalSpeedPaceModel;
         private double[] _vdotData { get; set; } = {0, 0};
+
+        [Parameter]
+        [SupplyParameterFromQuery(Name = "section")]
+        public string? Section { get; set; }
+
+        protected override void OnParametersSet()
+        {
+            if (TryParseSection(Section, out var section))
+                _activeSection = section;
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -180,6 +191,25 @@ namespace PaceLetics.Web.Pages.Athletes
                 && left.Time == right.Time
                 && left.Date.Date == right.Date.Date
                 && string.Equals(left.Id, right.Id, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool TryParseSection(string? value, out RacePacesSection section)
+        {
+            section = RacePacesSection.RaceData;
+
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+
+            var normalized = value.Trim().ToLowerInvariant();
+            section = normalized switch
+            {
+                "pacedata" or "racedata" or "laufdaten" => RacePacesSection.RaceData,
+                "pacezones" or "paces" or "pacebereiche" => RacePacesSection.PaceZones,
+                "info" or "infos" => RacePacesSection.Info,
+                _ => RacePacesSection.RaceData
+            };
+
+            return normalized is "pacedata" or "racedata" or "laufdaten" or "pacezones" or "paces" or "pacebereiche" or "info" or "infos";
         }
     }
 }

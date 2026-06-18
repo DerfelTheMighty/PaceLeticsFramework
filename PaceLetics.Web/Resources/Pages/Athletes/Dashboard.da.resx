@@ -12,6 +12,7 @@
   <data name="IntroText" xml:space="preserve"><value>Her finder du seneste kursusnyt, information om kommende træningspas og træningsforslag.</value></data>
   <data name="Breadcrumb_Personal" xml:space="preserve"><value>Personligt</value></data>
   <data name="WelcomeText" xml:space="preserve"><value>Hej {0}, her er din aktuelle træningsstatus.</value></data>
+  <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
   <data name="Metric_TrainingPlan" xml:space="preserve"><value>Træningsplan</value></data>
   <data name="Metric_NextSession" xml:space="preserve"><value>Næste session</value></data>

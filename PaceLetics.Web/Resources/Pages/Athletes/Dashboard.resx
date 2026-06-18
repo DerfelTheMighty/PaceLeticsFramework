@@ -12,6 +12,7 @@
   <data name="IntroText" xml:space="preserve"><value>Here you will find the latest course news, information about upcoming training sessions and training suggestions.</value></data>
   <data name="Breadcrumb_Personal" xml:space="preserve"><value>Personal</value></data>
   <data name="WelcomeText" xml:space="preserve"><value>Hello {0}, here is your current training status.</value></data>
+  <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
   <data name="Metric_TrainingPlan" xml:space="preserve"><value>Training plan</value></data>
   <data name="Metric_NextSession" xml:space="preserve"><value>Next session</value></data>

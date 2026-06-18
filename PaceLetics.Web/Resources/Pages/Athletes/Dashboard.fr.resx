@@ -12,6 +12,7 @@
   <data name="IntroText" xml:space="preserve"><value>Vous trouverez ici les dernières nouvelles des cours, les prochaines séances et des suggestions d’entraînement.</value></data>
   <data name="Breadcrumb_Personal" xml:space="preserve"><value>Personnel</value></data>
   <data name="WelcomeText" xml:space="preserve"><value>Bonjour {0}, voici votre statut d’entraînement actuel.</value></data>
+  <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
   <data name="Metric_TrainingPlan" xml:space="preserve"><value>Plan d’entraînement</value></data>
   <data name="Metric_NextSession" xml:space="preserve"><value>Prochaine séance</value></data>

@@ -5,6 +5,7 @@
 
 @using MudBlazor;
 @using PaceLetics.AthleteModule.CodeBase.Models;
+@using PaceLetics.CoreModule.Infrastructure.Interfaces
 @using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.CoreModule.Infrastructure.Services
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
@@ -15,6 +16,7 @@
 @inject IStringLocalizer<Dashboard> L
 @inject LoadingStateService Loading
 @inject ITrainingPlanService TrainingPlanService
+@inject ICriticalSpeedService CriticalSpeedService
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -29,12 +31,12 @@
 
         <MudGrid Spacing="3">
             <MudItem xs="12" sm="6" lg="4">
-                <DashboardMetricTile Label="@L["Metric_Vdot"]"
-                                     Value="@GetVdotValue()"
+                <DashboardMetricTile Label="@L["Metric_VdotCs"]"
+                                     Value="@GetVdotCsValue()"
                                      Detail="@GetReferenceDetail()"
                                      Icon="@Icons.Material.Filled.Speed"
                                      Accent="blue"
-                                     Href="/Athletes/racepaces" />
+                                     Href="/Athletes/racepaces?section=info" />
             </MudItem>
 
             <MudItem xs="12" sm="6" lg="4">
@@ -67,6 +69,7 @@
     TrainingPlan? _activePlan;
     TrainingSession? _nextSession;
     RaceResultModel? _referenceResult;
+    CriticalSpeedModel _criticalSpeed = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,6 +95,7 @@
             _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
             _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
             _referenceResult = Athlete?.ActiveReferenceResult;
+            _criticalSpeed = CriticalSpeedService.Estimate(GetCriticalSpeedResults(Athlete));
         });
 
         await base.OnInitializedAsync();
@@ -133,9 +137,41 @@
             .FirstOrDefault();
     }
 
-    private string GetVdotValue()
+    private string GetVdotCsValue()
     {
-        return Athlete?.Vdot > 0 ? Athlete.Vdot.ToString("0.0") : L["Metric_NotAvailable"];
+        var vdot = Athlete?.Vdot > 0
+            ? Athlete.Vdot.ToString("0.0")
+            : L["Metric_NotAvailable"].Value;
+
+        var criticalSpeed = _criticalSpeed.IsValid
+            ? $"{_criticalSpeed.CriticalSpeedMps:0.00} m/s"
+            : L["Metric_NotAvailable"].Value;
+
+        return $"{vdot} / {criticalSpeed}";
+    }
+
+    private static IEnumerable<RaceResultModel> GetCriticalSpeedResults(AthleteModel? athlete)
+    {
+        if (athlete is null)
+            return Enumerable.Empty<RaceResultModel>();
+
+        var results = new List<RaceResultModel>();
+
+        if (athlete.RaceResults is not null)
+            results.AddRange(athlete.RaceResults);
+
+        if (athlete.ActiveReferenceResult is not null && !results.Any(result => IsSameRaceResult(result, athlete.ActiveReferenceResult)))
+            results.Add(athlete.ActiveReferenceResult);
+
+        return results;
+    }
+
+    private static bool IsSameRaceResult(RaceResultModel left, RaceResultModel right)
+    {
+        return left.DistanceM == right.DistanceM
+            && left.Time == right.Time
+            && left.Date.Date == right.Date.Date
+            && string.Equals(left.Id, right.Id, StringComparison.OrdinalIgnoreCase);
     }
 
     private string GetReferenceDetail()

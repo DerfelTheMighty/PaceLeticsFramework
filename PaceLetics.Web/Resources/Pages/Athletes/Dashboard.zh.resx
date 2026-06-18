@@ -12,6 +12,7 @@
   <data name="IntroText" xml:space="preserve"><value>这里可以查看最新课程消息、即将到来的训练和训练建议。</value></data>
   <data name="Breadcrumb_Personal" xml:space="preserve"><value>个人</value></data>
   <data name="WelcomeText" xml:space="preserve"><value>你好 {0}，这是你当前的训练状态。</value></data>
+  <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
   <data name="Metric_TrainingPlan" xml:space="preserve"><value>训练计划</value></data>
   <data name="Metric_NextSession" xml:space="preserve"><value>下一次训练</value></data>
