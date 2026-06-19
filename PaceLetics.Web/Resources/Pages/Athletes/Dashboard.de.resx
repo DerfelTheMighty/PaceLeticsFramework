@@ -44,18 +44,18 @@
   <data name="Metric_RunningAnalysisInfoValue" xml:space="preserve"><value>Laufform verstehen</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>Mentale Ressource</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>Icon mit Gehirn und Herz</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>Laufen soll verfügbar bleiben.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>Die Folien führen Laufen als verlässliche Ressource für Stimmung, Affektregulation und Stressabbau ein. Genau deshalb gehören Verletzungsfreiheit, niedrige Drop-out-Rate und Selbstwirksamkeit zum Kern des Trainingssystems.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Wirkung</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Regelmäßiges Freizeitlaufen ist mit besserer Stimmung, emotionaler Stabilität und weniger Anspannung verbunden.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Verletzlichkeit</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Fällt Laufen durch Verletzung, Termindruck oder Rückschläge weg, fehlt vielen eine gewohnte Strategie zur mentalen Regulation.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Risiko</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Gerade Einsteiger:innen erleben hohe Verletzungs- und Abbruchraten; Frustration, Scham und Schuldgefühle können den Ausstieg verstärken.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Konsequenz</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Erfolg heißt deshalb nicht nur schneller werden, sondern die Ressource langfristig erschließen, aufbauen und nutzbar halten.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Warum Laufen mehr ist als Training</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>Wer läuft, trainiert nicht nur Muskeln und Kreislauf. Für viele wird der Lauf zu einem kontrollierbaren Moment im Tag: ein Werkzeug, das Stimmung ordnet, Anspannung senkt und Selbstwirksamkeit spürbar macht.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Was Laufen leisten kann</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Übersichtsarbeiten deuten darauf hin, dass einzelne Läufe und regelmäßiges Freizeitlaufen Stimmung und mentale Gesundheit unterstützen können. Die Befunde sind nicht grenzenlos, aber stark genug, um Laufen als psychische Ressource ernst zu nehmen.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Nicht unbegrenzt verfügbar</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Als Ressource ist Laufen an Belastbarkeit, Regeneration und Alltag gebunden. Schmerzen, Überlastung oder Zeitdruck können den Zugang unterbrechen; dann fehlt nicht nur Training, sondern auch eine eingeübte Form der Selbstregulation.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Wo Einsteiger:innen gefährdet sind</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Bei Anfänger:innen liegt die berichtete Verletzungsinzidenz deutlich höher als bei erfahrenen Freizeitläufer:innen. In Einstiegsprogrammen bricht zudem ein relevanter Teil früh ab, häufig wegen Beschwerden oder Verletzungen.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Was daraus folgt</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Nachhaltiges Lauftraining darf Drop-out deshalb nicht als Randnotiz behandeln. Wenn Frust, Scham oder Schuldgefühle den Wiedereinstieg blockieren, ist nicht nur ein Trainingsplan gescheitert, sondern eine Alltagsressource verloren gegangen.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>Die App übersetzt das in Routinen, dosierte Belastung, verständliche Trainingslogik und selbstständige Entscheidungen.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics setzt genau dort an: Belastung dosieren, Routinen verständlich machen, Fortschritt langfristig absichern und Athlet:innen befähigen, eigene Entscheidungen zu treffen.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>Quellen</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

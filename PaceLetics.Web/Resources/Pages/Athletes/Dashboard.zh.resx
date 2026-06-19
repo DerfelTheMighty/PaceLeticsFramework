@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>无内容</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>心理资源</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>大脑与心脏图标</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>跑步应当始终可用。</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>这些幻灯片把跑步视为调节情绪、稳定情感和缓解压力的可靠资源。因此，预防伤病、降低放弃率和提升自我效能，是训练系统的核心部分。</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>作用</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>规律的休闲跑步与更好的心情、更稳定的情绪和更低的紧张感相关。</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>脆弱性</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>当跑步因伤病、时间压力或挫折而中断时，许多人会失去一种熟悉的心理调节策略。</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>风险</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>初学者尤其容易面临较高的伤病率和放弃率；沮丧、羞耻和内疚可能进一步促使他们离开这项运动。</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>结论</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>因此，成功不只是变得更快，也意味着让这一资源可获得、可建立，并长期保持可用。</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>为什么跑步不只是训练</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>跑步训练的不只是肌肉和循环系统。对许多人来说，它会成为一天中可掌控的时刻：一种稳定情绪、降低紧张感并让自我效能变得可感的工具。</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>跑步能带来什么</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>综述研究提示，单次跑步和规律的休闲跑步都可能支持情绪和心理健康。证据并非没有边界，但已经足以让我们认真看待跑步的心理资源价值。</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>并非无限可用</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>作为一种资源，跑步取决于负荷耐受、恢复以及日常条件。疼痛、过载或时间压力都可能中断这种可用性；此时失去的不只是训练，还有一种已经习得的自我调节方式。</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>初学者的风险在哪里</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>初学跑者报告的伤病发生率明显高于有经验的休闲跑者。在入门计划中，也有相当一部分人很早停止，常见原因是疼痛或伤病。</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>由此得到什么结论</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>可持续的跑步训练不能把退出看作小问题。当沮丧、羞耻或内疚阻碍重新开始时，失败的不只是训练计划，失去的也是一种日常资源。</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>应用会把这一理念转化为日常习惯、合适的负荷、清晰的训练逻辑和自主决策。</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics 正是从这里开始：控制负荷，让日常训练更易理解，长期稳住进展，并帮助运动员自己做决定。</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>来源</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>Aucun contenu</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>Ressource mentale</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>Icône avec cerveau et cœur</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>La course doit rester disponible.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>Les diapositives présentent la course comme une ressource fiable pour l’humeur, la régulation affective et la réduction du stress. C’est pourquoi la prévention des blessures, le faible abandon et l’auto-efficacité sont au cœur du système d’entraînement.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Effet</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>La course de loisir régulière est associée à une meilleure humeur, à une stabilité émotionnelle et à une tension plus faible.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Fragilité</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Lorsque la course est interrompue par une blessure, le manque de temps ou des revers, beaucoup perdent une stratégie familière de régulation mentale.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Risque</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Les débutants sont particulièrement exposés à des taux élevés de blessures et d’abandon; la frustration, la honte et la culpabilité peuvent renforcer la sortie de la pratique.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Conséquence</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Réussir ne signifie donc pas seulement aller plus vite, mais rendre cette ressource accessible, la construire et la garder utilisable à long terme.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Pourquoi courir dépasse l’entraînement</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>Courir n’entraîne pas seulement les muscles et le système cardiovasculaire. Pour beaucoup, la sortie devient un moment maîtrisable dans la journée: un outil qui stabilise l’humeur, abaisse la tension et rend l’auto-efficacité palpable.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Ce que la course peut apporter</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Les revues suggèrent qu’une séance de course et la course de loisir régulière peuvent soutenir l’humeur et la santé mentale. Les données ont des limites, mais elles suffisent à prendre la course au sérieux comme ressource psychologique.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Une disponibilité limitée</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Comme ressource, la course dépend de la tolérance à la charge, de la récupération et des contraintes du quotidien. La douleur, la surcharge ou le manque de temps peuvent interrompre l’accès; on perd alors non seulement l’entraînement, mais aussi une forme apprise d’autorégulation.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Où le risque augmente chez les débutants</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>L’incidence rapportée des blessures est nettement plus élevée chez les débutants que chez les coureurs de loisir expérimentés. Dans les programmes d’initiation, une part importante abandonne aussi tôt, souvent à cause de douleurs ou de blessures.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Ce qu’il faut en conclure</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Un entraînement durable ne peut donc pas traiter l’abandon comme un détail. Lorsque la frustration, la honte ou la culpabilité bloquent le retour, ce n’est pas seulement un plan d’entraînement qui échoue: une ressource du quotidien disparaît.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>L’app transforme cela en routines, charge dosée, logique d’entraînement compréhensible et décisions autonomes.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics part de là: doser la charge, rendre les routines compréhensibles, sécuriser les progrès dans la durée et aider les athlètes à prendre leurs propres décisions.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>Sources</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

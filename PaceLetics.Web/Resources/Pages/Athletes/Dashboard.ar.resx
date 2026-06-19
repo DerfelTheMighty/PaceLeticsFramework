@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>لا يوجد محتوى</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>مورد ذهني</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>أيقونة الدماغ والقلب</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>يجب أن يبقى الجري متاحًا.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>تعرض الشرائح الجري كمورد موثوق للمزاج وتنظيم الانفعال وتخفيف التوتر. لذلك يصبح منع الإصابات وخفض الانقطاع وتعزيز الكفاءة الذاتية جزءًا أساسيًا من نظام التدريب.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>الأثر</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>يرتبط الجري الترفيهي المنتظم بمزاج أفضل واستقرار عاطفي أكبر وتوتر أقل.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>الهشاشة</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>عندما يتوقف الجري بسبب إصابة أو ضغط الوقت أو الانتكاسات، يفقد كثيرون استراتيجية مألوفة للتنظيم الذهني.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>الخطر</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>يواجه المبتدئون خصوصًا معدلات مرتفعة من الإصابات والانقطاع؛ وقد يعزز الإحباط والخجل والشعور بالذنب ترك الرياضة.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>النتيجة</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>لذلك لا يعني النجاح أن تصبح أسرع فقط، بل أن تجعل هذا المورد متاحًا وتبنيه وتحافظ على قابليته للاستخدام على المدى الطويل.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>لماذا الجري أكثر من تدريب</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>الجري لا يدرّب العضلات والدورة الدموية فقط. بالنسبة لكثيرين يصبح لحظة يمكن التحكم بها في اليوم: أداة تهدئ المزاج وتخفض التوتر وتجعل الكفاءة الذاتية ملموسة.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>ما الذي يمكن أن يقدمه الجري</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>تشير المراجعات إلى أن جولة جري واحدة والجري الترفيهي المنتظم يمكن أن يدعما المزاج والصحة النفسية. للأدلة حدود، لكنها كافية لأخذ الجري بجدية كمورد نفسي.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>ليس متاحًا بلا حدود</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>بوصفه موردًا، يعتمد الجري على تحمل الحمل والاستشفاء وظروف الحياة اليومية. يمكن للألم أو الحمل الزائد أو ضيق الوقت أن يقطع الوصول إليه؛ عندها لا يضيع التدريب فقط، بل تضيع أيضًا طريقة مكتسبة لتنظيم الذات.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>أين يكون المبتدئون أكثر عرضة</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>معدل الإصابات المبلغ عنه أعلى بوضوح لدى العدائين المبتدئين مقارنة بالعدائين الترفيهيين ذوي الخبرة. وفي برامج البداية يتوقف جزء ملحوظ مبكرًا، غالبًا بسبب الألم أو الإصابة.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>ما الذي ينتج عن ذلك</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>لذلك لا يمكن لتدريب الجري المستدام أن يعامل الانقطاع كمسألة جانبية. عندما تمنع مشاعر الإحباط أو الخجل أو الذنب العودة، لا يفشل برنامج تدريب فقط؛ بل يضيع مورد يومي.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>يترجم التطبيق ذلك إلى عادات منتظمة وحمل تدريبي مضبوط ومنطق تدريب مفهوم وقرارات مستقلة.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>يبدأ PaceLetics من هنا: ضبط الحمل، جعل العادات مفهومة، حماية التقدم على المدى الطويل، وتمكين الرياضيين من اتخاذ قراراتهم بأنفسهم.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>المصادر</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

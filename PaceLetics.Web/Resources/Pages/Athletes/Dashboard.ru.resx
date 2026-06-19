@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>Нет содержимого</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>Психологический ресурс</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>Иконка с мозгом и сердцем</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>Бег должен оставаться доступным.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>Слайды показывают бег как надежный ресурс для настроения, регуляции эмоций и снижения стресса. Поэтому профилактика травм, низкий уровень отказа от занятий и самоэффективность являются ядром тренировочной системы.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Эффект</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Регулярный любительский бег связан с лучшим настроением, эмоциональной стабильностью и меньшим напряжением.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Уязвимость</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Когда бег прерывается из-за травмы, нехватки времени или неудач, многие теряют привычную стратегию психической регуляции.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Риск</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Особенно новички сталкиваются с высокой частотой травм и отказа от занятий; разочарование, стыд и чувство вины могут усилить уход из спорта.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Следствие</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Поэтому успех означает не только стать быстрее, но и сделать этот ресурс доступным, развивать его и сохранять пригодным в долгосрочной перспективе.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Почему бег больше, чем тренировка</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>Бег тренирует не только мышцы и кровообращение. Для многих он становится управляемым моментом в течение дня: инструментом, который стабилизирует настроение, снижает напряжение и делает самоэффективность ощутимой.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Что может дать бег</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Обзоры показывают, что отдельные пробежки и регулярный любительский бег могут поддерживать настроение и психическое здоровье. У доказательств есть ограничения, но их достаточно, чтобы воспринимать бег как психологический ресурс.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Не безгранично доступный ресурс</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Как ресурс, бег зависит от переносимости нагрузки, восстановления и повседневных ограничений. Боль, перегрузка или нехватка времени могут прервать доступ к нему; тогда человек теряет не только тренировку, но и освоенный способ саморегуляции.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Где новички уязвимы</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Сообщаемая частота травм у новичков заметно выше, чем у опытных любителей. В программах для начинающих значимая часть участников также прекращает занятия рано, часто из-за боли или травмы.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Что из этого следует</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Устойчивые беговые программы не могут считать отказ от занятий второстепенной темой. Когда разочарование, стыд или чувство вины мешают вернуться, теряется не только тренировочный план, но и повседневный ресурс.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>Приложение переводит это в регулярные привычки, дозированную нагрузку, понятную тренировочную логику и самостоятельные решения.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics начинает именно здесь: дозировать нагрузку, делать привычки понятными, закреплять прогресс в долгосрочной перспективе и помогать спортсменам принимать собственные решения.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>Источники</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

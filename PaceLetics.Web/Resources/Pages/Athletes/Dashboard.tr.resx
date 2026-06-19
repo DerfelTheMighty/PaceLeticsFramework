@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>İçerik yok</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>Zihinsel kaynak</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>Beyin ve kalp simgesi</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>Koşu erişilebilir kalmalı.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>Slaytlar koşuyu ruh hali, duygu düzenleme ve stres azaltma için güvenilir bir kaynak olarak çerçeveliyor. Bu yüzden sakatlıkların önlenmesi, düşük bırakma oranı ve öz yeterlik antrenman sisteminin temel parçalarıdır.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Etki</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Düzenli rekreatif koşu daha iyi ruh hali, duygusal denge ve daha düşük gerginlikle ilişkilidir.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Kırılganlık</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Koşu sakatlık, zaman baskısı veya geri düşüşler nedeniyle kesildiğinde, birçok kişi zihinsel düzenleme için alışık olduğu bir stratejiyi kaybeder.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Risk</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Özellikle yeni başlayanlar yüksek sakatlık ve bırakma oranlarıyla karşılaşır; hayal kırıklığı, utanç ve suçluluk spordan uzaklaşmayı güçlendirebilir.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Sonuç</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Bu yüzden başarı yalnızca hızlanmak değil, bu kaynağı erişilebilir kılmak, geliştirmek ve uzun vadede kullanılabilir tutmaktır.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Koşu neden antrenmandan fazlasıdır</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>Koşu yalnızca kasları ve dolaşımı çalıştırmaz. Birçok kişi için gün içinde kontrol edilebilir bir ana dönüşür: ruh halini toparlayan, gerginliği azaltan ve öz yeterliği somutlaştıran bir araç.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Koşu ne sağlayabilir</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Derlemeler, tek bir koşunun ve düzenli rekreatif koşunun ruh halini ve mental sağlığı destekleyebileceğini gösteriyor. Kanıtların sınırları var, ancak koşuyu psikolojik bir kaynak olarak ciddiye almak için yeterince güçlüler.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Sınırsız erişilebilir değildir</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Bir kaynak olarak koşu; yük toleransına, toparlanmaya ve günlük yaşamın koşullarına bağlıdır. Ağrı, aşırı yüklenme ya da zaman baskısı erişimi kesebilir; bu durumda kişi yalnızca antrenmanı değil, öğrenilmiş bir öz düzenleme biçimini de kaybeder.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Yeni başlayanlar nerede hassastır</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Bildirilen sakatlık insidansı yeni başlayanlarda deneyimli rekreatif koşuculara göre belirgin biçimde daha yüksektir. Başlangıç programlarında da anlamlı bir grup, çoğunlukla ağrı veya sakatlık nedeniyle erken bırakır.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Bundan ne çıkar</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Sürdürülebilir koşu antrenmanı bırakmayı yan konu sayamaz. Hayal kırıklığı, utanç ya da suçluluk geri dönüşü engellediğinde yalnızca bir antrenman planı değil, gündelik bir kaynak kaybedilir.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>Uygulama bunu rutinlere, dozlanmış yüke, anlaşılır antrenman mantığına ve bağımsız kararlara dönüştürür.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics tam buradan başlar: yükü dozlamak, rutinleri anlaşılır kılmak, ilerlemeyi uzun vadede güvenceye almak ve sporcuların kendi kararlarını vermesini sağlamak.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>Kaynaklar</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

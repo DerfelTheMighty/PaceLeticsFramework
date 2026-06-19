@@ -53,8 +53,8 @@ public sealed class ComponentLocalizationTests
 
     [Theory]
     [InlineData("tr", "WelcomeText", "Merhaba {0}, işte güncel antrenman durumun.")]
-    [InlineData("de", "MentalResource_Title", "Laufen soll verfügbar bleiben.")]
-    [InlineData("en", "MentalResource_Title", "Running should stay available.")]
+    [InlineData("de", "MentalResource_Title", "Warum Laufen mehr ist als Training")]
+    [InlineData("en", "MentalResource_Title", "Why running is more than training")]
     [InlineData("es", "Title", "Panel")]
     public void DashboardResources_ResolveTranslatedKeysForNewCultures(
         string culture,

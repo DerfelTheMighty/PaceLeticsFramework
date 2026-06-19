@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>بدون محتوا</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>منبع ذهنی</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>آیکون مغز و قلب</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>دویدن باید در دسترس بماند.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>اسلایدها دویدن را به‌عنوان منبعی قابل اعتماد برای خلق‌وخو، تنظیم عاطفی و کاهش استرس نشان می‌دهند. به همین دلیل پیشگیری از آسیب، کاهش ترک تمرین و خودکارآمدی بخش‌های اصلی نظام تمرین هستند.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>اثر</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>دویدن تفریحی منظم با خلق بهتر، ثبات هیجانی و تنش کمتر همراه است.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>آسیب‌پذیری</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>وقتی دویدن به دلیل آسیب، فشار زمانی یا عقب‌گردها قطع می‌شود، بسیاری از افراد یک راهبرد آشنا برای تنظیم ذهنی را از دست می‌دهند.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>خطر</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>به‌ویژه مبتدیان با نرخ بالای آسیب و ترک تمرین روبه‌رو هستند؛ سرخوردگی، شرم و احساس گناه می‌تواند خروج از ورزش را تقویت کند.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>پیامد</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>بنابراین موفقیت فقط سریع‌تر شدن نیست، بلکه یعنی این منبع را در دسترس کنیم، بسازیم و در بلندمدت قابل استفاده نگه داریم.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>چرا دویدن فراتر از تمرین است</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>دویدن فقط عضلات و گردش خون را تمرین نمی‌دهد. برای بسیاری از افراد، دویدن به لحظه‌ای قابل کنترل در روز تبدیل می‌شود: ابزاری که خلق را آرام می‌کند، تنش را پایین می‌آورد و خودکارآمدی را ملموس می‌سازد.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>دویدن چه کاری می‌تواند بکند</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>مرورهای علمی نشان می‌دهند که یک جلسه دویدن و دویدن تفریحی منظم می‌توانند از خلق‌وخو و سلامت روان حمایت کنند. شواهد محدودیت دارند، اما آن‌قدر قوی هستند که دویدن را به‌عنوان منبعی روانی جدی بگیریم.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>بدون محدودیت در دسترس نیست</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>دویدن به‌عنوان یک منبع به تحمل بار، بازیابی و شرایط روزمره وابسته است. درد، فشار بیش از حد یا کمبود زمان می‌تواند دسترسی به آن را قطع کند؛ در این حالت فرد فقط تمرین را از دست نمی‌دهد، بلکه یک شکل آموخته‌شده از خودتنظیمی را هم از دست می‌دهد.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>مبتدیان کجا آسیب‌پذیرند</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>میزان آسیب گزارش‌شده در دوندگان مبتدی به‌طور آشکار بالاتر از دوندگان تفریحی باتجربه است. در برنامه‌های شروع نیز بخشی قابل توجه زود کنار می‌کشد، اغلب به دلیل درد یا آسیب.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>نتیجه چیست</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>بنابراین تمرین پایدار دویدن نمی‌تواند ترک تمرین را موضوعی حاشیه‌ای بداند. وقتی سرخوردگی، شرم یا احساس گناه مانع بازگشت می‌شود، فقط یک برنامه تمرینی شکست نخورده است؛ یک منبع روزمره از دست رفته است.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>اپلیکیشن این ایده را به روتین‌ها، بار تمرینی اندازه‌گیری‌شده، منطق تمرینی قابل فهم و تصمیم‌های مستقل تبدیل می‌کند.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics از همین‌جا شروع می‌کند: تنظیم بار، قابل فهم کردن روتین‌ها، حفظ پیشرفت در بلندمدت و توانمند کردن ورزشکاران برای تصمیم‌گیری مستقل.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>منابع</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

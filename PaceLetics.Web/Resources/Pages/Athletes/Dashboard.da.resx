@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>Intet indhold</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>Mental ressource</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>Ikon med hjerne og hjerte</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>Løb skal blive ved med at være tilgængeligt.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>Slidesene beskriver løb som en pålidelig ressource for humør, affektregulering og stressreduktion. Derfor er skadesforebyggelse, lavt frafald og mestringstro centrale dele af træningssystemet.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Effekt</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Regelmæssigt motionsløb er forbundet med bedre humør, følelsesmæssig stabilitet og lavere spænding.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Sårbarhed</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Når løb afbrydes af skader, tidspres eller tilbageslag, mister mange en velkendt strategi til mental regulering.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Risiko</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Begyndere oplever især høje skades- og frafaldsrater; frustration, skam og skyld kan forstærke vejen ud af sporten.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Konsekvens</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Succes betyder derfor ikke kun at blive hurtigere, men at gøre ressourcen tilgængelig, opbygge den og holde den brugbar på lang sigt.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Hvorfor løb er mere end træning</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>Løb træner ikke kun muskler og kredsløb. For mange bliver turen et kontrollerbart øjeblik i dagen: et redskab, der stabiliserer humør, sænker spænding og gør mestringstro mærkbar.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Hvad løb kan gøre</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Reviews tyder på, at enkelte løbeture og regelmæssigt motionsløb kan støtte humør og mental sundhed. Evidensen har grænser, men den er stærk nok til at tage løb alvorligt som psykologisk ressource.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Ikke ubegrænset tilgængelig</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Som ressource afhænger løb af belastningstolerance, restitution og hverdagens rammer. Smerter, overbelastning eller tidspres kan afbryde adgangen; så mister man ikke kun træning, men også en indøvet form for selvregulering.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Hvor risikoen er større for begyndere</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Den rapporterede skadesincidens er markant højere hos begyndere end hos erfarne motionsløbere. I begynderprogrammer stopper en betydelig andel også tidligt, ofte på grund af smerter eller skader.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Hvad det betyder</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Bæredygtig løbetræning kan derfor ikke behandle frafald som en detalje. Når frustration, flovhed eller skyld blokerer en tilbagevenden, er det ikke kun en træningsplan, der er mislykkedes; en hverdagsressource er gået tabt.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>Appen omsætter det til rutiner, doseret belastning, forståelig træningslogik og selvstændige beslutninger.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics begynder netop der: dosere belastning, gøre rutiner forståelige, sikre fremgang på lang sigt og hjælpe atleter med at træffe egne beslutninger.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>Kilder</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>

@@ -41,18 +41,18 @@
   <data name="SessionEmpty" xml:space="preserve"><value>Sin contenido</value></data>
   <data name="MentalResource_Kicker" xml:space="preserve"><value>Recurso mental</value></data>
   <data name="MentalResource_IconLabel" xml:space="preserve"><value>Icono con cerebro y corazón</value></data>
-  <data name="MentalResource_Title" xml:space="preserve"><value>Correr debe seguir estando disponible.</value></data>
-  <data name="MentalResource_Lead" xml:space="preserve"><value>Las diapositivas presentan la carrera como un recurso fiable para el estado de ánimo, la regulación afectiva y el alivio del estrés. Por eso la prevención de lesiones, una baja tasa de abandono y la autoeficacia forman parte del núcleo del sistema de entrenamiento.</value></data>
-  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Efecto</value></data>
-  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Correr de forma recreativa y regular se asocia con mejor estado de ánimo, estabilidad emocional y menor tensión.</value></data>
-  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Fragilidad</value></data>
-  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Cuando correr se interrumpe por una lesión, falta de tiempo o retrocesos, muchas personas pierden una estrategia conocida de regulación mental.</value></data>
-  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Riesgo</value></data>
-  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Las personas principiantes se enfrentan especialmente a altas tasas de lesiones y abandono; la frustración, la vergüenza y la culpa pueden reforzar la salida del deporte.</value></data>
-  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Consecuencia</value></data>
-  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Por eso el éxito no significa solo correr más rápido, sino hacer accesible el recurso, desarrollarlo y mantenerlo útil a largo plazo.</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Por qué correr es más que entrenar</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>Correr no entrena solo músculos y sistema cardiovascular. Para muchas personas se convierte en un momento controlable del día: una herramienta que ordena el ánimo, reduce la tensión y hace tangible la autoeficacia.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Qué puede aportar correr</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Las revisiones sugieren que una sesión de carrera y la carrera recreativa regular pueden apoyar el ánimo y la salud mental. La evidencia tiene límites, pero es suficiente para tomar la carrera en serio como recurso psicológico.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>No está disponible sin límites</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Como recurso, correr depende de la tolerancia a la carga, la recuperación y las condiciones del día a día. El dolor, la sobrecarga o la falta de tiempo pueden interrumpir el acceso; entonces no se pierde solo entrenamiento, sino también una forma aprendida de autorregulación.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Dónde aumenta el riesgo en principiantes</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>La incidencia de lesiones comunicada es claramente mayor en principiantes que en corredores recreativos con experiencia. En los programas de inicio, una parte relevante también abandona pronto, a menudo por dolor o lesión.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Qué se deduce</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>El entrenamiento sostenible no puede tratar el abandono como un detalle. Cuando la frustración, la vergüenza o la culpa bloquean el regreso, no ha fallado solo un plan de entrenamiento: se ha perdido un recurso cotidiano.</value></data>
   <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
-  <data name="MentalResource_StepAppText" xml:space="preserve"><value>La app lo traduce en rutinas, carga dosificada, lógica de entrenamiento comprensible y decisiones autónomas.</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>PaceLetics empieza ahí: dosificar la carga, hacer comprensibles las rutinas, asegurar el progreso a largo plazo y ayudar a los atletas a tomar sus propias decisiones.</value></data>
   <data name="MentalResource_SourcesTitle" xml:space="preserve"><value>Fuentes</value></data>
   <data name="MentalResource_SourceOswald" xml:space="preserve"><value>Oswald et al. Running and mental health: A scoping review. Int J Environ Res Public Health. 2020.</value></data>
   <data name="MentalResource_SourcePereira" xml:space="preserve"><value>Pereira et al. Psychological and behavioral correlates of recreational running. Front Psychol. 2021.</value></data>
