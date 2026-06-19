@@ -42,4 +42,18 @@
   <data name="Metric_RunningAnalysisInfo" xml:space="preserve"><value>Laufanalyse</value></data>
   <data name="Metric_RunningAnalysisInfoDetail" xml:space="preserve"><value>Warum wir nicht jede Laufform korrigieren</value></data>
   <data name="Metric_RunningAnalysisInfoValue" xml:space="preserve"><value>Laufform verstehen</value></data>
+  <data name="MentalResource_Kicker" xml:space="preserve"><value>Mentale Ressource</value></data>
+  <data name="MentalResource_IconLabel" xml:space="preserve"><value>Icon mit Gehirn und Herz</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Laufen soll verfügbar bleiben.</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>Die Folien führen Laufen als verlässliche Ressource für Stimmung, Affektregulation und Stressabbau ein. Genau deshalb gehören Verletzungsfreiheit, niedrige Drop-out-Rate und Selbstwirksamkeit zum Kern des Trainingssystems.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Wirkung</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Regelmäßiges Freizeitlaufen ist mit besserer Stimmung, emotionaler Stabilität und weniger Anspannung verbunden.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Verletzlichkeit</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>Fällt Laufen durch Verletzung, Termindruck oder Rückschläge weg, fehlt vielen eine gewohnte Strategie zur mentalen Regulation.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Risiko</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Gerade Einsteiger:innen erleben hohe Verletzungs- und Abbruchraten; Frustration, Scham und Schuldgefühle können den Ausstieg verstärken.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Konsequenz</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Erfolg heißt deshalb nicht nur schneller werden, sondern die Ressource langfristig erschließen, aufbauen und nutzbar halten.</value></data>
+  <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>Die App übersetzt das in Routinen, dosierte Belastung, verständliche Trainingslogik und selbstständige Entscheidungen.</value></data>
 </root>

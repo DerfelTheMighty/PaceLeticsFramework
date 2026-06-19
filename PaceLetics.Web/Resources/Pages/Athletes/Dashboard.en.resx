@@ -42,4 +42,18 @@
   <data name="Metric_RunningAnalysisInfo" xml:space="preserve"><value>Running analysis</value></data>
   <data name="Metric_RunningAnalysisInfoDetail" xml:space="preserve"><value>Why we do not correct every pattern</value></data>
   <data name="Metric_RunningAnalysisInfoValue" xml:space="preserve"><value>Understand form</value></data>
+  <data name="MentalResource_Kicker" xml:space="preserve"><value>Mental resource</value></data>
+  <data name="MentalResource_IconLabel" xml:space="preserve"><value>Brain and heart icon</value></data>
+  <data name="MentalResource_Title" xml:space="preserve"><value>Running should stay available.</value></data>
+  <data name="MentalResource_Lead" xml:space="preserve"><value>The slides frame running as a reliable resource for mood, affect regulation, and stress relief. That makes injury prevention, low drop-out, and self-efficacy core parts of the training system.</value></data>
+  <data name="MentalResource_StepEffectTitle" xml:space="preserve"><value>Effect</value></data>
+  <data name="MentalResource_StepEffectText" xml:space="preserve"><value>Regular recreational running is associated with better mood, emotional stability, and lower tension.</value></data>
+  <data name="MentalResource_StepFragileTitle" xml:space="preserve"><value>Fragility</value></data>
+  <data name="MentalResource_StepFragileText" xml:space="preserve"><value>When running is interrupted by injury, time pressure, or setbacks, many people lose a familiar strategy for mental regulation.</value></data>
+  <data name="MentalResource_StepRiskTitle" xml:space="preserve"><value>Risk</value></data>
+  <data name="MentalResource_StepRiskText" xml:space="preserve"><value>Beginners in particular face high injury and drop-out rates; frustration, shame, and guilt can reinforce leaving the sport.</value></data>
+  <data name="MentalResource_StepConsequenceTitle" xml:space="preserve"><value>Consequence</value></data>
+  <data name="MentalResource_StepConsequenceText" xml:space="preserve"><value>Success therefore means more than getting faster: it means making the resource accessible, building it, and keeping it usable long term.</value></data>
+  <data name="MentalResource_StepAppTitle" xml:space="preserve"><value>PaceLetics</value></data>
+  <data name="MentalResource_StepAppText" xml:space="preserve"><value>The app translates that into routines, dosed load, understandable training logic, and independent decisions.</value></data>
 </root>
