@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>Intervention philosophy</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>No intervention without indication. Do no harm. A movement pattern only becomes a problem when it is a problem in its specific context.</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>Running style is a self-optimizing system. We do not correct the appearance of movement; we check whether a dynamic pattern is actually linked to symptoms, load, or missing control.</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>How we talk about running style</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>When we look more closely</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>A running-style note is not a judgment of right or wrong.</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>We look together at whether a pattern fits symptoms, load, or fatigue.</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>The goal is understanding and options, not an obligation to correct.</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>A visible deviation alone is not yet a problem.</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>It becomes more relevant when the evidence is good and the pattern is dynamically visible.</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>With weaker evidence, symptoms and plausible links matter most.</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>From form correction to system understanding</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>In the past, the drill was often: everyone needs a perfect-looking form. Today, the better stance is: bodies differ, running style is individual, and a movement pattern is not automatically wrong just because it differs from an ideal image. The body is a self-optimizing system. Many runners choose cadence, stride length, and movement strategy very close to an economical solution for them, especially as experience grows</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>If an athlete has been symptom-free for years with a certain running style, specifically symptom-free with regard to that exact movement pattern, this is initially a sign of a well-functioning dynamic system. Even a well-intentioned intervention can shift that system in a negative direction.</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>Interventions have side effects</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>Technique changes rarely just reduce load; they shift it. Less knee load can mean more Achilles tendon, calf, or foot load. More stability can mean more stiffness. A different foot strike can overload new structures</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>Interventions therefore need an indication. This can be:</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>Moderate to good evidence showing a positive cost-benefit relationship for future injuries.</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>Low to moderate evidence together with symptoms associated with the intervention.</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>For most common criteria of good running form, these requirements are not met.</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>Avoiding the illusion of control</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>We believe that many old-school coaches quite often fall into an illusion of control. They give a correction, the athlete improves over weeks, but possibly not because of the correction. Training, tissue, coordination, and self-organization may have been adapting anyway. The system optimizes itself; the coach thinks: I fixed the form. Conversely, a correction can shift load and trigger symptoms. Then the coach says: see, that happened because you always run like this or that. In both cases, causality is claimed without being clearly established. That is exactly why we need indication, evidence, and context</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>A note about running style is not a judgment of whether you run right or wrong.</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>Your own perception matters: what do you feel, when does it occur, what changes it?</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>We always view running style in the context of symptoms, training, shoes, pace, volume, and fatigue.</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>You receive an interpretation and possible options, not an obligation to correct your form.</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>When a pattern becomes relevant</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>A visible deviation alone is not yet a problem. Many running styles work very well.</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>A pattern becomes more important when evidence is good and it is dynamically visible while running.</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>With moderate or weak evidence, the key question is whether matching symptoms, fatigue, or loss of control are also present.</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>Without symptoms or a plausible load link, an unusual pattern usually remains individual variation.</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>Evidence grades and benefit for injury prevention</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>Benefit scale: Very high, High, Medium, Low, Very low, None. It estimates how strongly an intervention on the feature can contribute to injury prevention when a concrete indication is present.</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>Feature</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>Evidence grade</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>Score</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>Benefit for injury prevention</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>When relevant?</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>Very high</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>High</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>Medium</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>Low</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>Very low</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>None</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>Hip drop opposite the stance leg</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>Internal rotation of the leg axis</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>Overstride</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>Forward trunk lean</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>Hip extension</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>Excessive lumbar arch</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>Trunk rotation</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>Arm angle</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>With dynamic expression, asymmetry, knee/ITB/pelvic symptoms.</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>With dynamic valgus, knee symptoms, ITB symptoms, or loss of control.</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>With marked expression, braking impulse, shin/knee symptoms, or load peaks.</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>Context-dependent: fatigue, hip/back symptoms, or clear compensation.</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>Relevant with missing hip extension and compensatory pelvis/lumbar movement.</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>Do not judge statically; only with dynamic overextension and symptoms.</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>Only with clear asymmetry, symptoms, or coordination problem.</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>Usually not an injury problem; more often rhythm, economy, or tension.</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>Sources</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>

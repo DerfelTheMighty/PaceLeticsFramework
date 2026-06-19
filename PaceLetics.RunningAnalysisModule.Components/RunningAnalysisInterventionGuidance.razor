@@ -1,12 +1,12 @@
 @namespace PaceLetics.RunningAnalysisModule.Components
+@inject IStringLocalizer<RunningAnalysisResources> L
 
 <MudStack Spacing="3" Class="mt-4">
     <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="1">
-            <MudText Typo="Typo.subtitle1" Class="fw-bold">Interventionsphilosophie</MudText>
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["InterventionGuidance_Title"]</MudText>
             <MudText Typo="Typo.body2" Color="Color.Secondary">
-                Keine Intervention ohne Indikation. Do no harm. Ein Bewegungsmuster ist erst dann ein Problem,
-                wenn es im konkreten Kontext ein Problem ist.
+                @L["InterventionGuidance_Subtitle"]
             </MudText>
         </MudStack>
     </MudPaper>
@@ -15,29 +15,27 @@
     {
         <MudPaper Class="pa-4" Elevation="0">
             <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
-                Laufstil ist ein selbstoptimierendes System. Wir korrigieren nicht das Aussehen einer Bewegung,
-                sondern pr&uuml;fen, ob ein dynamisches Muster wirklich mit Beschwerden, Belastung oder fehlender
-                Kontrolle zusammenh&auml;ngt.
+                @L["InterventionGuidance_CompactIntro"]
             </MudAlert>
         </MudPaper>
 
         <MudPaper Class="pa-4" Elevation="0">
             <MudGrid Spacing="2">
                 <MudItem xs="12" md="6">
-                    <MudText Typo="Typo.subtitle2">Wie wir &uuml;ber Laufstil sprechen</MudText>
+                    <MudText Typo="Typo.subtitle2">@L["InterventionGuidance_TalkTitle"]</MudText>
                     <MudList T="string" Dense="true">
-                        <MudListItem>Ein Laufstilhinweis ist keine Bewertung in richtig oder falsch.</MudListItem>
-                        <MudListItem>Wir schauen gemeinsam, ob ein Muster zu Beschwerden, Belastung oder Erm&uuml;dung passt.</MudListItem>
-                        <MudListItem>Ziel sind Verst&auml;ndnis und Optionen, nicht Korrekturpflicht.</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_CompactTalk_1"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_CompactTalk_2"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_CompactTalk_3"]</MudListItem>
                     </MudList>
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudText Typo="Typo.subtitle2">Wann wir genauer hinschauen</MudText>
+                    <MudText Typo="Typo.subtitle2">@L["InterventionGuidance_ReviewTitle"]</MudText>
                     <MudList T="string" Dense="true">
-                        <MudListItem>Eine sichtbare Abweichung allein ist noch kein Problem.</MudListItem>
-                        <MudListItem>Relevanter wird es bei guter Evidenz und dynamisch sichtbarem Muster.</MudListItem>
-                        <MudListItem>Bei schw&auml;cherer Evidenz z&auml;hlen vor allem Beschwerden und plausible Zusammenh&auml;nge.</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_CompactReview_1"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_CompactReview_2"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_CompactReview_3"]</MudListItem>
                     </MudList>
                 </MudItem>
             </MudGrid>
@@ -47,68 +45,50 @@
     {
         <MudPaper Class="pa-4" Elevation="0">
             <MudStack Spacing="2">
-                <MudText Typo="Typo.subtitle1" Class="fw-bold">Von Formkorrektur zu Systemverst&auml;ndnis</MudText>
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["InterventionGuidance_SystemUnderstandingTitle"]</MudText>
 
-            <MudText Typo="Typo.body2">
-                Fr&uuml;her war der Drill oft: Alle m&uuml;ssen eine m&ouml;glichst perfekte Form haben.
-                Heute ist die bessere Haltung: K&ouml;rper sind unterschiedlich, Lauftechnik ist individuell,
-                und ein Bewegungsmuster ist nicht automatisch falsch, nur weil es von einem Idealbild abweicht.
-                Der K&ouml;rper ist ein selbstoptimierendes System. Viele L&auml;ufer:innen w&auml;hlen
-                Schrittfrequenz, Schrittl&auml;nge und Bewegungsstrategie sehr nah an einer f&uuml;r sie
-                &ouml;konomischen L&ouml;sung, besonders mit wachsender Lauferfahrung
-                <a href="@Sources[3].Url" target="_blank" rel="noopener noreferrer">[4]</a>.
-            </MudText>
+                <MudText Typo="Typo.body2">
+                    @L["InterventionGuidance_SystemUnderstandingText"]
+                    <a href="@Sources[3].Url" target="_blank" rel="noopener noreferrer">[4]</a>.
+                </MudText>
             </MudStack>
         </MudPaper>
 
         <MudPaper Class="pa-4" Elevation="0">
             <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
-                Wenn ein:e Athlet:in mit einer bestimmten Laufform jahrelang beschwerdefrei ist, und zwar
-                beschwerdefrei im Hinblick auf genau dieses Bewegungsmuster, dann ist das zun&auml;chst ein Hinweis
-                auf ein gut funktionierendes dynamisches System. Eine auch gut gemeinte Intervention kann dieses
-                System zum Negativen hin verschieben.
+                @L["InterventionGuidance_FunctioningSystemAlert"]
             </MudAlert>
         </MudPaper>
 
         <MudPaper Class="pa-4" Elevation="0">
             <MudStack Spacing="2">
-                <MudText Typo="Typo.subtitle1" Class="fw-bold">Interventionen haben Nebenwirkungen</MudText>
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["InterventionGuidance_SideEffectsTitle"]</MudText>
 
                 <MudText Typo="Typo.body2">
-                    Technik&auml;nderungen reduzieren Belastung selten einfach; sie verschieben sie. Weniger
-                    Kniebelastung kann mehr Achillessehnen-, Waden- oder Fu&szlig;belastung bedeuten. Mehr
-                    Stabilit&auml;t kann mehr Steifigkeit bedeuten. Ein anderer Fu&szlig;aufsatz kann neue Strukturen
-                    &uuml;berfordern
+                    @L["InterventionGuidance_SideEffectsIntro"]
                     <a href="@Sources[2].Url" target="_blank" rel="noopener noreferrer">[3]</a>,
                     <a href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>,
                     <a href="@Sources[6].Url" target="_blank" rel="noopener noreferrer">[7]</a>.
-                    Interventionen brauchen daher eine Indikation. Das kann sein:
+                    @L["InterventionGuidance_SideEffectsIndicationIntro"]
                 </MudText>
 
                 <MudList T="string" Dense="true">
-                    <MudListItem>Mittlere bis gute Evidenz, die ein positives Kosten-Nutzen-Verh&auml;ltnis f&uuml;r zuk&uuml;nftige Verletzungen aufzeigt.</MudListItem>
-                    <MudListItem>Geringe bis mittlere Evidenz und das gleichzeitige Vorhandensein von Symptomen, die mit der Intervention assoziiert sind.</MudListItem>
+                    <MudListItem>@L["InterventionGuidance_SideEffectsIndication_1"]</MudListItem>
+                    <MudListItem>@L["InterventionGuidance_SideEffectsIndication_2"]</MudListItem>
                 </MudList>
 
                 <MudText Typo="Typo.body2">
-                    F&uuml;r die meisten g&auml;ngigen Kriterien einer guten Lauftechnik sind diese Voraussetzungen nicht erf&uuml;llt.
+                    @L["InterventionGuidance_SideEffectsConclusion"]
                 </MudText>
             </MudStack>
         </MudPaper>
 
         <MudPaper Class="pa-4" Elevation="0">
             <MudStack Spacing="2">
-                <MudText Typo="Typo.subtitle1" Class="fw-bold">Kontrollillusion vermeiden</MudText>
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["InterventionGuidance_ControlIllusionTitle"]</MudText>
 
                 <MudText Typo="Typo.body2">
-                    Wir glauben, dass viele Trainer:innen der alten Schule nicht selten einer Kontrollillusion
-                    unterliegen. Sie geben eine Korrektur, die Athlet:in wird &uuml;ber Wochen besser, aber
-                    m&ouml;glicherweise nicht wegen der Korrektur, sondern weil Training, Gewebe, Koordination
-                    und Selbstorganisation ohnehin adaptieren. Das System optimiert sich selbst, der Coach denkt:
-                    Ich habe die Form repariert. Umgekehrt kann eine Korrektur die Beanspruchung verschieben und
-                    Beschwerden ausl&ouml;sen. Dann sagt der Coach: Siehst du, das kommt, weil du immer so und so
-                    l&auml;ufst. In beiden F&auml;llen wird eine Kausalit&auml;t behauptet, die oft gar nicht
-                    sauber belegt ist. Genau deshalb brauchen wir Indikation, Evidenz und Kontext
+                    @L["InterventionGuidance_ControlIllusionText"]
                     <a href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>,
                     <a href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>,
                     <a href="@Sources[4].Url" target="_blank" rel="noopener noreferrer">[5]</a>.
@@ -119,22 +99,22 @@
         <MudPaper Class="pa-4" Elevation="0">
             <MudGrid Spacing="2">
                 <MudItem xs="12" md="6">
-                    <MudText Typo="Typo.subtitle2">Wie wir &uuml;ber Laufstil sprechen</MudText>
+                    <MudText Typo="Typo.subtitle2">@L["InterventionGuidance_TalkTitle"]</MudText>
                     <MudList T="string" Dense="true">
-                        <MudListItem>Ein Hinweis zum Laufstil ist keine Bewertung, ob du richtig oder falsch l&auml;ufst.</MudListItem>
-                        <MudListItem>Deine eigene Wahrnehmung ist wichtig: Was sp&uuml;rst du, wann tritt es auf, was ver&auml;ndert es?</MudListItem>
-                        <MudListItem>Wir betrachten Laufstil immer im Kontext von Beschwerden, Training, Schuhwerk, Tempo, Umfang und Erm&uuml;dung.</MudListItem>
-                        <MudListItem>Du bekommst eine Einordnung und m&ouml;gliche Optionen, keine Pflicht zur Formkorrektur.</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Talk_1"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Talk_2"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Talk_3"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Talk_4"]</MudListItem>
                     </MudList>
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudText Typo="Typo.subtitle2">Wann ein Muster relevant wird</MudText>
+                    <MudText Typo="Typo.subtitle2">@L["InterventionGuidance_RelevanceTitle"]</MudText>
                     <MudList T="string" Dense="true">
-                        <MudListItem>Eine sichtbare Abweichung allein ist noch kein Problem. Viele Laufstile funktionieren sehr gut.</MudListItem>
-                        <MudListItem>Wichtiger wird ein Muster, wenn die Evidenz gut ist und es dynamisch im Laufen sichtbar wird.</MudListItem>
-                        <MudListItem>Bei mittlerer oder schwacher Evidenz z&auml;hlt vor allem, ob passende Beschwerden, Erm&uuml;dung oder Kontrollverlust dazukommen.</MudListItem>
-                        <MudListItem>Ohne Beschwerden oder plausible Belastungskopplung bleibt ein auff&auml;lliges Muster meistens individuelle Variation.</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Relevance_1"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Relevance_2"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Relevance_3"]</MudListItem>
+                        <MudListItem>@L["InterventionGuidance_Relevance_4"]</MudListItem>
                     </MudList>
                 </MudItem>
             </MudGrid>
@@ -143,32 +123,31 @@
 
     <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="2">
-            <MudText Typo="Typo.subtitle1" Class="fw-bold">Evidenzgrade und Nutzen f&uuml;r Verletzungsprophylaxe</MudText>
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["InterventionGuidance_EvidenceTitle"]</MudText>
             <MudText Typo="Typo.body2" Color="Color.Secondary">
-                Nutzen-Skala: Sehr hoch, Hoch, Mittel, Niedrig, Sehr niedrig, Kein. Sie bewertet, wie stark eine
-                Intervention am Merkmal zur Verletzungsprophylaxe beitragen kann, wenn eine konkrete Indikation vorliegt.
+                @L["InterventionGuidance_EvidenceSubtitle"]
             </MudText>
 
-        <MudTable Items="EvidenceRows" Dense="true" Hover="false" Elevation="0" Breakpoint="Breakpoint.Sm">
-            <HeaderContent>
-                <MudTh>Merkmal</MudTh>
-                <MudTh>Evidenzgrad</MudTh>
-                <MudTh>Score</MudTh>
-                <MudTh>Nutzen f&uuml;r Verletzungsprophylaxe</MudTh>
-                <MudTh>Wann relevant?</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Merkmal">
-                    <span style="display:inline-block; padding:4px 8px; border-radius:999px; font-weight:700; color:var(--mud-palette-primary); background:var(--mud-palette-primary-hover);">
-                        @context.Feature
-                    </span>
-                </MudTd>
-                <MudTd DataLabel="Evidenzgrad">@context.Evidence</MudTd>
-                <MudTd DataLabel="Score">@context.Score</MudTd>
-                <MudTd DataLabel="Nutzen f&uuml;r Verletzungsprophylaxe">@context.InjuryPreventionBenefit</MudTd>
-                <MudTd DataLabel="Wann relevant?">@context.ActionThreshold</MudTd>
-            </RowTemplate>
-        </MudTable>
+            <MudTable Items="EvidenceRows" Dense="true" Hover="false" Elevation="0" Breakpoint="Breakpoint.Sm">
+                <HeaderContent>
+                    <MudTh>@TableFeatureLabel</MudTh>
+                    <MudTh>@TableEvidenceLabel</MudTh>
+                    <MudTh>@TableScoreLabel</MudTh>
+                    <MudTh>@TableBenefitLabel</MudTh>
+                    <MudTh>@TableRelevantWhenLabel</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="@TableFeatureLabel">
+                        <span style="display:inline-block; padding:4px 8px; border-radius:999px; font-weight:700; color:var(--mud-palette-primary); background:var(--mud-palette-primary-hover);">
+                            @L[context.FeatureKey]
+                        </span>
+                    </MudTd>
+                    <MudTd DataLabel="@TableEvidenceLabel">@context.Evidence</MudTd>
+                    <MudTd DataLabel="@TableScoreLabel">@context.Score</MudTd>
+                    <MudTd DataLabel="@TableBenefitLabel">@L[context.InjuryPreventionBenefitKey]</MudTd>
+                    <MudTd DataLabel="@TableRelevantWhenLabel">@L[context.ActionThresholdKey]</MudTd>
+                </RowTemplate>
+            </MudTable>
         </MudStack>
     </MudPaper>
 
@@ -176,12 +155,12 @@
     {
         <MudPaper Class="pa-4" Elevation="0">
             <MudStack Spacing="1">
-                <MudText Typo="Typo.subtitle2">Quellen</MudText>
+                <MudText Typo="Typo.subtitle2">@L["InterventionGuidance_SourcesTitle"]</MudText>
                 @foreach (var source in Sources)
                 {
                     <MudText Typo="Typo.caption">
                         [@source.Number]
-                        <a href="@source.Url" target="_blank" rel="noopener noreferrer">@source.Title</a>
+                        <a href="@source.Url" target="_blank" rel="noopener noreferrer">@L[source.TitleKey]</a>
                     </MudText>
                 }
             </MudStack>
@@ -192,39 +171,45 @@
 @code {
     [Parameter] public bool Compact { get; set; }
 
+    private string TableFeatureLabel => L["InterventionGuidance_TableFeature"];
+    private string TableEvidenceLabel => L["InterventionGuidance_TableEvidence"];
+    private string TableScoreLabel => L["InterventionGuidance_TableScore"];
+    private string TableBenefitLabel => L["InterventionGuidance_TableBenefit"];
+    private string TableRelevantWhenLabel => L["InterventionGuidance_TableRelevantWhen"];
+
     private static readonly EvidenceRow[] EvidenceRows =
     {
-        new("Absinken der H\u00fcfte gegen\u00fcber Standbein", "B", 8, "Hoch", "Bei dynamischer Auspr\u00e4gung, Asymmetrie, Knie-/ITB-/Beckenbeschwerden."),
-        new("Innenrotation der Beinachse", "B", 8, "Hoch", "Bei dynamischem Valgus, Kniebeschwerden, ITB-Symptomen oder Kontrollverlust."),
-        new("Overstride", "C", 7, "Mittel", "Bei hoher Auspr\u00e4gung, Bremsimpuls, Schienbein-/Kniebeschwerden oder Lastspitzen."),
-        new("Vorgebeugter Oberk\u00f6rper", "C", 5, "Niedrig", "Kontextabh\u00e4ngig: Erm\u00fcdung, H\u00fcft-/R\u00fcckenbeschwerden oder deutliche Kompensation."),
-        new("H\u00fcftextension", "D", 4, "Niedrig", "Relevant bei fehlender H\u00fcftstreckung mit Becken-/LWS-Ausweichbewegung."),
-        new("Hohlkreuz", "D", 3, "Sehr niedrig", "Nicht statisch bewerten; nur bei dynamischer \u00dcberstreckung und Beschwerden."),
-        new("Rotation im Oberk\u00f6rper", "D", 3, "Sehr niedrig", "Nur bei deutlicher Asymmetrie, Symptomen oder Koordinationsproblem."),
-        new("Armwinkel", "D", 1, "Kein", "In der Regel kein Verletzungsproblem; eher Rhythmus, \u00d6konomie oder Spannung.")
+        new("InterventionGuidance_FeatureHipDrop", "B", 8, "InterventionGuidance_BenefitHigh", "InterventionGuidance_ThresholdHipDrop"),
+        new("InterventionGuidance_FeatureLegInternalRotation", "B", 8, "InterventionGuidance_BenefitHigh", "InterventionGuidance_ThresholdLegInternalRotation"),
+        new("InterventionGuidance_FeatureOverstride", "C", 7, "InterventionGuidance_BenefitMedium", "InterventionGuidance_ThresholdOverstride"),
+        new("InterventionGuidance_FeatureForwardLean", "C", 5, "InterventionGuidance_BenefitLow", "InterventionGuidance_ThresholdForwardLean"),
+        new("InterventionGuidance_FeatureHipExtension", "D", 4, "InterventionGuidance_BenefitLow", "InterventionGuidance_ThresholdHipExtension"),
+        new("InterventionGuidance_FeatureLordosis", "D", 3, "InterventionGuidance_BenefitVeryLow", "InterventionGuidance_ThresholdLordosis"),
+        new("InterventionGuidance_FeatureTrunkRotation", "D", 3, "InterventionGuidance_BenefitVeryLow", "InterventionGuidance_ThresholdTrunkRotation"),
+        new("InterventionGuidance_FeatureArmAngle", "D", 1, "InterventionGuidance_BenefitNone", "InterventionGuidance_ThresholdArmAngle")
     };
 
     private static readonly SourceRow[] Sources =
     {
-        new("1", "Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.", "https://pubmed.ncbi.nlm.nih.gov/31028658/"),
-        new("2", "Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.", "https://pubmed.ncbi.nlm.nih.gov/35247202/"),
-        new("3", "Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.", "https://link.springer.com/article/10.1186/s40798-022-00504-0"),
-        new("4", "Moore. Is there an economical running technique? Sports Med. 2016.", "https://link.springer.com/article/10.1007/s40279-016-0474-4"),
-        new("5", "Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.", "https://bjsm.bmj.com/content/49/20/1290"),
-        new("6", "Clinical application of gait retraining in the injured runner. PMC.", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/"),
-        new("7", "Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.", "https://pubmed.ncbi.nlm.nih.gov/23439417/"),
-        new("8", "Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.", "https://pubmed.ncbi.nlm.nih.gov/30805204/")
+        new("1", "InterventionGuidance_SourceCeyssens", "https://pubmed.ncbi.nlm.nih.gov/31028658/"),
+        new("2", "InterventionGuidance_SourceWillwacher", "https://pubmed.ncbi.nlm.nih.gov/35247202/"),
+        new("3", "InterventionGuidance_SourceAndersonStepRate", "https://link.springer.com/article/10.1186/s40798-022-00504-0"),
+        new("4", "InterventionGuidance_SourceMoore", "https://link.springer.com/article/10.1007/s40279-016-0474-4"),
+        new("5", "InterventionGuidance_SourceNigg", "https://bjsm.bmj.com/content/49/20/1290"),
+        new("6", "InterventionGuidance_SourceGaitRetraining", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/"),
+        new("7", "InterventionGuidance_SourceRidge", "https://pubmed.ncbi.nlm.nih.gov/23439417/"),
+        new("8", "InterventionGuidance_SourceChristopher", "https://pubmed.ncbi.nlm.nih.gov/30805204/")
     };
 
     private sealed record EvidenceRow(
-        string Feature,
+        string FeatureKey,
         string Evidence,
         int Score,
-        string InjuryPreventionBenefit,
-        string ActionThreshold);
+        string InjuryPreventionBenefitKey,
+        string ActionThresholdKey);
 
     private sealed record SourceRow(
         string Number,
-        string Title,
+        string TitleKey,
         string Url);
 }

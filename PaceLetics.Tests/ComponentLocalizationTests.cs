@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using PaceLetics.AthleteModule.Components;
+using PaceLetics.RunningAnalysisModule.Components;
 using PaceLetics.TrainingModule.Components.Running;
 using PaceLetics.TrainingModule.Components.Workouts;
 using PaceLetics.Web.Areas.Identity.Pages.Account;
@@ -73,6 +74,20 @@ public sealed class ComponentLocalizationTests
         string expectedValue)
     {
         var value = GetLocalizedString<AthleteResources>(culture, key);
+
+        Assert.False(value.ResourceNotFound);
+        Assert.Equal(expectedValue, value.Value);
+    }
+
+    [Theory]
+    [InlineData("de", "InterventionGuidance_Title", "Interventionsphilosophie")]
+    [InlineData("en", "InterventionGuidance_Title", "Intervention philosophy")]
+    public void RunningAnalysisResources_ResolveInterventionGuidanceKeys(
+        string culture,
+        string key,
+        string expectedValue)
+    {
+        var value = GetLocalizedString<RunningAnalysisResources>(culture, key);
 
         Assert.False(value.ResourceNotFound);
         Assert.Equal(expectedValue, value.Value);

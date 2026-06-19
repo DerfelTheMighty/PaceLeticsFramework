@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>Interventionsphilosophie</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>Keine Intervention ohne Indikation. Do no harm. Ein Bewegungsmuster ist erst dann ein Problem, wenn es im konkreten Kontext ein Problem ist.</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>Laufstil ist ein selbstoptimierendes System. Wir korrigieren nicht das Aussehen einer Bewegung, sondern prüfen, ob ein dynamisches Muster wirklich mit Beschwerden, Belastung oder fehlender Kontrolle zusammenhängt.</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>Wie wir über Laufstil sprechen</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>Wann wir genauer hinschauen</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>Ein Laufstilhinweis ist keine Bewertung in richtig oder falsch.</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>Wir schauen gemeinsam, ob ein Muster zu Beschwerden, Belastung oder Ermüdung passt.</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>Ziel sind Verständnis und Optionen, nicht Korrekturpflicht.</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>Eine sichtbare Abweichung allein ist noch kein Problem.</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>Relevanter wird es bei guter Evidenz und dynamisch sichtbarem Muster.</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>Bei schwächerer Evidenz zählen vor allem Beschwerden und plausible Zusammenhänge.</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>Von Formkorrektur zu Systemverständnis</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>Früher war der Drill oft: Alle müssen eine möglichst perfekte Form haben. Heute ist die bessere Haltung: Körper sind unterschiedlich, Lauftechnik ist individuell, und ein Bewegungsmuster ist nicht automatisch falsch, nur weil es von einem Idealbild abweicht. Der Körper ist ein selbstoptimierendes System. Viele Läufer:innen wählen Schrittfrequenz, Schrittlänge und Bewegungsstrategie sehr nah an einer für sie ökonomischen Lösung, besonders mit wachsender Lauferfahrung</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>Wenn ein:e Athlet:in mit einer bestimmten Laufform jahrelang beschwerdefrei ist, und zwar beschwerdefrei im Hinblick auf genau dieses Bewegungsmuster, dann ist das zunächst ein Hinweis auf ein gut funktionierendes dynamisches System. Eine auch gut gemeinte Intervention kann dieses System zum Negativen hin verschieben.</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>Interventionen haben Nebenwirkungen</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>Technikänderungen reduzieren Belastung selten einfach; sie verschieben sie. Weniger Kniebelastung kann mehr Achillessehnen-, Waden- oder Fußbelastung bedeuten. Mehr Stabilität kann mehr Steifigkeit bedeuten. Ein anderer Fußaufsatz kann neue Strukturen überfordern</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>Interventionen brauchen daher eine Indikation. Das kann sein:</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>Mittlere bis gute Evidenz, die ein positives Kosten-Nutzen-Verhältnis für zukünftige Verletzungen aufzeigt.</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>Geringe bis mittlere Evidenz und das gleichzeitige Vorhandensein von Symptomen, die mit der Intervention assoziiert sind.</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>Für die meisten gängigen Kriterien einer guten Lauftechnik sind diese Voraussetzungen nicht erfüllt.</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>Kontrollillusion vermeiden</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>Wir glauben, dass viele Trainer:innen der alten Schule nicht selten einer Kontrollillusion unterliegen. Sie geben eine Korrektur, die Athlet:in wird über Wochen besser, aber möglicherweise nicht wegen der Korrektur, sondern weil Training, Gewebe, Koordination und Selbstorganisation ohnehin adaptieren. Das System optimiert sich selbst, der Coach denkt: Ich habe die Form repariert. Umgekehrt kann eine Korrektur die Beanspruchung verschieben und Beschwerden auslösen. Dann sagt der Coach: Siehst du, das kommt, weil du immer so und so läufst. In beiden Fällen wird eine Kausalität behauptet, die oft gar nicht sauber belegt ist. Genau deshalb brauchen wir Indikation, Evidenz und Kontext</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>Ein Hinweis zum Laufstil ist keine Bewertung, ob du richtig oder falsch läufst.</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>Deine eigene Wahrnehmung ist wichtig: Was spürst du, wann tritt es auf, was verändert es?</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>Wir betrachten Laufstil immer im Kontext von Beschwerden, Training, Schuhwerk, Tempo, Umfang und Ermüdung.</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>Du bekommst eine Einordnung und mögliche Optionen, keine Pflicht zur Formkorrektur.</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>Wann ein Muster relevant wird</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>Eine sichtbare Abweichung allein ist noch kein Problem. Viele Laufstile funktionieren sehr gut.</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>Wichtiger wird ein Muster, wenn die Evidenz gut ist und es dynamisch im Laufen sichtbar wird.</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>Bei mittlerer oder schwacher Evidenz zählt vor allem, ob passende Beschwerden, Ermüdung oder Kontrollverlust dazukommen.</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>Ohne Beschwerden oder plausible Belastungskopplung bleibt ein auffälliges Muster meistens individuelle Variation.</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>Evidenzgrade und Nutzen für Verletzungsprophylaxe</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>Nutzen-Skala: Sehr hoch, Hoch, Mittel, Niedrig, Sehr niedrig, Kein. Sie bewertet, wie stark eine Intervention am Merkmal zur Verletzungsprophylaxe beitragen kann, wenn eine konkrete Indikation vorliegt.</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>Merkmal</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>Evidenzgrad</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>Score</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>Nutzen für Verletzungsprophylaxe</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>Wann relevant?</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>Sehr hoch</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>Hoch</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>Mittel</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>Niedrig</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>Sehr niedrig</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>Kein</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>Absinken der Hüfte gegenüber Standbein</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>Innenrotation der Beinachse</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>Overstride</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>Vorgebeugter Oberkörper</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>Hüftextension</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>Hohlkreuz</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>Rotation im Oberkörper</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>Armwinkel</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>Bei dynamischer Ausprägung, Asymmetrie, Knie-/ITB-/Beckenbeschwerden.</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>Bei dynamischem Valgus, Kniebeschwerden, ITB-Symptomen oder Kontrollverlust.</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>Bei hoher Ausprägung, Bremsimpuls, Schienbein-/Kniebeschwerden oder Lastspitzen.</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>Kontextabhängig: Ermüdung, Hüft-/Rückenbeschwerden oder deutliche Kompensation.</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>Relevant bei fehlender Hüftstreckung mit Becken-/LWS-Ausweichbewegung.</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>Nicht statisch bewerten; nur bei dynamischer Überstreckung und Beschwerden.</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>Nur bei deutlicher Asymmetrie, Symptomen oder Koordinationsproblem.</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>In der Regel kein Verletzungsproblem; eher Rhythmus, Ökonomie oder Spannung.</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>Quellen</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>
