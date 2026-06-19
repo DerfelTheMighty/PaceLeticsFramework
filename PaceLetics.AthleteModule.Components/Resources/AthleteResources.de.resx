@@ -114,6 +114,15 @@
   <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
     <value>Wir steuern die Trainingsbereiche primär über die Pace, weil Laufgeschwindigkeit ein ziemlich guter Stellvertreter für äußere biomechanische Belastung ist. Das Kernproblem ist die unterschiedliche Adaptationsgeschwindigkeit der beteiligten Systeme: Anfänger:innen fühlen sich oft nach wenigen Wochen kardiovaskulär leistungsfähiger, während Sehnen, Knochen, Gelenke und Muskel-Sehnen-Strukturen deutlich gradueller an wiederholte Stoßbelastung angepasst werden müssen. Wird Training nur über Herzfrequenz oder generische Zonensysteme gesteuert, wird diese mechanische Exposition leicht unterschätzt. Die Pace gibt ein stabiles äußeres Ziel dafür, wie viel kraftvolles Laufen wiederholt wird; Herzfrequenz bleibt ergänzend nützlich für innere Beanspruchung und Erholung. Unsere Arbeitshypothese ist: Herzfrequenzgesteuertes Training ist für Athlet:innen sehr sinnvoll, die seit Jahren konstant trainieren, deren Bewegungsapparat bereits belastbar ist und deren weitere Adaption sehr spezifische Reize für Kreislauf, Stoffwechsel und Muskelarbeit braucht. In den ersten Trainingsjahren setzt es jedoch häufig den Schwerpunkt zu stark auf kardiovaskuläre Anstrengung statt auf mechanische Belastungsprogression und kann langfristig schaden. Für das heterogene Gruppentraining sollte das Model außerdem einfach, ausrüstungsarm und über mehrere Monate konsistent sein. Es sollte verschiedene Eingaben akzeptieren, Wettkampfprognosen unterstützen und eine überschaubare Menge an Trainingsbereichen praktisch abbilden. Die Pace ist dafür die einfachste gemeinsame Sprache: messbar, vergleichbar und unmittelbar im Training nutzbar.</value>
   </data>
+  <data name="PaceModelInfo_Rationale_PaceProxy_Text" xml:space="preserve">
+    <value>Wir steuern die Trainingsbereiche primär über die Pace, weil Laufgeschwindigkeit ein ziemlich guter Stellvertreter für äußere biomechanische Belastung ist.</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Adaptation_Text" xml:space="preserve">
+    <value>Das Kernproblem ist die unterschiedliche Adaptationsgeschwindigkeit der beteiligten Systeme: Anfänger:innen fühlen sich oft nach wenigen Wochen kardiovaskulär leistungsfähiger, während Sehnen, Knochen, Gelenke und Muskel-Sehnen-Strukturen deutlich gradueller an wiederholte Stoßbelastung angepasst werden müssen.</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Remaining_Text" xml:space="preserve">
+    <value>Wird Training nur über Herzfrequenz oder generische Zonensysteme gesteuert, wird diese mechanische Exposition leicht unterschätzt. Die Pace gibt ein stabiles äußeres Ziel dafür, wie viel kraftvolles Laufen wiederholt wird; Herzfrequenz bleibt ergänzend nützlich für innere Beanspruchung und Erholung. Unsere Arbeitshypothese ist: Herzfrequenzgesteuertes Training ist für Athlet:innen sehr sinnvoll, die seit Jahren konstant trainieren, deren Bewegungsapparat bereits belastbar ist und deren weitere Adaption sehr spezifische Reize für Kreislauf, Stoffwechsel und Muskelarbeit braucht. In den ersten Trainingsjahren setzt es jedoch häufig den Schwerpunkt zu stark auf kardiovaskuläre Anstrengung statt auf mechanische Belastungsprogression und kann langfristig schaden. Für das heterogene Gruppentraining sollte ein Model außerdem einfach, ausrüstungsarm und über mehrere Monate konsistent sein. Es sollte verschiedene Eingaben akzeptieren, Wettkampfprognosen unterstützen und eine überschaubare Menge an Trainingsbereichen praktisch abbilden. Die Pace ist dafür die einfachste gemeinsame Sprache: messbar, vergleichbar und unmittelbar im Training nutzbar.</value>
+  </data>
   <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
     <value>Konzeptionelles Diagramm zu den Adaptationszeiträumen von Nervensystem, Herz-Kreislauf-System, Skelettmuskel, Sehne und Knochen.</value>
   </data>
@@ -287,6 +296,15 @@
   </data>
   <data name="PaceModelInfo_LoadAdaptation_Text" xml:space="preserve">
     <value>Nein. Mechanische Last ist nicht nur Risiko, sondern auch Voraussetzung für Anpassung. Sehnen und Knochen reagieren auf ausreichend hohe Belastungsreize: Bohm et al. (2015) zeigen in einer Meta-Analyse, dass Sehnensteifigkeit und Materialeigenschaften besonders durch höhere Lastintensitäten zunehmen. Die Grafik darunter zeigt diese berichteten Effektgrößen: hohe Intensitäten über 70 Prozent MVC/RM erzeugten eine deutliche Anpassung der Sehnensteifigkeit, niedrige Intensitäten lagen nahe null. Warden et al. (2021) beschreiben Knochenstressverletzungen nicht als Folge von Belastung an sich, sondern als Fehler in der Workload-Dosierung. Für das Training heißt das: Wir wollen schnelle Paces nicht vermeiden, sondern dosieren.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Tendon_Text" xml:space="preserve">
+    <value>Nein. Mechanische Last ist nicht nur Risiko, sondern auch Voraussetzung für Anpassung. Sehnen und Knochen reagieren auf ausreichend hohe Belastungsreize: Bohm et al. (2015) zeigen in einer Meta-Analyse, dass Sehnensteifigkeit und Materialeigenschaften besonders durch höhere Lastintensitäten zunehmen.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Diagram_Text" xml:space="preserve">
+    <value>Die Grafik darunter zeigt diese berichteten Effektgrößen: hohe Intensitäten über 70 Prozent MVC/RM erzeugten eine deutliche Anpassung der Sehnensteifigkeit, niedrige Intensitäten lagen nahe null.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Workload_Text" xml:space="preserve">
+    <value>Warden et al. (2021) beschreiben Knochenstressverletzungen nicht als Folge von Belastung an sich, sondern als Fehler in der Workload-Dosierung. Für das Training heißt das: Wir wollen schnelle Paces nicht vermeiden, sondern dosieren.</value>
   </data>
   <data name="PaceModelInfo_LoadAdaptationDiagramAlt" xml:space="preserve">
     <value>Datenbasiertes Effektgrößen-Diagramm zu Sehnenanpassungen nach mechanischer Belastung aus Bohm et al. 2015.</value>

@@ -114,6 +114,15 @@
   <data name="PaceModelInfo_Rationale_Text" xml:space="preserve">
     <value>We primarily control training zones through pace because running speed is a fairly good proxy for external biomechanical load. The core issue is the different adaptation speed of the systems involved: beginners often feel cardiovascularly fitter after only a few weeks, while tendons, bones, joints, and muscle-tendon structures need to adapt much more gradually to repeated impact loading. If training is guided only by heart rate or generic zone systems, this mechanical exposure is easily underestimated. Pace provides a stable external target for how much forceful running is repeated; heart rate remains useful as a complementary signal for internal strain and recovery. Our working hypothesis is: heart-rate-guided training is very useful for athletes who have trained consistently for years, whose musculoskeletal system is already resilient, and whose further adaptation needs very specific stimuli for circulation, metabolism, and muscle work. In the first years of training, however, it often places too much emphasis on cardiovascular effort instead of mechanical load progression and can be harmful over the long term. For heterogeneous group training, the model should also be simple, equipment-light, and consistent over several months. It should accept different inputs, support race predictions, and map a manageable set of training zones in practice. Pace is the simplest common language for this: measurable, comparable, and immediately usable in training.</value>
   </data>
+  <data name="PaceModelInfo_Rationale_PaceProxy_Text" xml:space="preserve">
+    <value>We primarily control training zones through pace because running speed is a fairly good proxy for external biomechanical load.</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Adaptation_Text" xml:space="preserve">
+    <value>The core issue is the different adaptation speed of the systems involved: beginners often feel cardiovascularly fitter after only a few weeks, while tendons, bones, joints, and muscle-tendon structures need to adapt much more gradually to repeated impact loading.</value>
+  </data>
+  <data name="PaceModelInfo_Rationale_Remaining_Text" xml:space="preserve">
+    <value>If training is guided only by heart rate or generic zone systems, this mechanical exposure is easily underestimated. Pace provides a stable external target for how much forceful running is repeated; heart rate remains useful as a complementary signal for internal strain and recovery. Our working hypothesis is: heart-rate-guided training is very useful for athletes who have trained consistently for years, whose musculoskeletal system is already resilient, and whose further adaptation needs very specific stimuli for circulation, metabolism, and muscle work. In the first years of training, however, it often places too much emphasis on cardiovascular effort instead of mechanical load progression and can be harmful over the long term. For heterogeneous group training, the model should also be simple, equipment-light, and consistent over several months. It should accept different inputs, support race predictions, and map a manageable set of training zones in practice. Pace is the simplest common language for this: measurable, comparable, and immediately usable in training.</value>
+  </data>
   <data name="PaceModelInfo_AdaptationDiagramAlt" xml:space="preserve">
     <value>Conceptual diagram comparing adaptation timelines of the nervous system, cardiovascular system, skeletal muscle, tendon, and bone.</value>
   </data>
@@ -287,6 +296,15 @@
   </data>
   <data name="PaceModelInfo_LoadAdaptation_Text" xml:space="preserve">
     <value>No. Mechanical load is not only a risk; it is also required for adaptation. Tendons and bone respond to sufficiently strong loading stimuli: Bohm et al. (2015) show in a meta-analysis that tendon stiffness and material properties improve especially with higher loading intensities. The diagram below uses their reported effect sizes: high intensities above 70 percent MVC/RM produced a clear tendon-stiffness adaptation, while low intensities were near zero. Warden et al. (2021) frame bone stress injuries not as a consequence of load itself, but as a workload dosing error. For training, this means we do not avoid fast paces; we dose them.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Tendon_Text" xml:space="preserve">
+    <value>No. Mechanical load is not only a risk; it is also required for adaptation. Tendons and bone respond to sufficiently strong loading stimuli: Bohm et al. (2015) show in a meta-analysis that tendon stiffness and material properties improve especially with higher loading intensities.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Diagram_Text" xml:space="preserve">
+    <value>The diagram below uses their reported effect sizes: high intensities above 70 percent MVC/RM produced a clear tendon-stiffness adaptation, while low intensities were near zero.</value>
+  </data>
+  <data name="PaceModelInfo_LoadAdaptation_Workload_Text" xml:space="preserve">
+    <value>Warden et al. (2021) frame bone stress injuries not as a consequence of load itself, but as a workload dosing error. For training, this means we do not avoid fast paces; we dose them.</value>
   </data>
   <data name="PaceModelInfo_LoadAdaptationDiagramAlt" xml:space="preserve">
     <value>Data-based effect-size diagram of tendon adaptations after mechanical loading from Bohm et al. 2015.</value>
