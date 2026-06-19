@@ -1,23 +1,27 @@
 @namespace PaceLetics.RunningAnalysisModule.Components
 
-<section style="border:1px solid var(--mud-palette-lines-default); border-radius:8px; padding:16px;">
-    <MudStack Spacing="3">
+<MudStack Spacing="3" Class="mt-4">
+    <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="1">
-            <MudText Typo="Typo.h6">Interventionsphilosophie</MudText>
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">Interventionsphilosophie</MudText>
             <MudText Typo="Typo.body2" Color="Color.Secondary">
                 Keine Intervention ohne Indikation. Do no harm. Ein Bewegungsmuster ist erst dann ein Problem,
                 wenn es im konkreten Kontext ein Problem ist.
             </MudText>
         </MudStack>
+    </MudPaper>
 
-        @if (Compact)
-        {
+    @if (Compact)
+    {
+        <MudPaper Class="pa-4" Elevation="0">
             <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
                 Laufstil ist ein selbstoptimierendes System. Wir korrigieren nicht das Aussehen einer Bewegung,
                 sondern pr&uuml;fen, ob ein dynamisches Muster wirklich mit Beschwerden, Belastung oder fehlender
                 Kontrolle zusammenh&auml;ngt.
             </MudAlert>
+        </MudPaper>
 
+        <MudPaper Class="pa-4" Elevation="0">
             <MudGrid Spacing="2">
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2">Gespr&auml;chsrahmen</MudText>
@@ -37,9 +41,14 @@
                     </MudList>
                 </MudItem>
             </MudGrid>
-        }
-        else
-        {
+        </MudPaper>
+    }
+    else
+    {
+        <MudPaper Class="pa-4" Elevation="0">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">Von Formkorrektur zu Systemverst&auml;ndnis</MudText>
+
             <MudText Typo="Typo.body2">
                 Fr&uuml;her war der Drill oft: Alle m&uuml;ssen eine m&ouml;glichst perfekte Form haben.
                 Heute ist die bessere Haltung: K&ouml;rper sind unterschiedlich, Lauftechnik ist individuell,
@@ -49,13 +58,21 @@
                 &ouml;konomischen L&ouml;sung, besonders mit wachsender Lauferfahrung
                 <a href="@Sources[3].Url" target="_blank" rel="noopener noreferrer">[4]</a>.
             </MudText>
+            </MudStack>
+        </MudPaper>
 
+        <MudPaper Class="pa-4" Elevation="0">
             <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
                 Wenn eine Athlet:in mit einer bestimmten Laufform beschwerdefrei mehrere Marathons gelaufen ist,
                 und zwar beschwerdefrei im Hinblick auf genau dieses Bewegungsmuster, dann ist das zun&auml;chst
                 ein Hinweis auf ein gut funktionierendes dynamisches System. Eine auch gut gemeinte Intervention
                 kann dieses System zu ihren Ungunsten verschieben.
             </MudAlert>
+        </MudPaper>
+
+        <MudPaper Class="pa-4" Elevation="0">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">Interventionen verschieben Belastung</MudText>
 
             <MudText Typo="Typo.body2">
                 Technik&auml;nderungen reduzieren Belastung selten einfach; sie verschieben sie. Weniger
@@ -66,6 +83,12 @@
                 <a href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>,
                 <a href="@Sources[6].Url" target="_blank" rel="noopener noreferrer">[7]</a>.
             </MudText>
+            </MudStack>
+        </MudPaper>
+
+        <MudPaper Class="pa-4" Elevation="0">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">Kontrollillusion vermeiden</MudText>
 
             <MudText Typo="Typo.body2">
                 Viele Trainer:innen der alten Schule unterliegen hier einer Kontrollillusion. Sie geben eine
@@ -80,7 +103,10 @@
                 <a href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>,
                 <a href="@Sources[4].Url" target="_blank" rel="noopener noreferrer">[5]</a>.
             </MudText>
+            </MudStack>
+        </MudPaper>
 
+        <MudPaper Class="pa-4" Elevation="0">
             <MudGrid Spacing="2">
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2">Gespr&auml;chsrahmen</MudText>
@@ -103,26 +129,43 @@
                     </MudList>
                 </MudItem>
             </MudGrid>
-        }
+        </MudPaper>
+    }
+
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">Evidenzgrade und Nutzen f&uuml;r Verletzungsprophylaxe</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                Nutzen-Skala: Sehr hoch, Hoch, Mittel, Niedrig, Sehr niedrig, Kein. Sie bewertet, wie stark eine
+                Intervention am Merkmal zur Verletzungsprophylaxe beitragen kann, wenn eine konkrete Indikation vorliegt.
+            </MudText>
 
         <MudTable Items="EvidenceRows" Dense="true" Hover="false" Elevation="0" Breakpoint="Breakpoint.Sm">
             <HeaderContent>
                 <MudTh>Merkmal</MudTh>
                 <MudTh>Evidenzgrad</MudTh>
                 <MudTh>Score</MudTh>
+                <MudTh>Nutzen f&uuml;r Verletzungsprophylaxe</MudTh>
                 <MudTh>Wann relevant?</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Merkmal">@context.Feature</MudTd>
+                <MudTd DataLabel="Merkmal">
+                    <span style="display:inline-block; padding:4px 8px; border-radius:999px; font-weight:700; color:var(--mud-palette-primary); background:var(--mud-palette-primary-hover);">
+                        @context.Feature
+                    </span>
+                </MudTd>
                 <MudTd DataLabel="Evidenzgrad">@context.Evidence</MudTd>
                 <MudTd DataLabel="Score">@context.Score</MudTd>
+                <MudTd DataLabel="Nutzen f&uuml;r Verletzungsprophylaxe">@context.InjuryPreventionBenefit</MudTd>
                 <MudTd DataLabel="Wann relevant?">@context.ActionThreshold</MudTd>
             </RowTemplate>
         </MudTable>
+        </MudStack>
+    </MudPaper>
 
-        @if (!Compact)
-        {
-            <MudDivider />
+    @if (!Compact)
+    {
+        <MudPaper Class="pa-4" Elevation="0">
             <MudStack Spacing="1">
                 <MudText Typo="Typo.subtitle2">Quellen</MudText>
                 @foreach (var source in Sources)
@@ -133,23 +176,23 @@
                     </MudText>
                 }
             </MudStack>
-        }
-    </MudStack>
-</section>
+        </MudPaper>
+    }
+</MudStack>
 
 @code {
     [Parameter] public bool Compact { get; set; }
 
     private static readonly EvidenceRow[] EvidenceRows =
     {
-        new("Absinken der H\u00fcfte gegen\u00fcber Standbein", "B", 8, "Bei dynamischer Auspr\u00e4gung, Asymmetrie, Knie-/ITB-/Beckenbeschwerden."),
-        new("Innenrotation der Beinachse", "B", 8, "Bei dynamischem Valgus, Kniebeschwerden, ITB-Symptomen oder Kontrollverlust."),
-        new("Overstride", "C", 7, "Bei hoher Auspr\u00e4gung, Bremsimpuls, Schienbein-/Kniebeschwerden oder Lastspitzen."),
-        new("Vorgebeugter Oberk\u00f6rper", "C", 5, "Kontextabh\u00e4ngig: Erm\u00fcdung, H\u00fcft-/R\u00fcckenbeschwerden oder deutliche Kompensation."),
-        new("H\u00fcftextension", "D", 4, "Relevant bei fehlender H\u00fcftstreckung mit Becken-/LWS-Ausweichbewegung."),
-        new("Hohlkreuz", "D", 3, "Nicht statisch bewerten; nur bei dynamischer \u00dcberstreckung und Beschwerden."),
-        new("Rotation im Oberk\u00f6rper", "D", 3, "Nur bei deutlicher Asymmetrie, Symptomen oder Koordinationsproblem."),
-        new("Armwinkel", "D", 1, "In der Regel kein Verletzungsproblem; eher Rhythmus, \u00d6konomie oder Spannung.")
+        new("Absinken der H\u00fcfte gegen\u00fcber Standbein", "B", 8, "Hoch", "Bei dynamischer Auspr\u00e4gung, Asymmetrie, Knie-/ITB-/Beckenbeschwerden."),
+        new("Innenrotation der Beinachse", "B", 8, "Hoch", "Bei dynamischem Valgus, Kniebeschwerden, ITB-Symptomen oder Kontrollverlust."),
+        new("Overstride", "C", 7, "Mittel", "Bei hoher Auspr\u00e4gung, Bremsimpuls, Schienbein-/Kniebeschwerden oder Lastspitzen."),
+        new("Vorgebeugter Oberk\u00f6rper", "C", 5, "Niedrig", "Kontextabh\u00e4ngig: Erm\u00fcdung, H\u00fcft-/R\u00fcckenbeschwerden oder deutliche Kompensation."),
+        new("H\u00fcftextension", "D", 4, "Niedrig", "Relevant bei fehlender H\u00fcftstreckung mit Becken-/LWS-Ausweichbewegung."),
+        new("Hohlkreuz", "D", 3, "Sehr niedrig", "Nicht statisch bewerten; nur bei dynamischer \u00dcberstreckung und Beschwerden."),
+        new("Rotation im Oberk\u00f6rper", "D", 3, "Sehr niedrig", "Nur bei deutlicher Asymmetrie, Symptomen oder Koordinationsproblem."),
+        new("Armwinkel", "D", 1, "Kein", "In der Regel kein Verletzungsproblem; eher Rhythmus, \u00d6konomie oder Spannung.")
     };
 
     private static readonly SourceRow[] Sources =
@@ -168,6 +211,7 @@
         string Feature,
         string Evidence,
         int Score,
+        string InjuryPreventionBenefit,
         string ActionThreshold);
 
     private sealed record SourceRow(
