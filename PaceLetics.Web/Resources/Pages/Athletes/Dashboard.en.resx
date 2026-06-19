@@ -39,4 +39,7 @@
   <data name="SessionRuns" xml:space="preserve"><value>{0} run(s)</value></data>
   <data name="SessionWorkouts" xml:space="preserve"><value>{0} workout(s)</value></data>
   <data name="SessionEmpty" xml:space="preserve"><value>No content</value></data>
+  <data name="Metric_RunningAnalysisInfo" xml:space="preserve"><value>Running analysis</value></data>
+  <data name="Metric_RunningAnalysisInfoDetail" xml:space="preserve"><value>Why we do not correct every pattern</value></data>
+  <data name="Metric_RunningAnalysisInfoValue" xml:space="preserve"><value>Understand form</value></data>
 </root>

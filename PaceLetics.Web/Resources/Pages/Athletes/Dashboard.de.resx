@@ -39,4 +39,7 @@
   <data name="SessionRuns" xml:space="preserve"><value>{0} Lauf/Läufe</value></data>
   <data name="SessionWorkouts" xml:space="preserve"><value>{0} Workout(s)</value></data>
   <data name="SessionEmpty" xml:space="preserve"><value>Keine Inhalte</value></data>
+  <data name="Metric_RunningAnalysisInfo" xml:space="preserve"><value>Laufanalyse</value></data>
+  <data name="Metric_RunningAnalysisInfoDetail" xml:space="preserve"><value>Warum wir nicht jede Laufform korrigieren</value></data>
+  <data name="Metric_RunningAnalysisInfoValue" xml:space="preserve"><value>Laufform verstehen</value></data>
 </root>

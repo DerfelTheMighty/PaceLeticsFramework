@@ -173,9 +173,19 @@
     private DataAnalysesSection _activeSection = DataAnalysesSection.Recordings;
     private bool _isBusy;
 
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "section")]
+    public string? Section { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         await LoadAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (TryParseSection(Section, out var section))
+            _activeSection = section;
     }
 
     private async Task LoadAsync()
@@ -220,6 +230,31 @@
     private void SelectSection(DataAnalysesSection section)
     {
         _activeSection = section;
+    }
+
+    private static bool TryParseSection(string? value, out DataAnalysesSection section)
+    {
+        section = DataAnalysesSection.Recordings;
+
+        if (string.IsNullOrWhiteSpace(value))
+            return false;
+
+        var normalized = value.Trim().ToLowerInvariant();
+        section = normalized switch
+        {
+            "recordings" or "aufnahmen" => DataAnalysesSection.Recordings,
+            "analyses" or "analysis" or "analysen" => DataAnalysesSection.Analyses,
+            "info" or "infos" => DataAnalysesSection.Info,
+            _ => DataAnalysesSection.Recordings
+        };
+
+        return normalized is "recordings"
+            or "aufnahmen"
+            or "analyses"
+            or "analysis"
+            or "analysen"
+            or "info"
+            or "infos";
     }
 
     private string GetSectionButtonClass(DataAnalysesSection section)

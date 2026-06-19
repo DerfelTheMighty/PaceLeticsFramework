@@ -30,7 +30,7 @@
     <MudStack Spacing="4">
 
         <MudGrid Spacing="3">
-            <MudItem xs="12" sm="6" lg="4">
+            <MudItem xs="12" sm="6" lg="3">
                 <DashboardMetricTile Label="@L["Metric_VdotCs"]"
                                      Value="@GetVdotCsValue()"
                                      Detail="@GetReferenceDetail()"
@@ -39,7 +39,7 @@
                                      Href="/Athletes/pacezones" />
             </MudItem>
 
-            <MudItem xs="12" sm="6" lg="4">
+            <MudItem xs="12" sm="6" lg="3">
                 <DashboardMetricTile Label="@L["Metric_NextSession"]"
                                      Value="@GetNextSessionValue()"
                                      Detail="@GetNextSessionDetail()"
@@ -48,13 +48,22 @@
                                      Href="/Athletes/courses" />
             </MudItem>
 
-            <MudItem xs="12" sm="6" lg="4">
+            <MudItem xs="12" sm="6" lg="3">
                 <DashboardMetricTile Label="@L["Metric_TrainingSystem"]"
                                      Value="@L["Metric_TrainingSystemValue"]"
                                      Detail="@L["Metric_TrainingSystemDetail"]"
                                      Icon="@Icons.Material.Filled.School"
                                      Accent="orange"
                                      Href="/Athletes/racepaces?section=info" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" lg="3">
+                <DashboardMetricTile Label="@L["Metric_RunningAnalysisInfo"]"
+                                     Value="@L["Metric_RunningAnalysisInfoValue"]"
+                                     Detail="@L["Metric_RunningAnalysisInfoDetail"]"
+                                     Icon="@Icons.Material.Filled.Info"
+                                     Accent="red"
+                                     Href="/Athletes/data-analyses?section=info" />
             </MudItem>
         </MudGrid>
 
