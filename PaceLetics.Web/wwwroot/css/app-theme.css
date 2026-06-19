@@ -885,6 +885,25 @@
     line-height: 1;
 }
 
+.pl-mental-resource-citation {
+    margin-left: 4px;
+    color: var(--pl-mental-brain);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.pl-mental-resource-citation:hover,
+.pl-mental-resource-citation:focus-visible,
+.pl-mental-resource-sources a:hover,
+.pl-mental-resource-sources a:focus-visible {
+    text-decoration: underline;
+}
+
+.pl-mental-resource-sources a {
+    color: var(--pl-mental-brain);
+    text-decoration: none;
+}
+
 @media (max-width: 520px) {
     .pl-mental-resource-icon {
         width: 78px;

@@ -14,7 +14,13 @@
             <MudStack Spacing="1" Class="pl-mental-resource-copy">
                 <MudText Typo="Typo.caption" Class="pl-mental-resource-kicker">@L["MentalResource_Kicker"]</MudText>
                 <MudText Typo="Typo.h6">@L["MentalResource_Title"]</MudText>
-                <MudText Typo="Typo.body2" Class="pl-dashboard-muted">@L["MentalResource_Lead"]</MudText>
+                <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
+                    @L["MentalResource_Lead"]
+                    @foreach (var source in GetSources(1, 2))
+                    {
+                        <a class="pl-mental-resource-citation" href="@source.Url" target="_blank" rel="noopener noreferrer">[@source.Number]</a>
+                    }
+                </MudText>
             </MudStack>
         </MudStack>
 
@@ -27,11 +33,31 @@
                     <span class="pl-mental-resource-step-number">@($"{step.index + 1:00}")</span>
                     <MudStack Spacing="0">
                         <MudText Typo="Typo.subtitle2">@L[step.item.TitleKey]</MudText>
-                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">@L[step.item.TextKey]</MudText>
+                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
+                            @L[step.item.TextKey]
+                            @foreach (var source in GetSources(step.item.SourceNumbers))
+                            {
+                                <a class="pl-mental-resource-citation" href="@source.Url" target="_blank" rel="noopener noreferrer">[@source.Number]</a>
+                            }
+                        </MudText>
                     </MudStack>
                 </div>
             }
         </div>
+
+        <MudDivider />
+
+        <MudStack Spacing="1" Class="pl-mental-resource-sources">
+            <MudText Typo="Typo.subtitle2">@L["MentalResource_SourcesTitle"]</MudText>
+
+            @foreach (var source in Sources)
+            {
+                <MudText Typo="Typo.caption" Class="pl-dashboard-muted">
+                    [@source.Number]
+                    <a href="@source.Url" target="_blank" rel="noopener noreferrer">@L[source.TitleKey]</a>
+                </MudText>
+            }
+        </MudStack>
     </MudStack>
 </MudPaper>
 
@@ -40,12 +66,31 @@
 
     private static readonly MentalResourceStep[] Steps =
     [
-        new("MentalResource_StepEffectTitle", "MentalResource_StepEffectText"),
-        new("MentalResource_StepFragileTitle", "MentalResource_StepFragileText"),
-        new("MentalResource_StepRiskTitle", "MentalResource_StepRiskText"),
-        new("MentalResource_StepConsequenceTitle", "MentalResource_StepConsequenceText"),
-        new("MentalResource_StepAppTitle", "MentalResource_StepAppText")
+        new("MentalResource_StepEffectTitle", "MentalResource_StepEffectText", [1, 2]),
+        new("MentalResource_StepFragileTitle", "MentalResource_StepFragileText", [3, 4, 5]),
+        new("MentalResource_StepRiskTitle", "MentalResource_StepRiskText", [6, 7, 8]),
+        new("MentalResource_StepConsequenceTitle", "MentalResource_StepConsequenceText", [1, 6, 7]),
+        new("MentalResource_StepAppTitle", "MentalResource_StepAppText", [])
     ];
 
-    private sealed record MentalResourceStep(string TitleKey, string TextKey);
+    private static readonly SourceRow[] Sources =
+    [
+        new(1, "MentalResource_SourceOswald", "https://doi.org/10.3390/ijerph17218059"),
+        new(2, "MentalResource_SourcePereira", "https://doi.org/10.3389/fpsyg.2021.624783"),
+        new(3, "MentalResource_SourceFurie", "https://doi.org/10.1007/s12178-023-09830-6"),
+        new(4, "MentalResource_SourceDeJonge", "https://doi.org/10.3390/ijerph17031044"),
+        new(5, "MentalResource_SourceVerhagen", "https://doi.org/10.1136/bmjsem-2021-001117"),
+        new(6, "MentalResource_SourceVidebaek", "https://doi.org/10.1007/s40279-015-0333-8"),
+        new(7, "MentalResource_SourceFokkema", "https://doi.org/10.1016/j.jsams.2018.06.003"),
+        new(8, "MentalResource_SourceRelph", "https://doi.org/10.3390/ijerph20176682")
+    ];
+
+    private static IEnumerable<SourceRow> GetSources(params int[] numbers)
+    {
+        return Sources.Where(source => numbers.Contains(source.Number));
+    }
+
+    private sealed record MentalResourceStep(string TitleKey, string TextKey, int[] SourceNumbers);
+
+    private sealed record SourceRow(int Number, string TitleKey, string Url);
 }
