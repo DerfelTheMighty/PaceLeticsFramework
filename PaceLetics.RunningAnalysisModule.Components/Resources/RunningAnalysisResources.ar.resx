@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>فلسفة التدخل</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>لا تدخل من دون مؤشر واضح. لا تسبب الضرر. لا يصبح نمط الحركة مشكلة إلا عندما يكون مشكلة في سياقه المحدد.</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>أسلوب الجري نظام ذاتي التحسين. نحن لا نصحح شكل الحركة لمجرد مظهرها؛ بل نتحقق مما إذا كان النمط الديناميكي مرتبطا فعلا بالأعراض أو الحمل أو نقص التحكم.</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>كيف نتحدث عن أسلوب الجري</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>متى ننظر بدقة أكبر</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>ملاحظة حول أسلوب الجري ليست حكما بأنه صحيح أو خاطئ.</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>ننظر معا فيما إذا كان النمط يتوافق مع الأعراض أو الحمل أو التعب.</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>الهدف هو الفهم والخيارات، وليس فرض التصحيح.</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>الانحراف المرئي وحده لا يعني وجود مشكلة.</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>يزداد الأمر أهمية عندما تكون الأدلة جيدة ويظهر النمط ديناميكيا أثناء الجري.</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>مع الأدلة الأضعف، تكون الأعراض والروابط المعقولة هي الأهم.</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>من تصحيح الشكل إلى فهم النظام</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>في السابق كان النهج غالبا: يجب أن يمتلك الجميع شكلا مثاليا قدر الإمكان. اليوم الموقف الأفضل هو: الأجسام مختلفة، وتقنية الجري فردية، ونمط الحركة ليس خاطئا تلقائيا فقط لأنه يختلف عن صورة مثالية. الجسم نظام ذاتي التحسين. يختار كثير من العدائين الإيقاع وطول الخطوة واستراتيجية الحركة قريبا جدا من حل اقتصادي لهم، خاصة مع زيادة الخبرة في الجري</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>إذا كان الرياضي يجري منذ سنوات من دون أعراض بأسلوب جري معين، وتحديدا من دون أعراض مرتبطة بهذا النمط الحركي، فهذا يشير أولا إلى نظام ديناميكي يعمل جيدا. حتى التدخل حسن النية يمكن أن يزحزح هذا النظام في اتجاه سلبي.</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>للتدخلات آثار جانبية</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>تغييرات التقنية نادرا ما تقلل الحمل ببساطة؛ بل تنقله. تقليل حمل الركبة قد يعني زيادة حمل وتر أخيل أو عضلة الربلة أو القدم. مزيد من الثبات قد يعني مزيدا من الصلابة. وقد يجهد نمط هبوط قدم مختلف تراكيب جديدة</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>لذلك تحتاج التدخلات إلى مؤشر واضح. قد يكون ذلك:</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>أدلة متوسطة إلى جيدة تظهر علاقة إيجابية بين الكلفة والفائدة للوقاية من الإصابات المستقبلية.</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>أدلة منخفضة إلى متوسطة مع وجود أعراض مرتبطة بالتدخل في الوقت نفسه.</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>بالنسبة لمعظم المعايير الشائعة لتقنية الجري الجيدة، لا تتحقق هذه الشروط.</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>الموافقة وديناميكيات القوة</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsText" xml:space="preserve"><value>بالطبع قد يكون من المنطقي أيضا تعديل بعض معايير أسلوب الجري لأسباب تتعلق بالأداء. في الوقت نفسه، لكل تدخل ثمن: فهو لا يزيل الحمل ببساطة، بل ينقله داخل النظام وقد يخلق آثارا جانبية جديدة. لا يمكن أن يقرر أحد من خلال الصراخ من الخط الجانبي أو ضغط المجموعة أو تصحيح سريع ما إذا كان مكسب الأداء المحتمل يبرر قبول هذه الآثار الجانبية. هذه الموازنة تنتمي إلى رعاية فردية طويلة الأمد وتتطلب موافقة الرياضي المستنيرة. حتى إذا لاحظ المدرب جانبا من حركة الجري أو لم يعجبه، يجب أن يتذكر أنه لا أحد يرى النظام كله من الخارج. تاريخ التدريب، والأعراض، والأهداف، والمخاوف، والخبرات السابقة، والقدرة الحالية على التكيف كلها جزء من القرار. وبما أن توصيات دور المدرب تحمل دائما وزنا، وبما أنه قد يصعب على الرياضيين رفضها، فإننا نتعامل مع تدخلات أسلوب الجري بحذر خاص: ليس كأوامر، بل كقرارات مشتركة على قدم المساواة.</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>تجنب وهم السيطرة</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>نعتقد أن كثيرا من مدربي المدرسة القديمة يقعون غالبا في وهم السيطرة. يقدمون تصحيحا، ويتحسن الرياضي خلال أسابيع، لكن ربما ليس بسبب التصحيح؛ فقد يكون التدريب والأنسجة والتنسيق والتنظيم الذاتي قد تكيفت على أي حال. النظام يحسن نفسه، والمدرب يعتقد: لقد أصلحت الشكل. وبالعكس، قد ينقل التصحيح الحمل ويثير الأعراض. ثم يقول المدرب: أرأيت، حدث هذا لأنك تجري دائما بهذه الطريقة. في الحالتين يتم الادعاء بوجود سببية غالبا من دون دليل واضح. ولهذا بالضبط نحتاج إلى مؤشر واضح وأدلة وسياق</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>ملاحظة حول أسلوب الجري ليست تقييما لما إذا كنت تجري بطريقة صحيحة أو خاطئة.</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>إدراكك الشخصي مهم: ماذا تشعر، متى يظهر، وما الذي يغيره؟</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>ننظر دائما إلى أسلوب الجري في سياق الأعراض والتدريب والحذاء والسرعة والحجم والتعب.</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>تحصل على تفسير وخيارات ممكنة، وليس إلزاما بتصحيح الشكل.</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>متى يصبح النمط ذا صلة</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>الانحراف المرئي وحده لا يعني وجود مشكلة. كثير من أساليب الجري تعمل بشكل جيد جدا.</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>يصبح النمط أكثر أهمية عندما تكون الأدلة جيدة ويظهر ديناميكيا أثناء الجري.</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>مع الأدلة المتوسطة أو الضعيفة، السؤال الأهم هو ما إذا كانت هناك أعراض مناسبة أو تعب أو فقدان تحكم.</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>من دون أعراض أو ارتباط معقول بالحمل، يبقى النمط اللافت غالبا اختلافا فرديا.</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>درجات الدليل والفائدة للوقاية من الإصابات</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>مقياس الفائدة: عالية جدا، عالية، متوسطة، منخفضة، منخفضة جدا، لا توجد. يقدر مدى مساهمة التدخل في هذا المعيار في الوقاية من الإصابات عندما توجد دلالة محددة.</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>المعيار</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>درجة الدليل</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>الدرجة</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>الفائدة للوقاية من الإصابات</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>متى يكون ذا صلة؟</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>عالية جدا</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>عالية</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>متوسطة</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>منخفضة</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>منخفضة جدا</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>لا توجد</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>هبوط الحوض مقابل ساق الارتكاز</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>الدوران الداخلي لمحور الساق</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>خطوة زائدة أمام الجسم</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>ميل الجذع إلى الأمام</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>مد الورك</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>تقوس قطني زائد</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>دوران الجذع</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>زاوية الذراع</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>عند ظهور ديناميكي، أو عدم تماثل، أو أعراض في الركبة/الشريط الحرقفي الظنبوبي/الحوض.</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>عند وجود فحج ديناميكي، أو أعراض في الركبة، أو أعراض ITB، أو فقدان التحكم.</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>عند وضوحه، أو وجود اندفاع كابح، أو أعراض في الساق/الركبة، أو قمم حمل.</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>يعتمد على السياق: التعب، أعراض الورك/الظهر، أو تعويض واضح.</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>مهم عند نقص مد الورك مع تعويض في الحوض/الفقرات القطنية.</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>لا يقيم بشكل ثابت؛ فقط مع فرط مد ديناميكي وأعراض.</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>فقط عند عدم تماثل واضح أو أعراض أو مشكلة في التنسيق.</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>عادة ليس مشكلة إصابة؛ غالبا يتعلق بالإيقاع أو الاقتصاد أو التوتر.</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>المصادر</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>

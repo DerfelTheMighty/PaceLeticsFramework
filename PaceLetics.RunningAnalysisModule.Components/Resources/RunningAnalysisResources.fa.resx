@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>فلسفه مداخله</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>هیچ مداخله‌ای بدون اندیکاسیون. آسیب نرسان. یک الگوی حرکتی فقط زمانی مشکل است که در زمینه مشخص خودش واقعا مشکل ایجاد کند.</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>سبک دویدن یک سیستم خودبهینه‌ساز است. ما ظاهر حرکت را اصلاح نمی‌کنیم؛ بررسی می‌کنیم که آیا یک الگوی دینامیک واقعا با علائم، بار یا کمبود کنترل ارتباط دارد یا نه.</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>چگونه درباره سبک دویدن صحبت می‌کنیم</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>چه زمانی دقیق‌تر نگاه می‌کنیم</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>یک نکته درباره سبک دویدن، قضاوت درباره درست یا غلط بودن نیست.</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>با هم بررسی می‌کنیم که آیا یک الگو با علائم، بار یا خستگی همخوانی دارد یا نه.</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>هدف فهم و گزینه‌هاست، نه اجبار به اصلاح.</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>یک انحراف قابل مشاهده به تنهایی هنوز مشکل نیست.</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>وقتی شواهد خوب باشند و الگو به صورت دینامیک دیده شود، اهمیت بیشتری پیدا می‌کند.</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>با شواهد ضعیف‌تر، علائم و ارتباط‌های قابل قبول بیشترین اهمیت را دارند.</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>از اصلاح فرم تا فهم سیستم</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>در گذشته رویکرد اغلب این بود: همه باید تا حد ممکن فرم کامل داشته باشند. امروز نگرش بهتر این است: بدن‌ها متفاوت‌اند، تکنیک دویدن فردی است، و یک الگوی حرکتی فقط به دلیل فاصله داشتن از یک تصویر ایده‌آل به طور خودکار غلط نیست. بدن یک سیستم خودبهینه‌ساز است. بسیاری از دوندگان، به‌ویژه با افزایش تجربه دویدن، آهنگ قدم، طول گام و راهبرد حرکتی خود را بسیار نزدیک به راه‌حل اقتصادی مناسب خود انتخاب می‌کنند</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>اگر یک ورزشکار سال‌ها با یک فرم دویدن مشخص بدون علامت بوده است، و دقیقا نسبت به همین الگوی حرکتی بدون علامت بوده، این در ابتدا نشانه یک سیستم دینامیک خوب کارکرده است. حتی یک مداخله با نیت خوب هم می‌تواند این سیستم را به سمت منفی جابه‌جا کند.</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>مداخله‌ها عوارض جانبی دارند</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>تغییرات تکنیکی به ندرت فقط بار را کم می‌کنند؛ معمولا آن را جابه‌جا می‌کنند. بار کمتر روی زانو می‌تواند به معنی بار بیشتر روی تاندون آشیل، ساق یا پا باشد. ثبات بیشتر می‌تواند به معنی سفتی بیشتر باشد. نوع دیگری از فرود پا می‌تواند ساختارهای جدیدی را بیش از حد تحت فشار قرار دهد</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>بنابراین مداخله‌ها به اندیکاسیون نیاز دارند. این می‌تواند باشد:</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>شواهد متوسط تا خوب که نسبت هزینه-فایده مثبت برای آسیب‌های آینده نشان می‌دهد.</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>شواهد کم تا متوسط همراه با وجود همزمان علائمی که با مداخله مرتبط‌اند.</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>برای بیشتر معیارهای رایج تکنیک خوب دویدن، این شرایط برآورده نمی‌شوند.</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>رضایت و پویایی قدرت</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsText" xml:space="preserve"><value>البته ممکن است به دلایل عملکردی، تغییر بعضی پارامترهای سبک دویدن منطقی باشد. همزمان هر مداخله‌ای هزینه دارد: بار را صرفا حذف نمی‌کند، بلکه آن را در سیستم جابه‌جا می‌کند و می‌تواند عوارض جانبی جدید ایجاد کند. اینکه یک سود احتمالی در عملکرد، پذیرش این عوارض را توجیه می‌کند یا نه، نمی‌تواند با فریاد از کنار مسیر، فشار گروهی یا یک اصلاح سریع دیکته شود. این سنجش باید در چارچوب همراهی فردی و بلندمدت انجام شود و به رضایت آگاهانه ورزشکار نیاز دارد. حتی اگر مربی متوجه جنبه‌ای از حرکت دویدن شود یا آن را نپسندد، باید روشن باشد که هیچ‌کس از بیرون کل سیستم را نمی‌بیند. سابقه تمرین، علائم، اهداف، ترس‌ها، تجربه‌های قبلی و توان سازگاری فعلی همگی بخشی از تصمیم هستند. چون توصیه‌هایی که از جایگاه مربی می‌آیند همیشه وزن دارند و رد کردن آن‌ها برای ورزشکاران می‌تواند دشوار باشد، ما با مداخله‌های سبک دویدن با احتیاط ویژه برخورد می‌کنیم: نه به عنوان دستور، بلکه به عنوان تصمیم مشترک در سطح برابر.</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>پرهیز از توهم کنترل</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>ما باور داریم که بسیاری از مربیان قدیمی، کم‌وبیش دچار توهم کنترل می‌شوند. آن‌ها اصلاحی می‌دهند، ورزشکار طی چند هفته بهتر می‌شود، اما شاید نه به دلیل آن اصلاح. تمرین، بافت‌ها، هماهنگی و خودسازماندهی ممکن است به هر حال در حال سازگاری بوده باشند. سیستم خودش را بهینه می‌کند؛ مربی فکر می‌کند: من فرم را درست کردم. برعکس، یک اصلاح می‌تواند بار را جابه‌جا کند و علائم ایجاد کند. بعد مربی می‌گوید: دیدی، این به خاطر این است که همیشه این‌طور می‌دوی. در هر دو حالت، رابطه علت و معلولی‌ای ادعا می‌شود که اغلب به‌درستی ثابت نشده است. دقیقا به همین دلیل به اندیکاسیون، شواهد و زمینه نیاز داریم</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>یک نکته درباره سبک دویدن، ارزیابی این نیست که درست یا غلط می‌دوی.</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>ادراک خودت مهم است: چه چیزی حس می‌کنی، چه زمانی رخ می‌دهد، چه چیزی آن را تغییر می‌دهد؟</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>ما سبک دویدن را همیشه در زمینه علائم، تمرین، کفش، pace، حجم و خستگی می‌بینیم.</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>تو یک تفسیر و گزینه‌های ممکن دریافت می‌کنی، نه الزام به اصلاح فرم.</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>چه زمانی یک الگو مهم می‌شود</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>یک انحراف قابل مشاهده به تنهایی هنوز مشکل نیست. بسیاری از سبک‌های دویدن بسیار خوب کار می‌کنند.</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>وقتی شواهد خوب باشند و الگو هنگام دویدن به صورت دینامیک دیده شود، اهمیت بیشتری پیدا می‌کند.</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>در شواهد متوسط یا ضعیف، سوال کلیدی این است که آیا علائم متناسب، خستگی یا از دست دادن کنترل هم وجود دارد یا نه.</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>بدون علائم یا ارتباط قابل قبول با بار، یک الگوی جلب توجه‌کننده معمولا تنوع فردی باقی می‌ماند.</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>درجات شواهد و فایده برای پیشگیری از آسیب</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>مقیاس فایده: بسیار زیاد، زیاد، متوسط، کم، بسیار کم، هیچ. این مقیاس برآورد می‌کند که مداخله روی این ویژگی، در صورت وجود اندیکاسیون مشخص، تا چه حد می‌تواند به پیشگیری از آسیب کمک کند.</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>ویژگی</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>درجه شواهد</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>امتیاز</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>فایده برای پیشگیری از آسیب</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>چه زمانی مرتبط است؟</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>بسیار زیاد</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>زیاد</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>متوسط</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>کم</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>بسیار کم</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>هیچ</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>افت لگن نسبت به پای تکیه‌گاه</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>چرخش داخلی محور پا</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>گام‌برداری بیش از حد جلو</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>تنه خم‌شده به جلو</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>اکستنشن ران</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>قوس زیاد کمر</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>چرخش تنه</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>زاویه بازو</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>در صورت بروز دینامیک، عدم تقارن، علائم زانو/ITB/لگن.</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>در صورت والگوس دینامیک، علائم زانو، علائم ITB یا از دست دادن کنترل.</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>در صورت شدت واضح، ایمپالس ترمز، علائم ساق/زانو یا قله‌های بار.</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>وابسته به زمینه: خستگی، علائم ران/کمر یا جبران واضح.</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>در کمبود اکستنشن ران همراه با جبران لگن/کمر مرتبط است.</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>ایستا قضاوت نشود؛ فقط با هایپراکستنشن دینامیک و علائم.</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>فقط در صورت عدم تقارن واضح، علائم یا مشکل هماهنگی.</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>معمولا مشکل آسیب نیست؛ بیشتر ریتم، اقتصاد حرکت یا تنش.</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>منابع</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>

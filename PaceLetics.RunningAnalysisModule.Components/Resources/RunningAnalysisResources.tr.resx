@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>Müdahale felsefesi</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>Endikasyon olmadan müdahale yok. Önce zarar verme. Bir hareket paterni, ancak kendi somut bağlamında sorun olduğunda sorundur.</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>Koşu stili kendini optimize eden bir sistemdir. Hareketin görünüşünü düzeltmeyiz; dinamik bir paternin gerçekten semptomlar, yük veya kontrol eksikliğiyle ilişkili olup olmadığını değerlendiririz.</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>Koşu stili hakkında nasıl konuşuruz</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>Ne zaman daha yakından bakarız</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>Koşu stiliyle ilgili bir not, doğru ya da yanlış koştuğuna dair bir yargı değildir.</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>Bir paternin semptomlar, yük veya yorgunlukla uyumlu olup olmadığına birlikte bakarız.</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>Amaç düzeltme zorunluluğu değil, anlayış ve seçeneklerdir.</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>Gözle görülür bir sapma tek başına henüz sorun değildir.</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>Kanıt güçlü olduğunda ve patern koşu sırasında dinamik olarak görüldüğünde daha anlamlı hale gelir.</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>Kanıt zayıfsa en çok semptomlar ve makul bağlantılar önemlidir.</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>Form düzeltmeden sistem anlayışına</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>Geçmişte yaklaşım çoğu zaman şuydu: Herkesin mümkün olduğunca mükemmel bir forma sahip olması gerekir. Bugün daha iyi yaklaşım şudur: Bedenler farklıdır, koşu tekniği bireyseldir ve bir hareket paterni ideal bir görüntüden farklı olduğu için otomatik olarak yanlış değildir. Beden kendini optimize eden bir sistemdir. Birçok koşucu, özellikle deneyim arttıkça, kadansını, adım uzunluğunu ve hareket stratejisini kendisi için ekonomik bir çözüme oldukça yakın seçer</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>Bir sporcu belirli bir koşu formuyla yıllardır semptomsuzsa, özellikle de tam olarak bu hareket paterni açısından semptomsuzsa, bu öncelikle iyi işleyen dinamik bir sisteme işaret eder. İyi niyetli bir müdahale bile bu sistemi olumsuz yönde değiştirebilir.</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>Müdahalelerin yan etkileri vardır</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>Teknik değişiklikleri yükü nadiren sadece azaltır; daha çok yerini değiştirir. Daha az diz yükü daha fazla Aşil tendonu, baldır veya ayak yükü anlamına gelebilir. Daha fazla stabilite daha fazla sertlik anlamına gelebilir. Farklı bir ayak basışı yeni yapıları aşırı yükleyebilir</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>Bu nedenle müdahalelerin bir endikasyona ihtiyacı vardır. Bu şunlar olabilir:</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>Gelecekteki yaralanmalar için olumlu bir maliyet-fayda ilişkisi gösteren orta ila iyi düzeyde kanıt.</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>Düşük ila orta düzeyde kanıt ve müdahaleyle ilişkili semptomların aynı anda bulunması.</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>İyi koşu tekniğiyle ilgili yaygın kriterlerin çoğu için bu koşullar karşılanmaz.</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>Rıza ve güç dinamikleri</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsText" xml:space="preserve"><value>Elbette performans nedenleriyle koşu stilinin bazı parametrelerini değiştirmek anlamlı olabilir. Aynı zamanda her müdahalenin bir bedeli vardır: yükü basitçe ortadan kaldırmaz, sistem içinde yer değiştirir ve yeni yan etkiler oluşturabilir. Olası bir performans kazanımının bu yan etkileri kabul etmeye değip değmeyeceği kenardan bağırarak, grup baskısıyla veya hızlı bir düzeltmeyle dikte edilemez. Bu değerlendirme uzun vadeli, bireysel bir destek içinde yapılmalı ve sporcunun bilgilendirilmiş rızasını gerektirir. Bir antrenör koşu hareketinin bir yönünü fark etse veya beğenmese bile, dışarıdan kimsenin tüm sistemi göremediğini hatırlamalıdır. Antrenman geçmişi, semptomlar, hedefler, kaygılar, önceki deneyimler ve mevcut uyum kapasitesi karara dahildir. Antrenör rolünden gelen öneriler her zaman ağırlık taşıdığı ve sporcular için bunları reddetmek zor olabildiği için koşu stili müdahalelerine özellikle özenle yaklaşırız: talimat olarak değil, eşit düzeyde ortak karar olarak.</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>Kontrol yanılsamasından kaçınmak</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>Eski okul birçok antrenörün sık sık bir kontrol yanılsamasına kapıldığına inanıyoruz. Bir düzeltme verirler, sporcu haftalar içinde iyileşir; ancak bu iyileşme düzeltmeden değil, antrenman, doku, koordinasyon ve öz-örgütlenmenin zaten uyum sağlamasından kaynaklanıyor olabilir. Sistem kendini optimize eder; antrenör ise formu ben düzelttim diye düşünür. Tersine, bir düzeltme yükü kaydırıp semptomları tetikleyebilir. Sonra antrenör şöyle der: Bak, bu hep böyle koştuğun için oldu. Her iki durumda da çoğu zaman temiz biçimde kanıtlanmamış bir nedensellik iddia edilir. Tam da bu yüzden endikasyona, kanıta ve bağlama ihtiyacımız var</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>Koşu stiliyle ilgili bir not, doğru mu yanlış mı koştuğuna dair bir değerlendirme değildir.</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>Kendi algın önemlidir: Ne hissediyorsun, ne zaman ortaya çıkıyor, ne değiştiriyor?</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>Koşu stilini her zaman semptomlar, antrenman, ayakkabı, pace, hacim ve yorgunluk bağlamında değerlendiririz.</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>Sana bir değerlendirme ve olası seçenekler sunulur; formunu düzeltme zorunluluğu değil.</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>Bir patern ne zaman anlamlı olur</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>Gözle görülür bir sapma tek başına henüz sorun değildir. Birçok koşu stili çok iyi çalışır.</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>Kanıt iyi olduğunda ve patern koşu sırasında dinamik olarak görünür olduğunda daha önemli hale gelir.</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>Orta veya zayıf kanıtta asıl soru, buna uygun semptomların, yorgunluğun veya kontrol kaybının da bulunup bulunmadığıdır.</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>Semptom veya makul bir yük bağlantısı yoksa dikkat çeken bir patern genellikle bireysel varyasyon olarak kalır.</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>Kanıt dereceleri ve yaralanma önleme yararı</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>Yarar ölçeği: Çok yüksek, Yüksek, Orta, Düşük, Çok düşük, Yok. Somut bir endikasyon varsa, ilgili özellikteki müdahalenin yaralanma önlemeye ne kadar katkı sağlayabileceğini tahmin eder.</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>Özellik</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>Kanıt derecesi</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>Skor</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>Yaralanma önleme yararı</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>Ne zaman anlamlı?</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>Çok yüksek</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>Yüksek</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>Orta</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>Düşük</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>Çok düşük</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>Yok</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>Destek bacağına göre pelvis düşmesi</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>Bacak aksının iç rotasyonu</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>Overstride</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>Öne eğik gövde</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>Kalça ekstansiyonu</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>Bel çukurunun artması</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>Gövde rotasyonu</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>Kol açısı</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>Dinamik belirginlik, asimetri, diz/ITB/pelvis semptomları olduğunda.</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>Dinamik valgus, diz semptomları, ITB semptomları veya kontrol kaybı olduğunda.</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>Belirgin düzeydeyse, frenleme impulsu, kaval/diz semptomları veya yük zirveleri varsa.</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>Bağlama bağlıdır: yorgunluk, kalça/sırt semptomları veya belirgin kompansasyon.</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>Eksik kalça ekstansiyonu ve pelvis/bel kompansasyonu olduğunda anlamlıdır.</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>Statik olarak değerlendirme; yalnızca dinamik hiperekstansiyon ve semptomlarla birlikte.</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>Yalnızca belirgin asimetri, semptom veya koordinasyon problemi olduğunda.</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>Genellikle yaralanma problemi değildir; daha çok ritim, ekonomi veya gerginlikle ilgilidir.</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>Kaynaklar</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>

@@ -53,6 +53,8 @@ public sealed class ComponentLocalizationTests
 
     [Theory]
     [InlineData("tr", "WelcomeText", "Merhaba {0}, işte güncel antrenman durumun.")]
+    [InlineData("de", "MentalResource_Title", "Laufen soll verfügbar bleiben.")]
+    [InlineData("en", "MentalResource_Title", "Running should stay available.")]
     [InlineData("es", "Title", "Panel")]
     public void DashboardResources_ResolveTranslatedKeysForNewCultures(
         string culture,
@@ -82,6 +84,16 @@ public sealed class ComponentLocalizationTests
     [Theory]
     [InlineData("de", "InterventionGuidance_Title", "Interventionsphilosophie")]
     [InlineData("en", "InterventionGuidance_Title", "Intervention philosophy")]
+    [InlineData("tr", "InterventionGuidance_Title", "Müdahale felsefesi")]
+    [InlineData("da", "InterventionGuidance_Title", "Interventionsfilosofi")]
+    [InlineData("ar", "InterventionGuidance_Title", "فلسفة التدخل")]
+    [InlineData("ru", "InterventionGuidance_Title", "Философия вмешательств")]
+    [InlineData("fr", "InterventionGuidance_Title", "Philosophie de l'intervention")]
+    [InlineData("zh", "InterventionGuidance_Title", "干预理念")]
+    [InlineData("es", "InterventionGuidance_Title", "Filosofía de intervención")]
+    [InlineData("fa", "InterventionGuidance_Title", "فلسفه مداخله")]
+    [InlineData("de", "InterventionGuidance_ConsentPowerDynamicsTitle", "Konsens und Machtdynamik")]
+    [InlineData("en", "InterventionGuidance_ConsentPowerDynamicsTitle", "Consent and power dynamics")]
     public void RunningAnalysisResources_ResolveInterventionGuidanceKeys(
         string culture,
         string key,

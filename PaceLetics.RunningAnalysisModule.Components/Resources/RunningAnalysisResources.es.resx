@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>Filosofía de intervención</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>Ninguna intervención sin indicación. Do no harm. Un patrón de movimiento solo es un problema cuando lo es en su contexto concreto.</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>El estilo de carrera es un sistema que se autooptimiza. No corregimos el aspecto del movimiento; comprobamos si un patrón dinámico está realmente relacionado con síntomas, carga o falta de control.</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>Cómo hablamos del estilo de carrera</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>Cuándo miramos más de cerca</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>Una observación sobre el estilo de carrera no es un juicio de correcto o incorrecto.</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>Miramos juntos si un patrón encaja con síntomas, carga o fatiga.</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>El objetivo es comprensión y opciones, no obligación de corregir.</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>Una desviación visible por sí sola aún no es un problema.</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>Se vuelve más relevante cuando la evidencia es buena y el patrón es visible dinámicamente.</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>Con evidencia más débil, importan sobre todo los síntomas y los vínculos plausibles.</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>De la corrección de forma a la comprensión del sistema</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>Antes el discurso era a menudo: todo el mundo debe tener una forma lo más perfecta posible. Hoy la postura más adecuada es: los cuerpos son diferentes, la técnica de carrera es individual y un patrón de movimiento no es automáticamente incorrecto solo porque se aparte de una imagen ideal. El cuerpo es un sistema que se autooptimiza. Muchos corredores eligen cadencia, longitud de zancada y estrategia de movimiento muy cerca de una solución económica para ellos, especialmente a medida que aumenta la experiencia corriendo</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>Si una persona atleta lleva años sin síntomas con una determinada forma de correr, y concretamente sin síntomas relacionados con ese patrón de movimiento, eso es ante todo una señal de un sistema dinámico que funciona bien. Incluso una intervención bienintencionada puede desplazar ese sistema en una dirección negativa.</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>Las intervenciones tienen efectos secundarios</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>Los cambios técnicos rara vez reducen la carga sin más; la desplazan. Menos carga en la rodilla puede significar más carga en el tendón de Aquiles, la pantorrilla o el pie. Más estabilidad puede significar más rigidez. Otro apoyo del pie puede sobrecargar estructuras nuevas</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>Por eso las intervenciones necesitan una indicación. Puede ser:</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>Evidencia moderada a buena que muestre una relación coste-beneficio positiva para futuras lesiones.</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>Evidencia baja a moderada junto con síntomas asociados a la intervención.</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>Para la mayoría de los criterios habituales de una buena técnica de carrera, estas condiciones no se cumplen.</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>Consentimiento y dinámica de poder</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsText" xml:space="preserve"><value>Por supuesto, también puede tener sentido modificar ciertos parámetros del estilo de carrera por motivos de rendimiento. Al mismo tiempo, toda intervención tiene un precio: no elimina simplemente la carga, sino que la desplaza dentro del sistema y puede generar nuevos efectos secundarios. La decisión de si una posible mejora del rendimiento justifica aceptar esos efectos secundarios no puede dictarse a gritos desde la banda, por presión del grupo o mediante una corrección rápida. Esa valoración pertenece a un acompañamiento individual a largo plazo y requiere el consentimiento informado de la persona atleta. Aunque a una persona entrenadora le llame la atención o no le guste un aspecto del movimiento de carrera, debe recordar que nadie ve todo el sistema desde fuera. El historial de entrenamiento, los síntomas, los objetivos, los miedos, las experiencias previas y la capacidad actual de adaptación forman parte de la decisión. Como las recomendaciones desde el rol de entrenador siempre tienen peso, y como puede ser difícil para las personas atletas rechazarlas, abordamos las intervenciones sobre el estilo de carrera con especial cuidado: no como órdenes, sino como decisiones compartidas en igualdad.</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>Evitar la ilusión de control</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>Creemos que muchas personas entrenadoras de la vieja escuela caen con frecuencia en una ilusión de control. Dan una corrección, la persona atleta mejora durante semanas, pero quizá no por la corrección. El entrenamiento, los tejidos, la coordinación y la autoorganización tal vez se habrían adaptado de todos modos. El sistema se optimiza a sí mismo; la persona entrenadora piensa: he arreglado la forma. A la inversa, una corrección puede desplazar la carga y desencadenar síntomas. Entonces se dice: ves, eso pasa porque siempre corres así. En ambos casos se afirma una causalidad que a menudo no está claramente demostrada. Precisamente por eso necesitamos indicación, evidencia y contexto</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>Una observación sobre el estilo de carrera no es una valoración de si corres bien o mal.</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>Tu propia percepción importa: ¿qué sientes, cuándo aparece, qué lo modifica?</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>Siempre consideramos el estilo de carrera en el contexto de síntomas, entrenamiento, calzado, ritmo, volumen y fatiga.</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>Recibes una interpretación y posibles opciones, no una obligación de corregir la forma.</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>Cuándo un patrón se vuelve relevante</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>Una desviación visible por sí sola aún no es un problema. Muchos estilos de carrera funcionan muy bien.</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>Un patrón se vuelve más importante cuando la evidencia es buena y es visible dinámicamente durante la carrera.</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>Con evidencia moderada o débil, la clave es si también hay síntomas compatibles, fatiga o pérdida de control.</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>Sin síntomas ni una conexión plausible con la carga, un patrón llamativo suele seguir siendo variación individual.</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>Grados de evidencia y beneficio para la prevención de lesiones</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>Escala de beneficio: Muy alto, Alto, Medio, Bajo, Muy bajo, Ninguno. Estima cuánto puede contribuir una intervención sobre el rasgo a la prevención de lesiones cuando existe una indicación concreta.</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>Rasgo</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>Grado de evidencia</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>Puntuación</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>Beneficio para la prevención de lesiones</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>¿Cuándo es relevante?</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>Muy alto</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>Alto</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>Medio</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>Bajo</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>Muy bajo</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>Ninguno</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>Descenso de la cadera frente a la pierna de apoyo</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>Rotación interna del eje de la pierna</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>Sobrepaso de zancada</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>Tronco inclinado hacia delante</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>Extensión de cadera</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>Arco lumbar excesivo</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>Rotación del tronco</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>Ángulo del brazo</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>Con expresión dinámica, asimetría, síntomas de rodilla/ITB/pelvis.</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>Con valgo dinámico, síntomas de rodilla, síntomas ITB o pérdida de control.</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>Con expresión marcada, impulso de frenado, síntomas de tibia/rodilla o picos de carga.</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>Depende del contexto: fatiga, síntomas de cadera/espalda o compensación clara.</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>Relevante con falta de extensión de cadera y compensación de pelvis/lumbar.</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>No valorar de forma estática; solo con hiperextensión dinámica y síntomas.</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>Solo con asimetría clara, síntomas o problema de coordinación.</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>Por lo general no es un problema de lesión; más bien ritmo, economía o tensión.</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>Fuentes</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>

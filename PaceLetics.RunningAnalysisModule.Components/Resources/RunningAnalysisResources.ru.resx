@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>Философия вмешательств</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>Никаких вмешательств без показаний. Не навреди. Двигательный паттерн становится проблемой только тогда, когда он является проблемой в конкретном контексте.</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>Стиль бега — самооптимизирующаяся система. Мы не исправляем внешний вид движения; мы проверяем, действительно ли динамический паттерн связан с симптомами, нагрузкой или недостатком контроля.</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>Как мы говорим о стиле бега</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>Когда мы смотрим внимательнее</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>Замечание о стиле бега не является оценкой «правильно» или «неправильно».</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>Мы вместе смотрим, соответствует ли паттерн симптомам, нагрузке или усталости.</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>Цель — понимание и варианты, а не обязанность исправляться.</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>Видимое отклонение само по себе еще не проблема.</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>Оно становится более значимым, когда доказательства хороши и паттерн динамически виден.</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>При более слабых доказательствах важнее всего симптомы и правдоподобные связи.</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>От коррекции формы к пониманию системы</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>Раньше подход часто звучал так: у всех должна быть максимально идеальная форма. Сегодня более разумная позиция такова: тела различаются, техника бега индивидуальна, и двигательный паттерн не становится автоматически неправильным только потому, что отличается от идеального образа. Тело — самооптимизирующаяся система. Многие бегуны выбирают частоту шагов, длину шага и стратегию движения очень близко к экономичному для себя решению, особенно по мере роста бегового опыта</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>Если спортсмен годами бегает с определенной формой без симптомов, причем без симптомов именно в отношении этого двигательного паттерна, это прежде всего признак хорошо функционирующей динамической системы. Даже доброжелательное вмешательство может сместить эту систему в неблагоприятную сторону.</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>У вмешательств есть побочные эффекты</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>Изменения техники редко просто уменьшают нагрузку; они ее перераспределяют. Меньшая нагрузка на колено может означать большую нагрузку на ахиллово сухожилие, икру или стопу. Больше стабильности может означать больше жесткости. Другой способ постановки стопы может перегрузить новые структуры</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>Поэтому вмешательства требуют показаний. Это может быть:</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>Умеренные или хорошие доказательства, показывающие положительное соотношение пользы и цены для будущих травм.</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>Низкие или умеренные доказательства вместе с симптомами, связанными с вмешательством.</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>Для большинства распространенных критериев хорошей техники бега эти условия не выполнены.</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>Согласие и динамика власти</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsText" xml:space="preserve"><value>Конечно, по причинам, связанным с результативностью, иногда имеет смысл менять отдельные параметры стиля бега. Но у каждого вмешательства есть цена: оно не просто убирает нагрузку, а перераспределяет ее внутри системы и может создавать новые побочные эффекты. Вопрос о том, оправдывает ли возможный прирост результата принятие этих побочных эффектов, нельзя решать криком с бровки, групповым давлением или быстрой поправкой. Такой выбор должен происходить в рамках долгосрочного индивидуального сопровождения и требует информированного согласия спортсмена. Даже если тренеру бросается в глаза или не нравится какой-то аспект бегового движения, важно помнить: снаружи никто не видит всю систему. Тренировочная история, симптомы, цели, страхи, прежний опыт и текущая способность к адаптации входят в решение. Поскольку рекомендации из тренерской роли всегда имеют вес и спортсменам бывает трудно от них отказаться, мы особенно бережно подходим к вмешательствам в стиль бега: не как к приказам, а как к совместным решениям на равных.</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>Избегать иллюзии контроля</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>Мы считаем, что многие тренеры старой школы нередко попадают в иллюзию контроля. Они дают коррекцию, спортсмен за недели становится лучше, но, возможно, не из-за этой коррекции. Тренировка, ткани, координация и самоорганизация могли адаптироваться сами по себе. Система оптимизирует себя, а тренер думает: я исправил форму. И наоборот, коррекция может перераспределить нагрузку и вызвать симптомы. Тогда тренер говорит: видишь, это произошло потому, что ты всегда так бегаешь. В обоих случаях утверждается причинность, которая часто не доказана. Именно поэтому нам нужны показания, доказательства и контекст</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>Замечание о стиле бега не является оценкой того, правильно или неправильно ты бегаешь.</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>Твое собственное восприятие важно: что ты чувствуешь, когда это возникает, что это меняет?</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>Мы всегда рассматриваем стиль бега в контексте симптомов, тренировок, обуви, темпа, объема и усталости.</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>Ты получаешь оценку и возможные варианты, а не обязанность исправлять форму.</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>Когда паттерн становится значимым</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>Видимое отклонение само по себе еще не проблема. Многие стили бега работают очень хорошо.</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>Паттерн становится важнее, когда доказательства хороши и он динамически виден во время бега.</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>При умеренных или слабых доказательствах главное — есть ли соответствующие симптомы, усталость или потеря контроля.</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>Без симптомов или правдоподобной связи с нагрузкой заметный паттерн обычно остается индивидуальной вариацией.</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>Уровни доказательности и польза для профилактики травм</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>Шкала пользы: Очень высокая, Высокая, Средняя, Низкая, Очень низкая, Нет. Она оценивает, насколько вмешательство по этому признаку может способствовать профилактике травм при наличии конкретного показания.</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>Признак</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>Уровень доказательности</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>Балл</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>Польза для профилактики травм</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>Когда значимо?</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>Очень высокая</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>Высокая</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>Средняя</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>Низкая</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>Очень низкая</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>Нет</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>Опускание таза относительно опорной ноги</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>Внутренняя ротация оси ноги</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>Чрезмерный вынос стопы вперед</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>Наклоненный вперед корпус</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>Разгибание бедра</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>Чрезмерный поясничный прогиб</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>Ротация корпуса</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>Угол рук</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>При динамическом проявлении, асимметрии, симптомах колена/ITB/таза.</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>При динамическом вальгусе, симптомах колена, ITB или потере контроля.</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>При выраженном проявлении, тормозящем импульсе, симптомах голени/колена или пиках нагрузки.</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>Зависит от контекста: усталость, симптомы бедра/спины или явная компенсация.</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>Значимо при недостаточном разгибании бедра с компенсацией таза/поясницы.</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>Не оценивать статически; только при динамическом переразгибании и симптомах.</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>Только при явной асимметрии, симптомах или проблеме координации.</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>Обычно не является проблемой травм; чаще речь о ритме, экономичности или напряжении.</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>Источники</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>

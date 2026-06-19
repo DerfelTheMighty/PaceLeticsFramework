@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InterventionGuidance_Title" xml:space="preserve"><value>干预理念</value></data>
+  <data name="InterventionGuidance_Subtitle" xml:space="preserve"><value>没有指征就不干预。首先不造成伤害。一个动作模式只有在具体情境中真正造成问题时，才是问题。</value></data>
+  <data name="InterventionGuidance_CompactIntro" xml:space="preserve"><value>跑步姿态是一个自我优化的系统。我们不是为了外观看起来更标准而纠正动作，而是判断某个动态模式是否真的与症状、负荷或控制不足有关。</value></data>
+  <data name="InterventionGuidance_TalkTitle" xml:space="preserve"><value>我们如何谈论跑步姿态</value></data>
+  <data name="InterventionGuidance_ReviewTitle" xml:space="preserve"><value>什么时候需要更仔细观察</value></data>
+  <data name="InterventionGuidance_CompactTalk_1" xml:space="preserve"><value>关于跑步姿态的提示，不是对“对”或“错”的评价。</value></data>
+  <data name="InterventionGuidance_CompactTalk_2" xml:space="preserve"><value>我们一起判断某个模式是否与症状、负荷或疲劳相匹配。</value></data>
+  <data name="InterventionGuidance_CompactTalk_3" xml:space="preserve"><value>目标是理解和选择，而不是强制纠正。</value></data>
+  <data name="InterventionGuidance_CompactReview_1" xml:space="preserve"><value>仅仅看到偏离，并不等于已经存在问题。</value></data>
+  <data name="InterventionGuidance_CompactReview_2" xml:space="preserve"><value>当证据较好，并且该模式在跑步中动态可见时，它才更相关。</value></data>
+  <data name="InterventionGuidance_CompactReview_3" xml:space="preserve"><value>证据较弱时，最重要的是症状和合理的关联。</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingTitle" xml:space="preserve"><value>从姿态纠正到系统理解</value></data>
+  <data name="InterventionGuidance_SystemUnderstandingText" xml:space="preserve"><value>过去常见的思路是：每个人都必须拥有尽可能完美的姿态。今天更合适的态度是：身体各不相同，跑步技术具有个体性，一个动作模式并不会因为偏离理想图像就自动变成错误。身体是一个自我优化的系统。许多跑者会选择非常接近自身经济解的步频、步幅和动作策略，尤其是在跑步经验增加之后</value></data>
+  <data name="InterventionGuidance_FunctioningSystemAlert" xml:space="preserve"><value>如果一名运动员多年来以某种跑步姿态无症状地跑步，并且正是针对这个动作模式没有症状，这首先说明这是一个运作良好的动态系统。即使是出于好意的干预，也可能把这个系统推向不利方向。</value></data>
+  <data name="InterventionGuidance_SideEffectsTitle" xml:space="preserve"><value>干预有副作用</value></data>
+  <data name="InterventionGuidance_SideEffectsIntro" xml:space="preserve"><value>技术改变很少只是简单地降低负荷；它们通常是在转移负荷。膝关节负荷减少，可能意味着跟腱、小腿或足部负荷增加。更多稳定性可能意味着更多僵硬。不同的足着地方式可能让新的结构过载</value></data>
+  <data name="InterventionGuidance_SideEffectsIndicationIntro" xml:space="preserve"><value>因此，干预需要明确指征。指征可以是：</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>中等到较好的证据显示，对未来伤病具有正向的成本收益关系。</value></data>
+  <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>低到中等证据，同时存在与该干预相关的症状。</value></data>
+  <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>对于大多数常见的“良好跑姿”标准，这些条件并不成立。</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>同意与权力动态</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsText" xml:space="preserve"><value>当然，出于竞技表现的原因，修改跑步姿态中的某些参数也可能是有意义的。但同时，每一次干预都有代价：它不会简单地消除负荷，而是在系统内转移负荷，并可能产生新的副作用。潜在的表现提升是否值得接受这些副作用，不能由场边喊叫、群体压力或一次快速纠正来决定。这种权衡应当发生在长期、个体化的陪伴中，并需要运动员的知情同意。即使教练注意到或不喜欢跑步动作中的某个方面，也必须清楚：从外部没有人能看见整个系统。训练史、症状、目标、担忧、既往经验以及当前适应能力，都是决策的一部分。因为来自教练角色的建议总是带有分量，而运动员拒绝这些建议可能并不容易，所以我们对跑步姿态干预格外谨慎：它不是命令，而是平等基础上的共同决定。</value></data>
+  <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>避免控制错觉</value></data>
+  <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>我们认为，许多老派教练常常陷入一种控制错觉。他们给出一个纠正，运动员在几周内变好，但这未必是因为这个纠正；训练、组织、协调和自组织本来也可能在适应。系统在自我优化，而教练以为：我修好了他的姿态。反过来，一个纠正也可能转移负荷并引发症状。于是教练说：你看，这就是因为你一直那样跑。两种情况下，都声称了一种往往并未被清楚证明的因果关系。正因如此，我们需要指征、证据和背景</value></data>
+  <data name="InterventionGuidance_Talk_1" xml:space="preserve"><value>关于跑步姿态的提示，不是评价你跑得对还是错。</value></data>
+  <data name="InterventionGuidance_Talk_2" xml:space="preserve"><value>你自己的感受很重要：你感觉到什么，什么时候出现，什么会改变它？</value></data>
+  <data name="InterventionGuidance_Talk_3" xml:space="preserve"><value>我们始终把跑步姿态放在症状、训练、鞋、配速、跑量和疲劳的背景中来看。</value></data>
+  <data name="InterventionGuidance_Talk_4" xml:space="preserve"><value>你得到的是解释和可能的选项，而不是必须纠正姿态的义务。</value></data>
+  <data name="InterventionGuidance_RelevanceTitle" xml:space="preserve"><value>一个模式何时变得相关</value></data>
+  <data name="InterventionGuidance_Relevance_1" xml:space="preserve"><value>仅仅看到偏离，并不等于已经存在问题。许多跑步姿态运作得很好。</value></data>
+  <data name="InterventionGuidance_Relevance_2" xml:space="preserve"><value>当证据较好，并且该模式在跑步中动态可见时，它会变得更重要。</value></data>
+  <data name="InterventionGuidance_Relevance_3" xml:space="preserve"><value>在证据中等或较弱时，关键是是否同时存在相符的症状、疲劳或控制丧失。</value></data>
+  <data name="InterventionGuidance_Relevance_4" xml:space="preserve"><value>如果没有症状或合理的负荷关联，一个显眼的模式通常只是个体差异。</value></data>
+  <data name="InterventionGuidance_EvidenceTitle" xml:space="preserve"><value>证据等级与伤病预防收益</value></data>
+  <data name="InterventionGuidance_EvidenceSubtitle" xml:space="preserve"><value>收益等级：非常高、高、中、低、非常低、无。它评估在存在具体指征时，针对该特征的干预对伤病预防可能有多大贡献。</value></data>
+  <data name="InterventionGuidance_TableFeature" xml:space="preserve"><value>特征</value></data>
+  <data name="InterventionGuidance_TableEvidence" xml:space="preserve"><value>证据等级</value></data>
+  <data name="InterventionGuidance_TableScore" xml:space="preserve"><value>评分</value></data>
+  <data name="InterventionGuidance_TableBenefit" xml:space="preserve"><value>伤病预防收益</value></data>
+  <data name="InterventionGuidance_TableRelevantWhen" xml:space="preserve"><value>何时相关？</value></data>
+  <data name="InterventionGuidance_BenefitVeryHigh" xml:space="preserve"><value>非常高</value></data>
+  <data name="InterventionGuidance_BenefitHigh" xml:space="preserve"><value>高</value></data>
+  <data name="InterventionGuidance_BenefitMedium" xml:space="preserve"><value>中</value></data>
+  <data name="InterventionGuidance_BenefitLow" xml:space="preserve"><value>低</value></data>
+  <data name="InterventionGuidance_BenefitVeryLow" xml:space="preserve"><value>非常低</value></data>
+  <data name="InterventionGuidance_BenefitNone" xml:space="preserve"><value>无</value></data>
+  <data name="InterventionGuidance_FeatureHipDrop" xml:space="preserve"><value>相对支撑腿的髋部下沉</value></data>
+  <data name="InterventionGuidance_FeatureLegInternalRotation" xml:space="preserve"><value>下肢轴线内旋</value></data>
+  <data name="InterventionGuidance_FeatureOverstride" xml:space="preserve"><value>跨步过大</value></data>
+  <data name="InterventionGuidance_FeatureForwardLean" xml:space="preserve"><value>躯干前倾</value></data>
+  <data name="InterventionGuidance_FeatureHipExtension" xml:space="preserve"><value>髋伸展</value></data>
+  <data name="InterventionGuidance_FeatureLordosis" xml:space="preserve"><value>腰椎过度前凸</value></data>
+  <data name="InterventionGuidance_FeatureTrunkRotation" xml:space="preserve"><value>躯干旋转</value></data>
+  <data name="InterventionGuidance_FeatureArmAngle" xml:space="preserve"><value>手臂角度</value></data>
+  <data name="InterventionGuidance_ThresholdHipDrop" xml:space="preserve"><value>在动态表现、左右不对称、膝/ITB/骨盆症状时。</value></data>
+  <data name="InterventionGuidance_ThresholdLegInternalRotation" xml:space="preserve"><value>在动态膝外翻、膝症状、ITB症状或控制丧失时。</value></data>
+  <data name="InterventionGuidance_ThresholdOverstride" xml:space="preserve"><value>在表现明显、制动冲量、胫骨/膝症状或负荷峰值时。</value></data>
+  <data name="InterventionGuidance_ThresholdForwardLean" xml:space="preserve"><value>取决于背景：疲劳、髋/背部症状或明显代偿。</value></data>
+  <data name="InterventionGuidance_ThresholdHipExtension" xml:space="preserve"><value>在髋伸展不足并伴随骨盆/腰椎代偿时相关。</value></data>
+  <data name="InterventionGuidance_ThresholdLordosis" xml:space="preserve"><value>不要静态评价；仅在动态过伸且有症状时。</value></data>
+  <data name="InterventionGuidance_ThresholdTrunkRotation" xml:space="preserve"><value>仅在明显不对称、症状或协调问题时。</value></data>
+  <data name="InterventionGuidance_ThresholdArmAngle" xml:space="preserve"><value>通常不是伤病问题；更多与节奏、经济性或紧张有关。</value></data>
+  <data name="InterventionGuidance_SourcesTitle" xml:space="preserve"><value>来源</value></data>
+  <data name="InterventionGuidance_SourceCeyssens" xml:space="preserve"><value>Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.</value></data>
+  <data name="InterventionGuidance_SourceWillwacher" xml:space="preserve"><value>Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.</value></data>
+  <data name="InterventionGuidance_SourceAndersonStepRate" xml:space="preserve"><value>Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.</value></data>
+  <data name="InterventionGuidance_SourceMoore" xml:space="preserve"><value>Moore. Is there an economical running technique? Sports Med. 2016.</value></data>
+  <data name="InterventionGuidance_SourceNigg" xml:space="preserve"><value>Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.</value></data>
+  <data name="InterventionGuidance_SourceGaitRetraining" xml:space="preserve"><value>Clinical application of gait retraining in the injured runner. PMC.</value></data>
+  <data name="InterventionGuidance_SourceRidge" xml:space="preserve"><value>Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.</value></data>
+  <data name="InterventionGuidance_SourceChristopher" xml:space="preserve"><value>Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.</value></data>
+</root>
