@@ -1,0 +1,177 @@
+@namespace PaceLetics.RunningAnalysisModule.Components
+
+<section style="border:1px solid var(--mud-palette-lines-default); border-radius:8px; padding:16px;">
+    <MudStack Spacing="3">
+        <MudStack Spacing="1">
+            <MudText Typo="Typo.h6">Interventionsphilosophie</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                Keine Intervention ohne Indikation. Do no harm. Ein Bewegungsmuster ist erst dann ein Problem,
+                wenn es im konkreten Kontext ein Problem ist.
+            </MudText>
+        </MudStack>
+
+        @if (Compact)
+        {
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
+                Laufstil ist ein selbstoptimierendes System. Wir korrigieren nicht das Aussehen einer Bewegung,
+                sondern pr&uuml;fen, ob ein dynamisches Muster wirklich mit Beschwerden, Belastung oder fehlender
+                Kontrolle zusammenh&auml;ngt.
+            </MudAlert>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Gespr&auml;chsrahmen</MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem>Erst fragen: Darf ich dir etwas zum Laufstil sagen?</MudListItem>
+                        <MudListItem>Hintergrund des Bewegungsmusters auf Augenh&ouml;he verstehen.</MudListItem>
+                        <MudListItem>Awareness und Optionen statt Korrekturpflicht.</MudListItem>
+                    </MudList>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Handlungsschwelle</MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem>A-B und dynamisch sichtbar: ansprechen.</MudListItem>
+                        <MudListItem>C: bei Beschwerden, Schw&auml;che oder deutlicher Auspr&auml;gung.</MudListItem>
+                        <MudListItem>D: nur bei echter Symptomkopplung.</MudListItem>
+                    </MudList>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText Typo="Typo.body2">
+                Fr&uuml;her war der Drill oft: Alle m&uuml;ssen eine m&ouml;glichst perfekte Form haben.
+                Heute ist die bessere Haltung: K&ouml;rper sind unterschiedlich, Lauftechnik ist individuell,
+                und ein Bewegungsmuster ist nicht automatisch falsch, nur weil es von einem Idealbild abweicht.
+                Der K&ouml;rper ist ein selbstoptimierendes System. Viele L&auml;ufer:innen w&auml;hlen
+                Schrittfrequenz, Schrittl&auml;nge und Bewegungsstrategie sehr nah an einer f&uuml;r sie
+                &ouml;konomischen L&ouml;sung, besonders mit wachsender Lauferfahrung
+                <a href="@Sources[3].Url" target="_blank" rel="noopener noreferrer">[4]</a>.
+            </MudText>
+
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
+                Wenn eine Athlet:in mit einer bestimmten Laufform beschwerdefrei mehrere Marathons gelaufen ist,
+                und zwar beschwerdefrei im Hinblick auf genau dieses Bewegungsmuster, dann ist das zun&auml;chst
+                ein Hinweis auf ein gut funktionierendes dynamisches System. Eine auch gut gemeinte Intervention
+                kann dieses System zu ihren Ungunsten verschieben.
+            </MudAlert>
+
+            <MudText Typo="Typo.body2">
+                Technik&auml;nderungen reduzieren Belastung selten einfach; sie verschieben sie. Weniger
+                Kniebelastung kann mehr Achillessehnen-, Waden- oder Fu&szlig;belastung bedeuten. Mehr
+                Stabilit&auml;t kann mehr Steifigkeit bedeuten. Ein anderer Fu&szlig;aufsatz kann neue Strukturen
+                &uuml;berfordern
+                <a href="@Sources[2].Url" target="_blank" rel="noopener noreferrer">[3]</a>,
+                <a href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>,
+                <a href="@Sources[6].Url" target="_blank" rel="noopener noreferrer">[7]</a>.
+            </MudText>
+
+            <MudText Typo="Typo.body2">
+                Viele Trainer:innen der alten Schule unterliegen hier einer Kontrollillusion. Sie geben eine
+                Korrektur, die Athlet:in wird &uuml;ber Wochen besser, aber m&ouml;glicherweise nicht wegen
+                der Korrektur, sondern weil Training, Gewebe, Koordination und Selbstorganisation ohnehin
+                adaptieren. Das System optimiert sich selbst, der Coach denkt: Ich habe die Form repariert.
+                Umgekehrt kann eine Korrektur die Beanspruchung verschieben und Beschwerden ausl&ouml;sen.
+                Dann sagt der Coach: Siehst du, das kommt, weil du vorher so und so gelaufen bist. In beiden
+                F&auml;llen wird eine Kausalit&auml;t behauptet, die oft gar nicht sauber belegt ist. Genau
+                deshalb brauchen wir Indikation, Evidenz und Kontext
+                <a href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>,
+                <a href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>,
+                <a href="@Sources[4].Url" target="_blank" rel="noopener noreferrer">[5]</a>.
+            </MudText>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Gespr&auml;chsrahmen</MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem>Erst Zustimmung einholen: Darf ich dir etwas zu deinem Laufstil sagen?</MudListItem>
+                        <MudListItem>Auf Augenh&ouml;he fragen: Was sp&uuml;rst du selbst?</MudListItem>
+                        <MudListItem>Kontext kl&auml;ren: Beschwerden, Training, Schuhwerk, Tempo, Umfang, Erm&uuml;dung.</MudListItem>
+                        <MudListItem>Awareness und Optionen anbieten statt Korrekturpflicht formulieren.</MudListItem>
+                        <MudListItem>Selbstwirksamkeit st&auml;rken: testen, sp&uuml;ren, mitentscheiden.</MudListItem>
+                    </MudList>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Handlungsschwelle</MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem>A-B und dynamisch sichtbar: ansprechen, einordnen und mit Symptomen/Belastung abgleichen.</MudListItem>
+                        <MudListItem>C: ansprechen, wenn es direkt Beschwerden macht, deutlich ist oder nach Schw&auml;che/Erm&uuml;dung aussieht.</MudListItem>
+                        <MudListItem>D: nur thematisieren, wenn es wirklich Probleme macht oder klar mit Beschwerden gekoppelt ist.</MudListItem>
+                        <MudListItem>Interventionen klein dosieren: eine &Auml;nderung, kurze Exposition, Reaktion 24-48 Stunden beobachten.</MudListItem>
+                    </MudList>
+                </MudItem>
+            </MudGrid>
+        }
+
+        <MudTable Items="EvidenceRows" Dense="true" Hover="false" Elevation="0" Breakpoint="Breakpoint.Sm">
+            <HeaderContent>
+                <MudTh>Merkmal</MudTh>
+                <MudTh>Evidenzgrad</MudTh>
+                <MudTh>Score</MudTh>
+                <MudTh>Wann relevant?</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Merkmal">@context.Feature</MudTd>
+                <MudTd DataLabel="Evidenzgrad">@context.Evidence</MudTd>
+                <MudTd DataLabel="Score">@context.Score</MudTd>
+                <MudTd DataLabel="Wann relevant?">@context.ActionThreshold</MudTd>
+            </RowTemplate>
+        </MudTable>
+
+        @if (!Compact)
+        {
+            <MudDivider />
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.subtitle2">Quellen</MudText>
+                @foreach (var source in Sources)
+                {
+                    <MudText Typo="Typo.caption">
+                        [@source.Number]
+                        <a href="@source.Url" target="_blank" rel="noopener noreferrer">@source.Title</a>
+                    </MudText>
+                }
+            </MudStack>
+        }
+    </MudStack>
+</section>
+
+@code {
+    [Parameter] public bool Compact { get; set; }
+
+    private static readonly EvidenceRow[] EvidenceRows =
+    {
+        new("Absinken der H\u00fcfte gegen\u00fcber Standbein", "B", 8, "Bei dynamischer Auspr\u00e4gung, Asymmetrie, Knie-/ITB-/Beckenbeschwerden."),
+        new("Innenrotation der Beinachse", "B", 8, "Bei dynamischem Valgus, Kniebeschwerden, ITB-Symptomen oder Kontrollverlust."),
+        new("Overstride", "C", 7, "Bei hoher Auspr\u00e4gung, Bremsimpuls, Schienbein-/Kniebeschwerden oder Lastspitzen."),
+        new("Vorgebeugter Oberk\u00f6rper", "C", 5, "Kontextabh\u00e4ngig: Erm\u00fcdung, H\u00fcft-/R\u00fcckenbeschwerden oder deutliche Kompensation."),
+        new("H\u00fcftextension", "D", 4, "Relevant bei fehlender H\u00fcftstreckung mit Becken-/LWS-Ausweichbewegung."),
+        new("Hohlkreuz", "D", 3, "Nicht statisch bewerten; nur bei dynamischer \u00dcberstreckung und Beschwerden."),
+        new("Rotation im Oberk\u00f6rper", "D", 3, "Nur bei deutlicher Asymmetrie, Symptomen oder Koordinationsproblem."),
+        new("Armwinkel", "D", 1, "In der Regel kein Verletzungsproblem; eher Rhythmus, \u00d6konomie oder Spannung.")
+    };
+
+    private static readonly SourceRow[] Sources =
+    {
+        new("1", "Ceyssens et al. Biomechanical risk factors associated with running-related injuries: a systematic review. Sports Med. 2019.", "https://pubmed.ncbi.nlm.nih.gov/31028658/"),
+        new("2", "Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022.", "https://pubmed.ncbi.nlm.nih.gov/35247202/"),
+        new("3", "Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022.", "https://link.springer.com/article/10.1186/s40798-022-00504-0"),
+        new("4", "Moore. Is there an economical running technique? Sports Med. 2016.", "https://link.springer.com/article/10.1007/s40279-016-0474-4"),
+        new("5", "Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015.", "https://bjsm.bmj.com/content/49/20/1290"),
+        new("6", "Clinical application of gait retraining in the injured runner. PMC.", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/"),
+        new("7", "Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013.", "https://pubmed.ncbi.nlm.nih.gov/23439417/"),
+        new("8", "Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019.", "https://pubmed.ncbi.nlm.nih.gov/30805204/")
+    };
+
+    private sealed record EvidenceRow(
+        string Feature,
+        string Evidence,
+        int Score,
+        string ActionThreshold);
+
+    private sealed record SourceRow(
+        string Number,
+        string Title,
+        string Url);
+}

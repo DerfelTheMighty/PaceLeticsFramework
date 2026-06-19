@@ -16,14 +16,58 @@
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    <MudPaper Elevation="0" Class="pa-4 pl-panel mt-4">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px; min-width:0; flex:1 1 260px;">
+                <MudIcon Icon="@GetDriveIcon()" Color="@GetDriveIconColor()" />
+                <div style="min-width:0;">
+                    <MudText Typo="Typo.subtitle2">@L["DriveTitle"]</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@GetDriveDescription()</MudText>
+                    @if (_folder is not null)
+                    {
+                        <MudLink Href="@_folder.Url" Target="_blank" Typo="Typo.caption">@L["OpenFolder"]</MudLink>
+                    }
+                </div>
+            </MudStack>
+
+            @if (_folder is null)
+            {
+                <MudTooltip Text="@L["CreateFolder"]">
+                    <MudIconButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Icon="@Icons.Material.Filled.CreateNewFolder"
+                                   Disabled="_isBusy || string.IsNullOrWhiteSpace(_userId)"
+                                   OnClick="CreateFolderAsync"
+                                   aria-label="@L["CreateFolder"]" />
+                </MudTooltip>
+            }
+            else
+            {
+                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                    <MudTooltip Text="@L["OpenFolder"]">
+                        <MudIconButton Variant="Variant.Outlined"
+                                       Color="Color.Primary"
+                                       Icon="@Icons.Material.Filled.OpenInNew"
+                                       Disabled="_isBusy"
+                                       OnClick="OpenFolderAsync"
+                                       aria-label="@L["OpenFolder"]" />
+                    </MudTooltip>
+                    <MudTooltip Text="@L["DeleteFolder"]">
+                        <MudIconButton Variant="Variant.Outlined"
+                                       Color="Color.Error"
+                                       Icon="@Icons.Material.Filled.Delete"
+                                       Disabled="_isBusy"
+                                       OnClick="DeleteFolderAsync"
+                                       aria-label="@L["DeleteFolder"]" />
+                    </MudTooltip>
+                </MudStack>
+            }
+        </MudStack>
+    </MudPaper>
+
     <nav class="pl-section-nav" aria-label="@L["Title"]">
-        <button type="button"
-                class="@GetSectionButtonClass(DataAnalysesSection.Drive)"
-                aria-pressed="@(_activeSection == DataAnalysesSection.Drive)"
-                @onclick="@(() => SelectSection(DataAnalysesSection.Drive))">
-            <MudIcon Icon="@Icons.Material.Filled.FolderOpen" Size="Size.Small" />
-            <span>@L["TabDrive"]</span>
-        </button>
         <button type="button"
                 class="@GetSectionButtonClass(DataAnalysesSection.Recordings)"
                 aria-pressed="@(_activeSection == DataAnalysesSection.Recordings)"
@@ -38,62 +82,16 @@
             <MudIcon Icon="@Icons.Material.Filled.Assessment" Size="Size.Small" />
             <span>@L["TabAnalyses"]</span>
         </button>
+        <button type="button"
+                class="@GetSectionButtonClass(DataAnalysesSection.Info)"
+                aria-pressed="@(_activeSection == DataAnalysesSection.Info)"
+                @onclick="@(() => SelectSection(DataAnalysesSection.Info))">
+            <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+            <span>@L["TabInfo"]</span>
+        </button>
     </nav>
 
-    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
-
-    @if (_activeSection == DataAnalysesSection.Drive)
-    {
-        <MudPaper Elevation="0" Class="pa-4 pl-panel mt-4">
-            <MudStack Spacing="3">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
-                    <MudIcon Icon="@GetDriveIcon()" Color="@GetDriveIconColor()" />
-                    <div style="min-width:0;">
-                        <MudText Typo="Typo.subtitle2">@L["DriveTitle"]</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">@GetDriveDescription()</MudText>
-                    </div>
-                </MudStack>
-
-                @if (_folder is null)
-                {
-                    <MudStack Row="true" Justify="Justify.FlexEnd">
-                        <MudTooltip Text="@L["CreateFolder"]">
-                            <MudIconButton Variant="Variant.Filled"
-                                           Color="Color.Primary"
-                                           Icon="@Icons.Material.Filled.CreateNewFolder"
-                                           Disabled="_isBusy || string.IsNullOrWhiteSpace(_userId)"
-                                           OnClick="CreateFolderAsync"
-                                           aria-label="@L["CreateFolder"]" />
-                        </MudTooltip>
-                    </MudStack>
-                }
-                else
-                {
-                    <MudLink Href="@_folder.Url" Target="_blank" Typo="Typo.body2">@L["OpenFolder"]</MudLink>
-
-                    <MudStack Row="true" Justify="Justify.FlexEnd" Style="gap:8px; flex-wrap:wrap;">
-                        <MudTooltip Text="@L["OpenFolder"]">
-                            <MudIconButton Variant="Variant.Outlined"
-                                           Color="Color.Primary"
-                                           Icon="@Icons.Material.Filled.OpenInNew"
-                                           Disabled="_isBusy"
-                                           OnClick="OpenFolderAsync"
-                                           aria-label="@L["OpenFolder"]" />
-                        </MudTooltip>
-                        <MudTooltip Text="@L["DeleteFolder"]">
-                            <MudIconButton Variant="Variant.Outlined"
-                                           Color="Color.Error"
-                                           Icon="@Icons.Material.Filled.Delete"
-                                           Disabled="_isBusy"
-                                           OnClick="DeleteFolderAsync"
-                                           aria-label="@L["DeleteFolder"]" />
-                        </MudTooltip>
-                    </MudStack>
-                }
-            </MudStack>
-        </MudPaper>
-    }
-    else if (_activeSection == DataAnalysesSection.Recordings)
+    @if (_activeSection == DataAnalysesSection.Recordings)
     {
         <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
             <MudStack Spacing="3">
@@ -128,7 +126,7 @@
             </MudStack>
         </MudPaper>
     }
-    else
+    else if (_activeSection == DataAnalysesSection.Analyses)
     {
         <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
             <MudStack Spacing="3">
@@ -151,14 +149,20 @@
             </MudStack>
         </MudPaper>
     }
+    else
+    {
+        <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
+            <RunningAnalysisInterventionGuidance />
+        </MudPaper>
+    }
 </MudContainer>
 
 @code {
     private enum DataAnalysesSection
     {
-        Drive,
         Recordings,
-        Analyses
+        Analyses,
+        Info
     }
 
     private string? _userId;
@@ -166,7 +170,7 @@
     private string? _errorMessage;
     private DriveFolderReference? _folder;
     private IReadOnlyList<RunningAnalysisLink> _analyses = Array.Empty<RunningAnalysisLink>();
-    private DataAnalysesSection _activeSection = DataAnalysesSection.Drive;
+    private DataAnalysesSection _activeSection = DataAnalysesSection.Recordings;
     private bool _isBusy;
 
     protected override async Task OnInitializedAsync()
