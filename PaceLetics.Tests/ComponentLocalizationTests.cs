@@ -92,8 +92,8 @@ public sealed class ComponentLocalizationTests
     [InlineData("zh", "InterventionGuidance_Title", "干预理念")]
     [InlineData("es", "InterventionGuidance_Title", "Filosofía de intervención")]
     [InlineData("fa", "InterventionGuidance_Title", "فلسفه مداخله")]
-    [InlineData("de", "InterventionGuidance_ConsentPowerDynamicsTitle", "Konsens und Machtdynamik")]
-    [InlineData("en", "InterventionGuidance_ConsentPowerDynamicsTitle", "Consent and power dynamics")]
+    [InlineData("de", "InterventionGuidance_ConsentPowerDynamicsTitle", "Abwägung auf Augenhöhe")]
+    [InlineData("en", "InterventionGuidance_ConsentPowerDynamicsTitle", "Shared decision-making")]
     public void RunningAnalysisResources_ResolveInterventionGuidanceKeys(
         string culture,
         string key,

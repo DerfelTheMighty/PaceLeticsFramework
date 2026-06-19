@@ -24,7 +24,7 @@
   <data name="InterventionGuidance_SideEffectsIndication_1" xml:space="preserve"><value>中等到较好的证据显示，对未来伤病具有正向的成本收益关系。</value></data>
   <data name="InterventionGuidance_SideEffectsIndication_2" xml:space="preserve"><value>低到中等证据，同时存在与该干预相关的症状。</value></data>
   <data name="InterventionGuidance_SideEffectsConclusion" xml:space="preserve"><value>对于大多数常见的“良好跑姿”标准，这些条件并不成立。</value></data>
-  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>同意与权力动态</value></data>
+  <data name="InterventionGuidance_ConsentPowerDynamicsTitle" xml:space="preserve"><value>共同决策</value></data>
   <data name="InterventionGuidance_ConsentPowerDynamicsText" xml:space="preserve"><value>当然，出于竞技表现的原因，修改跑步姿态中的某些参数也可能是有意义的。但同时，每一次干预都有代价：它不会简单地消除负荷，而是在系统内转移负荷，并可能产生新的副作用。潜在的表现提升是否值得接受这些副作用，不能由场边喊叫、群体压力或一次快速纠正来决定。这种权衡应当发生在长期、个体化的陪伴中，并需要运动员的知情同意。即使教练注意到或不喜欢跑步动作中的某个方面，也必须清楚：从外部没有人能看见整个系统。训练史、症状、目标、担忧、既往经验以及当前适应能力，都是决策的一部分。因为来自教练角色的建议总是带有分量，而运动员拒绝这些建议可能并不容易，所以我们对跑步姿态干预格外谨慎：它不是命令，而是平等基础上的共同决定。</value></data>
   <data name="InterventionGuidance_ControlIllusionTitle" xml:space="preserve"><value>避免控制错觉</value></data>
   <data name="InterventionGuidance_ControlIllusionText" xml:space="preserve"><value>我们认为，许多老派教练常常陷入一种控制错觉。他们给出一个纠正，运动员在几周内变好，但这未必是因为这个纠正；训练、组织、协调和自组织本来也可能在适应。系统在自我优化，而教练以为：我修好了他的姿态。反过来，一个纠正也可能转移负荷并引发症状。于是教练说：你看，这就是因为你一直那样跑。两种情况下，都声称了一种往往并未被清楚证明的因果关系。正因如此，我们需要指征、证据和背景</value></data>
