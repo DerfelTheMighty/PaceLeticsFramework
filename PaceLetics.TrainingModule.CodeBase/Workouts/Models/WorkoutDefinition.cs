@@ -42,6 +42,12 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Models
         /// List of exercises in the workout
         /// </summary>
         public List<string> Exercises { get; set; } = new();
+        public List<string> Tags { get; set; } = new();
+        public List<ContentReference> ReadMore { get; set; } = new();
+        public string Source { get; set; } = "";
+        public string OwnerUserId { get; set; } = "";
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
     }
 

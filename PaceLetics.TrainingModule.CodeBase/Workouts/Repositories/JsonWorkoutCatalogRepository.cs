@@ -35,8 +35,45 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
             var document = JsonSerializer.Deserialize<WorkoutCatalogDocument>(json, Options)
                 ?? throw new InvalidDataException($"Workout catalog '{_filePath}' is empty or invalid.");
 
+            Normalize(document);
             Validate(document);
             return document;
+        }
+
+        private static void Normalize(WorkoutCatalogDocument document)
+        {
+            foreach (var exercise in document.Exercises)
+            {
+                exercise.Tags = NormalizeTags(exercise.Tags);
+                exercise.ReadMore = NormalizeReferences(exercise.ReadMore);
+                exercise.Source = exercise.Source?.Trim() ?? string.Empty;
+                exercise.OwnerUserId = exercise.OwnerUserId?.Trim() ?? string.Empty;
+            }
+
+            foreach (var workout in document.Workouts)
+            {
+                workout.Tags = NormalizeTags(workout.Tags);
+                workout.ReadMore = NormalizeReferences(workout.ReadMore);
+                workout.Source = workout.Source?.Trim() ?? string.Empty;
+                workout.OwnerUserId = workout.OwnerUserId?.Trim() ?? string.Empty;
+            }
+        }
+
+        private static List<string> NormalizeTags(IEnumerable<string>? tags)
+        {
+            return (tags ?? Enumerable.Empty<string>())
+                .Where(tag => !string.IsNullOrWhiteSpace(tag))
+                .Select(tag => tag.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private static List<ContentReference> NormalizeReferences(IEnumerable<ContentReference>? references)
+        {
+            return (references ?? Enumerable.Empty<ContentReference>())
+                .Where(reference => reference is not null)
+                .Select(reference => reference.NormalizeCopy())
+                .ToList();
         }
 
         private void Validate(WorkoutCatalogDocument document)
@@ -72,6 +109,11 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
                 {
                     errors.Add($"Duplicate exercise id/level combination '{exercise.Id}'/'{exercise.Level}'.");
                 }
+
+                ValidateReferences(
+                    exercise.ReadMore,
+                    $"Exercise '{exercise.Id}'",
+                    errors);
             }
 
             var workoutIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -114,6 +156,11 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
                             $"Workout '{workout.Id}' references missing exercise '{exerciseId}' for level '{workout.Level}'.");
                     }
                 }
+
+                ValidateReferences(
+                    workout.ReadMore,
+                    $"Workout '{workout.Id}'",
+                    errors);
             }
 
             if (errors.Count > 0)
@@ -121,6 +168,27 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
                 throw new WorkoutCatalogValidationException(
                     $"Workout catalog '{_filePath}' is invalid.",
                     errors);
+            }
+        }
+
+        private static void ValidateReferences(
+            IReadOnlyList<ContentReference> references,
+            string owner,
+            List<string> errors)
+        {
+            foreach (var reference in references)
+            {
+                if (reference.IsEmpty)
+                {
+                    errors.Add($"{owner} contains an empty readMore reference.");
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(reference.Url))
+                    continue;
+
+                if (!Uri.TryCreate(reference.Url, UriKind.RelativeOrAbsolute, out _))
+                    errors.Add($"{owner} contains invalid readMore url '{reference.Url}'.");
             }
         }
     }

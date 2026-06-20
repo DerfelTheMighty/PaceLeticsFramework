@@ -17,6 +17,10 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Models
 
 		public string Imagefile { get; }
 
+		public IReadOnlyCollection<string> Tags { get; }
+
+		public IReadOnlyCollection<ContentReference> ReadMore { get; }
+
 		public ExercisePreview(ExerciseDefinition def) 
 		{
 			Name = def.Name ?? string.Empty;
@@ -24,6 +28,8 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Models
 			Description = def.Description ?? string.Empty;
 			Imagefile = def.ImageFile ?? string.Empty;
 			Level = def.Level;
+			Tags = (def.Tags ?? new()).AsReadOnly();
+			ReadMore = (def.ReadMore ?? new()).AsReadOnly();
 		}
 
 	}

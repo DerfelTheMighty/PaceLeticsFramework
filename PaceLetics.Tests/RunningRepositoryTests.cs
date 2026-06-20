@@ -152,15 +152,28 @@ public sealed class RunningRepositoryTests
         return directory;
     }
 
-    private static string FindRepositoryRoot()
+    private static string FindRepositoryRoot(
+        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
     {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "PaceLeticsFramework.sln")))
+        var sourceDirectory = string.IsNullOrWhiteSpace(sourceFilePath)
+            ? null
+            : new DirectoryInfo(Path.GetDirectoryName(sourceFilePath)!);
+        var directory = FindRepositoryRootFrom(sourceDirectory)
+            ?? FindRepositoryRootFrom(new DirectoryInfo(Directory.GetCurrentDirectory()))
+            ?? FindRepositoryRootFrom(new DirectoryInfo(AppContext.BaseDirectory));
+
+        return directory?.FullName
+            ?? throw new DirectoryNotFoundException("Could not locate PaceLeticsFramework.sln.");
+    }
+
+    private static DirectoryInfo? FindRepositoryRootFrom(DirectoryInfo? directory)
+    {
+        while (directory is not null
+               && !File.Exists(Path.Combine(directory.FullName, "PaceLeticsFramework.sln")))
         {
             directory = directory.Parent;
         }
 
-        return directory?.FullName
-            ?? throw new DirectoryNotFoundException("Could not locate PaceLeticsFramework.sln.");
+        return directory;
     }
 }

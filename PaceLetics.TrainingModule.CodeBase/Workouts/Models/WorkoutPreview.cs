@@ -28,6 +28,10 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Models
 
 		public IReadOnlyCollection<Level> AvailableLevels => _availableLevels.AsReadOnly();
 
+		public IReadOnlyCollection<string> Tags { get; }
+
+		public IReadOnlyCollection<ContentReference> ReadMore { get; }
+
 
 		public WorkoutPreview(WorkoutDefinition def, IExerciseCatalog exerciseCatalog, IEnumerable<Level>? availableLevels = null) 
 		{
@@ -35,6 +39,8 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Models
 			Id = def.Id ?? string.Empty;
 			Description = def.Description ?? string.Empty;
 			Level = def.Level;
+			Tags = (def.Tags ?? new()).AsReadOnly();
+			ReadMore = (def.ReadMore ?? new()).AsReadOnly();
 			foreach (var id in def.Exercises ?? Enumerable.Empty<string>())
 				_exercises.Add(exerciseCatalog.GetExercisePreview(id, Level));
 			Count = _exercises.Count;
