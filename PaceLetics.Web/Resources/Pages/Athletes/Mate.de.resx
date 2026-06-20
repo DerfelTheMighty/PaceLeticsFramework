@@ -31,4 +31,23 @@
   <data name="RemoveSuccess" xml:space="preserve"><value>Mate-Freigabe entfernt.</value></data>
   <data name="ShareError" xml:space="preserve"><value>Freigabe fehlgeschlagen</value></data>
   <data name="RemoveError" xml:space="preserve"><value>Entfernen fehlgeschlagen</value></data>
+  <data name="PrivacyTitle" xml:space="preserve"><value>Deine Mate-Freigabe</value></data>
+  <data name="PrivacyBody" xml:space="preserve"><value>Mate zeigt freigegebene Einheiten nur innerhalb des passenden Kurses. Sichtbar werden koennen dein oeffentlicher Name, Einheit, Termin, Ort, Distanz und Pace; es wird nichts in einen Feed oder Social-Kanal gepostet.</value></data>
+  <data name="SharedForMate" xml:space="preserve"><value>Fuer Mate freigegeben</value></data>
+  <data name="NotShared" xml:space="preserve"><value>Nicht freigegeben</value></data>
+  <data name="ShareCta" xml:space="preserve"><value>Fuer Mate freigeben</value></data>
+  <data name="ShareTooltip" xml:space="preserve"><value>Einheit fuer passende Kursteilnehmer:innen sichtbar machen</value></data>
+  <data name="RemoveTooltip" xml:space="preserve"><value>Mate-Freigabe entfernen</value></data>
+  <data name="SharedVisibility" xml:space="preserve"><value>Sichtbar nach Freigabe: {0}</value></data>
+  <data name="WhyMatch" xml:space="preserve"><value>Warum passt das?</value></data>
+  <data name="ReasonSameCourse" xml:space="preserve"><value>Gleicher Kurs</value></data>
+  <data name="ReasonSamePaceZone" xml:space="preserve"><value>Gleicher Pacebereich</value></data>
+  <data name="ReasonPaceVeryClose" xml:space="preserve"><value>Pace fast gleich ({0} s/km)</value></data>
+  <data name="ReasonPaceClose" xml:space="preserve"><value>Pace nah dran ({0} s/km)</value></data>
+  <data name="ReasonDate" xml:space="preserve"><value>{0} Tag(e) Abstand</value></data>
+  <data name="ReasonDistance" xml:space="preserve"><value>{0} Distanzabstand</value></data>
+  <data name="QualityStrong" xml:space="preserve"><value>Sehr passend</value></data>
+  <data name="QualityGood" xml:space="preserve"><value>Passend</value></data>
+  <data name="QualityPossible" xml:space="preserve"><value>Moeglich</value></data>
+  <data name="VisibleDisplayName" xml:space="preserve"><value>oeffentlicher Name</value></data>
 </root>
