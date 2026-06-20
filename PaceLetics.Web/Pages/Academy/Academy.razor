@@ -1,0 +1,191 @@
+@page "/Academy"
+@page "/Athletes/academy"
+@attribute [Authorize]
+@using PaceLetics.Web.Services.Academy
+@inject IAcademyService AcademyService
+@inject IStringLocalizer<Academy> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <nav class="pl-section-nav" aria-label="@L["Title"]">
+        <button type="button"
+                class="@GetSectionButtonClass(null)"
+                aria-pressed="@(_selectedCategory is null)"
+                @onclick="@(() => SelectCategory(null))">
+            <MudIcon Icon="@Icons.Material.Filled.AutoStories" Size="Size.Small" />
+            <span>@L["TabAll"]</span>
+        </button>
+
+        @foreach (var category in _categories)
+        {
+            <button type="button"
+                    class="@GetSectionButtonClass(category)"
+                    aria-pressed="@IsCategorySelected(category)"
+                    @onclick="@(() => SelectCategory(category))">
+                <MudIcon Icon="@GetCategoryIcon(category)" Size="Size.Small" />
+                <span>@FormatCategory(category)</span>
+            </button>
+        }
+    </nav>
+
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    <MudStack Spacing="3" Class="mt-4">
+        <MudPaper Elevation="0" Class="pa-4 pl-panel">
+            <MudGrid Spacing="2">
+                <MudItem xs="6" sm="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricArticles"]</MudText>
+                    <MudText Typo="Typo.h6">@_articles.Count</MudText>
+                </MudItem>
+                <MudItem xs="6" sm="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricSources"]</MudText>
+                    <MudText Typo="Typo.h6">@CountSources()</MudText>
+                </MudItem>
+                <MudItem xs="6" sm="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricWorkouts"]</MudText>
+                    <MudText Typo="Typo.h6">@CountCategory(AcademyArticleCategories.Workouts)</MudText>
+                </MudItem>
+                <MudItem xs="6" sm="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricPlans"]</MudText>
+                    <MudText Typo="Typo.h6">@CountCategory(AcademyArticleCategories.TrainingPlans)</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        @foreach (var article in VisibleArticles)
+        {
+            <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+                <MudStack Spacing="2">
+                    <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="1" Style="min-width:0; flex:1 1 260px;">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                <MudIcon Icon="@GetCategoryIcon(article.Category)" Color="Color.Primary" Size="Size.Small" />
+                                <MudText Typo="Typo.h6">@article.Title</MudText>
+                            </MudStack>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@article.Summary</MudText>
+                        </MudStack>
+
+                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                            @FormatCategory(article.Category)
+                        </MudChip>
+                    </MudStack>
+
+                    @if (article.Tags.Count > 0)
+                    {
+                        <MudStack Row="true" Style="gap:6px; flex-wrap:wrap;">
+                            @foreach (var tag in article.Tags.Take(6))
+                            {
+                                <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
+                            }
+                        </MudStack>
+                    }
+
+                    <MudDivider />
+
+                    <MudStack Spacing="1">
+                        @foreach (var block in article.BodyBlocks)
+                        {
+                            <MudText Typo="Typo.body2">@block</MudText>
+                        }
+                    </MudStack>
+
+                    @if (article.References.Count > 0)
+                    {
+                        <MudStack Spacing="1" Class="pt-1">
+                            <MudText Typo="Typo.subtitle2">@L["Sources"]</MudText>
+                            @foreach (var reference in article.References)
+                            {
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @if (!string.IsNullOrWhiteSpace(reference.Url))
+                                    {
+                                        <MudLink Href="@reference.Url" Target="_blank" Typo="Typo.caption">@reference.Title</MudLink>
+                                    }
+                                    else
+                                    {
+                                        @reference.Title
+                                    }
+                                </MudText>
+                            }
+                        </MudStack>
+                    }
+
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@article.SourceModule</MudText>
+                </MudStack>
+            </MudPaper>
+        }
+    </MudStack>
+</MudContainer>
+
+@code {
+    private IReadOnlyList<AcademyArticle> _articles = Array.Empty<AcademyArticle>();
+    private IReadOnlyList<string> _categories = Array.Empty<string>();
+    private string? _selectedCategory;
+
+    private IEnumerable<AcademyArticle> VisibleArticles =>
+        string.IsNullOrWhiteSpace(_selectedCategory)
+            ? _articles
+            : _articles.Where(article => string.Equals(article.Category, _selectedCategory, StringComparison.OrdinalIgnoreCase));
+
+    protected override void OnInitialized()
+    {
+        _articles = AcademyService.GetArticles();
+        _categories = AcademyService.GetCategories();
+    }
+
+    private void SelectCategory(string? category)
+    {
+        _selectedCategory = category;
+    }
+
+    private bool IsCategorySelected(string category)
+    {
+        return string.Equals(_selectedCategory, category, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private string GetSectionButtonClass(string? category)
+    {
+        return (string.IsNullOrWhiteSpace(category) && _selectedCategory is null)
+            || (!string.IsNullOrWhiteSpace(category) && IsCategorySelected(category))
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
+    }
+
+    private string FormatCategory(string category)
+    {
+        return category switch
+        {
+            AcademyArticleCategories.Fundamentals => L["CategoryFundamentals"],
+            AcademyArticleCategories.RunningAnalysis => L["CategoryRunningAnalysis"],
+            AcademyArticleCategories.Workouts => L["CategoryWorkouts"],
+            AcademyArticleCategories.TrainingPlans => L["CategoryTrainingPlans"],
+            _ => category
+        };
+    }
+
+    private static string GetCategoryIcon(string category)
+    {
+        return category switch
+        {
+            AcademyArticleCategories.Fundamentals => Icons.Material.Filled.Psychology,
+            AcademyArticleCategories.RunningAnalysis => Icons.Material.Filled.DirectionsRun,
+            AcademyArticleCategories.Workouts => Icons.Material.Filled.FitnessCenter,
+            AcademyArticleCategories.TrainingPlans => Icons.Material.Filled.EventNote,
+            _ => Icons.Material.Filled.AutoStories
+        };
+    }
+
+    private int CountCategory(string category)
+    {
+        return _articles.Count(article => string.Equals(article.Category, category, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private int CountSources()
+    {
+        return _articles
+            .SelectMany(article => article.References)
+            .Select(reference => string.IsNullOrWhiteSpace(reference.Url) ? reference.Title : reference.Url)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Count();
+    }
+}
