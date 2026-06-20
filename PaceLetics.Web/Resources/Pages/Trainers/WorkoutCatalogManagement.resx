@@ -44,4 +44,27 @@
   <data name="Owner" xml:space="preserve"><value>Owner</value></data>
   <data name="Created" xml:space="preserve"><value>Created</value></data>
   <data name="Updated" xml:space="preserve"><value>Updated</value></data>
+  <data name="NewExercise" xml:space="preserve"><value>New exercise</value></data>
+  <data name="NewWorkout" xml:space="preserve"><value>New workout</value></data>
+  <data name="EditSelected" xml:space="preserve"><value>Edit selected</value></data>
+  <data name="EditExercise" xml:space="preserve"><value>Edit exercise</value></data>
+  <data name="EditWorkout" xml:space="preserve"><value>Edit workout</value></data>
+  <data name="EditorSubtitle" xml:space="preserve"><value>Save writes the workout catalog JSON and reuses catalog validation.</value></data>
+  <data name="FieldId" xml:space="preserve"><value>ID</value></data>
+  <data name="FieldName" xml:space="preserve"><value>Name</value></data>
+  <data name="FieldLevel" xml:space="preserve"><value>Level</value></data>
+  <data name="FieldDescription" xml:space="preserve"><value>Description</value></data>
+  <data name="FieldDuration" xml:space="preserve"><value>Duration</value></data>
+  <data name="FieldImageFile" xml:space="preserve"><value>Image file</value></data>
+  <data name="FieldSwitchLeftRight" xml:space="preserve"><value>Switch left/right</value></data>
+  <data name="FieldExecution" xml:space="preserve"><value>Execution steps, one per line</value></data>
+  <data name="FieldWorkoutExercises" xml:space="preserve"><value>Exercise IDs, one per line</value></data>
+  <data name="WorkoutExercisesHelp" xml:space="preserve"><value>Each ID must exist as an exercise with the same level as this workout.</value></data>
+  <data name="FieldTags" xml:space="preserve"><value>Tags</value></data>
+  <data name="TagsHelp" xml:space="preserve"><value>Comma-separated tags.</value></data>
+  <data name="FieldReferences" xml:space="preserve"><value>References</value></data>
+  <data name="ReferencesHelp" xml:space="preserve"><value>One per line: title | url | description | source type</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Workout catalog saved.</value></data>
 </root>

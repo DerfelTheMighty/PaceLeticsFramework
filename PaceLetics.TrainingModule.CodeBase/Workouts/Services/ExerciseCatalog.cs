@@ -7,12 +7,10 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Services
     public class ExerciseCatalog : IExerciseCatalog
     {
         private readonly List<ExerciseDefinition> _definitions;
-        private readonly List<ExercisePreview> _previews;
 
         public ExerciseCatalog(IEnumerable<ExerciseDefinition> exerciseDefinitions)
         {
-            _definitions = exerciseDefinitions.ToList();
-            _previews = _definitions.Select(def => new ExercisePreview(def)).ToList();
+            _definitions = exerciseDefinitions as List<ExerciseDefinition> ?? exerciseDefinitions.ToList();
         }
 
         public ExerciseDefinition GetDefinition(string id, Level level)
@@ -23,8 +21,8 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Services
 
         public ExercisePreview GetExercisePreview(string id, Level level)
         {
-            return _previews.Find(x => x.Id == id && x.Level == level)
-                ?? throw new KeyNotFoundException($"Exercise preview '{id}' with level '{level}' was not found.");
+            var definition = GetDefinition(id, level);
+            return new ExercisePreview(definition);
         }
 
         public List<string> GetExerciseIds()

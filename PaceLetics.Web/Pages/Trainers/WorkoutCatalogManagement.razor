@@ -1,9 +1,14 @@
 @page "/Trainers/workout-catalog"
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using System.Security.Claims
 @using PaceLetics.TrainingModule.CodeBase.Workouts.Enums
 @using PaceLetics.TrainingModule.CodeBase.Workouts.Models
-@inject WorkoutCatalogDocument Catalog
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
+@using PaceLetics.Web.Services.Workouts
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject WorkoutCatalogManagementService CatalogService
 @inject IStringLocalizer<WorkoutCatalogManagement> L
+@inject ISnackbar Snackbar
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -65,18 +70,137 @@
                     </MudButton>
                 </MudStack>
 
-                <MudTextField T="string"
-                              Label="@L["Search"]"
-                              Value="_search"
-                              ValueChanged="OnSearchChanged"
-                              Immediate="true"
-                              Variant="Variant.Outlined"
-                              Margin="Margin.Dense"
-                              Adornment="Adornment.Start"
-                              AdornmentIcon="@Icons.Material.Filled.Search"
-                              Style="min-width:240px; flex:1 1 320px;" />
+                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex:1 1 420px; flex-wrap:wrap;">
+                    <MudButton Size="Size.Small"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               OnClick="BeginNewExercise">
+                        @L["NewExercise"]
+                    </MudButton>
+                    <MudButton Size="Size.Small"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.PlaylistAdd"
+                               OnClick="BeginNewWorkout">
+                        @L["NewWorkout"]
+                    </MudButton>
+                    @if (HasSelection)
+                    {
+                        <MudButton Size="Size.Small"
+                                   Variant="Variant.Outlined"
+                                   Color="Color.Secondary"
+                                   StartIcon="@Icons.Material.Filled.Edit"
+                                   OnClick="BeginEditSelected">
+                            @L["EditSelected"]
+                        </MudButton>
+                    }
+                    <MudTextField T="string"
+                                  Label="@L["Search"]"
+                                  Value="_search"
+                                  ValueChanged="OnSearchChanged"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  Style="min-width:240px; flex:1 1 320px;" />
+                </MudStack>
             </MudStack>
         </MudPaper>
+
+        @if (_editor is not null)
+        {
+            <MudPaper Elevation="1" Class="pa-4">
+                <MudStack Spacing="3">
+                    <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.h6">@GetEditorTitle()</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@L["EditorSubtitle"]</MudText>
+                        </MudStack>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                            @(_editor.Kind == CatalogEditorKind.Exercise ? L["Exercises"] : L["Workouts"])
+                        </MudChip>
+                    </MudStack>
+
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" md="4">
+                            <MudTextField T="string" Label="@L["FieldId"]" @bind-Value="_editor.Id" Disabled="@_editor.IsExisting" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <MudTextField T="string" Label="@L["FieldName"]" @bind-Value="_editor.Name" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <MudSelect T="Level" Label="@L["FieldLevel"]" @bind-Value="_editor.Level" Variant="Variant.Outlined" Margin="Margin.Dense" Disabled="@_editor.IsExisting">
+                                @foreach (var level in EditableLevels)
+                                {
+                                    <MudSelectItem T="Level" Value="@level">@FormatLevel(level)</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12">
+                            <MudTextField T="string" Label="@L["FieldDescription"]" @bind-Value="_editor.Description" Lines="3" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </MudItem>
+
+                        @if (_editor.Kind == CatalogEditorKind.Exercise)
+                        {
+                            <MudItem xs="12" md="4">
+                                <MudNumericField T="int" Label="@L["FieldDuration"]" @bind-Value="_editor.Duration" Min="0" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField T="int" Label="@L["SwitchTime"]" @bind-Value="_editor.SwitchTime" Min="0" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField T="string" Label="@L["FieldImageFile"]" @bind-Value="_editor.ImageFile" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudSwitch T="bool" Label="@L["FieldSwitchLeftRight"]" @bind-Value="_editor.SwitchLeftRight" Color="Color.Primary" />
+                            </MudItem>
+                            <MudItem xs="12" md="8">
+                                <MudTextField T="string" Label="@L["FieldExecution"]" @bind-Value="_editor.ExecutionText" Lines="4" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                        }
+                        else
+                        {
+                            <MudItem xs="12" md="4">
+                                <MudNumericField T="int" Label="@L["PreparationTime"]" @bind-Value="_editor.PreparationTime" Min="0" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField T="int" Label="@L["RestTime"]" @bind-Value="_editor.RestTime" Min="0" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudNumericField T="int" Label="@L["SwitchTime"]" @bind-Value="_editor.SwitchTime" Min="0" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                            <MudItem xs="12">
+                                <MudTextField T="string" Label="@L["FieldWorkoutExercises"]" HelperText="@L["WorkoutExercisesHelp"]" @bind-Value="_editor.ExercisesText" Lines="4" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </MudItem>
+                        }
+
+                        <MudItem xs="12" md="6">
+                            <MudTextField T="string" Label="@L["FieldTags"]" HelperText="@L["TagsHelp"]" @bind-Value="_editor.TagsText" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudTextField T="string" Label="@L["Source"]" @bind-Value="_editor.Source" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudTextField T="string" Label="@L["Owner"]" @bind-Value="_editor.OwnerUserId" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </MudItem>
+                        <MudItem xs="12">
+                            <MudTextField T="string" Label="@L["FieldReferences"]" HelperText="@L["ReferencesHelp"]" @bind-Value="_editor.ReferencesText" Lines="3" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Style="gap:8px; flex-wrap:wrap;">
+                        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="CancelEditor">
+                            @L["Cancel"]
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Save" Disabled="@_isSaving" OnClick="SaveEditorAsync">
+                            @L["Save"]
+                        </MudButton>
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+        }
 
         <MudGrid Spacing="3">
             <MudItem xs="12" md="7">
@@ -375,11 +499,30 @@
     private bool _missingOnly;
     private string? _selectedExerciseKey;
     private string? _selectedWorkoutId;
+    private CatalogEditorModel? _editor;
+    private string? _trainerUserId;
+    private bool _isSaving;
+
+    private WorkoutCatalogDocument Catalog => CatalogService.Catalog;
+
+    private static readonly Level[] EditableLevels =
+    {
+        Level.Easy,
+        Level.Moderate,
+        Level.Advanced,
+        Level.Epic
+    };
 
     private enum CatalogSection
     {
         Exercises,
         Workouts
+    }
+
+    private enum CatalogEditorKind
+    {
+        Exercise,
+        Workout
     }
 
     private IReadOnlyList<ExerciseDefinition> FilteredExercises =>
@@ -492,8 +635,10 @@
         Catalog.Exercises.Count(HasIssues)
         + Catalog.Workouts.Count(HasIssues);
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _trainerUserId = authState.User.FindFirstValue(ClaimTypes.NameIdentifier);
         EnsureSelection();
     }
 
@@ -526,6 +671,80 @@
     {
         _selectedWorkoutId = workout.Id;
         _section = CatalogSection.Workouts;
+    }
+
+    private void BeginNewExercise()
+    {
+        _section = CatalogSection.Exercises;
+        _editor = CatalogEditorModel.NewExercise(_trainerUserId);
+    }
+
+    private void BeginNewWorkout()
+    {
+        _section = CatalogSection.Workouts;
+        _editor = CatalogEditorModel.NewWorkout(_trainerUserId);
+    }
+
+    private void BeginEditSelected()
+    {
+        if (SelectedExercise is not null)
+        {
+            _editor = CatalogEditorModel.FromExercise(SelectedExercise);
+            _section = CatalogSection.Exercises;
+            return;
+        }
+
+        if (SelectedWorkout is not null)
+        {
+            _editor = CatalogEditorModel.FromWorkout(SelectedWorkout);
+            _section = CatalogSection.Workouts;
+        }
+    }
+
+    private void CancelEditor()
+    {
+        _editor = null;
+    }
+
+    private async Task SaveEditorAsync()
+    {
+        if (_editor is null)
+            return;
+
+        _isSaving = true;
+        try
+        {
+            if (_editor.Kind == CatalogEditorKind.Exercise)
+            {
+                var exercise = _editor.ToExercise();
+                await CatalogService.UpsertExerciseAsync(exercise, _trainerUserId);
+                _selectedExerciseKey = GetExerciseKey(exercise);
+                _section = CatalogSection.Exercises;
+            }
+            else
+            {
+                var workout = _editor.ToWorkout();
+                await CatalogService.UpsertWorkoutAsync(workout, _trainerUserId);
+                _selectedWorkoutId = workout.Id;
+                _section = CatalogSection.Workouts;
+            }
+
+            _editor = null;
+            EnsureSelection();
+            Snackbar.Add(L["SaveSuccess"], Severity.Success);
+        }
+        catch (WorkoutCatalogValidationException ex)
+        {
+            Snackbar.Add(string.Join(" ", ex.Errors.Take(3)), Severity.Error);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isSaving = false;
+        }
     }
 
     private void EnsureSelection()
@@ -793,8 +1012,211 @@
             : Color.Default;
     }
 
+    private string GetEditorTitle()
+    {
+        if (_editor is null)
+            return string.Empty;
+
+        if (_editor.Kind == CatalogEditorKind.Exercise)
+            return _editor.IsExisting ? L["EditExercise"] : L["NewExercise"];
+
+        return _editor.IsExisting ? L["EditWorkout"] : L["NewWorkout"];
+    }
+
     private static string FormatDate(DateTime? date)
     {
         return date?.ToLocalTime().ToString("g") ?? string.Empty;
+    }
+
+    private sealed class CatalogEditorModel
+    {
+        public CatalogEditorKind Kind { get; init; }
+        public bool IsExisting { get; init; }
+        public string Id { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public Level Level { get; set; } = Level.Easy;
+        public int Duration { get; set; } = 30;
+        public string ImageFile { get; set; } = string.Empty;
+        public bool SwitchLeftRight { get; set; }
+        public int SwitchTime { get; set; }
+        public int PreparationTime { get; set; } = 10;
+        public int RestTime { get; set; } = 15;
+        public string ExecutionText { get; set; } = string.Empty;
+        public string ExercisesText { get; set; } = string.Empty;
+        public string TagsText { get; set; } = string.Empty;
+        public string ReferencesText { get; set; } = string.Empty;
+        public string Source { get; set; } = string.Empty;
+        public string OwnerUserId { get; set; } = string.Empty;
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+
+        public static CatalogEditorModel NewExercise(string? ownerUserId)
+        {
+            return new CatalogEditorModel
+            {
+                Kind = CatalogEditorKind.Exercise,
+                OwnerUserId = ownerUserId ?? string.Empty
+            };
+        }
+
+        public static CatalogEditorModel NewWorkout(string? ownerUserId)
+        {
+            return new CatalogEditorModel
+            {
+                Kind = CatalogEditorKind.Workout,
+                OwnerUserId = ownerUserId ?? string.Empty
+            };
+        }
+
+        public static CatalogEditorModel FromExercise(ExerciseDefinition exercise)
+        {
+            return new CatalogEditorModel
+            {
+                Kind = CatalogEditorKind.Exercise,
+                IsExisting = true,
+                Id = exercise.Id,
+                Name = exercise.Name,
+                Description = exercise.Description,
+                Level = exercise.Level,
+                Duration = exercise.Duration,
+                ImageFile = exercise.ImageFile,
+                SwitchLeftRight = exercise.SwitchLeftRight,
+                SwitchTime = exercise.SwitchTime,
+                ExecutionText = JoinLines(exercise.Execution),
+                TagsText = string.Join(", ", exercise.Tags),
+                ReferencesText = FormatReferences(exercise.ReadMore),
+                Source = exercise.Source,
+                OwnerUserId = exercise.OwnerUserId,
+                CreatedAt = exercise.CreatedAt,
+                UpdatedAt = exercise.UpdatedAt
+            };
+        }
+
+        public static CatalogEditorModel FromWorkout(WorkoutDefinition workout)
+        {
+            return new CatalogEditorModel
+            {
+                Kind = CatalogEditorKind.Workout,
+                IsExisting = true,
+                Id = workout.Id ?? string.Empty,
+                Name = workout.Name ?? string.Empty,
+                Description = workout.Description ?? string.Empty,
+                Level = workout.Level,
+                PreparationTime = workout.PreparationTime,
+                RestTime = workout.RestTime,
+                SwitchTime = workout.SwitchTime,
+                ExercisesText = JoinLines(workout.Exercises),
+                TagsText = string.Join(", ", workout.Tags),
+                ReferencesText = FormatReferences(workout.ReadMore),
+                Source = workout.Source,
+                OwnerUserId = workout.OwnerUserId,
+                CreatedAt = workout.CreatedAt,
+                UpdatedAt = workout.UpdatedAt
+            };
+        }
+
+        public ExerciseDefinition ToExercise()
+        {
+            return new ExerciseDefinition
+            {
+                Id = ResolveId(),
+                Name = Name.Trim(),
+                Description = Description.Trim(),
+                Execution = SplitLines(ExecutionText),
+                Duration = Duration,
+                ImageFile = ImageFile.Trim(),
+                Level = Level,
+                SwitchLeftRight = SwitchLeftRight,
+                SwitchTime = SwitchTime,
+                Tags = SplitTags(TagsText),
+                ReadMore = ParseReferences(ReferencesText),
+                Source = Source.Trim(),
+                OwnerUserId = OwnerUserId.Trim(),
+                CreatedAt = CreatedAt,
+                UpdatedAt = UpdatedAt
+            };
+        }
+
+        public WorkoutDefinition ToWorkout()
+        {
+            return new WorkoutDefinition
+            {
+                Id = ResolveId(),
+                Name = Name.Trim(),
+                Description = Description.Trim(),
+                Level = Level,
+                PreparationTime = PreparationTime,
+                RestTime = RestTime,
+                SwitchTime = SwitchTime,
+                Exercises = SplitLines(ExercisesText),
+                Tags = SplitTags(TagsText),
+                ReadMore = ParseReferences(ReferencesText),
+                Source = Source.Trim(),
+                OwnerUserId = OwnerUserId.Trim(),
+                CreatedAt = CreatedAt,
+                UpdatedAt = UpdatedAt
+            };
+        }
+
+        private string ResolveId()
+        {
+            return string.IsNullOrWhiteSpace(Id) ? Name.Trim() : Id.Trim();
+        }
+
+        private static string JoinLines(IEnumerable<string> values)
+        {
+            return string.Join(Environment.NewLine, values.Where(value => !string.IsNullOrWhiteSpace(value)));
+        }
+
+        private static List<string> SplitLines(string value)
+        {
+            return (value ?? string.Empty)
+                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(part => part.Trim())
+                .Where(part => !string.IsNullOrWhiteSpace(part))
+                .ToList();
+        }
+
+        private static List<string> SplitTags(string value)
+        {
+            return (value ?? string.Empty)
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Where(part => !string.IsNullOrWhiteSpace(part))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private static string FormatReferences(IEnumerable<ContentReference> references)
+        {
+            return string.Join(
+                Environment.NewLine,
+                references.Select(reference =>
+                    string.Join(" | ", new[]
+                    {
+                        reference.Title,
+                        reference.Url,
+                        reference.Description,
+                        reference.SourceType
+                    })));
+        }
+
+        private static List<ContentReference> ParseReferences(string value)
+        {
+            return SplitLines(value)
+                .Select(line =>
+                {
+                    var parts = line.Split('|', 4, StringSplitOptions.TrimEntries);
+                    return new ContentReference
+                    {
+                        Title = parts.ElementAtOrDefault(0) ?? string.Empty,
+                        Url = parts.ElementAtOrDefault(1) ?? string.Empty,
+                        Description = parts.ElementAtOrDefault(2) ?? string.Empty,
+                        SourceType = parts.ElementAtOrDefault(3) ?? string.Empty
+                    }.NormalizeCopy();
+                })
+                .Where(reference => !reference.IsEmpty)
+                .ToList();
+        }
     }
 }
