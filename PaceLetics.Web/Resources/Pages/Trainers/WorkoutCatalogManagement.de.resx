@@ -44,4 +44,27 @@
   <data name="Owner" xml:space="preserve"><value>Owner</value></data>
   <data name="Created" xml:space="preserve"><value>Erstellt</value></data>
   <data name="Updated" xml:space="preserve"><value>Aktualisiert</value></data>
+  <data name="NewExercise" xml:space="preserve"><value>Neue Uebung</value></data>
+  <data name="NewWorkout" xml:space="preserve"><value>Neues Workout</value></data>
+  <data name="EditSelected" xml:space="preserve"><value>Auswahl bearbeiten</value></data>
+  <data name="EditExercise" xml:space="preserve"><value>Uebung bearbeiten</value></data>
+  <data name="EditWorkout" xml:space="preserve"><value>Workout bearbeiten</value></data>
+  <data name="EditorSubtitle" xml:space="preserve"><value>Speichern schreibt den Workout-Katalog als JSON und nutzt die Katalogvalidierung.</value></data>
+  <data name="FieldId" xml:space="preserve"><value>ID</value></data>
+  <data name="FieldName" xml:space="preserve"><value>Name</value></data>
+  <data name="FieldLevel" xml:space="preserve"><value>Level</value></data>
+  <data name="FieldDescription" xml:space="preserve"><value>Beschreibung</value></data>
+  <data name="FieldDuration" xml:space="preserve"><value>Dauer</value></data>
+  <data name="FieldImageFile" xml:space="preserve"><value>Bilddatei</value></data>
+  <data name="FieldSwitchLeftRight" xml:space="preserve"><value>Links/rechts wechseln</value></data>
+  <data name="FieldExecution" xml:space="preserve"><value>Ausfuehrungsschritte, einer pro Zeile</value></data>
+  <data name="FieldWorkoutExercises" xml:space="preserve"><value>Uebungs-IDs, eine pro Zeile</value></data>
+  <data name="WorkoutExercisesHelp" xml:space="preserve"><value>Jede ID muss als Uebung mit demselben Level wie dieses Workout existieren.</value></data>
+  <data name="FieldTags" xml:space="preserve"><value>Tags</value></data>
+  <data name="TagsHelp" xml:space="preserve"><value>Tags kommagetrennt eingeben.</value></data>
+  <data name="FieldReferences" xml:space="preserve"><value>Quellen</value></data>
+  <data name="ReferencesHelp" xml:space="preserve"><value>Eine pro Zeile: Titel | URL | Beschreibung | Quellentyp</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Abbrechen</value></data>
+  <data name="Save" xml:space="preserve"><value>Speichern</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Workout-Katalog gespeichert.</value></data>
 </root>

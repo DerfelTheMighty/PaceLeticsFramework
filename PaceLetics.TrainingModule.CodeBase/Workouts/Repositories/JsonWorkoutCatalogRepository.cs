@@ -10,6 +10,8 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
         private static readonly JsonSerializerOptions Options = new()
         {
             PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
             Converters =
             {
                 new JsonStringEnumConverter()
@@ -38,6 +40,21 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
             Normalize(document);
             Validate(document);
             return document;
+        }
+
+        public void Save(WorkoutCatalogDocument document)
+        {
+            ArgumentNullException.ThrowIfNull(document);
+
+            Normalize(document);
+            Validate(document);
+
+            var directory = Path.GetDirectoryName(_filePath);
+            if (!string.IsNullOrWhiteSpace(directory))
+                Directory.CreateDirectory(directory);
+
+            var json = JsonSerializer.Serialize(document, Options);
+            File.WriteAllText(_filePath, json);
         }
 
         private static void Normalize(WorkoutCatalogDocument document)

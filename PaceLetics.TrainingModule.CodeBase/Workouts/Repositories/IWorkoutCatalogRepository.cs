@@ -5,5 +5,6 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
     public interface IWorkoutCatalogRepository
     {
         WorkoutCatalogDocument Load();
+        void Save(WorkoutCatalogDocument document);
     }
 }
