@@ -17,4 +17,17 @@
   <data name="Error_SaveBrowser" xml:space="preserve"><value>Deine Auswahl konnte nicht im Browser gespeichert werden.</value></data>
   <data name="Error_SaveServer_Title" xml:space="preserve"><value>Fehler</value></data>
   <data name="Error_SaveServer" xml:space="preserve"><value>Die Auswahl konnte nicht auf dem Server gespeichert werden.</value></data>
+  <data name="WorkoutCount" xml:space="preserve"><value>{0} Workout(s)</value></data>
+  <data name="WarmupCount" xml:space="preserve"><value>{0} Warm-up</value></data>
+  <data name="DrillCount" xml:space="preserve"><value>{0} Drill(s)</value></data>
+  <data name="Appointment" xml:space="preserve"><value>Termin</value></data>
+  <data name="Location" xml:space="preserve"><value>Ort</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notizen</value></data>
+  <data name="TrainingEffect" xml:space="preserve"><value>Trainingswirkung</value></data>
+  <data name="Focus" xml:space="preserve"><value>Fokus</value></data>
+  <data name="Stimulus" xml:space="preserve"><value>Reiz</value></data>
+  <data name="Adaptation" xml:space="preserve"><value>Anpassung</value></data>
+  <data name="Recovery" xml:space="preserve"><value>Regeneration</value></data>
+  <data name="Warmup" xml:space="preserve"><value>Warm-up</value></data>
+  <data name="Drills" xml:space="preserve"><value>Drills</value></data>
 </root>

@@ -114,6 +114,89 @@ public sealed class RunningRepositoryTests
     }
 
     [Fact]
+    public void JsonTrainingPlanRepository_LoadsTrainingSessionPreparationAndEffectMetadata()
+    {
+        var directory = CreateTempDirectory();
+        File.WriteAllText(Path.Combine(directory, "structured-plan.json"), """
+        {
+          "schemaVersion": 1,
+          "id": "structured-plan",
+          "name": "Structured Plan",
+          "sessions": [
+            {
+              "id": "structured-session",
+              "name": "Track Session",
+              "date": "2026-01-01",
+              "appointment": {
+                "startsAt": "2026-01-01T18:00:00",
+                "endsAt": "2026-01-01T19:30:00",
+                "location": "Track",
+                "notes": "Bring spikes"
+              },
+              "trainingEffect": {
+                "focus": "Technique",
+                "stimulus": "Coordination under light fatigue",
+                "adaptation": "Cleaner foot placement",
+                "recovery": "Easy next day"
+              },
+              "warmup": [
+                { "title": "Mobility", "description": "Dynamic mobility", "durationSeconds": 600 }
+              ],
+              "drills": [
+                { "title": "A-skip", "activityType": "drill", "durationSeconds": 300, "referenceId": "askip" }
+              ],
+              "workouts": [
+                { "workoutId": "Stabi Handout Easy", "sets": 1, "rounds": 1 }
+              ]
+            }
+          ]
+        }
+        """);
+
+        var plans = new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load();
+
+        var session = Assert.Single(Assert.Single(plans).Sessions);
+        Assert.True(session.HasPreparation);
+        Assert.True(session.HasTrainingEffect);
+        Assert.True(session.HasAppointment);
+        Assert.Equal("Mobility", Assert.Single(session.Warmup).Title);
+        Assert.Equal("A-skip", Assert.Single(session.Drills).Title);
+        Assert.Equal("Technique", session.TrainingEffect.Focus);
+        Assert.Equal("Track", session.Appointment.Location);
+        Assert.Equal(new DateTime(2026, 1, 1, 18, 0, 0), session.Appointment.StartsAt);
+    }
+
+    [Fact]
+    public void JsonTrainingPlanRepository_UsesAppointmentStartDateWhenSessionDateIsMissing()
+    {
+        var directory = CreateTempDirectory();
+        File.WriteAllText(Path.Combine(directory, "appointment-plan.json"), """
+        {
+          "schemaVersion": 1,
+          "id": "appointment-plan",
+          "name": "Appointment Plan",
+          "sessions": [
+            {
+              "name": "Workout Appointment",
+              "appointment": {
+                "startsAt": "2026-02-03T17:30:00"
+              },
+              "workouts": [
+                { "workoutId": "Stabi Handout Easy", "sets": 1, "rounds": 1 }
+              ]
+            }
+          ]
+        }
+        """);
+
+        var plans = new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load();
+
+        var session = Assert.Single(Assert.Single(plans).Sessions);
+        Assert.Equal(new DateTime(2026, 2, 3), session.Date);
+        Assert.Equal("2026-02-03-workout-appointment", session.Id);
+    }
+
+    [Fact]
     public void JsonTrainingPlanRepository_ValidatesWorkoutReferences()
     {
         var directory = CreateTempDirectory();
@@ -128,6 +211,34 @@ public sealed class RunningRepositoryTests
               "date": "2026-01-01",
               "workouts": [
                 { "workoutId": "missing-workout", "sets": 1, "rounds": 1 }
+              ]
+            }
+          ]
+        }
+        """);
+
+        Assert.Throws<InvalidDataException>(() =>
+            new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load());
+    }
+
+    [Fact]
+    public void JsonTrainingPlanRepository_ValidatesPreparationDurations()
+    {
+        var directory = CreateTempDirectory();
+        File.WriteAllText(Path.Combine(directory, "invalid-duration-plan.json"), """
+        {
+          "id": "invalid-duration-plan",
+          "name": "Invalid Duration Plan",
+          "sessions": [
+            {
+              "id": "invalid-duration-session",
+              "name": "Invalid Duration Session",
+              "date": "2026-01-01",
+              "warmup": [
+                { "title": "Mobility", "durationSeconds": -1 }
+              ],
+              "workouts": [
+                { "workoutId": "Stabi Handout Easy", "sets": 1, "rounds": 1 }
               ]
             }
           ]

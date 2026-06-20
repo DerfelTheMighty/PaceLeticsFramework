@@ -98,7 +98,7 @@ else
                             <MudPaper Elevation="0" Class="pa-3 pl-surface-card">
                                 <MudText Typo="Typo.subtitle2">@session.Name</MudText>
                                 <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                    @session.Date.ToString("dd.MM.yyyy") · @($"{session.Workouts.Count} Workout(s)")
+                                    @GetSessionTimelineDetail(session)
                                 </MudText>
                             </MudPaper>
                         }
@@ -138,17 +138,7 @@ else
             @if (_selectedTrainingSession is not null)
             {
                 <MudText Typo="Typo.caption" Color="Color.Secondary">
-                    @_selectedTrainingSession.Date.ToString("dd.MM.yyyy")
-                    @if (_resolved is not null)
-                    {
-                        @(" · ")
-                        @($"{_resolved.TotalDistance / 1000.0:0.0} km")
-                    }
-                    @if (_selectedTrainingSession.Workouts.Count > 0)
-                    {
-                        @(" · ")
-                        @($"{_selectedTrainingSession.Workouts.Count} Workout(s)")
-                    }
+                    @GetSessionDetailSummary(_selectedTrainingSession)
                 </MudText>
             }
         </div>
@@ -163,6 +153,75 @@ else
             else
             {
                 <MudStack Spacing="2">
+                    @if (_selectedTrainingSession.HasAppointment)
+                    {
+                        <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.subtitle2">@L["Appointment"]</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @FormatAppointment(_selectedTrainingSession.Appointment, _selectedTrainingSession.Date)
+                                </MudText>
+                                @if (!string.IsNullOrWhiteSpace(_selectedTrainingSession.Appointment.Location))
+                                {
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @($"{L["Location"]}: {_selectedTrainingSession.Appointment.Location}")
+                                    </MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(_selectedTrainingSession.Appointment.Notes))
+                                {
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @($"{L["Notes"]}: {_selectedTrainingSession.Appointment.Notes}")
+                                    </MudText>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+
+                    @if (_selectedTrainingSession.HasTrainingEffect)
+                    {
+                        <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.subtitle2">@L["TrainingEffect"]</MudText>
+                                @foreach (var line in GetTrainingEffectLines(_selectedTrainingSession.TrainingEffect))
+                                {
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@line</MudText>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+
+                    @if (_selectedTrainingSession.Warmup.Count > 0)
+                    {
+                        <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.subtitle2">@L["Warmup"]</MudText>
+                                @foreach (var activity in _selectedTrainingSession.Warmup)
+                                {
+                                    <MudStack Spacing="0">
+                                        <MudText Typo="Typo.body2">@activity.Title</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@GetActivityDetail(activity)</MudText>
+                                    </MudStack>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+
+                    @if (_selectedTrainingSession.Drills.Count > 0)
+                    {
+                        <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.subtitle2">@L["Drills"]</MudText>
+                                @foreach (var activity in _selectedTrainingSession.Drills)
+                                {
+                                    <MudStack Spacing="0">
+                                        <MudText Typo="Typo.body2">@activity.Title</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@GetActivityDetail(activity)</MudText>
+                                    </MudStack>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+
                     @if (_selectedTrainingSession.Workouts.Count > 0)
                     {
                         @foreach (var workout in _selectedTrainingSession.Workouts)
@@ -391,6 +450,106 @@ else
             PaceKeys.Repetition => "R",
             _ => string.Empty
         };
+    }
+
+    private string GetSessionTimelineDetail(TrainingSession session)
+    {
+        var parts = new List<string> { FormatSessionSchedule(session) };
+        AddSessionComposition(parts, session, null);
+        return string.Join(" · ", parts);
+    }
+
+    private string GetSessionDetailSummary(TrainingSession session)
+    {
+        var parts = new List<string> { FormatSessionSchedule(session) };
+        AddSessionComposition(parts, session, _resolved);
+        return string.Join(" · ", parts);
+    }
+
+    private void AddSessionComposition(
+        List<string> parts,
+        TrainingSession session,
+        ResolvedRunningSession? resolved)
+    {
+        if (resolved is not null)
+            parts.Add($"{resolved.TotalDistance / 1000.0:0.0} km");
+        else if (session.PrimaryRun is not null)
+            parts.Add($"{session.PrimaryRun.TotalDistance / 1000.0:0.0} km");
+
+        if (session.Workouts.Count > 0)
+            parts.Add(string.Format(L["WorkoutCount"], session.Workouts.Count));
+
+        if (session.Warmup.Count > 0)
+            parts.Add(string.Format(L["WarmupCount"], session.Warmup.Count));
+
+        if (session.Drills.Count > 0)
+            parts.Add(string.Format(L["DrillCount"], session.Drills.Count));
+    }
+
+    private string FormatSessionSchedule(TrainingSession session)
+    {
+        return session.Appointment.StartsAt is null
+            ? session.Date.ToString("dd.MM.yyyy")
+            : FormatAppointment(session.Appointment, session.Date);
+    }
+
+    private static string FormatAppointment(TrainingSessionAppointment appointment, DateTime? fallbackDate = null)
+    {
+        if (appointment.StartsAt is null)
+            return fallbackDate?.ToString("dd.MM.yyyy") ?? string.Empty;
+
+        if (appointment.EndsAt is null)
+            return appointment.StartsAt.Value.ToString("dd.MM.yyyy HH:mm");
+
+        return appointment.StartsAt.Value.Date == appointment.EndsAt.Value.Date
+            ? $"{appointment.StartsAt.Value:dd.MM.yyyy HH:mm} - {appointment.EndsAt.Value:HH:mm}"
+            : $"{appointment.StartsAt.Value:g} - {appointment.EndsAt.Value:g}";
+    }
+
+    private IEnumerable<string> GetTrainingEffectLines(TrainingEffect effect)
+    {
+        if (!string.IsNullOrWhiteSpace(effect.Focus))
+            yield return $"{L["Focus"]}: {effect.Focus}";
+
+        if (!string.IsNullOrWhiteSpace(effect.Stimulus))
+            yield return $"{L["Stimulus"]}: {effect.Stimulus}";
+
+        if (!string.IsNullOrWhiteSpace(effect.Adaptation))
+            yield return $"{L["Adaptation"]}: {effect.Adaptation}";
+
+        if (!string.IsNullOrWhiteSpace(effect.Recovery))
+            yield return $"{L["Recovery"]}: {effect.Recovery}";
+    }
+
+    private string GetActivityDetail(TrainingSessionActivity activity)
+    {
+        var parts = new List<string>();
+
+        if (activity.DurationSeconds > 0)
+            parts.Add(FormatDuration(activity.DurationSeconds));
+
+        if (!string.IsNullOrWhiteSpace(activity.ActivityType))
+            parts.Add(activity.ActivityType);
+
+        if (!string.IsNullOrWhiteSpace(activity.ReferenceId))
+            parts.Add(activity.ReferenceId);
+
+        if (!string.IsNullOrWhiteSpace(activity.Description))
+            parts.Add(activity.Description);
+
+        return parts.Count == 0 ? "-" : string.Join(" · ", parts);
+    }
+
+    private static string FormatDuration(int seconds)
+    {
+        if (seconds < 60)
+            return $"{seconds} s";
+
+        var minutes = seconds / 60;
+        var remainingSeconds = seconds % 60;
+        return remainingSeconds == 0
+            ? $"{minutes} min"
+            : $"{minutes}:{remainingSeconds:00} min";
     }
 
     private async Task SaveSelectedPlanAsync()

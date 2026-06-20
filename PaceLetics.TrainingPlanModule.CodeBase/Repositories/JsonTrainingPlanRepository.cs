@@ -112,22 +112,36 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
             : new List<RunningSession>();
 
         var workouts = dto.Workouts.Select(ValidateWorkout).ToList();
+        var primaryRun = runs.FirstOrDefault();
+
+        var appointment = dto.Appointment ?? TrainingSessionAppointment.Empty;
 
         var date = dto.Date != default
             ? dto.Date
-            : runs.FirstOrDefault()?.Date
-                ?? throw new InvalidDataException($"Training session '{dto.Id}' must define a date when it has no runs.");
+            : appointment.StartsAt?.Date
+                ?? primaryRun?.Date
+                ?? throw new InvalidDataException($"Training session '{dto.Id}' must define a date when it has no runs or appointment.");
 
         var id = !string.IsNullOrWhiteSpace(dto.Id)
             ? dto.Id
-            : runs.FirstOrDefault()?.Id
+            : primaryRun?.Id
+                ?? CreateSessionId(name: dto.Name, date)
                 ?? throw new InvalidDataException("Training session id must not be empty.");
 
         var name = !string.IsNullOrWhiteSpace(dto.Name)
             ? dto.Name
-            : runs.FirstOrDefault()?.Name ?? id;
+            : primaryRun?.Name ?? id;
 
-        return new TrainingSession(id, name, date, runs, workouts);
+        return new TrainingSession(
+            id,
+            name,
+            date,
+            runs,
+            workouts,
+            dto.Warmup,
+            dto.Drills,
+            dto.TrainingEffect,
+            appointment);
     }
 
     private WorkoutSessionDefinition ValidateWorkout(WorkoutSessionDefinition workout)
@@ -164,6 +178,19 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         return char.ToUpperInvariant(name[0]) + name[1..];
     }
 
+    private static string? CreateSessionId(string name, DateTime date)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return null;
+
+        var normalizedName = name
+            .Trim()
+            .ToLowerInvariant()
+            .Replace(' ', '-');
+
+        return $"{date:yyyy-MM-dd}-{normalizedName}";
+    }
+
     private sealed class TrainingPlanDocument
     {
         public int SchemaVersion { get; set; }
@@ -177,5 +204,9 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         public string Name { get; set; } = "";
         public DateTime Date { get; set; }
         public List<WorkoutSessionDefinition> Workouts { get; set; } = new();
+        public List<TrainingSessionActivity> Warmup { get; set; } = new();
+        public List<TrainingSessionActivity> Drills { get; set; } = new();
+        public TrainingEffect? TrainingEffect { get; set; }
+        public TrainingSessionAppointment? Appointment { get; set; }
     }
 }

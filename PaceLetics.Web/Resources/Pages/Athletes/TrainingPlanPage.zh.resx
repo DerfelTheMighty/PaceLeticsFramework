@@ -17,4 +17,17 @@
   <data name="Error_SaveBrowser" xml:space="preserve"><value>无法在浏览器中保存你的选择。</value></data>
   <data name="Error_SaveServer_Title" xml:space="preserve"><value>错误</value></data>
   <data name="Error_SaveServer" xml:space="preserve"><value>无法在服务器上保存选择。</value></data>
+  <data name="WorkoutCount" xml:space="preserve"><value>{0} workout(s)</value></data>
+  <data name="WarmupCount" xml:space="preserve"><value>{0} warm-up</value></data>
+  <data name="DrillCount" xml:space="preserve"><value>{0} drill(s)</value></data>
+  <data name="Appointment" xml:space="preserve"><value>Appointment</value></data>
+  <data name="Location" xml:space="preserve"><value>Location</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notes</value></data>
+  <data name="TrainingEffect" xml:space="preserve"><value>Training effect</value></data>
+  <data name="Focus" xml:space="preserve"><value>Focus</value></data>
+  <data name="Stimulus" xml:space="preserve"><value>Stimulus</value></data>
+  <data name="Adaptation" xml:space="preserve"><value>Adaptation</value></data>
+  <data name="Recovery" xml:space="preserve"><value>Recovery</value></data>
+  <data name="Warmup" xml:space="preserve"><value>Warm-up</value></data>
+  <data name="Drills" xml:space="preserve"><value>Drills</value></data>
 </root>
