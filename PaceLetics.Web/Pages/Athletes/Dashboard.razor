@@ -21,7 +21,7 @@
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="pt-5 px-4 px-sm-6 pb-8 pl-dashboard-page" MaxWidth="MaxWidth.Large">
 
     <PageHeader Title="@L["Title"]" Subtitle="@L["WelcomeText", _name]" />
 
@@ -29,8 +29,8 @@
 
     <MudStack Spacing="4">
 
-        <MudGrid Spacing="3">
-            <MudItem xs="12" sm="6" lg="3">
+        <MudGrid Spacing="3" Class="pl-dashboard-metrics">
+            <MudItem xs="12" md="6" xl="3">
                 <DashboardMetricTile Label="@L["Metric_VdotCs"]"
                                      Value="@GetVdotCsValue()"
                                      Detail="@GetReferenceDetail()"
@@ -39,7 +39,7 @@
                                      Href="/Athletes/pacezones" />
             </MudItem>
 
-            <MudItem xs="12" sm="6" lg="3">
+            <MudItem xs="12" md="6" xl="3">
                 <DashboardMetricTile Label="@L["Metric_NextSession"]"
                                      Value="@GetNextSessionValue()"
                                      Detail="@GetNextSessionDetail()"
@@ -48,7 +48,7 @@
                                      Href="/Athletes/courses" />
             </MudItem>
 
-            <MudItem xs="12" sm="6" lg="3">
+            <MudItem xs="12" md="6" xl="3">
                 <DashboardMetricTile Label="@L["Metric_TrainingSystem"]"
                                      Value="@L["Metric_TrainingSystemValue"]"
                                      Detail="@L["Metric_TrainingSystemDetail"]"
@@ -57,7 +57,7 @@
                                      Href="/Athletes/racepaces?section=info" />
             </MudItem>
 
-            <MudItem xs="12" sm="6" lg="3">
+            <MudItem xs="12" md="6" xl="3">
                 <DashboardMetricTile Label="@L["Metric_RunningAnalysisInfo"]"
                                      Value="@L["Metric_RunningAnalysisInfoValue"]"
                                      Detail="@L["Metric_RunningAnalysisInfoDetail"]"
