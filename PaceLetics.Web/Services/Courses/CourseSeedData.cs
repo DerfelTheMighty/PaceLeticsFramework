@@ -1,3 +1,5 @@
+using PaceLetics.CoreModule.Infrastructure.Models;
+
 namespace PaceLetics.Web.Services.Courses;
 
 public static class CourseSeedData
@@ -115,7 +117,8 @@ public static class CourseSeedData
                 {
                     TrainingPlanId = planId,
                     PublishedAt = startDate.AddDays(-14),
-                    VisibleFrom = startDate
+                    VisibleFrom = startDate,
+                    Target = FeedTarget.Course(id)
                 })
                 .ToList()
         };

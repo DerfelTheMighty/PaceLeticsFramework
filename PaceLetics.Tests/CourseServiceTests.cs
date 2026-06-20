@@ -1,3 +1,4 @@
+using PaceLetics.CoreModule.Infrastructure.Models;
 using PaceLetics.Web.Services.Courses;
 
 namespace PaceLetics.Tests;
@@ -343,7 +344,11 @@ public sealed class CourseServiceTests
         var updatedCourse = await repository.GetCourseAsync(course.Id);
 
         Assert.NotNull(updatedCourse);
-        Assert.Contains(updatedCourse.TrainingPlanPublications, publication => publication.TrainingPlanId == "plan-1");
+        var publication = Assert.Single(updatedCourse.TrainingPlanPublications);
+        Assert.Equal("plan-1", publication.TrainingPlanId);
+        Assert.True(publication.ToContentPublication(course.Id).IsVisibleFor(FeedTarget.Course(course.Id), DateTime.UtcNow));
+        Assert.Equal(FeedTargetTypes.Course, publication.Target?.NormalizeCopy().TargetType);
+        Assert.Equal(course.Id, publication.Target?.NormalizeCopy().TargetId);
     }
 
     [Fact]
@@ -394,6 +399,20 @@ public sealed class CourseServiceTests
         var planIds = await service.GetPublishedTrainingPlanIdsForAthleteAsync("athlete-1");
 
         Assert.Equal(new[] { "plan-2" }, planIds);
+    }
+
+    [Fact]
+    public async Task GetPublishedTrainingPlanIdsForAthlete_IgnoresPublicationsForOtherFeedTargets()
+    {
+        var course = CreateCourse("course-1", "plan-1");
+        course.TrainingPlanPublications[0].Target = FeedTarget.Course("course-2");
+        var repository = new InMemoryCourseRepository(course);
+        var service = new CourseService(repository);
+        await service.JoinCourseAsync("course-1", "athlete-1");
+
+        var planIds = await service.GetPublishedTrainingPlanIdsForAthleteAsync("athlete-1");
+
+        Assert.Empty(planIds);
     }
 
     [Fact]

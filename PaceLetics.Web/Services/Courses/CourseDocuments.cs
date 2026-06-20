@@ -1,4 +1,5 @@
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
+using PaceLetics.CoreModule.Infrastructure.Models;
 
 namespace PaceLetics.Web.Services.Courses;
 
@@ -131,6 +132,35 @@ public sealed class CourseTrainingPlanPublicationDocument
     public DateTime PublishedAt { get; set; }
     public string PublishedByUserId { get; set; } = string.Empty;
     public DateTime? VisibleFrom { get; set; }
+    public DateTime? VisibleUntil { get; set; }
+    public FeedTarget? Target { get; set; }
+
+    public ContentPublication ToContentPublication(string courseId)
+    {
+        return new ContentPublication
+        {
+            ContentType = PublishedContentTypes.TrainingPlan,
+            ContentId = TrainingPlanId,
+            Target = ResolveTarget(courseId),
+            PublishedAt = PublishedAt,
+            PublishedByUserId = PublishedByUserId,
+            VisibleFrom = VisibleFrom,
+            VisibleUntil = VisibleUntil
+        };
+    }
+
+    public bool IsVisibleInCourse(string courseId, DateTime utcNow)
+    {
+        return ToContentPublication(courseId).IsVisibleFor(FeedTarget.Course(courseId), utcNow);
+    }
+
+    private FeedTarget ResolveTarget(string courseId)
+    {
+        if (Target is null || Target.IsEmpty)
+            return FeedTarget.Course(courseId);
+
+        return Target.NormalizeCopy();
+    }
 }
 
 public sealed class CourseEnrollmentDocument : IQueryItem

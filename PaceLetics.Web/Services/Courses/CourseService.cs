@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Localization;
+using PaceLetics.CoreModule.Infrastructure.Models;
 
 namespace PaceLetics.Web.Services.Courses;
 
@@ -65,9 +66,13 @@ public sealed class CourseService : ICourseService
         var joinedCourses = await GetJoinedCoursesAsync(athleteUserId);
 
         return joinedCourses
-            .SelectMany(course => course.TrainingPlanPublications)
-            .Where(publication => publication.VisibleFrom is null || publication.VisibleFrom <= now)
-            .Select(publication => publication.TrainingPlanId)
+            .SelectMany(course => course.TrainingPlanPublications.Select(publication => new
+            {
+                CourseId = course.Id,
+                Publication = publication
+            }))
+            .Where(item => item.Publication.IsVisibleInCourse(item.CourseId, now))
+            .Select(item => item.Publication.TrainingPlanId)
             .Where(planId => !string.IsNullOrWhiteSpace(planId))
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
@@ -305,6 +310,7 @@ public sealed class CourseService : ICourseService
 
         var existing = course.TrainingPlanPublications
             .FirstOrDefault(publication => publication.TrainingPlanId == trainingPlanId);
+        var target = FeedTarget.Course(course.Id);
 
         if (existing is null)
         {
@@ -313,12 +319,14 @@ public sealed class CourseService : ICourseService
                 TrainingPlanId = trainingPlanId,
                 PublishedAt = DateTime.UtcNow,
                 PublishedByUserId = publishedByUserId,
-                VisibleFrom = visibleFrom
+                VisibleFrom = visibleFrom,
+                Target = target
             });
         }
         else
         {
             existing.VisibleFrom = visibleFrom;
+            existing.Target = target;
             existing.PublishedByUserId = string.IsNullOrWhiteSpace(existing.PublishedByUserId)
                 ? publishedByUserId
                 : existing.PublishedByUserId;
