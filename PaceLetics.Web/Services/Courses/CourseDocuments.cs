@@ -9,6 +9,7 @@ public static class CourseDocumentTypes
     public const string Enrollment = "courseEnrollment";
     public const string Event = "courseEvent";
     public const string EventRegistration = "courseEventRegistration";
+    public const string MateAvailability = "mateAvailability";
 }
 
 public static class CourseEnrollmentStatus

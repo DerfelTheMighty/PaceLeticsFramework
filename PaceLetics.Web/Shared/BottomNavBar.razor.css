@@ -9,7 +9,7 @@
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    gap: 0.15rem;
+    gap: 0.08rem;
     height: calc(4.65rem + var(--pl-bottom-nav-safe-area));
     padding: 0.45rem 0.35rem calc(0.45rem + var(--pl-bottom-nav-safe-area));
     background: color-mix(in srgb, var(--mud-palette-surface) 94%, black);
@@ -26,9 +26,9 @@
     justify-content: center;
     flex: 1 1 0;
     min-width: 0;
-    max-width: 5rem;
+    max-width: 4.75rem;
     min-height: 3.75rem;
-    padding: 0.35rem 0.18rem;
+    padding: 0.35rem 0.12rem;
     color: var(--mud-palette-text-secondary);
     text-decoration: none;
     border-radius: 999px;
@@ -71,7 +71,7 @@
     display: -webkit-box;
     max-width: 100%;
     overflow: hidden;
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     font-weight: 600;
     line-height: 1.15;
     text-align: center;
@@ -87,7 +87,7 @@
     }
 
     .pl-bottom-nav__label {
-        font-size: 0.62rem;
+        font-size: 0.58rem;
     }
 }
 

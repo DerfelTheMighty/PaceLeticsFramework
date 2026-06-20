@@ -1,0 +1,265 @@
+@page "/Athletes/mate"
+@attribute [Authorize]
+@using System.Security.Claims
+@using PaceLetics.Web.Services.Mates
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IMateService MateService
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Mate> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    @if (_isLoading)
+    {
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary" Class="mt-4" />
+    }
+    else
+    {
+        <MudStack Spacing="3" Class="mt-4">
+            <MudPaper Elevation="0" Class="pa-4 pl-panel">
+                <MudGrid Spacing="2">
+                    <MudItem xs="4">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricSessions"]</MudText>
+                        <MudText Typo="Typo.h6">@_overview.ShareableSessions.Count</MudText>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricShared"]</MudText>
+                        <MudText Typo="Typo.h6">@_overview.MyAvailabilities.Count</MudText>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricMatches"]</MudText>
+                        <MudText Typo="Typo.h6">@_overview.Matches.Count</MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.h6">@L["SectionMatches"]</MudText>
+                @if (_overview.Matches.Count == 0)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NoMatches"]</MudAlert>
+                }
+                else
+                {
+                    @foreach (var match in _overview.Matches)
+                    {
+                        <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+                            <MudStack Spacing="2">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                    <MudIcon Icon="@Icons.Material.Filled.People" Color="Color.Primary" />
+                                    <MudText Typo="Typo.h6">@match.MateSession.AthleteDisplayName</MudText>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                                        @($"{match.Score}%")
+                                    </MudChip>
+                                </MudStack>
+
+                                <MudText Typo="Typo.body2">@match.MateSession.SessionName</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">@GetAvailabilityDetail(match.MateSession)</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @string.Format(L["MatchOwn"], match.OwnSession.SessionName)
+                                </MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">@GetMatchDelta(match)</MudText>
+                            </MudStack>
+                        </MudPaper>
+                    }
+                }
+            </MudStack>
+
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.h6">@L["SectionShare"]</MudText>
+                @if (_overview.ShareableSessions.Count == 0)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NoSessions"]</MudAlert>
+                }
+                else
+                {
+                    @foreach (var session in _overview.ShareableSessions)
+                    {
+                        <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                <MudStack Spacing="1" Style="min-width:0; flex:1 1 260px;">
+                                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                        <MudIcon Icon="@Icons.Material.Filled.DirectionsRun" Color="Color.Primary" Size="Size.Small" />
+                                        <MudText Typo="Typo.h6">@session.SessionName</MudText>
+                                        @if (session.IsShared)
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                                                @L["Shared"]
+                                            </MudChip>
+                                        }
+                                    </MudStack>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@GetShareableDetail(session)</MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @($"{L["Course"]}: {session.CourseName} · {L["Plan"]}: {session.PlanName}")
+                                    </MudText>
+                                </MudStack>
+
+                                @if (session.IsShared && session.AvailabilityId is not null)
+                                {
+                                    <MudTooltip Text="@L["Remove"]">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                                       Color="Color.Secondary"
+                                                       Disabled="@_isSaving"
+                                                       OnClick="@(() => RemoveAsync(session.AvailabilityId))"
+                                                       aria-label="@L["Remove"]" />
+                                    </MudTooltip>
+                                }
+                                else
+                                {
+                                    <MudButton Color="Color.Primary"
+                                               Variant="Variant.Filled"
+                                               Disabled="@_isSaving"
+                                               StartIcon="@Icons.Material.Filled.PersonAdd"
+                                               OnClick="@(() => ShareAsync(session))">
+                                        @L["Share"]
+                                    </MudButton>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+                }
+            </MudStack>
+        </MudStack>
+    }
+</MudContainer>
+
+@code {
+    private MateOverview _overview = new();
+    private string? _userId;
+    private bool _isLoading = true;
+    private bool _isSaving;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _isLoading = true;
+        try
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            _userId = authState.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _overview = await MateService.GetOverviewAsync(_userId);
+        }
+        catch
+        {
+            Snackbar.Add(L["LoadError"], Severity.Error);
+            _overview = new MateOverview();
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task ShareAsync(MateShareableSession session)
+    {
+        _isSaving = true;
+        try
+        {
+            await MateService.ShareSessionAsync(
+                _userId,
+                new MateShareRequest
+                {
+                    CourseId = session.CourseId,
+                    PlanId = session.PlanId,
+                    SessionId = session.SessionId
+                });
+            Snackbar.Add(L["ShareSuccess"], Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"{L["ShareError"]}: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private async Task RemoveAsync(string availabilityId)
+    {
+        _isSaving = true;
+        try
+        {
+            await MateService.RemoveAvailabilityAsync(_userId, availabilityId);
+            Snackbar.Add(L["RemoveSuccess"], Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"{L["RemoveError"]}: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private string GetShareableDetail(MateShareableSession session)
+    {
+        return string.Join(
+            " · ",
+            new[]
+            {
+                FormatDate(session.StartsAt ?? session.SessionDate),
+                FormatDistance(session.DistanceMeters),
+                FormatPace(session.PaceSecondsPerKilometer, session.PaceKey),
+                string.IsNullOrWhiteSpace(session.Location) ? string.Empty : $"{L["Location"]}: {session.Location}"
+            }.Where(part => !string.IsNullOrWhiteSpace(part)));
+    }
+
+    private string GetAvailabilityDetail(MateAvailabilityDocument availability)
+    {
+        return string.Join(
+            " · ",
+            new[]
+            {
+                FormatDate(availability.StartsAt ?? availability.SessionDate),
+                availability.CourseName,
+                FormatDistance(availability.DistanceMeters),
+                FormatPace(availability.PaceSecondsPerKilometer, availability.PaceKey),
+                string.IsNullOrWhiteSpace(availability.Location) ? string.Empty : $"{L["Location"]}: {availability.Location}"
+            }.Where(part => !string.IsNullOrWhiteSpace(part)));
+    }
+
+    private string GetMatchDelta(MateMatch match)
+    {
+        var pace = match.PaceDeltaSeconds is null
+            ? L["SamePaceZone"].Value
+            : string.Format(L["PaceDelta"], match.PaceDeltaSeconds);
+        var days = string.Format(L["DayDelta"], match.DayDelta);
+        var distance = string.Format(L["DistanceDelta"], FormatDistance(match.DistanceDeltaMeters));
+
+        return $"{pace} · {days} · {distance}";
+    }
+
+    private static string FormatDate(DateTime date)
+    {
+        return date.TimeOfDay == TimeSpan.Zero
+            ? date.ToString("dd.MM.yyyy")
+            : date.ToString("dd.MM.yyyy HH:mm");
+    }
+
+    private static string FormatDistance(int meters)
+    {
+        return meters >= 1000
+            ? $"{meters / 1000.0:0.#} km"
+            : $"{meters} m";
+    }
+
+    private string FormatPace(int? secondsPerKilometer, string paceKey)
+    {
+        if (secondsPerKilometer is null or <= 0)
+            return string.IsNullOrWhiteSpace(paceKey) ? L["NoPace"] : paceKey;
+
+        var pace = TimeSpan.FromSeconds(secondsPerKilometer.Value);
+        return $"{pace:mm\\:ss}/km";
+    }
+}
