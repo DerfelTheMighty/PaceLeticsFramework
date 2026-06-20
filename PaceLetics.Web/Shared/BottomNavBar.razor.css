@@ -26,9 +26,9 @@
     justify-content: center;
     flex: 1 1 0;
     min-width: 0;
-    max-width: 5.4rem;
+    max-width: 5rem;
     min-height: 3.75rem;
-    padding: 0.35rem 0.25rem;
+    padding: 0.35rem 0.18rem;
     color: var(--mud-palette-text-secondary);
     text-decoration: none;
     border-radius: 999px;
@@ -54,6 +54,8 @@
     align-items: center;
     justify-content: center;
     gap: 0.1rem;
+    width: 100%;
+    min-width: 0;
 }
 
 .pl-bottom-nav__icon {
@@ -67,7 +69,7 @@
 
 .pl-bottom-nav__label {
     display: -webkit-box;
-    max-width: 4.9rem;
+    max-width: 100%;
     overflow: hidden;
     font-size: 0.68rem;
     font-weight: 600;
@@ -76,6 +78,17 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow-wrap: anywhere;
+}
+
+@media (max-width: 380px) {
+    .pl-bottom-nav ::deep .pl-bottom-nav__item {
+        padding-right: 0.08rem;
+        padding-left: 0.08rem;
+    }
+
+    .pl-bottom-nav__label {
+        font-size: 0.62rem;
+    }
 }
 
 @media (min-width: 960px) {
