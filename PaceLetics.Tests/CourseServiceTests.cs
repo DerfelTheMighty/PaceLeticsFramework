@@ -47,6 +47,25 @@ public sealed class CourseServiceTests
         Assert.Equal("Level 3", course.Level);
     }
 
+    [Fact]
+    public async Task CreateCourse_AssignsCourseAsTeamByDefault()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Sprintgruppe",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        Assert.Equal(course.Id, course.TeamId);
+    }
+
     [Theory]
     [InlineData("1", "Level 1")]
     [InlineData("Level 2", "Level 2")]
@@ -375,6 +394,104 @@ public sealed class CourseServiceTests
     }
 
     [Fact]
+    public async Task CreateChallenge_AddsChallengeForAssignedTrainer()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        var challenge = await service.CreateChallengeAsync(
+            course.Id,
+            new CourseChallengeCreateRequest
+            {
+                Title = "Juni-Kilometer",
+                ChallengeType = "DISTANCE",
+                StartsAt = DateTime.UtcNow.Date,
+                EndsAt = DateTime.UtcNow.Date.AddDays(14),
+                TargetValue = 40,
+                Unit = "km"
+            },
+            "trainer-1");
+        var updatedCourse = await repository.GetCourseAsync(course.Id);
+
+        Assert.NotNull(updatedCourse);
+        var storedChallenge = Assert.Single(updatedCourse.Challenges);
+        Assert.Equal(challenge.Id, storedChallenge.Id);
+        Assert.Equal(CourseChallengeTypes.Distance, storedChallenge.ChallengeType);
+        Assert.Equal(40m, storedChallenge.TargetValue);
+        Assert.Equal("km", storedChallenge.Unit);
+    }
+
+    [Fact]
+    public async Task CreateChallenge_RequiresTrainerWithEventPermissions()
+    {
+        var repository = new InMemoryCourseRepository();
+        var service = new CourseService(repository);
+        var course = await service.CreateCourseAsync(
+            new CourseCreateRequest
+            {
+                Name = "Laufschule",
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.Date.AddDays(14)
+            },
+            "trainer-1",
+            "Coach");
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            service.CreateChallengeAsync(
+                course.Id,
+                new CourseChallengeCreateRequest
+                {
+                    Title = "Juni-Kilometer",
+                    StartsAt = DateTime.UtcNow.Date,
+                    EndsAt = DateTime.UtcNow.Date.AddDays(14)
+                },
+                "trainer-2"));
+    }
+
+    [Fact]
+    public async Task RemoveChallenge_RemovesChallengeForAssignedTrainer()
+    {
+        var course = CreateCourse("course-1", "plan-1");
+        course.Challenges.Add(CreateChallenge("challenge-1", "Juni-Kilometer"));
+        var repository = new InMemoryCourseRepository(course);
+        var service = new CourseService(repository);
+
+        await service.RemoveChallengeAsync("course-1", "challenge-1", "trainer-1");
+        var updatedCourse = await repository.GetCourseAsync("course-1");
+
+        Assert.NotNull(updatedCourse);
+        Assert.Empty(updatedCourse.Challenges);
+    }
+
+    [Fact]
+    public async Task GetChallengesForAthlete_ReturnsCurrentPublishedChallengesFromJoinedCourses()
+    {
+        var hiddenCourse = CreateCourse("course-1", "plan-1");
+        hiddenCourse.Challenges.Add(CreateChallenge("hidden", "Hidden"));
+        var joinedCourse = CreateCourse("course-2", "plan-2");
+        joinedCourse.Challenges.Add(CreateChallenge("active", "Active"));
+        joinedCourse.Challenges.Add(CreateChallenge("unpublished", "Unpublished", isPublished: false));
+        joinedCourse.Challenges.Add(CreateChallenge("past", "Past", startsAt: DateTime.UtcNow.AddDays(-20), endsAt: DateTime.UtcNow.AddDays(-1)));
+        var repository = new InMemoryCourseRepository(hiddenCourse, joinedCourse);
+        var service = new CourseService(repository);
+        await service.JoinCourseAsync("course-2", "athlete-1");
+
+        var challenges = await service.GetChallengesForAthleteAsync("athlete-1");
+
+        var challenge = Assert.Single(challenges);
+        Assert.Equal("Active", challenge.Title);
+    }
+
+    [Fact]
     public async Task JoinCourse_CreatesActiveEnrollment()
     {
         var repository = new InMemoryCourseRepository(CreateCourse("course-1", "plan-1"));
@@ -603,6 +720,24 @@ public sealed class CourseServiceTests
                     PublishedAt = DateTime.UtcNow.AddDays(-1)
                 }
             }
+        };
+    }
+
+    private static CourseChallengeDocument CreateChallenge(
+        string challengeId,
+        string title,
+        DateTime? startsAt = null,
+        DateTime? endsAt = null,
+        bool isPublished = true)
+    {
+        return new CourseChallengeDocument
+        {
+            Id = challengeId,
+            Title = title,
+            StartsAt = startsAt?.Date ?? DateTime.UtcNow.Date,
+            EndsAt = endsAt?.Date ?? DateTime.UtcNow.Date.AddDays(14),
+            IsPublished = isPublished,
+            ChallengeType = CourseChallengeTypes.General
         };
     }
 

@@ -39,6 +39,15 @@ public interface ICourseService
 
     Task RemoveTrainingPlanPublicationAsync(string courseId, string trainingPlanId, string requestingTrainerUserId);
 
+    Task<CourseChallengeDocument> CreateChallengeAsync(
+        string courseId,
+        CourseChallengeCreateRequest request,
+        string requestingTrainerUserId);
+
+    Task RemoveChallengeAsync(string courseId, string challengeId, string requestingTrainerUserId);
+
+    Task<IReadOnlyList<CourseChallengeDocument>> GetChallengesForAthleteAsync(string athleteUserId);
+
     Task<IReadOnlyList<CourseEventDocument>> GetEventsAsync(string courseId);
 
     Task<CourseEventDocument> CreateEventAsync(

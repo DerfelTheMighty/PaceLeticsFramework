@@ -107,6 +107,7 @@ public static class CourseSeedData
             CourseId = id,
             Slug = id,
             Name = name,
+            TeamId = id,
             Level = level,
             Description = description,
             StartDate = startDate,

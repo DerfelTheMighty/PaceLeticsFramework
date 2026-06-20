@@ -46,6 +46,16 @@
   <data name="NoPublishedPlan" xml:space="preserve"><value>Noch kein Plan veröffentlicht.</value></data>
   <data name="TrainingPlan" xml:space="preserve"><value>Trainingsplan</value></data>
   <data name="AddPlan" xml:space="preserve"><value>Plan hinzufuegen</value></data>
+  <data name="Challenges" xml:space="preserve"><value>Challenges</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>Noch keine Challenges.</value></data>
+  <data name="ChallengeTitle" xml:space="preserve"><value>Challenge-Titel</value></data>
+  <data name="ChallengeType" xml:space="preserve"><value>Challenge-Typ</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>Allgemein</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>Teilnahme</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>Distanz</value></data>
+  <data name="ChallengeTarget" xml:space="preserve"><value>Ziel</value></data>
+  <data name="ChallengeUnit" xml:space="preserve"><value>Einheit</value></data>
+  <data name="AddChallenge" xml:space="preserve"><value>Challenge hinzufuegen</value></data>
   <data name="Participants" xml:space="preserve"><value>Teilnehmende</value></data>
   <data name="ParticipantsCount" xml:space="preserve"><value>Teilnehmende ({0})</value></data>
   <data name="CreateCourseSuccess" xml:space="preserve"><value>Kurs wurde erstellt.</value></data>
@@ -65,8 +75,14 @@
   <data name="PublishPlanSuccess" xml:space="preserve"><value>Trainingsplan wurde hinzugefuegt.</value></data>
   <data name="RemovePlanConfirm" xml:space="preserve"><value>Trainingsplan "{0}" entfernen?</value></data>
   <data name="RemovePlanSuccess" xml:space="preserve"><value>Trainingsplan wurde entfernt.</value></data>
+  <data name="AddChallengeSuccess" xml:space="preserve"><value>Challenge wurde hinzugefuegt.</value></data>
+  <data name="RemoveChallengeConfirm" xml:space="preserve"><value>Challenge "{0}" entfernen?</value></data>
+  <data name="RemoveChallengeSuccess" xml:space="preserve"><value>Challenge wurde entfernt.</value></data>
   <data name="Period" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
   <data name="DateRange" xml:space="preserve"><value>{0:dd.MM.yyyy HH:mm} bis {1:HH:mm} Uhr</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>Ziel: {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Ziel: {0:0.##} {1}</value></data>
   <data name="ValidationDateRequired" xml:space="preserve"><value>Bitte ein Datum auswählen.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Bitte eine Uhrzeit im Format HH:mm eingeben.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>Trainer:in konnte nicht ermittelt werden.</value></data>
