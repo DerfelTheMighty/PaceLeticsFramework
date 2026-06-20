@@ -7,4 +7,9 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
         WorkoutCatalogDocument Load();
         void Save(WorkoutCatalogDocument document);
     }
+
+    public interface IWorkoutCatalogValidator
+    {
+        void NormalizeAndValidate(WorkoutCatalogDocument document);
+    }
 }

@@ -5,7 +5,7 @@ using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 
 namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
 {
-    public sealed class JsonWorkoutCatalogRepository : IWorkoutCatalogRepository
+    public sealed class JsonWorkoutCatalogRepository : IWorkoutCatalogRepository, IWorkoutCatalogValidator
     {
         private static readonly JsonSerializerOptions Options = new()
         {
@@ -37,8 +37,7 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
             var document = JsonSerializer.Deserialize<WorkoutCatalogDocument>(json, Options)
                 ?? throw new InvalidDataException($"Workout catalog '{_filePath}' is empty or invalid.");
 
-            Normalize(document);
-            Validate(document);
+            NormalizeAndValidate(document);
             return document;
         }
 
@@ -46,8 +45,7 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
         {
             ArgumentNullException.ThrowIfNull(document);
 
-            Normalize(document);
-            Validate(document);
+            NormalizeAndValidate(document);
 
             var directory = Path.GetDirectoryName(_filePath);
             if (!string.IsNullOrWhiteSpace(directory))
@@ -55,6 +53,14 @@ namespace PaceLetics.TrainingModule.CodeBase.Workouts.Repositories
 
             var json = JsonSerializer.Serialize(document, Options);
             File.WriteAllText(_filePath, json);
+        }
+
+        public void NormalizeAndValidate(WorkoutCatalogDocument document)
+        {
+            ArgumentNullException.ThrowIfNull(document);
+
+            Normalize(document);
+            Validate(document);
         }
 
         private static void Normalize(WorkoutCatalogDocument document)
