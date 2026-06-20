@@ -1,9 +1,10 @@
 using AthleteDataAccessLibrary;
 using AthleteDataAccessLibrary.Contracts;
+using PaceLetics.Web.Services.Mates;
 
 namespace PaceLetics.Web.Services.Courses;
 
-public sealed class CosmosCourseRepository : ICourseRepository
+public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
 {
     private readonly IDataAccess _db;
     private readonly AthleteDataOptions _options;
@@ -55,10 +56,20 @@ public sealed class CosmosCourseRepository : ICourseRepository
         var registrations = await LoadPartitionItems<CourseEventRegistrationDocument>(
             courseId,
             CourseDocumentTypes.EventRegistration);
+        var mateAvailabilities = await LoadPartitionItems<MateAvailabilityDocument>(
+            courseId,
+            CourseDocumentTypes.MateAvailability);
         var events = await LoadPartitionItems<CourseEventDocument>(courseId, CourseDocumentTypes.Event);
         var enrollments = await LoadPartitionItems<CourseEnrollmentDocument>(
             courseId,
             CourseDocumentTypes.Enrollment);
+
+        foreach (var availability in mateAvailabilities)
+            await _db.DeleteItem<MateAvailabilityDocument>(
+                _options.DatabaseName,
+                _options.CourseContainerName,
+                availability.Id,
+                courseId);
 
         foreach (var registration in registrations)
             await _db.DeleteItem<CourseEventRegistrationDocument>(
@@ -217,6 +228,63 @@ public sealed class CosmosCourseRepository : ICourseRepository
             _options.CourseContainerName,
             registration,
             registration.CourseId);
+    }
+
+    public Task<IReadOnlyList<MateAvailabilityDocument>> GetMateAvailabilitiesForCourseAsync(string courseId)
+    {
+        return LoadPartitionItems<MateAvailabilityDocument>(courseId, CourseDocumentTypes.MateAvailability);
+    }
+
+    public async Task<IReadOnlyList<MateAvailabilityDocument>> GetMateAvailabilitiesForAthleteAsync(string athleteUserId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            return Array.Empty<MateAvailabilityDocument>();
+
+        var availabilities = await _db.LoadData<MateAvailabilityDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            CourseDocumentTypes.MateAvailability);
+
+        return availabilities
+            .Where(availability => availability.AthleteUserId == athleteUserId)
+            .ToList();
+    }
+
+    public Task<MateAvailabilityDocument?> GetMateAvailabilityAsync(string courseId, string availabilityId)
+    {
+        return _db.LoadItem<MateAvailabilityDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            availabilityId,
+            courseId);
+    }
+
+    public Task UpsertMateAvailabilityAsync(MateAvailabilityDocument availability)
+    {
+        availability.DocumentType = CourseDocumentTypes.MateAvailability;
+        if (string.IsNullOrWhiteSpace(availability.Id))
+        {
+            availability.Id = MateDocumentIds.Availability(
+                availability.CourseId,
+                availability.AthleteUserId,
+                availability.PlanId,
+                availability.SessionId);
+        }
+
+        return _db.UpsertItem(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            availability,
+            availability.CourseId);
+    }
+
+    public Task DeleteMateAvailabilityAsync(string courseId, string availabilityId)
+    {
+        return _db.DeleteItem<MateAvailabilityDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            availabilityId,
+            courseId);
     }
 
     private async Task EnsureDefaultCoursesAsync()

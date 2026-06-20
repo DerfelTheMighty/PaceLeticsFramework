@@ -26,6 +26,7 @@ using PaceLetics.Web.Services.DashboardMessages;
 using PaceLetics.Web.Services.Academy;
 using PaceLetics.CoreModule.Infrastructure.Services;
 using PaceLetics.Web.Services.Courses;
+using PaceLetics.Web.Services.Mates;
 using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
 using PaceLetics.Web.Services.Loading;
@@ -113,7 +114,9 @@ builder.Services.Configure<TrainerVerificationOptions>(options =>
     }
 });
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
-builder.Services.AddScoped<ICourseRepository, CosmosCourseRepository>();
+builder.Services.AddScoped<CosmosCourseRepository>();
+builder.Services.AddScoped<ICourseRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
+builder.Services.AddScoped<IMateRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
 {
     builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
@@ -137,6 +140,7 @@ builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunn
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddScoped<IAcademyService, AcademyService>();
+builder.Services.AddScoped<IMateService, MateService>();
 builder.Services.AddScoped<ThemePreferenceService>();
 builder.Services.AddScoped<LoadingStateService>();
 builder.Services.AddSingleton<DashboardMessageFeedOptions>();
