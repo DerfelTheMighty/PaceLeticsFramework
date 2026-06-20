@@ -105,6 +105,8 @@ public sealed class CourseService : ICourseService
             Name = request.Name.Trim(),
             Description = request.Description?.Trim() ?? string.Empty,
             Level = CourseLevelFormatting.Format(request.Level),
+            OrganizationId = request.OrganizationId?.Trim() ?? string.Empty,
+            TeamId = string.IsNullOrWhiteSpace(request.TeamId) ? courseId : request.TeamId.Trim(),
             StartDate = request.StartDate.Date,
             EndDate = request.EndDate.Date,
             CreatedByTrainerUserId = creatorTrainerUserId,
@@ -349,6 +351,82 @@ public sealed class CourseService : ICourseService
         await _repository.UpsertCourseAsync(course);
     }
 
+    public async Task<CourseChallengeDocument> CreateChallengeAsync(
+        string courseId,
+        CourseChallengeCreateRequest request,
+        string requestingTrainerUserId)
+    {
+        if (request is null)
+            throw new ArgumentNullException(nameof(request));
+
+        if (string.IsNullOrWhiteSpace(request.Title))
+            throw new InvalidOperationException(Text("ChallengeTitleRequired", "A challenge needs a title."));
+
+        if (request.EndsAt.Date < request.StartsAt.Date)
+            throw new InvalidOperationException(Text("ChallengeEndBeforeStart", "The challenge end date cannot be before the start date."));
+
+        if (request.TargetValue is < 0)
+            throw new InvalidOperationException(Text("ChallengeTargetPositive", "The challenge target cannot be negative."));
+
+        var course = await _repository.GetCourseAsync(courseId)
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "The course was not found."));
+
+        RequireEventManagement(course, requestingTrainerUserId);
+        course.Challenges ??= new List<CourseChallengeDocument>();
+
+        var challenge = new CourseChallengeDocument
+        {
+            Id = Guid.NewGuid().ToString("N"),
+            Title = request.Title.Trim(),
+            Description = request.Description?.Trim() ?? string.Empty,
+            ChallengeType = NormalizeChallengeType(request.ChallengeType),
+            StartsAt = request.StartsAt.Date,
+            EndsAt = request.EndsAt.Date,
+            TargetValue = request.TargetValue,
+            Unit = request.Unit?.Trim() ?? string.Empty,
+            CreatedByUserId = requestingTrainerUserId,
+            CreatedAt = DateTime.UtcNow,
+            IsPublished = request.IsPublished
+        };
+
+        course.Challenges.Add(challenge);
+        course.Challenges = course.Challenges
+            .OrderBy(existing => existing.StartsAt)
+            .ThenBy(existing => existing.Title)
+            .ToList();
+
+        await _repository.UpsertCourseAsync(course);
+        return challenge;
+    }
+
+    public async Task RemoveChallengeAsync(string courseId, string challengeId, string requestingTrainerUserId)
+    {
+        var course = await _repository.GetCourseAsync(courseId)
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "The course was not found."));
+
+        RequireEventManagement(course, requestingTrainerUserId);
+        course.Challenges ??= new List<CourseChallengeDocument>();
+
+        var removed = course.Challenges.RemoveAll(challenge => challenge.Id == challengeId);
+        if (removed == 0)
+            throw new InvalidOperationException(Text("ChallengeNotFound", "The challenge was not found."));
+
+        await _repository.UpsertCourseAsync(course);
+    }
+
+    public async Task<IReadOnlyList<CourseChallengeDocument>> GetChallengesForAthleteAsync(string athleteUserId)
+    {
+        var today = DateTime.UtcNow.Date;
+        var joinedCourses = await GetJoinedCoursesAsync(athleteUserId);
+
+        return joinedCourses
+            .SelectMany(course => course.Challenges ?? Enumerable.Empty<CourseChallengeDocument>())
+            .Where(challenge => challenge.IsPublished && challenge.EndsAt.Date >= today)
+            .OrderBy(challenge => challenge.StartsAt)
+            .ThenBy(challenge => challenge.Title)
+            .ToList();
+    }
+
     public Task<IReadOnlyList<CourseEventDocument>> GetEventsAsync(string courseId)
     {
         return _repository.GetEventsAsync(courseId);
@@ -562,6 +640,17 @@ public sealed class CourseService : ICourseService
         return string.IsNullOrWhiteSpace(displayName)
             ? fallbackUserId
             : displayName.Trim();
+    }
+
+    private static string NormalizeChallengeType(string? challengeType)
+    {
+        if (string.Equals(challengeType, CourseChallengeTypes.Attendance, StringComparison.OrdinalIgnoreCase))
+            return CourseChallengeTypes.Attendance;
+
+        if (string.Equals(challengeType, CourseChallengeTypes.Distance, StringComparison.OrdinalIgnoreCase))
+            return CourseChallengeTypes.Distance;
+
+        return CourseChallengeTypes.General;
     }
 
     private void RequireTrainerManagement(CourseDocument course, string requestingTrainerUserId)

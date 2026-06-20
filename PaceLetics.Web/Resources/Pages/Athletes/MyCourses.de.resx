@@ -21,6 +21,7 @@
   <data name="Joined" xml:space="preserve"><value>Beigetreten</value></data>
   <data name="Dates" xml:space="preserve"><value>Termine</value></data>
   <data name="Events" xml:space="preserve"><value>Events</value></data>
+  <data name="Challenges" xml:space="preserve"><value>Challenges</value></data>
   <data name="TrainingPlans" xml:space="preserve"><value>Trainingspläne</value></data>
   <data name="ShowAll" xml:space="preserve"><value>Alle</value></data>
   <data name="ShowLess" xml:space="preserve"><value>Weniger</value></data>
@@ -33,6 +34,10 @@
   <data name="OpenAnalysisFolder" xml:space="preserve"><value>Analyseordner öffnen</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>Abmelden</value></data>
   <data name="Register" xml:space="preserve"><value>Anmelden</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>Keine aktiven Challenges.</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>Allgemein</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>Teilnahme</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>Distanz</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>Noch keine Trainingspläne veröffentlicht.</value></data>
   <data name="LoadError" xml:space="preserve"><value>Die Kurse konnten nicht aus Cosmos DB geladen werden.</value></data>
   <data name="JoinSuccess" xml:space="preserve"><value>Du bist dem Kurs beigetreten.</value></data>
@@ -44,4 +49,7 @@
   <data name="ShortPeriod" xml:space="preserve"><value>{0:dd.MM.} bis {1:dd.MM.}</value></data>
   <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} bis {1:HH:mm} Uhr</value></data>
   <data name="EventDate" xml:space="preserve"><value>{0:dd.MM.yyyy HH:mm} bis {1:HH:mm} Uhr</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>Ziel: {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Ziel: {0:0.##} {1}</value></data>
 </root>

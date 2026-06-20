@@ -167,6 +167,7 @@
                     var course = selected.Course;
                     var upcomingDates = GetUpcomingDates(course).Take(6).ToList();
                     var courseEvents = GetEvents(course.Id).ToList();
+                    var courseChallenges = GetCourseChallenges(course).ToList();
                     var trainingPlanPublications = course.TrainingPlanPublications
                         .OrderBy(publication => publication.TrainingPlanId)
                         .ToList();
@@ -304,6 +305,52 @@
 
                             <section>
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                    <MudText Typo="Typo.subtitle2">@L["Challenges"]</MudText>
+                                    @if (courseChallenges.Count > 2)
+                                    {
+                                        <MudTooltip Text="@(_showAllChallenges ? L["ShowLess"] : L["ShowAll"])">
+                                            <MudIconButton Size="Size.Small"
+                                                           Color="Color.Primary"
+                                                           Icon="@(_showAllChallenges ? Icons.Material.Filled.ExpandLess : Icons.Material.Filled.ExpandMore)"
+                                                           OnClick="@(() => _showAllChallenges = !_showAllChallenges)"
+                                                           aria-label="@(_showAllChallenges ? L["ShowLess"] : L["ShowAll"])" />
+                                        </MudTooltip>
+                                    }
+                                </MudStack>
+
+                                @if (courseChallenges.Count == 0)
+                                {
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoChallenges"]</MudText>
+                                }
+                                else
+                                {
+                                    <MudStack Spacing="1">
+                                        @foreach (var challenge in GetVisibleChallenges(courseChallenges))
+                                        {
+                                            <div class="pl-list-row">
+                                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                    <MudText Typo="Typo.body2">@challenge.Title</MudText>
+                                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                                                        @FormatChallengeType(challenge.ChallengeType)
+                                                    </MudChip>
+                                                </MudStack>
+                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatChallengePeriod(challenge)</MudText>
+                                                @if (!string.IsNullOrWhiteSpace(challenge.Description))
+                                                {
+                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@challenge.Description</MudText>
+                                                }
+                                                @if (challenge.TargetValue is not null || !string.IsNullOrWhiteSpace(challenge.Unit))
+                                                {
+                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatChallengeTarget(challenge)</MudText>
+                                                }
+                                            </div>
+                                        }
+                                    </MudStack>
+                                }
+                            </section>
+
+                            <section>
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
                                     <MudText Typo="Typo.subtitle2">@L["TrainingPlans"]</MudText>
                                     @if (trainingPlanPublications.Count > 2)
                                     {
@@ -365,6 +412,7 @@
     private bool _isCoursePickerOpen;
     private bool _showAllDates;
     private bool _showAllEvents;
+    private bool _showAllChallenges;
     private bool _showAllTrainingPlans;
     private CoursesSection _activeSection = CoursesSection.Courses;
 
@@ -559,6 +607,19 @@
         return _showAllEvents ? events : events.Take(2);
     }
 
+    private static IEnumerable<CourseChallengeDocument> GetCourseChallenges(CourseDocument course)
+    {
+        return course.Challenges
+            .Where(challenge => challenge.IsPublished && challenge.EndsAt.Date >= DateTime.Today)
+            .OrderBy(challenge => challenge.StartsAt)
+            .ThenBy(challenge => challenge.Title);
+    }
+
+    private IEnumerable<CourseChallengeDocument> GetVisibleChallenges(IReadOnlyList<CourseChallengeDocument> challenges)
+    {
+        return _showAllChallenges ? challenges : challenges.Take(2);
+    }
+
     private IEnumerable<CourseTrainingPlanPublicationDocument> GetVisibleTrainingPlans(
         IReadOnlyList<CourseTrainingPlanPublicationDocument> publications)
     {
@@ -615,6 +676,7 @@
     {
         _showAllDates = false;
         _showAllEvents = false;
+        _showAllChallenges = false;
         _showAllTrainingPlans = false;
     }
 
@@ -648,6 +710,33 @@
     private string FormatEventDate(CourseEventDocument courseEvent)
     {
         return string.Format(L["EventDate"], courseEvent.StartsAt, courseEvent.EndsAt);
+    }
+
+    private string FormatChallengeType(string? challengeType)
+    {
+        if (string.Equals(challengeType, CourseChallengeTypes.Attendance, StringComparison.OrdinalIgnoreCase))
+            return L["ChallengeType_Attendance"];
+
+        if (string.Equals(challengeType, CourseChallengeTypes.Distance, StringComparison.OrdinalIgnoreCase))
+            return L["ChallengeType_Distance"];
+
+        return L["ChallengeType_General"];
+    }
+
+    private string FormatChallengePeriod(CourseChallengeDocument challenge)
+    {
+        return string.Format(L["ChallengePeriod"], challenge.StartsAt, challenge.EndsAt);
+    }
+
+    private string FormatChallengeTarget(CourseChallengeDocument challenge)
+    {
+        if (challenge.TargetValue is null)
+            return challenge.Unit;
+
+        if (string.IsNullOrWhiteSpace(challenge.Unit))
+            return string.Format(L["ChallengeTargetValue"], challenge.TargetValue);
+
+        return string.Format(L["ChallengeTargetWithUnit"], challenge.TargetValue, challenge.Unit);
     }
 
     private string FormatUpcomingDate(CourseDateDocument? date)

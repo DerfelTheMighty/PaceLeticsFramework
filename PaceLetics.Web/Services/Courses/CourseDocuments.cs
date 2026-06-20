@@ -29,6 +29,13 @@ public static class CourseEventTypes
     public const string RunningAnalysis = "runningAnalysis";
 }
 
+public static class CourseChallengeTypes
+{
+    public const string General = "general";
+    public const string Attendance = "attendance";
+    public const string Distance = "distance";
+}
+
 public enum CourseLevel
 {
     Level0 = 0,
@@ -86,6 +93,8 @@ public sealed class CourseDocument : IQueryItem
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string Level { get; set; } = string.Empty;
+    public string OrganizationId { get; set; } = string.Empty;
+    public string TeamId { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string CreatedByTrainerUserId { get; set; } = string.Empty;
@@ -94,6 +103,7 @@ public sealed class CourseDocument : IQueryItem
     public List<CourseDateDocument> Dates { get; set; } = new();
     public List<CourseTrainerDocument> Trainers { get; set; } = new();
     public List<CourseTrainingPlanPublicationDocument> TrainingPlanPublications { get; set; } = new();
+    public List<CourseChallengeDocument> Challenges { get; set; } = new();
 }
 
 public sealed class CourseCreateRequest
@@ -101,8 +111,22 @@ public sealed class CourseCreateRequest
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public CourseLevel Level { get; set; } = CourseLevel.Level1;
+    public string OrganizationId { get; set; } = string.Empty;
+    public string TeamId { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public bool IsPublished { get; set; } = true;
+}
+
+public sealed class CourseChallengeCreateRequest
+{
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string ChallengeType { get; set; } = CourseChallengeTypes.General;
+    public DateTime StartsAt { get; set; }
+    public DateTime EndsAt { get; set; }
+    public decimal? TargetValue { get; set; }
+    public string Unit { get; set; } = string.Empty;
     public bool IsPublished { get; set; } = true;
 }
 
@@ -161,6 +185,21 @@ public sealed class CourseTrainingPlanPublicationDocument
 
         return Target.NormalizeCopy();
     }
+}
+
+public sealed class CourseChallengeDocument
+{
+    public string Id { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string ChallengeType { get; set; } = CourseChallengeTypes.General;
+    public DateTime StartsAt { get; set; }
+    public DateTime EndsAt { get; set; }
+    public decimal? TargetValue { get; set; }
+    public string Unit { get; set; } = string.Empty;
+    public string CreatedByUserId { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public bool IsPublished { get; set; } = true;
 }
 
 public sealed class CourseEnrollmentDocument : IQueryItem

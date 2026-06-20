@@ -433,6 +433,92 @@
                                             </MudStack>
                                         </MudStack>
                                     </MudTabPanel>
+
+                                    <MudTabPanel Text="@L["Challenges"]">
+                                        <MudStack Spacing="2" Class="pt-2">
+                                            @if (course.Challenges.Count == 0)
+                                            {
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoChallenges"]</MudText>
+                                            }
+                                            else
+                                            {
+                                                @foreach (var challenge in course.Challenges.OrderBy(challenge => challenge.StartsAt))
+                                                {
+                                                    <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
+                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                                            <MudStack Spacing="0" Style="min-width:0;">
+                                                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                                    <MudText Typo="Typo.body2">@challenge.Title</MudText>
+                                                                    <MudChip T="string"
+                                                                             Size="Size.Small"
+                                                                             Color="@GetChallengeTypeColor(challenge.ChallengeType)"
+                                                                             Variant="Variant.Outlined">
+                                                                        @FormatChallengeType(challenge.ChallengeType)
+                                                                    </MudChip>
+                                                                </MudStack>
+                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatChallengePeriod(challenge)</MudText>
+                                                                @if (!string.IsNullOrWhiteSpace(challenge.Description))
+                                                                {
+                                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@challenge.Description</MudText>
+                                                                }
+                                                                @if (challenge.TargetValue is not null || !string.IsNullOrWhiteSpace(challenge.Unit))
+                                                                {
+                                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatChallengeTarget(challenge)</MudText>
+                                                                }
+                                                            </MudStack>
+                                                            <MudTooltip Text="@L["Delete"]">
+                                                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                               Color="Color.Default"
+                                                                               OnClick="@(() => RemoveChallengeAsync(course, challenge))"
+                                                                               aria-label="@L["Delete"]" />
+                                                            </MudTooltip>
+                                                        </MudStack>
+                                                    </MudPaper>
+                                                }
+                                            }
+
+                                            <MudDivider Class="my-2" />
+                                            <MudGrid Spacing="2">
+                                                <MudItem xs="12" md="6">
+                                                    <MudTextField Label="@L["ChallengeTitle"]" @bind-Value="_challengeTitle" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudSelect T="string"
+                                                               Label="@L["ChallengeType"]"
+                                                               @bind-Value="_challengeType"
+                                                               Variant="Variant.Outlined">
+                                                        <MudSelectItem T="string" Value="@CourseChallengeTypes.General">@L["ChallengeType_General"]</MudSelectItem>
+                                                        <MudSelectItem T="string" Value="@CourseChallengeTypes.Attendance">@L["ChallengeType_Attendance"]</MudSelectItem>
+                                                        <MudSelectItem T="string" Value="@CourseChallengeTypes.Distance">@L["ChallengeType_Distance"]</MudSelectItem>
+                                                    </MudSelect>
+                                                </MudItem>
+                                                <MudItem xs="12">
+                                                    <MudTextField Label="@L["Description"]" @bind-Value="_challengeDescription" Variant="Variant.Outlined" Lines="2" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudDatePicker Label="@L["Start"]" Date="_challengeStartDate" DateChanged="@(date => _challengeStartDate = date)" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudDatePicker Label="@L["End"]" Date="_challengeEndDate" DateChanged="@(date => _challengeEndDate = date)" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudNumericField T="decimal?" Label="@L["ChallengeTarget"]" @bind-Value="_challengeTargetValue" Variant="Variant.Outlined" Min="0" />
+                                                </MudItem>
+                                                <MudItem xs="12" md="6">
+                                                    <MudTextField Label="@L["ChallengeUnit"]" @bind-Value="_challengeUnit" Variant="Variant.Outlined" />
+                                                </MudItem>
+                                            </MudGrid>
+                                            <MudStack Row="true" Justify="Justify.FlexEnd">
+                                                <MudTooltip Text="@L["AddChallenge"]">
+                                                    <MudIconButton Color="Color.Primary"
+                                                                   Variant="Variant.Filled"
+                                                                   Icon="@Icons.Material.Filled.Flag"
+                                                                   OnClick="@(() => CreateChallengeAsync(course))"
+                                                                   aria-label="@L["AddChallenge"]" />
+                                                </MudTooltip>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudTabPanel>
                                 </MudTabs>
                             </MudStack>
                         }
@@ -479,6 +565,14 @@
     private string _eventEndTime = "19:30";
     private int? _eventCapacity;
     private DateTime? _eventRegistrationDeadline;
+
+    private string _challengeTitle = string.Empty;
+    private string _challengeDescription = string.Empty;
+    private string _challengeType = CourseChallengeTypes.General;
+    private DateTime? _challengeStartDate = DateTime.Today;
+    private DateTime? _challengeEndDate = DateTime.Today.AddDays(14);
+    private decimal? _challengeTargetValue;
+    private string _challengeUnit = string.Empty;
 
     private CourseDocument? SelectedCourse =>
         _courses.FirstOrDefault(course => course.Id == _selectedCourseId)
@@ -567,6 +661,7 @@
         _selectedCourseId = courseId;
         _selectedTrainerToAddId = null;
         _selectedTrainingPlanId = null;
+        ResetChallengeForm();
         _eventParticipants.Clear();
         _openParticipantLists.Clear();
         return LoadSelectedCourseEventsAsync();
@@ -854,6 +949,53 @@
         }
     }
 
+    private async Task CreateChallengeAsync(CourseDocument course)
+    {
+        try
+        {
+            await CourseService.CreateChallengeAsync(
+                course.Id,
+                new CourseChallengeCreateRequest
+                {
+                    Title = _challengeTitle,
+                    Description = _challengeDescription,
+                    ChallengeType = _challengeType,
+                    StartsAt = _challengeStartDate ?? DateTime.Today,
+                    EndsAt = _challengeEndDate ?? DateTime.Today,
+                    TargetValue = _challengeTargetValue,
+                    Unit = _challengeUnit,
+                    IsPublished = true
+                },
+                _userId ?? string.Empty);
+
+            Snackbar.Add(L["AddChallengeSuccess"], Severity.Success);
+            ResetChallengeForm();
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task RemoveChallengeAsync(CourseDocument course, CourseChallengeDocument challenge)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemoveChallengeConfirm"], challenge.Title));
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await CourseService.RemoveChallengeAsync(course.Id, challenge.Id, _userId ?? string.Empty);
+            Snackbar.Add(L["RemoveChallengeSuccess"], Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
     private void ResetCreateForm()
     {
         _courseName = string.Empty;
@@ -884,6 +1026,17 @@
         _eventEndTime = "19:30";
         _eventCapacity = null;
         _eventRegistrationDeadline = null;
+    }
+
+    private void ResetChallengeForm()
+    {
+        _challengeTitle = string.Empty;
+        _challengeDescription = string.Empty;
+        _challengeType = CourseChallengeTypes.General;
+        _challengeStartDate = DateTime.Today;
+        _challengeEndDate = DateTime.Today.AddDays(14);
+        _challengeTargetValue = null;
+        _challengeUnit = string.Empty;
     }
 
     private bool IsCreator(CourseDocument course)
@@ -918,6 +1071,44 @@
         return string.Equals(eventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase)
             ? Color.Primary
             : Color.Default;
+    }
+
+    private string FormatChallengeType(string? challengeType)
+    {
+        if (string.Equals(challengeType, CourseChallengeTypes.Attendance, StringComparison.OrdinalIgnoreCase))
+            return L["ChallengeType_Attendance"];
+
+        if (string.Equals(challengeType, CourseChallengeTypes.Distance, StringComparison.OrdinalIgnoreCase))
+            return L["ChallengeType_Distance"];
+
+        return L["ChallengeType_General"];
+    }
+
+    private Color GetChallengeTypeColor(string? challengeType)
+    {
+        if (string.Equals(challengeType, CourseChallengeTypes.Attendance, StringComparison.OrdinalIgnoreCase))
+            return Color.Success;
+
+        if (string.Equals(challengeType, CourseChallengeTypes.Distance, StringComparison.OrdinalIgnoreCase))
+            return Color.Info;
+
+        return Color.Default;
+    }
+
+    private string FormatChallengePeriod(CourseChallengeDocument challenge)
+    {
+        return string.Format(L["ChallengePeriod"], challenge.StartsAt, challenge.EndsAt);
+    }
+
+    private string FormatChallengeTarget(CourseChallengeDocument challenge)
+    {
+        if (challenge.TargetValue is null)
+            return challenge.Unit;
+
+        if (string.IsNullOrWhiteSpace(challenge.Unit))
+            return string.Format(L["ChallengeTargetValue"], challenge.TargetValue);
+
+        return string.Format(L["ChallengeTargetWithUnit"], challenge.TargetValue, challenge.Unit);
     }
 
     private static bool IsRunningAnalysisEvent(CourseEventDocument courseEvent)
