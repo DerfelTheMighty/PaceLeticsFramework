@@ -1,8 +1,6 @@
 using System.Globalization;
 using Microsoft.Extensions.Localization;
 using PaceLetics.RunningAnalysisModule.Components;
-using PaceLetics.TrainingModule.CodeBase.Workouts.Enums;
-using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.Web.Pages.Athletes;
 using PaceLetics.Web.Services;
@@ -19,29 +17,15 @@ public sealed class AcademyServiceTests
 
         var articles = service.GetArticles();
 
-        Assert.Contains(articles, article => article.Id == "mental-resource-running");
-        Assert.Contains(articles, article => article.Id == "mental-resource-beginner-risk");
+        var mentalResource = Assert.Single(articles, article => article.Id == "mental-resource-running");
+        Assert.Equal(AcademyArticleCategories.Fundamentals, mentalResource.Category);
+        Assert.Equal("Academy mental resource", mentalResource.SourceModule);
+        Assert.Contains(mentalResource.BodyBlocks, block => block.Contains("Novice runners"));
+        Assert.Contains(mentalResource.References, reference => reference.Url.Contains("ijerph17218059"));
+        Assert.Contains(mentalResource.References, reference => reference.Url.Contains("jsams.2018.06.003"));
         Assert.Contains(articles, article => article.Id == "running-analysis-intervention-philosophy");
         Assert.Contains(articles, article => article.Id == "running-analysis-side-effects");
-        Assert.Contains(articles, article => article.References.Any(reference => reference.Url.Contains("ijerph17218059")));
         Assert.Contains(articles, article => article.References.Any(reference => reference.Url.Contains("31028658")));
-    }
-
-    [Fact]
-    public void GetArticles_SeedsWorkoutAndExerciseKnowledgeFromCatalog()
-    {
-        var service = CreateService();
-
-        var articles = service.GetArticles();
-
-        var workout = Assert.Single(articles, article => article.Id == "workout-stabi-handout");
-        Assert.Equal(AcademyArticleCategories.Workouts, workout.Category);
-        Assert.Contains("Easy", workout.Tags);
-        Assert.Contains(workout.BodyBlocks, block => block.Contains("Glute Bridge Easy"));
-
-        var exercise = Assert.Single(articles, article => article.Id == "exercise-glute-bridge");
-        Assert.Contains("Easy", exercise.Tags);
-        Assert.Contains(exercise.BodyBlocks, block => block.Contains("Hold the bridge"));
     }
 
     [Fact]
@@ -68,8 +52,8 @@ public sealed class AcademyServiceTests
 
         Assert.Contains(AcademyArticleCategories.Fundamentals, categories);
         Assert.Contains(AcademyArticleCategories.RunningAnalysis, categories);
-        Assert.Contains(AcademyArticleCategories.Workouts, categories);
         Assert.Contains(AcademyArticleCategories.TrainingPlans, categories);
+        Assert.DoesNotContain("workouts", categories);
     }
 
     private static AcademyService CreateService()
@@ -77,39 +61,7 @@ public sealed class AcademyServiceTests
         return new AcademyService(
             new DictionaryLocalizer<Dashboard>(DashboardTexts),
             new DictionaryLocalizer<RunningAnalysisResources>(RunningAnalysisTexts),
-            CreateWorkoutCatalog(),
             new FakeTrainingPlanService());
-    }
-
-    private static WorkoutCatalogDocument CreateWorkoutCatalog()
-    {
-        return new WorkoutCatalogDocument
-        {
-            SchemaVersion = 1,
-            Exercises =
-            {
-                new ExerciseDefinition
-                {
-                    Id = "Glute Bridge Easy",
-                    Name = "Glute Bridge",
-                    Description = "Hip extension and stability.",
-                    Level = Level.Easy,
-                    Execution = new List<string> { "Set your feet.", "Hold the bridge." },
-                    Tags = new List<string> { "Stability" }
-                }
-            },
-            Workouts =
-            {
-                new WorkoutDefinition
-                {
-                    Id = "Stabi Handout Easy",
-                    Name = "Stabi Handout",
-                    Description = "Core stability base program.",
-                    Level = Level.Easy,
-                    Exercises = new List<string> { "Glute Bridge Easy" }
-                }
-            }
-        };
     }
 
     private static TrainingPlan CreateTrainingPlan()

@@ -6,7 +6,6 @@ public static class AcademyArticleCategories
 {
     public const string Fundamentals = "fundamentals";
     public const string RunningAnalysis = "runningAnalysis";
-    public const string Workouts = "workouts";
     public const string TrainingPlans = "trainingPlans";
 }
 

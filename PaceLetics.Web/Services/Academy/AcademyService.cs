@@ -11,18 +11,15 @@ public sealed partial class AcademyService : IAcademyService
 {
     private readonly IStringLocalizer<Dashboard> _dashboardLocalizer;
     private readonly IStringLocalizer<RunningAnalysisResources> _runningAnalysisLocalizer;
-    private readonly WorkoutCatalogDocument _workoutCatalog;
     private readonly ITrainingPlanService _trainingPlanService;
 
     public AcademyService(
         IStringLocalizer<Dashboard> dashboardLocalizer,
         IStringLocalizer<RunningAnalysisResources> runningAnalysisLocalizer,
-        WorkoutCatalogDocument workoutCatalog,
         ITrainingPlanService trainingPlanService)
     {
         _dashboardLocalizer = dashboardLocalizer;
         _runningAnalysisLocalizer = runningAnalysisLocalizer;
-        _workoutCatalog = workoutCatalog;
         _trainingPlanService = trainingPlanService;
     }
 
@@ -51,9 +48,6 @@ public sealed partial class AcademyService : IAcademyService
         foreach (var article in BuildRunningAnalysisArticles())
             yield return article;
 
-        foreach (var article in BuildWorkoutArticles())
-            yield return article;
-
         foreach (var article in BuildTrainingPlanArticles())
             yield return article;
     }
@@ -61,7 +55,6 @@ public sealed partial class AcademyService : IAcademyService
     private IEnumerable<AcademyArticle> BuildMentalResourceArticles()
     {
         var references = BuildMentalResourceReferences();
-        var commonTags = new[] { "Mental resource", "Sustainability", "Injury prevention" };
         var lead = DashboardText("MentalResource_Lead", "Running can become a psychological resource when load, recovery, and routine fit together.");
 
         yield return new AcademyArticle
@@ -70,44 +63,17 @@ public sealed partial class AcademyService : IAcademyService
             Title = DashboardText("MentalResource_Title", "Why running is more than training"),
             Summary = lead,
             Category = AcademyArticleCategories.Fundamentals,
-            SourceModule = "Dashboard mental resource",
-            Tags = commonTags,
+            SourceModule = "Academy mental resource",
+            Tags = new[] { "Mental resource", "Sustainability", "Injury prevention", "Beginners", "Drop-out" },
             BodyBlocks = Blocks(
                 lead,
                 DashboardText("MentalResource_StepEffectText", "Regular recreational running can support mood and mental health."),
-                DashboardText("MentalResource_StepAppText", "PaceLetics doses load and makes routines understandable.")),
-            References = references.Take(2).ToList(),
-            SortOrder = 10
-        };
-
-        yield return new AcademyArticle
-        {
-            Id = "mental-resource-fragile-access",
-            Title = DashboardText("MentalResource_StepFragileTitle", "Not available without limits"),
-            Summary = DashboardText("MentalResource_StepFragileText", "Running as a resource depends on load tolerance, recovery, and everyday constraints."),
-            Category = AcademyArticleCategories.Fundamentals,
-            SourceModule = "Dashboard mental resource",
-            Tags = commonTags,
-            BodyBlocks = Blocks(
                 DashboardText("MentalResource_StepFragileText", "Running as a resource depends on load tolerance, recovery, and everyday constraints."),
-                DashboardText("MentalResource_StepConsequenceText", "Sustainable programs cannot treat drop-out as a side issue.")),
-            References = references.Skip(2).Take(3).ToList(),
-            SortOrder = 11
-        };
-
-        yield return new AcademyArticle
-        {
-            Id = "mental-resource-beginner-risk",
-            Title = DashboardText("MentalResource_StepRiskTitle", "Where risk is higher for beginners"),
-            Summary = DashboardText("MentalResource_StepRiskText", "Novice runners show higher reported injury incidence and early drop-out in beginner programs."),
-            Category = AcademyArticleCategories.Fundamentals,
-            SourceModule = "Dashboard mental resource",
-            Tags = new[] { "Beginners", "Drop-out", "Injury risk" },
-            BodyBlocks = Blocks(
                 DashboardText("MentalResource_StepRiskText", "Novice runners show higher reported injury incidence and early drop-out in beginner programs."),
-                DashboardText("MentalResource_StepConsequenceText", "Sustainable running programs must protect access to running as an everyday resource.")),
-            References = references.Skip(5).Take(3).ToList(),
-            SortOrder = 12
+                DashboardText("MentalResource_StepConsequenceText", "Sustainable programs cannot treat drop-out as a side issue."),
+                DashboardText("MentalResource_StepAppText", "PaceLetics doses load and makes routines understandable.")),
+            References = references,
+            SortOrder = 10
         };
     }
 
@@ -165,72 +131,6 @@ public sealed partial class AcademyService : IAcademyService
             References = references,
             SortOrder = 32
         };
-    }
-
-    private IEnumerable<AcademyArticle> BuildWorkoutArticles()
-    {
-        foreach (var workoutGroup in _workoutCatalog.Workouts
-            .Where(workout => !string.IsNullOrWhiteSpace(workout.Name))
-            .GroupBy(workout => workout.Name!.Trim(), StringComparer.OrdinalIgnoreCase))
-        {
-            var variants = workoutGroup.OrderBy(workout => workout.Level).ToList();
-            var representative = variants.First();
-            var exerciseNames = variants
-                .SelectMany(workout => workout.Exercises)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .Take(10)
-                .ToList();
-
-            yield return new AcademyArticle
-            {
-                Id = $"workout-{Slug(workoutGroup.Key)}",
-                Title = workoutGroup.Key,
-                Summary = representative.Description ?? string.Empty,
-                Category = AcademyArticleCategories.Workouts,
-                SourceModule = "Workout catalog",
-                Tags = NormalizeTags(
-                    variants.SelectMany(workout => workout.Tags)
-                        .Concat(variants.Select(workout => workout.Level.ToString()))
-                        .Concat(new[] { "Workout" })),
-                BodyBlocks = Blocks(
-                    representative.Description ?? string.Empty,
-                    $"Level: {string.Join(", ", variants.Select(workout => workout.Level).Distinct())}",
-                    $"Exercises: {string.Join(", ", exerciseNames)}"),
-                References = NormalizeReferences(variants.SelectMany(workout => workout.ReadMore), variants.Select(workout => workout.Source)),
-                SortOrder = 50
-            };
-        }
-
-        foreach (var exerciseGroup in _workoutCatalog.Exercises
-            .Where(exercise => !string.IsNullOrWhiteSpace(exercise.Name))
-            .GroupBy(exercise => exercise.Name.Trim(), StringComparer.OrdinalIgnoreCase))
-        {
-            var variants = exerciseGroup.OrderBy(exercise => exercise.Level).ToList();
-            var representative = variants.First();
-            var execution = representative.Execution
-                .Where(step => !string.IsNullOrWhiteSpace(step))
-                .Take(4)
-                .ToList();
-
-            yield return new AcademyArticle
-            {
-                Id = $"exercise-{Slug(exerciseGroup.Key)}",
-                Title = exerciseGroup.Key,
-                Summary = representative.Description,
-                Category = AcademyArticleCategories.Workouts,
-                SourceModule = "Workout exercise catalog",
-                Tags = NormalizeTags(
-                    variants.SelectMany(exercise => exercise.Tags)
-                        .Concat(variants.Select(exercise => exercise.Level.ToString()))
-                        .Concat(new[] { "Exercise" })),
-                BodyBlocks = Blocks(
-                    representative.Description,
-                    execution.Count == 0 ? string.Empty : string.Join(" ", execution),
-                    $"Progressions: {string.Join(", ", variants.Select(exercise => exercise.Level).Distinct())}"),
-                References = NormalizeReferences(variants.SelectMany(exercise => exercise.ReadMore), variants.Select(exercise => exercise.Source)),
-                SortOrder = 70
-            };
-        }
     }
 
     private IEnumerable<AcademyArticle> BuildTrainingPlanArticles()
@@ -391,32 +291,6 @@ public sealed partial class AcademyService : IAcademyService
             .Where(tag => !string.IsNullOrWhiteSpace(tag))
             .Select(tag => tag!.Trim())
             .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToList();
-    }
-
-    private static IReadOnlyList<ContentReference> NormalizeReferences(
-        IEnumerable<ContentReference> readMore,
-        IEnumerable<string> sourceValues)
-    {
-        var references = readMore
-            .Where(reference => reference is not null)
-            .Select(reference => reference.NormalizeCopy())
-            .Where(reference => !reference.IsEmpty)
-            .ToList();
-
-        foreach (var source in sourceValues.Where(source => !string.IsNullOrWhiteSpace(source)))
-        {
-            references.Add(new ContentReference
-            {
-                Title = source.Trim(),
-                Url = Uri.TryCreate(source.Trim(), UriKind.Absolute, out _) ? source.Trim() : string.Empty,
-                SourceType = "source"
-            });
-        }
-
-        return references
-            .GroupBy(reference => $"{reference.Title}|{reference.Url}", StringComparer.OrdinalIgnoreCase)
-            .Select(group => group.First())
             .ToList();
     }
 
