@@ -31,4 +31,23 @@
   <data name="RemoveSuccess" xml:space="preserve"><value>Mate sharing removed.</value></data>
   <data name="ShareError" xml:space="preserve"><value>Sharing failed</value></data>
   <data name="RemoveError" xml:space="preserve"><value>Removing failed</value></data>
+  <data name="PrivacyTitle" xml:space="preserve"><value>Your Mate sharing</value></data>
+  <data name="PrivacyBody" xml:space="preserve"><value>Mate shows shared sessions only within the matching course. Your public name, session, date, location, distance, and pace can be visible; nothing is posted to a feed or social channel.</value></data>
+  <data name="SharedForMate" xml:space="preserve"><value>Shared for Mate</value></data>
+  <data name="NotShared" xml:space="preserve"><value>Not shared</value></data>
+  <data name="ShareCta" xml:space="preserve"><value>Share for Mate</value></data>
+  <data name="ShareTooltip" xml:space="preserve"><value>Make this session visible to matching course participants</value></data>
+  <data name="RemoveTooltip" xml:space="preserve"><value>Remove Mate sharing</value></data>
+  <data name="SharedVisibility" xml:space="preserve"><value>Visible after sharing: {0}</value></data>
+  <data name="WhyMatch" xml:space="preserve"><value>Why it fits</value></data>
+  <data name="ReasonSameCourse" xml:space="preserve"><value>Same course</value></data>
+  <data name="ReasonSamePaceZone" xml:space="preserve"><value>Same pace zone</value></data>
+  <data name="ReasonPaceVeryClose" xml:space="preserve"><value>Pace almost equal ({0} s/km)</value></data>
+  <data name="ReasonPaceClose" xml:space="preserve"><value>Pace close ({0} s/km)</value></data>
+  <data name="ReasonDate" xml:space="preserve"><value>{0} day(s) apart</value></data>
+  <data name="ReasonDistance" xml:space="preserve"><value>{0} distance gap</value></data>
+  <data name="QualityStrong" xml:space="preserve"><value>Strong fit</value></data>
+  <data name="QualityGood" xml:space="preserve"><value>Good fit</value></data>
+  <data name="QualityPossible" xml:space="preserve"><value>Possible fit</value></data>
+  <data name="VisibleDisplayName" xml:space="preserve"><value>public name</value></data>
 </root>
