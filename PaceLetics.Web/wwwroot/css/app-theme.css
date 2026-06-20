@@ -152,7 +152,7 @@
     z-index: 0;
     opacity: 0.56;
     background:
-        url("../images/theme/cote-dazur-background.png") center center / cover no-repeat;
+        url("../images/theme/cote-dazur-background.jpg") center center / cover no-repeat;
     filter: saturate(0.92) contrast(0.94) brightness(1.04);
 }
 
@@ -252,7 +252,7 @@
     z-index: 0;
     opacity: 0.58;
     background:
-        url("../images/theme/tropical-pool-background.png") center center / cover no-repeat;
+        url("../images/theme/tropical-pool-background.jpg") center center / cover no-repeat;
     filter: saturate(0.92) contrast(0.92) brightness(1.06);
 }
 
