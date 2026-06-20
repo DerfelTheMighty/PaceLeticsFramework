@@ -7,25 +7,50 @@ namespace PaceLetics.Web.Services.Workouts;
 
 public sealed class WorkoutCatalogManagementService
 {
-    private readonly IWorkoutCatalogRepository _repository;
+    private readonly IWorkoutCatalogStore _store;
+    private readonly IWorkoutCatalogValidator _validator;
     private readonly WorkoutCatalogDocument _catalog;
-    private readonly object _gate = new();
+    private readonly SemaphoreSlim _gate = new(1, 1);
+    private bool _isLoaded;
 
     public WorkoutCatalogManagementService(
-        IWorkoutCatalogRepository repository,
+        IWorkoutCatalogStore store,
+        IWorkoutCatalogValidator validator,
         WorkoutCatalogDocument catalog)
     {
-        _repository = repository;
+        _store = store;
+        _validator = validator;
         _catalog = catalog;
     }
 
     public WorkoutCatalogDocument Catalog => _catalog;
 
-    public Task UpsertExerciseAsync(ExerciseDefinition exercise, string? trainerUserId)
+    public async Task EnsureLoadedAsync()
+    {
+        await _gate.WaitAsync();
+        try
+        {
+            if (_isLoaded)
+                return;
+
+            var loadedCatalog = await _store.LoadOrSeedAsync(CloneCatalog(_catalog));
+            _validator.NormalizeAndValidate(loadedCatalog);
+            Apply(loadedCatalog);
+            _isLoaded = true;
+        }
+        finally
+        {
+            _gate.Release();
+        }
+    }
+
+    public async Task UpsertExerciseAsync(ExerciseDefinition exercise, string? trainerUserId)
     {
         ArgumentNullException.ThrowIfNull(exercise);
 
-        lock (_gate)
+        await EnsureLoadedAsync();
+        await _gate.WaitAsync();
+        try
         {
             var candidate = CloneCatalog(_catalog);
             var now = DateTime.UtcNow;
@@ -55,17 +80,21 @@ public sealed class WorkoutCatalogManagementService
                 candidate.Exercises.Add(normalized);
             }
 
-            SaveAndApply(candidate);
+            await SaveAndApplyAsync(candidate);
         }
-
-        return Task.CompletedTask;
+        finally
+        {
+            _gate.Release();
+        }
     }
 
-    public Task UpsertWorkoutAsync(WorkoutDefinition workout, string? trainerUserId)
+    public async Task UpsertWorkoutAsync(WorkoutDefinition workout, string? trainerUserId)
     {
         ArgumentNullException.ThrowIfNull(workout);
 
-        lock (_gate)
+        await EnsureLoadedAsync();
+        await _gate.WaitAsync();
+        try
         {
             var candidate = CloneCatalog(_catalog);
             var now = DateTime.UtcNow;
@@ -93,16 +122,24 @@ public sealed class WorkoutCatalogManagementService
                 candidate.Workouts.Add(normalized);
             }
 
-            SaveAndApply(candidate);
+            await SaveAndApplyAsync(candidate);
         }
-
-        return Task.CompletedTask;
+        finally
+        {
+            _gate.Release();
+        }
     }
 
-    private void SaveAndApply(WorkoutCatalogDocument candidate)
+    private async Task SaveAndApplyAsync(WorkoutCatalogDocument candidate)
     {
-        _repository.Save(candidate);
+        _validator.NormalizeAndValidate(candidate);
+        await _store.SaveAsync(candidate);
+        Apply(candidate);
+        _isLoaded = true;
+    }
 
+    private void Apply(WorkoutCatalogDocument candidate)
+    {
         _catalog.SchemaVersion = candidate.SchemaVersion;
         Replace(_catalog.Exercises, candidate.Exercises);
         Replace(_catalog.Workouts, candidate.Workouts);

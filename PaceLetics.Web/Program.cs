@@ -76,7 +76,9 @@ var webRootPath = !string.IsNullOrWhiteSpace(builder.Environment.WebRootPath)
     ? builder.Environment.WebRootPath
     : Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
 var workoutCatalogPath = Path.Combine(webRootPath, "data", "workouts", "catalog.de.json");
-builder.Services.AddSingleton<IWorkoutCatalogRepository>(new JsonWorkoutCatalogRepository(workoutCatalogPath));
+builder.Services.AddSingleton(new JsonWorkoutCatalogRepository(workoutCatalogPath));
+builder.Services.AddSingleton<IWorkoutCatalogRepository>(x => x.GetRequiredService<JsonWorkoutCatalogRepository>());
+builder.Services.AddSingleton<IWorkoutCatalogValidator>(x => x.GetRequiredService<JsonWorkoutCatalogRepository>());
 builder.Services.AddSingleton<WorkoutCatalogDocument>(x => x.GetRequiredService<IWorkoutCatalogRepository>().Load());
 builder.Services.AddSingleton<IExerciseCatalog>(x => new ExerciseCatalog(x.GetRequiredService<WorkoutCatalogDocument>().Exercises));
 builder.Services.AddSingleton<IExerciseFactory, ExerciseFactory>();
@@ -88,7 +90,9 @@ builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 builder.Services.AddScoped<WorkoutAreaViewModel>();
 builder.Services.AddScoped<SelectDifficultyViewModel>();
 builder.Services.AddScoped<WorkoutRoomViewModel>();
+builder.Services.AddSingleton<IWorkoutCatalogStore, CosmosWorkoutCatalogStore>();
 builder.Services.AddSingleton<WorkoutCatalogManagementService>();
+builder.Services.AddHostedService<WorkoutCatalogStartupLoader>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddSingleton(builder.Configuration.GetAthleteDataOptions());
 builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));

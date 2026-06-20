@@ -637,6 +637,19 @@
 
     protected override async Task OnInitializedAsync()
     {
+        try
+        {
+            await CatalogService.EnsureLoadedAsync();
+        }
+        catch (WorkoutCatalogValidationException ex)
+        {
+            Snackbar.Add(string.Join(" ", ex.Errors.Take(3)), Severity.Error);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         _trainerUserId = authState.User.FindFirstValue(ClaimTypes.NameIdentifier);
         EnsureSelection();
