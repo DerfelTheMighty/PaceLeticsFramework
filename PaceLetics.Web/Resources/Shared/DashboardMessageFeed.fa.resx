@@ -17,6 +17,10 @@
   <data name="UpcomingTrainingTomorrow_Body" xml:space="preserve"><value>&quot;{0}&quot; فردا در برنامه تمرینی شماست.</value></data>
   <data name="UpcomingTraining_Body" xml:space="preserve"><value>&quot;{0}&quot; در تاریخ {1:d} در برنامه تمرینی شماست.</value></data>
   <data name="UpcomingTraining_Action" xml:space="preserve"><value>باز کردن برنامه تمرینی</value></data>
+  <data name="TrainingGuardReferenceStale_Title" xml:space="preserve"><value>Training Guard</value></data>
+  <data name="TrainingGuardReferenceStale_Body" xml:space="preserve"><value>&quot;{0}&quot; is coming up on {1:d}, but your assessment run is {2:0} days old. Update it before faster work.</value></data>
+  <data name="TrainingGuardWarmupMissing_Title" xml:space="preserve"><value>Warm-up check</value></data>
+  <data name="TrainingGuardWarmupMissing_Body" xml:space="preserve"><value>&quot;{0}&quot; contains faster work on {1:d}. Add a warm-up before the main set.</value></data>
   <data name="DeleteMessage" xml:space="preserve"><value>حذف پیام</value></data>
   <data name="Severity_Info" xml:space="preserve"><value>اطلاعات</value></data>
   <data name="Severity_Success" xml:space="preserve"><value>باشه</value></data>

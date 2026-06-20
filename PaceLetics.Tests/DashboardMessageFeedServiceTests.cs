@@ -1,3 +1,4 @@
+using PaceLetics.CoreModule.Infrastructure.Constants;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.CoreModule.Infrastructure.Models;
 using PaceLetics.CoreModule.Infrastructure.Services;
@@ -70,12 +71,71 @@ public sealed class DashboardMessageFeedServiceTests
             message => Assert.Equal("upcoming-training-selected-session", message.Id));
     }
 
+    [Fact]
+    public void Build_AddsTrainingGuardMessageWhenKeySessionUsesStaleReference()
+    {
+        var athlete = CreateAthleteWithReferenceRun(Today.AddDays(-181));
+        athlete.SelectedTrainingPlanId = "selected";
+        var plan = CreatePlan(
+            "selected",
+            Today.AddDays(1),
+            "Threshold Session",
+            new[] { new RunningSegment(SegmentType.Dauerlauf, 1000, PaceKeys.Threshold) });
+        var service = CreateService(new[] { plan });
+
+        var messages = service.Build(CreateContext(athlete));
+
+        Assert.Contains(messages, message => message.Id == "reference-run-stale");
+        var guard = Assert.Single(messages, message => message.Id == "training-guard-reference-stale-selected-session");
+        Assert.Equal(Severity.Warning, guard.Severity);
+        Assert.Equal("Threshold Session", guard.BodyArguments[0]);
+        Assert.Equal(181, guard.BodyArguments[2]);
+    }
+
+    [Fact]
+    public void Build_AddsTrainingGuardMessageWhenKeySessionHasNoWarmup()
+    {
+        var athlete = CreateAthleteWithReferenceRun(Today);
+        athlete.SelectedTrainingPlanId = "selected";
+        var plan = CreatePlan(
+            "selected",
+            Today.AddDays(1),
+            "Intervals",
+            new[] { new RunningSegment(SegmentType.Intervall, 400, PaceKeys.Intervall) });
+        var service = CreateService(new[] { plan });
+
+        var messages = service.Build(CreateContext(athlete));
+
+        var guard = Assert.Single(messages, message => message.Id == "training-guard-warmup-missing-selected-session");
+        Assert.Equal(Severity.Info, guard.Severity);
+        Assert.Equal("Intervals", guard.BodyArguments[0]);
+    }
+
+    [Fact]
+    public void Build_DoesNotAddTrainingGuardMessageForEasySessionWithoutWarmup()
+    {
+        var athlete = CreateAthleteWithReferenceRun(Today);
+        athlete.SelectedTrainingPlanId = "selected";
+        var plan = CreatePlan(
+            "selected",
+            Today.AddDays(1),
+            "Easy Session",
+            new[] { new RunningSegment(SegmentType.Dauerlauf, 1000, PaceKeys.Easy) });
+        var service = CreateService(new[] { plan });
+
+        var messages = service.Build(CreateContext(athlete));
+
+        Assert.DoesNotContain(messages, message => message.SourceModule == "TrainingGuard");
+        Assert.Single(messages);
+    }
+
     private static IAthleteMessageFeedService CreateService(IReadOnlyList<TrainingPlan>? plans = null)
     {
         var options = new DashboardMessageFeedOptions();
         return new AthleteMessageFeedService(new IAthleteMessageProvider[]
         {
             new ReferenceRunDashboardMessageProvider(options),
+            new TrainingGuardDashboardMessageProvider(options, new TestTrainingPlanService(plans ?? Array.Empty<TrainingPlan>()), new TrainingGuardEvaluator()),
             new UpcomingTrainingDashboardMessageProvider(options, new TestTrainingPlanService(plans ?? Array.Empty<TrainingPlan>()))
         });
     }
@@ -104,7 +164,11 @@ public sealed class DashboardMessageFeedServiceTests
         };
     }
 
-    private static TrainingPlan CreatePlan(string id, DateTime date, string sessionName)
+    private static TrainingPlan CreatePlan(
+        string id,
+        DateTime date,
+        string sessionName,
+        IReadOnlyList<RunningSegment>? sequence = null)
     {
         return new TrainingPlan(
             id,
@@ -115,22 +179,26 @@ public sealed class DashboardMessageFeedServiceTests
                     $"{id}-session",
                     sessionName,
                     date,
-                    new[] { new TestRunningSession($"{id}-run", sessionName, date) },
+                    new[] { new TestRunningSession($"{id}-run", sessionName, date, sequence) },
                     Array.Empty<WorkoutSessionDefinition>())
             });
     }
 
     private sealed class TestRunningSession : RunningSession
     {
-        public TestRunningSession(string id, string name, DateTime date)
+        public TestRunningSession(
+            string id,
+            string name,
+            DateTime date,
+            IReadOnlyList<RunningSegment>? sequence = null)
             : base(id, name, date, null, null)
         {
+            Sequence = sequence ?? new[] { new RunningSegment(SegmentType.Dauerlauf, 1000) };
         }
 
         public override int TotalDistance => 1000;
 
-        public override IReadOnlyList<RunningSegment> Sequence { get; } =
-            new[] { new RunningSegment(SegmentType.Dauerlauf, 1000) };
+        public override IReadOnlyList<RunningSegment> Sequence { get; }
     }
 
     private sealed class TestTrainingPlanService : ITrainingPlanService
