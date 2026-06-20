@@ -101,7 +101,15 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
 
         var drive = CreateFolderManagementDriveService();
         await EnsureAnyoneWithLinkCanReadAsync(drive, userFolder.FolderId, cancellationToken);
-        await GrantAccessAsync(drive, userFolder, userEmail, role: "reader", cancellationToken);
+        try
+        {
+            await GrantAccessAsync(drive, userFolder, userEmail, role: "reader", cancellationToken);
+        }
+        catch (Exception ex) when (IsNonGoogleAccountSharingException(ex))
+        {
+            // Link access was already granted above. The user-specific grant is optional
+            // and Google rejects it for email addresses without an associated Google account.
+        }
     }
 
     public async Task<DriveFolderReference> EnsureChildFolderAsync(
@@ -750,5 +758,22 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var message = exception?.Message ?? string.Empty;
         return message.Contains("Service Accounts do not have storage quota", StringComparison.OrdinalIgnoreCase)
             || message.Contains("service account has no storage quota", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsNonGoogleAccountSharingException(Exception exception)
+    {
+        for (var current = exception; current is not null; current = current.InnerException)
+        {
+            var message = current.Message;
+            if (message.Contains("not a Google account", StringComparison.OrdinalIgnoreCase)
+                || message.Contains("without a Google account", StringComparison.OrdinalIgnoreCase)
+                || message.Contains("no Google account associated", StringComparison.OrdinalIgnoreCase)
+                || message.Contains("without an associated Google account", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
