@@ -45,4 +45,5 @@
   <data name="Nav_Workouts" xml:space="preserve"><value>Workouts</value></data>
   <data name="Nav_Profiles" xml:space="preserve"><value>Profile</value></data>
   <data name="Nav_About" xml:space="preserve"><value>About</value></data>
+  <data name="Nav_TrainerWorkoutCatalog" xml:space="preserve"><value>Workout-Katalog</value></data>
 </root>

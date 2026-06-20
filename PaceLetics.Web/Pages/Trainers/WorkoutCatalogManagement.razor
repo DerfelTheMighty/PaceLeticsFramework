@@ -1,0 +1,800 @@
+@page "/Trainers/workout-catalog"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Enums
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Models
+@inject WorkoutCatalogDocument Catalog
+@inject IStringLocalizer<WorkoutCatalogManagement> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Large">
+    <MudStack Spacing="3">
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
+
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["Exercises"]</MudText>
+                    <MudText Typo="Typo.h5">@Catalog.Exercises.Count</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["Workouts"]</MudText>
+                    <MudText Typo="Typo.h5">@Catalog.Workouts.Count</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["ReferencedItems"]</MudText>
+                    <MudText Typo="Typo.h5">@ReferencedItemCount</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetadataOpen"]</MudText>
+                    <MudText Typo="Typo.h5" Color="@GetMetadataOpenColor()">@MetadataOpenCount</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        <MudPaper Elevation="1" Class="pa-4">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                    <MudButton Size="Size.Small"
+                               Variant="@GetSectionVariant(CatalogSection.Exercises)"
+                               Color="@GetSectionColor(CatalogSection.Exercises)"
+                               StartIcon="@Icons.Material.Filled.FitnessCenter"
+                               OnClick="@(() => SelectSection(CatalogSection.Exercises))">
+                        @L["Exercises"]
+                    </MudButton>
+                    <MudButton Size="Size.Small"
+                               Variant="@GetSectionVariant(CatalogSection.Workouts)"
+                               Color="@GetSectionColor(CatalogSection.Workouts)"
+                               StartIcon="@Icons.Material.Filled.ViewList"
+                               OnClick="@(() => SelectSection(CatalogSection.Workouts))">
+                        @L["Workouts"]
+                    </MudButton>
+                    <MudButton Size="Size.Small"
+                               Variant="@(_missingOnly ? Variant.Filled : Variant.Outlined)"
+                               Color="@(_missingOnly ? Color.Warning : Color.Default)"
+                               StartIcon="@Icons.Material.Filled.FilterAlt"
+                               OnClick="ToggleMissingFilter">
+                        @GetMissingFilterText()
+                    </MudButton>
+                </MudStack>
+
+                <MudTextField T="string"
+                              Label="@L["Search"]"
+                              Value="_search"
+                              ValueChanged="OnSearchChanged"
+                              Immediate="true"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Style="min-width:240px; flex:1 1 320px;" />
+            </MudStack>
+        </MudPaper>
+
+        <MudGrid Spacing="3">
+            <MudItem xs="12" md="7">
+                <MudStack Spacing="2">
+                    @if (_section == CatalogSection.Exercises)
+                    {
+                        var exercises = FilteredExercises;
+                        if (exercises.Count == 0)
+                        {
+                            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["EmptyResults"]</MudAlert>
+                        }
+                        else
+                        {
+                            @foreach (var exercise in exercises)
+                            {
+                                var issues = GetIssueKeys(exercise);
+                                <MudPaper Elevation="1"
+                                          Class="pa-3"
+                                          Style="@GetListItemStyle(IsSelected(exercise))"
+                                          @onclick="@(() => SelectExercise(exercise))">
+                                    <MudStack Spacing="2">
+                                        <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                            <MudStack Spacing="0" Style="min-width:0; flex:1 1 260px;">
+                                                <MudText Typo="Typo.subtitle1">@exercise.Name</MudText>
+                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@exercise.Id</MudText>
+                                            </MudStack>
+
+                                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                                                    @FormatLevel(exercise.Level)
+                                                </MudChip>
+                                                <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                                                    @FormatDuration(exercise.Duration)
+                                                </MudChip>
+                                                <MudChip T="string" Size="Size.Small" Color="@GetIssueColor(issues)" Variant="Variant.Outlined">
+                                                    @GetIssueSummary(issues)
+                                                </MudChip>
+                                            </MudStack>
+                                        </MudStack>
+
+                                        @if (exercise.Tags.Count > 0)
+                                        {
+                                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                @foreach (var tag in exercise.Tags)
+                                                {
+                                                    <MudChip T="string" Size="Size.Small" Variant="Variant.Text">@tag</MudChip>
+                                                }
+                                            </MudStack>
+                                        }
+                                    </MudStack>
+                                </MudPaper>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var workouts = FilteredWorkouts;
+                        if (workouts.Count == 0)
+                        {
+                            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["EmptyResults"]</MudAlert>
+                        }
+                        else
+                        {
+                            @foreach (var workout in workouts)
+                            {
+                                var issues = GetIssueKeys(workout);
+                                <MudPaper Elevation="1"
+                                          Class="pa-3"
+                                          Style="@GetListItemStyle(IsSelected(workout))"
+                                          @onclick="@(() => SelectWorkout(workout))">
+                                    <MudStack Spacing="2">
+                                        <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                            <MudStack Spacing="0" Style="min-width:0; flex:1 1 260px;">
+                                                <MudText Typo="Typo.subtitle1">@workout.Name</MudText>
+                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@workout.Id</MudText>
+                                            </MudStack>
+
+                                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                                                    @FormatLevel(workout.Level)
+                                                </MudChip>
+                                                <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                                                    @FormatDuration(GetWorkoutDuration(workout))
+                                                </MudChip>
+                                                <MudChip T="string" Size="Size.Small" Color="@GetIssueColor(issues)" Variant="Variant.Outlined">
+                                                    @GetIssueSummary(issues)
+                                                </MudChip>
+                                            </MudStack>
+                                        </MudStack>
+
+                                        @if (workout.Tags.Count > 0)
+                                        {
+                                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                                @foreach (var tag in workout.Tags)
+                                                {
+                                                    <MudChip T="string" Size="Size.Small" Variant="Variant.Text">@tag</MudChip>
+                                                }
+                                            </MudStack>
+                                        }
+                                    </MudStack>
+                                </MudPaper>
+                            }
+                        }
+                    }
+                </MudStack>
+            </MudItem>
+
+            <MudItem xs="12" md="5">
+                @if (!HasSelection)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NoSelection"]</MudAlert>
+                }
+                else
+                {
+                    <MudPaper Elevation="1" Class="pa-4">
+                        <MudStack Spacing="3">
+                            <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                <MudStack Spacing="0" Style="min-width:0;">
+                                    <MudText Typo="Typo.h6">@SelectedName</MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@SelectedIdentifier</MudText>
+                                </MudStack>
+
+                                <MudChip T="string" Size="Size.Small" Color="@GetIssueColor(SelectedIssueKeys)" Variant="Variant.Outlined">
+                                    @GetIssueSummary(SelectedIssueKeys)
+                                </MudChip>
+                            </MudStack>
+
+                            <MudText Typo="Typo.body2" Color="@GetDescriptionColor()">
+                                @SelectedDescription
+                            </MudText>
+
+                            @if (SelectedIssueKeys.Count > 0)
+                            {
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                    @foreach (var issueKey in SelectedIssueKeys)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
+                                            @L[issueKey]
+                                        </MudChip>
+                                    }
+                                </MudStack>
+                            }
+
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                                    @FormatLevel(SelectedLevel)
+                                </MudChip>
+                                @if (!string.IsNullOrWhiteSpace(SelectedSource))
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Outlined">
+                                        @($"{L["Source"]}: {SelectedSource}")
+                                    </MudChip>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(SelectedOwnerUserId))
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Outlined">
+                                        @($"{L["Owner"]}: {SelectedOwnerUserId}")
+                                    </MudChip>
+                                }
+                            </MudStack>
+
+                            @if (SelectedTags.Count > 0)
+                            {
+                                <MudStack Spacing="1">
+                                    <MudText Typo="Typo.subtitle2">@L["Tags"]</MudText>
+                                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                        @foreach (var tag in SelectedTags)
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
+                                        }
+                                    </MudStack>
+                                </MudStack>
+                            }
+
+                            @if (SelectedExercise is not null)
+                            {
+                                <MudDivider />
+                                <MudStack Spacing="1">
+                                    <MudText Typo="Typo.subtitle2">@L["Execution"]</MudText>
+                                    @if (SelectedExercise.Execution.Count == 0)
+                                    {
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoExecution"]</MudText>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var step in SelectedExercise.Execution)
+                                        {
+                                            <MudText Typo="Typo.body2">@step</MudText>
+                                        }
+                                    }
+                                </MudStack>
+                            }
+                            else if (SelectedWorkout is not null)
+                            {
+                                <MudDivider />
+                                <MudStack Spacing="2">
+                                    <MudText Typo="Typo.subtitle2">@L["Timings"]</MudText>
+                                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                        <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">
+                                            @($"{L["PreparationTime"]}: {FormatDuration(SelectedWorkout.PreparationTime)}")
+                                        </MudChip>
+                                        <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">
+                                            @($"{L["RestTime"]}: {FormatDuration(SelectedWorkout.RestTime)}")
+                                        </MudChip>
+                                        <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">
+                                            @($"{L["SwitchTime"]}: {FormatDuration(SelectedWorkout.SwitchTime)}")
+                                        </MudChip>
+                                    </MudStack>
+
+                                    <MudText Typo="Typo.subtitle2">@L["LinkedExercises"]</MudText>
+                                    <MudStack Spacing="1">
+                                        @foreach (var exerciseId in SelectedWorkout.Exercises)
+                                        {
+                                            <div style="border:1px solid var(--mud-palette-lines-default); border-radius:8px; padding:8px 10px;">
+                                                <MudStack Spacing="0">
+                                                    <MudText Typo="Typo.body2">@GetExerciseTitle(exerciseId, SelectedWorkout.Level)</MudText>
+                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@exerciseId</MudText>
+                                                </MudStack>
+                                            </div>
+                                        }
+                                    </MudStack>
+                                </MudStack>
+                            }
+
+                            <MudDivider />
+                            <MudStack Spacing="2">
+                                <MudText Typo="Typo.subtitle2">@L["References"]</MudText>
+                                @if (SelectedReadMore.Count == 0)
+                                {
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoReferences"]</MudText>
+                                }
+                                else
+                                {
+                                    @foreach (var reference in SelectedReadMore)
+                                    {
+                                        <div style="border:1px solid var(--mud-palette-lines-default); border-radius:8px; padding:10px 12px;">
+                                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                <MudStack Spacing="0" Style="min-width:0;">
+                                                    <MudText Typo="Typo.body2">@GetReferenceTitle(reference)</MudText>
+                                                    @if (!string.IsNullOrWhiteSpace(reference.Description))
+                                                    {
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@reference.Description</MudText>
+                                                    }
+                                                    @if (!string.IsNullOrWhiteSpace(reference.SourceType))
+                                                    {
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@reference.SourceType</MudText>
+                                                    }
+                                                </MudStack>
+
+                                                @if (!string.IsNullOrWhiteSpace(reference.Url))
+                                                {
+                                                    <MudTooltip Text="@L["OpenReference"]">
+                                                        <MudIconButton Href="@reference.Url"
+                                                                       Target="_blank"
+                                                                       Icon="@Icons.Material.Filled.OpenInNew"
+                                                                       Color="Color.Primary"
+                                                                       Variant="Variant.Outlined"
+                                                                       aria-label="@L["OpenReference"]" />
+                                                    </MudTooltip>
+                                                }
+                                            </MudStack>
+                                        </div>
+                                    }
+                                }
+                            </MudStack>
+
+                            @if (SelectedCreatedAt is not null || SelectedUpdatedAt is not null)
+                            {
+                                <MudDivider />
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                    @if (SelectedCreatedAt is not null)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Variant="Variant.Text">
+                                            @($"{L["Created"]}: {FormatDate(SelectedCreatedAt)}")
+                                        </MudChip>
+                                    }
+                                    @if (SelectedUpdatedAt is not null)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Variant="Variant.Text">
+                                            @($"{L["Updated"]}: {FormatDate(SelectedUpdatedAt)}")
+                                        </MudChip>
+                                    }
+                                </MudStack>
+                            }
+                        </MudStack>
+                    </MudPaper>
+                }
+            </MudItem>
+        </MudGrid>
+    </MudStack>
+</MudContainer>
+
+@code {
+    private CatalogSection _section = CatalogSection.Exercises;
+    private string _search = string.Empty;
+    private bool _missingOnly;
+    private string? _selectedExerciseKey;
+    private string? _selectedWorkoutId;
+
+    private enum CatalogSection
+    {
+        Exercises,
+        Workouts
+    }
+
+    private IReadOnlyList<ExerciseDefinition> FilteredExercises =>
+        Catalog.Exercises
+            .Where(MatchesExercise)
+            .OrderBy(exercise => exercise.Name)
+            .ThenBy(exercise => exercise.Level)
+            .ToList();
+
+    private IReadOnlyList<WorkoutDefinition> FilteredWorkouts =>
+        Catalog.Workouts
+            .Where(MatchesWorkout)
+            .OrderBy(workout => workout.Name)
+            .ThenBy(workout => workout.Level)
+            .ToList();
+
+    private ExerciseDefinition? SelectedExercise =>
+        string.IsNullOrWhiteSpace(_selectedExerciseKey)
+            ? null
+            : Catalog.Exercises.FirstOrDefault(exercise => string.Equals(GetExerciseKey(exercise), _selectedExerciseKey, StringComparison.OrdinalIgnoreCase));
+
+    private WorkoutDefinition? SelectedWorkout =>
+        string.IsNullOrWhiteSpace(_selectedWorkoutId)
+            ? null
+            : Catalog.Workouts.FirstOrDefault(workout => string.Equals(workout.Id, _selectedWorkoutId, StringComparison.OrdinalIgnoreCase));
+
+    private bool HasSelection =>
+        SelectedExercise is not null || SelectedWorkout is not null;
+
+    private string SelectedName =>
+        SelectedExercise?.Name
+        ?? SelectedWorkout?.Name
+        ?? L["NoSelection"];
+
+    private string SelectedIdentifier =>
+        SelectedExercise?.Id
+        ?? SelectedWorkout?.Id
+        ?? string.Empty;
+
+    private string SelectedDescription =>
+        !string.IsNullOrWhiteSpace(SelectedExercise?.Description)
+            ? SelectedExercise.Description
+            : !string.IsNullOrWhiteSpace(SelectedWorkout?.Description)
+                ? SelectedWorkout.Description
+                : L["NoDescription"];
+
+    private Level SelectedLevel =>
+        SelectedExercise?.Level
+        ?? SelectedWorkout?.Level
+        ?? Level.None;
+
+    private IReadOnlyList<string> SelectedTags
+    {
+        get
+        {
+            if (SelectedExercise is not null)
+                return SelectedExercise.Tags;
+
+            if (SelectedWorkout is not null)
+                return SelectedWorkout.Tags;
+
+            return Array.Empty<string>();
+        }
+    }
+
+    private IReadOnlyList<ContentReference> SelectedReadMore
+    {
+        get
+        {
+            if (SelectedExercise is not null)
+                return SelectedExercise.ReadMore;
+
+            if (SelectedWorkout is not null)
+                return SelectedWorkout.ReadMore;
+
+            return Array.Empty<ContentReference>();
+        }
+    }
+
+    private string SelectedSource =>
+        SelectedExercise?.Source
+        ?? SelectedWorkout?.Source
+        ?? string.Empty;
+
+    private string SelectedOwnerUserId =>
+        SelectedExercise?.OwnerUserId
+        ?? SelectedWorkout?.OwnerUserId
+        ?? string.Empty;
+
+    private DateTime? SelectedCreatedAt =>
+        SelectedExercise?.CreatedAt
+        ?? SelectedWorkout?.CreatedAt;
+
+    private DateTime? SelectedUpdatedAt =>
+        SelectedExercise?.UpdatedAt
+        ?? SelectedWorkout?.UpdatedAt;
+
+    private IReadOnlyList<string> SelectedIssueKeys =>
+        SelectedExercise is not null
+            ? GetIssueKeys(SelectedExercise)
+            : SelectedWorkout is not null
+                ? GetIssueKeys(SelectedWorkout)
+                : Array.Empty<string>();
+
+    private int ReferencedItemCount =>
+        Catalog.Exercises.Count(exercise => exercise.ReadMore.Count > 0)
+        + Catalog.Workouts.Count(workout => workout.ReadMore.Count > 0);
+
+    private int MetadataOpenCount =>
+        Catalog.Exercises.Count(HasIssues)
+        + Catalog.Workouts.Count(HasIssues);
+
+    protected override void OnInitialized()
+    {
+        EnsureSelection();
+    }
+
+    private Task OnSearchChanged(string search)
+    {
+        _search = search ?? string.Empty;
+        EnsureSelection();
+        return Task.CompletedTask;
+    }
+
+    private void SelectSection(CatalogSection section)
+    {
+        _section = section;
+        EnsureSelection();
+    }
+
+    private void ToggleMissingFilter()
+    {
+        _missingOnly = !_missingOnly;
+        EnsureSelection();
+    }
+
+    private void SelectExercise(ExerciseDefinition exercise)
+    {
+        _selectedExerciseKey = GetExerciseKey(exercise);
+        _section = CatalogSection.Exercises;
+    }
+
+    private void SelectWorkout(WorkoutDefinition workout)
+    {
+        _selectedWorkoutId = workout.Id;
+        _section = CatalogSection.Workouts;
+    }
+
+    private void EnsureSelection()
+    {
+        if (_section == CatalogSection.Exercises)
+        {
+            var exercises = FilteredExercises;
+            if (string.IsNullOrWhiteSpace(_selectedExerciseKey)
+                || exercises.All(exercise => !string.Equals(GetExerciseKey(exercise), _selectedExerciseKey, StringComparison.OrdinalIgnoreCase)))
+            {
+                _selectedExerciseKey = exercises.FirstOrDefault() is { } exercise
+                    ? GetExerciseKey(exercise)
+                    : null;
+            }
+
+            return;
+        }
+
+        var workouts = FilteredWorkouts;
+        if (string.IsNullOrWhiteSpace(_selectedWorkoutId)
+            || workouts.All(workout => !string.Equals(workout.Id, _selectedWorkoutId, StringComparison.OrdinalIgnoreCase)))
+        {
+            _selectedWorkoutId = workouts.FirstOrDefault()?.Id;
+        }
+    }
+
+    private bool MatchesExercise(ExerciseDefinition exercise)
+    {
+        if (_missingOnly && !HasIssues(exercise))
+            return false;
+
+        return MatchesSearch(
+            exercise.Name,
+            exercise.Id,
+            exercise.Description,
+            exercise.Source,
+            exercise.OwnerUserId,
+            exercise.Tags,
+            exercise.ReadMore);
+    }
+
+    private bool MatchesWorkout(WorkoutDefinition workout)
+    {
+        if (_missingOnly && !HasIssues(workout))
+            return false;
+
+        return MatchesSearch(
+            workout.Name ?? string.Empty,
+            workout.Id ?? string.Empty,
+            workout.Description ?? string.Empty,
+            workout.Source,
+            workout.OwnerUserId,
+            workout.Tags,
+            workout.ReadMore);
+    }
+
+    private bool MatchesSearch(
+        string name,
+        string id,
+        string description,
+        string source,
+        string ownerUserId,
+        IEnumerable<string> tags,
+        IEnumerable<ContentReference> readMore)
+    {
+        if (string.IsNullOrWhiteSpace(_search))
+            return true;
+
+        return ContainsSearch(name)
+            || ContainsSearch(id)
+            || ContainsSearch(description)
+            || ContainsSearch(source)
+            || ContainsSearch(ownerUserId)
+            || tags.Any(ContainsSearch)
+            || readMore.Any(reference =>
+                ContainsSearch(reference.Title)
+                || ContainsSearch(reference.Url)
+                || ContainsSearch(reference.Description)
+                || ContainsSearch(reference.SourceType));
+    }
+
+    private bool ContainsSearch(string? value)
+    {
+        return !string.IsNullOrWhiteSpace(value)
+            && value.Contains(_search, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool HasIssues(ExerciseDefinition exercise)
+    {
+        return exercise.Tags.Count == 0
+            || exercise.ReadMore.Count == 0
+            || string.IsNullOrWhiteSpace(exercise.Source)
+            || string.IsNullOrWhiteSpace(exercise.OwnerUserId);
+    }
+
+    private static bool HasIssues(WorkoutDefinition workout)
+    {
+        return workout.Tags.Count == 0
+            || workout.ReadMore.Count == 0
+            || string.IsNullOrWhiteSpace(workout.Source)
+            || string.IsNullOrWhiteSpace(workout.OwnerUserId);
+    }
+
+    private static IReadOnlyList<string> GetIssueKeys(ExerciseDefinition exercise)
+    {
+        var issues = new List<string>();
+        AddCommonIssueKeys(exercise.Tags, exercise.ReadMore, exercise.Source, exercise.OwnerUserId, issues);
+        return issues;
+    }
+
+    private static IReadOnlyList<string> GetIssueKeys(WorkoutDefinition workout)
+    {
+        var issues = new List<string>();
+        AddCommonIssueKeys(workout.Tags, workout.ReadMore, workout.Source, workout.OwnerUserId, issues);
+        return issues;
+    }
+
+    private static void AddCommonIssueKeys(
+        IReadOnlyList<string> tags,
+        IReadOnlyList<ContentReference> readMore,
+        string source,
+        string ownerUserId,
+        List<string> issues)
+    {
+        if (tags.Count == 0)
+            issues.Add("MissingTags");
+
+        if (readMore.Count == 0)
+            issues.Add("MissingReadMore");
+
+        if (string.IsNullOrWhiteSpace(source))
+            issues.Add("MissingSource");
+
+        if (string.IsNullOrWhiteSpace(ownerUserId))
+            issues.Add("MissingOwner");
+    }
+
+    private string GetIssueSummary(IReadOnlyList<string> issueKeys)
+    {
+        return issueKeys.Count == 0
+            ? L["Ready"]
+            : string.Format(L["IssueCount"], issueKeys.Count);
+    }
+
+    private static Color GetIssueColor(IReadOnlyList<string> issueKeys)
+    {
+        return issueKeys.Count == 0
+            ? Color.Success
+            : Color.Warning;
+    }
+
+    private Color GetMetadataOpenColor()
+    {
+        return MetadataOpenCount == 0 ? Color.Success : Color.Warning;
+    }
+
+    private Variant GetSectionVariant(CatalogSection section)
+    {
+        return _section == section ? Variant.Filled : Variant.Outlined;
+    }
+
+    private Color GetSectionColor(CatalogSection section)
+    {
+        return _section == section ? Color.Primary : Color.Default;
+    }
+
+    private string GetMissingFilterText()
+    {
+        return _missingOnly ? L["FilterMissing"] : L["FilterAll"];
+    }
+
+    private string GetListItemStyle(bool selected)
+    {
+        var border = selected
+            ? "var(--mud-palette-primary)"
+            : "var(--mud-palette-lines-default)";
+
+        var background = selected
+            ? "var(--mud-palette-action-default-hover)"
+            : "var(--mud-palette-surface)";
+
+        return $"border:1px solid {border}; background:{background}; cursor:pointer;";
+    }
+
+    private bool IsSelected(ExerciseDefinition exercise)
+    {
+        return _section == CatalogSection.Exercises
+            && string.Equals(GetExerciseKey(exercise), _selectedExerciseKey, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string GetExerciseKey(ExerciseDefinition exercise)
+    {
+        return $"{exercise.Id}|{exercise.Level}";
+    }
+
+    private bool IsSelected(WorkoutDefinition workout)
+    {
+        return _section == CatalogSection.Workouts
+            && string.Equals(workout.Id, _selectedWorkoutId, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private string FormatLevel(Level level)
+    {
+        return level switch
+        {
+            Level.Easy => L["Level_Easy"],
+            Level.Moderate => L["Level_Moderate"],
+            Level.Advanced => L["Level_Advanced"],
+            Level.Epic => L["Level_Epic"],
+            _ => L["Level_None"]
+        };
+    }
+
+    private string FormatDuration(int seconds)
+    {
+        if (seconds < 60)
+            return $"{seconds} {L["SecondsSuffix"]}";
+
+        var minutes = seconds / 60;
+        var remainingSeconds = seconds % 60;
+        return remainingSeconds == 0
+            ? $"{minutes} min"
+            : $"{minutes}:{remainingSeconds:00} min";
+    }
+
+    private int GetWorkoutDuration(WorkoutDefinition workout)
+    {
+        var exercises = workout.Exercises
+            .Select(exerciseId => FindExercise(exerciseId, workout.Level))
+            .Where(exercise => exercise is not null)
+            .ToList();
+
+        var exerciseDuration = exercises.Sum(exercise => exercise?.Duration ?? 0);
+        var restDuration = Math.Max(0, exercises.Count - 1) * workout.RestTime;
+        return workout.PreparationTime + exerciseDuration + restDuration;
+    }
+
+    private ExerciseDefinition? FindExercise(string exerciseId, Level level)
+    {
+        return Catalog.Exercises.FirstOrDefault(exercise =>
+            string.Equals(exercise.Id, exerciseId, StringComparison.OrdinalIgnoreCase)
+            && exercise.Level == level);
+    }
+
+    private string GetExerciseTitle(string exerciseId, Level level)
+    {
+        return FindExercise(exerciseId, level)?.Name ?? exerciseId;
+    }
+
+    private string GetReferenceTitle(ContentReference reference)
+    {
+        if (!string.IsNullOrWhiteSpace(reference.Title))
+            return reference.Title;
+
+        if (!string.IsNullOrWhiteSpace(reference.Url))
+            return reference.Url;
+
+        return L["References"];
+    }
+
+    private Color GetDescriptionColor()
+    {
+        return string.Equals(SelectedDescription, L["NoDescription"].Value, StringComparison.Ordinal)
+            ? Color.Secondary
+            : Color.Default;
+    }
+
+    private static string FormatDate(DateTime? date)
+    {
+        return date?.ToLocalTime().ToString("g") ?? string.Empty;
+    }
+}

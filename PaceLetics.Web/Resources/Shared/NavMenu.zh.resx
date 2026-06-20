@@ -13,4 +13,5 @@
   <data name="Nav_Workouts" xml:space="preserve"><value>训练</value></data>
   <data name="Nav_Profiles" xml:space="preserve"><value>个人资料</value></data>
   <data name="Nav_About" xml:space="preserve"><value>关于</value></data>
+  <data name="Nav_TrainerWorkoutCatalog" xml:space="preserve"><value>Workout Catalog</value></data>
 </root>

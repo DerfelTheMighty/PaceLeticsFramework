@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Workout-Katalog</value></data>
+  <data name="Title" xml:space="preserve"><value>Workout-Katalog</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Uebungen, Workouts, Tags und Quellen</value></data>
+  <data name="Exercises" xml:space="preserve"><value>Uebungen</value></data>
+  <data name="Workouts" xml:space="preserve"><value>Workouts</value></data>
+  <data name="ReferencedItems" xml:space="preserve"><value>Mit Quellen</value></data>
+  <data name="MetadataOpen" xml:space="preserve"><value>Offene Metadaten</value></data>
+  <data name="Search" xml:space="preserve"><value>Suchen</value></data>
+  <data name="FilterAll" xml:space="preserve"><value>Alle</value></data>
+  <data name="FilterMissing" xml:space="preserve"><value>Offen</value></data>
+  <data name="EmptyResults" xml:space="preserve"><value>Keine Eintraege gefunden.</value></data>
+  <data name="NoSelection" xml:space="preserve"><value>Kein Eintrag ausgewaehlt.</value></data>
+  <data name="NoDescription" xml:space="preserve"><value>Keine Beschreibung.</value></data>
+  <data name="Ready" xml:space="preserve"><value>Vollstaendig</value></data>
+  <data name="IssueCount" xml:space="preserve"><value>{0} offen</value></data>
+  <data name="MissingTags" xml:space="preserve"><value>Tags fehlen</value></data>
+  <data name="MissingReadMore" xml:space="preserve"><value>Quellen fehlen</value></data>
+  <data name="MissingSource" xml:space="preserve"><value>Source fehlt</value></data>
+  <data name="MissingOwner" xml:space="preserve"><value>Owner fehlt</value></data>
+  <data name="Level_None" xml:space="preserve"><value>Ohne Level</value></data>
+  <data name="Level_Easy" xml:space="preserve"><value>Leicht</value></data>
+  <data name="Level_Moderate" xml:space="preserve"><value>Fortgeschritten</value></data>
+  <data name="Level_Advanced" xml:space="preserve"><value>Schwer</value></data>
+  <data name="Level_Epic" xml:space="preserve"><value>Episch</value></data>
+  <data name="SecondsSuffix" xml:space="preserve"><value>s</value></data>
+  <data name="Tags" xml:space="preserve"><value>Tags</value></data>
+  <data name="Execution" xml:space="preserve"><value>Ausfuehrung</value></data>
+  <data name="NoExecution" xml:space="preserve"><value>Keine Ausfuehrungsschritte.</value></data>
+  <data name="Timings" xml:space="preserve"><value>Zeiten</value></data>
+  <data name="PreparationTime" xml:space="preserve"><value>Vorbereitung</value></data>
+  <data name="RestTime" xml:space="preserve"><value>Pause</value></data>
+  <data name="SwitchTime" xml:space="preserve"><value>Wechsel</value></data>
+  <data name="LinkedExercises" xml:space="preserve"><value>Verknuepfte Uebungen</value></data>
+  <data name="References" xml:space="preserve"><value>Quellen</value></data>
+  <data name="NoReferences" xml:space="preserve"><value>Keine Quellen.</value></data>
+  <data name="OpenReference" xml:space="preserve"><value>Quelle oeffnen</value></data>
+  <data name="Source" xml:space="preserve"><value>Quelle</value></data>
+  <data name="Owner" xml:space="preserve"><value>Owner</value></data>
+  <data name="Created" xml:space="preserve"><value>Erstellt</value></data>
+  <data name="Updated" xml:space="preserve"><value>Aktualisiert</value></data>
+</root>

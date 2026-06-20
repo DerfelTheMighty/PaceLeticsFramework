@@ -13,4 +13,5 @@
   <data name="Nav_Workouts" xml:space="preserve"><value>تمرین‌ها</value></data>
   <data name="Nav_Profiles" xml:space="preserve"><value>نمایه‌ها</value></data>
   <data name="Nav_About" xml:space="preserve"><value>درباره</value></data>
+  <data name="Nav_TrainerWorkoutCatalog" xml:space="preserve"><value>Workout Catalog</value></data>
 </root>

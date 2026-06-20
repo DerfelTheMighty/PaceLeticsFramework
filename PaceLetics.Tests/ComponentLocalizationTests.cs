@@ -115,6 +115,15 @@ public sealed class ComponentLocalizationTests
     }
 
     [Fact]
+    public void WorkoutCatalogManagementResources_ResolveGermanTitle()
+    {
+        var value = GetLocalizedString<WorkoutCatalogManagement>("de", "Title");
+
+        Assert.False(value.ResourceNotFound);
+        Assert.Equal("Workout-Katalog", value.Value);
+    }
+
+    [Fact]
     public void CourseServiceResources_ResolveTranslatedKeysForNewCultures()
     {
         var value = GetLocalizedString<CourseService>("zh", "CourseNotFound");
