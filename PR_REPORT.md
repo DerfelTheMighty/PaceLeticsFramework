@@ -1,54 +1,55 @@
-# PR Report: Add Ocean, Forest, and Maritime Theme Backgrounds
+# PR Report: Compress Theme Background Assets
 
 ## Summary
-- Added generated background artwork for the `Ocean`, `Forest`, and `Maritime` app themes.
-- Ocean uses a dark watercolor wash with layered currents and subtle teal/gold linework.
-- Forest uses a centered ivory-white abstract tree form with sparse thin branches and very small leaves, tuned for mobile center crops.
-- Maritime uses a three-color dune grass beach illustration based on the Maritime theme palette.
-- Kept backgrounds theme-specific by applying layout classes only for the selected theme.
+- Converted all theme background images from PNG to JPG because the assets do not use transparency.
+- Updated the theme CSS to reference the new JPG files.
+- Kept each image at its original pixel dimensions so background positioning and cover behavior remain unchanged.
+- Reduced total theme background payload from approximately 16.48 MB to 1.44 MB.
 
-## User Experience
-- **Ocean** now has a calm dark-blue watercolor background that supports the existing navy/teal palette.
-- **Forest** now has a warm dark-brown background with a central ivory-white, highly abstract tree form, so the motif remains visible on smartphone viewports.
-- **Maritime** now has a light dune grass coastal background using sea blue, coral sand, and pale warm yellow from the theme.
-- All three themes use fixed background image layers plus gradient/vignette overlays so cards, navigation, and text remain readable.
-- App bars and drawers are slightly translucent with blur to keep the theme artwork present without competing with the UI.
+## Asset Size Impact
+| Theme background | Previous size | New size | Reduction |
+| --- | ---: | ---: | ---: |
+| `dark-romance-background` | 2,401.4 KB | 200.5 KB | 91.7% |
+| `forest-prune-background` | 1,742.5 KB | 91.6 KB | 94.7% |
+| `maritime-dune-background` | 2,766.6 KB | 246.6 KB | 91.1% |
+| `ocean-watercolor-background` | 2,576.2 KB | 229.8 KB | 91.1% |
+| `paceletics-neon-track-background` | 2,067.3 KB | 186.7 KB | 91.0% |
+| `stellar-forge-tech-background` | 3,024.0 KB | 354.7 KB | 88.3% |
+| `wildflowers-background` | 2,295.0 KB | 162.3 KB | 92.9% |
 
 ## Implementation Details
-- Updated `MainLayout.razor` to map additional selected themes to layout classes:
-  - `AppThemeName.Ocean` -> `pl-ocean-layout`
-  - `AppThemeName.Forest` -> `pl-forest-layout`
-  - `AppThemeName.Maritime` -> `pl-maritime-layout`
-- Updated `app-theme.css` with:
-  - `pl-ocean-layout`
-  - `pl-forest-layout`
-  - `pl-maritime-layout`
-  - fixed `::before` image layers
-  - fixed `::after` gradient and vignette overlays
-  - theme-specific app bar and drawer transparency
-- Added generated image assets:
-  - `PaceLetics.Web/wwwroot/images/theme/ocean-watercolor-background.png`
-  - `PaceLetics.Web/wwwroot/images/theme/forest-prune-background.png`
-  - `PaceLetics.Web/wwwroot/images/theme/maritime-dune-background.png`
+- Replaced the PNG theme assets under `PaceLetics.Web/wwwroot/images/theme/` with JPG equivalents:
+  - `dark-romance-background.jpg`
+  - `forest-prune-background.jpg`
+  - `maritime-dune-background.jpg`
+  - `ocean-watercolor-background.jpg`
+  - `paceletics-neon-track-background.jpg`
+  - `stellar-forge-tech-background.jpg`
+  - `wildflowers-background.jpg`
+- Updated `PaceLetics.Web/wwwroot/css/app-theme.css` to use the new `.jpg` paths.
+- Removed the old `.png` files from the theme asset directory.
 
 ## Compatibility Notes
-- No theme enum values changed.
-- No stored theme preferences are invalidated.
-- No new runtime dependencies were added.
-- Existing Identity page layout remains unchanged; these theme-specific backgrounds apply to the Blazor app layout.
+- No CSS layout, opacity, filter, or positioning values changed.
+- No theme names, enum values, or persisted preferences changed.
+- No runtime dependencies were added.
+- JPG conversion is safe for these assets because all original files were 24-bit RGB images without alpha transparency.
 
 ## Verification
-- Ran `dotnet build PaceLeticsFramework.sln --no-restore`.
+- Confirmed all new JPG files decode successfully and preserve the original dimensions.
+- Confirmed there are no remaining source references to the old theme PNG paths.
+- Ran `dotnet build .\PaceLeticsFramework.sln`.
 - Result: build succeeded.
-- Existing NuGet advisory warnings for `OpenMcdf` and `SharpCompress` still appear and are unrelated to this PR.
-- Confirmed the generated assets are valid PNG files with expected landscape dimensions.
+- Existing warnings remain unrelated to this change:
+  - NuGet advisory warnings for `OpenMcdf` and `SharpCompress`.
+  - Existing Blazor/code warnings in athlete and training components.
 
 ## PR
 - Branch: `codex/ocean-forest-theme-backgrounds`
 - Base: `main`
-- Suggested title: `Add Ocean, Forest, and Maritime theme backgrounds`
+- Suggested title: `Compress theme background assets`
 - Suggested description:
-  - Adds watercolor-inspired Ocean background artwork.
-  - Adds a centered abstract white Forest tree background for better mobile visibility.
-  - Adds a three-color Maritime dune grass background based on the theme palette.
-  - Uses per-theme layout classes and overlays to keep the UI readable.
+  - Converts theme background images from PNG to JPG where transparency is not needed.
+  - Updates theme CSS references to the optimized JPG assets.
+  - Reduces total theme background payload from about 16.48 MB to 1.44 MB.
+  - Keeps original image dimensions and existing theme styling intact.
