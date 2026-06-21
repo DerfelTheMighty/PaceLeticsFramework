@@ -49,7 +49,7 @@
 
                 <MudText Typo="Typo.body2">
                     @L["InterventionGuidance_SystemUnderstandingText"]
-                    <a href="@Sources[3].Url" target="_blank" rel="noopener noreferrer">[4]</a>.
+                    <a class="pl-citation" href="@Sources[3].Url" target="_blank" rel="noopener noreferrer">[4]</a>.
                 </MudText>
             </MudStack>
         </MudPaper>
@@ -66,15 +66,22 @@
 
                 <MudText Typo="Typo.body2">
                     @L["InterventionGuidance_SideEffectsIntro"]
-                    <a href="@Sources[2].Url" target="_blank" rel="noopener noreferrer">[3]</a>,
-                    <a href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>,
-                    <a href="@Sources[6].Url" target="_blank" rel="noopener noreferrer">[7]</a>.
+                    <a class="pl-citation" href="@Sources[2].Url" target="_blank" rel="noopener noreferrer">[3]</a>
+                    <a class="pl-citation" href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>
+                    <a class="pl-citation" href="@Sources[6].Url" target="_blank" rel="noopener noreferrer">[7]</a>.
                     @L["InterventionGuidance_SideEffectsIndicationIntro"]
                 </MudText>
 
                 <MudList T="string" Dense="true">
-                    <MudListItem>@L["InterventionGuidance_SideEffectsIndication_1"]</MudListItem>
-                    <MudListItem>@L["InterventionGuidance_SideEffectsIndication_2"]</MudListItem>
+                    <MudListItem>
+                        @L["InterventionGuidance_SideEffectsIndication_1"]
+                        <a class="pl-citation" href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>
+                        <a class="pl-citation" href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>
+                    </MudListItem>
+                    <MudListItem>
+                        @L["InterventionGuidance_SideEffectsIndication_2"]
+                        <a class="pl-citation" href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>
+                    </MudListItem>
                 </MudList>
 
                 <MudText Typo="Typo.body2">
@@ -89,6 +96,8 @@
 
                 <MudText Typo="Typo.body2">
                     @L["InterventionGuidance_ConsentPowerDynamicsText"]
+                    <a class="pl-citation" href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>
+                    <a class="pl-citation" href="@Sources[6].Url" target="_blank" rel="noopener noreferrer">[7]</a>
                 </MudText>
             </MudStack>
         </MudPaper>
@@ -99,9 +108,10 @@
 
                 <MudText Typo="Typo.body2">
                     @L["InterventionGuidance_ControlIllusionText"]
-                    <a href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>,
-                    <a href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>,
-                    <a href="@Sources[4].Url" target="_blank" rel="noopener noreferrer">[5]</a>.
+                    <a class="pl-citation" href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>
+                    <a class="pl-citation" href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>
+                    <a class="pl-citation" href="@Sources[4].Url" target="_blank" rel="noopener noreferrer">[5]</a>
+                    <a class="pl-citation" href="@Sources[7].Url" target="_blank" rel="noopener noreferrer">[8]</a>.
                 </MudText>
             </MudStack>
         </MudPaper>
@@ -122,8 +132,15 @@
                     <MudText Typo="Typo.subtitle2">@L["InterventionGuidance_RelevanceTitle"]</MudText>
                     <MudList T="string" Dense="true">
                         <MudListItem>@L["InterventionGuidance_Relevance_1"]</MudListItem>
-                        <MudListItem>@L["InterventionGuidance_Relevance_2"]</MudListItem>
-                        <MudListItem>@L["InterventionGuidance_Relevance_3"]</MudListItem>
+                        <MudListItem>
+                            @L["InterventionGuidance_Relevance_2"]
+                            <a class="pl-citation" href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>
+                            <a class="pl-citation" href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>
+                        </MudListItem>
+                        <MudListItem>
+                            @L["InterventionGuidance_Relevance_3"]
+                            <a class="pl-citation" href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>
+                        </MudListItem>
                         <MudListItem>@L["InterventionGuidance_Relevance_4"]</MudListItem>
                     </MudList>
                 </MudItem>
@@ -136,6 +153,8 @@
             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["InterventionGuidance_EvidenceTitle"]</MudText>
             <MudText Typo="Typo.body2" Color="Color.Secondary">
                 @L["InterventionGuidance_EvidenceSubtitle"]
+                <a class="pl-citation" href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>
+                <a class="pl-citation" href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>
             </MudText>
 
             <MudTable Items="EvidenceRows" Dense="true" Hover="false" Elevation="0" Breakpoint="Breakpoint.Sm">
@@ -166,13 +185,15 @@
         <MudPaper Class="pa-4" Elevation="0">
             <MudStack Spacing="1">
                 <MudText Typo="Typo.subtitle2">@L["InterventionGuidance_SourcesTitle"]</MudText>
+                <div class="pl-source-list">
                 @foreach (var source in Sources)
                 {
-                    <MudText Typo="Typo.caption">
-                        [@source.Number]
+                    <MudText Typo="Typo.caption" Class="pl-source-row">
+                        <span class="pl-source-number">[@source.Number]</span>
                         <a href="@source.Url" target="_blank" rel="noopener noreferrer">@L[source.TitleKey]</a>
                     </MudText>
                 }
+                </div>
             </MudStack>
         </MudPaper>
     }

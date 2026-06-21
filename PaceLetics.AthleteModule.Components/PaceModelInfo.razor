@@ -8,13 +8,16 @@
             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_Rationale_Title"]</MudText>
             <MudText Typo="Typo.body2">
                 @L["PaceModelInfo_Rationale_PaceProxy_Text"]
-                <MudLink Href="https://link.springer.com/article/10.1007/s40279-026-02410-x" Target="_blank">[1]</MudLink>
+                <a class="pl-citation" href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>
+                <a class="pl-citation" href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>
             </MudText>
             <MudText Typo="Typo.body2">
                 @L["PaceModelInfo_Rationale_Adaptation_Text"]
-                <MudLink Href="https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf" Target="_blank">[2]</MudLink>
-                <MudLink Href="https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/" Target="_blank">[3]</MudLink>
-                <MudLink Href="https://pubmed.ncbi.nlm.nih.gov/33635519/" Target="_blank">[5]</MudLink>
+                <a class="pl-citation" href="@Sources[2].Url" target="_blank" rel="noopener noreferrer">[3]</a>
+                <a class="pl-citation" href="@Sources[3].Url" target="_blank" rel="noopener noreferrer">[4]</a>
+                <a class="pl-citation" href="@Sources[4].Url" target="_blank" rel="noopener noreferrer">[5]</a>
+                <a class="pl-citation" href="@Sources[5].Url" target="_blank" rel="noopener noreferrer">[6]</a>
+                <a class="pl-citation" href="@Sources[10].Url" target="_blank" rel="noopener noreferrer">[11]</a>
             </MudText>
             <MudText Typo="Typo.body2">@L["PaceModelInfo_Rationale_Remaining_Text"]</MudText>
         </MudStack>
@@ -37,12 +40,12 @@
             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_LoadAdaptation_Title"]</MudText>
             <MudText Typo="Typo.body2">
                 @L["PaceModelInfo_LoadAdaptation_Tendon_Text"]
-                <MudLink Href="https://link.springer.com/article/10.1186/s40798-015-0009-9" Target="_blank">[4]</MudLink>
+                <a class="pl-citation" href="@Sources[6].Url" target="_blank" rel="noopener noreferrer">[7]</a>
             </MudText>
             <MudText Typo="Typo.body2">@L["PaceModelInfo_LoadAdaptation_Diagram_Text"]</MudText>
             <MudText Typo="Typo.body2">
                 @L["PaceModelInfo_LoadAdaptation_Workload_Text"]
-                <MudLink Href="https://pubmed.ncbi.nlm.nih.gov/33635519/" Target="_blank">[5]</MudLink>
+                <a class="pl-citation" href="@Sources[10].Url" target="_blank" rel="noopener noreferrer">[11]</a>
             </MudText>
         </MudStack>
     </MudPaper>
@@ -56,21 +59,33 @@
     <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_Daniels_Title"]</MudText>
-            <MudText Typo="Typo.body2">@L["PaceModelInfo_Daniels_Text"]</MudText>
+            <MudText Typo="Typo.body2">
+                @L["PaceModelInfo_Daniels_Text"]
+                <a class="pl-citation" href="@Sources[9].Url" target="_blank" rel="noopener noreferrer">[10]</a>
+            </MudText>
         </MudStack>
     </MudPaper>
 
     <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_Cs_Title"]</MudText>
-            <MudText Typo="Typo.body2">@L["PaceModelInfo_Cs_Text"]</MudText>
+            <MudText Typo="Typo.body2">
+                @L["PaceModelInfo_Cs_Text"]
+                <a class="pl-citation" href="@Sources[7].Url" target="_blank" rel="noopener noreferrer">[8]</a>
+                <a class="pl-citation" href="@Sources[8].Url" target="_blank" rel="noopener noreferrer">[9]</a>
+            </MudText>
         </MudStack>
     </MudPaper>
 
     <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_Calculation_Title"]</MudText>
-            <MudText Typo="Typo.body2">@L["PaceModelInfo_Calculation_Text"]</MudText>
+            <MudText Typo="Typo.body2">
+                @L["PaceModelInfo_Calculation_Text"]
+                <a class="pl-citation" href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>
+                <a class="pl-citation" href="@Sources[7].Url" target="_blank" rel="noopener noreferrer">[8]</a>
+                <a class="pl-citation" href="@Sources[8].Url" target="_blank" rel="noopener noreferrer">[9]</a>
+            </MudText>
         </MudStack>
     </MudPaper>
 
@@ -84,82 +99,39 @@
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["PaceModelInfo_References_Title"]</MudText>
 
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://link.springer.com/article/10.1007/s40279-026-02410-x" Target="_blank">
-                    @L["PaceModelInfo_Anderson_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Anderson_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/" Target="_blank">
-                    @L["PaceModelInfo_Lipkova_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Lipkova_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://pubmed.ncbi.nlm.nih.gov/28490537/" Target="_blank">
-                    @L["PaceModelInfo_Hawley_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Hawley_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://pubmed.ncbi.nlm.nih.gov/27748956/" Target="_blank">
-                    @L["PaceModelInfo_MacInnis_Title"]
-                </MudLink>
-                @L["PaceModelInfo_MacInnis_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf" Target="_blank">
-                    @L["PaceModelInfo_Kubo_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Kubo_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/" Target="_blank">
-                    @L["PaceModelInfo_Bohm_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Bohm_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://link.springer.com/article/10.1186/s40798-015-0009-9" Target="_blank">
-                    @L["PaceModelInfo_Bohm2015_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Bohm2015_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full" Target="_blank">
-                    @L["PaceModelInfo_Papagiannaki_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Papagiannaki_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full" Target="_blank">
-                    @L["PaceModelInfo_Jiang_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Jiang_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03026/full" Target="_blank">
-                    @L["PaceModelInfo_Billat_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Billat_Text"]
-            </MudText>
-
-            <MudText Typo="Typo.body2">
-                <MudLink Href="https://pubmed.ncbi.nlm.nih.gov/33635519/" Target="_blank">
-                    @L["PaceModelInfo_Warden_Title"]
-                </MudLink>
-                @L["PaceModelInfo_Warden_Text"]
-            </MudText>
+            <div class="pl-source-list">
+            @foreach (var source in Sources)
+            {
+                <MudText Typo="Typo.body2" Class="pl-source-row">
+                    <span class="pl-source-number">[@source.Number]</span>
+                    <span class="pl-source-text">
+                        <a href="@source.Url" target="_blank" rel="noopener noreferrer">
+                            @L[source.TitleKey]
+                        </a>
+                        @L[source.TextKey]
+                    </span>
+                </MudText>
+            }
+            </div>
         </MudStack>
     </MudPaper>
 </MudStack>
+
+@code {
+    private static readonly SourceRow[] Sources =
+    {
+        new("1", "PaceModelInfo_Anderson_Title", "PaceModelInfo_Anderson_Text", "https://link.springer.com/article/10.1007/s40279-026-02410-x"),
+        new("2", "PaceModelInfo_Lipkova_Title", "PaceModelInfo_Lipkova_Text", "https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/"),
+        new("3", "PaceModelInfo_Hawley_Title", "PaceModelInfo_Hawley_Text", "https://pubmed.ncbi.nlm.nih.gov/28490537/"),
+        new("4", "PaceModelInfo_MacInnis_Title", "PaceModelInfo_MacInnis_Text", "https://pubmed.ncbi.nlm.nih.gov/27748956/"),
+        new("5", "PaceModelInfo_Kubo_Title", "PaceModelInfo_Kubo_Text", "https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf"),
+        new("6", "PaceModelInfo_Bohm_Title", "PaceModelInfo_Bohm_Text", "https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/"),
+        new("7", "PaceModelInfo_Bohm2015_Title", "PaceModelInfo_Bohm2015_Text", "https://link.springer.com/article/10.1186/s40798-015-0009-9"),
+        new("8", "PaceModelInfo_Papagiannaki_Title", "PaceModelInfo_Papagiannaki_Text", "https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full"),
+        new("9", "PaceModelInfo_Jiang_Title", "PaceModelInfo_Jiang_Text", "https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full"),
+        new("10", "PaceModelInfo_Billat_Title", "PaceModelInfo_Billat_Text", "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03026/full"),
+        new("11", "PaceModelInfo_Warden_Title", "PaceModelInfo_Warden_Text", "https://pubmed.ncbi.nlm.nih.gov/33635519/")
+    };
+
+    private sealed record SourceRow(string Number, string TitleKey, string TextKey, string Url);
+}

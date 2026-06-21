@@ -11,7 +11,11 @@
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["MentalResource_Title"]</MudText>
                 </div>
             </MudStack>
-            <MudText Typo="Typo.body2">@L["MentalResource_Lead"]</MudText>
+            <MudText Typo="Typo.body2">
+                @L["MentalResource_Lead"]
+                <a class="pl-citation" href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>
+                <a class="pl-citation" href="@Sources[1].Url" target="_blank" rel="noopener noreferrer">[2]</a>
+            </MudText>
         </MudStack>
     </MudPaper>
 
@@ -20,7 +24,14 @@
         <MudPaper Class="pa-4" Elevation="0">
             <MudStack Spacing="2">
                 <MudText Typo="Typo.subtitle1" Class="fw-bold">@L[section.TitleKey]</MudText>
-                <MudText Typo="Typo.body2">@L[section.TextKey]</MudText>
+                <MudText Typo="Typo.body2">
+                    @L[section.TextKey]
+                    @foreach (var sourceIndex in section.SourceIndexes)
+                    {
+                        var source = Sources[sourceIndex];
+                        <a class="pl-citation" href="@source.Url" target="_blank" rel="noopener noreferrer">[@source.Number]</a>
+                    }
+                </MudText>
             </MudStack>
         </MudPaper>
     }
@@ -28,12 +39,15 @@
     <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="1">
             <MudText Typo="Typo.subtitle2">@L["MentalResource_SourcesTitle"]</MudText>
+            <div class="pl-source-list">
             @foreach (var source in Sources)
             {
-                <MudText Typo="Typo.caption">
+                <MudText Typo="Typo.caption" Class="pl-source-row">
+                    <span class="pl-source-number">[@source.Number]</span>
                     <a href="@source.Url" target="_blank" rel="noopener noreferrer">@L[source.TitleKey]</a>
                 </MudText>
             }
+            </div>
         </MudStack>
     </MudPaper>
 </MudStack>
@@ -41,26 +55,26 @@
 @code {
     private static readonly ArticleSection[] Sections =
     {
-        new("MentalResource_StepEffectTitle", "MentalResource_StepEffectText"),
-        new("MentalResource_StepFragileTitle", "MentalResource_StepFragileText"),
-        new("MentalResource_StepRiskTitle", "MentalResource_StepRiskText"),
-        new("MentalResource_StepConsequenceTitle", "MentalResource_StepConsequenceText"),
-        new("MentalResource_StepAppTitle", "MentalResource_StepAppText")
+        new("MentalResource_StepEffectTitle", "MentalResource_StepEffectText", new[] { 0, 1 }),
+        new("MentalResource_StepFragileTitle", "MentalResource_StepFragileText", new[] { 2, 4 }),
+        new("MentalResource_StepRiskTitle", "MentalResource_StepRiskText", new[] { 5, 7 }),
+        new("MentalResource_StepConsequenceTitle", "MentalResource_StepConsequenceText", new[] { 6 }),
+        new("MentalResource_StepAppTitle", "MentalResource_StepAppText", new[] { 3, 4, 6 })
     };
 
     private static readonly SourceRow[] Sources =
     {
-        new("MentalResource_SourceOswald", "https://doi.org/10.3390/ijerph17218059"),
-        new("MentalResource_SourcePereira", "https://doi.org/10.3389/fpsyg.2021.624783"),
-        new("MentalResource_SourceFurie", "https://doi.org/10.1007/s12178-023-09830-6"),
-        new("MentalResource_SourceDeJonge", "https://doi.org/10.3390/ijerph17031044"),
-        new("MentalResource_SourceVerhagen", "https://doi.org/10.1136/bmjsem-2021-001117"),
-        new("MentalResource_SourceVidebaek", "https://doi.org/10.1007/s40279-015-0333-8"),
-        new("MentalResource_SourceFokkema", "https://doi.org/10.1016/j.jsams.2018.06.003"),
-        new("MentalResource_SourceRelph", "https://doi.org/10.3390/ijerph20176682")
+        new("1", "MentalResource_SourceOswald", "https://doi.org/10.3390/ijerph17218059"),
+        new("2", "MentalResource_SourcePereira", "https://doi.org/10.3389/fpsyg.2021.624783"),
+        new("3", "MentalResource_SourceFurie", "https://doi.org/10.1007/s12178-023-09830-6"),
+        new("4", "MentalResource_SourceDeJonge", "https://doi.org/10.3390/ijerph17031044"),
+        new("5", "MentalResource_SourceVerhagen", "https://doi.org/10.1136/bmjsem-2021-001117"),
+        new("6", "MentalResource_SourceVidebaek", "https://doi.org/10.1007/s40279-015-0333-8"),
+        new("7", "MentalResource_SourceFokkema", "https://doi.org/10.1016/j.jsams.2018.06.003"),
+        new("8", "MentalResource_SourceRelph", "https://doi.org/10.3390/ijerph20176682")
     };
 
-    private sealed record ArticleSection(string TitleKey, string TextKey);
+    private sealed record ArticleSection(string TitleKey, string TextKey, IReadOnlyList<int> SourceIndexes);
 
-    private sealed record SourceRow(string TitleKey, string Url);
+    private sealed record SourceRow(string Number, string TitleKey, string Url);
 }

@@ -1164,8 +1164,9 @@
 
 .pl-academy-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 180px));
+    justify-content: start;
+    gap: 12px;
 }
 
 .pl-academy-tile-link {
@@ -1203,12 +1204,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 10px;
+    gap: 7px;
     aspect-ratio: 1 / 1;
     height: 100%;
     min-width: 0;
     overflow: hidden;
-    padding: 16px;
+    padding: 10px;
     border: 1px solid color-mix(in srgb, var(--pl-academy-accent) 28%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
     background: color-mix(in srgb, var(--pl-academy-accent) var(--pl-academy-tile-accent), var(--mud-palette-surface));
@@ -1236,7 +1237,7 @@
 .pl-academy-tile__header {
     display: grid;
     min-width: 0;
-    gap: 10px;
+    gap: 6px;
     align-content: start;
     flex: 0 0 auto;
 }
@@ -1246,7 +1247,8 @@
     overflow: hidden;
     color: var(--mud-palette-text-primary);
     font-weight: 800;
-    line-height: 1.2;
+    font-size: .86rem;
+    line-height: 1.15;
     overflow-wrap: anywhere;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -1259,13 +1261,13 @@
     align-items: center;
     max-width: 100%;
     min-width: 0;
-    min-height: 24px;
-    padding: 3px 8px;
+    min-height: 20px;
+    padding: 2px 6px;
     border: 1px solid color-mix(in srgb, var(--pl-academy-accent) 48%, transparent);
     border-radius: 999px;
     color: var(--pl-academy-accent);
     background: color-mix(in srgb, var(--pl-academy-accent) 8%, transparent);
-    font-size: .75rem;
+    font-size: .64rem;
     font-weight: 700;
     line-height: 1.2;
     overflow: hidden;
@@ -1284,9 +1286,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 82px;
-    height: 82px;
-    flex: 0 0 82px;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
     border: 1px solid color-mix(in srgb, var(--pl-academy-accent) 32%, transparent);
     border-radius: var(--pl-radius);
     color: var(--pl-academy-accent);
@@ -1296,7 +1298,7 @@
 .pl-academy-tile__icon .mud-icon-root {
     width: 1em;
     height: 1em;
-    font-size: 3.25rem;
+    font-size: 2.15rem;
 }
 
 .pl-academy-tile__subtitle {
@@ -1304,7 +1306,8 @@
     min-width: 0;
     overflow: hidden;
     color: var(--mud-palette-text-secondary);
-    line-height: 1.35;
+    font-size: .68rem;
+    line-height: 1.25;
     overflow-wrap: anywhere;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -1353,30 +1356,82 @@
     gap: 8px;
 }
 
+.pl-citation {
+    display: inline-flex;
+    margin-left: .25rem;
+    color: var(--mud-palette-error) !important;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.pl-citation:hover,
+.pl-citation:focus-visible {
+    text-decoration: underline;
+}
+
+.pl-source-list {
+    display: grid;
+    gap: 6px;
+}
+
+.pl-source-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 8px;
+}
+
+.pl-source-row > a,
+.pl-source-text {
+    min-width: 0;
+}
+
+.pl-source-number {
+    color: var(--mud-palette-error);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
 @supports not (aspect-ratio: 1 / 1) {
     .pl-academy-tile {
-        min-height: 240px;
+        min-height: 180px;
     }
 }
 
 @media (max-width: 599.98px) {
     .pl-academy-grid {
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
     }
 
     .pl-academy-tile {
-        padding: 14px;
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .pl-academy-tile__title {
+        font-size: .78rem;
+    }
+
+    .pl-academy-tile__chip {
+        min-height: 18px;
+        padding: 2px 5px;
+        font-size: .58rem;
     }
 
     .pl-academy-tile__icon {
-        width: 68px;
-        height: 68px;
-        flex-basis: 68px;
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
     }
 
     .pl-academy-tile__icon .mud-icon-root {
-        font-size: 2.75rem;
+        font-size: 1.85rem;
+    }
+
+    .pl-academy-tile__subtitle {
+        font-size: .62rem;
+        line-height: 1.2;
     }
 }
 
