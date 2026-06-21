@@ -22,7 +22,7 @@ public sealed class UserDriveFolderServiceTests
 
         Assert.Equal("existing-folder", folder.FolderId);
         Assert.Empty(storage.CreatedFolders);
-        Assert.Single(storage.ReadableFolders);
+        Assert.Single(storage.PublicReadLinkFolders);
         Assert.Empty(repository.SavedFolders);
     }
 
@@ -39,7 +39,7 @@ public sealed class UserDriveFolderServiceTests
 
         Assert.Equal("user-folder-athlete-1", folder.FolderId);
         Assert.Single(storage.CreatedFolders);
-        Assert.Single(storage.ReadableFolders);
+        Assert.Single(storage.PublicReadLinkFolders);
         Assert.Single(repository.SavedFolders);
         Assert.Equal("athlete@example.com", repository.SavedFolders[0].Email);
     }
@@ -125,7 +125,7 @@ public sealed class UserDriveFolderServiceTests
     private sealed class FakeUserDriveFolderStorageProvider : IUserDriveFolderStorageProvider
     {
         public List<UserDriveFolderRequest> CreatedFolders { get; } = new();
-        public List<(DriveFolderReference Folder, string Email)> ReadableFolders { get; } = new();
+        public List<DriveFolderReference> PublicReadLinkFolders { get; } = new();
         public List<(DriveFolderReference Parent, string FolderName)> CreatedChildFolders { get; } = new();
         public List<(DriveFolderReference Folder, string FileName, string ContentType)> UploadedFiles { get; } = new();
         public List<DriveFolderReference> DeletedFolders { get; } = new();
@@ -140,12 +140,11 @@ public sealed class UserDriveFolderServiceTests
                 $"https://drive.test/user-folder-{request.AthleteUserId}"));
         }
 
-        public Task GrantUserReadAccessAsync(
+        public Task EnsureUserFolderHasPublicReadLinkAsync(
             DriveFolderReference userFolder,
-            string userEmail,
             CancellationToken cancellationToken = default)
         {
-            ReadableFolders.Add((userFolder, userEmail));
+            PublicReadLinkFolders.Add(userFolder);
             return Task.CompletedTask;
         }
 

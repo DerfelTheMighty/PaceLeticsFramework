@@ -35,12 +35,12 @@ public sealed class UserDriveFolderService : IUserDriveFolderService
         var existing = await _repository.FindUserFolderAsync(request.AthleteUserId.Trim(), cancellationToken);
         if (existing is not null)
         {
-            await _storageProvider.GrantUserReadAccessAsync(existing, request.Email, cancellationToken);
+            await _storageProvider.EnsureUserFolderHasPublicReadLinkAsync(existing, cancellationToken);
             return existing;
         }
 
         var userFolder = await _storageProvider.EnsureUserFolderAsync(request, cancellationToken);
-        await _storageProvider.GrantUserReadAccessAsync(userFolder, request.Email, cancellationToken);
+        await _storageProvider.EnsureUserFolderHasPublicReadLinkAsync(userFolder, cancellationToken);
         await _repository.SaveUserFolderAsync(
             new SaveUserDriveFolderRequest(
                 request.AthleteUserId.Trim(),
@@ -135,7 +135,7 @@ public sealed class UserDriveFolderService : IUserDriveFolderService
             throw new InvalidOperationException("An athlete user id is required.");
 
         if (string.IsNullOrWhiteSpace(request.Email))
-            throw new InvalidOperationException("A user email is required to share the Drive folder.");
+            throw new InvalidOperationException("A user email is required to create the Drive folder reference.");
     }
 
     private static void ValidateUploadRequest(UserDriveAnalysisRecordingUploadRequest request)

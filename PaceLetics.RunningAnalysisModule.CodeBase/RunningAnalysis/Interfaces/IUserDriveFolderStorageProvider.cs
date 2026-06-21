@@ -8,9 +8,8 @@ public interface IUserDriveFolderStorageProvider
         UserDriveFolderRequest request,
         CancellationToken cancellationToken = default);
 
-    Task GrantUserReadAccessAsync(
+    Task EnsureUserFolderHasPublicReadLinkAsync(
         DriveFolderReference userFolder,
-        string userEmail,
         CancellationToken cancellationToken = default);
 
     Task<DriveFolderReference> EnsureChildFolderAsync(
