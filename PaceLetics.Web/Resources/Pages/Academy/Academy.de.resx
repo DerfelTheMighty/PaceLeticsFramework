@@ -10,9 +10,7 @@
   <data name="TabAll" xml:space="preserve"><value>Alle</value></data>
   <data name="CategoryFundamentals" xml:space="preserve"><value>Grundlagen</value></data>
   <data name="CategoryRunningAnalysis" xml:space="preserve"><value>Laufform</value></data>
-  <data name="CategoryTrainingPlans" xml:space="preserve"><value>Plaene</value></data>
   <data name="MetricArticles" xml:space="preserve"><value>Artikel</value></data>
   <data name="MetricSources" xml:space="preserve"><value>Quellen</value></data>
-  <data name="MetricPlans" xml:space="preserve"><value>Plan-Bloecke</value></data>
   <data name="Sources" xml:space="preserve"><value>Quellen</value></data>
 </root>

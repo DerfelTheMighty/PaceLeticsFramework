@@ -1,9 +1,7 @@
 using System.Globalization;
 using Microsoft.Extensions.Localization;
 using PaceLetics.RunningAnalysisModule.Components;
-using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.Web.Pages.Athletes;
-using PaceLetics.Web.Services;
 using PaceLetics.Web.Services.Academy;
 
 namespace PaceLetics.Tests;
@@ -29,21 +27,6 @@ public sealed class AcademyServiceTests
     }
 
     [Fact]
-    public void GetArticles_SeedsTrainingPlanKnowledgeFromPublishedPlanCatalog()
-    {
-        var service = CreateService();
-
-        var articles = service.GetArticles();
-
-        var plan = Assert.Single(articles, article => article.Id == "training-plan-level-1-laufschule");
-        Assert.Equal(AcademyArticleCategories.TrainingPlans, plan.Category);
-        Assert.Contains("Level 1", plan.Tags);
-        Assert.Contains(plan.BodyBlocks, block => block.Contains("Warm-up ABC"));
-        Assert.Contains(plan.BodyBlocks, block => block.Contains("Stride drill"));
-        Assert.Contains(plan.BodyBlocks, block => block.Contains("Aerobic base"));
-    }
-
-    [Fact]
     public void GetCategories_ReturnsCategoriesWithSeedArticles()
     {
         var service = CreateService();
@@ -52,32 +35,15 @@ public sealed class AcademyServiceTests
 
         Assert.Contains(AcademyArticleCategories.Fundamentals, categories);
         Assert.Contains(AcademyArticleCategories.RunningAnalysis, categories);
-        Assert.Contains(AcademyArticleCategories.TrainingPlans, categories);
         Assert.DoesNotContain("workouts", categories);
+        Assert.DoesNotContain("trainingPlans", categories);
     }
 
     private static AcademyService CreateService()
     {
         return new AcademyService(
             new DictionaryLocalizer<Dashboard>(DashboardTexts),
-            new DictionaryLocalizer<RunningAnalysisResources>(RunningAnalysisTexts),
-            new FakeTrainingPlanService());
-    }
-
-    private static TrainingPlan CreateTrainingPlan()
-    {
-        var session = new TrainingSession(
-            "session-1",
-            "Easy start",
-            new DateTime(2026, 1, 1),
-            Array.Empty<PaceLetics.TrainingModule.CodeBase.Running.Models.RunningSession>(),
-            new[] { new WorkoutSessionDefinition("Stabi Handout Easy", "Stabi Handout") },
-            new[] { new TrainingSessionActivity("Warm-up ABC", "Mobilize", 300, ActivityType: "warmup") },
-            new[] { new TrainingSessionActivity("Stride drill", "Coordinate", 120, ActivityType: "drill") },
-            new TrainingEffect("Aerobic base", "Low intensity", "Capacity", "Short recovery"),
-            TrainingSessionAppointment.Empty);
-
-        return new TrainingPlan("Level 1 Laufschule", "Level 1 Laufschule", new[] { session });
+            new DictionaryLocalizer<RunningAnalysisResources>(RunningAnalysisTexts));
     }
 
     private static readonly Dictionary<string, string> DashboardTexts = new(StringComparer.OrdinalIgnoreCase)
@@ -128,24 +94,6 @@ public sealed class AcademyServiceTests
         ["InterventionGuidance_SourceRidge"] = "Ridge et al.",
         ["InterventionGuidance_SourceChristopher"] = "Christopher et al."
     };
-
-    private sealed class FakeTrainingPlanService : ITrainingPlanService
-    {
-        public IReadOnlyList<TrainingPlan> LoadTrainingPlans()
-        {
-            return new[] { CreateTrainingPlan() };
-        }
-
-        public Task<IReadOnlyList<TrainingPlan>> LoadTrainingPlansForUserAsync(string? userId)
-        {
-            return Task.FromResult<IReadOnlyList<TrainingPlan>>(LoadTrainingPlans());
-        }
-
-        public IReadOnlyList<PaceLetics.TrainingModule.CodeBase.Running.Models.RunningSession> LoadLegacySessions()
-        {
-            return Array.Empty<PaceLetics.TrainingModule.CodeBase.Running.Models.RunningSession>();
-        }
-    }
 
     private sealed class DictionaryLocalizer<T> : IStringLocalizer<T>
     {

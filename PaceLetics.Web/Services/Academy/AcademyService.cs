@@ -1,8 +1,6 @@
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.Localization;
 using PaceLetics.RunningAnalysisModule.Components;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
-using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.Web.Pages.Athletes;
 
 namespace PaceLetics.Web.Services.Academy;
@@ -11,16 +9,13 @@ public sealed partial class AcademyService : IAcademyService
 {
     private readonly IStringLocalizer<Dashboard> _dashboardLocalizer;
     private readonly IStringLocalizer<RunningAnalysisResources> _runningAnalysisLocalizer;
-    private readonly ITrainingPlanService _trainingPlanService;
 
     public AcademyService(
         IStringLocalizer<Dashboard> dashboardLocalizer,
-        IStringLocalizer<RunningAnalysisResources> runningAnalysisLocalizer,
-        ITrainingPlanService trainingPlanService)
+        IStringLocalizer<RunningAnalysisResources> runningAnalysisLocalizer)
     {
         _dashboardLocalizer = dashboardLocalizer;
         _runningAnalysisLocalizer = runningAnalysisLocalizer;
-        _trainingPlanService = trainingPlanService;
     }
 
     public IReadOnlyList<AcademyArticle> GetArticles()
@@ -46,9 +41,6 @@ public sealed partial class AcademyService : IAcademyService
             yield return article;
 
         foreach (var article in BuildRunningAnalysisArticles())
-            yield return article;
-
-        foreach (var article in BuildTrainingPlanArticles())
             yield return article;
     }
 
@@ -133,80 +125,6 @@ public sealed partial class AcademyService : IAcademyService
         };
     }
 
-    private IEnumerable<AcademyArticle> BuildTrainingPlanArticles()
-    {
-        foreach (var plan in _trainingPlanService.LoadTrainingPlans())
-        {
-            var effects = plan.Sessions
-                .Select(session => session.TrainingEffect)
-                .Where(effect => effect is not null && !effect.IsEmpty)
-                .Select(effect => effect.Normalize())
-                .Distinct()
-                .Take(3)
-                .ToList();
-            var warmups = plan.Sessions
-                .SelectMany(session => session.Warmup)
-                .Select(activity => activity.Title)
-                .Where(title => !string.IsNullOrWhiteSpace(title))
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .Take(6)
-                .ToList();
-            var drills = plan.Sessions
-                .SelectMany(session => session.Drills)
-                .Select(activity => activity.Title)
-                .Where(title => !string.IsNullOrWhiteSpace(title))
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .Take(6)
-                .ToList();
-
-            yield return new AcademyArticle
-            {
-                Id = $"training-plan-{Slug(plan.Id)}",
-                Title = plan.Name,
-                Summary = BuildPlanSummary(plan),
-                Category = AcademyArticleCategories.TrainingPlans,
-                SourceModule = "Training plan catalog",
-                Tags = NormalizeTags(new[] { "Training plan", ExtractLevelTag(plan.Name) }),
-                BodyBlocks = Blocks(
-                    BuildPlanSummary(plan),
-                    BuildTrainingEffectBlock(effects),
-                    warmups.Count == 0 ? string.Empty : $"Warm-up: {string.Join(", ", warmups)}",
-                    drills.Count == 0 ? string.Empty : $"Drills: {string.Join(", ", drills)}"),
-                References = Array.Empty<ContentReference>(),
-                SortOrder = 90
-            };
-        }
-    }
-
-    private static string BuildPlanSummary(TrainingPlan plan)
-    {
-        var dateRange = plan.StartDate is null || plan.EndDate is null
-            ? string.Empty
-            : $"{plan.StartDate:dd.MM.yyyy} - {plan.EndDate:dd.MM.yyyy}";
-        var distance = plan.TotalRunDistance > 0
-            ? $", {plan.TotalRunDistance / 1000m:0.#} km running volume"
-            : string.Empty;
-
-        return $"{plan.Sessions.Count} sessions{distance}{(string.IsNullOrWhiteSpace(dateRange) ? string.Empty : $" ({dateRange})")}.";
-    }
-
-    private static string BuildTrainingEffectBlock(IReadOnlyList<TrainingEffect> effects)
-    {
-        if (effects.Count == 0)
-            return string.Empty;
-
-        return string.Join(
-            " ",
-            effects.Select(effect =>
-                string.Join(
-                    " ",
-                    Blocks(
-                        effect.Focus,
-                        effect.Stimulus,
-                        effect.Adaptation,
-                        effect.Recovery))));
-    }
-
     private List<ContentReference> BuildMentalResourceReferences()
     {
         return new List<ContentReference>
@@ -285,32 +203,4 @@ public sealed partial class AcademyService : IAcademyService
             .ToList();
     }
 
-    private static IReadOnlyList<string> NormalizeTags(IEnumerable<string?> tags)
-    {
-        return tags
-            .Where(tag => !string.IsNullOrWhiteSpace(tag))
-            .Select(tag => tag!.Trim())
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToList();
-    }
-
-    private static string ExtractLevelTag(string name)
-    {
-        var match = LevelRegex().Match(name);
-        return match.Success ? match.Value : string.Empty;
-    }
-
-    private static string Slug(string value)
-    {
-        var slug = new string(value
-            .Trim()
-            .ToLowerInvariant()
-            .Select(character => char.IsLetterOrDigit(character) ? character : '-')
-            .ToArray());
-
-        return string.Join("-", slug.Split('-', StringSplitOptions.RemoveEmptyEntries));
-    }
-
-    [GeneratedRegex("Level\\s+[0-5]", RegexOptions.IgnoreCase)]
-    private static partial Regex LevelRegex();
 }
