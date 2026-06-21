@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Choose a public username</value></data>
+  <data name="Text" xml:space="preserve"><value>Your public username is used in course, recording, and analysis views instead of your email address.</value></data>
+  <data name="PublicUserName" xml:space="preserve"><value>Public username</value></data>
+  <data name="HelpText" xml:space="preserve"><value>Letters, numbers, dots, underscores, and hyphens only.</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Required" xml:space="preserve"><value>Please enter a public username.</value></data>
+  <data name="InvalidCharacters" xml:space="preserve"><value>The public username may only contain letters, numbers, periods, underscores, and hyphens.</value></data>
+  <data name="AlreadyTaken" xml:space="preserve"><value>This public username is already taken.</value></data>
+  <data name="Saved" xml:space="preserve"><value>Public username saved.</value></data>
+</root>

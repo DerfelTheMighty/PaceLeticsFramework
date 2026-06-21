@@ -11,27 +11,28 @@
 @inject NavigationManager Navigation
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
+@inject IStringLocalizer<RunningAnalysisSession> L
 
-<PageTitle>Laufanalyse auswerten</PageTitle>
+<PageTitle>@L["ReviewPageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-            <PageHeader Title="@(_courseEvent?.Title ?? "Laufanalyse auswerten")"
+            <PageHeader Title="@(_courseEvent?.Title ?? L["ReviewPageTitle"].ToString())"
                         Subtitle="@GetHeaderSubtitle()" />
 
             <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                <MudTooltip Text="Zur Aufnahme">
+                <MudTooltip Text="@L["BackToRecording"]">
                     <MudIconButton Icon="@Icons.Material.Filled.Videocam"
                                    Variant="Variant.Outlined"
                                    Color="Color.Primary"
                                    OnClick="OpenRecordingSession"
-                                   aria-label="Zur Aufnahme" />
+                                   aria-label="@L["BackToRecording"]" />
                 </MudTooltip>
-                <MudTooltip Text="Zurück">
+                <MudTooltip Text="@L["Back"]">
                     <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
                                    OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analyses"))"
-                                   aria-label="Zurück" />
+                                   aria-label="@L["Back"]" />
                 </MudTooltip>
             </MudStack>
         </MudStack>
@@ -42,19 +43,19 @@
         }
         else if (_captureSession is null)
         {
-            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">Analyse wird geladen.</MudAlert>
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["ReviewLoading"]</MudAlert>
         }
         else if (_captureSession.Status != RunningAnalysisEventStatus.Completed)
         {
             <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                Die Analyse kann erst nach Abschluss der Aufnahmesession durchgefuehrt werden.
+                @L["ReviewNeedsCompletedCapture"]
             </MudAlert>
 
             <MudButton Variant="Variant.Filled"
                        Color="Color.Primary"
                        StartIcon="@Icons.Material.Filled.Videocam"
                        OnClick="OpenRecordingSession">
-                Aufnahmesession öffnen
+                @L["OpenRecordingSession"]
             </MudButton>
         }
         else
@@ -63,14 +64,14 @@
                 <MudStack Spacing="2">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
                         <MudStack Spacing="0">
-                            <MudText Typo="Typo.h6">Teilnehmende</MudText>
+                            <MudText Typo="Typo.h6">@L["Roster"]</MudText>
                             <MudText Typo="Typo.body2" Color="Color.Secondary">
                                 @GetRosterStatusText()
                             </MudText>
                         </MudStack>
 
                         <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
-                            Aufnahme abgeschlossen
+                            @L["CaptureCompleted"]
                         </MudChip>
                     </MudStack>
 
@@ -84,7 +85,7 @@
             @if (CurrentParticipant is null)
             {
                 <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                    Wähle einen Teilnehmer zur Bewertung aus.
+                    @L["SelectParticipantForAssessment"]
                 </MudAlert>
             }
             else
@@ -101,13 +102,13 @@
 
                             @if (!string.IsNullOrWhiteSpace(CurrentParticipant.DriveFolderUrl))
                             {
-                                <MudTooltip Text="Athletenordner öffnen">
+                                <MudTooltip Text="@L["OpenAthleteFolder"]">
                                     <MudIconButton Href="@CurrentParticipant.DriveFolderUrl"
                                                    Target="_blank"
                                                    Icon="@Icons.Material.Filled.FolderOpen"
                                                    Color="Color.Primary"
                                                    Variant="Variant.Outlined"
-                                                   aria-label="Athletenordner öffnen" />
+                                                   aria-label="@L["OpenAthleteFolder"]" />
                                 </MudTooltip>
                             }
                         </MudStack>
@@ -117,13 +118,13 @@
                                        Variant="@GetPerspectiveVariant(RunningAnalysisPerspective.Side)"
                                        Color="@GetPerspectiveColor(RunningAnalysisPerspective.Side)"
                                        OnClick="@(() => SelectPerspective(RunningAnalysisPerspective.Side))">
-                                Seitenansicht
+                                @L["PerspectiveSide"]
                             </MudButton>
                             <MudButton Size="Size.Small"
                                        Variant="@GetPerspectiveVariant(RunningAnalysisPerspective.Rear)"
                                        Color="@GetPerspectiveColor(RunningAnalysisPerspective.Rear)"
                                        OnClick="@(() => SelectPerspective(RunningAnalysisPerspective.Rear))">
-                                Rueckansicht
+                                @L["PerspectiveRear"]
                             </MudButton>
                         </MudStack>
 
@@ -132,13 +133,13 @@
                                 <MudText Typo="Typo.body2">@GetVideoAccessText()</MudText>
                                 @if (!string.IsNullOrWhiteSpace(CurrentVideoUrl))
                                 {
-                                    <MudTooltip Text="Video öffnen">
+                                    <MudTooltip Text="@L["OpenVideo"]">
                                         <MudIconButton Href="@CurrentVideoUrl"
                                                        Target="_blank"
                                                        Icon="@Icons.Material.Filled.OpenInNew"
                                                        Color="Color.Primary"
                                                        Variant="Variant.Outlined"
-                                                       aria-label="Video öffnen" />
+                                                       aria-label="@L["OpenVideo"]" />
                                     </MudTooltip>
                                 }
                             </MudStack>
@@ -161,30 +162,30 @@
 
                                             <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
                                                 <MudSelect T="RunningAnalysisAssessmentRating"
-                                                           Label="Bewertung"
+                                                           Label="@L["AssessmentRating"]"
                                                            Dense="true"
                                                            Style="min-width:180px;"
                                                            @bind-Value="item.Rating">
-                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.NotAssessable">Nicht bewertbar</MudSelectItem>
-                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.Normal">0 unauffaellig</MudSelectItem>
-                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.Mild">1 leicht auffaellig</MudSelectItem>
-                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.Significant">2 deutlich auffaellig</MudSelectItem>
+                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.NotAssessable">@L["RatingNotAssessable"]</MudSelectItem>
+                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.Normal">@L["RatingNormal"]</MudSelectItem>
+                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.Mild">@L["RatingMild"]</MudSelectItem>
+                                                    <MudSelectItem T="RunningAnalysisAssessmentRating" Value="RunningAnalysisAssessmentRating.Significant">@L["RatingSignificant"]</MudSelectItem>
                                                 </MudSelect>
 
                                                 <MudSelect T="RunningAnalysisAssessmentConfidence"
-                                                           Label="Sicherheit"
+                                                           Label="@L["AssessmentConfidence"]"
                                                            Dense="true"
                                                            Style="min-width:150px;"
                                                            @bind-Value="item.Confidence">
-                                                    <MudSelectItem T="RunningAnalysisAssessmentConfidence" Value="RunningAnalysisAssessmentConfidence.Low">Niedrig</MudSelectItem>
-                                                    <MudSelectItem T="RunningAnalysisAssessmentConfidence" Value="RunningAnalysisAssessmentConfidence.Medium">Mittel</MudSelectItem>
-                                                    <MudSelectItem T="RunningAnalysisAssessmentConfidence" Value="RunningAnalysisAssessmentConfidence.High">Hoch</MudSelectItem>
+                                                    <MudSelectItem T="RunningAnalysisAssessmentConfidence" Value="RunningAnalysisAssessmentConfidence.Low">@L["ConfidenceLow"]</MudSelectItem>
+                                                    <MudSelectItem T="RunningAnalysisAssessmentConfidence" Value="RunningAnalysisAssessmentConfidence.Medium">@L["ConfidenceMedium"]</MudSelectItem>
+                                                    <MudSelectItem T="RunningAnalysisAssessmentConfidence" Value="RunningAnalysisAssessmentConfidence.High">@L["ConfidenceHigh"]</MudSelectItem>
                                                 </MudSelect>
                                             </MudStack>
                                         </MudStack>
 
                                         <MudTextField T="string"
-                                                      Label="Notiz"
+                                                      Label="@L["Notes"]"
                                                       Lines="2"
                                                       Variant="Variant.Outlined"
                                                       @bind-Value="item.Notes" />
@@ -194,7 +195,7 @@
                         </MudStack>
 
                         <MudTextField T="string"
-                                      Label="Zusammenfassung"
+                                      Label="@L["Summary"]"
                                       Lines="3"
                                       Variant="Variant.Outlined"
                                       @bind-Value="_analysisSummary" />
@@ -205,34 +206,34 @@
                             </MudText>
 
                             <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                                <MudTooltip Text="Entwurf speichern">
+                                <MudTooltip Text="@L["SaveDraft"]">
                                     <MudIconButton Icon="@Icons.Material.Filled.Save"
                                                    Color="Color.Primary"
                                                    Variant="Variant.Outlined"
                                                    Disabled="@_isSavingAnalysis"
                                                    OnClick="@(() => SaveParticipantAnalysisAsync(false))"
-                                                   aria-label="Entwurf speichern" />
+                                                   aria-label="@L["SaveDraft"]" />
                                 </MudTooltip>
 
                                 @if (_selectedPerspective == RunningAnalysisPerspective.Side)
                                 {
-                                    <MudTooltip Text="Weiter zur Rueckansicht">
+                                    <MudTooltip Text="@L["ContinueToRear"]">
                                         <MudIconButton Icon="@Icons.Material.Filled.ArrowForward"
                                                        Color="Color.Primary"
                                                        Variant="Variant.Filled"
                                                        OnClick="@(() => SelectPerspective(RunningAnalysisPerspective.Rear))"
-                                                       aria-label="Weiter zur Rueckansicht" />
+                                                       aria-label="@L["ContinueToRear"]" />
                                     </MudTooltip>
                                 }
                                 else
                                 {
-                                    <MudTooltip Text="Analyse abschliessen">
+                                    <MudTooltip Text="@L["CompleteAnalysis"]">
                                         <MudIconButton Icon="@Icons.Material.Filled.DoneAll"
                                                        Color="Color.Success"
                                                        Variant="Variant.Filled"
                                                        Disabled="@_isSavingAnalysis"
                                                        OnClick="@(() => SaveParticipantAnalysisAsync(true))"
-                                                       aria-label="Analyse abschliessen" />
+                                                       aria-label="@L["CompleteAnalysis"]" />
                                     </MudTooltip>
                                 }
                             </MudStack>
@@ -285,7 +286,7 @@
 
     private async Task LoadAsync()
     {
-        await Loading.RunAsync("Laufanalyse wird geladen", async () =>
+        await Loading.RunAsync(L["ReviewLoading"], async () =>
         {
             try
             {
@@ -295,18 +296,18 @@
                 _trainerDisplayName = authState.User.Identity?.Name ?? _userId;
 
                 if (string.IsNullOrWhiteSpace(_userId))
-                    throw new InvalidOperationException("Der Trainer konnte nicht aufgeloest werden.");
+                    throw new InvalidOperationException(L["TrainerNotResolved"]);
 
                 var courses = await CourseService.GetCoursesForTrainerAsync(_userId);
                 _course = courses.FirstOrDefault(course => course.Id == CourseId)
-                    ?? throw new InvalidOperationException("Der Kurs wurde nicht gefunden.");
+                    ?? throw new InvalidOperationException(L["CourseNotFound"]);
 
                 var events = await CourseService.GetEventsAsync(_course.Id);
                 _courseEvent = events.FirstOrDefault(courseEvent => courseEvent.Id == EventId)
-                    ?? throw new InvalidOperationException("Das Event wurde nicht gefunden.");
+                    ?? throw new InvalidOperationException(L["EventNotFound"]);
 
                 if (!string.Equals(_courseEvent.EventType, CourseEventTypes.RunningAnalysis, StringComparison.OrdinalIgnoreCase))
-                    throw new InvalidOperationException("Dieses Event ist keine Laufanalyse.");
+                    throw new InvalidOperationException(L["ReviewNotRunningAnalysis"]);
 
                 _captureSession = await RunningAnalysisService.PrepareCaptureSessionAsync(
                     new RunningAnalysisCaptureSessionRequest(
@@ -404,7 +405,7 @@
                 });
 
             await LoadRosterAsync();
-            Snackbar.Add(complete ? "Analyse abgeschlossen." : "Analyseentwurf gespeichert.", Severity.Success);
+            Snackbar.Add(complete ? L["AnalysisCompleteSuccess"] : L["AnalysisDraftSaved"], Severity.Success);
         }
         catch (Exception ex)
         {
@@ -427,28 +428,28 @@
     private string GetHeaderSubtitle()
     {
         if (_course is null || _courseEvent is null)
-            return "Bewertung nach abgeschlossener Aufnahmesession";
+            return L["ReviewSubtitle"];
 
-        return $"{_course.Name}, {_courseEvent.StartsAt:g} - {_courseEvent.EndsAt:g}";
+        return string.Format(L["ReviewSubtitleWithCourse"], _course.Name, _courseEvent.StartsAt, _courseEvent.EndsAt);
     }
 
     private string GetRosterStatusText()
     {
         var completed = _roster.Count(item => item.ResultStatus == RunningAnalysisResultStatus.Completed);
-        return $"{_roster.Count} Teilnehmende, {completed} abgeschlossen";
+        return string.Format(L["RosterStatus"], _roster.Count, completed);
     }
 
     private string GetAnalysisStatusText()
     {
         if (_analysisResult?.Status == RunningAnalysisResultStatus.Completed)
             return _analysisResult.TotalMaxScore > 0
-                ? $"Abgeschlossen: {_analysisResult.TotalScore}/{_analysisResult.TotalMaxScore}"
-                : "Abgeschlossen";
+                ? string.Format(L["AnalysisStatusCompletedWithScore"], _analysisResult.TotalScore, _analysisResult.TotalMaxScore)
+                : L["AnalysisStatusCompleted"];
 
         if (_analysisResult?.Status == RunningAnalysisResultStatus.Draft)
-            return "Entwurf";
+            return L["AnalysisStatusDraft"];
 
-        return "Noch nicht bewertet";
+        return L["AnalysisStatusNotAssessed"];
     }
 
     private Variant GetPerspectiveVariant(RunningAnalysisPerspective perspective)
@@ -471,13 +472,13 @@
     private string GetVideoAccessText()
     {
         var perspective = _selectedPerspective == RunningAnalysisPerspective.Rear
-            ? "Rueckansicht"
-            : "Seitenansicht";
+            ? L["PerspectiveRear"].ToString()
+            : L["PerspectiveSide"].ToString();
 
         if (!string.IsNullOrWhiteSpace(CurrentVideoUrl))
-            return $"{perspective}: Videodatei verfügbar.";
+            return string.Format(L["VideoAvailable"], perspective);
 
-        return $"{perspective}: Keine zugeordnete Videodatei gefunden. Bitte den Athletenordner öffnen oder die Aufnahme hochladen.";
+        return string.Format(L["VideoMissing"], perspective);
     }
 
     private string GetCurrentScoreText()
@@ -486,12 +487,12 @@
         var sideMax = CalculateAssessmentMaxScore(_sideAssessment);
         var rearScore = CalculateAssessmentScore(_rearAssessment);
         var rearMax = CalculateAssessmentMaxScore(_rearAssessment);
-        return $"Seite {FormatScore(sideScore, sideMax)} | Hinten {FormatScore(rearScore, rearMax)}";
+        return string.Format(L["ScoreSummary"], FormatScore(sideScore, sideMax), FormatScore(rearScore, rearMax));
     }
 
-    private static string FormatScore(int score, int maxScore)
+    private string FormatScore(int score, int maxScore)
     {
-        return maxScore > 0 ? $"{score}/{maxScore}" : "nicht bewertet";
+        return maxScore > 0 ? $"{score}/{maxScore}" : L["ScoreNotAssessed"];
     }
 
     private static int CalculateAssessmentScore(IEnumerable<RunningAnalysisAssessmentItem> items)
@@ -534,32 +535,32 @@
             .ToList();
     }
 
-    private static string GetCriterionTitle(RunningAnalysisCriterion criterion)
+    private string GetCriterionTitle(RunningAnalysisCriterion criterion)
     {
         return criterion switch
         {
-            RunningAnalysisCriterion.Overstride => "Overstride",
-            RunningAnalysisCriterion.TrunkPosture => "Oberkörperhaltung",
-            RunningAnalysisCriterion.HipExtension => "Hüftstreckung",
-            RunningAnalysisCriterion.ArmSwingSide => "Armschwung",
-            RunningAnalysisCriterion.InternalRotation => "Innenrotation",
-            RunningAnalysisCriterion.PelvicDrop => "Absinken des Beckens",
-            RunningAnalysisCriterion.ArmSwingRear => "Armschwung",
+            RunningAnalysisCriterion.Overstride => L["CriterionOverstrideTitle"],
+            RunningAnalysisCriterion.TrunkPosture => L["CriterionTrunkPostureTitle"],
+            RunningAnalysisCriterion.HipExtension => L["CriterionHipExtensionTitle"],
+            RunningAnalysisCriterion.ArmSwingSide => L["CriterionArmSwingSideTitle"],
+            RunningAnalysisCriterion.InternalRotation => L["CriterionInternalRotationTitle"],
+            RunningAnalysisCriterion.PelvicDrop => L["CriterionPelvicDropTitle"],
+            RunningAnalysisCriterion.ArmSwingRear => L["CriterionArmSwingRearTitle"],
             _ => criterion.ToString()
         };
     }
 
-    private static string GetCriterionHint(RunningAnalysisCriterion criterion)
+    private string GetCriterionHint(RunningAnalysisCriterion criterion)
     {
         return criterion switch
         {
-            RunningAnalysisCriterion.Overstride => "Fußaufsatz deutlich vor dem Körper, oft mit gestrecktem Knie.",
-            RunningAnalysisCriterion.TrunkPosture => "Stabile leichte Vorlage ohne starkes Aufrichten, Rundrücken oder Hohlkreuz.",
-            RunningAnalysisCriterion.HipExtension => "Ausreichende Streckung hinter dem Körper ohne Ausweichen über die Lendenwirbelsaeule.",
-            RunningAnalysisCriterion.ArmSwingSide => "Rhythmischer Armschwung ohne starkes Kreuzen oder asymmetrisches Pendeln.",
-            RunningAnalysisCriterion.InternalRotation => "Knie oder Oberschenkel rotiert in der Stützphase sichtbar nach innen.",
-            RunningAnalysisCriterion.PelvicDrop => "Becken sinkt auf der Gegenseite in der mittleren Stützphase ab.",
-            RunningAnalysisCriterion.ArmSwingRear => "Symmetrischer Armschwung ohne starkes Cross-over oder Schulterhochstand.",
+            RunningAnalysisCriterion.Overstride => L["CriterionOverstrideHint"],
+            RunningAnalysisCriterion.TrunkPosture => L["CriterionTrunkPostureHint"],
+            RunningAnalysisCriterion.HipExtension => L["CriterionHipExtensionHint"],
+            RunningAnalysisCriterion.ArmSwingSide => L["CriterionArmSwingSideHint"],
+            RunningAnalysisCriterion.InternalRotation => L["CriterionInternalRotationHint"],
+            RunningAnalysisCriterion.PelvicDrop => L["CriterionPelvicDropHint"],
+            RunningAnalysisCriterion.ArmSwingRear => L["CriterionArmSwingRearHint"],
             _ => string.Empty
         };
     }

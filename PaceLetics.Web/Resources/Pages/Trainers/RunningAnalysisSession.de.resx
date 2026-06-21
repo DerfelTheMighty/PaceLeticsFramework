@@ -76,4 +76,61 @@
   <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>Die lokale Aufnahme ist zu groß für den Upload.</value></data>
   <data name="UploadSuccess" xml:space="preserve"><value>Aufnahme wurde hochgeladen.</value></data>
   <data name="UploadFailed" xml:space="preserve"><value>Upload fehlgeschlagen.</value></data>
+  <data name="BackToRoster" xml:space="preserve"><value>Zur Liste</value></data>
+  <data name="Recording" xml:space="preserve"><value>Aufnahme</value></data>
+  <data name="PerspectiveSide" xml:space="preserve"><value>Seitenansicht</value></data>
+  <data name="PerspectiveRear" xml:space="preserve"><value>Rueckansicht</value></data>
+  <data name="OpenVideo" xml:space="preserve"><value>Video oeffnen</value></data>
+  <data name="OpenFolder" xml:space="preserve"><value>Ordner oeffnen</value></data>
+  <data name="OpenAthleteFolder" xml:space="preserve"><value>Athletenordner oeffnen</value></data>
+  <data name="AssessmentRating" xml:space="preserve"><value>Bewertung</value></data>
+  <data name="RatingNotAssessable" xml:space="preserve"><value>Nicht bewertbar</value></data>
+  <data name="RatingNormal" xml:space="preserve"><value>0 unauffaellig</value></data>
+  <data name="RatingMild" xml:space="preserve"><value>1 leicht auffaellig</value></data>
+  <data name="RatingSignificant" xml:space="preserve"><value>2 deutlich auffaellig</value></data>
+  <data name="AssessmentConfidence" xml:space="preserve"><value>Sicherheit</value></data>
+  <data name="ConfidenceLow" xml:space="preserve"><value>Niedrig</value></data>
+  <data name="ConfidenceMedium" xml:space="preserve"><value>Mittel</value></data>
+  <data name="ConfidenceHigh" xml:space="preserve"><value>Hoch</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notiz</value></data>
+  <data name="Summary" xml:space="preserve"><value>Zusammenfassung</value></data>
+  <data name="SaveDraft" xml:space="preserve"><value>Entwurf speichern</value></data>
+  <data name="ContinueToRear" xml:space="preserve"><value>Weiter zur Rueckansicht</value></data>
+  <data name="CompleteAnalysis" xml:space="preserve"><value>Analyse abschliessen</value></data>
+  <data name="AnalysisCompleteSuccess" xml:space="preserve"><value>Analyse abgeschlossen.</value></data>
+  <data name="AnalysisDraftSaved" xml:space="preserve"><value>Analyseentwurf gespeichert.</value></data>
+  <data name="AnalysisStatusCompletedWithScore" xml:space="preserve"><value>Abgeschlossen: {0}/{1}</value></data>
+  <data name="AnalysisStatusCompleted" xml:space="preserve"><value>Abgeschlossen</value></data>
+  <data name="AnalysisStatusDraft" xml:space="preserve"><value>Entwurf</value></data>
+  <data name="AnalysisStatusNotAssessed" xml:space="preserve"><value>Noch nicht bewertet</value></data>
+  <data name="VideoAvailable" xml:space="preserve"><value>{0}: Videodatei verfuegbar.</value></data>
+  <data name="VideoMissing" xml:space="preserve"><value>{0}: Keine zugeordnete Videodatei gefunden. Bitte den Athletenordner oeffnen oder die Aufnahme hochladen.</value></data>
+  <data name="ScoreSummary" xml:space="preserve"><value>Seite {0} | Hinten {1}</value></data>
+  <data name="ScoreNotAssessed" xml:space="preserve"><value>nicht bewertet</value></data>
+  <data name="CriterionOverstrideTitle" xml:space="preserve"><value>Overstride</value></data>
+  <data name="CriterionTrunkPostureTitle" xml:space="preserve"><value>Oberkoerperhaltung</value></data>
+  <data name="CriterionHipExtensionTitle" xml:space="preserve"><value>Hueftstreckung</value></data>
+  <data name="CriterionArmSwingSideTitle" xml:space="preserve"><value>Armschwung</value></data>
+  <data name="CriterionInternalRotationTitle" xml:space="preserve"><value>Innenrotation</value></data>
+  <data name="CriterionPelvicDropTitle" xml:space="preserve"><value>Absinken des Beckens</value></data>
+  <data name="CriterionArmSwingRearTitle" xml:space="preserve"><value>Armschwung</value></data>
+  <data name="CriterionOverstrideHint" xml:space="preserve"><value>Fussaufsatz deutlich vor dem Koerper, oft mit gestrecktem Knie.</value></data>
+  <data name="CriterionTrunkPostureHint" xml:space="preserve"><value>Stabile leichte Vorlage ohne starkes Aufrichten, Rundruecken oder Hohlkreuz.</value></data>
+  <data name="CriterionHipExtensionHint" xml:space="preserve"><value>Ausreichende Streckung hinter dem Koerper ohne Ausweichen ueber die Lendenwirbelsaeule.</value></data>
+  <data name="CriterionArmSwingSideHint" xml:space="preserve"><value>Rhythmischer Armschwung ohne starkes Kreuzen oder asymmetrisches Pendeln.</value></data>
+  <data name="CriterionInternalRotationHint" xml:space="preserve"><value>Knie oder Oberschenkel rotiert in der Stuetzphase sichtbar nach innen.</value></data>
+  <data name="CriterionPelvicDropHint" xml:space="preserve"><value>Becken sinkt auf der Gegenseite in der mittleren Stuetzphase ab.</value></data>
+  <data name="CriterionArmSwingRearHint" xml:space="preserve"><value>Symmetrischer Armschwung ohne starkes Cross-over oder Schulterhochstand.</value></data>
+  <data name="ReviewPageTitle" xml:space="preserve"><value>Laufanalyse auswerten</value></data>
+  <data name="BackToRecording" xml:space="preserve"><value>Zur Aufnahme</value></data>
+  <data name="Back" xml:space="preserve"><value>Zurueck</value></data>
+  <data name="ReviewLoading" xml:space="preserve"><value>Laufanalyse wird geladen</value></data>
+  <data name="ReviewNeedsCompletedCapture" xml:space="preserve"><value>Die Analyse kann erst nach Abschluss der Aufnahmesession durchgefuehrt werden.</value></data>
+  <data name="OpenRecordingSession" xml:space="preserve"><value>Aufnahmesession oeffnen</value></data>
+  <data name="CaptureCompleted" xml:space="preserve"><value>Aufnahme abgeschlossen</value></data>
+  <data name="SelectParticipantForAssessment" xml:space="preserve"><value>Waehle einen Teilnehmer zur Bewertung aus.</value></data>
+  <data name="ReviewNotRunningAnalysis" xml:space="preserve"><value>Dieses Event ist keine Laufanalyse.</value></data>
+  <data name="ReviewSubtitle" xml:space="preserve"><value>Bewertung nach abgeschlossener Aufnahmesession</value></data>
+  <data name="ReviewSubtitleWithCourse" xml:space="preserve"><value>{0}, {1:dd.MM.yyyy HH:mm} bis {2:HH:mm} Uhr</value></data>
+  <data name="RosterStatus" xml:space="preserve"><value>{0} Teilnehmende, {1} abgeschlossen</value></data>
 </root>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -6,6 +6,7 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="ManageProfile" xml:space="preserve"><value>管理个人资料</value></data>
   <data name="LogOut" xml:space="preserve"><value>退出登录</value></data>
-  <data name="Register" xml:space="preserve"><value>报名</value></data>
+  <data name="Register" xml:space="preserve"><value>æŠ¥å</value></data>
   <data name="LogIn" xml:space="preserve"><value>登录</value></data>
+  <data name="Language" xml:space="preserve"><value>语言</value></data>
 </root>

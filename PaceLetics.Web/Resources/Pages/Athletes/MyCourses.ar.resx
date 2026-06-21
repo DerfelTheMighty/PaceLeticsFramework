@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -37,4 +37,15 @@
   <data name="ShortPeriod" xml:space="preserve"><value>{0:MM/dd} إلى {1:MM/dd}</value></data>
   <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} إلى {1:HH:mm}</value></data>
   <data name="EventDate" xml:space="preserve"><value>{0:yyyy/MM/dd HH:mm} إلى {1:HH:mm}</value></data>
+  <data name="TabCourses" xml:space="preserve"><value>الدورات</value></data>
+  <data name="TabTrainingPlans" xml:space="preserve"><value>الخطط</value></data>
+  <data name="TabPaceMate" xml:space="preserve"><value>Pace Mate</value></data>
+  <data name="Challenges" xml:space="preserve"><value>التحديات</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>لا توجد تحديات نشطة.</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>عام</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>الحضور</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>المسافة</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:dd.MM.yyyy} إلى {1:dd.MM.yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>الهدف: {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>الهدف: {0:0.##} {1}</value></data>
 </root>

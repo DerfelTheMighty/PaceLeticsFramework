@@ -86,4 +86,5 @@
   <data name="ValidationDateRequired" xml:space="preserve"><value>Bitte ein Datum auswählen.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Bitte eine Uhrzeit im Format HH:mm eingeben.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>Trainer:in konnte nicht ermittelt werden.</value></data>
+  <data name="PublishedSince" xml:space="preserve"><value>Seit {0:dd.MM.yyyy}</value></data>
 </root>

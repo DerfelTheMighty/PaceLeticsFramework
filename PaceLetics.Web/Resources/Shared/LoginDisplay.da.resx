@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -8,4 +8,5 @@
   <data name="LogOut" xml:space="preserve"><value>Log ud</value></data>
   <data name="Register" xml:space="preserve"><value>Tilmeld</value></data>
   <data name="LogIn" xml:space="preserve"><value>Log ind</value></data>
+  <data name="Language" xml:space="preserve"><value>Sprog</value></data>
 </root>

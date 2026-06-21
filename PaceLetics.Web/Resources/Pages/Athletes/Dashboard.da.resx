@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -62,4 +62,7 @@
   <data name="MentalResource_SourceVidebaek" xml:space="preserve"><value>Videbaek et al. Incidence of running-related injuries per 1000 h of running. Sports Med. 2015.</value></data>
   <data name="MentalResource_SourceFokkema" xml:space="preserve"><value>Fokkema et al. Reasons and predictors of discontinuation after a novice running program. J Sci Med Sport. 2019.</value></data>
   <data name="MentalResource_SourceRelph" xml:space="preserve"><value>Relph et al. Couch-to-5k or Couch to Ouch to Couch? Int J Environ Res Public Health. 2023.</value></data>
+  <data name="Metric_RunningAnalysisInfo" xml:space="preserve"><value>Løbeanalyse</value></data>
+  <data name="Metric_RunningAnalysisInfoDetail" xml:space="preserve"><value>Hvorfor vi ikke retter enhver løbestil</value></data>
+  <data name="Metric_RunningAnalysisInfoValue" xml:space="preserve"><value>Forstå løbeform</value></data>
 </root>

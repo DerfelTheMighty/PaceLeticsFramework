@@ -396,7 +396,7 @@
                                                         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
                                                             <MudStack Spacing="0" Style="min-width:0;">
                                                                 <MudText Typo="Typo.body2">@GetTrainingPlanName(publication.TrainingPlanId)</MudText>
-                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">Seit @publication.PublishedAt.ToString("dd.MM.yyyy")</MudText>
+                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@string.Format(L["PublishedSince"], publication.PublishedAt)</MudText>
                                                             </MudStack>
                                                             <MudTooltip Text="@L["Delete"]">
                                                                 <MudIconButton Icon="@Icons.Material.Filled.Delete"

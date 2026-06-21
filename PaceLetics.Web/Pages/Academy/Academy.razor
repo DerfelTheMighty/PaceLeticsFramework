@@ -35,11 +35,11 @@
         @foreach (var article in VisibleArticles)
         {
             <a href="@GetArticleHref(article)" class="pl-academy-tile-link" aria-label="@article.Title">
-                <MudPaper Elevation="0" Class="@GetArticleTileClass(article)" role="article">
+                <article class="@GetArticleTileClass(article)">
                     <div class="pl-academy-tile__header">
-                        <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="pl-academy-tile__chip">
+                        <span class="pl-academy-tile__chip">
                             @FormatCategory(article.Category)
-                        </MudChip>
+                        </span>
                         <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
                     </div>
 
@@ -48,7 +48,7 @@
                     </div>
 
                     <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
-                </MudPaper>
+                </article>
             </a>
         }
     </div>

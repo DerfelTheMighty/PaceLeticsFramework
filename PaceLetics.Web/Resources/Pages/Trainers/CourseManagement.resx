@@ -86,4 +86,5 @@
   <data name="ValidationDateRequired" xml:space="preserve"><value>Please select a date.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Please enter a time in HH:mm format.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>The coach could not be resolved.</value></data>
+  <data name="PublishedSince" xml:space="preserve"><value>Since {0:MM/dd/yyyy}</value></data>
 </root>

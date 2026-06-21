@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -67,4 +67,24 @@
   <data name="ValidationDateRequired" xml:space="preserve"><value>Vælg en dato.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Indtast et tidspunkt i HH:mm-format.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>Coachen kunne ikke findes.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Slet</value></data>
+  <data name="Remove" xml:space="preserve"><value>Fjern</value></data>
+  <data name="StartRunningAnalysis" xml:space="preserve"><value>Start løbeanalyse</value></data>
+  <data name="Challenges" xml:space="preserve"><value>Udfordringer</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>Ingen aktive udfordringer.</value></data>
+  <data name="ChallengeTitle" xml:space="preserve"><value>Udfordringstitel</value></data>
+  <data name="ChallengeType" xml:space="preserve"><value>Udfordringstype</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>Generelt</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>Deltagelse</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>Distance</value></data>
+  <data name="ChallengeTarget" xml:space="preserve"><value>Mål</value></data>
+  <data name="ChallengeUnit" xml:space="preserve"><value>Enhed</value></data>
+  <data name="AddChallenge" xml:space="preserve"><value>Tilføj udfordring</value></data>
+  <data name="AddChallengeSuccess" xml:space="preserve"><value>Udfordringen blev tilføjet.</value></data>
+  <data name="RemoveChallengeConfirm" xml:space="preserve"><value>Fjern udfordringen &quot;{0}&quot;?</value></data>
+  <data name="RemoveChallengeSuccess" xml:space="preserve"><value>Udfordringen blev fjernet.</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:dd.MM.yyyy} til {1:dd.MM.yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>Mål: {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Mål: {0:0.##} {1}</value></data>
+  <data name="PublishedSince" xml:space="preserve"><value>Siden {0:dd.MM.yyyy}</value></data>
 </root>

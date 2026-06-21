@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -14,4 +14,10 @@
   <data name="Nav_Profiles" xml:space="preserve"><value>الملفات الشخصية</value></data>
   <data name="Nav_About" xml:space="preserve"><value>حول</value></data>
   <data name="Nav_TrainerWorkoutCatalog" xml:space="preserve"><value>Workout Catalog</value></data>
+  <data name="Nav_Academy" xml:space="preserve"><value>Academy</value></data>
+  <data name="Nav_Mate" xml:space="preserve"><value>Pace Mate</value></data>
+  <data name="Nav_DataAnalyses" xml:space="preserve"><value>البيانات والتحليلات</value></data>
+  <data name="Nav_Analyses" xml:space="preserve"><value>تحليلاتي</value></data>
+  <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
+  <data name="Nav_TrainerRunningAnalyses" xml:space="preserve"><value>تحليلات الجري</value></data>
 </root>

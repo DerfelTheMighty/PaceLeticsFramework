@@ -4,17 +4,17 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>ä½ çš„æ¯”èµ›æ•°æ®</value></data>
-  <data name="Loading" xml:space="preserve"><value>æ­£åœ¨åŠ è½½ä½ çš„æ•°æ®...</value></data>
-  <data name="Title" xml:space="preserve"><value>ä½ çš„æ¯”èµ›æ•°æ®</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>è¾“å…¥æ–°çš„å‚è€ƒæ¯”èµ›æˆ–ç¼–è¾‘çŽ°æœ‰æ¯”èµ›ã€‚</value></data>
-  <data name="NoRaceWarning" xml:space="preserve"><value>æ·»åŠ ä¸€æ¬¡å‚è€ƒæ¯”èµ›ï¼Œä»¥ä¾¿æˆ‘ä»¬ç¡®å®šä½ çš„è®­ç»ƒåŒºé—´ã€‚</value></data>
-  <data name="AddRace" xml:space="preserve"><value>æ·»åŠ å‚è€ƒæ¯”èµ›</value></data>
-  <data name="RaceOldWarning" xml:space="preserve"><value>ä½ çš„å‚è€ƒæ¯”èµ›å·²è¶…è¿‡ 6 ä¸ªæœˆã€‚ä¸ºäº†æœ€ä½³è®­ç»ƒï¼Œè¯·ä½¿ç”¨æ›´æ–°çš„å‚è€ƒæ¯”èµ›ã€‚</value></data>
-  <data name="LoadError_Title" xml:space="preserve"><value>åŠ è½½é”™è¯¯</value></data>
-  <data name="LoadError_Message" xml:space="preserve"><value>æ— æ³•åŠ è½½ä½ çš„æ•°æ®ï¼š</value></data>
-  <data name="PaceZonesTitle" xml:space="preserve"><value>Ã¤Â½Â Ã§Å¡â€žÃ©â€¦ÂÃ©â‚¬Å¸Ã¥Å’ÂºÃ©â€”Â´</value></data>
-  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Ã¨Â¿â„¢Ã©â€¡Å’Ã¥ÂÂ¯Ã¤Â»Â¥Ã¦Â Â¹Ã¦ÂÂ®Ã¤Â½Â Ã§Å¡â€ž VDOT Ã¥â‚¬Â¼Ã¦Å¸Â¥Ã§Å“â€¹Ã¦Å“â‚¬Ã¤Â½Â³Ã¨Â®Â­Ã§Â»Æ’Ã©â€¦ÂÃ©â‚¬Å¸Ã¥Å’ÂºÃ©â€”Â´Ã£â‚¬â€š</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>你的比赛数据</value></data>
+  <data name="Loading" xml:space="preserve"><value>正在加载你的数据...</value></data>
+  <data name="Title" xml:space="preserve"><value>你的比赛数据</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>输入新的参考比赛或编辑现有比赛。</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>添加一次参考比赛，以便我们确定你的训练区间。</value></data>
+  <data name="AddRace" xml:space="preserve"><value>添加参考比赛</value></data>
+  <data name="RaceOldWarning" xml:space="preserve"><value>你的参考比赛已超过 6 个月。为了最佳训练，请使用更新的参考比赛。</value></data>
+  <data name="LoadError_Title" xml:space="preserve"><value>加载错误</value></data>
+  <data name="LoadError_Message" xml:space="preserve"><value>无法加载你的数据：</value></data>
+  <data name="PaceZonesTitle" xml:space="preserve"><value>你的配速区间</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>这里可以根据你的 VDOT 值查看最佳训练配速区间。</value></data>
 
   <data name="TabInfo" xml:space="preserve"><value>&#x4FE1;&#x606F;</value></data>
   <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
@@ -23,4 +23,6 @@
   <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>&#x6839;&#x636E;&#x591A;&#x4E2A;&#x8DD1;&#x6B65;&#x7ED3;&#x679C;&#x901A;&#x8FC7;&#x56DE;&#x5F52;&#x8BA1;&#x7B97;&#x3002;</value></data>
   <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>&#x6839;&#x636E;&#x5355;&#x6B21;&#x8DD1;&#x6B65;&#x4F30;&#x8BA1;&#x3002;</value></data>
   <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>&#x5C1A;&#x65E0; Critical Speed &#x4F30;&#x8BA1;&#x3002;</value></data>
+  <data name="TabRaceData" xml:space="preserve"><value>比赛数据</value></data>
+  <data name="TabPaceZones" xml:space="preserve"><value>配速区间</value></data>
 </root>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -45,4 +45,12 @@
   <data name="ShortPeriod" xml:space="preserve"><value>{0:MM/dd} to {1:MM/dd}</value></data>
   <data name="TimeRange" xml:space="preserve"><value>{0:HH:mm} to {1:HH:mm}</value></data>
   <data name="EventDate" xml:space="preserve"><value>{0:MM/dd/yyyy HH:mm} to {1:HH:mm}</value></data>
+  <data name="Challenges" xml:space="preserve"><value>Challenges</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>No active challenges.</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>General</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>Attendance</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>Distance</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:MM/dd/yyyy} to {1:MM/dd/yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>Target: {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Target: {0:0.##} {1}</value></data>
 </root>

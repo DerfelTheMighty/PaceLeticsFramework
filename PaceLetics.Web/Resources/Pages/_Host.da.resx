@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ProductionError" xml:space="preserve"><value>Der opstod en fejl. Applikationen reagerer muligvis foerst igen efter genindlaesning.</value></data>
+  <data name="DevelopmentError" xml:space="preserve"><value>Der opstod en uhaandteret undtagelse. Se browserens udviklervaerktoejer for detaljer.</value></data>
+  <data name="Reload" xml:space="preserve"><value>Genindlaes</value></data>
+</root>

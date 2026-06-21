@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Error</value></data>
+  <data name="Heading" xml:space="preserve"><value>Error.</value></data>
+  <data name="Message" xml:space="preserve"><value>Se produjo un error al procesar tu solicitud.</value></data>
+  <data name="RequestId" xml:space="preserve"><value>ID de solicitud</value></data>
+  <data name="DevelopmentMode" xml:space="preserve"><value>Modo de desarrollo</value></data>
+  <data name="DevelopmentModeText" xml:space="preserve"><value>El modo de desarrollo muestra informacion detallada sobre el error.</value></data>
+  <data name="DevelopmentWarning" xml:space="preserve"><value>El modo de desarrollo no debe estar activado en aplicaciones desplegadas.</value></data>
+  <data name="DevelopmentWarningDetail" xml:space="preserve"><value>Puede mostrar informacion sensible de excepciones. Usalo solo localmente con ASPNETCORE_ENVIRONMENT=Development y reinicia la app.</value></data>
+</root>

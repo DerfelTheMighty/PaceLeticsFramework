@@ -4,17 +4,17 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Ø¯Ø§Ø¯Ù‡â€ŒÙ‡Ø§ÛŒ Ù…Ø³Ø§Ø¨Ù‚Ù‡ Ø´Ù…Ø§</value></data>
-  <data name="Loading" xml:space="preserve"><value>Ø¯Ø± Ø­Ø§Ù„ Ø¨Ø§Ø±Ú¯Ø°Ø§Ø±ÛŒ Ø¯Ø§Ø¯Ù‡â€ŒÙ‡Ø§ÛŒ Ø´Ù…Ø§...</value></data>
-  <data name="Title" xml:space="preserve"><value>Ø¯Ø§Ø¯Ù‡â€ŒÙ‡Ø§ÛŒ Ù…Ø³Ø§Ø¨Ù‚Ù‡ Ø´Ù…Ø§</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>ÛŒÚ© Ù…Ø³Ø§Ø¨Ù‚Ù‡ Ù…Ø±Ø¬Ø¹ Ø¬Ø¯ÛŒØ¯ ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯ ÛŒØ§ Ù…ÙˆØ±Ø¯ Ù…ÙˆØ¬ÙˆØ¯ Ø±Ø§ ÙˆÛŒØ±Ø§ÛŒØ´ Ú©Ù†ÛŒØ¯.</value></data>
-  <data name="NoRaceWarning" xml:space="preserve"><value>ÛŒÚ© Ù…Ø³Ø§Ø¨Ù‚Ù‡ Ù…Ø±Ø¬Ø¹ Ø§Ø¶Ø§ÙÙ‡ Ú©Ù†ÛŒØ¯ ØªØ§ Ø¨ØªÙˆØ§Ù†ÛŒÙ… Ù…Ø­Ø¯ÙˆØ¯Ù‡â€ŒÙ‡Ø§ÛŒ ØªÙ…Ø±ÛŒÙ†ÛŒ Ø´Ù…Ø§ Ø±Ø§ ØªØ¹ÛŒÛŒÙ† Ú©Ù†ÛŒÙ….</value></data>
-  <data name="AddRace" xml:space="preserve"><value>Ø§ÙØ²ÙˆØ¯Ù† Ù…Ø³Ø§Ø¨Ù‚Ù‡ Ù…Ø±Ø¬Ø¹</value></data>
-  <data name="RaceOldWarning" xml:space="preserve"><value>Ù…Ø³Ø§Ø¨Ù‚Ù‡ Ù…Ø±Ø¬Ø¹ Ø´Ù…Ø§ Ø¨ÛŒØ´ Ø§Ø² Û¶ Ù…Ø§Ù‡ Ù‚Ø¯ÛŒÙ…ÛŒ Ø§Ø³Øª. Ø¨Ø±Ø§ÛŒ ØªÙ…Ø±ÛŒÙ† Ø¨Ù‡ÛŒÙ†Ù‡ØŒ Ø§Ø² Ù…Ø³Ø§Ø¨Ù‚Ù‡ Ù…Ø±Ø¬Ø¹ Ø¬Ø¯ÛŒØ¯ØªØ±ÛŒ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ú©Ù†ÛŒØ¯.</value></data>
-  <data name="LoadError_Title" xml:space="preserve"><value>Ø®Ø·Ø§ÛŒ Ø¨Ø§Ø±Ú¯Ø°Ø§Ø±ÛŒ</value></data>
-  <data name="LoadError_Message" xml:space="preserve"><value>Ø¯Ø§Ø¯Ù‡â€ŒÙ‡Ø§ÛŒ Ø´Ù…Ø§ Ø¨Ø§Ø±Ú¯Ø°Ø§Ø±ÛŒ Ù†Ø´Ø¯:</value></data>
-  <data name="PaceZonesTitle" xml:space="preserve"><value>Ã™â€¦Ã˜Â­Ã˜Â¯Ã™Ë†Ã˜Â¯Ã™â€¡Ã¢â‚¬Å’Ã™â€¡Ã˜Â§Ã›Å’ Ã™Â¾Ã›Å’Ã˜Â³ Ã˜Â´Ã™â€¦Ã˜Â§</value></data>
-  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Ã˜Â§Ã›Å’Ã™â€ Ã˜Â¬Ã˜Â§ Ã™â€¦Ã›Å’Ã¢â‚¬Å’Ã˜ÂªÃ™Ë†Ã˜Â§Ã™â€ Ã›Å’Ã˜Â¯ Ã™â€¦Ã˜Â­Ã˜Â¯Ã™Ë†Ã˜Â¯Ã™â€¡Ã¢â‚¬Å’Ã™â€¡Ã˜Â§Ã›Å’ Ã™Â¾Ã›Å’Ã˜Â³ Ã˜ÂªÃ™â€¦Ã˜Â±Ã›Å’Ã™â€ Ã›Å’ Ã˜Â¨Ã™â€¡Ã›Å’Ã™â€ Ã™â€¡ Ã˜Â¨Ã˜Â± Ã˜Â§Ã˜Â³Ã˜Â§Ã˜Â³ Ã™â€¦Ã™â€šÃ˜Â¯Ã˜Â§Ã˜Â± VDOT Ã˜Â®Ã™Ë†Ã˜Â¯ Ã˜Â±Ã˜Â§ Ã˜Â¨Ã˜Â¨Ã›Å’Ã™â€ Ã›Å’Ã˜Â¯.</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>داده‌های مسابقه شما</value></data>
+  <data name="Loading" xml:space="preserve"><value>در حال بارگذاری داده‌های شما...</value></data>
+  <data name="Title" xml:space="preserve"><value>داده‌های مسابقه شما</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>یک مسابقه مرجع جدید وارد کنید یا مورد موجود را ویرایش کنید.</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>یک مسابقه مرجع اضافه کنید تا بتوانیم محدوده‌های تمرینی شما را تعیین کنیم.</value></data>
+  <data name="AddRace" xml:space="preserve"><value>افزودن مسابقه مرجع</value></data>
+  <data name="RaceOldWarning" xml:space="preserve"><value>مسابقه مرجع شما بیش از ۶ ماه قدیمی است. برای تمرین بهینه، از مسابقه مرجع جدیدتری استفاده کنید.</value></data>
+  <data name="LoadError_Title" xml:space="preserve"><value>خطای بارگذاری</value></data>
+  <data name="LoadError_Message" xml:space="preserve"><value>داده‌های شما بارگذاری نشد:</value></data>
+  <data name="PaceZonesTitle" xml:space="preserve"><value>محدوده‌های پیس شما</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>اینجا می‌توانید محدوده‌های پیس تمرینی بهینه بر اساس مقدار VDOT خود را ببینید.</value></data>
 
   <data name="TabInfo" xml:space="preserve"><value>&#x627;&#x637;&#x644;&#x627;&#x639;&#x627;&#x62A;</value></data>
   <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
@@ -23,4 +23,6 @@
   <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>&#x645;&#x62D;&#x627;&#x633;&#x628;&#x647; &#x627;&#x632; &#x686;&#x646;&#x62F; &#x646;&#x62A;&#x6CC;&#x62C;&#x647; &#x62F;&#x648; &#x628;&#x627; &#x631;&#x6AF;&#x631;&#x633;&#x6CC;&#x648;&#x646;.</value></data>
   <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>&#x628;&#x631;&#x622;&#x648;&#x631;&#x62F; &#x627;&#x632; &#x6CC;&#x6A9; &#x62F;&#x648;.</value></data>
   <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>&#x647;&#x646;&#x648;&#x632; &#x628;&#x631;&#x622;&#x648;&#x631;&#x62F; Critical Speed &#x645;&#x648;&#x62C;&#x648;&#x62F; &#x646;&#x6CC;&#x633;&#x62A;.</value></data>
+  <data name="TabRaceData" xml:space="preserve"><value>داده‌های مسابقه</value></data>
+  <data name="TabPaceZones" xml:space="preserve"><value>محدوده‌های پیس</value></data>
 </root>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -8,4 +8,5 @@
   <data name="LogOut" xml:space="preserve"><value>خروج</value></data>
   <data name="Register" xml:space="preserve"><value>ثبت‌نام</value></data>
   <data name="LogIn" xml:space="preserve"><value>ورود</value></data>
+  <data name="Language" xml:space="preserve"><value>زبان</value></data>
 </root>

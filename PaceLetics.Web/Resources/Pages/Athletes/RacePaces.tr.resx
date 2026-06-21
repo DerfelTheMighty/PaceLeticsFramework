@@ -4,17 +4,17 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>YarÄ±ÅŸ verilerin</value></data>
-  <data name="Loading" xml:space="preserve"><value>Verilerin yÃ¼kleniyor...</value></data>
-  <data name="Title" xml:space="preserve"><value>YarÄ±ÅŸ verilerin</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Yeni bir referans yarÄ±ÅŸ gir veya mevcut olanÄ± dÃ¼zenle.</value></data>
-  <data name="NoRaceWarning" xml:space="preserve"><value>Antrenman bÃ¶lgelerini belirleyebilmemiz iÃ§in bir referans yarÄ±ÅŸ ekle.</value></data>
-  <data name="AddRace" xml:space="preserve"><value>Referans yarÄ±ÅŸ ekle</value></data>
-  <data name="RaceOldWarning" xml:space="preserve"><value>Referans yarÄ±ÅŸÄ±n 6 aydan eski. En iyi antrenman iÃ§in daha gÃ¼ncel bir referans yarÄ±ÅŸ kullanmalÄ±sÄ±n.</value></data>
-  <data name="LoadError_Title" xml:space="preserve"><value>YÃ¼kleme hatasÄ±</value></data>
-  <data name="LoadError_Message" xml:space="preserve"><value>Verilerin yÃ¼klenemedi:</value></data>
-  <data name="PaceZonesTitle" xml:space="preserve"><value>Tempo bÃƒÂ¶lgelerin</value></data>
-  <data name="PaceZonesSubtitle" xml:space="preserve"><value>VDOT deÃ„Å¸erine gÃƒÂ¶re en uygun antrenman tempo bÃƒÂ¶lgelerini burada bulabilirsin.</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Yarış verilerin</value></data>
+  <data name="Loading" xml:space="preserve"><value>Verilerin yükleniyor...</value></data>
+  <data name="Title" xml:space="preserve"><value>Yarış verilerin</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Yeni bir referans yarış gir veya mevcut olanı düzenle.</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>Antrenman bölgelerini belirleyebilmemiz için bir referans yarış ekle.</value></data>
+  <data name="AddRace" xml:space="preserve"><value>Referans yarış ekle</value></data>
+  <data name="RaceOldWarning" xml:space="preserve"><value>Referans yarışın 6 aydan eski. En iyi antrenman için daha güncel bir referans yarış kullanmalısın.</value></data>
+  <data name="LoadError_Title" xml:space="preserve"><value>Yükleme hatası</value></data>
+  <data name="LoadError_Message" xml:space="preserve"><value>Verilerin yüklenemedi:</value></data>
+  <data name="PaceZonesTitle" xml:space="preserve"><value>Tempo bölgelerin</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>VDOT değerine göre en uygun antrenman tempo bölgelerini burada bulabilirsin.</value></data>
 
   <data name="TabInfo" xml:space="preserve"><value>Bilgi</value></data>
   <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
@@ -23,4 +23,6 @@
   <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>Birden fazla kosu sonucu regresyonla hesaplandi.</value></data>
   <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>Tek bir kosudan tahmin edildi.</value></data>
   <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>Henuz Critical Speed tahmini yok.</value></data>
+  <data name="TabRaceData" xml:space="preserve"><value>Yarış verileri</value></data>
+  <data name="TabPaceZones" xml:space="preserve"><value>Tempo bölgeleri</value></data>
 </root>

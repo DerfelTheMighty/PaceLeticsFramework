@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>My Drive</value></data>
+  <data name="Title" xml:space="preserve"><value>My Drive</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Your personal PaceLetics Google Drive folder</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading Drive folder</value></data>
+  <data name="AthleteNotResolved" xml:space="preserve"><value>The athlete could not be resolved.</value></data>
+  <data name="NoFolderTitle" xml:space="preserve"><value>No Drive folder yet</value></data>
+  <data name="NoFolderText" xml:space="preserve"><value>Create your folder to store PaceLetics files in Google Drive.</value></data>
+  <data name="CreateFolder" xml:space="preserve"><value>Create folder</value></data>
+  <data name="CreateSuccess" xml:space="preserve"><value>Drive folder created.</value></data>
+  <data name="FolderReadyTitle" xml:space="preserve"><value>Your Drive folder is ready</value></data>
+  <data name="OpenFolder" xml:space="preserve"><value>Open folder</value></data>
+  <data name="DeleteFolder" xml:space="preserve"><value>Delete folder</value></data>
+  <data name="DeleteConfirm" xml:space="preserve"><value>Delete your PaceLetics Drive folder? This removes the folder from Google Drive.</value></data>
+  <data name="DeleteSuccess" xml:space="preserve"><value>Drive folder deleted.</value></data>
+</root>

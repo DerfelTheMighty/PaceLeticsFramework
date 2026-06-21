@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Pace Mate</value></data>
+  <data name="Title" xml:space="preserve"><value>Pace Mate</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Find matching training partners for released running sessions.</value></data>
+  <data name="MetricSessions" xml:space="preserve"><value>Sessions</value></data>
+  <data name="MetricShared" xml:space="preserve"><value>Shared</value></data>
+  <data name="MetricMatches" xml:space="preserve"><value>Matches</value></data>
+  <data name="SectionMatches" xml:space="preserve"><value>Matches</value></data>
+  <data name="SectionShare" xml:space="preserve"><value>Running sessions</value></data>
+  <data name="NoMatches" xml:space="preserve"><value>No Pace Mate matches yet.</value></data>
+  <data name="NoSessions" xml:space="preserve"><value>No upcoming running sessions are available.</value></data>
+  <data name="Shared" xml:space="preserve"><value>Shared</value></data>
+  <data name="Share" xml:space="preserve"><value>Share</value></data>
+  <data name="Remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="Course" xml:space="preserve"><value>Course</value></data>
+  <data name="Plan" xml:space="preserve"><value>Plan</value></data>
+  <data name="Location" xml:space="preserve"><value>Location</value></data>
+  <data name="MatchOwn" xml:space="preserve"><value>Matches your session: {0}</value></data>
+  <data name="SamePaceZone" xml:space="preserve"><value>Same pace zone</value></data>
+  <data name="PaceDelta" xml:space="preserve"><value>{0} s/km difference</value></data>
+  <data name="DayDelta" xml:space="preserve"><value>{0} day(s)</value></data>
+  <data name="DistanceDelta" xml:space="preserve"><value>{0} distance difference</value></data>
+  <data name="NoPace" xml:space="preserve"><value>No pace</value></data>
+  <data name="LoadError" xml:space="preserve"><value>Pace Mate data could not be loaded.</value></data>
+  <data name="ShareSuccess" xml:space="preserve"><value>Session shared for Pace Mate.</value></data>
+  <data name="RemoveSuccess" xml:space="preserve"><value>Pace Mate sharing removed.</value></data>
+  <data name="ShareError" xml:space="preserve"><value>Sharing failed</value></data>
+  <data name="RemoveError" xml:space="preserve"><value>Removing failed</value></data>
+  <data name="PrivacyTitle" xml:space="preserve"><value>Your Pace Mate sharing</value></data>
+  <data name="PrivacyBody" xml:space="preserve"><value>Pace Mate shows shared sessions only within the matching course. Your public name, session, date, location, distance, and pace can be visible; nothing is posted to a feed or social channel.</value></data>
+  <data name="SharedForMate" xml:space="preserve"><value>Shared for Pace Mate</value></data>
+  <data name="NotShared" xml:space="preserve"><value>Not shared</value></data>
+  <data name="ShareCta" xml:space="preserve"><value>Share for Pace Mate</value></data>
+  <data name="ShareTooltip" xml:space="preserve"><value>Make this session visible to matching course participants</value></data>
+  <data name="RemoveTooltip" xml:space="preserve"><value>Remove Pace Mate sharing</value></data>
+  <data name="SharedVisibility" xml:space="preserve"><value>Visible after sharing: {0}</value></data>
+  <data name="WhyMatch" xml:space="preserve"><value>Why it fits</value></data>
+  <data name="ReasonSameCourse" xml:space="preserve"><value>Same course</value></data>
+  <data name="ReasonSamePaceZone" xml:space="preserve"><value>Same pace zone</value></data>
+  <data name="ReasonPaceVeryClose" xml:space="preserve"><value>Pace almost equal ({0} s/km)</value></data>
+  <data name="ReasonPaceClose" xml:space="preserve"><value>Pace close ({0} s/km)</value></data>
+  <data name="ReasonDate" xml:space="preserve"><value>{0} day(s) apart</value></data>
+  <data name="ReasonDistance" xml:space="preserve"><value>{0} distance gap</value></data>
+  <data name="QualityStrong" xml:space="preserve"><value>Strong fit</value></data>
+  <data name="QualityGood" xml:space="preserve"><value>Good fit</value></data>
+  <data name="QualityPossible" xml:space="preserve"><value>Possible fit</value></data>
+  <data name="VisibleDisplayName" xml:space="preserve"><value>public name</value></data>
+</root>

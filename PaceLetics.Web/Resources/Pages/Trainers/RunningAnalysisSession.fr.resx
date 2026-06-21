@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Running recording</value></data>
+  <data name="Title" xml:space="preserve"><value>Running recording</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Run the recording session</value></data>
+  <data name="SubtitleWithCourse" xml:space="preserve"><value>{0}, {1:MM/dd/yyyy HH:mm} to {2:HH:mm}</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading running recording</value></data>
+  <data name="BackToCourses" xml:space="preserve"><value>Back to courses</value></data>
+  <data name="Online" xml:space="preserve"><value>Online</value></data>
+  <data name="Offline" xml:space="preserve"><value>Offline</value></data>
+  <data name="StartCapture" xml:space="preserve"><value>Start recording</value></data>
+  <data name="CompleteCapture" xml:space="preserve"><value>Complete recording</value></data>
+  <data name="CompletedMessage" xml:space="preserve"><value>Recording completed. You can start it again and record another attempt.</value></data>
+  <data name="Roster" xml:space="preserve"><value>Participants</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>The coach could not be resolved.</value></data>
+  <data name="CourseNotFound" xml:space="preserve"><value>The course was not found.</value></data>
+  <data name="EventNotFound" xml:space="preserve"><value>The event was not found.</value></data>
+  <data name="NotRunningAnalysis" xml:space="preserve"><value>This event is not a running recording.</value></data>
+  <data name="Status_Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="Status_Prepared" xml:space="preserve"><value>Prepared</value></data>
+  <data name="Status_InProgress" xml:space="preserve"><value>In progress</value></data>
+  <data name="Status_Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="StartSuccess" xml:space="preserve"><value>Recording was started.</value></data>
+  <data name="CompleteConfirm" xml:space="preserve"><value>Complete this recording?</value></data>
+  <data name="CompleteSuccess" xml:space="preserve"><value>Recording was completed.</value></data>
+  <data name="CompletedCannotRecord" xml:space="preserve"><value>A completed recording cannot record again.</value></data>
+  <data name="RetakeHint" xml:space="preserve"><value>Start recording again for this participant.</value></data>
+  <data name="NoNextParticipant" xml:space="preserve"><value>No more participants.</value></data>
+  <data name="LocalRecordingsTitle" xml:space="preserve"><value>Local recordings</value></data>
+  <data name="LocalRecordingsText" xml:space="preserve"><value>{0} recording(s) are saved on this device.</value></data>
+  <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} local, {1} pending, {2} failed, {3} uploaded.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>No local recordings were found in the selected folder.</value></data>
+  <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>The local folder is still selected, but the browser needs access again after reload. Click "Renew access" so the existing video and JSON files can be scanned again.</value></data>
+  <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>The local folder could not be scanned: {0}</value></data>
+  <data name="LocalStorageTitle" xml:space="preserve"><value>Local recording folder</value></data>
+  <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Choose folder</value></data>
+  <data name="OpenUploadPage" xml:space="preserve"><value>Upload queue</value></data>
+  <data name="RefreshFolderAccess" xml:space="preserve"><value>Renew access</value></data>
+  <data name="LocalStorageReady" xml:space="preserve"><value>Local recording folder is ready.</value></data>
+  <data name="LocalStorageReadyText" xml:space="preserve"><value>Recordings are saved directly in "{0}". Storage location: {1}</value></data>
+  <data name="LocalStorageUnknown" xml:space="preserve"><value>Checking local recording folder.</value></data>
+  <data name="LocalStorageUnsupported" xml:space="preserve"><value>This browser cannot save recordings directly to a local device folder.</value></data>
+  <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Choose a local folder on this device first. New recordings will then be saved there as video files.</value></data>
+  <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>The browser needs access to the selected local recording folder again.</value></data>
+  <data name="UploadPendingRecordings" xml:space="preserve"><value>Upload recordings</value></data>
+  <data name="RefreshQueue" xml:space="preserve"><value>Refresh</value></data>
+  <data name="UploadSingle" xml:space="preserve"><value>Start upload</value></data>
+  <data name="RetryUpload" xml:space="preserve"><value>Upload again</value></data>
+  <data name="OpenUploadedRecording" xml:space="preserve"><value>Open file</value></data>
+  <data name="QueueRecordedAt" xml:space="preserve"><value>Recorded</value></data>
+  <data name="QueueSize" xml:space="preserve"><value>Size</value></data>
+  <data name="QueueStorageLocation" xml:space="preserve"><value>Local storage location</value></data>
+  <data name="QueueAttempts" xml:space="preserve"><value>Upload attempts</value></data>
+  <data name="QueueLastUpload" xml:space="preserve"><value>Last upload attempt</value></data>
+  <data name="QueueLastError" xml:space="preserve"><value>Last error</value></data>
+  <data name="UploadStatus_Queued" xml:space="preserve"><value>Queued</value></data>
+  <data name="UploadStatus_Uploading" xml:space="preserve"><value>Uploading</value></data>
+  <data name="UploadStatus_Uploaded" xml:space="preserve"><value>Uploaded</value></data>
+  <data name="UploadStatus_Failed" xml:space="preserve"><value>Failed</value></data>
+  <data name="LocalSaveSuccess" xml:space="preserve"><value>{0} was saved on this device.</value></data>
+  <data name="UploadPendingOffline" xml:space="preserve"><value>Uploads are only available while online.</value></data>
+  <data name="UploadPendingSuccess" xml:space="preserve"><value>{0} recording(s) were uploaded.</value></data>
+  <data name="UploadPendingFailed" xml:space="preserve"><value>{0} recording(s) could not be uploaded.</value></data>
+  <data name="UploadSingleSuccess" xml:space="preserve"><value>{0} was uploaded.</value></data>
+  <data name="NoPendingUploads" xml:space="preserve"><value>No pending uploads.</value></data>
+  <data name="UploadQueueUploading" xml:space="preserve"><value>Upload queue is running. Local files are being uploaded to the matching participant folders.</value></data>
+  <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload queue is waiting for access to the local recording folder.</value></data>
+  <data name="UploadQueueOffline" xml:space="preserve"><value>Upload queue is waiting for an online connection.</value></data>
+  <data name="UploadQueueReady" xml:space="preserve"><value>{0} upload(s) are waiting. Automatic upload is active.</value></data>
+  <data name="UploadQueueIdle" xml:space="preserve"><value>Upload queue is empty. New local recordings will be uploaded automatically.</value></data>
+  <data name="UploadQueueIdleWithRefresh" xml:space="preserve"><value>Upload queue is empty. Last folder scan: {0:MM/dd/yyyy HH:mm:ss}.</value></data>
+  <data name="QueuedRecordingTooLarge" xml:space="preserve"><value>The local recording is too large to upload.</value></data>
+  <data name="UploadSuccess" xml:space="preserve"><value>Recording was uploaded.</value></data>
+  <data name="UploadFailed" xml:space="preserve"><value>Upload failed.</value></data>
+  <data name="BackToRoster" xml:space="preserve"><value>Retour a la liste</value></data>
+  <data name="Recording" xml:space="preserve"><value>Enregistrement</value></data>
+  <data name="PerspectiveSide" xml:space="preserve"><value>Vue de cote</value></data>
+  <data name="PerspectiveRear" xml:space="preserve"><value>Vue arriere</value></data>
+  <data name="OpenVideo" xml:space="preserve"><value>Ouvrir la video</value></data>
+  <data name="OpenFolder" xml:space="preserve"><value>Ouvrir le dossier</value></data>
+  <data name="OpenAthleteFolder" xml:space="preserve"><value>Ouvrir le dossier athlete</value></data>
+  <data name="AssessmentRating" xml:space="preserve"><value>Evaluation</value></data>
+  <data name="RatingNotAssessable" xml:space="preserve"><value>Non evaluable</value></data>
+  <data name="RatingNormal" xml:space="preserve"><value>0 normal</value></data>
+  <data name="RatingMild" xml:space="preserve"><value>1 legerement notable</value></data>
+  <data name="RatingSignificant" xml:space="preserve"><value>2 clairement notable</value></data>
+  <data name="AssessmentConfidence" xml:space="preserve"><value>Confiance</value></data>
+  <data name="ConfidenceLow" xml:space="preserve"><value>Faible</value></data>
+  <data name="ConfidenceMedium" xml:space="preserve"><value>Moyenne</value></data>
+  <data name="ConfidenceHigh" xml:space="preserve"><value>Elevee</value></data>
+  <data name="Notes" xml:space="preserve"><value>Note</value></data>
+  <data name="Summary" xml:space="preserve"><value>Resume</value></data>
+  <data name="SaveDraft" xml:space="preserve"><value>Enregistrer le brouillon</value></data>
+  <data name="ContinueToRear" xml:space="preserve"><value>Passer a la vue arriere</value></data>
+  <data name="CompleteAnalysis" xml:space="preserve"><value>Terminer analyse</value></data>
+  <data name="AnalysisCompleteSuccess" xml:space="preserve"><value>Analyse terminee.</value></data>
+  <data name="AnalysisDraftSaved" xml:space="preserve"><value>Brouillon analyse enregistre.</value></data>
+  <data name="AnalysisStatusCompletedWithScore" xml:space="preserve"><value>Termine : {0}/{1}</value></data>
+  <data name="AnalysisStatusCompleted" xml:space="preserve"><value>Termine</value></data>
+  <data name="AnalysisStatusDraft" xml:space="preserve"><value>Brouillon</value></data>
+  <data name="AnalysisStatusNotAssessed" xml:space="preserve"><value>Pas encore evalue</value></data>
+  <data name="VideoAvailable" xml:space="preserve"><value>{0} : fichier video disponible.</value></data>
+  <data name="VideoMissing" xml:space="preserve"><value>{0} : aucun fichier video associe trouve. Ouvre le dossier athlete ou televerse enregistrement.</value></data>
+  <data name="ScoreSummary" xml:space="preserve"><value>Cote {0} | Arriere {1}</value></data>
+  <data name="ScoreNotAssessed" xml:space="preserve"><value>non evalue</value></data>
+  <data name="CriterionOverstrideTitle" xml:space="preserve"><value>Overstride</value></data>
+  <data name="CriterionTrunkPostureTitle" xml:space="preserve"><value>Torso posture</value></data>
+  <data name="CriterionHipExtensionTitle" xml:space="preserve"><value>Hip extension</value></data>
+  <data name="CriterionArmSwingSideTitle" xml:space="preserve"><value>Arm swing</value></data>
+  <data name="CriterionInternalRotationTitle" xml:space="preserve"><value>Internal rotation</value></data>
+  <data name="CriterionPelvicDropTitle" xml:space="preserve"><value>Pelvic drop</value></data>
+  <data name="CriterionArmSwingRearTitle" xml:space="preserve"><value>Arm swing</value></data>
+  <data name="CriterionOverstrideHint" xml:space="preserve"><value>Foot strike clearly in front of the body, often with an extended knee.</value></data>
+  <data name="CriterionTrunkPostureHint" xml:space="preserve"><value>Stable slight forward lean without excessive upright posture, rounded back, or hollow back.</value></data>
+  <data name="CriterionHipExtensionHint" xml:space="preserve"><value>Sufficient extension behind the body without compensating through the lumbar spine.</value></data>
+  <data name="CriterionArmSwingSideHint" xml:space="preserve"><value>Rhythmic arm swing without strong crossing or asymmetric pendulum movement.</value></data>
+  <data name="CriterionInternalRotationHint" xml:space="preserve"><value>Knee or thigh visibly rotates inward during stance.</value></data>
+  <data name="CriterionPelvicDropHint" xml:space="preserve"><value>Pelvis drops on the opposite side during mid-stance.</value></data>
+  <data name="CriterionArmSwingRearHint" xml:space="preserve"><value>Symmetric arm swing without strong cross-over or shoulder elevation.</value></data>
+  <data name="ReviewPageTitle" xml:space="preserve"><value>Evaluer analyse de course</value></data>
+  <data name="BackToRecording" xml:space="preserve"><value>Retour a enregistrement</value></data>
+  <data name="Back" xml:space="preserve"><value>Retour</value></data>
+  <data name="ReviewLoading" xml:space="preserve"><value>Chargement analyse de course</value></data>
+  <data name="ReviewNeedsCompletedCapture" xml:space="preserve"><value>Analyse possible seulement apres la fin de la session enregistrement.</value></data>
+  <data name="OpenRecordingSession" xml:space="preserve"><value>Ouvrir la session enregistrement</value></data>
+  <data name="CaptureCompleted" xml:space="preserve"><value>Enregistrement termine</value></data>
+  <data name="SelectParticipantForAssessment" xml:space="preserve"><value>Selectionne un participant a evaluer.</value></data>
+  <data name="ReviewNotRunningAnalysis" xml:space="preserve"><value>Cet evenement n est pas une analyse de course.</value></data>
+  <data name="ReviewSubtitle" xml:space="preserve"><value>Evaluation apres la session enregistrement terminee</value></data>
+  <data name="ReviewSubtitleWithCourse" xml:space="preserve"><value>{0}, {1:dd.MM.yyyy HH:mm} a {2:HH:mm}</value></data>
+  <data name="RosterStatus" xml:space="preserve"><value>{0} participants, {1} termines</value></data>
+</root>

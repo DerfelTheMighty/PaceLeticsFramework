@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -67,4 +67,24 @@
   <data name="ValidationDateRequired" xml:space="preserve"><value>Veuillez sélectionner une date.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Veuillez saisir une heure au format HH:mm.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>Le coach n’a pas pu être résolu.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Supprimer</value></data>
+  <data name="Remove" xml:space="preserve"><value>Retirer</value></data>
+  <data name="StartRunningAnalysis" xml:space="preserve"><value>Démarrer analyse de course</value></data>
+  <data name="Challenges" xml:space="preserve"><value>Défis</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>Aucun défi actif.</value></data>
+  <data name="ChallengeTitle" xml:space="preserve"><value>Titre du défi</value></data>
+  <data name="ChallengeType" xml:space="preserve"><value>Type de défi</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>Général</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>Présence</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>Distance</value></data>
+  <data name="ChallengeTarget" xml:space="preserve"><value>Objectif</value></data>
+  <data name="ChallengeUnit" xml:space="preserve"><value>Unité</value></data>
+  <data name="AddChallenge" xml:space="preserve"><value>Ajouter un défi</value></data>
+  <data name="AddChallengeSuccess" xml:space="preserve"><value>Défi ajouté.</value></data>
+  <data name="RemoveChallengeConfirm" xml:space="preserve"><value>Retirer le défi « {0} » ?</value></data>
+  <data name="RemoveChallengeSuccess" xml:space="preserve"><value>Défi retiré.</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:dd.MM.yyyy} au {1:dd.MM.yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>Objectif : {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Objectif : {0:0.##} {1}</value></data>
+  <data name="PublishedSince" xml:space="preserve"><value>Depuis le {0:dd.MM.yyyy}</value></data>
 </root>

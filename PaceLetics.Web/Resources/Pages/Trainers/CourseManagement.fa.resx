@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -67,4 +67,24 @@
   <data name="ValidationDateRequired" xml:space="preserve"><value>لطفاً یک تاریخ انتخاب کنید.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>لطفاً زمان را با قالب HH:mm وارد کنید.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>مربی شناسایی نشد.</value></data>
+  <data name="Delete" xml:space="preserve"><value>حذف</value></data>
+  <data name="Remove" xml:space="preserve"><value>برداشتن</value></data>
+  <data name="StartRunningAnalysis" xml:space="preserve"><value>شروع تحلیل دویدن</value></data>
+  <data name="Challenges" xml:space="preserve"><value>چالش‌ها</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>چالش فعالی وجود ندارد.</value></data>
+  <data name="ChallengeTitle" xml:space="preserve"><value>عنوان چالش</value></data>
+  <data name="ChallengeType" xml:space="preserve"><value>نوع چالش</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>عمومی</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>حضور</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>مسافت</value></data>
+  <data name="ChallengeTarget" xml:space="preserve"><value>هدف</value></data>
+  <data name="ChallengeUnit" xml:space="preserve"><value>واحد</value></data>
+  <data name="AddChallenge" xml:space="preserve"><value>افزودن چالش</value></data>
+  <data name="AddChallengeSuccess" xml:space="preserve"><value>چالش اضافه شد.</value></data>
+  <data name="RemoveChallengeConfirm" xml:space="preserve"><value>چالش &quot;{0}&quot; حذف شود؟</value></data>
+  <data name="RemoveChallengeSuccess" xml:space="preserve"><value>چالش حذف شد.</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:dd.MM.yyyy} تا {1:dd.MM.yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>هدف: {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>هدف: {0:0.##} {1}</value></data>
+  <data name="PublishedSince" xml:space="preserve"><value>از {0:dd.MM.yyyy}</value></data>
 </root>

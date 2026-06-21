@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -68,4 +68,23 @@
   <data name="ValidationDateRequired" xml:space="preserve"><value>Please select a date.</value></data>
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Please enter a time in HH:mm format.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>The coach could not be resolved.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="Challenges" xml:space="preserve"><value>Challenges</value></data>
+  <data name="NoChallenges" xml:space="preserve"><value>No active challenges.</value></data>
+  <data name="ChallengeTitle" xml:space="preserve"><value>Challenge title</value></data>
+  <data name="ChallengeType" xml:space="preserve"><value>Challenge type</value></data>
+  <data name="ChallengeType_General" xml:space="preserve"><value>General</value></data>
+  <data name="ChallengeType_Attendance" xml:space="preserve"><value>Attendance</value></data>
+  <data name="ChallengeType_Distance" xml:space="preserve"><value>Distance</value></data>
+  <data name="ChallengeTarget" xml:space="preserve"><value>Target</value></data>
+  <data name="ChallengeUnit" xml:space="preserve"><value>Unit</value></data>
+  <data name="AddChallenge" xml:space="preserve"><value>Add challenge</value></data>
+  <data name="AddChallengeSuccess" xml:space="preserve"><value>Challenge added.</value></data>
+  <data name="RemoveChallengeConfirm" xml:space="preserve"><value>Remove challenge &quot;{0}&quot;?</value></data>
+  <data name="RemoveChallengeSuccess" xml:space="preserve"><value>Challenge removed.</value></data>
+  <data name="ChallengePeriod" xml:space="preserve"><value>{0:MM/dd/yyyy} to {1:MM/dd/yyyy}</value></data>
+  <data name="ChallengeTargetValue" xml:space="preserve"><value>Target: {0:0.##}</value></data>
+  <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Target: {0:0.##} {1}</value></data>
+  <data name="PublishedSince" xml:space="preserve"><value>Since {0:MM/dd/yyyy}</value></data>
 </root>

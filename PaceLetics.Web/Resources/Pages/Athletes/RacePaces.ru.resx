@@ -4,17 +4,17 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Ð’Ð°ÑˆÐ¸ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð·Ð°Ð±ÐµÐ³Ð°</value></data>
-  <data name="Loading" xml:space="preserve"><value>Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° Ð²Ð°ÑˆÐ¸Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ…...</value></data>
-  <data name="Title" xml:space="preserve"><value>Ð’Ð°ÑˆÐ¸ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð·Ð°Ð±ÐµÐ³Ð°</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ñ‹Ð¹ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÑŒÐ½Ñ‹Ð¹ Ð·Ð°Ð±ÐµÐ³ Ð¸Ð»Ð¸ Ð¸Ð·Ð¼ÐµÐ½Ð¸Ñ‚Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹.</value></data>
-  <data name="NoRaceWarning" xml:space="preserve"><value>Ð”Ð¾Ð±Ð°Ð²ÑŒÑ‚Ðµ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÑŒÐ½Ñ‹Ð¹ Ð·Ð°Ð±ÐµÐ³, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¼Ñ‹ Ð¼Ð¾Ð³Ð»Ð¸ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ñ‚ÑŒ Ð²Ð°ÑˆÐ¸ Ñ‚Ñ€ÐµÐ½Ð¸Ñ€Ð¾Ð²Ð¾Ñ‡Ð½Ñ‹Ðµ Ð·Ð¾Ð½Ñ‹.</value></data>
-  <data name="AddRace" xml:space="preserve"><value>Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÑŒÐ½Ñ‹Ð¹ Ð·Ð°Ð±ÐµÐ³</value></data>
-  <data name="RaceOldWarning" xml:space="preserve"><value>Ð’Ð°Ñˆ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÑŒÐ½Ñ‹Ð¹ Ð·Ð°Ð±ÐµÐ³ ÑÑ‚Ð°Ñ€ÑˆÐµ 6 Ð¼ÐµÑÑÑ†ÐµÐ². Ð”Ð»Ñ Ð¾Ð¿Ñ‚Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ð¹ Ñ‚Ñ€ÐµÐ½Ð¸Ñ€Ð¾Ð²ÐºÐ¸ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ Ð±Ð¾Ð»ÐµÐµ ÑÐ²ÐµÐ¶Ð¸Ð¹ Ð·Ð°Ð±ÐµÐ³.</value></data>
-  <data name="LoadError_Title" xml:space="preserve"><value>ÐžÑˆÐ¸Ð±ÐºÐ° Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸</value></data>
-  <data name="LoadError_Message" xml:space="preserve"><value>Ð’Ð°ÑˆÐ¸ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð½Ðµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ:</value></data>
-  <data name="PaceZonesTitle" xml:space="preserve"><value>Ãâ€™ÃÂ°Ã‘Ë†ÃÂ¸ ÃÂ·ÃÂ¾ÃÂ½Ã‘â€¹ Ã‘â€šÃÂµÃÂ¼ÃÂ¿ÃÂ°</value></data>
-  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Ãâ€”ÃÂ´ÃÂµÃ‘ÂÃ‘Å’ ÃÂ²Ã‘â€¹ ÃÂ½ÃÂ°ÃÂ¹ÃÂ´ÃÂµÃ‘â€šÃÂµ ÃÂ¾ÃÂ¿Ã‘â€šÃÂ¸ÃÂ¼ÃÂ°ÃÂ»Ã‘Å’ÃÂ½Ã‘â€¹ÃÂµ ÃÂ·ÃÂ¾ÃÂ½Ã‘â€¹ Ã‘â€šÃ‘â‚¬ÃÂµÃÂ½ÃÂ¸Ã‘â‚¬ÃÂ¾ÃÂ²ÃÂ¾Ã‘â€¡ÃÂ½ÃÂ¾ÃÂ³ÃÂ¾ Ã‘â€šÃÂµÃÂ¼ÃÂ¿ÃÂ° ÃÂ½ÃÂ° ÃÂ¾Ã‘ÂÃÂ½ÃÂ¾ÃÂ²ÃÂµ ÃÂ²ÃÂ°Ã‘Ë†ÃÂµÃÂ³ÃÂ¾ VDOT.</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Ваши данные забега</value></data>
+  <data name="Loading" xml:space="preserve"><value>Загрузка ваших данных...</value></data>
+  <data name="Title" xml:space="preserve"><value>Ваши данные забега</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Введите новый контрольный забег или измените существующий.</value></data>
+  <data name="NoRaceWarning" xml:space="preserve"><value>Добавьте контрольный забег, чтобы мы могли определить ваши тренировочные зоны.</value></data>
+  <data name="AddRace" xml:space="preserve"><value>Добавить контрольный забег</value></data>
+  <data name="RaceOldWarning" xml:space="preserve"><value>Ваш контрольный забег старше 6 месяцев. Для оптимальной тренировки используйте более свежий забег.</value></data>
+  <data name="LoadError_Title" xml:space="preserve"><value>Ошибка загрузки</value></data>
+  <data name="LoadError_Message" xml:space="preserve"><value>Ваши данные не удалось загрузить:</value></data>
+  <data name="PaceZonesTitle" xml:space="preserve"><value>Ваши зоны темпа</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Здесь вы найдете оптимальные зоны тренировочного темпа на основе вашего VDOT.</value></data>
 
   <data name="TabInfo" xml:space="preserve"><value>&#x418;&#x43D;&#x444;&#x43E;</value></data>
   <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>
@@ -23,4 +23,6 @@
   <data name="CriticalSpeedCard_Method_Regression" xml:space="preserve"><value>&#x420;&#x430;&#x441;&#x441;&#x447;&#x438;&#x442;&#x430;&#x43D;&#x43E; &#x43F;&#x43E; &#x43D;&#x435;&#x441;&#x43A;&#x43E;&#x43B;&#x44C;&#x43A;&#x438;&#x43C; &#x440;&#x435;&#x437;&#x443;&#x43B;&#x44C;&#x442;&#x430;&#x442;&#x430;&#x43C; &#x447;&#x435;&#x440;&#x435;&#x437; &#x440;&#x435;&#x433;&#x440;&#x435;&#x441;&#x441;&#x438;&#x44E;.</value></data>
   <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>&#x41E;&#x446;&#x435;&#x43D;&#x435;&#x43D;&#x43E; &#x43F;&#x43E; &#x43E;&#x434;&#x43D;&#x43E;&#x43C;&#x443; &#x437;&#x430;&#x431;&#x435;&#x433;&#x443;.</value></data>
   <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>&#x41E;&#x446;&#x435;&#x43D;&#x43A;&#x430; Critical Speed &#x43F;&#x43E;&#x43A;&#x430; &#x43D;&#x435;&#x434;&#x43E;&#x441;&#x442;&#x443;&#x43F;&#x43D;&#x430;.</value></data>
+  <data name="TabRaceData" xml:space="preserve"><value>Данные забегов</value></data>
+  <data name="TabPaceZones" xml:space="preserve"><value>Темповые зоны</value></data>
 </root>
