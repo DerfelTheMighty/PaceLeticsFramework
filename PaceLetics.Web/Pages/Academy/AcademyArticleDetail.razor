@@ -1,0 +1,144 @@
+@page "/Academy/{ArticleId}"
+@page "/Athletes/academy/{ArticleId}"
+@attribute [Authorize]
+@using PaceLetics.Web.Services.Academy
+@inject IAcademyService AcademyService
+@inject IStringLocalizer<Academy> L
+
+<PageTitle>@PageTitleText</PageTitle>
+
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <MudButton Href="/Athletes/academy"
+               Variant="Variant.Text"
+               Color="Color.Primary"
+               StartIcon="@Icons.Material.Filled.ArrowBack"
+               Class="mb-3">
+        @L["BackToOverview"]
+    </MudButton>
+
+    @if (_article is null)
+    {
+        <PageHeader Title="@L["NotFoundTitle"]" Subtitle="@L["NotFoundSubtitle"]" />
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-4">
+            @L["NotFoundBody"]
+        </MudAlert>
+    }
+    else
+    {
+        <PageHeader Title="@_article.Title" Subtitle="@_article.Summary" />
+
+        <MudPaper Elevation="0" Class="@GetArticlePanelClass(_article)">
+            <MudStack Spacing="3">
+                <div class="pl-academy-article__topline">
+                    <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="pl-academy-tile__chip">
+                        @FormatCategory(_article.Category)
+                    </MudChip>
+
+                    @if (_article.Tags.Count > 0)
+                    {
+                        <div class="pl-academy-article__tags" aria-label="@L["Tags"]">
+                            @foreach (var tag in _article.Tags)
+                            {
+                                <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="pl-academy-article__icon" aria-hidden="true">
+                    <MudIcon Icon="@GetArticleIcon(_article)" />
+                </div>
+
+                <MudStack Spacing="2">
+                    @foreach (var block in _article.BodyBlocks)
+                    {
+                        <MudText Typo="Typo.body1" Class="pl-academy-article__body">@block</MudText>
+                    }
+                </MudStack>
+
+                @if (_article.References.Count > 0)
+                {
+                    <MudDivider />
+
+                    <section class="pl-academy-article__sources">
+                        <MudText Typo="Typo.subtitle2">@L["Sources"]</MudText>
+                        <MudStack Spacing="1">
+                            @foreach (var reference in _article.References)
+                            {
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @if (!string.IsNullOrWhiteSpace(reference.Url))
+                                    {
+                                        <MudLink Href="@reference.Url" Target="_blank" Typo="Typo.caption">@reference.Title</MudLink>
+                                    }
+                                    else
+                                    {
+                                        @reference.Title
+                                    }
+                                </MudText>
+                            }
+                        </MudStack>
+                    </section>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(_article.SourceModule))
+                {
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@_article.SourceModule</MudText>
+                }
+            </MudStack>
+        </MudPaper>
+    }
+</MudContainer>
+
+@code {
+    [Parameter]
+    public string? ArticleId { get; set; }
+
+    private AcademyArticle? _article;
+
+    private string PageTitleText => _article?.Title ?? L["PageTitle"];
+
+    protected override void OnParametersSet()
+    {
+        _article = AcademyService.GetArticles()
+            .FirstOrDefault(article => string.Equals(article.Id, ArticleId, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private string FormatCategory(string category)
+    {
+        return category switch
+        {
+            AcademyArticleCategories.Fundamentals => L["CategoryFundamentals"],
+            AcademyArticleCategories.RunningAnalysis => L["CategoryRunningAnalysis"],
+            _ => category
+        };
+    }
+
+    private static string GetArticleIcon(AcademyArticle article)
+    {
+        return article.Id switch
+        {
+            "mental-resource-running" => Icons.Material.Filled.Psychology,
+            "running-analysis-intervention-philosophy" => Icons.Material.Filled.DirectionsRun,
+            "running-analysis-side-effects" => Icons.Material.Filled.Info,
+            "running-analysis-shared-decision" => Icons.Material.Filled.Groups,
+            _ => article.Category switch
+            {
+                AcademyArticleCategories.Fundamentals => Icons.Material.Filled.Psychology,
+                AcademyArticleCategories.RunningAnalysis => Icons.Material.Filled.DirectionsRun,
+                _ => Icons.Material.Filled.AutoStories
+            }
+        };
+    }
+
+    private static string GetArticlePanelClass(AcademyArticle article)
+    {
+        var accentClass = article.Category switch
+        {
+            AcademyArticleCategories.Fundamentals => "pl-academy-tile--fundamentals",
+            AcademyArticleCategories.RunningAnalysis => "pl-academy-tile--running-analysis",
+            _ => "pl-academy-tile--default"
+        };
+
+        return $"pa-4 mt-4 pl-academy-article {accentClass}";
+    }
+}

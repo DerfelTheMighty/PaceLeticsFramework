@@ -10,4 +10,10 @@
   <data name="TabAll" xml:space="preserve"><value>Alle</value></data>
   <data name="CategoryFundamentals" xml:space="preserve"><value>Grundlagen</value></data>
   <data name="CategoryRunningAnalysis" xml:space="preserve"><value>Laufform</value></data>
+  <data name="BackToOverview" xml:space="preserve"><value>Academy</value></data>
+  <data name="NotFoundTitle" xml:space="preserve"><value>Artikel nicht gefunden</value></data>
+  <data name="NotFoundSubtitle" xml:space="preserve"><value>Dieser Academy-Artikel ist nicht verfuegbar.</value></data>
+  <data name="NotFoundBody" xml:space="preserve"><value>Gehe zur Academy-Uebersicht zurueck, um einen anderen Artikel auszuwaehlen.</value></data>
+  <data name="Sources" xml:space="preserve"><value>Quellen</value></data>
+  <data name="Tags" xml:space="preserve"><value>Tags</value></data>
 </root>

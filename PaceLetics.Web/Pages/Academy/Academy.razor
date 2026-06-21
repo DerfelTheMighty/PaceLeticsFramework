@@ -34,20 +34,22 @@
     <div class="pl-academy-grid mt-4">
         @foreach (var article in VisibleArticles)
         {
-            <MudPaper Elevation="0" Class="@GetArticleTileClass(article)" role="article" aria-label="@article.Title">
-                <div class="pl-academy-tile__header">
-                    <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
-                    <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="pl-academy-tile__chip">
-                        @FormatCategory(article.Category)
-                    </MudChip>
-                </div>
+            <a href="@GetArticleHref(article)" class="pl-academy-tile-link" aria-label="@article.Title">
+                <MudPaper Elevation="0" Class="@GetArticleTileClass(article)" role="article">
+                    <div class="pl-academy-tile__header">
+                        <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="pl-academy-tile__chip">
+                            @FormatCategory(article.Category)
+                        </MudChip>
+                        <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
+                    </div>
 
-                <div class="pl-academy-tile__icon" aria-hidden="true">
-                    <MudIcon Icon="@GetArticleIcon(article)" />
-                </div>
+                    <div class="pl-academy-tile__icon" aria-hidden="true">
+                        <MudIcon Icon="@GetArticleIcon(article)" />
+                    </div>
 
-                <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
-            </MudPaper>
+                    <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
+                </MudPaper>
+            </a>
         }
     </div>
 </MudContainer>
@@ -128,5 +130,10 @@
         };
 
         return $"pl-academy-tile {accentClass}";
+    }
+
+    private static string GetArticleHref(AcademyArticle article)
+    {
+        return $"/Athletes/academy/{Uri.EscapeDataString(article.Id)}";
     }
 }
