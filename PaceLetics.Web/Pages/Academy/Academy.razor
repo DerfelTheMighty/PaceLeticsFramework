@@ -1,8 +1,8 @@
 @page "/Academy"
 @page "/Athletes/academy"
 @attribute [Authorize]
-@using PaceLetics.Web.Services.Academy
-@inject IAcademyService AcademyService
+@using PaceLetics.Web.Services.Articles
+@inject IArticleService ArticleService
 @inject IStringLocalizer<Academy> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
@@ -55,19 +55,19 @@
 </MudContainer>
 
 @code {
-    private IReadOnlyList<AcademyArticle> _articles = Array.Empty<AcademyArticle>();
+    private IReadOnlyList<ArticlePreview> _articles = Array.Empty<ArticlePreview>();
     private IReadOnlyList<string> _categories = Array.Empty<string>();
     private string? _selectedCategory;
 
-    private IEnumerable<AcademyArticle> VisibleArticles =>
+    private IEnumerable<ArticlePreview> VisibleArticles =>
         string.IsNullOrWhiteSpace(_selectedCategory)
             ? _articles
             : _articles.Where(article => string.Equals(article.Category, _selectedCategory, StringComparison.OrdinalIgnoreCase));
 
     protected override void OnInitialized()
     {
-        _articles = AcademyService.GetArticles();
-        _categories = AcademyService.GetCategories();
+        _articles = ArticleService.GetArticlePreviews();
+        _categories = ArticleService.GetCategories();
     }
 
     private void SelectCategory(string? category)
@@ -92,9 +92,9 @@
     {
         return category switch
         {
-            AcademyArticleCategories.Fundamentals => L["CategoryFundamentals"],
-            AcademyArticleCategories.RunningAnalysis => L["CategoryRunningAnalysis"],
-            AcademyArticleCategories.Training => L["CategoryTraining"],
+            ArticleCategories.Fundamentals => L["CategoryFundamentals"],
+            ArticleCategories.RunningAnalysis => L["CategoryRunningAnalysis"],
+            ArticleCategories.Training => L["CategoryTraining"],
             _ => category
         };
     }
@@ -103,14 +103,14 @@
     {
         return category switch
         {
-            AcademyArticleCategories.Fundamentals => Icons.Material.Filled.Psychology,
-            AcademyArticleCategories.RunningAnalysis => Icons.Material.Filled.DirectionsRun,
-            AcademyArticleCategories.Training => Icons.Material.Filled.Speed,
+            ArticleCategories.Fundamentals => Icons.Material.Filled.Psychology,
+            ArticleCategories.RunningAnalysis => Icons.Material.Filled.DirectionsRun,
+            ArticleCategories.Training => Icons.Material.Filled.Speed,
             _ => Icons.Material.Filled.AutoStories
         };
     }
 
-    private static string GetArticleIcon(AcademyArticle article)
+    private static string GetArticleIcon(ArticlePreview article)
     {
         return article.Id switch
         {
@@ -121,20 +121,20 @@
         };
     }
 
-    private static string GetArticleTileClass(AcademyArticle article)
+    private static string GetArticleTileClass(ArticlePreview article)
     {
         var accentClass = article.Category switch
         {
-            AcademyArticleCategories.Fundamentals => "pl-academy-tile--fundamentals",
-            AcademyArticleCategories.RunningAnalysis => "pl-academy-tile--running-analysis",
-            AcademyArticleCategories.Training => "pl-academy-tile--training",
+            ArticleCategories.Fundamentals => "pl-academy-tile--fundamentals",
+            ArticleCategories.RunningAnalysis => "pl-academy-tile--running-analysis",
+            ArticleCategories.Training => "pl-academy-tile--training",
             _ => "pl-academy-tile--default"
         };
 
         return $"pl-academy-tile {accentClass}";
     }
 
-    private static string GetArticleHref(AcademyArticle article)
+    private static string GetArticleHref(ArticlePreview article)
     {
         return $"/Athletes/academy/{Uri.EscapeDataString(article.Id)}";
     }

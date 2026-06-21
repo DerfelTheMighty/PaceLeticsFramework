@@ -3,8 +3,8 @@
 @attribute [Authorize]
 @using PaceLetics.AthleteModule.Components
 @using PaceLetics.RunningAnalysisModule.Components
-@using PaceLetics.Web.Services.Academy
-@inject IAcademyService AcademyService
+@using PaceLetics.Web.Services.Articles
+@inject IArticleService ArticleService
 @inject IStringLocalizer<Academy> L
 
 <PageTitle>@PageTitleText</PageTitle>
@@ -50,15 +50,15 @@
                 </MudStack>
             </MudPaper>
 
-            @if (_article.Id == "mental-resource-running")
+            @if (_article.ContentKind == ArticleContentKind.MentalResource)
             {
                 <MentalResourceArticle />
             }
-            else if (_article.Id == "evidence-based-running-analysis")
+            else if (_article.ContentKind == ArticleContentKind.RunningAnalysisGuidance)
             {
                 <RunningAnalysisInterventionGuidance />
             }
-            else if (_article.Id == "pace-controlled-training")
+            else if (_article.ContentKind == ArticleContentKind.PaceModelInfo)
             {
                 <PaceModelInfo />
             }
@@ -74,41 +74,40 @@
     [Parameter]
     public string? ArticleId { get; set; }
 
-    private AcademyArticle? _article;
+    private Article? _article;
 
     private string PageTitleText => _article?.Title ?? L["PageTitle"];
 
     protected override void OnParametersSet()
     {
-        _article = AcademyService.GetArticles()
-            .FirstOrDefault(article => string.Equals(article.Id, ArticleId, StringComparison.OrdinalIgnoreCase));
+        _article = ArticleService.GetArticle(ArticleId);
     }
 
     private string FormatCategory(string category)
     {
         return category switch
         {
-            AcademyArticleCategories.Fundamentals => L["CategoryFundamentals"],
-            AcademyArticleCategories.RunningAnalysis => L["CategoryRunningAnalysis"],
-            AcademyArticleCategories.Training => L["CategoryTraining"],
+            ArticleCategories.Fundamentals => L["CategoryFundamentals"],
+            ArticleCategories.RunningAnalysis => L["CategoryRunningAnalysis"],
+            ArticleCategories.Training => L["CategoryTraining"],
             _ => category
         };
     }
 
-    private static string GetArticleMetaClass(AcademyArticle article)
+    private static string GetArticleMetaClass(Article article)
     {
         var accentClass = article.Category switch
         {
-            AcademyArticleCategories.Fundamentals => "pl-academy-tile--fundamentals",
-            AcademyArticleCategories.RunningAnalysis => "pl-academy-tile--running-analysis",
-            AcademyArticleCategories.Training => "pl-academy-tile--training",
+            ArticleCategories.Fundamentals => "pl-academy-tile--fundamentals",
+            ArticleCategories.RunningAnalysis => "pl-academy-tile--running-analysis",
+            ArticleCategories.Training => "pl-academy-tile--training",
             _ => "pl-academy-tile--default"
         };
 
         return $"pa-3 pl-academy-article {accentClass}";
     }
 
-    private RenderFragment RenderFallbackArticle(AcademyArticle article) => builder =>
+    private RenderFragment RenderFallbackArticle(Article article) => builder =>
     {
         var sequence = 0;
 

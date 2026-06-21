@@ -3,15 +3,15 @@ using Microsoft.Extensions.Localization;
 using PaceLetics.AthleteModule.Components;
 using PaceLetics.RunningAnalysisModule.Components;
 using PaceLetics.Web.Pages.Athletes;
-using PaceLetics.Web.Services.Academy;
+using PaceLetics.Web.Services.Articles;
 using AcademyPage = PaceLetics.Web.Pages.Academy.Academy;
 
 namespace PaceLetics.Tests;
 
-public sealed class AcademyServiceTests
+public sealed class ArticleServiceTests
 {
     [Fact]
-    public void GetArticles_ReturnsTheThreeAcademyArticles()
+    public void GetArticles_ReturnsTheThreeGlobalArticles()
     {
         var service = CreateService();
 
@@ -24,21 +24,24 @@ public sealed class AcademyServiceTests
             article => Assert.Equal("pace-controlled-training", article.Id));
 
         var mentalResource = Assert.Single(articles, article => article.Id == "mental-resource-running");
-        Assert.Equal(AcademyArticleCategories.Fundamentals, mentalResource.Category);
+        Assert.Equal(ArticleCategories.Fundamentals, mentalResource.Category);
+        Assert.Equal(ArticleContentKind.MentalResource, mentalResource.ContentKind);
         Assert.Equal("Laufen als mentale Resource", mentalResource.Title);
-        Assert.Equal("Academy mental resource", mentalResource.SourceModule);
+        Assert.Equal("MentalResourceArticle", mentalResource.SourceModule);
         Assert.Contains(mentalResource.BodyBlocks, block => block.Contains("Novice runners"));
         Assert.Contains(mentalResource.References, reference => reference.Url.Contains("ijerph17218059"));
         Assert.Contains(mentalResource.References, reference => reference.Url.Contains("jsams.2018.06.003"));
 
         var runningAnalysis = Assert.Single(articles, article => article.Id == "evidence-based-running-analysis");
-        Assert.Equal(AcademyArticleCategories.RunningAnalysis, runningAnalysis.Category);
+        Assert.Equal(ArticleCategories.RunningAnalysis, runningAnalysis.Category);
+        Assert.Equal(ArticleContentKind.RunningAnalysisGuidance, runningAnalysis.ContentKind);
         Assert.Equal("Evidenzbasierte Laufanalyse", runningAnalysis.Title);
         Assert.Contains(runningAnalysis.BodyBlocks, block => block.Contains("Technique changes shift load."));
         Assert.Contains(runningAnalysis.References, reference => reference.Url.Contains("31028658"));
 
         var paceTraining = Assert.Single(articles, article => article.Id == "pace-controlled-training");
-        Assert.Equal(AcademyArticleCategories.Training, paceTraining.Category);
+        Assert.Equal(ArticleCategories.Training, paceTraining.Category);
+        Assert.Equal(ArticleContentKind.PaceModelInfo, paceTraining.ContentKind);
         Assert.Equal("Pacegesteuertes Training", paceTraining.Title);
         Assert.Equal("Why we train pace-guided", paceTraining.Summary);
         Assert.Equal("PaceModelInfo", paceTraining.SourceModule);
@@ -48,26 +51,70 @@ public sealed class AcademyServiceTests
     }
 
     [Fact]
+    public void GetArticlePreviews_ReturnsLightweightCardsForAllArticles()
+    {
+        var service = CreateService();
+
+        var previews = service.GetArticlePreviews();
+
+        Assert.Collection(
+            previews,
+            preview =>
+            {
+                Assert.Equal("mental-resource-running", preview.Id);
+                Assert.Equal("Laufen als mentale Resource", preview.Title);
+                Assert.Equal(ArticleContentKind.MentalResource, preview.ContentKind);
+            },
+            preview =>
+            {
+                Assert.Equal("evidence-based-running-analysis", preview.Id);
+                Assert.Equal("Evidenzbasierte Laufanalyse", preview.Title);
+                Assert.Equal(ArticleContentKind.RunningAnalysisGuidance, preview.ContentKind);
+            },
+            preview =>
+            {
+                Assert.Equal("pace-controlled-training", preview.Id);
+                Assert.Equal("Pacegesteuertes Training", preview.Title);
+                Assert.Equal(ArticleContentKind.PaceModelInfo, preview.ContentKind);
+            });
+
+        Assert.All(previews, preview => Assert.NotNull(preview.Tags));
+    }
+
+    [Fact]
+    public void GetArticle_ReturnsArticleByIdCaseInsensitively()
+    {
+        var service = CreateService();
+
+        var article = service.GetArticle("PACE-CONTROLLED-TRAINING");
+
+        Assert.NotNull(article);
+        Assert.Equal("pace-controlled-training", article.Id);
+    }
+
+    [Fact]
     public void GetCategories_ReturnsCategoriesWithSeedArticles()
     {
         var service = CreateService();
 
         var categories = service.GetCategories();
 
-        Assert.Contains(AcademyArticleCategories.Fundamentals, categories);
-        Assert.Contains(AcademyArticleCategories.RunningAnalysis, categories);
-        Assert.Contains(AcademyArticleCategories.Training, categories);
+        Assert.Contains(ArticleCategories.Fundamentals, categories);
+        Assert.Contains(ArticleCategories.RunningAnalysis, categories);
+        Assert.Contains(ArticleCategories.Training, categories);
         Assert.DoesNotContain("workouts", categories);
         Assert.DoesNotContain("trainingPlans", categories);
     }
 
-    private static AcademyService CreateService()
+    private static ArticleService CreateService()
     {
-        return new AcademyService(
+        var repository = new LocalizedArticleRepository(
             new DictionaryLocalizer<AcademyPage>(AcademyTexts),
             new DictionaryLocalizer<AthleteResources>(AthleteTexts),
             new DictionaryLocalizer<Dashboard>(DashboardTexts),
             new DictionaryLocalizer<RunningAnalysisResources>(RunningAnalysisTexts));
+
+        return new ArticleService(repository);
     }
 
     private static readonly Dictionary<string, string> AcademyTexts = new(StringComparer.OrdinalIgnoreCase)

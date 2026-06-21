@@ -5,16 +5,16 @@ using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 using PaceLetics.Web.Pages.Athletes;
 using AcademyPage = PaceLetics.Web.Pages.Academy.Academy;
 
-namespace PaceLetics.Web.Services.Academy;
+namespace PaceLetics.Web.Services.Articles;
 
-public sealed partial class AcademyService : IAcademyService
+public sealed class LocalizedArticleRepository : IArticleRepository
 {
     private readonly IStringLocalizer<AcademyPage> _academyLocalizer;
     private readonly IStringLocalizer<AthleteResources> _athleteLocalizer;
     private readonly IStringLocalizer<Dashboard> _dashboardLocalizer;
     private readonly IStringLocalizer<RunningAnalysisResources> _runningAnalysisLocalizer;
 
-    public AcademyService(
+    public LocalizedArticleRepository(
         IStringLocalizer<AcademyPage> academyLocalizer,
         IStringLocalizer<AthleteResources> athleteLocalizer,
         IStringLocalizer<Dashboard> dashboardLocalizer,
@@ -26,24 +26,12 @@ public sealed partial class AcademyService : IAcademyService
         _runningAnalysisLocalizer = runningAnalysisLocalizer;
     }
 
-    public IReadOnlyList<AcademyArticle> GetArticles()
+    public IReadOnlyList<Article> GetArticles()
     {
-        return BuildArticles()
-            .Where(article => !string.IsNullOrWhiteSpace(article.Title))
-            .OrderBy(article => article.SortOrder)
-            .ThenBy(article => article.Title)
-            .ToList();
+        return BuildArticles().ToList();
     }
 
-    public IReadOnlyList<string> GetCategories()
-    {
-        return GetArticles()
-            .Select(article => article.Category)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToList();
-    }
-
-    private IEnumerable<AcademyArticle> BuildArticles()
+    private IEnumerable<Article> BuildArticles()
     {
         foreach (var article in BuildMentalResourceArticles())
             yield return article;
@@ -55,18 +43,18 @@ public sealed partial class AcademyService : IAcademyService
             yield return article;
     }
 
-    private IEnumerable<AcademyArticle> BuildMentalResourceArticles()
+    private IEnumerable<Article> BuildMentalResourceArticles()
     {
         var references = BuildMentalResourceReferences();
         var lead = DashboardText("MentalResource_Lead", "Running can become a psychological resource when load, recovery, and routine fit together.");
 
-        yield return new AcademyArticle
+        yield return new Article
         {
             Id = "mental-resource-running",
             Title = AcademyText("ArticleMentalResourceTitle", "Laufen als mentale Resource"),
             Summary = lead,
-            Category = AcademyArticleCategories.Fundamentals,
-            SourceModule = "Academy mental resource",
+            Category = ArticleCategories.Fundamentals,
+            SourceModule = "MentalResourceArticle",
             Tags = new[] { "Mental resource", "Sustainability", "Injury prevention", "Beginners", "Drop-out" },
             BodyBlocks = Blocks(
                 lead,
@@ -76,21 +64,22 @@ public sealed partial class AcademyService : IAcademyService
                 DashboardText("MentalResource_StepConsequenceText", "Sustainable programs cannot treat drop-out as a side issue."),
                 DashboardText("MentalResource_StepAppText", "PaceLetics doses load and makes routines understandable.")),
             References = references,
+            ContentKind = ArticleContentKind.MentalResource,
             SortOrder = 10
         };
     }
 
-    private IEnumerable<AcademyArticle> BuildRunningAnalysisArticles()
+    private IEnumerable<Article> BuildRunningAnalysisArticles()
     {
         var references = BuildRunningAnalysisReferences();
 
-        yield return new AcademyArticle
+        yield return new Article
         {
             Id = "evidence-based-running-analysis",
             Title = AcademyText("ArticleRunningAnalysisTitle", "Evidenzbasierte Laufanalyse"),
             Summary = AcademyText("ArticleRunningAnalysisSummary", "Warum Laufanalyse Evidenz, Kontext und gemeinsame Entscheidungen braucht."),
-            Category = AcademyArticleCategories.RunningAnalysis,
-            SourceModule = "Running analysis guidance",
+            Category = ArticleCategories.RunningAnalysis,
+            SourceModule = "RunningAnalysisInterventionGuidance",
             Tags = new[] { "Running analysis", "Evidence", "Shared decision", "Do no harm" },
             BodyBlocks = Blocks(
                 RunningAnalysisText("InterventionGuidance_CompactIntro", "Running style is a self-optimizing system."),
@@ -105,20 +94,21 @@ public sealed partial class AcademyService : IAcademyService
                 RunningAnalysisText("InterventionGuidance_Talk_1", "A note about running style is not a judgment."),
                 RunningAnalysisText("InterventionGuidance_Talk_3", "Running style belongs in the context of symptoms, training, shoes, pace, volume, and fatigue.")),
             References = references,
+            ContentKind = ArticleContentKind.RunningAnalysisGuidance,
             SortOrder = 20
         };
     }
 
-    private IEnumerable<AcademyArticle> BuildPaceControlledTrainingArticles()
+    private IEnumerable<Article> BuildPaceControlledTrainingArticles()
     {
         var references = BuildPaceModelReferences();
 
-        yield return new AcademyArticle
+        yield return new Article
         {
             Id = "pace-controlled-training",
             Title = AcademyText("ArticlePaceTrainingTitle", "Pacegesteuertes Training"),
             Summary = DashboardText("Metric_TrainingSystemDetail", "Why we train pace-guided"),
-            Category = AcademyArticleCategories.Training,
+            Category = ArticleCategories.Training,
             SourceModule = "PaceModelInfo",
             Tags = new[] { "Pace", "VDOT", "Critical speed", "D'", "Training load" },
             BodyBlocks = Blocks(
@@ -129,6 +119,7 @@ public sealed partial class AcademyService : IAcademyService
                 AthleteText("PaceModelInfo_Cs_Text", "Critical Speed describes the boundary between heavy and severe intensity domains."),
                 AthleteText("PaceModelInfo_Calculation_Text", "PaceLetics calculates with speed internally and uses VDOT, Critical Speed, and D' for training guidance.")),
             References = references,
+            ContentKind = ArticleContentKind.PaceModelInfo,
             SortOrder = 30
         };
     }
@@ -181,16 +172,6 @@ public sealed partial class AcademyService : IAcademyService
         };
     }
 
-    private static IReadOnlyList<ContentReference> ReferencesByNumber(
-        IReadOnlyList<ContentReference> references,
-        params string[] numbers)
-    {
-        var numberSet = numbers.ToHashSet(StringComparer.OrdinalIgnoreCase);
-        return references
-            .Where(reference => numberSet.Contains(reference.SourceType))
-            .ToList();
-    }
-
     private static ContentReference Reference<T>(
         string titleKey,
         string url,
@@ -205,11 +186,6 @@ public sealed partial class AcademyService : IAcademyService
         };
     }
 
-    private string DashboardText(string key, string fallback)
-    {
-        return Localized(_dashboardLocalizer, key, fallback);
-    }
-
     private string AcademyText(string key, string fallback)
     {
         return Localized(_academyLocalizer, key, fallback);
@@ -218,6 +194,11 @@ public sealed partial class AcademyService : IAcademyService
     private string AthleteText(string key, string fallback)
     {
         return Localized(_athleteLocalizer, key, fallback);
+    }
+
+    private string DashboardText(string key, string fallback)
+    {
+        return Localized(_dashboardLocalizer, key, fallback);
     }
 
     private string RunningAnalysisText(string key, string fallback)
@@ -238,5 +219,4 @@ public sealed partial class AcademyService : IAcademyService
             .Select(value => value.Trim())
             .ToList();
     }
-
 }
