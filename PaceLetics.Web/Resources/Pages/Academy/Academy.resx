@@ -10,7 +10,4 @@
   <data name="TabAll" xml:space="preserve"><value>All</value></data>
   <data name="CategoryFundamentals" xml:space="preserve"><value>Foundations</value></data>
   <data name="CategoryRunningAnalysis" xml:space="preserve"><value>Form</value></data>
-  <data name="MetricArticles" xml:space="preserve"><value>Articles</value></data>
-  <data name="MetricSources" xml:space="preserve"><value>Sources</value></data>
-  <data name="Sources" xml:space="preserve"><value>Sources</value></data>
 </root>

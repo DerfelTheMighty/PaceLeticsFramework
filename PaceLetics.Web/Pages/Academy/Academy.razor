@@ -7,7 +7,7 @@
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
-<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Large">
     <nav class="pl-section-nav" aria-label="@L["Title"]">
         <button type="button"
                 class="@GetSectionButtonClass(null)"
@@ -31,82 +31,25 @@
 
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    <MudStack Spacing="3" Class="mt-4">
-        <MudPaper Elevation="0" Class="pa-4 pl-panel">
-            <MudGrid Spacing="2">
-                <MudItem xs="6">
-                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricArticles"]</MudText>
-                    <MudText Typo="Typo.h6">@_articles.Count</MudText>
-                </MudItem>
-                <MudItem xs="6">
-                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["MetricSources"]</MudText>
-                    <MudText Typo="Typo.h6">@CountSources()</MudText>
-                </MudItem>
-            </MudGrid>
-        </MudPaper>
-
+    <div class="pl-academy-grid mt-4">
         @foreach (var article in VisibleArticles)
         {
-            <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
-                <MudStack Spacing="2">
-                    <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                        <MudStack Spacing="1" Style="min-width:0; flex:1 1 260px;">
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
-                                <MudIcon Icon="@GetCategoryIcon(article.Category)" Color="Color.Primary" Size="Size.Small" />
-                                <MudText Typo="Typo.h6">@article.Title</MudText>
-                            </MudStack>
-                            <MudText Typo="Typo.body2" Color="Color.Secondary">@article.Summary</MudText>
-                        </MudStack>
+            <MudPaper Elevation="0" Class="@GetArticleTileClass(article)" role="article" aria-label="@article.Title">
+                <div class="pl-academy-tile__header">
+                    <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
+                    <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="pl-academy-tile__chip">
+                        @FormatCategory(article.Category)
+                    </MudChip>
+                </div>
 
-                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
-                            @FormatCategory(article.Category)
-                        </MudChip>
-                    </MudStack>
+                <div class="pl-academy-tile__icon" aria-hidden="true">
+                    <MudIcon Icon="@GetArticleIcon(article)" />
+                </div>
 
-                    @if (article.Tags.Count > 0)
-                    {
-                        <MudStack Row="true" Style="gap:6px; flex-wrap:wrap;">
-                            @foreach (var tag in article.Tags.Take(6))
-                            {
-                                <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
-                            }
-                        </MudStack>
-                    }
-
-                    <MudDivider />
-
-                    <MudStack Spacing="1">
-                        @foreach (var block in article.BodyBlocks)
-                        {
-                            <MudText Typo="Typo.body2">@block</MudText>
-                        }
-                    </MudStack>
-
-                    @if (article.References.Count > 0)
-                    {
-                        <MudStack Spacing="1" Class="pt-1">
-                            <MudText Typo="Typo.subtitle2">@L["Sources"]</MudText>
-                            @foreach (var reference in article.References)
-                            {
-                                <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                    @if (!string.IsNullOrWhiteSpace(reference.Url))
-                                    {
-                                        <MudLink Href="@reference.Url" Target="_blank" Typo="Typo.caption">@reference.Title</MudLink>
-                                    }
-                                    else
-                                    {
-                                        @reference.Title
-                                    }
-                                </MudText>
-                            }
-                        </MudStack>
-                    }
-
-                    <MudText Typo="Typo.caption" Color="Color.Secondary">@article.SourceModule</MudText>
-                </MudStack>
+                <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
             </MudPaper>
         }
-    </MudStack>
+    </div>
 </MudContainer>
 
 @code {
@@ -163,17 +106,27 @@
         };
     }
 
-    private int CountCategory(string category)
+    private static string GetArticleIcon(AcademyArticle article)
     {
-        return _articles.Count(article => string.Equals(article.Category, category, StringComparison.OrdinalIgnoreCase));
+        return article.Id switch
+        {
+            "mental-resource-running" => Icons.Material.Filled.Psychology,
+            "running-analysis-intervention-philosophy" => Icons.Material.Filled.DirectionsRun,
+            "running-analysis-side-effects" => Icons.Material.Filled.Info,
+            "running-analysis-shared-decision" => Icons.Material.Filled.Groups,
+            _ => GetCategoryIcon(article.Category)
+        };
     }
 
-    private int CountSources()
+    private static string GetArticleTileClass(AcademyArticle article)
     {
-        return _articles
-            .SelectMany(article => article.References)
-            .Select(reference => string.IsNullOrWhiteSpace(reference.Url) ? reference.Title : reference.Url)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .Count();
+        var accentClass = article.Category switch
+        {
+            AcademyArticleCategories.Fundamentals => "pl-academy-tile--fundamentals",
+            AcademyArticleCategories.RunningAnalysis => "pl-academy-tile--running-analysis",
+            _ => "pl-academy-tile--default"
+        };
+
+        return $"pl-academy-tile {accentClass}";
     }
 }
