@@ -21,9 +21,4 @@
   <data name="ArticleRunningAnalysisTitle" xml:space="preserve"><value>Evidence-based running analysis</value></data>
   <data name="ArticleRunningAnalysisSummary" xml:space="preserve"><value>Why running analysis needs evidence, context, and shared decisions.</value></data>
   <data name="ArticlePaceTrainingTitle" xml:space="preserve"><value>Pace-controlled training</value></data>
-  <data name="ArticlePaceTrainingSummary" xml:space="preserve"><value>Why pace zones make training load controllable and understandable.</value></data>
-  <data name="ArticlePaceTrainingBody1" xml:space="preserve"><value>Pace-controlled training translates performance data into concrete speed ranges. A plan becomes not only a distance, but a controllable training load.</value></data>
-  <data name="ArticlePaceTrainingBody2" xml:space="preserve"><value>Pace zones help keep easy runs truly easy and hard sessions deliberately dosed. They protect against turning every session into the same medium-hard effort.</value></data>
-  <data name="ArticlePaceTrainingBody3" xml:space="preserve"><value>PaceLetics uses reference performances, VDOT, and critical speed to make training understandable. Pace is not the goal itself; it is an orientation tool.</value></data>
-  <data name="ArticlePaceTrainingBody4" xml:space="preserve"><value>When form, fatigue, weather, or terrain do not fit, perception still matters. Good training control combines numbers with body feel.</value></data>
 </root>

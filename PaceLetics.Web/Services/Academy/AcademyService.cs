@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Localization;
+using PaceLetics.AthleteModule.Components;
 using PaceLetics.RunningAnalysisModule.Components;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 using PaceLetics.Web.Pages.Athletes;
@@ -9,15 +10,18 @@ namespace PaceLetics.Web.Services.Academy;
 public sealed partial class AcademyService : IAcademyService
 {
     private readonly IStringLocalizer<AcademyPage> _academyLocalizer;
+    private readonly IStringLocalizer<AthleteResources> _athleteLocalizer;
     private readonly IStringLocalizer<Dashboard> _dashboardLocalizer;
     private readonly IStringLocalizer<RunningAnalysisResources> _runningAnalysisLocalizer;
 
     public AcademyService(
         IStringLocalizer<AcademyPage> academyLocalizer,
+        IStringLocalizer<AthleteResources> athleteLocalizer,
         IStringLocalizer<Dashboard> dashboardLocalizer,
         IStringLocalizer<RunningAnalysisResources> runningAnalysisLocalizer)
     {
         _academyLocalizer = academyLocalizer;
+        _athleteLocalizer = athleteLocalizer;
         _dashboardLocalizer = dashboardLocalizer;
         _runningAnalysisLocalizer = runningAnalysisLocalizer;
     }
@@ -107,20 +111,24 @@ public sealed partial class AcademyService : IAcademyService
 
     private IEnumerable<AcademyArticle> BuildPaceControlledTrainingArticles()
     {
+        var references = BuildPaceModelReferences();
+
         yield return new AcademyArticle
         {
             Id = "pace-controlled-training",
             Title = AcademyText("ArticlePaceTrainingTitle", "Pacegesteuertes Training"),
-            Summary = AcademyText("ArticlePaceTrainingSummary", "Warum Pacebereiche Trainingsbelastung steuerbar und nachvollziehbar machen."),
+            Summary = DashboardText("Metric_TrainingSystemDetail", "Why we train pace-guided"),
             Category = AcademyArticleCategories.Training,
-            SourceModule = "PaceLetics training system",
-            Tags = new[] { "Pace", "VDOT", "Critical speed", "Training load" },
+            SourceModule = "PaceModelInfo",
+            Tags = new[] { "Pace", "VDOT", "Critical speed", "D'", "Training load" },
             BodyBlocks = Blocks(
-                AcademyText("ArticlePaceTrainingBody1", "Pacegesteuertes Training übersetzt Leistungsdaten in konkrete Geschwindigkeitsbereiche. Dadurch wird aus einem Plan nicht nur eine Strecke, sondern eine steuerbare Belastung."),
-                AcademyText("ArticlePaceTrainingBody2", "Pacebereiche helfen, lockere Läufe wirklich locker zu halten und harte Einheiten gezielt zu dosieren. Das schützt vor dem typischen Muster, jede Einheit unbewusst mittelhart zu laufen."),
-                AcademyText("ArticlePaceTrainingBody3", "PaceLetics nutzt Referenzleistungen, VDOT und Critical Speed, um Training verständlich zu machen. Die Pace ist dabei kein Selbstzweck, sondern ein Werkzeug zur Orientierung."),
-                AcademyText("ArticlePaceTrainingBody4", "Wenn Form, Müdigkeit, Wetter oder Gelände nicht passen, bleibt Wahrnehmung wichtig. Gute Trainingssteuerung verbindet Zahlen mit Körpergefühl.")),
-            References = Array.Empty<ContentReference>(),
+                AthleteText("PaceModelInfo_Rationale_PaceProxy_Text", "Pace is a practical proxy for external training load."),
+                AthleteText("PaceModelInfo_Rationale_Adaptation_Text", "Training adaptations happen on different timelines."),
+                AthleteText("PaceModelInfo_Rationale_Remaining_Text", "Good training control keeps useful stress and available adaptation in balance."),
+                AthleteText("PaceModelInfo_Daniels_Text", "Daniels/VDOT translates current performance into standardized training paces."),
+                AthleteText("PaceModelInfo_Cs_Text", "Critical Speed describes the boundary between heavy and severe intensity domains."),
+                AthleteText("PaceModelInfo_Calculation_Text", "PaceLetics calculates with speed internally and uses VDOT, Critical Speed, and D' for training guidance.")),
+            References = references,
             SortOrder = 30
         };
     }
@@ -152,6 +160,24 @@ public sealed partial class AcademyService : IAcademyService
             Reference("InterventionGuidance_SourceGaitRetraining", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/", _runningAnalysisLocalizer, "6"),
             Reference("InterventionGuidance_SourceRidge", "https://pubmed.ncbi.nlm.nih.gov/23439417/", _runningAnalysisLocalizer, "7"),
             Reference("InterventionGuidance_SourceChristopher", "https://pubmed.ncbi.nlm.nih.gov/30805204/", _runningAnalysisLocalizer, "8")
+        };
+    }
+
+    private List<ContentReference> BuildPaceModelReferences()
+    {
+        return new List<ContentReference>
+        {
+            Reference("PaceModelInfo_Anderson_Title", "https://link.springer.com/article/10.1007/s40279-026-02410-x", _athleteLocalizer, "1"),
+            Reference("PaceModelInfo_Lipkova_Title", "https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/", _athleteLocalizer, "2"),
+            Reference("PaceModelInfo_Hawley_Title", "https://pubmed.ncbi.nlm.nih.gov/28490537/", _athleteLocalizer, "3"),
+            Reference("PaceModelInfo_MacInnis_Title", "https://pubmed.ncbi.nlm.nih.gov/27748956/", _athleteLocalizer, "4"),
+            Reference("PaceModelInfo_Kubo_Title", "https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf", _athleteLocalizer, "5"),
+            Reference("PaceModelInfo_Bohm_Title", "https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/", _athleteLocalizer, "6"),
+            Reference("PaceModelInfo_Bohm2015_Title", "https://link.springer.com/article/10.1186/s40798-015-0009-9", _athleteLocalizer, "7"),
+            Reference("PaceModelInfo_Papagiannaki_Title", "https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full", _athleteLocalizer, "8"),
+            Reference("PaceModelInfo_Jiang_Title", "https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full", _athleteLocalizer, "9"),
+            Reference("PaceModelInfo_Billat_Title", "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03026/full", _athleteLocalizer, "10"),
+            Reference("PaceModelInfo_Warden_Title", "https://pubmed.ncbi.nlm.nih.gov/33635519/", _athleteLocalizer, "11")
         };
     }
 
@@ -187,6 +213,11 @@ public sealed partial class AcademyService : IAcademyService
     private string AcademyText(string key, string fallback)
     {
         return Localized(_academyLocalizer, key, fallback);
+    }
+
+    private string AthleteText(string key, string fallback)
+    {
+        return Localized(_athleteLocalizer, key, fallback);
     }
 
     private string RunningAnalysisText(string key, string fallback)

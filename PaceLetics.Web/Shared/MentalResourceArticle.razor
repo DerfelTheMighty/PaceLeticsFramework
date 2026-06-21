@@ -1,0 +1,66 @@
+@using PaceLetics.Web.Pages.Athletes
+@inject IStringLocalizer<Dashboard> L
+
+<MudStack Spacing="3">
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="2">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
+                <MudIcon Icon="@Icons.Material.Filled.Psychology" Color="Color.Primary" />
+                <div>
+                    <MudText Typo="Typo.overline">@L["MentalResource_Kicker"]</MudText>
+                    <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["MentalResource_Title"]</MudText>
+                </div>
+            </MudStack>
+            <MudText Typo="Typo.body2">@L["MentalResource_Lead"]</MudText>
+        </MudStack>
+    </MudPaper>
+
+    @foreach (var section in Sections)
+    {
+        <MudPaper Class="pa-4" Elevation="0">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L[section.TitleKey]</MudText>
+                <MudText Typo="Typo.body2">@L[section.TextKey]</MudText>
+            </MudStack>
+        </MudPaper>
+    }
+
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="1">
+            <MudText Typo="Typo.subtitle2">@L["MentalResource_SourcesTitle"]</MudText>
+            @foreach (var source in Sources)
+            {
+                <MudText Typo="Typo.caption">
+                    <a href="@source.Url" target="_blank" rel="noopener noreferrer">@L[source.TitleKey]</a>
+                </MudText>
+            }
+        </MudStack>
+    </MudPaper>
+</MudStack>
+
+@code {
+    private static readonly ArticleSection[] Sections =
+    {
+        new("MentalResource_StepEffectTitle", "MentalResource_StepEffectText"),
+        new("MentalResource_StepFragileTitle", "MentalResource_StepFragileText"),
+        new("MentalResource_StepRiskTitle", "MentalResource_StepRiskText"),
+        new("MentalResource_StepConsequenceTitle", "MentalResource_StepConsequenceText"),
+        new("MentalResource_StepAppTitle", "MentalResource_StepAppText")
+    };
+
+    private static readonly SourceRow[] Sources =
+    {
+        new("MentalResource_SourceOswald", "https://doi.org/10.3390/ijerph17218059"),
+        new("MentalResource_SourcePereira", "https://doi.org/10.3389/fpsyg.2021.624783"),
+        new("MentalResource_SourceFurie", "https://doi.org/10.1007/s12178-023-09830-6"),
+        new("MentalResource_SourceDeJonge", "https://doi.org/10.3390/ijerph17031044"),
+        new("MentalResource_SourceVerhagen", "https://doi.org/10.1136/bmjsem-2021-001117"),
+        new("MentalResource_SourceVidebaek", "https://doi.org/10.1007/s40279-015-0333-8"),
+        new("MentalResource_SourceFokkema", "https://doi.org/10.1016/j.jsams.2018.06.003"),
+        new("MentalResource_SourceRelph", "https://doi.org/10.3390/ijerph20176682")
+    };
+
+    private sealed record ArticleSection(string TitleKey, string TextKey);
+
+    private sealed record SourceRow(string TitleKey, string Url);
+}

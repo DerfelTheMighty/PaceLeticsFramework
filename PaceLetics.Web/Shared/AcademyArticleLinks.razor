@@ -1,0 +1,54 @@
+@using PaceLetics.Web.Services.Academy
+@inject IAcademyService AcademyService
+@inject IStringLocalizer<PaceLetics.Web.Pages.Academy.Academy> L
+
+@if (_articles.Count > 0)
+{
+    <MudPaper Class="pa-4" Elevation="0">
+        <MudStack Spacing="2">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:10px;">
+                <MudIcon Icon="@Icons.Material.Filled.AutoStories" Color="Color.Primary" />
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["Title"]</MudText>
+            </MudStack>
+
+            <MudStack Spacing="1">
+                @foreach (var article in _articles)
+                {
+                    <MudButton Href="@GetArticleHref(article)"
+                               Variant="Variant.Text"
+                               Color="Color.Primary"
+                               StartIcon="@GetArticleIcon(article)"
+                               EndIcon="@Icons.Material.Filled.ArrowForward"
+                               Class="justify-start">
+                        @article.Title
+                    </MudButton>
+                }
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+}
+
+@code {
+    private IReadOnlyList<AcademyArticle> _articles = Array.Empty<AcademyArticle>();
+
+    protected override void OnInitialized()
+    {
+        _articles = AcademyService.GetArticles();
+    }
+
+    private static string GetArticleHref(AcademyArticle article)
+    {
+        return $"/Athletes/academy/{Uri.EscapeDataString(article.Id)}";
+    }
+
+    private static string GetArticleIcon(AcademyArticle article)
+    {
+        return article.Id switch
+        {
+            "mental-resource-running" => Icons.Material.Filled.Psychology,
+            "evidence-based-running-analysis" => Icons.Material.Filled.FactCheck,
+            "pace-controlled-training" => Icons.Material.Filled.Speed,
+            _ => Icons.Material.Filled.AutoStories
+        };
+    }
+}

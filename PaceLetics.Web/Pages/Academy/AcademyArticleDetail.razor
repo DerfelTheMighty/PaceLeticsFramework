@@ -1,6 +1,8 @@
 @page "/Academy/{ArticleId}"
 @page "/Athletes/academy/{ArticleId}"
 @attribute [Authorize]
+@using PaceLetics.AthleteModule.Components
+@using PaceLetics.RunningAnalysisModule.Components
 @using PaceLetics.Web.Services.Academy
 @inject IAcademyService AcademyService
 @inject IStringLocalizer<Academy> L
@@ -27,65 +29,44 @@
     {
         <PageHeader Title="@_article.Title" Subtitle="@_article.Summary" />
 
-        <MudPaper Elevation="0" Class="@GetArticlePanelClass(_article)">
-            <MudStack Spacing="3">
-                <div class="pl-academy-article__topline">
-                    <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="pl-academy-tile__chip">
-                        @FormatCategory(_article.Category)
-                    </MudChip>
-
-                    @if (_article.Tags.Count > 0)
-                    {
-                        <div class="pl-academy-article__tags" aria-label="@L["Tags"]">
-                            @foreach (var tag in _article.Tags)
-                            {
-                                <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
-                            }
-                        </div>
-                    }
-                </div>
-
-                <div class="pl-academy-article__icon" aria-hidden="true">
-                    <MudIcon Icon="@GetArticleIcon(_article)" />
-                </div>
-
+        <MudStack Spacing="3" Class="mt-4">
+            <MudPaper Elevation="0" Class="@GetArticleMetaClass(_article)">
                 <MudStack Spacing="2">
-                    @foreach (var block in _article.BodyBlocks)
-                    {
-                        <MudText Typo="Typo.body1" Class="pl-academy-article__body">@block</MudText>
-                    }
+                    <div class="pl-academy-article__topline">
+                        <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Class="pl-academy-tile__chip">
+                            @FormatCategory(_article.Category)
+                        </MudChip>
+
+                        @if (_article.Tags.Count > 0)
+                        {
+                            <div class="pl-academy-article__tags" aria-label="@L["Tags"]">
+                                @foreach (var tag in _article.Tags)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
+                                }
+                            </div>
+                        }
+                    </div>
                 </MudStack>
+            </MudPaper>
 
-                @if (_article.References.Count > 0)
-                {
-                    <MudDivider />
-
-                    <section class="pl-academy-article__sources">
-                        <MudText Typo="Typo.subtitle2">@L["Sources"]</MudText>
-                        <MudStack Spacing="1">
-                            @foreach (var reference in _article.References)
-                            {
-                                <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                    @if (!string.IsNullOrWhiteSpace(reference.Url))
-                                    {
-                                        <MudLink Href="@reference.Url" Target="_blank" Typo="Typo.caption">@reference.Title</MudLink>
-                                    }
-                                    else
-                                    {
-                                        @reference.Title
-                                    }
-                                </MudText>
-                            }
-                        </MudStack>
-                    </section>
-                }
-
-                @if (!string.IsNullOrWhiteSpace(_article.SourceModule))
-                {
-                    <MudText Typo="Typo.caption" Color="Color.Secondary">@_article.SourceModule</MudText>
-                }
-            </MudStack>
-        </MudPaper>
+            @if (_article.Id == "mental-resource-running")
+            {
+                <MentalResourceArticle />
+            }
+            else if (_article.Id == "evidence-based-running-analysis")
+            {
+                <RunningAnalysisInterventionGuidance />
+            }
+            else if (_article.Id == "pace-controlled-training")
+            {
+                <PaceModelInfo />
+            }
+            else
+            {
+                @RenderFallbackArticle(_article)
+            }
+        </MudStack>
     }
 </MudContainer>
 
@@ -114,24 +95,7 @@
         };
     }
 
-    private static string GetArticleIcon(AcademyArticle article)
-    {
-        return article.Id switch
-        {
-            "mental-resource-running" => Icons.Material.Filled.Psychology,
-            "evidence-based-running-analysis" => Icons.Material.Filled.FactCheck,
-            "pace-controlled-training" => Icons.Material.Filled.Speed,
-            _ => article.Category switch
-            {
-                AcademyArticleCategories.Fundamentals => Icons.Material.Filled.Psychology,
-                AcademyArticleCategories.RunningAnalysis => Icons.Material.Filled.DirectionsRun,
-                AcademyArticleCategories.Training => Icons.Material.Filled.Speed,
-                _ => Icons.Material.Filled.AutoStories
-            }
-        };
-    }
-
-    private static string GetArticlePanelClass(AcademyArticle article)
+    private static string GetArticleMetaClass(AcademyArticle article)
     {
         var accentClass = article.Category switch
         {
@@ -141,6 +105,35 @@
             _ => "pl-academy-tile--default"
         };
 
-        return $"pa-4 mt-4 pl-academy-article {accentClass}";
+        return $"pa-3 pl-academy-article {accentClass}";
     }
+
+    private RenderFragment RenderFallbackArticle(AcademyArticle article) => builder =>
+    {
+        var sequence = 0;
+
+        builder.OpenComponent<MudPaper>(sequence++);
+        builder.AddAttribute(sequence++, "Elevation", 0);
+        builder.AddAttribute(sequence++, "Class", GetArticleMetaClass(article));
+        builder.AddAttribute(sequence++, "ChildContent", (RenderFragment)(paperBuilder =>
+        {
+            var paperSequence = 0;
+            paperBuilder.OpenComponent<MudStack>(paperSequence++);
+            paperBuilder.AddAttribute(paperSequence++, "Spacing", 2);
+            paperBuilder.AddAttribute(paperSequence++, "ChildContent", (RenderFragment)(stackBuilder =>
+            {
+                var stackSequence = 0;
+                foreach (var block in article.BodyBlocks)
+                {
+                    stackBuilder.OpenComponent<MudText>(stackSequence++);
+                    stackBuilder.AddAttribute(stackSequence++, "Typo", Typo.body1);
+                    stackBuilder.AddAttribute(stackSequence++, "Class", "pl-academy-article__body");
+                    stackBuilder.AddAttribute(stackSequence++, "ChildContent", (RenderFragment)(textBuilder => textBuilder.AddContent(0, block)));
+                    stackBuilder.CloseComponent();
+                }
+            }));
+            paperBuilder.CloseComponent();
+        }));
+        builder.CloseComponent();
+    };
 }

@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.Extensions.Localization;
+using PaceLetics.AthleteModule.Components;
 using PaceLetics.RunningAnalysisModule.Components;
 using PaceLetics.Web.Pages.Athletes;
 using PaceLetics.Web.Services.Academy;
@@ -39,7 +40,11 @@ public sealed class AcademyServiceTests
         var paceTraining = Assert.Single(articles, article => article.Id == "pace-controlled-training");
         Assert.Equal(AcademyArticleCategories.Training, paceTraining.Category);
         Assert.Equal("Pacegesteuertes Training", paceTraining.Title);
-        Assert.Contains(paceTraining.BodyBlocks, block => block.Contains("Pacebereiche"));
+        Assert.Equal("Why we train pace-guided", paceTraining.Summary);
+        Assert.Equal("PaceModelInfo", paceTraining.SourceModule);
+        Assert.Contains(paceTraining.BodyBlocks, block => block.Contains("Critical Speed"));
+        Assert.Contains(paceTraining.References, reference => reference.Url.Contains("s40279-026-02410-x"));
+        Assert.Contains(paceTraining.References, reference => reference.Url.Contains("11933073"));
     }
 
     [Fact]
@@ -60,6 +65,7 @@ public sealed class AcademyServiceTests
     {
         return new AcademyService(
             new DictionaryLocalizer<AcademyPage>(AcademyTexts),
+            new DictionaryLocalizer<AthleteResources>(AthleteTexts),
             new DictionaryLocalizer<Dashboard>(DashboardTexts),
             new DictionaryLocalizer<RunningAnalysisResources>(RunningAnalysisTexts));
     }
@@ -69,16 +75,33 @@ public sealed class AcademyServiceTests
         ["ArticleMentalResourceTitle"] = "Laufen als mentale Resource",
         ["ArticleRunningAnalysisTitle"] = "Evidenzbasierte Laufanalyse",
         ["ArticleRunningAnalysisSummary"] = "Warum Laufanalyse Evidenz, Kontext und gemeinsame Entscheidungen braucht.",
-        ["ArticlePaceTrainingTitle"] = "Pacegesteuertes Training",
-        ["ArticlePaceTrainingSummary"] = "Warum Pacebereiche Trainingsbelastung steuerbar und nachvollziehbar machen.",
-        ["ArticlePaceTrainingBody1"] = "Pacegesteuertes Training übersetzt Leistungsdaten in konkrete Geschwindigkeitsbereiche. Dadurch wird aus einem Plan nicht nur eine Strecke, sondern eine steuerbare Belastung.",
-        ["ArticlePaceTrainingBody2"] = "Pacebereiche helfen, lockere Läufe wirklich locker zu halten und harte Einheiten gezielt zu dosieren. Das schützt vor dem typischen Muster, jede Einheit unbewusst mittelhart zu laufen.",
-        ["ArticlePaceTrainingBody3"] = "PaceLetics nutzt Referenzleistungen, VDOT und Critical Speed, um Training verständlich zu machen. Die Pace ist dabei kein Selbstzweck, sondern ein Werkzeug zur Orientierung.",
-        ["ArticlePaceTrainingBody4"] = "Wenn Form, Müdigkeit, Wetter oder Gelände nicht passen, bleibt Wahrnehmung wichtig. Gute Trainingssteuerung verbindet Zahlen mit Körpergefühl."
+        ["ArticlePaceTrainingTitle"] = "Pacegesteuertes Training"
+    };
+
+    private static readonly Dictionary<string, string> AthleteTexts = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["PaceModelInfo_Rationale_PaceProxy_Text"] = "Pace is a useful training proxy.",
+        ["PaceModelInfo_Rationale_Adaptation_Text"] = "Adaptation needs time.",
+        ["PaceModelInfo_Rationale_Remaining_Text"] = "Keep load and adaptation aligned.",
+        ["PaceModelInfo_Daniels_Text"] = "Daniels/VDOT provides training paces.",
+        ["PaceModelInfo_Cs_Text"] = "Critical Speed separates intensity domains.",
+        ["PaceModelInfo_Calculation_Text"] = "PaceLetics calculates speed and D'.",
+        ["PaceModelInfo_Anderson_Title"] = "Anderson et al.",
+        ["PaceModelInfo_Lipkova_Title"] = "Lipkova et al.",
+        ["PaceModelInfo_Hawley_Title"] = "Hawley et al.",
+        ["PaceModelInfo_MacInnis_Title"] = "MacInnis et al.",
+        ["PaceModelInfo_Kubo_Title"] = "Kubo et al.",
+        ["PaceModelInfo_Bohm_Title"] = "Bohm et al.",
+        ["PaceModelInfo_Bohm2015_Title"] = "Bohm et al. 2015",
+        ["PaceModelInfo_Papagiannaki_Title"] = "Papagiannaki et al.",
+        ["PaceModelInfo_Jiang_Title"] = "Jiang et al.",
+        ["PaceModelInfo_Billat_Title"] = "Billat et al.",
+        ["PaceModelInfo_Warden_Title"] = "Warden et al."
     };
 
     private static readonly Dictionary<string, string> DashboardTexts = new(StringComparer.OrdinalIgnoreCase)
     {
+        ["Metric_TrainingSystemDetail"] = "Why we train pace-guided",
         ["MentalResource_Title"] = "Why running is more than training",
         ["MentalResource_Lead"] = "Running can become a controllable resource.",
         ["MentalResource_StepEffectText"] = "Running can support mood.",

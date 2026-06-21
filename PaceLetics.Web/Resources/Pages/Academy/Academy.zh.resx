@@ -21,9 +21,4 @@
   <data name="ArticleRunningAnalysisTitle" xml:space="preserve"><value>循证跑步分析</value></data>
   <data name="ArticleRunningAnalysisSummary" xml:space="preserve"><value>为什么跑步分析需要证据、情境和共同决策。</value></data>
   <data name="ArticlePaceTrainingTitle" xml:space="preserve"><value>配速控制训练</value></data>
-  <data name="ArticlePaceTrainingSummary" xml:space="preserve"><value>为什么配速区间能让训练负荷可控且易懂。</value></data>
-  <data name="ArticlePaceTrainingBody1" xml:space="preserve"><value>配速控制训练把表现数据转化为具体速度区间。计划不再只是距离，而是可控制的训练负荷。</value></data>
-  <data name="ArticlePaceTrainingBody2" xml:space="preserve"><value>配速区间帮助轻松跑真正保持轻松，也让高强度训练有明确剂量。它避免每次训练都不自觉地变成中等偏难。</value></data>
-  <data name="ArticlePaceTrainingBody3" xml:space="preserve"><value>PaceLetics 使用参考成绩、VDOT 和临界速度来让训练更易理解。配速不是目的本身，而是方向工具。</value></data>
-  <data name="ArticlePaceTrainingBody4" xml:space="preserve"><value>当状态、疲劳、天气或地形不合适时，主观感受仍然重要。好的训练控制会把数字和身体感觉结合起来。</value></data>
 </root>
