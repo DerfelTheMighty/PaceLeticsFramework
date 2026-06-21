@@ -4,15 +4,15 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
-  <data name="PageTitle" xml:space="preserve"><value>Mate</value></data>
-  <data name="Title" xml:space="preserve"><value>Mate</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Pace Mate</value></data>
+  <data name="Title" xml:space="preserve"><value>Pace Mate</value></data>
   <data name="Subtitle" xml:space="preserve"><value>Finde passende Trainingspartner:innen fuer freigegebene Laufeinheiten.</value></data>
   <data name="MetricSessions" xml:space="preserve"><value>Einheiten</value></data>
   <data name="MetricShared" xml:space="preserve"><value>Freigegeben</value></data>
   <data name="MetricMatches" xml:space="preserve"><value>Matches</value></data>
   <data name="SectionMatches" xml:space="preserve"><value>Matches</value></data>
   <data name="SectionShare" xml:space="preserve"><value>Laufeinheiten</value></data>
-  <data name="NoMatches" xml:space="preserve"><value>Noch keine Mate-Matches.</value></data>
+  <data name="NoMatches" xml:space="preserve"><value>Noch keine Pace-Mate-Matches.</value></data>
   <data name="NoSessions" xml:space="preserve"><value>Keine kommenden Laufeinheiten verfuegbar.</value></data>
   <data name="Shared" xml:space="preserve"><value>Freigegeben</value></data>
   <data name="Share" xml:space="preserve"><value>Freigeben</value></data>
@@ -26,18 +26,18 @@
   <data name="DayDelta" xml:space="preserve"><value>{0} Tag(e)</value></data>
   <data name="DistanceDelta" xml:space="preserve"><value>{0} Distanzunterschied</value></data>
   <data name="NoPace" xml:space="preserve"><value>Keine Pace</value></data>
-  <data name="LoadError" xml:space="preserve"><value>Mate-Daten konnten nicht geladen werden.</value></data>
-  <data name="ShareSuccess" xml:space="preserve"><value>Einheit fuer Mate freigegeben.</value></data>
-  <data name="RemoveSuccess" xml:space="preserve"><value>Mate-Freigabe entfernt.</value></data>
+  <data name="LoadError" xml:space="preserve"><value>Pace-Mate-Daten konnten nicht geladen werden.</value></data>
+  <data name="ShareSuccess" xml:space="preserve"><value>Einheit fuer Pace Mate freigegeben.</value></data>
+  <data name="RemoveSuccess" xml:space="preserve"><value>Pace-Mate-Freigabe entfernt.</value></data>
   <data name="ShareError" xml:space="preserve"><value>Freigabe fehlgeschlagen</value></data>
   <data name="RemoveError" xml:space="preserve"><value>Entfernen fehlgeschlagen</value></data>
-  <data name="PrivacyTitle" xml:space="preserve"><value>Deine Mate-Freigabe</value></data>
-  <data name="PrivacyBody" xml:space="preserve"><value>Mate zeigt freigegebene Einheiten nur innerhalb des passenden Kurses. Sichtbar werden koennen dein oeffentlicher Name, Einheit, Termin, Ort, Distanz und Pace; es wird nichts in einen Feed oder Social-Kanal gepostet.</value></data>
-  <data name="SharedForMate" xml:space="preserve"><value>Fuer Mate freigegeben</value></data>
+  <data name="PrivacyTitle" xml:space="preserve"><value>Deine Pace-Mate-Freigabe</value></data>
+  <data name="PrivacyBody" xml:space="preserve"><value>Pace Mate zeigt freigegebene Einheiten nur innerhalb des passenden Kurses. Sichtbar werden koennen dein oeffentlicher Name, Einheit, Termin, Ort, Distanz und Pace; es wird nichts in einen Feed oder Social-Kanal gepostet.</value></data>
+  <data name="SharedForMate" xml:space="preserve"><value>Fuer Pace Mate freigegeben</value></data>
   <data name="NotShared" xml:space="preserve"><value>Nicht freigegeben</value></data>
-  <data name="ShareCta" xml:space="preserve"><value>Fuer Mate freigeben</value></data>
+  <data name="ShareCta" xml:space="preserve"><value>Fuer Pace Mate freigeben</value></data>
   <data name="ShareTooltip" xml:space="preserve"><value>Einheit fuer passende Kursteilnehmer:innen sichtbar machen</value></data>
-  <data name="RemoveTooltip" xml:space="preserve"><value>Mate-Freigabe entfernen</value></data>
+  <data name="RemoveTooltip" xml:space="preserve"><value>Pace-Mate-Freigabe entfernen</value></data>
   <data name="SharedVisibility" xml:space="preserve"><value>Sichtbar nach Freigabe: {0}</value></data>
   <data name="WhyMatch" xml:space="preserve"><value>Warum passt das?</value></data>
   <data name="ReasonSameCourse" xml:space="preserve"><value>Gleicher Kurs</value></data>

@@ -34,7 +34,7 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Nav_Dashboard" xml:space="preserve"><value>Dashboard</value></data>
   <data name="Nav_Academy" xml:space="preserve"><value>Academy</value></data>
-  <data name="Nav_Mate" xml:space="preserve"><value>Mate</value></data>
+  <data name="Nav_Mate" xml:space="preserve"><value>Pace Mate</value></data>
   <data name="Nav_RaceData" xml:space="preserve"><value>Race Data</value></data>
   <data name="Nav_PaceZones" xml:space="preserve"><value>Pace Zones</value></data>
   <data name="Nav_Courses" xml:space="preserve"><value>Courses &amp; Plans</value></data>

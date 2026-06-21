@@ -10,6 +10,7 @@
   <data name="Subtitle" xml:space="preserve"><value>Course memberships, dates, events, and training plans</value></data>
   <data name="TabCourses" xml:space="preserve"><value>Courses</value></data>
   <data name="TabTrainingPlans" xml:space="preserve"><value>Plans</value></data>
+  <data name="TabPaceMate" xml:space="preserve"><value>Pace Mate</value></data>
   <data name="NoPublishedCourses" xml:space="preserve"><value>No courses are currently published.</value></data>
   <data name="NoUpcomingDate" xml:space="preserve"><value>No upcoming date</value></data>
   <data name="UpcomingDate" xml:space="preserve"><value>{0:MM/dd HH:mm}</value></data>

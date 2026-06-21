@@ -7,10 +7,23 @@
 @inject ISnackbar Snackbar
 @inject IStringLocalizer<Mate> L
 
-<PageTitle>@L["PageTitle"]</PageTitle>
+@if (!Embedded)
+{
+    <PageTitle>@L["PageTitle"]</PageTitle>
+}
 
-<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
-    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+<MudContainer Class="@ContainerClass" MaxWidth="MaxWidth.Medium">
+    @if (Embedded)
+    {
+        <MudStack Spacing="1">
+            <MudText Typo="Typo.h6">@L["Title"]</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["Subtitle"]</MudText>
+        </MudStack>
+    }
+    else
+    {
+        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+    }
 
     @if (_isLoading)
     {
@@ -153,10 +166,17 @@
 </MudContainer>
 
 @code {
+    [Parameter]
+    public bool Embedded { get; set; }
+
     private MateOverview _overview = new();
     private string? _userId;
     private bool _isLoading = true;
     private bool _isSaving;
+
+    private string ContainerClass => Embedded
+        ? "pa-0 pb-8"
+        : "pl-section-page px-6 pb-8";
 
     protected override async Task OnInitializedAsync()
     {

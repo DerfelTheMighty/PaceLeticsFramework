@@ -8,6 +8,7 @@
 @inject ICourseService CourseService
 @inject IRunningAnalysisService RunningAnalysisService
 @inject IJSRuntime JS
+@inject NavigationManager Navigation
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
 @inject IStringLocalizer<MyCourses> L
@@ -29,6 +30,13 @@
                 @onclick="@(() => SelectSection(CoursesSection.TrainingPlans))">
             <MudIcon Icon="@Icons.Material.Filled.EventNote" Size="Size.Small" />
             <span>@L["TabTrainingPlans"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(CoursesSection.PaceMate)"
+                aria-pressed="@(_activeSection == CoursesSection.PaceMate)"
+                @onclick="@(() => SelectSection(CoursesSection.PaceMate))">
+            <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Small" />
+            <span>@L["TabPaceMate"]</span>
         </button>
     </nav>
 
@@ -386,12 +394,18 @@
             </MudStack>
         }
     }
-    else
+    else if (_activeSection == CoursesSection.TrainingPlans)
     {
         <MudDivider Class="my-4" />
 
         <TrainingPlanPage Embedded="true"
                           AutoScrollToNextSession="false" />
+    }
+    else
+    {
+        <MudDivider Class="my-4" />
+
+        <Mate Embedded="true" />
     }
 </MudContainer>
 
@@ -399,8 +413,12 @@
     private enum CoursesSection
     {
         Courses,
-        TrainingPlans
+        TrainingPlans,
+        PaceMate
     }
+
+    [SupplyParameterFromQuery(Name = "section")]
+    public string? SectionQuery { get; set; }
 
     private string? _userId;
     private string? _errorMessage;
@@ -415,6 +433,7 @@
     private bool _showAllChallenges;
     private bool _showAllTrainingPlans;
     private CoursesSection _activeSection = CoursesSection.Courses;
+    private string? _appliedSectionQuery;
 
     private CourseOverview? SelectedOverview =>
         JoinedCourses.FirstOrDefault(course => course.Course.Id == _selectedCourseId)
@@ -425,6 +444,15 @@
 
     private IEnumerable<CourseOverview> AvailableCourses =>
         _courses.Where(course => !course.IsJoined);
+
+    protected override void OnParametersSet()
+    {
+        if (string.Equals(_appliedSectionQuery, SectionQuery, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        _appliedSectionQuery = SectionQuery;
+        _activeSection = ParseSectionQuery(SectionQuery);
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -499,6 +527,7 @@
     private void SelectSection(CoursesSection section)
     {
         _activeSection = section;
+        Navigation.NavigateTo(GetSectionUri(section), replace: true);
     }
 
     private string GetSectionButtonClass(CoursesSection section)
@@ -506,6 +535,26 @@
         return _activeSection == section
             ? "pl-section-nav__item pl-section-nav__item--active"
             : "pl-section-nav__item";
+    }
+
+    private static CoursesSection ParseSectionQuery(string? section)
+    {
+        return section?.Trim().ToLowerInvariant() switch
+        {
+            "plans" or "training-plans" => CoursesSection.TrainingPlans,
+            "pace-mate" or "mate" => CoursesSection.PaceMate,
+            _ => CoursesSection.Courses
+        };
+    }
+
+    private static string GetSectionUri(CoursesSection section)
+    {
+        return section switch
+        {
+            CoursesSection.TrainingPlans => "/Athletes/courses?section=plans",
+            CoursesSection.PaceMate => "/Athletes/courses?section=pace-mate",
+            _ => "/Athletes/courses"
+        };
     }
 
     private void OpenCoursePicker()
