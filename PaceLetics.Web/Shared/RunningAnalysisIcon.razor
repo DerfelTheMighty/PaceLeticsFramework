@@ -1,0 +1,34 @@
+<svg class="@CssClass"
+     viewBox="54 24 42 58"
+     fill="none"
+     xmlns="http://www.w3.org/2000/svg"
+     aria-hidden="true"
+     focusable="false">
+    <path class="pl-running-analysis-icon__axis"
+          d="M 59.916644 28.328563 L 58.315954 50.687696 M 58.737184 55.017986 L 58.838284 73.990394" />
+    <path class="pl-running-analysis-icon__vector"
+          d="M 65.116044 77.232005 L 60.052454 47.362817" />
+    <path class="pl-running-analysis-icon__arrow"
+          d="M 60.052454 47.362817 L 57.772454 52.202817 L 62.812454 51.342817 Z" />
+    <circle class="pl-running-analysis-icon__joint"
+            cx="66.428654"
+            cy="62.141574"
+            r="2.1571705" />
+    <circle class="pl-running-analysis-icon__joint"
+            cx="62.374174"
+            cy="73.752845"
+            r="2.1571705" />
+    <circle class="pl-running-analysis-icon__joint pl-running-analysis-icon__joint--small"
+            cx="60.872904"
+            cy="83.025884"
+            r="1.491039" />
+</svg>
+
+@code {
+    [Parameter]
+    public string? Class { get; set; }
+
+    private string CssClass => string.IsNullOrWhiteSpace(Class)
+        ? "pl-running-analysis-icon"
+        : $"pl-running-analysis-icon {Class}";
+}

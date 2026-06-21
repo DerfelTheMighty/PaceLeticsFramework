@@ -1329,6 +1329,45 @@
     flex: 0 0 4rem;
 }
 
+.pl-running-analysis-icon {
+    display: block;
+    width: 4.6rem;
+    height: 4.6rem;
+    overflow: visible;
+}
+
+.pl-running-analysis-icon__axis,
+.pl-running-analysis-icon__vector {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.pl-running-analysis-icon__axis {
+    stroke: var(--mud-palette-secondary);
+    stroke-width: 1.4;
+    stroke-dasharray: 3 2.2;
+}
+
+.pl-running-analysis-icon__vector {
+    stroke: var(--mud-palette-primary);
+    stroke-width: 1.7;
+}
+
+.pl-running-analysis-icon__arrow {
+    fill: var(--mud-palette-primary);
+}
+
+.pl-running-analysis-icon__joint {
+    fill: color-mix(in srgb, var(--mud-palette-surface) 66%, transparent);
+    stroke: var(--mud-palette-primary);
+    stroke-width: 1.6;
+}
+
+.pl-running-analysis-icon__joint--small {
+    stroke: var(--mud-palette-secondary);
+}
+
 .pl-academy-tile__subtitle {
     flex: 0 0 auto;
     min-width: 0;
@@ -1458,6 +1497,11 @@
     }
 
     .pl-mental-resource-icon {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .pl-running-analysis-icon {
         width: 4rem;
         height: 4rem;
     }

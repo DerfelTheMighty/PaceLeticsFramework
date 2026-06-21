@@ -48,6 +48,10 @@
                         {
                             <MentalResourceIcon />
                         }
+                        else if (IsRunningAnalysisArticle(article))
+                        {
+                            <RunningAnalysisIcon />
+                        }
                         else
                         {
                             <MudIcon Icon="@GetArticleIcon(article)" />
@@ -121,7 +125,6 @@
     {
         return article.Id switch
         {
-            "evidence-based-running-analysis" => Icons.Material.Filled.FactCheck,
             "pace-controlled-training" => Icons.Material.Filled.Speed,
             _ => GetCategoryIcon(article.Category)
         };
@@ -130,6 +133,11 @@
     private static bool IsMentalResourceArticle(ArticlePreview article)
     {
         return string.Equals(article.Id, "mental-resource-running", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsRunningAnalysisArticle(ArticlePreview article)
+    {
+        return string.Equals(article.Id, "evidence-based-running-analysis", StringComparison.OrdinalIgnoreCase);
     }
 
     private static string GetArticleTileClass(ArticlePreview article)
