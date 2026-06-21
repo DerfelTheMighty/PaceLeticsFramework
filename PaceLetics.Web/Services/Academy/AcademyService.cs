@@ -2,18 +2,22 @@ using Microsoft.Extensions.Localization;
 using PaceLetics.RunningAnalysisModule.Components;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 using PaceLetics.Web.Pages.Athletes;
+using AcademyPage = PaceLetics.Web.Pages.Academy.Academy;
 
 namespace PaceLetics.Web.Services.Academy;
 
 public sealed partial class AcademyService : IAcademyService
 {
+    private readonly IStringLocalizer<AcademyPage> _academyLocalizer;
     private readonly IStringLocalizer<Dashboard> _dashboardLocalizer;
     private readonly IStringLocalizer<RunningAnalysisResources> _runningAnalysisLocalizer;
 
     public AcademyService(
+        IStringLocalizer<AcademyPage> academyLocalizer,
         IStringLocalizer<Dashboard> dashboardLocalizer,
         IStringLocalizer<RunningAnalysisResources> runningAnalysisLocalizer)
     {
+        _academyLocalizer = academyLocalizer;
         _dashboardLocalizer = dashboardLocalizer;
         _runningAnalysisLocalizer = runningAnalysisLocalizer;
     }
@@ -42,6 +46,9 @@ public sealed partial class AcademyService : IAcademyService
 
         foreach (var article in BuildRunningAnalysisArticles())
             yield return article;
+
+        foreach (var article in BuildPaceControlledTrainingArticles())
+            yield return article;
     }
 
     private IEnumerable<AcademyArticle> BuildMentalResourceArticles()
@@ -52,7 +59,7 @@ public sealed partial class AcademyService : IAcademyService
         yield return new AcademyArticle
         {
             Id = "mental-resource-running",
-            Title = DashboardText("MentalResource_Title", "Why running is more than training"),
+            Title = AcademyText("ArticleMentalResourceTitle", "Laufen als mentale Resource"),
             Summary = lead,
             Category = AcademyArticleCategories.Fundamentals,
             SourceModule = "Academy mental resource",
@@ -72,56 +79,49 @@ public sealed partial class AcademyService : IAcademyService
     private IEnumerable<AcademyArticle> BuildRunningAnalysisArticles()
     {
         var references = BuildRunningAnalysisReferences();
-        var commonTags = new[] { "Running analysis", "Shared decision", "Do no harm" };
 
         yield return new AcademyArticle
         {
-            Id = "running-analysis-intervention-philosophy",
-            Title = RunningAnalysisText("InterventionGuidance_Title", "Intervention philosophy"),
-            Summary = RunningAnalysisText("InterventionGuidance_Subtitle", "No intervention without indication."),
+            Id = "evidence-based-running-analysis",
+            Title = AcademyText("ArticleRunningAnalysisTitle", "Evidenzbasierte Laufanalyse"),
+            Summary = AcademyText("ArticleRunningAnalysisSummary", "Warum Laufanalyse Evidenz, Kontext und gemeinsame Entscheidungen braucht."),
             Category = AcademyArticleCategories.RunningAnalysis,
             SourceModule = "Running analysis guidance",
-            Tags = commonTags,
+            Tags = new[] { "Running analysis", "Evidence", "Shared decision", "Do no harm" },
             BodyBlocks = Blocks(
                 RunningAnalysisText("InterventionGuidance_CompactIntro", "Running style is a self-optimizing system."),
                 RunningAnalysisText("InterventionGuidance_SystemUnderstandingText", "Bodies differ and running style is individual."),
-                RunningAnalysisText("InterventionGuidance_FunctioningSystemAlert", "A long symptom-free pattern can be a functioning dynamic system.")),
-            References = ReferencesByNumber(references, "4"),
-            SortOrder = 30
-        };
-
-        yield return new AcademyArticle
-        {
-            Id = "running-analysis-side-effects",
-            Title = RunningAnalysisText("InterventionGuidance_SideEffectsTitle", "Interventions have side effects"),
-            Summary = RunningAnalysisText("InterventionGuidance_SideEffectsIntro", "Technique changes rarely just reduce load; they shift it."),
-            Category = AcademyArticleCategories.RunningAnalysis,
-            SourceModule = "Running analysis guidance",
-            Tags = commonTags,
-            BodyBlocks = Blocks(
+                RunningAnalysisText("InterventionGuidance_FunctioningSystemAlert", "A long symptom-free pattern can be a functioning dynamic system."),
                 RunningAnalysisText("InterventionGuidance_SideEffectsIntro", "Technique changes rarely just reduce load; they shift it."),
                 RunningAnalysisText("InterventionGuidance_SideEffectsIndicationIntro", "Interventions need an indication."),
                 RunningAnalysisText("InterventionGuidance_SideEffectsIndication_1", "Moderate to good evidence can justify an intervention."),
                 RunningAnalysisText("InterventionGuidance_SideEffectsIndication_2", "Symptoms and plausible links matter when evidence is weaker."),
-                RunningAnalysisText("InterventionGuidance_SideEffectsConclusion", "Most common criteria of good running form do not meet these requirements.")),
-            References = ReferencesByNumber(references, "3", "6", "7"),
-            SortOrder = 31
-        };
-
-        yield return new AcademyArticle
-        {
-            Id = "running-analysis-shared-decision",
-            Title = RunningAnalysisText("InterventionGuidance_ConsentPowerDynamicsTitle", "Shared decision-making"),
-            Summary = RunningAnalysisText("InterventionGuidance_Talk_4", "You receive an interpretation and options, not an obligation to correct."),
-            Category = AcademyArticleCategories.RunningAnalysis,
-            SourceModule = "Running analysis guidance",
-            Tags = commonTags,
-            BodyBlocks = Blocks(
+                RunningAnalysisText("InterventionGuidance_SideEffectsConclusion", "Most common criteria of good running form do not meet these requirements."),
                 RunningAnalysisText("InterventionGuidance_ConsentPowerDynamicsText", "Running-style interventions require informed consent and context."),
                 RunningAnalysisText("InterventionGuidance_Talk_1", "A note about running style is not a judgment."),
                 RunningAnalysisText("InterventionGuidance_Talk_3", "Running style belongs in the context of symptoms, training, shoes, pace, volume, and fatigue.")),
             References = references,
-            SortOrder = 32
+            SortOrder = 20
+        };
+    }
+
+    private IEnumerable<AcademyArticle> BuildPaceControlledTrainingArticles()
+    {
+        yield return new AcademyArticle
+        {
+            Id = "pace-controlled-training",
+            Title = AcademyText("ArticlePaceTrainingTitle", "Pacegesteuertes Training"),
+            Summary = AcademyText("ArticlePaceTrainingSummary", "Warum Pacebereiche Trainingsbelastung steuerbar und nachvollziehbar machen."),
+            Category = AcademyArticleCategories.Training,
+            SourceModule = "PaceLetics training system",
+            Tags = new[] { "Pace", "VDOT", "Critical speed", "Training load" },
+            BodyBlocks = Blocks(
+                AcademyText("ArticlePaceTrainingBody1", "Pacegesteuertes Training übersetzt Leistungsdaten in konkrete Geschwindigkeitsbereiche. Dadurch wird aus einem Plan nicht nur eine Strecke, sondern eine steuerbare Belastung."),
+                AcademyText("ArticlePaceTrainingBody2", "Pacebereiche helfen, lockere Läufe wirklich locker zu halten und harte Einheiten gezielt zu dosieren. Das schützt vor dem typischen Muster, jede Einheit unbewusst mittelhart zu laufen."),
+                AcademyText("ArticlePaceTrainingBody3", "PaceLetics nutzt Referenzleistungen, VDOT und Critical Speed, um Training verständlich zu machen. Die Pace ist dabei kein Selbstzweck, sondern ein Werkzeug zur Orientierung."),
+                AcademyText("ArticlePaceTrainingBody4", "Wenn Form, Müdigkeit, Wetter oder Gelände nicht passen, bleibt Wahrnehmung wichtig. Gute Trainingssteuerung verbindet Zahlen mit Körpergefühl.")),
+            References = Array.Empty<ContentReference>(),
+            SortOrder = 30
         };
     }
 
@@ -182,6 +182,11 @@ public sealed partial class AcademyService : IAcademyService
     private string DashboardText(string key, string fallback)
     {
         return Localized(_dashboardLocalizer, key, fallback);
+    }
+
+    private string AcademyText(string key, string fallback)
+    {
+        return Localized(_academyLocalizer, key, fallback);
     }
 
     private string RunningAnalysisText(string key, string fallback)

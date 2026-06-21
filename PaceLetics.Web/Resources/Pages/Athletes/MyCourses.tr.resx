@@ -24,6 +24,11 @@
   <data name="ShowLess" xml:space="preserve"><value>Daha az</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>Yaklaşan tarih yok.</value></data>
   <data name="NoEvents" xml:space="preserve"><value>Şu anda etkinlik listelenmiyor.</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>Koşu analizi</value></data>
+  <data name="AnalysisPreparing" xml:space="preserve"><value>Analiz klasörü hazırlanıyor.</value></data>
+  <data name="AnalysisReady" xml:space="preserve"><value>Analiz klasörü hazır.</value></data>
+  <data name="AnalysisFailed" xml:space="preserve"><value>Analiz klasörü hazırlanamadı.</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>Analiz klasörünü aç</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>İptal</value></data>
   <data name="Register" xml:space="preserve"><value>Kayıt ol</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>Henüz antrenman planı yayınlanmadı.</value></data>

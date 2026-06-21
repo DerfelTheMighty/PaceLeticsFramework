@@ -16,4 +16,14 @@
   <data name="NotFoundBody" xml:space="preserve"><value>Return to the Academy overview to choose another article.</value></data>
   <data name="Sources" xml:space="preserve"><value>Sources</value></data>
   <data name="Tags" xml:space="preserve"><value>Tags</value></data>
+  <data name="CategoryTraining" xml:space="preserve"><value>التدريب</value></data>
+  <data name="ArticleMentalResourceTitle" xml:space="preserve"><value>الجري كمورد ذهني</value></data>
+  <data name="ArticleRunningAnalysisTitle" xml:space="preserve"><value>تحليل الجري المبني على الأدلة</value></data>
+  <data name="ArticleRunningAnalysisSummary" xml:space="preserve"><value>لماذا يحتاج تحليل الجري إلى أدلة وسياق وقرارات مشتركة.</value></data>
+  <data name="ArticlePaceTrainingTitle" xml:space="preserve"><value>تدريب موجّه بالوتيرة</value></data>
+  <data name="ArticlePaceTrainingSummary" xml:space="preserve"><value>لماذا تجعل مناطق الوتيرة حمل التدريب قابلا للتحكم والفهم.</value></data>
+  <data name="ArticlePaceTrainingBody1" xml:space="preserve"><value>التدريب الموجّه بالوتيرة يحول بيانات الأداء إلى نطاقات سرعة واضحة. هكذا لا تصبح الخطة مجرد مسافة، بل حملا تدريبيا قابلا للتحكم.</value></data>
+  <data name="ArticlePaceTrainingBody2" xml:space="preserve"><value>تساعد مناطق الوتيرة على إبقاء الجري السهل سهلا فعلا وعلى ضبط الوحدات الصعبة بدقة. وهي تمنع تحويل كل وحدة دون وعي إلى جهد متوسط الصعوبة.</value></data>
+  <data name="ArticlePaceTrainingBody3" xml:space="preserve"><value>يستخدم PaceLetics الأداء المرجعي وVDOT والسرعة الحرجة لجعل التدريب مفهوما. الوتيرة ليست هدفا بحد ذاتها، بل أداة توجيه.</value></data>
+  <data name="ArticlePaceTrainingBody4" xml:space="preserve"><value>عندما لا تناسب الحالة أو التعب أو الطقس أو التضاريس، يبقى الإحساس الجسدي مهما. التحكم الجيد في التدريب يجمع الأرقام مع الإحساس بالجسم.</value></data>
 </root>

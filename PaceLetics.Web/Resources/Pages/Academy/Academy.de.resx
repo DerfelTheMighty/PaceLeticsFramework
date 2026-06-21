@@ -16,4 +16,14 @@
   <data name="NotFoundBody" xml:space="preserve"><value>Gehe zur Academy-Uebersicht zurueck, um einen anderen Artikel auszuwaehlen.</value></data>
   <data name="Sources" xml:space="preserve"><value>Quellen</value></data>
   <data name="Tags" xml:space="preserve"><value>Tags</value></data>
+  <data name="CategoryTraining" xml:space="preserve"><value>Training</value></data>
+  <data name="ArticleMentalResourceTitle" xml:space="preserve"><value>Laufen als mentale Resource</value></data>
+  <data name="ArticleRunningAnalysisTitle" xml:space="preserve"><value>Evidenzbasierte Laufanalyse</value></data>
+  <data name="ArticleRunningAnalysisSummary" xml:space="preserve"><value>Warum Laufanalyse Evidenz, Kontext und gemeinsame Entscheidungen braucht.</value></data>
+  <data name="ArticlePaceTrainingTitle" xml:space="preserve"><value>Pacegesteuertes Training</value></data>
+  <data name="ArticlePaceTrainingSummary" xml:space="preserve"><value>Warum Pacebereiche Trainingsbelastung steuerbar und nachvollziehbar machen.</value></data>
+  <data name="ArticlePaceTrainingBody1" xml:space="preserve"><value>Pacegesteuertes Training übersetzt Leistungsdaten in konkrete Geschwindigkeitsbereiche. Dadurch wird aus einem Plan nicht nur eine Strecke, sondern eine steuerbare Belastung.</value></data>
+  <data name="ArticlePaceTrainingBody2" xml:space="preserve"><value>Pacebereiche helfen, lockere Läufe wirklich locker zu halten und harte Einheiten gezielt zu dosieren. Das schützt vor dem typischen Muster, jede Einheit unbewusst mittelhart zu laufen.</value></data>
+  <data name="ArticlePaceTrainingBody3" xml:space="preserve"><value>PaceLetics nutzt Referenzleistungen, VDOT und Critical Speed, um Training verständlich zu machen. Die Pace ist dabei kein Selbstzweck, sondern ein Werkzeug zur Orientierung.</value></data>
+  <data name="ArticlePaceTrainingBody4" xml:space="preserve"><value>Wenn Form, Müdigkeit, Wetter oder Gelände nicht passen, bleibt Wahrnehmung wichtig. Gute Trainingssteuerung verbindet Zahlen mit Körpergefühl.</value></data>
 </root>

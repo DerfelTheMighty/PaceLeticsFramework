@@ -24,6 +24,11 @@
   <data name="ShowLess" xml:space="preserve"><value>Mindre</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>Ingen kommende datoer.</value></data>
   <data name="NoEvents" xml:space="preserve"><value>Der er ingen events opført lige nu.</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>Løbeanalyse</value></data>
+  <data name="AnalysisPreparing" xml:space="preserve"><value>Analysemappe forberedes.</value></data>
+  <data name="AnalysisReady" xml:space="preserve"><value>Analysemappe er klar.</value></data>
+  <data name="AnalysisFailed" xml:space="preserve"><value>Analysemappe kunne ikke forberedes.</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>Åbn analysemappe</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>Annuller</value></data>
   <data name="Register" xml:space="preserve"><value>Tilmeld</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>Der er endnu ikke offentliggjort træningsplaner.</value></data>

@@ -16,4 +16,14 @@
   <data name="NotFoundBody" xml:space="preserve"><value>Return to the Academy overview to choose another article.</value></data>
   <data name="Sources" xml:space="preserve"><value>Sources</value></data>
   <data name="Tags" xml:space="preserve"><value>Tags</value></data>
+  <data name="CategoryTraining" xml:space="preserve"><value>Antrenman</value></data>
+  <data name="ArticleMentalResourceTitle" xml:space="preserve"><value>Zihinsel kaynak olarak koşu</value></data>
+  <data name="ArticleRunningAnalysisTitle" xml:space="preserve"><value>Kanıta dayalı koşu analizi</value></data>
+  <data name="ArticleRunningAnalysisSummary" xml:space="preserve"><value>Koşu analizinin neden kanıt, bağlam ve ortak karar gerektirdiği.</value></data>
+  <data name="ArticlePaceTrainingTitle" xml:space="preserve"><value>Tempo kontrollü antrenman</value></data>
+  <data name="ArticlePaceTrainingSummary" xml:space="preserve"><value>Tempo bölgeleri antrenman yükünü neden kontrol edilebilir ve anlaşılır kılar.</value></data>
+  <data name="ArticlePaceTrainingBody1" xml:space="preserve"><value>Tempo kontrollü antrenman, performans verilerini somut hız aralıklarına çevirir. Böylece plan yalnızca mesafe değil, yönetilebilir bir yük olur.</value></data>
+  <data name="ArticlePaceTrainingBody2" xml:space="preserve"><value>Tempo bölgeleri kolay koşuları gerçekten kolay tutmaya ve zor seansları bilinçli dozlamaya yardımcı olur. Her seansın fark etmeden orta-zor yapılmasını önler.</value></data>
+  <data name="ArticlePaceTrainingBody3" xml:space="preserve"><value>PaceLetics, referans performansları, VDOT ve kritik hızı kullanarak antrenmanı anlaşılır kılar. Tempo amaç değil, yön bulma aracıdır.</value></data>
+  <data name="ArticlePaceTrainingBody4" xml:space="preserve"><value>Form, yorgunluk, hava veya zemin uygun değilse algı hâlâ önemlidir. İyi antrenman kontrolü sayıları beden hissiyle birleştirir.</value></data>
 </root>

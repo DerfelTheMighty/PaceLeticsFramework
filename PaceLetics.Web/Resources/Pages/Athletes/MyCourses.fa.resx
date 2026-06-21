@@ -24,6 +24,11 @@
   <data name="ShowLess" xml:space="preserve"><value>کمتر</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>تاریخ‌های آینده وجود ندارد.</value></data>
   <data name="NoEvents" xml:space="preserve"><value>در حال حاضر رویدادی فهرست نشده است.</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>تحلیل دویدن</value></data>
+  <data name="AnalysisPreparing" xml:space="preserve"><value>پوشه تحلیل در حال آماده‌سازی است.</value></data>
+  <data name="AnalysisReady" xml:space="preserve"><value>پوشه تحلیل آماده است.</value></data>
+  <data name="AnalysisFailed" xml:space="preserve"><value>پوشه تحلیل آماده نشد.</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>باز کردن پوشه تحلیل</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>لغو</value></data>
   <data name="Register" xml:space="preserve"><value>ثبت‌نام</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>هنوز برنامه تمرینی منتشر نشده است.</value></data>

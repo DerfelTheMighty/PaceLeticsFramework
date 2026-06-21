@@ -24,6 +24,11 @@
   <data name="ShowLess" xml:space="preserve"><value>Moins</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>Aucune date à venir.</value></data>
   <data name="NoEvents" xml:space="preserve"><value>Aucun événement n’est actuellement listé.</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>Analyse de course</value></data>
+  <data name="AnalysisPreparing" xml:space="preserve"><value>Le dossier d’analyse est en préparation.</value></data>
+  <data name="AnalysisReady" xml:space="preserve"><value>Le dossier d’analyse est prêt.</value></data>
+  <data name="AnalysisFailed" xml:space="preserve"><value>Le dossier d’analyse n’a pas pu être préparé.</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>Ouvrir le dossier d’analyse</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>Annuler</value></data>
   <data name="Register" xml:space="preserve"><value>S’inscrire</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>Aucun plan d’entraînement publié pour le moment.</value></data>

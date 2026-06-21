@@ -16,4 +16,14 @@
   <data name="NotFoundBody" xml:space="preserve"><value>Return to the Academy overview to choose another article.</value></data>
   <data name="Sources" xml:space="preserve"><value>Sources</value></data>
   <data name="Tags" xml:space="preserve"><value>Tags</value></data>
+  <data name="CategoryTraining" xml:space="preserve"><value>Тренировка</value></data>
+  <data name="ArticleMentalResourceTitle" xml:space="preserve"><value>Бег как ментальный ресурс</value></data>
+  <data name="ArticleRunningAnalysisTitle" xml:space="preserve"><value>Доказательный анализ бега</value></data>
+  <data name="ArticleRunningAnalysisSummary" xml:space="preserve"><value>Почему анализу бега нужны доказательства, контекст и совместные решения.</value></data>
+  <data name="ArticlePaceTrainingTitle" xml:space="preserve"><value>Тренировка по темпу</value></data>
+  <data name="ArticlePaceTrainingSummary" xml:space="preserve"><value>Почему темповые зоны делают тренировочную нагрузку управляемой и понятной.</value></data>
+  <data name="ArticlePaceTrainingBody1" xml:space="preserve"><value>Тренировка по темпу переводит данные о форме в конкретные диапазоны скорости. План становится не только дистанцией, но и управляемой нагрузкой.</value></data>
+  <data name="ArticlePaceTrainingBody2" xml:space="preserve"><value>Темповые зоны помогают сохранять легкие пробежки действительно легкими и точно дозировать тяжелые занятия. Это защищает от привычки делать каждую тренировку средне-тяжелой.</value></data>
+  <data name="ArticlePaceTrainingBody3" xml:space="preserve"><value>PaceLetics использует контрольные результаты, VDOT и критическую скорость, чтобы сделать тренировку понятной. Темп не является самоцелью, это инструмент ориентации.</value></data>
+  <data name="ArticlePaceTrainingBody4" xml:space="preserve"><value>Если форма, усталость, погода или покрытие не подходят, субъективное ощущение остается важным. Хорошее управление тренировкой соединяет цифры и ощущения тела.</value></data>
 </root>

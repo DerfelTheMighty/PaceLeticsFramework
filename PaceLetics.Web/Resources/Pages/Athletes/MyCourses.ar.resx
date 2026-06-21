@@ -24,6 +24,11 @@
   <data name="ShowLess" xml:space="preserve"><value>أقل</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>لا توجد مواعيد قادمة.</value></data>
   <data name="NoEvents" xml:space="preserve"><value>لا توجد فعاليات مدرجة حاليًا.</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>تحليل الجري</value></data>
+  <data name="AnalysisPreparing" xml:space="preserve"><value>يتم تحضير مجلد التحليل.</value></data>
+  <data name="AnalysisReady" xml:space="preserve"><value>مجلد التحليل جاهز.</value></data>
+  <data name="AnalysisFailed" xml:space="preserve"><value>تعذر تحضير مجلد التحليل.</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>فتح مجلد التحليل</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>إلغاء</value></data>
   <data name="Register" xml:space="preserve"><value>تسجيل</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>لم تُنشر أي خطط تدريب بعد.</value></data>

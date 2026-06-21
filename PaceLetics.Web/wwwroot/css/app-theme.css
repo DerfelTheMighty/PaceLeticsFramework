@@ -1224,6 +1224,11 @@
     --pl-academy-tile-accent: 8%;
 }
 
+.pl-academy-tile--training {
+    --pl-academy-accent: var(--mud-palette-success);
+    --pl-academy-tile-accent: 8%;
+}
+
 .pl-academy-tile--default {
     --pl-academy-accent: var(--mud-palette-info);
 }

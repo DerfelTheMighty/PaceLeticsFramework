@@ -109,6 +109,7 @@
         {
             AcademyArticleCategories.Fundamentals => L["CategoryFundamentals"],
             AcademyArticleCategories.RunningAnalysis => L["CategoryRunningAnalysis"],
+            AcademyArticleCategories.Training => L["CategoryTraining"],
             _ => category
         };
     }
@@ -118,13 +119,13 @@
         return article.Id switch
         {
             "mental-resource-running" => Icons.Material.Filled.Psychology,
-            "running-analysis-intervention-philosophy" => Icons.Material.Filled.DirectionsRun,
-            "running-analysis-side-effects" => Icons.Material.Filled.Info,
-            "running-analysis-shared-decision" => Icons.Material.Filled.Groups,
+            "evidence-based-running-analysis" => Icons.Material.Filled.FactCheck,
+            "pace-controlled-training" => Icons.Material.Filled.Speed,
             _ => article.Category switch
             {
                 AcademyArticleCategories.Fundamentals => Icons.Material.Filled.Psychology,
                 AcademyArticleCategories.RunningAnalysis => Icons.Material.Filled.DirectionsRun,
+                AcademyArticleCategories.Training => Icons.Material.Filled.Speed,
                 _ => Icons.Material.Filled.AutoStories
             }
         };
@@ -136,6 +137,7 @@
         {
             AcademyArticleCategories.Fundamentals => "pl-academy-tile--fundamentals",
             AcademyArticleCategories.RunningAnalysis => "pl-academy-tile--running-analysis",
+            AcademyArticleCategories.Training => "pl-academy-tile--training",
             _ => "pl-academy-tile--default"
         };
 

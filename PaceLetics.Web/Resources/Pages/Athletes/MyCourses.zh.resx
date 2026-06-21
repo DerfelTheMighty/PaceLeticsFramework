@@ -24,6 +24,11 @@
   <data name="ShowLess" xml:space="preserve"><value>æ›´å°‘</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>没有即将到来的日期。</value></data>
   <data name="NoEvents" xml:space="preserve"><value>当前没有列出的活动。</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>跑步分析</value></data>
+  <data name="AnalysisPreparing" xml:space="preserve"><value>正在准备分析文件夹。</value></data>
+  <data name="AnalysisReady" xml:space="preserve"><value>分析文件夹已就绪。</value></data>
+  <data name="AnalysisFailed" xml:space="preserve"><value>无法准备分析文件夹。</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>打开分析文件夹</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>å–æ¶ˆ</value></data>
   <data name="Register" xml:space="preserve"><value>æŠ¥å</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>尚未发布训练计划。</value></data>

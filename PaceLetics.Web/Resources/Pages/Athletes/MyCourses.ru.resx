@@ -24,6 +24,11 @@
   <data name="ShowLess" xml:space="preserve"><value>Меньше</value></data>
   <data name="NoUpcomingDates" xml:space="preserve"><value>Нет предстоящих дат.</value></data>
   <data name="NoEvents" xml:space="preserve"><value>Сейчас нет событий.</value></data>
+  <data name="RunningAnalysis" xml:space="preserve"><value>Анализ бега</value></data>
+  <data name="AnalysisPreparing" xml:space="preserve"><value>Папка анализа подготавливается.</value></data>
+  <data name="AnalysisReady" xml:space="preserve"><value>Папка анализа готова.</value></data>
+  <data name="AnalysisFailed" xml:space="preserve"><value>Не удалось подготовить папку анализа.</value></data>
+  <data name="OpenAnalysisFolder" xml:space="preserve"><value>Открыть папку анализа</value></data>
   <data name="CancelRegistration" xml:space="preserve"><value>Отмена</value></data>
   <data name="Register" xml:space="preserve"><value>Зарегистрироваться</value></data>
   <data name="NoTrainingPlans" xml:space="preserve"><value>Планы тренировок еще не опубликованы.</value></data>

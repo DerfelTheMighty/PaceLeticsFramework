@@ -16,4 +16,14 @@
   <data name="NotFoundBody" xml:space="preserve"><value>Return to the Academy overview to choose another article.</value></data>
   <data name="Sources" xml:space="preserve"><value>Sources</value></data>
   <data name="Tags" xml:space="preserve"><value>Tags</value></data>
+  <data name="CategoryTraining" xml:space="preserve"><value>Entraînement</value></data>
+  <data name="ArticleMentalResourceTitle" xml:space="preserve"><value>Courir comme ressource mentale</value></data>
+  <data name="ArticleRunningAnalysisTitle" xml:space="preserve"><value>Analyse de course fondée sur les preuves</value></data>
+  <data name="ArticleRunningAnalysisSummary" xml:space="preserve"><value>Pourquoi l’analyse de course a besoin de preuves, de contexte et de décisions partagées.</value></data>
+  <data name="ArticlePaceTrainingTitle" xml:space="preserve"><value>Entraînement guidé par l’allure</value></data>
+  <data name="ArticlePaceTrainingSummary" xml:space="preserve"><value>Pourquoi les zones d’allure rendent la charge maîtrisable et compréhensible.</value></data>
+  <data name="ArticlePaceTrainingBody1" xml:space="preserve"><value>L’entraînement guidé par l’allure transforme les données de performance en plages de vitesse concrètes. Un plan devient non seulement une distance, mais une charge maîtrisable.</value></data>
+  <data name="ArticlePaceTrainingBody2" xml:space="preserve"><value>Les zones d’allure aident à garder les sorties faciles vraiment faciles et à doser les séances dures. Elles évitent que chaque séance devienne un effort moyen-dur.</value></data>
+  <data name="ArticlePaceTrainingBody3" xml:space="preserve"><value>PaceLetics utilise les performances de référence, le VDOT et la vitesse critique pour rendre l’entraînement compréhensible. L’allure n’est pas une fin en soi, mais un repère.</value></data>
+  <data name="ArticlePaceTrainingBody4" xml:space="preserve"><value>Quand la forme, la fatigue, la météo ou le terrain ne correspondent pas, le ressenti reste important. Une bonne régulation combine chiffres et sensations.</value></data>
 </root>
