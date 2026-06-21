@@ -1301,6 +1301,34 @@
     font-size: 2.15rem;
 }
 
+.pl-mental-resource-icon {
+    display: block;
+    width: 2.3rem;
+    height: 2.3rem;
+    overflow: visible;
+}
+
+.pl-mental-resource-icon__mind,
+.pl-mental-resource-icon__heart {
+    fill: none;
+}
+
+.pl-mental-resource-icon__mind {
+    stroke: var(--mud-palette-primary);
+    stroke-width: 3.8;
+}
+
+.pl-mental-resource-icon__heart {
+    stroke: var(--mud-palette-secondary);
+    stroke-width: 3.2;
+}
+
+.pl-mental-resource-icon--article-header {
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 2rem;
+}
+
 .pl-academy-tile__subtitle {
     flex: 0 0 auto;
     min-width: 0;
@@ -1427,6 +1455,11 @@
 
     .pl-academy-tile__icon .mud-icon-root {
         font-size: 1.85rem;
+    }
+
+    .pl-mental-resource-icon {
+        width: 2rem;
+        height: 2rem;
     }
 
     .pl-academy-tile__subtitle {

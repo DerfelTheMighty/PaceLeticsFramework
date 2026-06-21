@@ -44,7 +44,14 @@
                     </div>
 
                     <div class="pl-academy-tile__icon" aria-hidden="true">
-                        <MudIcon Icon="@GetArticleIcon(article)" />
+                        @if (IsMentalResourceArticle(article))
+                        {
+                            <MentalResourceIcon />
+                        }
+                        else
+                        {
+                            <MudIcon Icon="@GetArticleIcon(article)" />
+                        }
                     </div>
 
                     <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
@@ -114,11 +121,15 @@
     {
         return article.Id switch
         {
-            "mental-resource-running" => Icons.Material.Filled.Psychology,
             "evidence-based-running-analysis" => Icons.Material.Filled.FactCheck,
             "pace-controlled-training" => Icons.Material.Filled.Speed,
             _ => GetCategoryIcon(article.Category)
         };
+    }
+
+    private static bool IsMentalResourceArticle(ArticlePreview article)
+    {
+        return string.Equals(article.Id, "mental-resource-running", StringComparison.OrdinalIgnoreCase);
     }
 
     private static string GetArticleTileClass(ArticlePreview article)
