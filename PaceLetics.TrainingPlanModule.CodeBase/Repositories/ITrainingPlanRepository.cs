@@ -1,8 +1,8 @@
-using PaceLetics.TrainingPlanModule.CodeBase.Models;
+using PaceLetics.TrainingPlanModule.CodeBase.Definitions;
 
 namespace PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 
 public interface ITrainingPlanRepository
 {
-    IReadOnlyList<TrainingPlan> Load();
+    IReadOnlyList<TrainingPlanDefinition> Load();
 }

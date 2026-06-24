@@ -1,58 +1,26 @@
+using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
+using PaceLetics.TrainingModule.CodeBase.Running.Interfaces;
+
 namespace PaceLetics.TrainingModule.CodeBase.Running.Models
 {
-    public class RunningSessionDto
+    public sealed class RunningSessionFactory : IRunningSessionFactory
     {
-        public string SessionType { get; set; } = "";
-    }
-
-    public sealed class IntervalSessionDto : RunningSessionDto
-    {
-        public string Id { get; set; } = "";
-        public string Name { get; set; } = "";
-        public DateTime Date { get; set; }
-        public int? WarmupDistance { get; set; }
-        public int? CooldownDistance { get; set; }
-        public List<int> Distances { get; set; } = new();
-        public List<int>? Recovery { get; set; } = new();
-        public List<string> PaceKeys { get; set; } = new();
-        public int Sets { get; set; } = 1;
-        public int SetRecovery { get; set; } = 0;
-    }
-
-    public sealed class PlannedSessionDto : RunningSessionDto
-    {
-        public string Id { get; set; } = "";
-        public string Name { get; set; } = "";
-        public DateTime Date { get; set; }
-        public List<RunningSegmentDto> Sequence { get; set; } = new();
-    }
-
-    public sealed class RunningSegmentDto
-    {
-        public SegmentType Type { get; set; }
-        public int Distance { get; set; }
-        public string? PaceKey { get; set; }
-        public TimeSpan? Duration { get; set; }
-    }
-
-    public static class RunningSessionFactory
-    {
-        public static RunningSession Create(RunningSessionDto definition)
+        public RunningSession Create(RunningSessionDefinition definition)
         {
             return definition switch
             {
-                IntervalSessionDto interval => CreateInterval(interval),
-                PlannedSessionDto planned => CreatePlanned(planned),
+                IntervalSessionDefinition interval => CreateInterval(interval),
+                PlannedSessionDefinition planned => CreatePlanned(planned),
                 _ => throw new InvalidDataException($"Unknown session definition type: {definition.GetType().Name}")
             };
         }
 
-        public static IReadOnlyList<RunningSession> Create(IEnumerable<RunningSessionDto> definitions)
+        public IReadOnlyList<RunningSession> Create(IEnumerable<RunningSessionDefinition> definitions)
         {
             return definitions.Select(Create).ToList();
         }
 
-        private static RunningSession CreateInterval(IntervalSessionDto definition)
+        private static RunningSession CreateInterval(IntervalSessionDefinition definition)
         {
             var recovery = definition.Recovery ?? new List<int>();
 
@@ -73,7 +41,7 @@ namespace PaceLetics.TrainingModule.CodeBase.Running.Models
                 definition.CooldownDistance);
         }
 
-        private static RunningSession CreatePlanned(PlannedSessionDto definition)
+        private static RunningSession CreatePlanned(PlannedSessionDefinition definition)
         {
             return new PlannedRunSession(
                 definition.Id,

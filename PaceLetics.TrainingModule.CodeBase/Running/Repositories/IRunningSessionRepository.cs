@@ -1,8 +1,8 @@
-using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
 
 namespace PaceLetics.TrainingModule.CodeBase.Running.Repositories;
 
 public interface IRunningSessionRepository
 {
-    IReadOnlyList<RunningSessionDto> Load();
+    IReadOnlyList<RunningSessionDefinition> Load();
 }

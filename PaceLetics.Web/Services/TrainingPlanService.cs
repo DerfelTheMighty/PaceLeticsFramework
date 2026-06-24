@@ -1,32 +1,38 @@
 using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Interfaces;
 using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
+using PaceLetics.TrainingPlanModule.CodeBase.Interfaces;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 using PaceLetics.Web.Services.Courses;
-using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 
 namespace PaceLetics.Web.Services;
 
 public sealed class TrainingPlanService : ITrainingPlanService
 {
-    private readonly IWebHostEnvironment _environment;
-    private readonly IWorkoutCatalog _workoutCatalog;
+    private readonly ITrainingPlanRepository _trainingPlanRepository;
+    private readonly ITrainingPlanFactory _trainingPlanFactory;
+    private readonly IRunningSessionRepository _legacyRunningSessionRepository;
+    private readonly IRunningSessionFactory _runningSessionFactory;
     private readonly ICourseService _courseService;
 
     public TrainingPlanService(
-        IWebHostEnvironment environment,
-        IWorkoutCatalog workoutCatalog,
+        ITrainingPlanRepository trainingPlanRepository,
+        ITrainingPlanFactory trainingPlanFactory,
+        IRunningSessionRepository legacyRunningSessionRepository,
+        IRunningSessionFactory runningSessionFactory,
         ICourseService courseService)
     {
-        _environment = environment;
-        _workoutCatalog = workoutCatalog;
+        _trainingPlanRepository = trainingPlanRepository;
+        _trainingPlanFactory = trainingPlanFactory;
+        _legacyRunningSessionRepository = legacyRunningSessionRepository;
+        _runningSessionFactory = runningSessionFactory;
         _courseService = courseService;
     }
 
     public IReadOnlyList<TrainingPlan> LoadTrainingPlans()
     {
-        var plansDir = Path.Combine(WebRootPath, "data", "plans");
-        var plans = new JsonTrainingPlanRepository(plansDir, _workoutCatalog).Load().ToList();
+        var plans = _trainingPlanFactory.Create(_trainingPlanRepository.Load()).ToList();
 
         if (plans.Any())
             return plans;
@@ -64,18 +70,16 @@ public sealed class TrainingPlanService : ITrainingPlanService
 
     public IReadOnlyList<RunningSession> LoadLegacySessions()
     {
-        var legacyPath = Path.Combine(WebRootPath, "data", "intervalls.json");
-        if (!File.Exists(legacyPath))
+        try
+        {
+            var definitions = _legacyRunningSessionRepository.Load();
+            return _runningSessionFactory.Create(definitions);
+        }
+        catch (FileNotFoundException)
+        {
             return Array.Empty<RunningSession>();
-
-        var definitions = new JsonRunningSessionRepository(legacyPath).Load();
-        return RunningSessionFactory.Create(definitions);
+        }
     }
-
-    private string WebRootPath =>
-        !string.IsNullOrWhiteSpace(_environment.WebRootPath)
-            ? _environment.WebRootPath
-            : Path.Combine(AppContext.BaseDirectory, "wwwroot");
 
     private static string ToReadableName(string id)
     {

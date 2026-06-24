@@ -1,6 +1,8 @@
+using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
 using PaceLetics.TrainingModule.CodeBase.Running.Models;
 using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
 using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
+using PaceLetics.TrainingPlanModule.CodeBase.Services;
 
 namespace PaceLetics.Tests;
 
@@ -25,21 +27,21 @@ public sealed class RunningRepositoryTests
 
         var definitions = new JsonRunningSessionRepository(path).Load();
 
-        var definition = Assert.IsType<PlannedSessionDto>(Assert.Single(definitions));
+        var definition = Assert.IsType<PlannedSessionDefinition>(Assert.Single(definitions));
         Assert.Equal("planned-test", definition.Id);
     }
 
     [Fact]
     public void RunningSessionFactory_CreatesRuntimeSessionFromDefinition()
     {
-        var definition = new PlannedSessionDto
+        var definition = new PlannedSessionDefinition
         {
             Id = "planned-test",
             Name = "Planned Test",
             Date = new DateTime(2026, 1, 1),
             Sequence =
             [
-                new RunningSegmentDto
+                new RunningSegmentDefinition
                 {
                     Type = SegmentType.Dauerlauf,
                     Distance = 1000,
@@ -48,7 +50,7 @@ public sealed class RunningRepositoryTests
             ]
         };
 
-        var session = RunningSessionFactory.Create(definition);
+        var session = new RunningSessionFactory().Create(definition);
 
         Assert.Equal("planned-test", session.Id);
         Assert.Equal(1000, session.TotalDistance);
@@ -103,7 +105,7 @@ public sealed class RunningRepositoryTests
         }
         """);
 
-        var plans = new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load();
+        var plans = LoadTrainingPlans(directory);
 
         var plan = Assert.Single(plans);
         var session = Assert.Single(plan.Sessions);
@@ -153,7 +155,7 @@ public sealed class RunningRepositoryTests
         }
         """);
 
-        var plans = new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load();
+        var plans = LoadTrainingPlans(directory);
 
         var session = Assert.Single(Assert.Single(plans).Sessions);
         Assert.True(session.HasPreparation);
@@ -189,7 +191,7 @@ public sealed class RunningRepositoryTests
         }
         """);
 
-        var plans = new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load();
+        var plans = LoadTrainingPlans(directory);
 
         var session = Assert.Single(Assert.Single(plans).Sessions);
         Assert.Equal(new DateTime(2026, 2, 3), session.Date);
@@ -218,7 +220,7 @@ public sealed class RunningRepositoryTests
         """);
 
         Assert.Throws<InvalidDataException>(() =>
-            new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load());
+            LoadTrainingPlans(directory));
     }
 
     [Fact]
@@ -246,7 +248,7 @@ public sealed class RunningRepositoryTests
         """);
 
         Assert.Throws<InvalidDataException>(() =>
-            new JsonTrainingPlanRepository(directory, WorkoutCatalogTestData.CreateWorkoutCatalog()).Load());
+            LoadTrainingPlans(directory));
     }
 
     private static string WriteTempJson(string json)
@@ -254,6 +256,14 @@ public sealed class RunningRepositoryTests
         var path = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.json");
         File.WriteAllText(path, json);
         return path;
+    }
+
+    private static IReadOnlyList<TrainingPlanModule.CodeBase.Models.TrainingPlan> LoadTrainingPlans(string directory)
+    {
+        var definitions = new JsonTrainingPlanRepository(directory).Load();
+        return new TrainingPlanFactory(
+            new RunningSessionFactory(),
+            WorkoutCatalogTestData.CreateWorkoutCatalog()).Create(definitions);
     }
 
     private static string CreateTempDirectory()

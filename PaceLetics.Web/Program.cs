@@ -10,6 +10,9 @@ using MudBlazor.Extensions;
 using MudBlazor;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Services;
+using PaceLetics.TrainingModule.CodeBase.Running.Interfaces;
+using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PaceLetics.Web.Services;
@@ -31,6 +34,9 @@ using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
 using PaceLetics.Web.Services.Loading;
 using PaceLetics.Web.Services.Workouts;
+using PaceLetics.TrainingPlanModule.CodeBase.Interfaces;
+using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
+using PaceLetics.TrainingPlanModule.CodeBase.Services;
 using PaceLetics.Web.Localization;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Services;
@@ -76,6 +82,8 @@ var webRootPath = !string.IsNullOrWhiteSpace(builder.Environment.WebRootPath)
     ? builder.Environment.WebRootPath
     : Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
 var workoutCatalogPath = Path.Combine(webRootPath, "data", "workouts", "catalog.de.json");
+var trainingPlansPath = Path.Combine(webRootPath, "data", "plans");
+var legacyRunningSessionsPath = Path.Combine(webRootPath, "data", "intervalls.json");
 builder.Services.AddSingleton(new JsonWorkoutCatalogRepository(workoutCatalogPath));
 builder.Services.AddSingleton<IWorkoutCatalogRepository>(x => x.GetRequiredService<JsonWorkoutCatalogRepository>());
 builder.Services.AddSingleton<IWorkoutCatalogValidator>(x => x.GetRequiredService<JsonWorkoutCatalogRepository>());
@@ -87,6 +95,12 @@ builder.Services.AddSingleton<IWorkoutCatalog>(x => new WorkoutCatalog(
     x.GetRequiredService<WorkoutCatalogDocument>().Workouts));
 builder.Services.AddScoped<IWorkoutFactory, WorkoutFactory>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+builder.Services.AddSingleton<IRunningSessionFactory, RunningSessionFactory>();
+builder.Services.AddSingleton<ITrainingPlanFactory>(x => new TrainingPlanFactory(
+    x.GetRequiredService<IRunningSessionFactory>(),
+    x.GetRequiredService<IWorkoutCatalog>()));
+builder.Services.AddScoped<ITrainingPlanRepository>(_ => new JsonTrainingPlanRepository(trainingPlansPath));
+builder.Services.AddScoped<IRunningSessionRepository>(_ => new JsonRunningSessionRepository(legacyRunningSessionsPath));
 builder.Services.AddScoped<WorkoutAreaViewModel>();
 builder.Services.AddScoped<SelectDifficultyViewModel>();
 builder.Services.AddScoped<WorkoutRoomViewModel>();

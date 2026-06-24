@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
 
 namespace PaceLetics.TrainingModule.CodeBase.Running.Repositories;
 
@@ -25,7 +25,7 @@ public sealed class JsonRunningSessionRepository : IRunningSessionRepository
         _filePath = filePath;
     }
 
-    public IReadOnlyList<RunningSessionDto> Load()
+    public IReadOnlyList<RunningSessionDefinition> Load()
     {
         if (!File.Exists(_filePath))
             throw new FileNotFoundException("Running session file was not found.", _filePath);
@@ -39,15 +39,15 @@ public sealed class JsonRunningSessionRepository : IRunningSessionRepository
             : new[] { ParseDefinition(document.RootElement) };
     }
 
-    public static RunningSessionDto ParseDefinition(JsonElement element)
+    public static RunningSessionDefinition ParseDefinition(JsonElement element)
     {
         var sessionType = element.GetProperty("sessionType").GetString()?.Trim().ToLowerInvariant();
 
         return sessionType switch
         {
-            "interval" => element.Deserialize<IntervalSessionDto>(Options)
+            "interval" => element.Deserialize<IntervalSessionDefinition>(Options)
                 ?? throw new InvalidDataException("Could not deserialize interval session."),
-            "planned" => element.Deserialize<PlannedSessionDto>(Options)
+            "planned" => element.Deserialize<PlannedSessionDefinition>(Options)
                 ?? throw new InvalidDataException("Could not deserialize planned session."),
             _ => throw new InvalidDataException($"Unknown sessionType: {sessionType}")
         };

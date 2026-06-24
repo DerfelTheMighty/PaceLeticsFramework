@@ -1,8 +1,8 @@
 using System.Text.Json;
-using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
 using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
+using PaceLetics.TrainingPlanModule.CodeBase.Definitions;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
-using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 
 namespace PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 
@@ -14,23 +14,21 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
     };
 
     private readonly string _directoryPath;
-    private readonly IWorkoutCatalog? _workoutCatalog;
 
-    public JsonTrainingPlanRepository(string directoryPath, IWorkoutCatalog? workoutCatalog = null)
+    public JsonTrainingPlanRepository(string directoryPath)
     {
         if (string.IsNullOrWhiteSpace(directoryPath))
             throw new ArgumentException("Training plan directory path must not be empty.", nameof(directoryPath));
 
         _directoryPath = directoryPath;
-        _workoutCatalog = workoutCatalog;
     }
 
-    public IReadOnlyList<TrainingPlan> Load()
+    public IReadOnlyList<TrainingPlanDefinition> Load()
     {
         if (!Directory.Exists(_directoryPath))
-            return Array.Empty<TrainingPlan>();
+            return Array.Empty<TrainingPlanDefinition>();
 
-        var plans = new List<TrainingPlan>();
+        var plans = new List<TrainingPlanDefinition>();
         foreach (var file in Directory.EnumerateFiles(_directoryPath, "*.json"))
         {
             try
@@ -46,7 +44,7 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         return plans;
     }
 
-    private TrainingPlan LoadPlan(string filePath)
+    private TrainingPlanDefinition LoadPlan(string filePath)
     {
         var json = File.ReadAllText(filePath);
         using var document = JsonDocument.Parse(json);
@@ -60,10 +58,12 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
             root.TryGetProperty("sessionType", out _))
         {
             var definition = JsonRunningSessionRepository.ParseDefinition(root);
-            return new TrainingPlan(
-                fallbackId,
-                ToReadableName(fallbackId),
-                new[] { CreateRunOnlyTrainingSession(RunningSessionFactory.Create(definition)) });
+            return new TrainingPlanDefinition
+            {
+                Id = fallbackId,
+                Name = ToReadableName(fallbackId),
+                Sessions = [CreateRunOnlyTrainingSession(definition)]
+            };
         }
 
         if (root.ValueKind == JsonValueKind.Object &&
@@ -77,28 +77,35 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
                 ? ToReadableName(id)
                 : planDocument.Name;
 
-            return new TrainingPlan(
-                id,
-                name,
-                sessionsElement.EnumerateArray().Select(ParseTrainingSession).ToList());
+            return new TrainingPlanDefinition
+            {
+                SchemaVersion = planDocument.SchemaVersion,
+                Id = id,
+                Name = name,
+                Sessions = sessionsElement.EnumerateArray().Select(ParseTrainingSession).ToList()
+            };
         }
 
         throw new InvalidDataException("Unsupported training plan JSON format.");
     }
 
-    private TrainingPlan LoadLegacyPlan(string fallbackId, JsonElement root)
+    private TrainingPlanDefinition LoadLegacyPlan(string fallbackId, JsonElement root)
     {
         var sessions = root
             .EnumerateArray()
             .Select(JsonRunningSessionRepository.ParseDefinition)
-            .Select(RunningSessionFactory.Create)
             .Select(CreateRunOnlyTrainingSession)
             .ToList();
 
-        return new TrainingPlan(fallbackId, ToReadableName(fallbackId), sessions);
+        return new TrainingPlanDefinition
+        {
+            Id = fallbackId,
+            Name = ToReadableName(fallbackId),
+            Sessions = sessions
+        };
     }
 
-    private TrainingSession ParseTrainingSession(JsonElement sessionElement)
+    private TrainingSessionDefinition ParseTrainingSession(JsonElement sessionElement)
     {
         var dto = sessionElement.Deserialize<TrainingSessionDocument>(Options)
             ?? throw new InvalidDataException("Could not deserialize training session.");
@@ -107,66 +114,29 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
             ? runsElement
                 .EnumerateArray()
                 .Select(JsonRunningSessionRepository.ParseDefinition)
-                .Select(RunningSessionFactory.Create)
                 .ToList()
-            : new List<RunningSession>();
+            : [];
 
-        var workouts = dto.Workouts.Select(ValidateWorkout).ToList();
-        var primaryRun = runs.FirstOrDefault();
-
-        var appointment = dto.Appointment ?? TrainingSessionAppointment.Empty;
-
-        var date = dto.Date != default
-            ? dto.Date
-            : appointment.StartsAt?.Date
-                ?? primaryRun?.Date
-                ?? throw new InvalidDataException($"Training session '{dto.Id}' must define a date when it has no runs or appointment.");
-
-        var id = !string.IsNullOrWhiteSpace(dto.Id)
-            ? dto.Id
-            : primaryRun?.Id
-                ?? CreateSessionId(name: dto.Name, date)
-                ?? throw new InvalidDataException("Training session id must not be empty.");
-
-        var name = !string.IsNullOrWhiteSpace(dto.Name)
-            ? dto.Name
-            : primaryRun?.Name ?? id;
-
-        return new TrainingSession(
-            id,
-            name,
-            date,
-            runs,
-            workouts,
-            dto.Warmup,
-            dto.Drills,
-            dto.TrainingEffect,
-            appointment);
+        return new TrainingSessionDefinition
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            Date = dto.Date,
+            Runs = runs,
+            Workouts = dto.Workouts,
+            Warmup = dto.Warmup,
+            Drills = dto.Drills,
+            TrainingEffect = dto.TrainingEffect,
+            Appointment = dto.Appointment
+        };
     }
 
-    private WorkoutSessionDefinition ValidateWorkout(WorkoutSessionDefinition workout)
+    private static TrainingSessionDefinition CreateRunOnlyTrainingSession(RunningSessionDefinition session)
     {
-        if (string.IsNullOrWhiteSpace(workout.WorkoutId))
-            throw new InvalidDataException("Workout session workoutId must not be empty.");
-
-        if (workout.Sets < 1)
-            throw new InvalidDataException($"Workout session '{workout.WorkoutId}' sets must be greater than zero.");
-
-        if (workout.Rounds < 1)
-            throw new InvalidDataException($"Workout session '{workout.WorkoutId}' rounds must be greater than zero.");
-
-        _workoutCatalog?.GetDefinition(workout.WorkoutId);
-        return workout;
-    }
-
-    private static TrainingSession CreateRunOnlyTrainingSession(RunningSession session)
-    {
-        return new TrainingSession(
-            session.Id,
-            session.Name,
-            session.Date,
-            new[] { session },
-            Array.Empty<WorkoutSessionDefinition>());
+        return new TrainingSessionDefinition
+        {
+            Runs = [session]
+        };
     }
 
     private static string ToReadableName(string id)
@@ -176,19 +146,6 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
 
         var name = id.Replace('-', ' ').Replace('_', ' ');
         return char.ToUpperInvariant(name[0]) + name[1..];
-    }
-
-    private static string? CreateSessionId(string name, DateTime date)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-            return null;
-
-        var normalizedName = name
-            .Trim()
-            .ToLowerInvariant()
-            .Replace(' ', '-');
-
-        return $"{date:yyyy-MM-dd}-{normalizedName}";
     }
 
     private sealed class TrainingPlanDocument
