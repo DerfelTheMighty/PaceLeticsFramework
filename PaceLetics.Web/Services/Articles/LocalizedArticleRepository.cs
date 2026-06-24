@@ -55,14 +55,16 @@ public sealed class LocalizedArticleRepository : IArticleRepository
             Summary = lead,
             Category = ArticleCategories.Fundamentals,
             SourceModule = "MentalResourceArticle",
-            Tags = new[] { "Mental resource", "Sustainability", "Injury prevention", "Beginners", "Drop-out" },
+            Tags = new[] { "Mental resource", "Literature", "Mood", "Self-efficacy" },
             BodyBlocks = Blocks(
                 lead,
-                DashboardText("MentalResource_StepEffectText", "Regular recreational running can support mood and mental health."),
-                DashboardText("MentalResource_StepFragileText", "Running as a resource depends on load tolerance, recovery, and everyday constraints."),
-                DashboardText("MentalResource_StepRiskText", "Novice runners show higher reported injury incidence and early drop-out in beginner programs."),
-                DashboardText("MentalResource_StepConsequenceText", "Sustainable programs cannot treat drop-out as a side issue."),
-                DashboardText("MentalResource_StepAppText", "PaceLetics doses load and makes routines understandable.")),
+                DashboardText("MentalResource_ResearchIntro", "The current literature suggests that running can be a low-threshold mental resource."),
+                DashboardText("MentalResource_ResearchOswald", "A scoping review on running and mental health links single runs and regular running with better mood, lower tension, and positive mental health outcomes."),
+                DashboardText("MentalResource_ResearchPereira", "A systematic review on recreational running highlights motivation, self-regulation, habit, and perceived competence as central psychological factors for staying with running."),
+                DashboardText("MentalResource_ResearchActivityReviews", "Broader reviews support this interpretation: physical activity reduces depressive symptoms, anxiety, and psychological distress, and walking or jogging is among the well-studied forms of movement for depressive symptoms."),
+                DashboardText("MentalResource_ResearchCochrane", "The current Cochrane review concludes that exercise can moderately reduce depressive symptoms compared with control conditions, while long-term evidence remains limited."),
+                DashboardText("MentalResource_ResearchProspective", "Prospective cohort data also show that even moderate activity volumes are associated with a lower risk of depression."),
+                DashboardText("MentalResource_ResearchConclusion", "Running should not be inflated into therapy or a therapy substitute. The point is that running can be a mental resource and that many people intuitively use it as one.")),
             References = references,
             ContentKind = ArticleContentKind.MentalResource,
             SortOrder = 10
@@ -130,12 +132,10 @@ public sealed class LocalizedArticleRepository : IArticleRepository
         {
             Reference("MentalResource_SourceOswald", "https://doi.org/10.3390/ijerph17218059", _dashboardLocalizer),
             Reference("MentalResource_SourcePereira", "https://doi.org/10.3389/fpsyg.2021.624783", _dashboardLocalizer),
-            Reference("MentalResource_SourceFurie", "https://doi.org/10.1007/s12178-023-09830-6", _dashboardLocalizer),
-            Reference("MentalResource_SourceDeJonge", "https://doi.org/10.3390/ijerph17031044", _dashboardLocalizer),
-            Reference("MentalResource_SourceVerhagen", "https://doi.org/10.1136/bmjsem-2021-001117", _dashboardLocalizer),
-            Reference("MentalResource_SourceVidebaek", "https://doi.org/10.1007/s40279-015-0333-8", _dashboardLocalizer),
-            Reference("MentalResource_SourceFokkema", "https://doi.org/10.1016/j.jsams.2018.06.003", _dashboardLocalizer),
-            Reference("MentalResource_SourceRelph", "https://doi.org/10.3390/ijerph20176682", _dashboardLocalizer)
+            Reference("MentalResource_SourceSingh", "https://doi.org/10.1136/bjsports-2022-106195", _dashboardLocalizer),
+            Reference("MentalResource_SourceNoetel", "https://doi.org/10.1136/bmj-2023-075847", _dashboardLocalizer),
+            Reference("MentalResource_SourceCochrane", "https://doi.org/10.1002/14651858.CD004366.pub7", _dashboardLocalizer),
+            Reference("MentalResource_SourcePearce", "https://doi.org/10.1001/jamapsychiatry.2022.0609", _dashboardLocalizer)
         };
     }
 
