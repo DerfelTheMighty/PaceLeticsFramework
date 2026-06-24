@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AthleteDataAccessLibrary.Contracts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.Options;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.Web.Configuration;
 using PaceLetics.Web.Data;
+using PaceLetics.Web.Services.ProfileImages;
 
 namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -29,19 +31,22 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         private readonly TrainerVerificationOptions _trainerVerificationOptions;
         private readonly IAthleteData _athleteData;
         private readonly IStringLocalizer<IndexModel> _localizer;
+        private readonly IProfileImageService _profileImageService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<TrainerVerificationOptions> trainerVerificationOptions,
             IAthleteData athleteData,
-            IStringLocalizer<IndexModel> localizer)
+            IStringLocalizer<IndexModel> localizer,
+            IProfileImageService profileImageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _trainerVerificationOptions = trainerVerificationOptions.Value;
             _athleteData = athleteData;
             _localizer = localizer;
+            _profileImageService = profileImageService;
         }
 
         [Display(Name = "Name")]
@@ -50,6 +55,8 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         public string Roles { get; set; }
 
         public bool IsTrainer { get; set; }
+
+        public string CurrentProfileImageUrl { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -64,9 +71,8 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Oeffentlicher Nutzername")]
             public string PublicUserName { get; set; }
 
-            [Url]
-            [Display(Name = "Profilfoto URL")]
-            public string ProfileImageUrl { get; set; }
+            [Display(Name = "Profilfoto")]
+            public IFormFile ProfileImageUpload { get; set; }
 
             [Display(Name = "Oeffentliches Profil sichtbar")]
             public bool IsPublicProfileVisible { get; set; }
@@ -90,9 +96,11 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 PublicUserName = publicProfile?.PublicUserName ?? userName,
-                ProfileImageUrl = publicProfile?.ProfileImageUrl,
+                ProfileImageUpload = null,
                 IsPublicProfileVisible = publicProfile?.IsProfileVisible ?? false
             };
+
+            CurrentProfileImageUrl = publicProfile?.ProfileImageUrl;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -116,6 +124,8 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             }
 
             var publicUserName = Input.PublicUserName?.Trim();
+            var isPublicProfileVisible = Input.IsPublicProfileVisible;
+            var trainerVerificationCode = Input.TrainerVerificationCode;
             if (!string.IsNullOrWhiteSpace(publicUserName))
             {
                 if (!IsPublicUserNameFormatValid(publicUserName))
@@ -139,12 +149,15 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
                 ? ApplicationRoles.Trainer
                 : ApplicationRoles.Athlete;
 
-            if (!string.IsNullOrWhiteSpace(Input.TrainerVerificationCode))
+            if (!string.IsNullOrWhiteSpace(trainerVerificationCode))
             {
-                var trainerResult = await TryAddTrainerRoleAsync(user, Input.TrainerVerificationCode);
+                var trainerResult = await TryAddTrainerRoleAsync(user, trainerVerificationCode);
                 if (!trainerResult)
                 {
                     await LoadAsync(user);
+                    Input.PublicUserName = publicUserName;
+                    Input.IsPublicProfileVisible = isPublicProfileVisible;
+                    Input.TrainerVerificationCode = trainerVerificationCode;
                     return Page();
                 }
 
@@ -153,13 +166,37 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
             }
 
             var athlete = await GetOrCreateAthleteAsync(user.Id, await _userManager.GetUserNameAsync(user), roles);
+            var profileImageUrl = athlete.PublicProfile?.ProfileImageUrl;
+            if (Input.ProfileImageUpload is { Length: > 0 })
+            {
+                try
+                {
+                    var result = await _profileImageService.SaveAsync(
+                        Input.ProfileImageUpload,
+                        user.Id,
+                        profileImageUrl,
+                        HttpContext.RequestAborted);
+
+                    profileImageUrl = result.Url;
+                }
+                catch (ProfileImageException ex)
+                {
+                    ModelState.AddModelError("Input.ProfileImageUpload", GetProfileImageErrorMessage(ex.Error));
+                    await LoadAsync(user);
+                    Input.PublicUserName = publicUserName;
+                    Input.IsPublicProfileVisible = isPublicProfileVisible;
+                    Input.TrainerVerificationCode = trainerVerificationCode;
+                    return Page();
+                }
+            }
+
             athlete.Roles = CreateRoleModel(roles);
             athlete.PublicProfile = new PublicProfileModel
             {
                 PublicUserName = publicUserName,
                 NormalizedPublicUserName = NormalizePublicUserName(publicUserName),
-                ProfileImageUrl = Input.ProfileImageUrl?.Trim(),
-                IsProfileVisible = Input.IsPublicProfileVisible,
+                ProfileImageUrl = profileImageUrl,
+                IsProfileVisible = isPublicProfileVisible,
                 PublicRole = role
             };
 
@@ -340,6 +377,18 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         private static bool IsPublicUserNameFormatValid(string value)
         {
             return Regex.IsMatch(value, @"\A[A-Za-z0-9._-]+\z");
+        }
+
+        private string GetProfileImageErrorMessage(ProfileImageError error)
+        {
+            return error switch
+            {
+                ProfileImageError.Empty => _localizer["ProfileImageEmpty"],
+                ProfileImageError.TooLarge => _localizer["ProfileImageTooLarge"],
+                ProfileImageError.UnsupportedType => _localizer["ProfileImageUnsupportedType"],
+                ProfileImageError.InvalidImage => _localizer["ProfileImageInvalid"],
+                _ => _localizer["ProfileImageInvalid"]
+            };
         }
     }
 }

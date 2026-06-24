@@ -32,6 +32,7 @@
     </PackageReference>
     <PackageReference Include="MudBlazor" />
     <PackageReference Include="MudBlazor.Extensions" />
+    <PackageReference Include="SixLabors.ImageSharp" />
   </ItemGroup>
 
   <ItemGroup>

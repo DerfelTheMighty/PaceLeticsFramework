@@ -14,6 +14,9 @@
   <data name="RequestTrainerRoleDescription" xml:space="preserve"><value>A valid verification code enables the coach role in addition to the athlete role.</value></data>
   <data name="PublicUserName" xml:space="preserve"><value>Public username</value></data>
   <data name="ProfileImageUrl" xml:space="preserve"><value>Profile photo URL</value></data>
+  <data name="ProfileImageUpload" xml:space="preserve"><value>Profile photo</value></data>
+  <data name="ProfileImageUploadHint" xml:space="preserve"><value>Upload a JPG, PNG, or WebP image. It will be cropped square and scaled down without distortion.</value></data>
+  <data name="CurrentProfileImage" xml:space="preserve"><value>Current profile photo</value></data>
   <data name="IsPublicProfileVisible" xml:space="preserve"><value>Public profile visible</value></data>
   <data name="TrainerVerificationCode" xml:space="preserve"><value>Coach verification code</value></data>
 </root>

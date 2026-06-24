@@ -14,6 +14,9 @@
   <data name="RequestTrainerRoleDescription" xml:space="preserve"><value>Mit einem gültigen Verifikationscode wird die Trainerrolle zusätzlich zur Athlet:innenrolle aktiviert.</value></data>
   <data name="PublicUserName" xml:space="preserve"><value>Öffentlicher Nutzername</value></data>
   <data name="ProfileImageUrl" xml:space="preserve"><value>Profilfoto URL</value></data>
+  <data name="ProfileImageUpload" xml:space="preserve"><value>Profilbild</value></data>
+  <data name="ProfileImageUploadHint" xml:space="preserve"><value>Lade ein JPG-, PNG- oder WebP-Bild hoch. Es wird quadratisch zugeschnitten und ohne Verzerrung verkleinert.</value></data>
+  <data name="CurrentProfileImage" xml:space="preserve"><value>Aktuelles Profilbild</value></data>
   <data name="IsPublicProfileVisible" xml:space="preserve"><value>Öffentliches Profil sichtbar</value></data>
   <data name="TrainerVerificationCode" xml:space="preserve"><value>Trainer-Verifikationscode</value></data>
 </root>

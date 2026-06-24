@@ -7,6 +7,10 @@
   <data name="ProfileUpdated" xml:space="preserve"><value>Your profile has been updated.</value></data>
   <data name="PublicUserNameCharacters" xml:space="preserve"><value>The public username may only contain letters, numbers, periods, underscores, and hyphens.</value></data>
   <data name="PublicUserNameExists" xml:space="preserve"><value>This public username is already taken.</value></data>
+  <data name="ProfileImageEmpty" xml:space="preserve"><value>Please choose an image file.</value></data>
+  <data name="ProfileImageInvalid" xml:space="preserve"><value>The selected file could not be read as an image.</value></data>
+  <data name="ProfileImageTooLarge" xml:space="preserve"><value>The profile photo must be 5 MB or smaller.</value></data>
+  <data name="ProfileImageUnsupportedType" xml:space="preserve"><value>Please upload a JPG, PNG, or WebP image.</value></data>
   <data name="RoleAthlete" xml:space="preserve"><value>Athlete</value></data>
   <data name="RoleTrainer" xml:space="preserve"><value>Coach</value></data>
   <data name="TrainerVerificationInvalid" xml:space="preserve"><value>The coach verification code is invalid.</value></data>

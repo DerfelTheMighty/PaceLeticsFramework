@@ -7,6 +7,10 @@
   <data name="ProfileUpdated" xml:space="preserve"><value>Dein Profil wurde aktualisiert.</value></data>
   <data name="PublicUserNameCharacters" xml:space="preserve"><value>Der öffentliche Nutzername darf nur Buchstaben, Zahlen, Punkte, Unterstriche und Bindestriche enthalten.</value></data>
   <data name="PublicUserNameExists" xml:space="preserve"><value>Dieser öffentliche Nutzername ist bereits vergeben.</value></data>
+  <data name="ProfileImageEmpty" xml:space="preserve"><value>Bitte waehle eine Bilddatei aus.</value></data>
+  <data name="ProfileImageInvalid" xml:space="preserve"><value>Die gewaehlte Datei konnte nicht als Bild gelesen werden.</value></data>
+  <data name="ProfileImageTooLarge" xml:space="preserve"><value>Das Profilbild darf maximal 5 MB gross sein.</value></data>
+  <data name="ProfileImageUnsupportedType" xml:space="preserve"><value>Bitte lade ein JPG-, PNG- oder WebP-Bild hoch.</value></data>
   <data name="RoleAthlete" xml:space="preserve"><value>Athlet:in</value></data>
   <data name="RoleTrainer" xml:space="preserve"><value>Trainer:in</value></data>
   <data name="TrainerVerificationInvalid" xml:space="preserve"><value>Der Trainer-Verifikationscode ist ungültig.</value></data>
