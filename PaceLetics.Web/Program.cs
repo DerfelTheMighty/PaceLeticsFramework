@@ -11,8 +11,8 @@ using MudBlazor;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Services;
 using PaceLetics.TrainingModule.CodeBase.Running.Interfaces;
-using PaceLetics.TrainingModule.CodeBase.Running.Models;
 using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
+using PaceLetics.TrainingModule.CodeBase.Running.Services;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PaceLetics.Web.Services;
@@ -30,6 +30,7 @@ using PaceLetics.Web.Services.Articles;
 using PaceLetics.CoreModule.Infrastructure.Services;
 using PaceLetics.Web.Services.Courses;
 using PaceLetics.Web.Services.Mates;
+using PaceLetics.Web.Services.ProfileImages;
 using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
 using PaceLetics.Web.Services.Loading;
@@ -96,9 +97,11 @@ builder.Services.AddSingleton<IWorkoutCatalog>(x => new WorkoutCatalog(
 builder.Services.AddScoped<IWorkoutFactory, WorkoutFactory>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 builder.Services.AddSingleton<IRunningSessionFactory, RunningSessionFactory>();
+builder.Services.AddSingleton<ITrainingPlanDefinitionValidator>(x =>
+    new TrainingPlanDefinitionValidator(x.GetRequiredService<IWorkoutCatalog>()));
 builder.Services.AddSingleton<ITrainingPlanFactory>(x => new TrainingPlanFactory(
     x.GetRequiredService<IRunningSessionFactory>(),
-    x.GetRequiredService<IWorkoutCatalog>()));
+    validator: x.GetRequiredService<ITrainingPlanDefinitionValidator>()));
 builder.Services.AddScoped<ITrainingPlanRepository>(_ => new JsonTrainingPlanRepository(trainingPlansPath));
 builder.Services.AddScoped<IRunningSessionRepository>(_ => new JsonRunningSessionRepository(legacyRunningSessionsPath));
 builder.Services.AddScoped<WorkoutAreaViewModel>();
@@ -162,6 +165,7 @@ builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddScoped<IArticleRepository, LocalizedArticleRepository>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IMateService, MateService>();
+builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
 builder.Services.AddScoped<ThemePreferenceService>();
 builder.Services.AddScoped<LoadingStateService>();
 builder.Services.AddSingleton<DashboardMessageFeedOptions>();

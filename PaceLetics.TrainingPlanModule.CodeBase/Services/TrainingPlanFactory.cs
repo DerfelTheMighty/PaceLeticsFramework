@@ -1,5 +1,4 @@
 using PaceLetics.TrainingModule.CodeBase.Running.Interfaces;
-using PaceLetics.TrainingModule.CodeBase.Running.Models;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 using PaceLetics.TrainingPlanModule.CodeBase.Definitions;
 using PaceLetics.TrainingPlanModule.CodeBase.Interfaces;
@@ -10,30 +9,33 @@ namespace PaceLetics.TrainingPlanModule.CodeBase.Services;
 public sealed class TrainingPlanFactory : ITrainingPlanFactory
 {
     private readonly IRunningSessionFactory _runningSessionFactory;
-    private readonly IWorkoutCatalog? _workoutCatalog;
+    private readonly ITrainingPlanDefinitionValidator _validator;
 
     public TrainingPlanFactory(
         IRunningSessionFactory runningSessionFactory,
-        IWorkoutCatalog? workoutCatalog = null)
+        IWorkoutCatalog? workoutCatalog = null,
+        ITrainingPlanDefinitionValidator? validator = null)
     {
         _runningSessionFactory = runningSessionFactory;
-        _workoutCatalog = workoutCatalog;
+        _validator = validator ?? new TrainingPlanDefinitionValidator(workoutCatalog);
     }
 
     public TrainingPlan Create(TrainingPlanDefinition definition)
     {
         try
         {
+            _validator.Validate(definition);
+
             return new TrainingPlan(
                 definition.Id,
                 definition.Name,
                 definition.Sessions.Select(CreateTrainingSession));
         }
-        catch (ArgumentException ex)
+        catch (TrainingPlanDefinitionValidationException ex)
         {
-            throw new InvalidDataException($"Training plan definition '{definition.Id}' is invalid.", ex);
+            throw new InvalidDataException(ex.Message, ex);
         }
-        catch (KeyNotFoundException ex)
+        catch (ArgumentException ex)
         {
             throw new InvalidDataException($"Training plan definition '{definition.Id}' is invalid.", ex);
         }
@@ -50,7 +52,7 @@ public sealed class TrainingPlanFactory : ITrainingPlanFactory
             .Select(_runningSessionFactory.Create)
             .ToList();
 
-        var workouts = definition.Workouts.Select(ValidateWorkout).ToList();
+        var workouts = definition.Workouts.ToList();
         var primaryRun = runs.FirstOrDefault();
         var appointment = definition.Appointment ?? TrainingSessionAppointment.Empty;
 
@@ -80,29 +82,6 @@ public sealed class TrainingPlanFactory : ITrainingPlanFactory
             definition.Drills,
             definition.TrainingEffect,
             appointment);
-    }
-
-    private WorkoutSessionDefinition ValidateWorkout(WorkoutSessionDefinition workout)
-    {
-        if (string.IsNullOrWhiteSpace(workout.WorkoutId))
-            throw new InvalidDataException("Workout session workoutId must not be empty.");
-
-        if (workout.Sets < 1)
-            throw new InvalidDataException($"Workout session '{workout.WorkoutId}' sets must be greater than zero.");
-
-        if (workout.Rounds < 1)
-            throw new InvalidDataException($"Workout session '{workout.WorkoutId}' rounds must be greater than zero.");
-
-        try
-        {
-            _workoutCatalog?.GetDefinition(workout.WorkoutId);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            throw new InvalidDataException($"Workout session '{workout.WorkoutId}' references an unknown workout.", ex);
-        }
-
-        return workout;
     }
 
     private static string? CreateSessionId(string name, DateTime date)

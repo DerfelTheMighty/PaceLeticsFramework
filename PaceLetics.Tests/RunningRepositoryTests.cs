@@ -1,6 +1,8 @@
 using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
 using PaceLetics.TrainingModule.CodeBase.Running.Models;
 using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
+using PaceLetics.TrainingModule.CodeBase.Running.Services;
+using PaceLetics.TrainingPlanModule.CodeBase.Definitions;
 using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 using PaceLetics.TrainingPlanModule.CodeBase.Services;
 
@@ -249,6 +251,42 @@ public sealed class RunningRepositoryTests
 
         Assert.Throws<InvalidDataException>(() =>
             LoadTrainingPlans(directory));
+    }
+
+    [Fact]
+    public void TrainingPlanDefinitionValidator_ReturnsErrorsForInvalidDefinition()
+    {
+        var definition = new TrainingPlanDefinition
+        {
+            Id = "invalid-plan",
+            Name = "Invalid Plan",
+            Sessions =
+            [
+                new TrainingSessionDefinition
+                {
+                    Id = "invalid-session",
+                    Name = "Invalid Session",
+                    Workouts =
+                    [
+                        new("missing-workout", Sets: 0, Rounds: 0)
+                    ],
+                    Warmup =
+                    [
+                        new TrainingPlanModule.CodeBase.Models.TrainingSessionActivity(
+                            Title: "Mobility",
+                            DurationSeconds: -1)
+                    ]
+                }
+            ]
+        };
+
+        var validator = new TrainingPlanDefinitionValidator(WorkoutCatalogTestData.CreateWorkoutCatalog());
+
+        var ex = Assert.Throws<TrainingPlanDefinitionValidationException>(() => validator.Validate(definition));
+        Assert.Contains(ex.Errors, error => error.Contains("must define a date"));
+        Assert.Contains(ex.Errors, error => error.Contains("references an unknown workout"));
+        Assert.Contains(ex.Errors, error => error.Contains("sets must be greater than zero"));
+        Assert.Contains(ex.Errors, error => error.Contains("duration must not be negative"));
     }
 
     private static string WriteTempJson(string json)
