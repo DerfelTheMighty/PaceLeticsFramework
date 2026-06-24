@@ -13,14 +13,6 @@
             </MudStack>
             <MudText Typo="Typo.body2">
                 @L["MentalResource_Lead"]
-            </MudText>
-        </MudStack>
-    </MudPaper>
-
-    <MudPaper Class="pa-4" Elevation="0">
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["MentalResource_StepEffectTitle"]</MudText>
-            <MudText Typo="Typo.body2">
                 @L["MentalResource_ResearchIntro"]
                 @L["MentalResource_ResearchOswald"]
                 <a class="pl-citation" href="@Sources[0].Url" target="_blank" rel="noopener noreferrer">[1]</a>
@@ -37,6 +29,23 @@
             </MudText>
         </MudStack>
     </MudPaper>
+
+    @foreach (var section in Sections)
+    {
+        <MudPaper Class="pa-4" Elevation="0">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L[section.TitleKey]</MudText>
+                <MudText Typo="Typo.body2">
+                    @L[section.TextKey]
+                    @foreach (var sourceIndex in section.SourceIndexes)
+                    {
+                        var source = Sources[sourceIndex];
+                        <a class="pl-citation" href="@source.Url" target="_blank" rel="noopener noreferrer">[@source.Number]</a>
+                    }
+                </MudText>
+            </MudStack>
+        </MudPaper>
+    }
 
     <MudPaper Class="pa-4" Elevation="0">
         <MudStack Spacing="1">
@@ -55,6 +64,15 @@
 </MudStack>
 
 @code {
+    private static readonly ArticleSection[] Sections =
+    {
+        new("MentalResource_StepEffectTitle", "MentalResource_StepEffectText", new[] { 0, 1 }),
+        new("MentalResource_StepFragileTitle", "MentalResource_StepFragileText", new[] { 6, 8 }),
+        new("MentalResource_StepRiskTitle", "MentalResource_StepRiskText", new[] { 9, 11 }),
+        new("MentalResource_StepConsequenceTitle", "MentalResource_StepConsequenceText", new[] { 10 }),
+        new("MentalResource_StepAppTitle", "MentalResource_StepAppText", new[] { 7, 8, 10 })
+    };
+
     private static readonly SourceRow[] Sources =
     {
         new("1", "MentalResource_SourceOswald", "https://doi.org/10.3390/ijerph17218059"),
@@ -62,8 +80,16 @@
         new("3", "MentalResource_SourceSingh", "https://doi.org/10.1136/bjsports-2022-106195"),
         new("4", "MentalResource_SourceNoetel", "https://doi.org/10.1136/bmj-2023-075847"),
         new("5", "MentalResource_SourceCochrane", "https://doi.org/10.1002/14651858.CD004366.pub7"),
-        new("6", "MentalResource_SourcePearce", "https://doi.org/10.1001/jamapsychiatry.2022.0609")
+        new("6", "MentalResource_SourcePearce", "https://doi.org/10.1001/jamapsychiatry.2022.0609"),
+        new("7", "MentalResource_SourceFurie", "https://doi.org/10.1007/s12178-023-09830-6"),
+        new("8", "MentalResource_SourceDeJonge", "https://doi.org/10.3390/ijerph17031044"),
+        new("9", "MentalResource_SourceVerhagen", "https://doi.org/10.1136/bmjsem-2021-001117"),
+        new("10", "MentalResource_SourceVidebaek", "https://doi.org/10.1007/s40279-015-0333-8"),
+        new("11", "MentalResource_SourceFokkema", "https://doi.org/10.1016/j.jsams.2018.06.003"),
+        new("12", "MentalResource_SourceRelph", "https://doi.org/10.3390/ijerph20176682")
     };
+
+    private sealed record ArticleSection(string TitleKey, string TextKey, IReadOnlyList<int> SourceIndexes);
 
     private sealed record SourceRow(string Number, string TitleKey, string Url);
 }

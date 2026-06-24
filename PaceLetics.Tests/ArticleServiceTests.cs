@@ -29,8 +29,10 @@ public sealed class ArticleServiceTests
         Assert.Equal("Laufen als mentale Resource", mentalResource.Title);
         Assert.Equal("MentalResourceArticle", mentalResource.SourceModule);
         Assert.Contains(mentalResource.BodyBlocks, block => block.Contains("mental resource"));
+        Assert.Contains(mentalResource.BodyBlocks, block => block.Contains("Novice runners"));
         Assert.Contains(mentalResource.References, reference => reference.Url.Contains("ijerph17218059"));
         Assert.Contains(mentalResource.References, reference => reference.Url.Contains("CD004366.pub7"));
+        Assert.Contains(mentalResource.References, reference => reference.Url.Contains("jsams.2018.06.003"));
 
         var runningAnalysis = Assert.Single(articles, article => article.Id == "evidence-based-running-analysis");
         Assert.Equal(ArticleCategories.RunningAnalysis, runningAnalysis.Category);
@@ -158,12 +160,25 @@ public sealed class ArticleServiceTests
         ["MentalResource_ResearchCochrane"] = "The current Cochrane review finds moderate effects.",
         ["MentalResource_ResearchProspective"] = "Moderate activity is associated with lower depression risk.",
         ["MentalResource_ResearchConclusion"] = "Running is not therapy or a therapy substitute.",
+        ["MentalResource_StepEffectText"] = "Running can support mood.",
+        ["MentalResource_StepAppText"] = "PaceLetics makes routines understandable.",
+        ["MentalResource_StepFragileTitle"] = "Not available without limits",
+        ["MentalResource_StepFragileText"] = "Running depends on load tolerance.",
+        ["MentalResource_StepConsequenceText"] = "Sustainable programs cannot treat drop-out as a side issue.",
+        ["MentalResource_StepRiskTitle"] = "Where risk is higher for beginners",
+        ["MentalResource_StepRiskText"] = "Novice runners have higher injury incidence.",
         ["MentalResource_SourceOswald"] = "Oswald et al.",
         ["MentalResource_SourcePereira"] = "Pereira et al.",
         ["MentalResource_SourceSingh"] = "Singh et al.",
         ["MentalResource_SourceNoetel"] = "Noetel et al.",
         ["MentalResource_SourceCochrane"] = "Cochrane Review.",
-        ["MentalResource_SourcePearce"] = "Pearce et al."
+        ["MentalResource_SourcePearce"] = "Pearce et al.",
+        ["MentalResource_SourceFurie"] = "Furie et al.",
+        ["MentalResource_SourceDeJonge"] = "de Jonge et al.",
+        ["MentalResource_SourceVerhagen"] = "Verhagen et al.",
+        ["MentalResource_SourceVidebaek"] = "Videbaek et al.",
+        ["MentalResource_SourceFokkema"] = "Fokkema et al.",
+        ["MentalResource_SourceRelph"] = "Relph et al."
     };
 
     private static readonly Dictionary<string, string> RunningAnalysisTexts = new(StringComparer.OrdinalIgnoreCase)
