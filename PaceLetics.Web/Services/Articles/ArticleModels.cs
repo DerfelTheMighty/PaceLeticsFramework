@@ -26,6 +26,7 @@ public sealed class Article
     public string SourceModule { get; init; } = string.Empty;
     public IReadOnlyList<string> Tags { get; init; } = Array.Empty<string>();
     public IReadOnlyList<string> BodyBlocks { get; init; } = Array.Empty<string>();
+    public string BodyHtml { get; init; } = string.Empty;
     public IReadOnlyList<ContentReference> References { get; init; } = Array.Empty<ContentReference>();
     public ArticleContentKind ContentKind { get; init; } = ArticleContentKind.Generic;
     public int SortOrder { get; init; }

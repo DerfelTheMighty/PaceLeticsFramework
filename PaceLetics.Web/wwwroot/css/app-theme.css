@@ -1418,6 +1418,97 @@
     line-height: 1.65;
 }
 
+.pl-academy-article__markdown {
+    line-height: 1.65;
+}
+
+.pl-academy-article__markdown > *:first-child {
+    margin-top: 0;
+}
+
+.pl-academy-article__markdown > *:last-child {
+    margin-bottom: 0;
+}
+
+.pl-academy-article__markdown h2,
+.pl-academy-article__markdown h3 {
+    margin: 1.5rem 0 .65rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.pl-academy-article__markdown h2 {
+    font-size: 1.1rem;
+}
+
+.pl-academy-article__markdown h3 {
+    font-size: 1rem;
+}
+
+.pl-academy-article__markdown p,
+.pl-academy-article__markdown ul,
+.pl-academy-article__markdown ol,
+.pl-academy-article__markdown blockquote,
+.pl-academy-article__markdown table {
+    margin: 0 0 1rem;
+}
+
+.pl-academy-article__markdown ul,
+.pl-academy-article__markdown ol {
+    padding-left: 1.25rem;
+}
+
+.pl-academy-article__markdown li + li {
+    margin-top: .35rem;
+}
+
+.pl-academy-article__markdown blockquote {
+    padding: .85rem 1rem;
+    border-left: 4px solid var(--pl-academy-accent);
+    border-radius: var(--pl-radius);
+    color: var(--mud-palette-text-secondary);
+    background: color-mix(in srgb, var(--pl-academy-accent) 9%, transparent);
+}
+
+.pl-academy-article__markdown img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 1rem 0;
+    border-radius: var(--pl-radius);
+}
+
+.pl-academy-article__markdown table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-wrap: anywhere;
+}
+
+.pl-academy-article__markdown th,
+.pl-academy-article__markdown td {
+    padding: .55rem .65rem;
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+    text-align: left;
+    vertical-align: top;
+}
+
+.pl-academy-article__markdown th {
+    font-weight: 700;
+    color: var(--mud-palette-text-primary);
+    background: color-mix(in srgb, var(--pl-academy-accent) 8%, transparent);
+}
+
+.pl-academy-article__markdown a {
+    color: var(--mud-palette-primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.pl-academy-article__markdown a:hover,
+.pl-academy-article__markdown a:focus-visible {
+    text-decoration: underline;
+}
+
 .pl-academy-article__sources {
     display: grid;
     gap: 8px;

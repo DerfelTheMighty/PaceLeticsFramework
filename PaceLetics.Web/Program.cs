@@ -162,7 +162,7 @@ builder.Services.AddScoped<IUserDriveFolderService, UserDriveFolderService>();
 builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunningAnalysisRegistrationAdapter>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
-builder.Services.AddScoped<IArticleRepository, LocalizedArticleRepository>();
+builder.Services.AddScoped<IArticleRepository>(_ => new MarkdownArticleRepository(builder.Environment.ContentRootPath));
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IMateService, MateService>();
 builder.Services.AddScoped<IProfileImageService, ProfileImageService>();

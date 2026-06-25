@@ -30,6 +30,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Markdig" />
     <PackageReference Include="MudBlazor" />
     <PackageReference Include="MudBlazor.Extensions" />
     <PackageReference Include="SixLabors.ImageSharp" />
@@ -63,6 +64,13 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\EmailTemplates\ConfirmationEmailTemplate.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Content\Academy\**\*.md" />
+	  <Content Include="Content\Academy\**\*.md">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>

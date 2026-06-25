@@ -50,17 +50,13 @@
                 </MudStack>
             </MudPaper>
 
-            @if (_article.ContentKind == ArticleContentKind.MentalResource)
+            @if (!string.IsNullOrWhiteSpace(_article.BodyHtml))
             {
-                <MentalResourceArticle />
-            }
-            else if (_article.ContentKind == ArticleContentKind.RunningAnalysisGuidance)
-            {
-                <RunningAnalysisInterventionGuidance />
-            }
-            else if (_article.ContentKind == ArticleContentKind.PaceModelInfo)
-            {
-                <PaceModelInfo />
+                <MudPaper Elevation="0" Class="@GetArticleMetaClass(_article)">
+                    <div class="pl-academy-article__markdown">
+                        @((MarkupString)_article.BodyHtml)
+                    </div>
+                </MudPaper>
             }
             else
             {
