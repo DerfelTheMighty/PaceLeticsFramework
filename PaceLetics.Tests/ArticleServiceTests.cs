@@ -33,7 +33,7 @@ public sealed class ArticleServiceTests
         Assert.Equal(ArticleCategories.RunningAnalysis, runningAnalysis.Category);
         Assert.Equal(ArticleContentKind.RunningAnalysisGuidance, runningAnalysis.ContentKind);
         Assert.Equal("Evidenzbasierte Laufanalyse", runningAnalysis.Title);
-        Assert.Contains("Technikaenderungen reduzieren Belastung selten einfach", runningAnalysis.BodyHtml);
+        Assert.Contains("Technikänderungen reduzieren Belastung selten einfach", runningAnalysis.BodyHtml);
         Assert.Contains(runningAnalysis.References, reference => reference.Url.Contains("31028658"));
 
         var paceTraining = Assert.Single(articles, article => article.Id == "pace-controlled-training");
