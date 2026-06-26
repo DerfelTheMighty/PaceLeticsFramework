@@ -6,7 +6,7 @@ namespace PaceLetics.Tests;
 public sealed class ArticleServiceTests
 {
     [Fact]
-    public void GetArticles_ReturnsTheThreeGlobalArticlesFromMarkdown()
+    public void GetArticles_ReturnsTheGlobalArticlesFromMarkdown()
     {
         var service = CreateService("de");
 
@@ -16,7 +16,8 @@ public sealed class ArticleServiceTests
             articles,
             article => Assert.Equal("mental-resource-running", article.Id),
             article => Assert.Equal("evidence-based-running-analysis", article.Id),
-            article => Assert.Equal("pace-controlled-training", article.Id));
+            article => Assert.Equal("pace-controlled-training", article.Id),
+            article => Assert.Equal("tendon-adaptation", article.Id));
 
         var mentalResource = Assert.Single(articles, article => article.Id == "mental-resource-running");
         Assert.Equal(ArticleCategories.Fundamentals, mentalResource.Category);
@@ -44,6 +45,14 @@ public sealed class ArticleServiceTests
         Assert.Contains("Critical Speed", paceTraining.BodyHtml);
         Assert.Contains(paceTraining.References, reference => reference.Url.Contains("s40279-026-02410-x"));
         Assert.Contains(paceTraining.References, reference => reference.Url.Contains("11933073"));
+
+        var tendonAdaptation = Assert.Single(articles, article => article.Id == "tendon-adaptation");
+        Assert.Equal(ArticleCategories.Training, tendonAdaptation.Category);
+        Assert.Equal(ArticleContentKind.Generic, tendonAdaptation.ContentKind);
+        Assert.Equal("Warum Sehnen langsam adaptieren", tendonAdaptation.Title);
+        Assert.Contains("Mechanotransduktion", tendonAdaptation.BodyHtml);
+        Assert.Contains(tendonAdaptation.References, reference => reference.Url.Contains("s40798-015-0009-9"));
+        Assert.Contains(tendonAdaptation.References, reference => reference.Url.Contains("PMC11301520"));
     }
 
     [Fact]
@@ -84,6 +93,12 @@ public sealed class ArticleServiceTests
                 Assert.Equal("pace-controlled-training", preview.Id);
                 Assert.Equal("Pacegesteuertes Training", preview.Title);
                 Assert.Equal(ArticleContentKind.PaceModelInfo, preview.ContentKind);
+            },
+            preview =>
+            {
+                Assert.Equal("tendon-adaptation", preview.Id);
+                Assert.Equal("Warum Sehnen langsam adaptieren", preview.Title);
+                Assert.Equal(ArticleContentKind.Generic, preview.ContentKind);
             });
 
         Assert.All(previews, preview => Assert.NotNull(preview.Tags));
