@@ -36,6 +36,10 @@ Wird Training nur ueber Herzfrequenz oder generische Zonensysteme gesteuert, wir
 
 ![Adaptation timeline](/images/diagrams/adaptation-timeline.svg)
 
+Das folgende Modell ist bewusst qualitativ: Die vertikale Achse hat keine Einheit und zeigt keine Messwerte, sondern das Verhaeltnis von Trainingsanforderung und Anpassung. Entscheidend ist die Logik. Wenn die Pace ueber laengere Bloecke stabil gehalten und nur schrittweise erhoeht wird, koennen langsamere Strukturen wie Sehne und Knochen aufschliessen, ohne dass die mechanische Anforderung der kardiovaskulaeren Anpassung permanent davonlaeuft.
+
+![Six-month step adaptation](/images/diagrams/six-month-step-adaptation.svg)
+
 ![Mechanical load versus pace](/images/diagrams/mechanical-load-vs-pace.svg)
 
 ## Ist hohe Pace grundsaetzlich schlecht?
