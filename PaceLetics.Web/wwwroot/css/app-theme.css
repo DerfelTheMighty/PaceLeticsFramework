@@ -1336,36 +1336,43 @@
     overflow: visible;
 }
 
-.pl-running-analysis-icon__axis,
-.pl-running-analysis-icon__vector {
+.pl-running-analysis-icon__runner {
     fill: none;
+    stroke: var(--mud-palette-primary);
+    stroke-width: 7.2;
+}
+
+.pl-running-analysis-icon__head {
+    fill: var(--mud-palette-primary);
+    stroke: none;
+}
+
+.pl-running-analysis-icon__analysis {
+    fill: none;
+    stroke: var(--mud-palette-secondary);
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
 .pl-running-analysis-icon__axis {
-    stroke: var(--mud-palette-secondary);
-    stroke-width: 1.4;
+    stroke-width: 1.5;
     stroke-dasharray: 3 2.2;
+    opacity: .9;
 }
 
-.pl-running-analysis-icon__vector {
-    stroke: var(--mud-palette-primary);
-    stroke-width: 1.7;
+.pl-running-analysis-icon__angle {
+    stroke-width: 2.2;
 }
 
-.pl-running-analysis-icon__arrow {
-    fill: var(--mud-palette-primary);
+.pl-running-analysis-icon__trend {
+    stroke-width: 2;
+    opacity: .92;
 }
 
 .pl-running-analysis-icon__joint {
     fill: color-mix(in srgb, var(--mud-palette-surface) 66%, transparent);
-    stroke: var(--mud-palette-primary);
-    stroke-width: 1.6;
-}
-
-.pl-running-analysis-icon__joint--small {
     stroke: var(--mud-palette-secondary);
+    stroke-width: 1.6;
 }
 
 .pl-academy-tile__subtitle {
