@@ -7,23 +7,23 @@ sourceModule: Markdown
 contentKind: PaceModelInfo
 sortOrder: 30
 tags:
-  - Pace
-  - VDOT
-  - Critical speed
-  - D'
-  - Training load
+ - Pace
+ - VDOT
+ - Critical speed
+ - D'
+ - Training load
 references:
-  - Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running. | https://link.springer.com/article/10.1007/s40279-026-02410-x
-  - Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application. | https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/
-  - Hawley et al. (2018): Adaptations to Endurance and Strength Training. | https://pubmed.ncbi.nlm.nih.gov/28490537/
-  - MacInnis & Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity. | https://pubmed.ncbi.nlm.nih.gov/27748956/
-  - Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining. | https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf
-  - Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training. | https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/
-  - Bohm et al. (2015): Human tendon adaptation in response to mechanical loading. | https://link.springer.com/article/10.1186/s40798-015-0009-9
-  - Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full
-  - Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full
-  - Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance. | https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03026/full
-  - Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload. | https://pubmed.ncbi.nlm.nih.gov/33635519/
+ - Anderson et al. (2026): The Measurement and Application of Critical Speed and D' in Running. | https://link.springer.com/article/10.1007/s40279-026-02410-x
+ - Lipkova et al. (2025): Field-based tests for determining critical speed among runners and its practical application. | https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/
+ - Hawley et al. (2018): Adaptations to Endurance and Strength Training. | https://pubmed.ncbi.nlm.nih.gov/28490537/
+ - MacInnis & Gibala (2017): Physiological adaptations to interval training and the role of exercise intensity. | https://pubmed.ncbi.nlm.nih.gov/27748956/
+ - Kubo et al. (2010): Time course of changes in muscle and tendon properties during strength training and detraining. | https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf
+ - Bohm et al. (2019): Functional Adaptation of Connective Tissue by Training. | https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/
+ - Bohm et al. (2015): Human tendon adaptation in response to mechanical loading. | https://link.springer.com/article/10.1186/s40798-015-0009-9
+ - Papagiannaki et al. (2020): Running-Related Injury From an Engineering, Medical and Sport Science Perspective. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full
+ - Jiang et al. (2024): Comparison of ground reaction forces as running speed increases between male and female runners. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full
+ - Billat et al. (2020): Pacing Strategy Affects the Sub-Elite Marathoner's Cardiac Drift and Performance. | https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03026/full
+ - Warden et al. (2021): Preventing Bone Stress Injuries in Runners with Optimal Workload. | https://pubmed.ncbi.nlm.nih.gov/33635519/
 ---
 
 ## Why pace-guided training?
@@ -35,6 +35,10 @@ The core issue is the different adaptation speed of the systems involved: beginn
 If training is guided only by heart rate or generic zone systems, this mechanical exposure is easily underestimated. Pace provides a stable external target for how much forceful running is repeated; heart rate remains useful as a complementary signal for internal strain and recovery. For heterogeneous group training, the model should also be simple, equipment-light, and consistent over several months. Pace is the simplest common language for this: measurable, comparable, and immediately usable in training.
 
 ![Adaptation timeline](/images/diagrams/adaptation-timeline.svg)
+
+The following model is deliberately qualitative: the vertical axis has no unit and does not show measured values, but the relationship between training demand and adaptation. The logic is what matters. If pace is kept stable over longer blocks and increased only step by step, slower structures such as tendons and bones can catch up without the mechanical demand constantly racing ahead of cardiovascular adaptation.
+
+![Six-month step adaptation](/images/diagrams/six-month-step-adaptation.svg)
 
 ![Mechanical load versus pace](/images/diagrams/mechanical-load-vs-pace.svg)
 

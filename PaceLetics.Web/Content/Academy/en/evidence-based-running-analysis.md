@@ -7,19 +7,19 @@ sourceModule: Markdown
 contentKind: RunningAnalysisGuidance
 sortOrder: 20
 tags:
-  - Running analysis
-  - Evidence
-  - Shared decision
-  - Do no harm
+ - Running analysis
+ - Evidence
+ - Shared decision
+ - Do no harm
 references:
-  - Ceyssens et al. Biomechanical risk factors associated with running-related injuries. Sports Med. 2019. | https://pubmed.ncbi.nlm.nih.gov/31028658/
-  - Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022. | https://pubmed.ncbi.nlm.nih.gov/35247202/
-  - Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022. | https://link.springer.com/article/10.1186/s40798-022-00504-0
-  - Moore. Is there an economical running technique? Sports Med. 2016. | https://link.springer.com/article/10.1007/s40279-016-0474-4
-  - Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015. | https://bjsm.bmj.com/content/49/20/1290
-  - Clinical application of gait retraining in the injured runner. PMC. | https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/
-  - Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013. | https://pubmed.ncbi.nlm.nih.gov/23439417/
-  - Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019. | https://pubmed.ncbi.nlm.nih.gov/30805204/
+ - Ceyssens et al. Biomechanical risk factors associated with running-related injuries. Sports Med. 2019. | https://pubmed.ncbi.nlm.nih.gov/31028658/
+ - Willwacher et al. Running-related biomechanical risk factors for overuse injuries in distance runners. Sports Med. 2022. | https://pubmed.ncbi.nlm.nih.gov/35247202/
+ - Anderson et al. What is the effect of changing running step rate on injury, performance and biomechanics? Sports Med Open. 2022. | https://link.springer.com/article/10.1186/s40798-022-00504-0
+ - Moore. Is there an economical running technique? Sports Med. 2016. | https://link.springer.com/article/10.1007/s40279-016-0474-4
+ - Nigg et al. Running shoes and running injuries: preferred movement path and comfort filter. Br J Sports Med. 2015. | https://bjsm.bmj.com/content/49/20/1290
+ - Clinical application of gait retraining in the injured runner. PMC. | https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/
+ - Ridge et al. Foot bone marrow edema after a 10-week transition to minimalist running shoes. Med Sci Sports Exerc. 2013. | https://pubmed.ncbi.nlm.nih.gov/23439417/
+ - Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019. | https://pubmed.ncbi.nlm.nih.gov/30805204/
 ---
 
 No intervention without indication. Do no harm. A movement pattern only becomes a problem when it is a problem in its specific context.
