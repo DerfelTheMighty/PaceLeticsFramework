@@ -52,6 +52,10 @@
                         {
                             <RunningAnalysisIcon />
                         }
+                        else if (IsTendonAdaptationArticle(article))
+                        {
+                            <TendonIcon />
+                        }
                         else
                         {
                             <MudIcon Icon="@GetArticleIcon(article)" />
@@ -138,6 +142,11 @@
     private static bool IsRunningAnalysisArticle(ArticlePreview article)
     {
         return string.Equals(article.Id, "evidence-based-running-analysis", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsTendonAdaptationArticle(ArticlePreview article)
+    {
+        return string.Equals(article.Id, "tendon-adaptation", StringComparison.OrdinalIgnoreCase);
     }
 
     private static string GetArticleTileClass(ArticlePreview article)

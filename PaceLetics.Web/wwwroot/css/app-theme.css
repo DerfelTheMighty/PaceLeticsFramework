@@ -1375,6 +1375,31 @@
     stroke-width: 1.6;
 }
 
+.pl-tendon-icon {
+    display: block;
+    width: 4.6rem;
+    height: 4.6rem;
+    overflow: visible;
+}
+
+.pl-tendon-icon__fibers {
+    fill: none;
+    stroke: var(--mud-palette-primary);
+    stroke-width: 5.6;
+}
+
+.pl-tendon-icon__load {
+    fill: none;
+    stroke: var(--mud-palette-secondary);
+    stroke-width: 2.8;
+}
+
+.pl-tendon-icon__load circle {
+    fill: color-mix(in srgb, var(--mud-palette-surface) 66%, transparent);
+    stroke: var(--mud-palette-secondary);
+    stroke-width: 2.2;
+}
+
 .pl-academy-tile__subtitle {
     flex: 0 0 auto;
     min-width: 0;
@@ -1600,6 +1625,11 @@
     }
 
     .pl-running-analysis-icon {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .pl-tendon-icon {
         width: 4rem;
         height: 4rem;
     }
