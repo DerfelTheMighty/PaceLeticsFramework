@@ -53,4 +53,24 @@
   <data name="ChallengePeriod" xml:space="preserve"><value>{0:MM/dd/yyyy} to {1:MM/dd/yyyy}</value></data>
   <data name="ChallengeTargetValue" xml:space="preserve"><value>Target: {0:0.##}</value></data>
   <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Target: {0:0.##} {1}</value></data>
+  <data name="TabCalendar" xml:space="preserve"><value>Calendar</value></data>
+  <data name="CalendarTitle" xml:space="preserve"><value>Training calendar</value></data>
+  <data name="CalendarSubtitle" xml:space="preserve"><value>Your training sessions, course dates, and events in one view.</value></data>
+  <data name="PreviousPeriod" xml:space="preserve"><value>Previous month</value></data>
+  <data name="NextPeriod" xml:space="preserve"><value>Next month</value></data>
+  <data name="Today" xml:space="preserve"><value>Today</value></data>
+  <data name="FilterTrainingSessions" xml:space="preserve"><value>Training</value></data>
+  <data name="FilterCourseDates" xml:space="preserve"><value>Course dates</value></data>
+  <data name="FilterEvents" xml:space="preserve"><value>Events</value></data>
+  <data name="CalendarItemCount" xml:space="preserve"><value>{0} item(s)</value></data>
+  <data name="NoCalendarItems" xml:space="preserve"><value>No calendar entries for this day.</value></data>
+  <data name="CalendarLoadError" xml:space="preserve"><value>The training calendar could not be loaded.</value></data>
+  <data name="CalendarWhen" xml:space="preserve"><value>When</value></data>
+  <data name="CalendarSource" xml:space="preserve"><value>Source</value></data>
+  <data name="CalendarKindTraining" xml:space="preserve"><value>Training session</value></data>
+  <data name="CalendarKindCourseDate" xml:space="preserve"><value>Course date</value></data>
+  <data name="CalendarKindEvent" xml:space="preserve"><value>Event</value></data>
+  <data name="CalendarRegistered" xml:space="preserve"><value>You are registered.</value></data>
+  <data name="CalendarNotRegistered" xml:space="preserve"><value>You are not registered.</value></data>
+  <data name="Location" xml:space="preserve"><value>Location</value></data>
 </root>

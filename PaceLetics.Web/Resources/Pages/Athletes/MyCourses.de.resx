@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -53,4 +53,24 @@
   <data name="ChallengePeriod" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
   <data name="ChallengeTargetValue" xml:space="preserve"><value>Ziel: {0:0.##}</value></data>
   <data name="ChallengeTargetWithUnit" xml:space="preserve"><value>Ziel: {0:0.##} {1}</value></data>
+  <data name="TabCalendar" xml:space="preserve"><value>Kalender</value></data>
+  <data name="CalendarTitle" xml:space="preserve"><value>Trainingskalender</value></data>
+  <data name="CalendarSubtitle" xml:space="preserve"><value>Deine Trainingseinheiten, Kurstermine und Events in einer Ansicht.</value></data>
+  <data name="PreviousPeriod" xml:space="preserve"><value>Vorheriger Monat</value></data>
+  <data name="NextPeriod" xml:space="preserve"><value>Naechster Monat</value></data>
+  <data name="Today" xml:space="preserve"><value>Heute</value></data>
+  <data name="FilterTrainingSessions" xml:space="preserve"><value>Training</value></data>
+  <data name="FilterCourseDates" xml:space="preserve"><value>Kurstermine</value></data>
+  <data name="FilterEvents" xml:space="preserve"><value>Events</value></data>
+  <data name="CalendarItemCount" xml:space="preserve"><value>{0} Eintrag/Eintraege</value></data>
+  <data name="NoCalendarItems" xml:space="preserve"><value>Keine Kalendereintraege fuer diesen Tag.</value></data>
+  <data name="CalendarLoadError" xml:space="preserve"><value>Der Trainingskalender konnte nicht geladen werden.</value></data>
+  <data name="CalendarWhen" xml:space="preserve"><value>Wann</value></data>
+  <data name="CalendarSource" xml:space="preserve"><value>Quelle</value></data>
+  <data name="CalendarKindTraining" xml:space="preserve"><value>Trainingseinheit</value></data>
+  <data name="CalendarKindCourseDate" xml:space="preserve"><value>Kurstermin</value></data>
+  <data name="CalendarKindEvent" xml:space="preserve"><value>Event</value></data>
+  <data name="CalendarRegistered" xml:space="preserve"><value>Du bist angemeldet.</value></data>
+  <data name="CalendarNotRegistered" xml:space="preserve"><value>Du bist nicht angemeldet.</value></data>
+  <data name="Location" xml:space="preserve"><value>Ort</value></data>
 </root>

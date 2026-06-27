@@ -1,0 +1,476 @@
+@using System.Globalization
+@using PaceLetics.Web.Services.Calendar
+@using PaceLetics.Web.Services.Courses
+@inject ITrainingCalendarService CalendarService
+@inject ICourseService CourseService
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<MyCourses> L
+
+<MudStack Spacing="3">
+    <MudStack Spacing="1">
+        <MudText Typo="Typo.h6">@L["CalendarTitle"]</MudText>
+        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["CalendarSubtitle"]</MudText>
+    </MudStack>
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+    }
+
+    <MudPaper Elevation="0" Class="pa-3 pl-calendar-toolbar">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:8px; flex-wrap:wrap;">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:4px;">
+                <MudTooltip Text="@L["PreviousPeriod"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Size="Size.Small" OnClick="PreviousMonth" aria-label="@L["PreviousPeriod"]" />
+                </MudTooltip>
+                <MudText Typo="Typo.subtitle2" Class="pl-calendar-month-title">@_monthStart.ToString("MMMM yyyy", CultureInfo.CurrentCulture)</MudText>
+                <MudTooltip Text="@L["NextPeriod"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Size="Size.Small" OnClick="NextMonth" aria-label="@L["NextPeriod"]" />
+                </MudTooltip>
+            </MudStack>
+
+            <MudTooltip Text="@L["Today"]">
+                <MudIconButton Icon="@Icons.Material.Filled.Today" Color="Color.Primary" Size="Size.Small" OnClick="GoToToday" aria-label="@L["Today"]" />
+            </MudTooltip>
+        </MudStack>
+
+        <MudStack Row="true" Class="mt-3" Style="gap:6px; flex-wrap:wrap;">
+            <MudButton Size="Size.Small" Variant="@GetFilterVariant(_showTraining)" Color="Color.Primary" StartIcon="@Icons.Material.Filled.DirectionsRun" OnClick="ToggleTraining">
+                @L["FilterTrainingSessions"]
+            </MudButton>
+            <MudButton Size="Size.Small" Variant="@GetFilterVariant(_showCourseDates)" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.School" OnClick="ToggleCourseDates">
+                @L["FilterCourseDates"]
+            </MudButton>
+            <MudButton Size="Size.Small" Variant="@GetFilterVariant(_showEvents)" Color="Color.Tertiary" StartIcon="@Icons.Material.Filled.Event" OnClick="ToggleEvents">
+                @L["FilterEvents"]
+            </MudButton>
+        </MudStack>
+    </MudPaper>
+
+    @if (_isLoading)
+    {
+        <div class="pl-loading">
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        </div>
+    }
+    else
+    {
+        <MudPaper Elevation="0" Class="pa-2 pl-calendar-panel">
+            <div class="pl-calendar-weekdays">
+                @foreach (var dayName in WeekdayNames)
+                {
+                    <span>@dayName</span>
+                }
+            </div>
+            <div class="pl-calendar-grid">
+                @foreach (var day in MonthDays)
+                {
+                    var isSelected = day.Date == _selectedDate.Date;
+                    var isToday = day.Date == DateTime.Today;
+                    var dayItems = GetDayItems(day).Take(3).ToList();
+                    <button type="button"
+                            class="@GetDayClass(day, isSelected, isToday)"
+                            @onclick="@(() => SelectDate(day))">
+                        <span class="pl-calendar-day-number">@day.Day</span>
+                        @if (dayItems.Count > 0)
+                        {
+                            <span class="pl-calendar-day-dots" aria-hidden="true">
+                                @foreach (var item in dayItems)
+                                {
+                                    <span class="@GetDotClass(item)"></span>
+                                }
+                            </span>
+                        }
+                    </button>
+                }
+            </div>
+        </MudPaper>
+
+        <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+            <MudStack Spacing="2">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                    <MudText Typo="Typo.subtitle2">@_selectedDate.ToString("dddd, dd.MM.yyyy", CultureInfo.CurrentCulture)</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@string.Format(L["CalendarItemCount"], SelectedDateItems.Count)</MudText>
+                </MudStack>
+
+                @if (SelectedDateItems.Count == 0)
+                {
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoCalendarItems"]</MudText>
+                }
+                else
+                {
+                    <MudStack Spacing="1">
+                        @foreach (var item in SelectedDateItems)
+                        {
+                            <button type="button" class="pl-calendar-agenda-item" @onclick="@(() => OpenDetails(item))">
+                                <span class="@GetMarkerClass(item)"></span>
+                                <span class="pl-calendar-agenda-time">@FormatItemTime(item)</span>
+                                <span class="pl-calendar-agenda-copy">
+                                    <span class="pl-calendar-agenda-title">@item.Title</span>
+                                    <span class="pl-calendar-agenda-meta">@GetItemMeta(item)</span>
+                                </span>
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                            </button>
+                        }
+                    </MudStack>
+                }
+            </MudStack>
+        </MudPaper>
+    }
+</MudStack>
+
+@if (_detailsOpen)
+{
+    <div class="pl-overlay" @onclick="CloseDetails"></div>
+}
+
+<div style="position:fixed; left:0; right:0; bottom:0; z-index:1301; transform: translateY(@(_detailsOpen ? "0" : "105%")); transition: transform 180ms ease; pointer-events:@(_detailsOpen ? "auto" : "none");">
+    <MudPaper Elevation="12" Class="pl-bottom-sheet">
+        <div style="padding:12px 16px;">
+            <div class="pl-bottom-sheet-handle"></div>
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%; gap:12px;">
+                <MudStack Spacing="0" Style="min-width:0;">
+                    <MudText Typo="Typo.h6">@(_selectedItem?.Title ?? L["CalendarTitle"])</MudText>
+                    @if (_selectedItem is not null)
+                    {
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@GetKindLabel(_selectedItem)</MudText>
+                    }
+                </MudStack>
+                <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseDetails" />
+            </MudStack>
+        </div>
+        <MudDivider />
+        <div style="height: calc(100% - 78px); overflow:auto; padding:12px 16px;">
+            @if (_selectedItem is not null)
+            {
+                <MudStack Spacing="2">
+                    <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.subtitle2">@L["CalendarWhen"]</MudText>
+                            <MudText Typo="Typo.body2">@FormatDateRange(_selectedItem)</MudText>
+                            @if (!string.IsNullOrWhiteSpace(_selectedItem.Location))
+                            {
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">@($"{L["Location"]}: {_selectedItem.Location}")</MudText>
+                            }
+                        </MudStack>
+                    </MudPaper>
+
+                    @if (!string.IsNullOrWhiteSpace(_selectedItem.CourseName) || !string.IsNullOrWhiteSpace(_selectedItem.PlanName))
+                    {
+                        <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                            <MudStack Spacing="1">
+                                <MudText Typo="Typo.subtitle2">@L["CalendarSource"]</MudText>
+                                @if (!string.IsNullOrWhiteSpace(_selectedItem.CourseName))
+                                {
+                                    <MudText Typo="Typo.body2">@_selectedItem.CourseName</MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(_selectedItem.PlanName))
+                                {
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@_selectedItem.PlanName</MudText>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(_selectedItem.Description))
+                    {
+                        <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                            <MudText Typo="Typo.body2">@_selectedItem.Description</MudText>
+                        </MudPaper>
+                    }
+
+                    @if (_selectedItem.Kind == TrainingCalendarItemKinds.CourseEvent)
+                    {
+                        <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                <MudText Typo="Typo.body2">@(_selectedItem.IsRegistered ? L["CalendarRegistered"] : L["CalendarNotRegistered"])</MudText>
+                                @if (_selectedItem.IsRegistered)
+                                {
+                                    <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Default" StartIcon="@Icons.Material.Filled.Logout" OnClick="CancelRegistrationAsync">
+                                        @L["CancelRegistration"]
+                                    </MudButton>
+                                }
+                                else
+                                {
+                                    <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.HowToReg" OnClick="RegisterAsync">
+                                        @L["Register"]
+                                    </MudButton>
+                                }
+                            </MudStack>
+                        </MudPaper>
+                    }
+                </MudStack>
+            }
+        </div>
+    </MudPaper>
+</div>
+
+@code {
+    [Parameter]
+    public string? UserId { get; set; }
+
+    private IReadOnlyList<TrainingCalendarItem> _items = Array.Empty<TrainingCalendarItem>();
+    private DateTime _monthStart = new(DateTime.Today.Year, DateTime.Today.Month, 1);
+    private DateTime _selectedDate = DateTime.Today;
+    private TrainingCalendarItem? _selectedItem;
+    private bool _detailsOpen;
+    private bool _isLoading;
+    private bool _showTraining = true;
+    private bool _showCourseDates = true;
+    private bool _showEvents = true;
+    private string? _errorMessage;
+
+    private IReadOnlyList<TrainingCalendarItem> VisibleItems => _items
+        .Where(IsVisibleByFilter)
+        .ToList();
+
+    private IReadOnlyList<TrainingCalendarItem> SelectedDateItems => VisibleItems
+        .Where(item => item.StartsAt.Date == _selectedDate.Date)
+        .OrderBy(item => item.StartsAt)
+        .ThenBy(item => item.Kind)
+        .ThenBy(item => item.Title)
+        .ToList();
+
+    private IEnumerable<DateTime> MonthDays
+    {
+        get
+        {
+            var firstDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            var offset = ((int)_monthStart.DayOfWeek - (int)firstDayOfWeek + 7) % 7;
+            var firstVisibleDay = _monthStart.AddDays(-offset);
+
+            for (var i = 0; i < 42; i++)
+                yield return firstVisibleDay.AddDays(i);
+        }
+    }
+
+    private IEnumerable<string> WeekdayNames
+    {
+        get
+        {
+            var format = CultureInfo.CurrentCulture.DateTimeFormat;
+            var firstDay = (int)format.FirstDayOfWeek;
+
+            for (var i = 0; i < 7; i++)
+                yield return format.AbbreviatedDayNames[(firstDay + i) % 7];
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        if (string.IsNullOrWhiteSpace(UserId))
+        {
+            _items = Array.Empty<TrainingCalendarItem>();
+            return;
+        }
+
+        _isLoading = true;
+        _errorMessage = null;
+
+        try
+        {
+            _items = await CalendarService.GetCalendarItemsForAthleteAsync(UserId);
+        }
+        catch
+        {
+            _items = Array.Empty<TrainingCalendarItem>();
+            _errorMessage = L["CalendarLoadError"];
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private IEnumerable<TrainingCalendarItem> GetDayItems(DateTime day)
+    {
+        return VisibleItems.Where(item => item.StartsAt.Date == day.Date);
+    }
+
+    private void PreviousMonth()
+    {
+        _monthStart = _monthStart.AddMonths(-1);
+        _selectedDate = ClampSelectedDateToMonth();
+    }
+
+    private void NextMonth()
+    {
+        _monthStart = _monthStart.AddMonths(1);
+        _selectedDate = ClampSelectedDateToMonth();
+    }
+
+    private void GoToToday()
+    {
+        _selectedDate = DateTime.Today;
+        _monthStart = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+    }
+
+    private DateTime ClampSelectedDateToMonth()
+    {
+        var day = Math.Min(_selectedDate.Day, DateTime.DaysInMonth(_monthStart.Year, _monthStart.Month));
+        return new DateTime(_monthStart.Year, _monthStart.Month, day);
+    }
+
+    private void SelectDate(DateTime day)
+    {
+        _selectedDate = day.Date;
+        _monthStart = new DateTime(day.Year, day.Month, 1);
+    }
+
+    private void OpenDetails(TrainingCalendarItem item)
+    {
+        _selectedItem = item;
+        _detailsOpen = true;
+    }
+
+    private void CloseDetails()
+    {
+        _detailsOpen = false;
+    }
+
+    private async Task RegisterAsync()
+    {
+        if (_selectedItem is null || string.IsNullOrWhiteSpace(UserId))
+            return;
+
+        try
+        {
+            await CourseService.RegisterForEventAsync(_selectedItem.CourseId, _selectedItem.EventId, UserId);
+            Snackbar.Add(L["RegisterSuccess"], Severity.Success);
+            await ReloadSelectedItemAsync(_selectedItem.Id);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task CancelRegistrationAsync()
+    {
+        if (_selectedItem is null || string.IsNullOrWhiteSpace(UserId))
+            return;
+
+        try
+        {
+            await CourseService.CancelEventRegistrationAsync(_selectedItem.CourseId, _selectedItem.EventId, UserId);
+            Snackbar.Add(L["CancelRegistrationSuccess"], Severity.Success);
+            await ReloadSelectedItemAsync(_selectedItem.Id);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task ReloadSelectedItemAsync(string itemId)
+    {
+        await LoadAsync();
+        _selectedItem = _items.FirstOrDefault(item => item.Id == itemId);
+        if (_selectedItem is null)
+            _detailsOpen = false;
+    }
+
+    private bool IsVisibleByFilter(TrainingCalendarItem item)
+    {
+        return item.Kind switch
+        {
+            TrainingCalendarItemKinds.TrainingSession => _showTraining,
+            TrainingCalendarItemKinds.CourseDate => _showCourseDates,
+            TrainingCalendarItemKinds.CourseEvent => _showEvents,
+            _ => true
+        };
+    }
+
+    private void ToggleTraining() => _showTraining = !_showTraining;
+    private void ToggleCourseDates() => _showCourseDates = !_showCourseDates;
+    private void ToggleEvents() => _showEvents = !_showEvents;
+
+    private static Variant GetFilterVariant(bool isActive)
+    {
+        return isActive ? Variant.Filled : Variant.Outlined;
+    }
+
+    private string GetDayClass(DateTime day, bool isSelected, bool isToday)
+    {
+        var classes = new List<string> { "pl-calendar-day" };
+        if (day.Month != _monthStart.Month)
+            classes.Add("pl-calendar-day-muted");
+        if (isSelected)
+            classes.Add("pl-calendar-day-selected");
+        if (isToday)
+            classes.Add("pl-calendar-day-today");
+        return string.Join(" ", classes);
+    }
+
+    private string GetKindLabel(TrainingCalendarItem item)
+    {
+        return item.Kind switch
+        {
+            TrainingCalendarItemKinds.TrainingSession => L["CalendarKindTraining"],
+            TrainingCalendarItemKinds.CourseDate => L["CalendarKindCourseDate"],
+            TrainingCalendarItemKinds.CourseEvent => L["CalendarKindEvent"],
+            _ => item.Kind
+        };
+    }
+
+    private string GetItemMeta(TrainingCalendarItem item)
+    {
+        var parts = new List<string>();
+        if (!string.IsNullOrWhiteSpace(item.CourseName))
+            parts.Add(item.CourseName);
+        if (!string.IsNullOrWhiteSpace(item.PlanName))
+            parts.Add(item.PlanName);
+        if (!string.IsNullOrWhiteSpace(item.Location))
+            parts.Add(item.Location);
+        return parts.Count == 0 ? GetKindLabel(item) : string.Join(" - ", parts);
+    }
+
+    private static string FormatItemTime(TrainingCalendarItem item)
+    {
+        if (!item.HasTime)
+            return item.StartsAt.ToString("dd.MM.");
+
+        return item.EndsAt is null
+            ? item.StartsAt.ToString("HH:mm")
+            : $"{item.StartsAt:HH:mm}-{item.EndsAt.Value:HH:mm}";
+    }
+
+    private static string FormatDateRange(TrainingCalendarItem item)
+    {
+        if (!item.HasTime)
+            return item.StartsAt.ToString("dd.MM.yyyy");
+
+        if (item.EndsAt is null)
+            return item.StartsAt.ToString("dd.MM.yyyy HH:mm");
+
+        return item.StartsAt.Date == item.EndsAt.Value.Date
+            ? $"{item.StartsAt:dd.MM.yyyy HH:mm} - {item.EndsAt.Value:HH:mm}"
+            : $"{item.StartsAt:g} - {item.EndsAt.Value:g}";
+    }
+
+    private static string GetMarkerClass(TrainingCalendarItem item)
+    {
+        return $"pl-calendar-agenda-marker {GetKindClass(item)}";
+    }
+
+    private static string GetDotClass(TrainingCalendarItem item)
+    {
+        return $"pl-calendar-day-dot {GetKindClass(item)}";
+    }
+
+    private static string GetKindClass(TrainingCalendarItem item)
+    {
+        return item.Kind switch
+        {
+            TrainingCalendarItemKinds.TrainingSession => "pl-calendar-kind-training",
+            TrainingCalendarItemKinds.CourseDate => "pl-calendar-kind-course-date",
+            TrainingCalendarItemKinds.CourseEvent => "pl-calendar-kind-event",
+            _ => string.Empty
+        };
+    }
+}

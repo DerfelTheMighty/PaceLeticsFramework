@@ -38,6 +38,13 @@
             <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Small" />
             <span>@L["TabPaceMate"]</span>
         </button>
+        <button type="button"
+                class="@GetSectionButtonClass(CoursesSection.Calendar)"
+                aria-pressed="@(_activeSection == CoursesSection.Calendar)"
+                @onclick="@(() => SelectSection(CoursesSection.Calendar))">
+            <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Size="Size.Small" />
+            <span>@L["TabCalendar"]</span>
+        </button>
     </nav>
 
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
@@ -401,11 +408,17 @@
         <TrainingPlanPage Embedded="true"
                           AutoScrollToNextSession="false" />
     }
-    else
+    else if (_activeSection == CoursesSection.PaceMate)
     {
         <MudDivider Class="my-4" />
 
         <Mate Embedded="true" />
+    }
+    else
+    {
+        <MudDivider Class="my-4" />
+
+        <TrainingCalendar UserId="@_userId" />
     }
 </MudContainer>
 
@@ -414,7 +427,8 @@
     {
         Courses,
         TrainingPlans,
-        PaceMate
+        PaceMate,
+        Calendar
     }
 
     [SupplyParameterFromQuery(Name = "section")]
@@ -543,6 +557,7 @@
         {
             "plans" or "training-plans" => CoursesSection.TrainingPlans,
             "pace-mate" or "mate" => CoursesSection.PaceMate,
+            "calendar" or "kalender" => CoursesSection.Calendar,
             _ => CoursesSection.Courses
         };
     }
@@ -553,6 +568,7 @@
         {
             CoursesSection.TrainingPlans => "/Athletes/courses?section=plans",
             CoursesSection.PaceMate => "/Athletes/courses?section=pace-mate",
+            CoursesSection.Calendar => "/Athletes/courses?section=calendar",
             _ => "/Athletes/courses"
         };
     }
