@@ -73,4 +73,7 @@
   <data name="CalendarRegistered" xml:space="preserve"><value>You are registered.</value></data>
   <data name="CalendarNotRegistered" xml:space="preserve"><value>You are not registered.</value></data>
   <data name="Location" xml:space="preserve"><value>Location</value></data>
+  <data name="CalendarSubscribedPlans" xml:space="preserve"><value>Subscribed plans</value></data>
+  <data name="CalendarNoSubscribedPlans" xml:space="preserve"><value>No plan is selected for the calendar.</value></data>
+  <data name="CalendarSubscriptionSaveError" xml:space="preserve"><value>The plan selection could not be saved in this browser.</value></data>
 </root>

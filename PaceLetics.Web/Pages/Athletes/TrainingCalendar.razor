@@ -3,6 +3,7 @@
 @using PaceLetics.Web.Services.Courses
 @inject ITrainingCalendarService CalendarService
 @inject ICourseService CourseService
+@inject IJSRuntime JS
 @inject ISnackbar Snackbar
 @inject IStringLocalizer<MyCourses> L
 
@@ -33,6 +34,28 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Today" Color="Color.Primary" Size="Size.Small" OnClick="GoToToday" aria-label="@L["Today"]" />
             </MudTooltip>
         </MudStack>
+
+        @if (AvailableTrainingPlans.Count > 0)
+        {
+            <MudStack Class="mt-3" Spacing="1">
+                <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CalendarSubscribedPlans"]</MudText>
+                <div class="pl-calendar-plan-selector">
+                    @foreach (var plan in AvailableTrainingPlans)
+                    {
+                        <MudCheckBox T="bool"
+                                     Dense="true"
+                                     Color="Color.Primary"
+                                     Label="@plan.Name"
+                                     Value="@IsPlanSelected(plan.PlanId)"
+                                     ValueChanged="@((bool selected) => OnPlanSelectionChangedAsync(plan.PlanId, selected))" />
+                    }
+                </div>
+                @if (_showTraining && _selectedPlanIds.Count == 0)
+                {
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CalendarNoSubscribedPlans"]</MudText>
+                }
+            </MudStack>
+        }
 
         <MudStack Row="true" Class="mt-3" Style="gap:6px; flex-wrap:wrap;">
             <MudButton Size="Size.Small" Variant="@GetFilterVariant(_showTraining)" Color="Color.Primary" StartIcon="@Icons.Material.Filled.DirectionsRun" OnClick="ToggleTraining">
@@ -219,9 +242,21 @@
     private bool _showCourseDates = true;
     private bool _showEvents = true;
     private string? _errorMessage;
+    private string? _loadedSubscriptionUserId;
+    private HashSet<string> _selectedPlanIds = new(StringComparer.OrdinalIgnoreCase);
 
     private IReadOnlyList<TrainingCalendarItem> VisibleItems => _items
         .Where(IsVisibleByFilter)
+        .ToList();
+
+    private IReadOnlyList<CalendarPlanOption> AvailableTrainingPlans => _items
+        .Where(item => item.Kind == TrainingCalendarItemKinds.TrainingSession)
+        .Where(item => !string.IsNullOrWhiteSpace(item.PlanId))
+        .GroupBy(item => item.PlanId, StringComparer.OrdinalIgnoreCase)
+        .Select(group => new CalendarPlanOption(
+            group.Key,
+            group.Select(item => item.PlanName).FirstOrDefault(name => !string.IsNullOrWhiteSpace(name)) ?? group.Key))
+        .OrderBy(plan => plan.Name)
         .ToList();
 
     private IReadOnlyList<TrainingCalendarItem> SelectedDateItems => VisibleItems
@@ -275,6 +310,8 @@
         try
         {
             _items = await CalendarService.GetCalendarItemsForAthleteAsync(UserId);
+            await EnsurePlanSubscriptionsLoadedAsync();
+            NormalizeSelectedPlans();
         }
         catch
         {
@@ -290,6 +327,77 @@
     private IEnumerable<TrainingCalendarItem> GetDayItems(DateTime day)
     {
         return VisibleItems.Where(item => item.StartsAt.Date == day.Date);
+    }
+
+    private async Task EnsurePlanSubscriptionsLoadedAsync()
+    {
+        if (string.IsNullOrWhiteSpace(UserId)
+            || string.Equals(_loadedSubscriptionUserId, UserId, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        _loadedSubscriptionUserId = UserId;
+        var availablePlanIds = AvailableTrainingPlans
+            .Select(plan => plan.PlanId)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        string? stored = null;
+        try
+        {
+            stored = await JS.InvokeAsync<string?>("localStorage.getItem", CalendarSubscriptionStorageKey(UserId));
+        }
+        catch
+        {
+            stored = null;
+        }
+
+        _selectedPlanIds = stored is null
+            ? availablePlanIds
+            : stored
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Where(availablePlanIds.Contains)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+    }
+
+    private void NormalizeSelectedPlans()
+    {
+        var availablePlanIds = AvailableTrainingPlans
+            .Select(plan => plan.PlanId)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        _selectedPlanIds.RemoveWhere(planId => !availablePlanIds.Contains(planId));
+    }
+
+    private bool IsPlanSelected(string planId)
+    {
+        return _selectedPlanIds.Contains(planId);
+    }
+
+    private async Task OnPlanSelectionChangedAsync(string planId, bool isSelected)
+    {
+        if (isSelected)
+            _selectedPlanIds.Add(planId);
+        else
+            _selectedPlanIds.Remove(planId);
+
+        await SavePlanSubscriptionsAsync();
+    }
+
+    private async Task SavePlanSubscriptionsAsync()
+    {
+        if (string.IsNullOrWhiteSpace(UserId))
+            return;
+
+        try
+        {
+            var value = string.Join("|", _selectedPlanIds.OrderBy(planId => planId));
+            await JS.InvokeVoidAsync("localStorage.setItem", CalendarSubscriptionStorageKey(UserId), value);
+        }
+        catch
+        {
+            Snackbar.Add(L["CalendarSubscriptionSaveError"], Severity.Warning);
+        }
     }
 
     private void PreviousMonth()
@@ -379,7 +487,7 @@
     {
         return item.Kind switch
         {
-            TrainingCalendarItemKinds.TrainingSession => _showTraining,
+            TrainingCalendarItemKinds.TrainingSession => _showTraining && _selectedPlanIds.Contains(item.PlanId),
             TrainingCalendarItemKinds.CourseDate => _showCourseDates,
             TrainingCalendarItemKinds.CourseEvent => _showEvents,
             _ => true
@@ -473,4 +581,11 @@
             _ => string.Empty
         };
     }
+
+    private static string CalendarSubscriptionStorageKey(string userId)
+    {
+        return $"trainingCalendarSubscribedPlans_{userId}";
+    }
+
+    private sealed record CalendarPlanOption(string PlanId, string Name);
 }

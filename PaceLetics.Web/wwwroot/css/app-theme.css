@@ -1740,6 +1740,16 @@
     gap: 4px;
 }
 
+.pl-calendar-plan-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+}
+
+.pl-calendar-plan-selector .mud-checkbox {
+    min-width: min(100%, 168px);
+}
+
 .pl-calendar-day {
     display: flex;
     min-width: 0;

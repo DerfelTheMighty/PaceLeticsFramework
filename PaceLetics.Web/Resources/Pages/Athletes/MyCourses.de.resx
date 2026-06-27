@@ -73,4 +73,7 @@
   <data name="CalendarRegistered" xml:space="preserve"><value>Du bist angemeldet.</value></data>
   <data name="CalendarNotRegistered" xml:space="preserve"><value>Du bist nicht angemeldet.</value></data>
   <data name="Location" xml:space="preserve"><value>Ort</value></data>
+  <data name="CalendarSubscribedPlans" xml:space="preserve"><value>Abonnierte Plaene</value></data>
+  <data name="CalendarNoSubscribedPlans" xml:space="preserve"><value>Es ist kein Plan fuer den Kalender ausgewaehlt.</value></data>
+  <data name="CalendarSubscriptionSaveError" xml:space="preserve"><value>Die Planauswahl konnte in diesem Browser nicht gespeichert werden.</value></data>
 </root>
