@@ -1,0 +1,186 @@
+.pl-academy-info {
+    position: fixed;
+    right: clamp(12px, 2vw, 24px);
+    bottom: clamp(16px, 2vw, 24px);
+    z-index: 1300;
+    width: min(92vw, 390px);
+    pointer-events: none;
+}
+
+.pl-academy-info__panel {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr) 32px;
+    gap: 12px;
+    align-items: center;
+    min-height: 96px;
+    padding: 12px;
+    color: var(--mud-palette-text-primary);
+    border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 26%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+    background: color-mix(in srgb, var(--mud-palette-surface) 92%, transparent);
+    box-shadow: 0 16px 40px color-mix(in srgb, var(--mud-palette-black) 24%, transparent);
+    backdrop-filter: blur(14px) saturate(1.08);
+    pointer-events: auto;
+    animation: pl-academy-info-enter 180ms ease-out;
+}
+
+.pl-academy-info__mascot {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+    color: var(--mud-palette-primary);
+    border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 34%, transparent);
+    border-radius: var(--pl-radius);
+    background:
+        linear-gradient(145deg,
+            color-mix(in srgb, var(--mud-palette-primary) 15%, var(--mud-palette-surface)),
+            color-mix(in srgb, var(--mud-palette-secondary) 10%, var(--mud-palette-surface)));
+}
+
+.pl-academy-info__mascot::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 11px;
+    width: 30px;
+    height: 8px;
+    border-radius: 999px 999px 3px 3px;
+    background: color-mix(in srgb, var(--mud-palette-secondary) 72%, var(--mud-palette-primary));
+}
+
+.pl-academy-info__mascot-mark {
+    position: absolute;
+    inset: 17px 0 0;
+    color: var(--mud-palette-text-primary);
+    font-size: 1.35rem;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+}
+
+.pl-academy-info__mascot .mud-icon-root {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 18px;
+    height: 18px;
+    padding: 2px;
+    color: var(--mud-palette-surface);
+    border-radius: 50%;
+    background: var(--mud-palette-primary);
+}
+
+.pl-academy-info__body {
+    display: grid;
+    min-width: 0;
+    gap: 6px;
+}
+
+.pl-academy-info__loading {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    gap: 7px;
+    color: var(--mud-palette-text-secondary);
+    font-size: .72rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.pl-academy-info__loading span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pl-academy-info__tip {
+    min-width: 0;
+    margin: 0;
+    color: var(--mud-palette-text-primary);
+    font-size: .86rem;
+    font-weight: 700;
+    line-height: 1.28;
+    overflow-wrap: anywhere;
+}
+
+.pl-academy-info__source {
+    justify-self: start;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--mud-palette-primary);
+    font-size: .7rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pl-academy-info__source:hover,
+.pl-academy-info__source:focus-visible {
+    text-decoration: underline;
+    outline: none;
+}
+
+.pl-academy-info__close {
+    align-self: start;
+    justify-self: end;
+    color: var(--mud-palette-text-secondary) !important;
+}
+
+@keyframes pl-academy-info-enter {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 10px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@media (max-width: 959.98px) {
+    .pl-academy-info {
+        right: 10px;
+        bottom: calc(5.1rem + env(safe-area-inset-bottom, 0px));
+        left: 10px;
+        width: auto;
+    }
+}
+
+@media (max-width: 420px) {
+    .pl-academy-info__panel {
+        grid-template-columns: 46px minmax(0, 1fr) 30px;
+        gap: 10px;
+        min-height: 92px;
+        padding: 10px;
+    }
+
+    .pl-academy-info__mascot {
+        width: 46px;
+        height: 46px;
+    }
+
+    .pl-academy-info__mascot::before {
+        top: 7px;
+        left: 9px;
+        width: 26px;
+        height: 7px;
+    }
+
+    .pl-academy-info__mascot-mark {
+        top: 15px;
+        font-size: 1.15rem;
+    }
+
+    .pl-academy-info__tip {
+        font-size: .8rem;
+    }
+}

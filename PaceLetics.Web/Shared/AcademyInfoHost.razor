@@ -1,0 +1,60 @@
+@implements IDisposable
+@inject NavigationManager Navigation
+@inject AcademyInfoService AcademyInfo
+
+@if (AcademyInfo.IsVisible && AcademyInfo.CurrentTip is not null)
+{
+    <aside class="pl-academy-info" role="status" aria-live="polite">
+        <div class="pl-academy-info__panel">
+            <div class="pl-academy-info__mascot" aria-hidden="true">
+                <span class="pl-academy-info__mascot-mark">P</span>
+                <MudIcon Icon="@Icons.Material.Filled.DirectionsRun" Size="Size.Small" />
+            </div>
+
+            <div class="pl-academy-info__body">
+                <div class="pl-academy-info__loading">
+                    <MudProgressCircular Color="Color.Primary"
+                                         Size="Size.Small"
+                                         StrokeWidth="3"
+                                         Indeterminate="true" />
+                    <span>Academy-Daten werden geladen</span>
+                </div>
+                <p class="pl-academy-info__tip">@AcademyInfo.CurrentTip.Text</p>
+                <a class="pl-academy-info__source" href="@AcademyInfo.CurrentTip.ArticleHref">
+                    @AcademyInfo.CurrentTip.Source
+                </a>
+            </div>
+
+            <MudIconButton Icon="@Icons.Material.Filled.Close"
+                           Size="Size.Small"
+                           Color="Color.Inherit"
+                           Class="pl-academy-info__close"
+                           OnClick="@AcademyInfo.Hide"
+                           aria-label="Academy-Hinweis ausblenden" />
+        </div>
+    </aside>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+        AcademyInfo.Changed += OnAcademyInfoChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs args)
+    {
+        _ = AcademyInfo.TrackNavigationAsync(args.Location);
+    }
+
+    private void OnAcademyInfoChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= OnLocationChanged;
+        AcademyInfo.Changed -= OnAcademyInfoChanged;
+    }
+}
