@@ -209,6 +209,9 @@ namespace PaceLetics.Web.Pages.Athletes
 
         private IEnumerable<RaceResultModel> GetCriticalSpeedResults()
         {
+            if (_athlete.ActiveReferenceResult is null)
+                return [];
+
             var results = new List<RaceResultModel>();
 
             if (_athlete.RaceResults is not null)
