@@ -222,7 +222,7 @@
 
     private static IEnumerable<RaceResultModel> GetCriticalSpeedResults(AthleteModel? athlete)
     {
-        if (athlete is null)
+        if (athlete?.ActiveReferenceResult is null)
             return Enumerable.Empty<RaceResultModel>();
 
         var results = new List<RaceResultModel>();
