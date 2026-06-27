@@ -1750,6 +1750,94 @@
     min-width: min(100%, 168px);
 }
 
+.pl-training-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.pl-training-plan-card {
+    min-height: 168px;
+    cursor: pointer;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: var(--pl-radius);
+    background: var(--mud-palette-surface);
+    transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.pl-training-plan-card:hover,
+.pl-training-plan-card:focus-visible {
+    border-color: color-mix(in srgb, var(--mud-palette-primary) 48%, var(--mud-palette-lines-default));
+    transform: translateY(-1px);
+}
+
+.pl-training-plan-card-selected {
+    border-color: var(--mud-palette-primary);
+    border-width: 2px;
+    background: color-mix(in srgb, var(--mud-palette-primary) 9%, var(--mud-palette-surface));
+}
+
+.pl-training-session-row {
+    display: grid;
+    grid-template-columns: minmax(54px, auto) 1fr auto auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 0;
+    color: var(--mud-palette-text-primary);
+    font: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+    cursor: pointer;
+}
+
+.pl-training-session-row:hover,
+.pl-training-session-row:focus-visible {
+    color: var(--mud-palette-primary);
+    outline: none;
+}
+
+.pl-training-session-row-next {
+    background: color-mix(in srgb, var(--mud-palette-primary) 6%, transparent);
+}
+
+.pl-training-session-date,
+.pl-training-session-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pl-training-session-date {
+    color: var(--mud-palette-text-secondary);
+    font-size: .78rem;
+    white-space: nowrap;
+}
+
+.pl-training-session-date small {
+    font-size: .7rem;
+}
+
+.pl-training-session-title,
+.pl-training-session-meta {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pl-training-session-title {
+    font-weight: 600;
+}
+
+.pl-training-session-meta {
+    color: var(--mud-palette-text-secondary);
+    font-size: .76rem;
+}
+
 .pl-calendar-day {
     display: flex;
     min-width: 0;

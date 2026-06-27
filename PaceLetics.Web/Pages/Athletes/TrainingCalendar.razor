@@ -35,28 +35,6 @@
             </MudTooltip>
         </MudStack>
 
-        @if (AvailableTrainingPlans.Count > 0)
-        {
-            <MudStack Class="mt-3" Spacing="1">
-                <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CalendarSubscribedPlans"]</MudText>
-                <div class="pl-calendar-plan-selector">
-                    @foreach (var plan in AvailableTrainingPlans)
-                    {
-                        <MudCheckBox T="bool"
-                                     Dense="true"
-                                     Color="Color.Primary"
-                                     Label="@plan.Name"
-                                     Value="@IsPlanSelected(plan.PlanId)"
-                                     ValueChanged="@((bool selected) => OnPlanSelectionChangedAsync(plan.PlanId, selected))" />
-                    }
-                </div>
-                @if (_showTraining && _selectedPlanIds.Count == 0)
-                {
-                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CalendarNoSubscribedPlans"]</MudText>
-                }
-            </MudStack>
-        }
-
         <MudStack Row="true" Class="mt-3" Style="gap:6px; flex-wrap:wrap;">
             <MudButton Size="Size.Small" Variant="@GetFilterVariant(_showTraining)" Color="Color.Primary" StartIcon="@Icons.Material.Filled.DirectionsRun" OnClick="ToggleTraining">
                 @L["FilterTrainingSessions"]
@@ -353,7 +331,7 @@
         }
 
         _selectedPlanIds = stored is null
-            ? availablePlanIds
+            ? new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             : stored
                 .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .Where(availablePlanIds.Contains)
@@ -367,37 +345,6 @@
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         _selectedPlanIds.RemoveWhere(planId => !availablePlanIds.Contains(planId));
-    }
-
-    private bool IsPlanSelected(string planId)
-    {
-        return _selectedPlanIds.Contains(planId);
-    }
-
-    private async Task OnPlanSelectionChangedAsync(string planId, bool isSelected)
-    {
-        if (isSelected)
-            _selectedPlanIds.Add(planId);
-        else
-            _selectedPlanIds.Remove(planId);
-
-        await SavePlanSubscriptionsAsync();
-    }
-
-    private async Task SavePlanSubscriptionsAsync()
-    {
-        if (string.IsNullOrWhiteSpace(UserId))
-            return;
-
-        try
-        {
-            var value = string.Join("|", _selectedPlanIds.OrderBy(planId => planId));
-            await JS.InvokeVoidAsync("localStorage.setItem", CalendarSubscriptionStorageKey(UserId), value);
-        }
-        catch
-        {
-            Snackbar.Add(L["CalendarSubscriptionSaveError"], Severity.Warning);
-        }
     }
 
     private void PreviousMonth()

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -30,4 +30,11 @@
   <data name="Recovery" xml:space="preserve"><value>Regeneration</value></data>
   <data name="Warmup" xml:space="preserve"><value>Warm-up</value></data>
   <data name="Drills" xml:space="preserve"><value>Drills</value></data>
+  <data name="Subscribe" xml:space="preserve"><value>Abonnieren</value></data>
+  <data name="Unsubscribe" xml:space="preserve"><value>Abo beenden</value></data>
+  <data name="Subscribed" xml:space="preserve"><value>Abonniert</value></data>
+  <data name="NextSession" xml:space="preserve"><value>Naechste</value></data>
+  <data name="PlanSessionCount" xml:space="preserve"><value>{0} Einheit(en)</value></data>
+  <data name="PlanNoDates" xml:space="preserve"><value>Keine Termine</value></data>
+  <data name="PlanRange" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
 </root>

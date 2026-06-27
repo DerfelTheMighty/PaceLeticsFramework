@@ -54,60 +54,83 @@ else
     }
     else
     {
-        <MudPaper Class="pa-3 pl-panel" Elevation="0">
-            <MudSelect T="string" Label="@L["SelectPlan"]"
-                       Value="_selectedPlanId"
-                       ValueChanged="@(async (string id) => await OnPlanChanged(id))"
-                       Dense="true"
-                       Variant="Variant.Outlined"
-                       Immediate="true">
-                @foreach (var p in _plans)
-                {
-                    <MudSelectItem T="string" Value="@p.Id">@p.Name</MudSelectItem>
-                }
-            </MudSelect>
-        </MudPaper>
+        <div class="pl-training-plan-grid">
+            @foreach (var plan in _plans)
+            {
+                var isSelected = plan.Id == _selectedPlanId;
+                var isSubscribed = IsPlanSubscribed(plan.Id);
+
+                <MudPaper Elevation="@(isSelected ? 4 : 1)"
+                          Class="@GetPlanCardClass(isSelected)"
+                          @onclick="@(() => SelectPlanAsync(plan.Id))">
+                    <MudStack Spacing="2" Style="height:100%;">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:8px;">
+                            <MudIcon Icon="@Icons.Material.Filled.EventNote" Color="Color.Primary" Size="Size.Small" />
+                            @if (isSubscribed)
+                            {
+                                <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">@L["Subscribed"]</MudChip>
+                            }
+                        </MudStack>
+
+                        <MudText Typo="Typo.subtitle2" Style="line-height:1.25;">@plan.Name</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPlanSummary(plan)</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPlanRange(plan)</MudText>
+
+                        <MudSpacer />
+
+                        <MudButton Size="Size.Small"
+                                   Variant="@(isSubscribed ? Variant.Outlined : Variant.Filled)"
+                                   Color="@(isSubscribed ? Color.Default : Color.Primary)"
+                                   StartIcon="@(isSubscribed ? Icons.Material.Filled.NotificationsOff : Icons.Material.Filled.NotificationsActive)"
+                                   OnClick="@(() => TogglePlanSubscriptionAsync(plan.Id))">
+                            @(isSubscribed ? L["Unsubscribe"] : L["Subscribe"])
+                        </MudButton>
+                    </MudStack>
+                </MudPaper>
+            }
+        </div>
     }
 </MudStack>
 
-<!-- Timeline -->
 @if (Plan is not null)
 {
-    <div style="height: calc(100vh - 300px); overflow:auto; -webkit-overflow-scrolling:touch; padding:0 12px 12px 12px;">
-        <MudTimeline TimelineOrientation="TimelineOrientation.Vertical"
-                     TimelinePosition="TimelinePosition.Left">
+    <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+        <MudStack Spacing="2">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                <MudText Typo="Typo.subtitle2">@Plan.Name</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPlanSummary(Plan)</MudText>
+            </MudStack>
 
-            @foreach (var session in Plan.Sessions)
-            {
-                var isNext = session.Id == _nextSessionId;
+            <MudStack Spacing="1">
+                @foreach (var session in Plan.Sessions)
+                {
+                    var isNext = session.Id == _nextSessionId;
 
-                <MudTimelineItem id="@(isNext ? "next-session" : null)"
-                                 Color="@(isNext ? Color.Primary : Color.Surface)"
-                                 Elevation="@(isNext ? 26 : 10)"
-                                 Size="@(isNext ? Size.Large : Size.Medium)"
-                                 Style="width:100%;">
-
-                    <div style="cursor:pointer;"
-                         @onclick="() => OpenDetails(session.Id)">
-                        @if (session.PrimaryRun is not null)
+                    <button id="@(isNext ? "next-session" : null)"
+                            type="button"
+                            class="@GetSessionRowClass(isNext)"
+                            @onclick="@(() => OpenDetails(session.Id))">
+                        <span class="pl-training-session-date">
+                            <span>@session.Date.ToString("dd.MM.")</span>
+                            @if (session.Appointment.StartsAt is not null)
+                            {
+                                <small>@session.Appointment.StartsAt.Value.ToString("HH:mm")</small>
+                            }
+                        </span>
+                        <span class="pl-training-session-copy">
+                            <span class="pl-training-session-title">@session.Name</span>
+                            <span class="pl-training-session-meta">@GetSessionTimelineDetail(session)</span>
+                        </span>
+                        @if (isNext)
                         {
-                            <RunningSessionMiniCard Session="session.PrimaryRun" IsHighlighted="isNext" />
+                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@L["NextSession"]</MudChip>
                         }
-                        else
-                        {
-                            <MudPaper Elevation="0" Class="pa-3 pl-surface-card">
-                                <MudText Typo="Typo.subtitle2">@session.Name</MudText>
-                                <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                    @GetSessionTimelineDetail(session)
-                                </MudText>
-                            </MudPaper>
-                        }
-                    </div>
-
-                </MudTimelineItem>
-            }
-        </MudTimeline>
-    </div>
+                        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                    </button>
+                }
+            </MudStack>
+        </MudStack>
+    </MudPaper>
 }
 @if (_detailsOpen)
 {
@@ -303,6 +326,7 @@ else
 
     private List<TrainingPlan> _plans = new();
     private string? _selectedPlanId;
+    private HashSet<string> _subscribedPlanIds = new(StringComparer.OrdinalIgnoreCase);
 
     private string ContainerClass => Embedded
         ? "pa-0 pb-8"
@@ -332,6 +356,7 @@ else
             }
 
             _plans = (await TrainingPlanService.LoadTrainingPlansForUserAsync(userID)).ToList();
+            await LoadPlanSubscriptionsAsync(userID);
 
             // Auswahl: gespeicherter Plan wenn vorhanden (Server-Athlete.SelectedTrainingPlanId), sonst Browser localStorage, sonst nächster oder erster Plan
             string? storedPlan = null;
@@ -378,17 +403,7 @@ else
             }
 
             // Setze aktuell gewählten Plan
-            Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
-
-            if (Plan is not null)
-            {
-                var today = DateTime.Today;
-                _nextSessionId = Plan.Sessions
-                    .Where(s => s.Date.Date >= today)
-                    .OrderBy(s => s.Date)
-                    .Select(s => s.Id)
-                    .FirstOrDefault();
-            }
+            ApplySelectedPlan();
         }
         catch
         {
@@ -420,6 +435,106 @@ else
     private void CloseDetails()
     {
         _detailsOpen = false;
+    }
+
+    private async Task SelectPlanAsync(string planId)
+    {
+        _selectedPlanId = planId;
+        ApplySelectedPlan();
+
+        if (!string.IsNullOrEmpty(_userId))
+        {
+            try
+            {
+                var key = $"selectedPlan_{_userId}";
+                await JS.InvokeVoidAsync("localStorage.setItem", key, _selectedPlanId);
+            }
+            catch
+            {
+                await dialogService.ShowInformationAsync(L["Error_SaveBrowser_Title"], L["Error_SaveBrowser"], Icons.Material.Filled.Error);
+            }
+        }
+
+        if (_athlete is not null)
+        {
+            try
+            {
+                _athlete.SelectedTrainingPlanId = _selectedPlanId;
+                await AthleteData.UpdateAthlete(_athlete);
+            }
+            catch
+            {
+                await dialogService.ShowInformationAsync(L["Error_SaveServer_Title"], L["Error_SaveServer"], Icons.Material.Filled.Error);
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    private void ApplySelectedPlan()
+    {
+        Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
+
+        var today = DateTime.Today;
+        _nextSessionId = Plan?.Sessions
+            .Where(s => s.Date.Date >= today)
+            .OrderBy(s => s.Date)
+            .Select(s => s.Id)
+            .FirstOrDefault();
+    }
+
+    private bool IsPlanSubscribed(string planId)
+    {
+        return _subscribedPlanIds.Contains(planId);
+    }
+
+    private async Task TogglePlanSubscriptionAsync(string planId)
+    {
+        if (!_subscribedPlanIds.Add(planId))
+            _subscribedPlanIds.Remove(planId);
+
+        await SavePlanSubscriptionsAsync();
+    }
+
+    private async Task LoadPlanSubscriptionsAsync(string? userId)
+    {
+        _subscribedPlanIds.Clear();
+
+        if (string.IsNullOrWhiteSpace(userId))
+            return;
+
+        try
+        {
+            var stored = await JS.InvokeAsync<string?>("localStorage.getItem", CalendarSubscriptionStorageKey(userId));
+            if (string.IsNullOrWhiteSpace(stored))
+                return;
+
+            var availablePlanIds = _plans.Select(plan => plan.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
+            _subscribedPlanIds = stored
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Where(availablePlanIds.Contains)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            _subscribedPlanIds.Clear();
+        }
+    }
+
+    private async Task SavePlanSubscriptionsAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        try
+        {
+            var value = string.Join("|", _subscribedPlanIds.OrderBy(planId => planId));
+            await JS.InvokeVoidAsync("localStorage.setItem", CalendarSubscriptionStorageKey(_userId), value);
+        }
+        catch
+        {
+            await dialogService.ShowInformationAsync(L["Error_SaveBrowser_Title"], L["Error_SaveBrowser"], Icons.Material.Filled.Error);
+        }
     }
 
     private static string GetPaceZoneClass(string? paceKey)
@@ -552,63 +667,34 @@ else
             : $"{minutes}:{remainingSeconds:00} min";
     }
 
-    private async Task SaveSelectedPlanAsync()
+    private static string GetPlanCardClass(bool isSelected)
     {
-        if (_selectedPlanId == null) return;
-
-        // local anwenden
-        Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
-
-        var today = DateTime.Today;
-        _nextSessionId = Plan?.Sessions
-            .Where(s => s.Date.Date >= today)
-            .OrderBy(s => s.Date)
-            .Select(s => s.Id)
-            .FirstOrDefault();
-        try
-        {
-            if (!string.IsNullOrEmpty(_userId))
-            {
-                var key = $"selectedPlan_{_userId}";
-                await JS.InvokeVoidAsync("localStorage.setItem", key, _selectedPlanId);
-            }
-        }
-        catch
-        {
-            await dialogService.ShowInformationAsync(L["Error_SaveBrowser_Title"], L["Error_SaveBrowser"], Icons.Material.Filled.Error);
-        }
-
-        StateHasChanged();
+        return isSelected
+            ? "pa-3 pl-training-plan-card pl-training-plan-card-selected"
+            : "pa-3 pl-training-plan-card";
     }
 
-    private async Task OnPlanChanged(string id)
+    private static string GetSessionRowClass(bool isNext)
     {
-        _selectedPlanId = id;
-        // apply immediately
-        Plan = _plans.FirstOrDefault(p => p.Id == _selectedPlanId);
+        return isNext
+            ? "pl-training-session-row pl-training-session-row-next"
+            : "pl-training-session-row";
+    }
 
-        var today = DateTime.Today;
-        _nextSessionId = Plan?.Sessions
-            .Where(s => s.Date.Date >= today)
-            .OrderBy(s => s.Date)
-            .Select(s => s.Id)
-            .FirstOrDefault();
+    private string FormatPlanSummary(TrainingPlan plan)
+    {
+        return string.Format(L["PlanSessionCount"], plan.Sessions.Count);
+    }
 
-        // persist on server if athlete loaded
-        if (_athlete is not null)
-        {
-            try
-            {
-                // ensure AthleteModel has SelectedTrainingPlanId property
-                _athlete.SelectedTrainingPlanId = _selectedPlanId;
-                await AthleteData.UpdateAthlete(_athlete);
-            }
-            catch
-            {
-                await dialogService.ShowInformationAsync(L["Error_SaveServer_Title"], L["Error_SaveServer"], Icons.Material.Filled.Error);
-            }
-        }
+    private string FormatPlanRange(TrainingPlan plan)
+    {
+        return plan.StartDate is null || plan.EndDate is null
+            ? L["PlanNoDates"]
+            : string.Format(L["PlanRange"], plan.StartDate.Value, plan.EndDate.Value);
+    }
 
-        StateHasChanged();
+    private static string CalendarSubscriptionStorageKey(string userId)
+    {
+        return $"trainingCalendarSubscribedPlans_{userId}";
     }
 }
