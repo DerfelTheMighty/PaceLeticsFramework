@@ -399,7 +399,6 @@
         <MudDivider Class="my-4" />
 
         <TrainingPlanPage Embedded="true"
-                          SectionQuery="@ActivePlanSectionQuery"
                           AutoScrollToNextSession="true" />
     }
     else
@@ -421,9 +420,6 @@
     [SupplyParameterFromQuery(Name = "section")]
     public string? SectionQuery { get; set; }
 
-    [SupplyParameterFromQuery(Name = "plan-section")]
-    public string? PlanSectionQuery { get; set; }
-
     private string? _userId;
     private string? _errorMessage;
     private string? _selectedCourseId;
@@ -438,9 +434,6 @@
     private bool _showAllTrainingPlans;
     private CoursesSection _activeSection = CoursesSection.Courses;
     private string? _appliedSectionQuery;
-
-    private string? ActivePlanSectionQuery =>
-        IsLegacyPaceMateSection(SectionQuery) ? "pace-mate" : PlanSectionQuery;
 
     private CourseOverview? SelectedOverview =>
         JoinedCourses.FirstOrDefault(course => course.Course.Id == _selectedCourseId)
@@ -549,7 +542,6 @@
         return section?.Trim().ToLowerInvariant() switch
         {
             "plans" or "training-plans" => CoursesSection.TrainingPlans,
-            "pace-mate" or "mate" => CoursesSection.TrainingPlans,
             "calendar" or "kalender" => CoursesSection.Calendar,
             _ => CoursesSection.Courses
         };
@@ -563,11 +555,6 @@
             CoursesSection.Calendar => "/Athletes/courses?section=calendar",
             _ => "/Athletes/courses"
         };
-    }
-
-    private static bool IsLegacyPaceMateSection(string? section)
-    {
-        return section?.Trim().ToLowerInvariant() is "pace-mate" or "mate";
     }
 
     private void OpenCoursePicker()
