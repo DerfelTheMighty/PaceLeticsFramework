@@ -28,7 +28,6 @@ references:
  - Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full
  - Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021. | https://www.nature.com/articles/s41467-021-21880-3
  - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
- - Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026. | https://www.mdpi.com/2411-5142/11/1/130
 ---
 
 Sener forbinder muskler og knogler. Men de er ikke passive strukturer. De er et tilpasningsdygtigt biologisk væv, der overfører kraft og lagrer energi.
@@ -83,8 +82,6 @@ Eksplosiv træning og plyometri er afgørende for sportsevner, men de er ikke al
 
 Denne ordre er afgørende for tilbagevenden til sporten. Når det kommer til problemer med akillessenen, understreger Silbernagel og Crossley, at tilbagevenden til sport ikke afgøres af en enkelt test. Smerteprogression, funktion, modstandskraft, sportskrav og reaktionen på progression er relevante. Smerte er ikke en perfekt vævsmarkør, men det er et nyttigt overvågningssignal. Hvis symptomerne øges betydeligt under sessionen eller fortsætter den næste dag, var stressen sandsynligvis for høj til det aktuelle tilpasningsniveau. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-Ernæring kan også diskuteres som en understøttende faktor. En systematisk gennemgang fra 2026 fandt bevis for, at 15 til 30 gram kollagen eller gelatine sammen med mindst 50 mg C-vitamin kombineret med tilstrækkelig intens styrketræning kunne understøtte senerelaterede strukturelle parametre såsom tværsnit eller stivhed. Dataene er stadig heterogene, og kosttilskud erstatter ikke mekanisk stimulus. En additiv model er mere plausibel: træning giver signalet, ernæring giver substrater og cofaktorer. [[16]](https://www.mdpi.com/2411-5142/11/1/130)
-
 ## Praktisk træningsramme
 
 Senetræning bør planlægges over mindst 12 uger. Den vigtigste stimulus er høj, kontrolleret spænding. Afhængigt af den samlede belastning er 2 til 4 målrettede senesessioner om ugen plausible. I praksis betyder det ofte intensiteter på omkring 70 procent 1RM eller, for isometrisk arbejde, 85 til 90 procent af maksimal isometrisk styrke. Det afgørende er, at senen faktisk udsættes for høj belastning over flere sekunder. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
@@ -117,4 +114,3 @@ Sener tilpasser sig langsomt, fordi de primært består af langvarig ekstracellu
 13. [Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025.](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 14. [Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021.](https://www.nature.com/articles/s41467-021-21880-3)
 15. [Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013.](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
-16. [Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026.](https://www.mdpi.com/2411-5142/11/1/130)

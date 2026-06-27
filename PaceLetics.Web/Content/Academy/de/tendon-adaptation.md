@@ -28,7 +28,6 @@ references:
   - Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full
   - Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021. | https://www.nature.com/articles/s41467-021-21880-3
   - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
-  - Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026. | https://www.mdpi.com/2411-5142/11/1/130
 ---
 
 Sehnen verbinden Muskeln und Knochen. Sie sind aber keine passiven Strukturen. Sie sind ein anpassungsfähiges biologisches Gewebe, das Kraft überträgt und Energie speichert.
@@ -83,8 +82,6 @@ Explosives Training und Plyometrie sind für Sportfähigkeit unverzichtbar, aber
 
 Für die Rückkehr in den Sport ist diese Reihenfolge entscheidend. Silbernagel und Crossley betonen bei Achillessehnenbeschwerden, dass Return-to-Sport nicht durch einen einzelnen Test entschieden wird. Relevant sind Schmerzverlauf, Funktion, Belastbarkeit, Sportanforderung und die Reaktion auf Progression. Schmerz ist dabei kein perfekter Gewebemarker, aber ein nützliches Monitoring-Signal. Wenn Symptome während der Einheit deutlich steigen oder am nächsten Tag nachhallen, war die Belastung für den aktuellen Anpassungsstand wahrscheinlich zu hoch. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-Auch Ernährung kann als unterstützender Faktor diskutiert werden. Eine systematische Übersicht von 2026 fand Hinweise, dass 15 bis 30 Gramm Kollagen oder Gelatine zusammen mit mindestens 50 mg Vitamin C, kombiniert mit ausreichend intensivem Widerstandstraining, tendonbezogene Strukturparameter wie Querschnitt oder Steifigkeit unterstützen könnten. Die Datenlage ist noch heterogen, und Supplemente ersetzen keinen mechanischen Reiz. Plausibel ist eher ein additives Modell: Training liefert das Signal, Ernährung liefert Substrate und Cofaktoren. [[16]](https://www.mdpi.com/2411-5142/11/1/130)
-
 ## Praktischer Trainingsrahmen
 
 Sehnentraining sollte über mindestens 12 Wochen geplant werden. Der Hauptreiz ist hohe, kontrollierte Zugspannung. Je nach Gesamtbelastung sind 2 bis 4 gezielte Sehneneinheiten pro Woche plausibel. In der Praxis bedeutet das häufig Intensitäten ab etwa 70 Prozent 1RM oder, bei isometrischer Arbeit, 85 bis 90 Prozent der maximalen isometrischen Kraft. Entscheidend ist, dass die Sehne tatsächlich über mehrere Sekunden hoch belastet wird. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
@@ -117,4 +114,3 @@ Sehnen adaptieren langsam, weil sie vor allem aus langlebiger extrazellulärer M
 13. [Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025.](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 14. [Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021.](https://www.nature.com/articles/s41467-021-21880-3)
 15. [Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013.](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
-16. [Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026.](https://www.mdpi.com/2411-5142/11/1/130)

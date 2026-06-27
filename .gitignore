@@ -371,3 +371,10 @@ PaceLetics.Web/appsettings.*.Local.json
 *service-account*.json
 *google-drive-credentials*.json
 .secrets/
+
+# Local research materials and generated artifacts
+.codex-remote-attachments/
+TendonTraining/
+outputs/
+PaceLetics.Web/wwwroot/images/diagrams/cardio-coupled-load-adaptation.svg
+scripts/generate_cardio_coupled_load_adaptation_diagram.py

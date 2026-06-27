@@ -28,7 +28,6 @@ references:
  - Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full
  - Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021. | https://www.nature.com/articles/s41467-021-21880-3
  - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
- - Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026. | https://www.mdpi.com/2411-5142/11/1/130
 ---
 
 Сухожилия соединяют мышцы и кости. Но они не являются пассивными структурами. Они представляют собой адаптируемую биологическую ткань, передающую силу и хранящую энергию.
@@ -83,8 +82,6 @@ Heavy Slow Resistance сочетает в себе высокую нагрузк
 
 Этот приказ имеет решающее значение для возвращения в спорт. Когда речь заходит о проблемах с ахилловым сухожилием, Силбернагель и Кроссли подчеркивают, что возвращение в спорт не решается одним испытанием. Прогрессирование боли, функция, устойчивость, спортивные требования и реакция на прогрессирование имеют значение. Боль не является идеальным тканевым маркером, но является полезным сигналом мониторинга. Если симптомы значительно усиливаются во время сеанса или сохраняются на следующий день, вероятно, стресс был слишком сильным для текущего уровня адаптации. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-Питание также можно рассматривать как поддерживающий фактор. Систематический обзор 2026 года обнаружил доказательства того, что от 15 до 30 граммов коллагена или желатина вместе как минимум с 50 мг витамина С в сочетании с достаточно интенсивными тренировками с отягощениями могут поддерживать структурные параметры сухожилий, такие как поперечное сечение или жесткость. Данные по-прежнему неоднородны, и добавки не заменяют механический стимул. Аддитивная модель более правдоподобна: тренировка обеспечивает сигнал, питание обеспечивает субстраты и кофакторы. [[16]](https://www.mdpi.com/2411-5142/11/1/130)
-
 ## Практическая основа обучения
 
 Тренировку сухожилий следует планировать в течение как минимум 12 недель. Основным стимулом является высокое контролируемое напряжение. В зависимости от общей нагрузки вероятны от 2 до 4 целевых сеансов сухожилий в неделю. На практике это часто означает интенсивность около 70 процентов. 1RM или, для изометрической работы, от 85 до 90 процентов максимальной изометрической силы. Важно то, что сухожилие фактически подвергается высокой нагрузке в течение нескольких секунд. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
@@ -117,4 +114,3 @@ Heavy Slow Resistance сочетает в себе высокую нагрузк
 13. [Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025.](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 14. [Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021.](https://www.nature.com/articles/s41467-021-21880-3)
 15. [Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013.](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
-16. [Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026.](https://www.mdpi.com/2411-5142/11/1/130)

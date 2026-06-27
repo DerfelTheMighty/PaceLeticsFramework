@@ -28,7 +28,6 @@ references:
  - Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full
  - Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021. | https://www.nature.com/articles/s41467-021-21880-3
  - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
- - Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026. | https://www.mdpi.com/2411-5142/11/1/130
 ---
 
 Los tendones conectan músculos y huesos. Pero no son estructuras pasivas. Son un tejido biológico adaptable que transmite fuerza y ​​almacena energía.
@@ -83,8 +82,6 @@ El entrenamiento explosivo y la pliometría son fundamentales para la capacidad 
 
 Este orden es crucial para el regreso al deporte. Cuando se trata de problemas en el tendón de Aquiles, Silbernagel y Crossley destacan que la vuelta al deporte no se decide con una sola prueba. La progresión del dolor, la función, la resiliencia, las necesidades deportivas y la reacción a la progresión son relevantes. El dolor no es un marcador tisular perfecto, pero es una señal de seguimiento útil. Si los síntomas aumentan significativamente durante la sesión o persisten al día siguiente, es probable que el estrés sea demasiado alto para el nivel actual de adaptación. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-La nutrición también se puede discutir como un factor de apoyo. Una revisión sistemática de 2026 encontró evidencia de que de 15 a 30 gramos de colágeno o gelatina junto con al menos 50 mg de vitamina C, combinados con un entrenamiento de resistencia suficientemente intenso, podrían respaldar los parámetros estructurales relacionados con los tendones, como la sección transversal o la rigidez. Los datos aún son heterogéneos y los suplementos no reemplazan el estímulo mecánico. Un modelo aditivo es más plausible: el entrenamiento proporciona la señal, la nutrición proporciona sustratos y cofactores. [[16]](https://www.mdpi.com/2411-5142/11/1/130)
-
 ## Marco de formación práctica
 
 El entrenamiento de los tendones debe planificarse durante al menos 12 semanas. El estímulo principal es una tensión elevada y controlada. Dependiendo de la carga total, son posibles de 2 a 4 sesiones de tendón específicas por semana. En la práctica, esto suele significar intensidades de alrededor del 70 por ciento. 1RM o, para trabajos isométricos, del 85 al 90 por ciento de la fuerza isométrica máxima. Lo que es crucial es que el tendón esté realmente sometido a una gran tensión durante varios segundos. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
@@ -117,4 +114,3 @@ Los tendones se adaptan lentamente porque están formados principalmente por una
 13. [Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025.](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 14. [Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021.](https://www.nature.com/articles/s41467-021-21880-3)
 15. [Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013.](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
-16. [Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026.](https://www.mdpi.com/2411-5142/11/1/130)

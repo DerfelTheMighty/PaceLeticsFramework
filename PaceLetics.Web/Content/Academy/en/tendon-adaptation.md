@@ -28,7 +28,6 @@ references:
  - Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full
  - Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021. | https://www.nature.com/articles/s41467-021-21880-3
  - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
- - Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026. | https://www.mdpi.com/2411-5142/11/1/130
 ---
 
 Tendons connect muscles and bones. But they are not passive structures. They are an adaptable biological tissue that transmits force and stores energy.
@@ -83,8 +82,6 @@ Explosive training and plyometrics are essential for sports ability, but they ar
 
 This order is crucial for the return to sport. When it comes to Achilles tendon problems, Silbernagel and Crossley emphasize that return to sport is not decided by a single test. Pain progression, function, resilience, sport requirements and the reaction to progression are relevant. Pain is not a perfect tissue marker, but it is a useful monitoring signal. If symptoms increase significantly during the session or persist the next day, the stress was likely too high for the current level of adaptation. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-Nutrition can also be discussed as a supporting factor. A 2026 systematic review found evidence that 15 to 30 grams of collagen or gelatin along with at least 50 mg of vitamin C, combined with sufficiently intense resistance training, could support tendon-related structural parameters such as cross-section or stiffness. The data is still heterogeneous, and supplements do not replace mechanical stimulus. An additive model is more plausible: training provides the signal, nutrition provides substrates and cofactors. [[16]](https://www.mdpi.com/2411-5142/11/1/130)
-
 ## Practical training framework
 
 Tendon training should be planned over at least 12 weeks. The main stimulus is high, controlled tensile load. Depending on total load, 2 to 4 targeted tendon sessions per week are plausible. In practice, this often means intensities from around 70 percent 1RM or, for isometric work, 85 to 90 percent of maximum isometric force. What matters is that the tendon is actually loaded highly for several seconds. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
@@ -117,4 +114,3 @@ Tendons adapt slowly because they consist primarily of long-lasting extracellula
 13. [Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025.](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 14. [Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021.](https://www.nature.com/articles/s41467-021-21880-3)
 15. [Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013.](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
-16. [Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026.](https://www.mdpi.com/2411-5142/11/1/130)

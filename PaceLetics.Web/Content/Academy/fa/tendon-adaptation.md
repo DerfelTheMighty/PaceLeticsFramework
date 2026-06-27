@@ -28,7 +28,6 @@ references:
  - Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full
  - Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021. | https://www.nature.com/articles/s41467-021-21880-3
  - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
- - Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026. | https://www.mdpi.com/2411-5142/11/1/130
 ---
 
 تاندون ها ماهیچه ها و استخوان ها را به هم متصل می کنند. اما آنها ساختارهای منفعل نیستند. آنها یک بافت بیولوژیکی سازگار هستند که نیرو را منتقل می کنند و انرژی را ذخیره می کنند.
@@ -83,8 +82,6 @@ Heavy Slow Resistance بار بالا را با حرکت کنترل شده و د
 
 این دستور برای بازگشت به ورزش بسیار مهم است. وقتی صحبت از مشکلات تاندون آشیل می شود، سیلبرناگل و کراسلی تاکید می کنند که بازگشت به ورزش تنها با یک آزمایش مشخص نمی شود. پیشرفت درد، عملکرد، انعطاف پذیری، الزامات ورزشی و واکنش به پیشرفت مرتبط هستند. درد یک نشانگر بافت کامل نیست، اما یک سیگنال نظارتی مفید است. اگر علائم در طول جلسه به طور قابل توجهی افزایش یابد یا روز بعد ادامه یابد، احتمالاً استرس برای سطح فعلی سازگاری بسیار زیاد است. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-تغذیه نیز می تواند به عنوان یک عامل حمایت کننده مورد بحث قرار گیرد. یک بررسی سیستماتیک در سال 2026 شواهدی را نشان داد که 15 تا 30 گرم کلاژن یا ژلاتین همراه با حداقل 50 میلی گرم ویتامین C، همراه با تمرین مقاومتی به اندازه کافی شدید، می تواند از پارامترهای ساختاری مرتبط با تاندون مانند سطح مقطع یا سفتی حمایت کند. داده ها هنوز ناهمگن هستند و مکمل ها جایگزین محرک های مکانیکی نمی شوند. یک مدل افزایشی قابل قبول تر است: آموزش سیگنال را ارائه می دهد، تغذیه بسترها و عوامل کوفاکتور را فراهم می کند. [[16]](https://www.mdpi.com/2411-5142/11/1/130)
-
 ## چارچوب آموزش عملی
 
 تمرین تاندون باید حداقل برای 12 هفته برنامه ریزی شود. محرک اصلی تنش بالا و کنترل شده است. بسته به بار کلی، 2 تا 4 جلسه تاندون هدفمند در هفته قابل قبول است. در عمل، این اغلب به معنای شدت حدود 70 درصد است 1RM یا برای کارهای ایزومتریک 85 تا 90 درصد حداکثر مقاومت ایزومتریک. آنچه بسیار مهم است این است که تاندون در طی چند ثانیه در واقع تحت فشار زیادی قرار می گیرد. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
@@ -117,4 +114,3 @@ Heavy Slow Resistance بار بالا را با حرکت کنترل شده و د
 13. [Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025.](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 14. [Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021.](https://www.nature.com/articles/s41467-021-21880-3)
 15. [Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013.](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
-16. [Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026.](https://www.mdpi.com/2411-5142/11/1/130)

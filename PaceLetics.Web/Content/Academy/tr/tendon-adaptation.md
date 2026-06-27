@@ -28,7 +28,6 @@ references:
  - Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025. | https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full
  - Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021. | https://www.nature.com/articles/s41467-021-21880-3
  - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
- - Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026. | https://www.mdpi.com/2411-5142/11/1/130
 ---
 
 Tendonlar kasları ve kemikleri birbirine bağlar. Ama pasif yapılar değiller. Kuvvet ileten ve enerji depolayan uyarlanabilir biyolojik dokulardır.
@@ -83,8 +82,6 @@ Patlayıcı antrenman ve plyometri, sportif yetenek için gereklidir, ancak bunl
 
 Bu sıralama spora dönüş için çok önemli. Aşil tendonu sorunları söz konusu olduğunda Silbernagel ve Crossley, spora dönüşün tek bir testle belirlenemeyeceğini vurguluyor. Ağrının ilerlemesi, işlevi, dayanıklılığı, spor gereksinimleri ve ilerlemeye verilen tepki önemlidir. Ağrı mükemmel bir doku belirteci değildir ancak yararlı bir izleme sinyalidir. Semptomlar seans sırasında önemli ölçüde artarsa ​​veya ertesi gün devam ederse, stres muhtemelen mevcut uyum düzeyi için çok yüksekti. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-Beslenmeyi de destekleyici bir faktör olarak ele almak mümkündür. 2026'da yapılan sistematik bir inceleme, 15 ila 30 gram kolajen veya jelatin ile en az 50 mg C vitamininin, yeterince yoğun direnç antrenmanı ile birleştiğinde, kesit veya sertlik gibi tendonla ilgili yapısal parametreleri destekleyebileceğine dair kanıtlar buldu. Veriler hala heterojendir ve takviyeler mekanik uyaranın yerini almaz. Eklemeli bir model daha makuldür: Eğitim sinyali sağlar, beslenme ise substratları ve kofaktörleri sağlar. [[16]](https://www.mdpi.com/2411-5142/11/1/130)
-
 ## Pratik eğitim çerçevesi
 
 Tendon eğitimi en az 12 haftalık olarak planlanmalıdır. Ana uyarıcı yüksek, kontrollü gerilimdir. Genel yüke bağlı olarak haftada 2 ila 4 hedeflenen tendon seansı makuldür. Uygulamada bu genellikle yüzde 70 civarında yoğunluk anlamına gelir 1RM veya izometrik çalışma için maksimum izometrik gücün yüzde 85 ila 90'ı. Önemli olan tendonun aslında birkaç saniye boyunca yüksek strese maruz kalmasıdır. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
@@ -117,4 +114,3 @@ Tendonlar yavaş uyum sağlar çünkü esas olarak uzun ömürlü hücre dışı
 13. [Gögele et al. Tendon mechanobiology in the context of tendon biofabrication. Front Bioeng Biotechnol. 2025.](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 14. [Oliver et al. Molecular architecture of the Golgi tendon organ. Nat Commun. 2021.](https://www.nature.com/articles/s41467-021-21880-3)
 15. [Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013.](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
-16. [Buchalski et al. Collagen Supplementation on Tendon-Related Structural and Performance Outcomes: A Systematic Review. J Funct Morphol Kinesiol. 2026.](https://www.mdpi.com/2411-5142/11/1/130)
