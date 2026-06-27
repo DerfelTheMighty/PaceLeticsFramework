@@ -138,6 +138,15 @@ public sealed class CosmosRunningAnalysisRepository :
             recording.CourseId);
     }
 
+    public Task DeleteRecordingAsync(string recordingId, string courseId, CancellationToken cancellationToken = default)
+    {
+        return _db.DeleteItem<RunningAnalysisRecording>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            recordingId,
+            courseId);
+    }
+
     public async Task<RunningAnalysisResult?> GetResultForParticipantAsync(
         string captureSessionId,
         string participantId,
@@ -169,6 +178,15 @@ public sealed class CosmosRunningAnalysisRepository :
             _options.CourseContainerName,
             WithDocumentType(result, RunningAnalysisDocumentTypes.Result),
             result.CourseId);
+    }
+
+    public Task DeleteResultAsync(string resultId, string courseId, CancellationToken cancellationToken = default)
+    {
+        return _db.DeleteItem<RunningAnalysisResult>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            resultId,
+            courseId);
     }
 
     public async Task<DriveFolderReference?> FindReusableFolderAsync(

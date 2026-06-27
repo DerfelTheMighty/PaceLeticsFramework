@@ -10,7 +10,7 @@
   <data name="Loading" xml:space="preserve"><value>Loading analyses</value></data>
   <data name="NoAnalyses" xml:space="preserve"><value>No completed analyses available yet.</value></data>
   <data name="OpenFolder" xml:space="preserve"><value>Open folder</value></data>
-  <data name="RemoveAnalysis" xml:space="preserve"><value>Remove</value></data>
-  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>Remove "{0}" from your overview? The Drive files will not be deleted.</value></data>
+  <data name="RemoveAnalysis" xml:space="preserve"><value>Delete</value></data>
+  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>Delete "{0}"? This will delete the Drive files and remove the entry from your overview.</value></data>
   <data name="AthleteNotResolved" xml:space="preserve"><value>The athlete could not be resolved.</value></data>
 </root>

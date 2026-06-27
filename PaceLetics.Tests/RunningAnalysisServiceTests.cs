@@ -300,6 +300,51 @@ public sealed class RunningAnalysisServiceTests
     }
 
     [Fact]
+    public async Task DeleteAnalysisForAthlete_DeletesDriveFilesAndLocalArtifacts()
+    {
+        var repository = new InMemoryRunningAnalysisRepository();
+        var storage = new FakeRunningAnalysisStorageProvider();
+        var service = CreateService(
+            repository,
+            storage,
+            new FakeUserDriveFolderRegistry(),
+            new FakeUserDriveFolderService());
+        var participant = await service.RegisterParticipantAsync(CreateRegistration());
+        var analysisEvent = Assert.Single(repository.Events.Values);
+
+        await service.UploadRecordingAsync(
+            analysisEvent.Id,
+            participant.Id,
+            "side.webm",
+            "video/webm",
+            new MemoryStream([1]),
+            isOnline: true,
+            perspective: RunningAnalysisPerspective.Side);
+        await service.UploadRecordingAsync(
+            analysisEvent.Id,
+            participant.Id,
+            "rear.webm",
+            "video/webm",
+            new MemoryStream([2]),
+            isOnline: true,
+            perspective: RunningAnalysisPerspective.Rear);
+        var result = await service.SaveAnalysisResultAsync(CreateResultRequest(
+            analysisEvent.Id,
+            participant.Id,
+            complete: true));
+
+        await service.DeleteAnalysisForAthleteAsync("runner-1", analysisEvent.Id);
+
+        Assert.Empty(await repository.GetRecordingsForParticipantAsync(participant.Id));
+        Assert.Empty(await repository.GetResultsForAthleteAsync("runner-1"));
+        Assert.Empty(await service.GetAnalysesForAthleteAsync("runner-1"));
+        Assert.True((await repository.GetParticipantByIdAsync(participant.Id))?.IsHiddenFromAthlete);
+        Assert.Contains("file-1", storage.DeletedFileIds);
+        Assert.Contains("file-2", storage.DeletedFileIds);
+        Assert.Contains(result.ResultDriveFileId, storage.DeletedFileIds);
+    }
+
+    [Fact]
     public async Task RegisterUploadedRecording_MakesPerspectiveVideoAvailableInRoster()
     {
         var repository = new InMemoryRunningAnalysisRepository();
@@ -612,6 +657,16 @@ public sealed class RunningAnalysisServiceTests
                 $"file-{request.Recording.AttemptNumber}",
                 $"https://drive.test/file-{request.Recording.AttemptNumber}"));
         }
+
+        public List<string> DeletedFileIds { get; } = new();
+
+        public Task DeleteFileAsync(
+            string driveFileId,
+            CancellationToken cancellationToken = default)
+        {
+            DeletedFileIds.Add(driveFileId);
+            return Task.CompletedTask;
+        }
     }
 
     private sealed class InMemoryRunningAnalysisRepository : IRunningAnalysisRepository
@@ -743,6 +798,15 @@ public sealed class RunningAnalysisServiceTests
             return Task.CompletedTask;
         }
 
+        public Task DeleteRecordingAsync(
+            string recordingId,
+            string courseId,
+            CancellationToken cancellationToken = default)
+        {
+            _recordings.Remove(recordingId);
+            return Task.CompletedTask;
+        }
+
         public Task<RunningAnalysisResult?> GetResultForParticipantAsync(
             string captureSessionId,
             string participantId,
@@ -769,6 +833,15 @@ public sealed class RunningAnalysisServiceTests
             CancellationToken cancellationToken = default)
         {
             _results[result.Id] = result;
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteResultAsync(
+            string resultId,
+            string courseId,
+            CancellationToken cancellationToken = default)
+        {
+            _results.Remove(resultId);
             return Task.CompletedTask;
         }
 

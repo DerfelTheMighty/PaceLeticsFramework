@@ -9,6 +9,7 @@ using Google.Apis.Upload;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Storage;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -177,6 +178,25 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var request = drive.Files.Delete(userFolder.FolderId);
         request.SupportsAllDrives = true;
         await request.ExecuteAsync(cancellationToken);
+    }
+
+    public async Task DeleteFileAsync(
+        string driveFileId,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(driveFileId))
+            return;
+
+        var drive = CreateFolderManagementDriveService();
+        var request = drive.Files.Delete(driveFileId.Trim());
+        request.SupportsAllDrives = true;
+        try
+        {
+            await request.ExecuteAsync(cancellationToken);
+        }
+        catch (Google.GoogleApiException ex) when (ex.HttpStatusCode == HttpStatusCode.NotFound)
+        {
+        }
     }
 
     public async Task<DriveFileReference> UploadRecordingAsync(

@@ -312,7 +312,7 @@
 
         try
         {
-            await RunningAnalysisService.HideAnalysisForAthleteAsync(_userId, analysis.AnalysisEventId);
+            await RunningAnalysisService.DeleteAnalysisForAthleteAsync(_userId, analysis.AnalysisEventId);
             _analyses = _analyses
                 .Where(existing => existing.AnalysisEventId != analysis.AnalysisEventId)
                 .ToList();

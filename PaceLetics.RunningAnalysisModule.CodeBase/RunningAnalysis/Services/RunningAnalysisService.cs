@@ -299,6 +299,59 @@ public sealed class RunningAnalysisService : IRunningAnalysisService
         return HideCaptureForAthleteAsync(athleteUserId, analysisEventId, cancellationToken);
     }
 
+    public async Task DeleteAnalysisForAthleteAsync(
+        string athleteUserId,
+        string analysisEventId,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            throw new InvalidOperationException("The athlete user id is required.");
+
+        if (string.IsNullOrWhiteSpace(analysisEventId))
+            throw new InvalidOperationException("The running analysis id is required.");
+
+        var normalizedAthleteUserId = athleteUserId.Trim();
+        var normalizedAnalysisEventId = analysisEventId.Trim();
+        var participants = await _repository.GetParticipantsAsync(normalizedAnalysisEventId, cancellationToken);
+        var matchingParticipants = participants
+            .Where(participant => string.Equals(participant.AthleteUserId, normalizedAthleteUserId, StringComparison.Ordinal))
+            .ToList();
+
+        if (matchingParticipants.Count == 0)
+            throw new InvalidOperationException("The running analysis was not found for this athlete.");
+
+        var athleteResults = await _repository.GetResultsForAthleteAsync(normalizedAthleteUserId, cancellationToken);
+
+        foreach (var participant in matchingParticipants)
+        {
+            var recordings = await _repository.GetRecordingsForParticipantAsync(participant.Id, cancellationToken);
+            foreach (var recording in recordings)
+            {
+                if (!string.IsNullOrWhiteSpace(recording.DriveFileId))
+                    await _storageProvider.DeleteFileAsync(recording.DriveFileId, cancellationToken);
+
+                await _repository.DeleteRecordingAsync(recording.Id, recording.CourseId, cancellationToken);
+            }
+
+            var results = athleteResults
+                .Where(result =>
+                    result.CaptureSessionId == normalizedAnalysisEventId
+                    && result.ParticipantId == participant.Id)
+                .ToList();
+
+            foreach (var result in results)
+            {
+                if (!string.IsNullOrWhiteSpace(result.ResultDriveFileId))
+                    await _storageProvider.DeleteFileAsync(result.ResultDriveFileId, cancellationToken);
+
+                await _repository.DeleteResultAsync(result.Id, result.CourseId, cancellationToken);
+            }
+
+            participant.IsHiddenFromAthlete = true;
+            await _repository.UpsertParticipantAsync(participant, cancellationToken);
+        }
+    }
+
     public async Task<RunningAnalysisResult?> GetAnalysisResultForParticipantAsync(
         string captureSessionId,
         string participantId,

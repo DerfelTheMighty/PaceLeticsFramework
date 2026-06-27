@@ -23,4 +23,8 @@ public interface IRunningAnalysisStorageProvider
     Task<DriveFileReference> UploadRecordingAsync(
         UploadRecordingRequest request,
         CancellationToken cancellationToken = default);
+
+    Task DeleteFileAsync(
+        string driveFileId,
+        CancellationToken cancellationToken = default);
 }

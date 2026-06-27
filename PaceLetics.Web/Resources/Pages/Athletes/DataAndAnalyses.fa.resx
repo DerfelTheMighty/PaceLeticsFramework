@@ -19,9 +19,9 @@
   <data name="AnalysesSubtitle" xml:space="preserve"><value>Your shared running recording folders</value></data>
   <data name="DriveRequiredForAnalyses" xml:space="preserve"><value>Link your Drive folder before recordings can be shown here.</value></data>
   <data name="NoAnalyses" xml:space="preserve"><value>No recordings available yet.</value></data>
-  <data name="RemoveAnalysis" xml:space="preserve"><value>Remove</value></data>
-  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>Remove "{0}" from your overview? The Drive files will not be deleted.</value></data>
-  <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Entry removed from your overview.</value></data>
+  <data name="RemoveAnalysis" xml:space="preserve"><value>Delete</value></data>
+  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>Delete "{0}"? This will delete the Drive files and remove the entry from your overview.</value></data>
+  <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Drive files deleted and entry removed from your overview.</value></data>
   <data name="DriveTitle" xml:space="preserve"><value>Drive folder</value></data>
   <data name="NoFolderText" xml:space="preserve"><value>No Drive folder is linked yet.</value></data>
   <data name="FolderReadyText" xml:space="preserve"><value>Your Drive folder is linked and ready.</value></data>

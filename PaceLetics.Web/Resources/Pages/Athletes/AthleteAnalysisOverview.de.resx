@@ -10,7 +10,7 @@
   <data name="OpenAnalysis" xml:space="preserve"><value>Analyse öffnen</value></data>
   <data name="OpenResultFile" xml:space="preserve"><value>Ergebnisdatei öffnen</value></data>
   <data name="OpenFolder" xml:space="preserve"><value>Ordner öffnen</value></data>
-  <data name="RemoveAnalysis" xml:space="preserve"><value>Entfernen</value></data>
+  <data name="RemoveAnalysis" xml:space="preserve"><value>Löschen</value></data>
   <data name="OverallScore" xml:space="preserve"><value>Gesamt</value></data>
   <data name="SideScore" xml:space="preserve"><value>Seite</value></data>
   <data name="RearScore" xml:space="preserve"><value>Hinten</value></data>

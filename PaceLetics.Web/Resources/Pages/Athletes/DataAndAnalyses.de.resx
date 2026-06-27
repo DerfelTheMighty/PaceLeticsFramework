@@ -19,9 +19,9 @@
   <data name="AnalysesSubtitle" xml:space="preserve"><value>Deine freigegebenen Laufaufnahme-Ordner</value></data>
   <data name="DriveRequiredForAnalyses" xml:space="preserve"><value>Verlinke zuerst deinen Drive-Ordner, damit hier Aufnahmen angezeigt werden koennen.</value></data>
   <data name="NoAnalyses" xml:space="preserve"><value>Noch keine Aufnahmen verfügbar.</value></data>
-  <data name="RemoveAnalysis" xml:space="preserve"><value>Entfernen</value></data>
-  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>"{0}" aus deiner Übersicht entfernen? Die Drive-Dateien werden nicht geloescht.</value></data>
-  <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Eintrag wurde aus deiner Übersicht entfernt.</value></data>
+  <data name="RemoveAnalysis" xml:space="preserve"><value>Löschen</value></data>
+  <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>"{0}" löschen? Dadurch werden die Drive-Dateien gelöscht und der Eintrag aus deiner Übersicht entfernt.</value></data>
+  <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Drive-Dateien wurden gelöscht und der Eintrag wurde aus deiner Übersicht entfernt.</value></data>
   <data name="DriveTitle" xml:space="preserve"><value>Drive-Ordner</value></data>
   <data name="NoFolderText" xml:space="preserve"><value>Noch kein Drive-Ordner verlinkt.</value></data>
   <data name="FolderReadyText" xml:space="preserve"><value>Dein Drive-Ordner ist verlinkt und bereit.</value></data>

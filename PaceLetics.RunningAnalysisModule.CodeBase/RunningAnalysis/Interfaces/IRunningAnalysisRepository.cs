@@ -30,9 +30,13 @@ public interface IRunningAnalysisRepository
 
     Task UpsertRecordingAsync(RunningAnalysisRecording recording, CancellationToken cancellationToken = default);
 
+    Task DeleteRecordingAsync(string recordingId, string courseId, CancellationToken cancellationToken = default);
+
     Task<RunningAnalysisResult?> GetResultForParticipantAsync(string captureSessionId, string participantId, CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<RunningAnalysisResult>> GetResultsForAthleteAsync(string athleteUserId, CancellationToken cancellationToken = default);
 
     Task UpsertResultAsync(RunningAnalysisResult result, CancellationToken cancellationToken = default);
+
+    Task DeleteResultAsync(string resultId, string courseId, CancellationToken cancellationToken = default);
 }
