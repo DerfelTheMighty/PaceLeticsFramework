@@ -32,13 +32,6 @@
             <span>@L["TabTrainingPlans"]</span>
         </button>
         <button type="button"
-                class="@GetSectionButtonClass(CoursesSection.PaceMate)"
-                aria-pressed="@(_activeSection == CoursesSection.PaceMate)"
-                @onclick="@(() => SelectSection(CoursesSection.PaceMate))">
-            <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Small" />
-            <span>@L["TabPaceMate"]</span>
-        </button>
-        <button type="button"
                 class="@GetSectionButtonClass(CoursesSection.Calendar)"
                 aria-pressed="@(_activeSection == CoursesSection.Calendar)"
                 @onclick="@(() => SelectSection(CoursesSection.Calendar))">
@@ -406,13 +399,8 @@
         <MudDivider Class="my-4" />
 
         <TrainingPlanPage Embedded="true"
-                          AutoScrollToNextSession="false" />
-    }
-    else if (_activeSection == CoursesSection.PaceMate)
-    {
-        <MudDivider Class="my-4" />
-
-        <Mate Embedded="true" />
+                          SectionQuery="@ActivePlanSectionQuery"
+                          AutoScrollToNextSession="true" />
     }
     else
     {
@@ -427,12 +415,14 @@
     {
         Courses,
         TrainingPlans,
-        PaceMate,
         Calendar
     }
 
     [SupplyParameterFromQuery(Name = "section")]
     public string? SectionQuery { get; set; }
+
+    [SupplyParameterFromQuery(Name = "plan-section")]
+    public string? PlanSectionQuery { get; set; }
 
     private string? _userId;
     private string? _errorMessage;
@@ -448,6 +438,9 @@
     private bool _showAllTrainingPlans;
     private CoursesSection _activeSection = CoursesSection.Courses;
     private string? _appliedSectionQuery;
+
+    private string? ActivePlanSectionQuery =>
+        IsLegacyPaceMateSection(SectionQuery) ? "pace-mate" : PlanSectionQuery;
 
     private CourseOverview? SelectedOverview =>
         JoinedCourses.FirstOrDefault(course => course.Course.Id == _selectedCourseId)
@@ -556,7 +549,7 @@
         return section?.Trim().ToLowerInvariant() switch
         {
             "plans" or "training-plans" => CoursesSection.TrainingPlans,
-            "pace-mate" or "mate" => CoursesSection.PaceMate,
+            "pace-mate" or "mate" => CoursesSection.TrainingPlans,
             "calendar" or "kalender" => CoursesSection.Calendar,
             _ => CoursesSection.Courses
         };
@@ -567,10 +560,14 @@
         return section switch
         {
             CoursesSection.TrainingPlans => "/Athletes/courses?section=plans",
-            CoursesSection.PaceMate => "/Athletes/courses?section=pace-mate",
             CoursesSection.Calendar => "/Athletes/courses?section=calendar",
             _ => "/Athletes/courses"
         };
+    }
+
+    private static bool IsLegacyPaceMateSection(string? section)
+    {
+        return section?.Trim().ToLowerInvariant() is "pace-mate" or "mate";
     }
 
     private void OpenCoursePicker()

@@ -37,13 +37,6 @@
             <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
             <span>@L["TabPaceZones"]</span>
         </button>
-        <button type="button"
-                class="@GetSectionButtonClass(RacePacesSection.Info)"
-                aria-pressed="@(_activeSection == RacePacesSection.Info)"
-                @onclick="@(() => SelectSection(RacePacesSection.Info))">
-            <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-            <span>@L["TabInfo"]</span>
-        </button>
     </nav>
 
     <PageHeader Title="@L["Title"]"
@@ -135,12 +128,6 @@
                                          Recommendations="@_criticalSpeedIntervals" />
             }
         }
-        else
-        {
-            <PaceModelInfo />
-            <ArticleLinks />
-        }
-
     </MudStack>
 
 </MudContainer>
@@ -149,8 +136,7 @@
     private enum RacePacesSection
     {
         RaceData,
-        PaceZones,
-        Info
+        PaceZones
     }
 
     private RacePacesSection _activeSection = RacePacesSection.RaceData;

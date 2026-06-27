@@ -209,11 +209,10 @@ namespace PaceLetics.Web.Pages.Athletes
             {
                 "pacedata" or "racedata" or "laufdaten" => RacePacesSection.RaceData,
                 "pacezones" or "paces" or "pacebereiche" => RacePacesSection.PaceZones,
-                "info" or "infos" => RacePacesSection.Info,
                 _ => RacePacesSection.RaceData
             };
 
-            return normalized is "pacedata" or "racedata" or "laufdaten" or "pacezones" or "paces" or "pacebereiche" or "info" or "infos";
+            return normalized is "pacedata" or "racedata" or "laufdaten" or "pacezones" or "paces" or "pacebereiche";
         }
     }
 }

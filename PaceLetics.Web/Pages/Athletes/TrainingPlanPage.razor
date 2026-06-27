@@ -21,6 +21,28 @@
 
 @if (Embedded)
 {
+    <nav class="pl-section-nav" aria-label="@L["Title"]">
+        <button type="button"
+                class="@GetSectionButtonClass(TrainingPlanSection.Plans)"
+                aria-pressed="@(_activeSection == TrainingPlanSection.Plans)"
+                @onclick="@(() => SelectSection(TrainingPlanSection.Plans))">
+            <MudIcon Icon="@Icons.Material.Filled.EventNote" Size="Size.Small" />
+            <span>@L["TabTrainingPlans"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(TrainingPlanSection.PaceMate)"
+                aria-pressed="@(_activeSection == TrainingPlanSection.PaceMate)"
+                @onclick="@(() => SelectSection(TrainingPlanSection.PaceMate))">
+            <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Small" />
+            <span>@L["TabPaceMate"]</span>
+        </button>
+    </nav>
+}
+
+@if (_activeSection == TrainingPlanSection.Plans)
+{
+@if (Embedded)
+{
     <MudStack Spacing="1">
         <MudText Typo="Typo.h6">@L["Title"]</MudText>
         <MudText Typo="Typo.body2" Color="Color.Secondary">@L["Subtitle"]</MudText>
@@ -303,15 +325,29 @@ else
         </div>
     </MudPaper>
 </div>
+}
+else
+{
+    <Mate Embedded="true" />
+}
 
 </MudContainer>
 
 @code {
+    private enum TrainingPlanSection
+    {
+        Plans,
+        PaceMate
+    }
+
     [Parameter]
     public bool Embedded { get; set; }
 
     [Parameter]
     public bool AutoScrollToNextSession { get; set; } = true;
+
+    [Parameter]
+    public string? SectionQuery { get; set; }
 
     private TrainingPlan? Plan;
     private string? _nextSessionId;
@@ -327,10 +363,16 @@ else
     private List<TrainingPlan> _plans = new();
     private string? _selectedPlanId;
     private HashSet<string> _subscribedPlanIds = new(StringComparer.OrdinalIgnoreCase);
+    private TrainingPlanSection _activeSection = TrainingPlanSection.Plans;
 
     private string ContainerClass => Embedded
         ? "pa-0 pb-8"
         : "pt-6 px-6 pb-8";
+
+    protected override void OnParametersSet()
+    {
+        _activeSection = ParseSection(SectionQuery);
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -418,6 +460,39 @@ else
     {
         if (firstRender && AutoScrollToNextSession && _nextSessionId != null)
             await JS.InvokeVoidAsync("scrollToNextSession");
+    }
+
+    private void SelectSection(TrainingPlanSection section)
+    {
+        _activeSection = section;
+
+        if (Embedded)
+            Navigation.NavigateTo(GetSectionUri(section), replace: true);
+    }
+
+    private string GetSectionButtonClass(TrainingPlanSection section)
+    {
+        return _activeSection == section
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
+    }
+
+    private static TrainingPlanSection ParseSection(string? section)
+    {
+        return section?.Trim().ToLowerInvariant() switch
+        {
+            "pace-mate" or "mate" => TrainingPlanSection.PaceMate,
+            _ => TrainingPlanSection.Plans
+        };
+    }
+
+    private static string GetSectionUri(TrainingPlanSection section)
+    {
+        return section switch
+        {
+            TrainingPlanSection.PaceMate => "/Athletes/courses?section=plans&plan-section=pace-mate",
+            _ => "/Athletes/courses?section=plans"
+        };
     }
 
     private void OpenDetails(string sessionId)
