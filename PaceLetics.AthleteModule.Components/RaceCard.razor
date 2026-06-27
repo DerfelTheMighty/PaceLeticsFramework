@@ -20,12 +20,24 @@
                 </MudStack>
             </MudStack>
 
-            <MudTooltip Text="@L["RaceCard_Edit"]">
-                <MudIconButton Icon="@Icons.Material.Filled.Edit"
-                               Color="Color.Primary"
-                               OnClick="HandleEditCard"
-                               aria-label="@L["RaceCard_Edit"]" />
-            </MudTooltip>
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                <MudTooltip Text="@L["RaceCard_Edit"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                   Color="Color.Primary"
+                                   OnClick="HandleEditCard"
+                                   aria-label="@L["RaceCard_Edit"]" />
+                </MudTooltip>
+
+                @if (OnDeleteRaceCard.HasDelegate)
+                {
+                    <MudTooltip Text="@L["RaceCard_Delete"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                       Color="Color.Error"
+                                       OnClick="HandleDeleteCard"
+                                       aria-label="@L["RaceCard_Delete"]" />
+                    </MudTooltip>
+                }
+            </MudStack>
         </MudStack>
 
         <MudDivider />

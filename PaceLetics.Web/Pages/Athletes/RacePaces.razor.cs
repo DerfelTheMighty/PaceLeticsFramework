@@ -78,6 +78,27 @@ namespace PaceLetics.Web.Pages.Athletes
             await OpenRaceDialog(new RaceResultModel { Date = DateTime.Now });
         }
 
+        private async Task DeleteActiveReferenceRun()
+        {
+            var activeReferenceResult = _athlete.ActiveReferenceResult;
+            if (activeReferenceResult is null)
+                return;
+
+            var confirmed = await JS.InvokeAsync<bool>("confirm", new object?[] { L["DeleteRaceConfirm"].Value });
+            if (!confirmed)
+                return;
+
+            RemoveRaceResult(activeReferenceResult);
+            _athlete.ActiveReferenceResult = null;
+            _athlete.Vdot = 0;
+            _athlete.PaceModel = new PaceModel();
+            _vdotData[0] = 0;
+            _vdotData[1] = 0;
+            UpdatePaceModels();
+
+            await Loading.RunAsync(L["Loading"], () => AthleteData.UpdateAthlete(_athlete));
+        }
+
         private async Task OpenRaceDialog(RaceResultModel? raceResult)
         {
             var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
@@ -174,6 +195,16 @@ namespace PaceLetics.Web.Pages.Athletes
             }
 
             _athlete.RaceResults.Add(result);
+        }
+
+        private void RemoveRaceResult(RaceResultModel result)
+        {
+            _athlete.RaceResults ??= new List<RaceResultModel>();
+
+            _athlete.RaceResults.RemoveAll(existing =>
+                IsSameRaceResult(existing, result)
+                || (!string.IsNullOrWhiteSpace(result.Id)
+                    && string.Equals(existing.Id, result.Id, StringComparison.OrdinalIgnoreCase)));
         }
 
         private IEnumerable<RaceResultModel> GetCriticalSpeedResults()

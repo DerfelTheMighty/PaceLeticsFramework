@@ -17,6 +17,7 @@
 @inject IPaceModelProvider pmProvider
 @inject LoadingStateService Loading
 @inject IStringLocalizer<RacePaces> L
+@inject IJSRuntime JS
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -64,7 +65,9 @@
             }
             else
             {
-                <RaceCard OnEditRaceCard="@AddAthlete" Model="@_athlete.ActiveReferenceResult" />
+                <RaceCard OnEditRaceCard="@AddAthlete"
+                          OnDeleteRaceCard="@DeleteActiveReferenceRun"
+                          Model="@_athlete.ActiveReferenceResult" />
 
                 <MudTooltip Text="@L["AddRace"]">
                     <MudIconButton Variant="Variant.Outlined"

@@ -24,6 +24,9 @@
   <data name="RaceCard_Edit" xml:space="preserve">
     <value>Edit race</value>
   </data>
+  <data name="RaceCard_Delete" xml:space="preserve">
+    <value>Delete race</value>
+  </data>
   <data name="PaceInfo_MoreInfo" xml:space="preserve">
     <value>More info</value>
   </data>
