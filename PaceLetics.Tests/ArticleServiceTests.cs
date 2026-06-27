@@ -15,6 +15,7 @@ public sealed class ArticleServiceTests
         Assert.Collection(
             articles,
             article => Assert.Equal("mental-resource-running", article.Id),
+            article => Assert.Equal("injured-athletes", article.Id),
             article => Assert.Equal("evidence-based-running-analysis", article.Id),
             article => Assert.Equal("pace-controlled-training", article.Id),
             article => Assert.Equal("tendon-adaptation", article.Id));
@@ -29,6 +30,15 @@ public sealed class ArticleServiceTests
         Assert.Contains(mentalResource.References, reference => reference.Url.Contains("ijerph17218059"));
         Assert.Contains(mentalResource.References, reference => reference.Url.Contains("CD004366.pub7"));
         Assert.Contains(mentalResource.References, reference => reference.Url.Contains("jsams.2018.06.003"));
+
+        var injuredAthletes = Assert.Single(articles, article => article.Id == "injured-athletes");
+        Assert.Equal(ArticleCategories.Fundamentals, injuredAthletes.Category);
+        Assert.Equal(ArticleContentKind.Generic, injuredAthletes.ContentKind);
+        Assert.Equal("Wenn Sportler verletzt sind", injuredAthletes.Title);
+        Assert.Contains("Detraining", injuredAthletes.BodyHtml);
+        Assert.Contains("Sozialer Rückzug", injuredAthletes.BodyHtml);
+        Assert.Contains(injuredAthletes.References, reference => reference.Url.Contains("bjsports-2012-091203"));
+        Assert.Contains(injuredAthletes.References, reference => reference.Url.Contains("ijerph19116458"));
 
         var runningAnalysis = Assert.Single(articles, article => article.Id == "evidence-based-running-analysis");
         Assert.Equal(ArticleCategories.RunningAnalysis, runningAnalysis.Category);
@@ -58,7 +68,7 @@ public sealed class ArticleServiceTests
     [Fact]
     public void GetArticles_FallsBackToEnglishWhenCultureIsMissing()
     {
-        var service = CreateService("fr");
+        var service = CreateService("pt-BR");
 
         var article = service.GetArticle("mental-resource-running");
 
@@ -81,6 +91,12 @@ public sealed class ArticleServiceTests
                 Assert.Equal("mental-resource-running", preview.Id);
                 Assert.Equal("Laufen als mentale Ressource", preview.Title);
                 Assert.Equal(ArticleContentKind.MentalResource, preview.ContentKind);
+            },
+            preview =>
+            {
+                Assert.Equal("injured-athletes", preview.Id);
+                Assert.Equal("Wenn Sportler verletzt sind", preview.Title);
+                Assert.Equal(ArticleContentKind.Generic, preview.ContentKind);
             },
             preview =>
             {

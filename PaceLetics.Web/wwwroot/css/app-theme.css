@@ -1396,6 +1396,48 @@
     stroke-width: 2.2;
 }
 
+.pl-injury-icon {
+    --pl-injury-icon-base: var(--pl-academy-accent, var(--mud-palette-primary));
+    --pl-injury-icon-signal: color-mix(in srgb, var(--pl-injury-icon-base) 42%, var(--mud-palette-error));
+    display: block;
+    width: 4.6rem;
+    height: 4.6rem;
+    overflow: visible;
+}
+
+.pl-injury-icon__body {
+    fill: none;
+    stroke: var(--pl-injury-icon-base);
+    stroke-width: 6.4;
+}
+
+.pl-injury-icon__body circle {
+    fill: color-mix(in srgb, var(--pl-injury-icon-base) 86%, var(--mud-palette-surface));
+    stroke: none;
+}
+
+.pl-injury-icon__knee {
+    fill: none;
+    stroke: var(--pl-injury-icon-signal);
+}
+
+.pl-injury-icon__glow {
+    fill: color-mix(in srgb, var(--pl-injury-icon-signal) 18%, transparent);
+    stroke: color-mix(in srgb, var(--pl-injury-icon-signal) 42%, transparent);
+    stroke-width: 7;
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--pl-injury-icon-signal) 72%, transparent));
+}
+
+.pl-injury-icon__ring {
+    fill: color-mix(in srgb, var(--mud-palette-surface) 58%, transparent);
+    stroke-width: 2.6;
+}
+
+.pl-injury-icon__spark {
+    stroke-width: 2.4;
+    opacity: .9;
+}
+
 .pl-academy-tile__subtitle {
     flex: 0 0 auto;
     min-width: 0;
@@ -1626,6 +1668,11 @@
     }
 
     .pl-tendon-icon {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .pl-injury-icon {
         width: 4rem;
         height: 4rem;
     }

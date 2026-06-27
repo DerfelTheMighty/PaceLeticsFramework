@@ -56,6 +56,10 @@
                         {
                             <TendonIcon />
                         }
+                        else if (IsInjuredAthletesArticle(article))
+                        {
+                            <InjuryIcon />
+                        }
                         else
                         {
                             <MudIcon Icon="@GetArticleIcon(article)" />
@@ -147,6 +151,11 @@
     private static bool IsTendonAdaptationArticle(ArticlePreview article)
     {
         return string.Equals(article.Id, "tendon-adaptation", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsInjuredAthletesArticle(ArticlePreview article)
+    {
+        return string.Equals(article.Id, "injured-athletes", StringComparison.OrdinalIgnoreCase);
     }
 
     private static string GetArticleTileClass(ArticlePreview article)
