@@ -479,8 +479,6 @@
 
 .pl-dashboard-page .pl-pageheader {
     padding: 18px 20px;
-    background: color-mix(in srgb, var(--mud-palette-surface) 82%, transparent);
-    backdrop-filter: blur(10px);
 }
 
 .pl-panel {
