@@ -33,13 +33,6 @@
             <MudIcon Icon="@Icons.Material.Filled.Assessment" Size="Size.Small" />
             <span>@L["TabAnalyses"]</span>
         </button>
-        <button type="button"
-                class="@GetSectionButtonClass(DataAnalysesSection.Info)"
-                aria-pressed="@(_activeSection == DataAnalysesSection.Info)"
-                @onclick="@(() => SelectSection(DataAnalysesSection.Info))">
-            <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-            <span>@L["TabInfo"]</span>
-        </button>
     </nav>
 
     @if (_activeSection == DataAnalysesSection.Recordings)
@@ -149,19 +142,13 @@
             </MudStack>
         </MudPaper>
     }
-    else
-    {
-        <RunningAnalysisInterventionGuidance />
-        <ArticleLinks />
-    }
 </MudContainer>
 
 @code {
     private enum DataAnalysesSection
     {
         Recordings,
-        Analyses,
-        Info
+        Analyses
     }
 
     private string? _userId;
@@ -243,7 +230,6 @@
         {
             "recordings" or "aufnahmen" => DataAnalysesSection.Recordings,
             "analyses" or "analysis" or "analysen" => DataAnalysesSection.Analyses,
-            "info" or "infos" => DataAnalysesSection.Info,
             _ => DataAnalysesSection.Recordings
         };
 
@@ -251,9 +237,7 @@
             or "aufnahmen"
             or "analyses"
             or "analysis"
-            or "analysen"
-            or "info"
-            or "infos";
+            or "analysen";
     }
 
     private string GetSectionButtonClass(DataAnalysesSection section)
