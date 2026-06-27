@@ -30,12 +30,12 @@
                 </MudText>
             </MudStack>
 
-            <MudTooltip Text="@(Session is null ? L["Courses"] : L["Open"])">
-                <MudIconButton Href="/Athletes/courses"
+            <MudTooltip Text="@GetTooltipText()">
+                <MudIconButton Href="@Href"
                                Variant="Variant.Filled"
                                Color="Color.Primary"
                                Icon="@(Session is null ? Icons.Material.Filled.School : Icons.Material.Filled.OpenInNew)"
-                               aria-label="@(Session is null ? L["Courses"] : L["Open"])" />
+                               aria-label="@GetTooltipText()" />
             </MudTooltip>
         </MudStack>
 
@@ -69,6 +69,19 @@
 @code {
     [Parameter]
     public TrainingSession? Session { get; set; }
+
+    [Parameter]
+    public string Href { get; set; } = "/Athletes/courses";
+
+    [Parameter]
+    public string? Tooltip { get; set; }
+
+    private string GetTooltipText()
+    {
+        return !string.IsNullOrWhiteSpace(Tooltip)
+            ? Tooltip
+            : Session is null ? L["Courses"] : L["Open"];
+    }
 
     private string GetSessionComposition(TrainingSession session)
     {

@@ -27,6 +27,21 @@
   <data name="Metric_NoPlan" xml:space="preserve"><value>Kein Plan ausgewählt</value></data>
   <data name="Metric_PlanSessions" xml:space="preserve"><value>{0} Einheiten</value></data>
   <data name="Metric_NoSession" xml:space="preserve"><value>Keine anstehende Einheit</value></data>
+  <data name="Metric_TrainingCalendar" xml:space="preserve"><value>Trainingskalender</value></data>
+  <data name="CalendarUpcomingCount" xml:space="preserve"><value>{0} anstehend</value></data>
+  <data name="CalendarNoUpcoming" xml:space="preserve"><value>Keine anstehenden Kalendereintr&#xE4;ge</value></data>
+  <data name="CalendarNextItem" xml:space="preserve"><value>N&#xE4;chster Eintrag: {0:dd.MM.} / {1}</value></data>
+  <data name="CalendarPreviewTitle" xml:space="preserve"><value>Trainingskalender</value></data>
+  <data name="Metric_Academy" xml:space="preserve"><value>Academy</value></data>
+  <data name="Metric_AcademyValue" xml:space="preserve"><value>&#xDC;bersicht</value></data>
+  <data name="Metric_AcademyDetail" xml:space="preserve"><value>Wissen und Orientierung</value></data>
+  <data name="Metric_WorkoutArea" xml:space="preserve"><value>Workout Area</value></data>
+  <data name="Metric_WorkoutAreaValue" xml:space="preserve"><value>Workouts &#xF6;ffnen</value></data>
+  <data name="Metric_WorkoutAreaDetail" xml:space="preserve"><value>Kraft und Mobilit&#xE4;t</value></data>
+  <data name="Tooltip_TrainingCalendar" xml:space="preserve"><value>Kalender &#xF6;ffnen</value></data>
+  <data name="Tooltip_NextSession" xml:space="preserve"><value>Einheit &#xF6;ffnen</value></data>
+  <data name="Tooltip_Academy" xml:space="preserve"><value>Academy &#xF6;ffnen</value></data>
+  <data name="Tooltip_WorkoutArea" xml:space="preserve"><value>Workout Area &#xF6;ffnen</value></data>
   <data name="TrainingOverview_Title" xml:space="preserve"><value>Trainingsübersicht</value></data>
   <data name="TrainingOverview_Empty" xml:space="preserve"><value>Aktuell ist keine anstehende Einheit geplant.</value></data>
   <data name="TrainingOverview_PreviewTitle" xml:space="preserve"><value>Planvorschau</value></data>

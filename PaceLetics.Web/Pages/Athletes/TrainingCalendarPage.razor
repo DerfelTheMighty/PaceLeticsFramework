@@ -1,0 +1,20 @@
+@page "/Athletes/trainingcalendar"
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStringLocalizer<MyCourses> L
+
+<PageTitle>@L["CalendarTitle"]</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Large">
+    <TrainingCalendar UserId="@_userId" />
+</MudContainer>
+
+@code {
+    private string? _userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+    }
+}

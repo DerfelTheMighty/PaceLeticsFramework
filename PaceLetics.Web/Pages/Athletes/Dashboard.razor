@@ -10,6 +10,7 @@
 @using PaceLetics.CoreModule.Infrastructure.Services
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services
+@using PaceLetics.Web.Services.Calendar
 
 @inject IAthleteData AthleteData
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
@@ -17,6 +18,7 @@
 @inject LoadingStateService Loading
 @inject ITrainingPlanService TrainingPlanService
 @inject ICriticalSpeedService CriticalSpeedService
+@inject ITrainingCalendarService CalendarService
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -31,12 +33,13 @@
 
         <MudGrid Spacing="3" Class="pl-dashboard-metrics">
             <MudItem xs="12" md="6" xl="3">
-                <DashboardMetricTile Label="@L["Metric_VdotCs"]"
-                                     Value="@GetVdotCsValue()"
-                                     Detail="@GetReferenceDetail()"
-                                     Icon="@Icons.Material.Filled.Speed"
+                <DashboardMetricTile Label="@L["Metric_TrainingCalendar"]"
+                                     Value="@GetCalendarValue()"
+                                     Detail="@GetCalendarDetail()"
+                                     Icon="@Icons.Material.Filled.CalendarMonth"
                                      Accent="blue"
-                                     Href="/Athletes/pacezones" />
+                                     Href="/Athletes/trainingcalendar"
+                                     Tooltip="@L["Tooltip_TrainingCalendar"]" />
             </MudItem>
 
             <MudItem xs="12" md="6" xl="3">
@@ -45,31 +48,71 @@
                                      Detail="@GetNextSessionDetail()"
                                      Icon="@Icons.Material.Filled.EventAvailable"
                                      Accent="green"
-                                     Href="/Athletes/courses" />
+                                     Href="/Athletes/courses?section=plans"
+                                     Tooltip="@L["Tooltip_NextSession"]" />
             </MudItem>
 
             <MudItem xs="12" md="6" xl="3">
-                <DashboardMetricTile Label="@L["Metric_TrainingSystem"]"
-                                     Value="@L["Metric_TrainingSystemValue"]"
-                                     Detail="@L["Metric_TrainingSystemDetail"]"
-                                     Icon="@Icons.Material.Filled.School"
+                <DashboardMetricTile Label="@L["Metric_Academy"]"
+                                     Value="@L["Metric_AcademyValue"]"
+                                     Detail="@L["Metric_AcademyDetail"]"
+                                     Icon="@Icons.Material.Filled.AutoStories"
                                      Accent="orange"
-                                     Href="/Athletes/racepaces?section=info" />
+                                     Href="/Athletes/academy"
+                                     Tooltip="@L["Tooltip_Academy"]" />
             </MudItem>
 
             <MudItem xs="12" md="6" xl="3">
-                <DashboardMetricTile Label="@L["Metric_RunningAnalysisInfo"]"
-                                     Value="@L["Metric_RunningAnalysisInfoValue"]"
-                                     Detail="@L["Metric_RunningAnalysisInfoDetail"]"
-                                     Icon="@Icons.Material.Filled.Info"
+                <DashboardMetricTile Label="@L["Metric_WorkoutArea"]"
+                                     Value="@L["Metric_WorkoutAreaValue"]"
+                                     Detail="@L["Metric_WorkoutAreaDetail"]"
+                                     Icon="@Icons.Material.Filled.FitnessCenter"
                                      Accent="red"
-                                     Href="/Athletes/data-analyses?section=info" />
+                                     Href="/Workouts/WorkoutArea"
+                                     Tooltip="@L["Tooltip_WorkoutArea"]" />
             </MudItem>
         </MudGrid>
 
         <MudGrid Spacing="3">
-            <MudItem xs="12">
-                <DashboardNextTrainingSessionTile Session="_nextSession" />
+            <MudItem xs="12" md="6">
+                <MudLink Href="/Athletes/trainingcalendar" Underline="Underline.None" Class="pl-dashboard-preview-link">
+                    <MudTooltip Text="@L["Tooltip_TrainingCalendar"]">
+                        <MudPaper Elevation="0" Class="pa-4 pl-panel pl-dashboard-calendar-preview">
+                            <MudStack Spacing="3">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                    <MudStack Spacing="0" Style="min-width:0;">
+                                        <MudText Typo="Typo.h6">@L["CalendarPreviewTitle"]</MudText>
+                                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">@GetCalendarPreviewSubtitle()</MudText>
+                                    </MudStack>
+                                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                                </MudStack>
+
+                                <div class="pl-dashboard-calendar-days">
+                                    @foreach (var day in CalendarPreviewDays)
+                                    {
+                                        var items = GetCalendarItemsForDay(day).Take(3).ToList();
+                                        <div class="@GetCalendarPreviewDayClass(day, items.Count > 0)">
+                                            <span class="pl-dashboard-calendar-weekday">@day.ToString("ddd")</span>
+                                            <span class="pl-dashboard-calendar-date">@day.Day</span>
+                                            <span class="pl-dashboard-calendar-dots" aria-hidden="true">
+                                                @foreach (var item in items)
+                                                {
+                                                    <span class="@GetCalendarDotClass(item)"></span>
+                                                }
+                                            </span>
+                                        </div>
+                                    }
+                                </div>
+                            </MudStack>
+                        </MudPaper>
+                    </MudTooltip>
+                </MudLink>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <DashboardNextTrainingSessionTile Session="_nextSession"
+                                                  Href="/Athletes/courses?section=plans"
+                                                  Tooltip="@L["Tooltip_NextSession"]" />
             </MudItem>
         </MudGrid>
     </MudStack>
@@ -84,6 +127,7 @@
     AthleteModel? Athlete;
     string _name = String.Empty;
     IReadOnlyList<TrainingPlan> _trainingPlans = Array.Empty<TrainingPlan>();
+    IReadOnlyList<TrainingCalendarItem> _calendarItems = Array.Empty<TrainingCalendarItem>();
     TrainingPlan? _activePlan;
     TrainingSession? _nextSession;
     RaceResultModel? _referenceResult;
@@ -109,6 +153,16 @@
             catch
             {
                 _trainingPlans = Array.Empty<TrainingPlan>();
+            }
+            try
+            {
+                _calendarItems = string.IsNullOrWhiteSpace(id)
+                    ? Array.Empty<TrainingCalendarItem>()
+                    : await CalendarService.GetCalendarItemsForAthleteAsync(id);
+            }
+            catch
+            {
+                _calendarItems = Array.Empty<TrainingCalendarItem>();
             }
             _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
             _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
@@ -206,7 +260,80 @@
 
     private string GetNextSessionDetail()
     {
-        return _nextSession?.Name ?? L["Metric_NoSession"];
+        return _nextSession is null
+            ? L["Metric_NoSession"]
+            : $"{_nextSession.Name} / {GetSessionComposition(_nextSession)}";
+    }
+
+    private string GetCalendarValue()
+    {
+        var upcomingCount = UpcomingCalendarItems.Count;
+        return upcomingCount == 0
+            ? L["Metric_NotAvailable"]
+            : string.Format(L["CalendarUpcomingCount"], upcomingCount);
+    }
+
+    private string GetCalendarDetail()
+    {
+        var nextItem = UpcomingCalendarItems.FirstOrDefault();
+        return nextItem is null
+            ? L["CalendarNoUpcoming"]
+            : $"{nextItem.StartsAt:dd.MM.} / {nextItem.Title}";
+    }
+
+    private string GetCalendarPreviewSubtitle()
+    {
+        var nextItem = UpcomingCalendarItems.FirstOrDefault();
+        return nextItem is null
+            ? L["CalendarNoUpcoming"]
+            : string.Format(L["CalendarNextItem"], nextItem.StartsAt, nextItem.Title);
+    }
+
+    private IReadOnlyList<TrainingCalendarItem> UpcomingCalendarItems => _calendarItems
+        .Where(item => item.StartsAt.Date >= DateTime.Today)
+        .OrderBy(item => item.StartsAt)
+        .ThenBy(item => item.Kind)
+        .ThenBy(item => item.Title)
+        .Take(5)
+        .ToList();
+
+    private IEnumerable<DateTime> CalendarPreviewDays
+    {
+        get
+        {
+            for (var i = 0; i < 7; i++)
+                yield return DateTime.Today.AddDays(i);
+        }
+    }
+
+    private IEnumerable<TrainingCalendarItem> GetCalendarItemsForDay(DateTime day)
+    {
+        return _calendarItems
+            .Where(item => item.StartsAt.Date == day.Date)
+            .OrderBy(item => item.StartsAt)
+            .ThenBy(item => item.Kind)
+            .ThenBy(item => item.Title);
+    }
+
+    private static string GetCalendarPreviewDayClass(DateTime day, bool hasItems)
+    {
+        var classes = new List<string> { "pl-dashboard-calendar-day" };
+        if (day.Date == DateTime.Today)
+            classes.Add("pl-dashboard-calendar-day-today");
+        if (hasItems)
+            classes.Add("pl-dashboard-calendar-day-active");
+        return string.Join(" ", classes);
+    }
+
+    private static string GetCalendarDotClass(TrainingCalendarItem item)
+    {
+        return item.Kind switch
+        {
+            TrainingCalendarItemKinds.TrainingSession => "pl-dashboard-calendar-dot pl-calendar-kind-training",
+            TrainingCalendarItemKinds.CourseDate => "pl-dashboard-calendar-dot pl-calendar-kind-course-date",
+            TrainingCalendarItemKinds.CourseEvent => "pl-dashboard-calendar-dot pl-calendar-kind-event",
+            _ => "pl-dashboard-calendar-dot"
+        };
     }
 
     private string GetSessionComposition(TrainingSession session)

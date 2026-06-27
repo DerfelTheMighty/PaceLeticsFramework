@@ -27,6 +27,21 @@
   <data name="Metric_NoPlan" xml:space="preserve"><value>No plan selected</value></data>
   <data name="Metric_PlanSessions" xml:space="preserve"><value>{0} sessions</value></data>
   <data name="Metric_NoSession" xml:space="preserve"><value>No upcoming session</value></data>
+  <data name="Metric_TrainingCalendar" xml:space="preserve"><value>Training calendar</value></data>
+  <data name="CalendarUpcomingCount" xml:space="preserve"><value>{0} upcoming</value></data>
+  <data name="CalendarNoUpcoming" xml:space="preserve"><value>No upcoming calendar items</value></data>
+  <data name="CalendarNextItem" xml:space="preserve"><value>Next: {0:MM/dd} / {1}</value></data>
+  <data name="CalendarPreviewTitle" xml:space="preserve"><value>Training calendar</value></data>
+  <data name="Metric_Academy" xml:space="preserve"><value>Academy</value></data>
+  <data name="Metric_AcademyValue" xml:space="preserve"><value>Overview</value></data>
+  <data name="Metric_AcademyDetail" xml:space="preserve"><value>Knowledge and guidance</value></data>
+  <data name="Metric_WorkoutArea" xml:space="preserve"><value>Workout Area</value></data>
+  <data name="Metric_WorkoutAreaValue" xml:space="preserve"><value>Open workouts</value></data>
+  <data name="Metric_WorkoutAreaDetail" xml:space="preserve"><value>Strength and mobility</value></data>
+  <data name="Tooltip_TrainingCalendar" xml:space="preserve"><value>Open calendar</value></data>
+  <data name="Tooltip_NextSession" xml:space="preserve"><value>Open next session</value></data>
+  <data name="Tooltip_Academy" xml:space="preserve"><value>Open Academy</value></data>
+  <data name="Tooltip_WorkoutArea" xml:space="preserve"><value>Open Workout Area</value></data>
   <data name="TrainingOverview_Title" xml:space="preserve"><value>Training overview</value></data>
   <data name="TrainingOverview_Empty" xml:space="preserve"><value>There is no upcoming session planned right now.</value></data>
   <data name="TrainingOverview_PreviewTitle" xml:space="preserve"><value>Plan preview</value></data>

@@ -1,12 +1,32 @@
 @if (!string.IsNullOrWhiteSpace(Href))
 {
-    <MudLink Href="@Href" Underline="Underline.None" Class="pl-metric-link">
-        @TileContent
-    </MudLink>
+    @if (!string.IsNullOrWhiteSpace(Tooltip))
+    {
+        <MudTooltip Text="@Tooltip">
+            <MudLink Href="@Href" Underline="Underline.None" Class="pl-metric-link">
+                @TileContent
+            </MudLink>
+        </MudTooltip>
+    }
+    else
+    {
+        <MudLink Href="@Href" Underline="Underline.None" Class="pl-metric-link">
+            @TileContent
+        </MudLink>
+    }
 }
 else
 {
-    @TileContent
+    @if (!string.IsNullOrWhiteSpace(Tooltip))
+    {
+        <MudTooltip Text="@Tooltip">
+            @TileContent
+        </MudTooltip>
+    }
+    else
+    {
+        @TileContent
+    }
 }
 @code {
     private RenderFragment TileContent => @<MudPaper Elevation="0" Class="@TileClass">
@@ -49,6 +69,9 @@ else
 
     [Parameter]
     public string? Href { get; set; }
+
+    [Parameter]
+    public string? Tooltip { get; set; }
 
     private string TileClass => $"pl-metric-tile pl-metric-{Accent}";
 }
