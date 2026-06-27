@@ -18,5 +18,7 @@
   <data name="ProfileImageUploadHint" xml:space="preserve"><value>Lade ein JPG-, PNG- oder WebP-Bild hoch. Es wird quadratisch zugeschnitten und ohne Verzerrung verkleinert.</value></data>
   <data name="CurrentProfileImage" xml:space="preserve"><value>Aktuelles Profilbild</value></data>
   <data name="IsPublicProfileVisible" xml:space="preserve"><value>Öffentliches Profil sichtbar</value></data>
+  <data name="AcademyInfoEnabled" xml:space="preserve"><value>Academy-Tipps beim Navigieren anzeigen</value></data>
+  <data name="AcademyInfoEnabledHint" xml:space="preserve"><value>Kurze Lauftipps erscheinen gelegentlich, bis du sie schliesst oder dauerhaft deaktivierst.</value></data>
   <data name="TrainerVerificationCode" xml:space="preserve"><value>Trainer-Verifikationscode</value></data>
 </root>

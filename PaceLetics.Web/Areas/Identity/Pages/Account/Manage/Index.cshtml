@@ -51,6 +51,11 @@
                 <input asp-for="Input.IsPublicProfileVisible" class="form-check-input" />
                 <label asp-for="Input.IsPublicProfileVisible" class="form-check-label">@Localizer["IsPublicProfileVisible"]</label>
             </div>
+            <div class="form-check form-switch mb-4">
+                <input id="academy-info-enabled" class="form-check-input" type="checkbox" checked />
+                <label for="academy-info-enabled" class="form-check-label">@Localizer["AcademyInfoEnabled"]</label>
+                <div class="form-text">@Localizer["AcademyInfoEnabledHint"]</div>
+            </div>
             @if (!Model.IsTrainer)
             {
                 <div class="mud-divider my-4"></div>
@@ -70,4 +75,19 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (() => {
+            const input = document.getElementById("academy-info-enabled");
+            const preferences = window.paceleticsAcademyInfo;
+
+            if (!input || !preferences) {
+                return;
+            }
+
+            input.checked = preferences.isEnabled();
+            input.addEventListener("change", () => {
+                preferences.setEnabled(input.checked);
+            });
+        })();
+    </script>
 }

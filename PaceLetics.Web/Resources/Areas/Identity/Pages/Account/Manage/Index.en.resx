@@ -18,5 +18,7 @@
   <data name="ProfileImageUploadHint" xml:space="preserve"><value>Upload a JPG, PNG, or WebP image. It will be cropped square and scaled down without distortion.</value></data>
   <data name="CurrentProfileImage" xml:space="preserve"><value>Current profile photo</value></data>
   <data name="IsPublicProfileVisible" xml:space="preserve"><value>Public profile visible</value></data>
+  <data name="AcademyInfoEnabled" xml:space="preserve"><value>Show Academy tips while navigating</value></data>
+  <data name="AcademyInfoEnabledHint" xml:space="preserve"><value>Short running tips appear occasionally until you close or disable them.</value></data>
   <data name="TrainerVerificationCode" xml:space="preserve"><value>Coach verification code</value></data>
 </root>

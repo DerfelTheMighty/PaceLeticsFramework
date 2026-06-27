@@ -12,17 +12,18 @@
             </div>
 
             <div class="pl-academy-info__body">
-                <div class="pl-academy-info__loading">
-                    <MudProgressCircular Color="Color.Primary"
-                                         Size="Size.Small"
-                                         StrokeWidth="3"
-                                         Indeterminate="true" />
-                    <span>Academy-Daten werden geladen</span>
-                </div>
+                <div class="pl-academy-info__eyebrow">PaceLetics Academy</div>
                 <p class="pl-academy-info__tip">@AcademyInfo.CurrentTip.Text</p>
-                <a class="pl-academy-info__source" href="@AcademyInfo.CurrentTip.ArticleHref">
-                    @AcademyInfo.CurrentTip.Source
-                </a>
+                <div class="pl-academy-info__actions">
+                    <a class="pl-academy-info__source" href="@AcademyInfo.CurrentTip.ArticleHref">
+                        @AcademyInfo.CurrentTip.Source
+                    </a>
+                    <button type="button"
+                            class="pl-academy-info__disable"
+                            @onclick="AcademyInfo.DisableAsync">
+                        Dauerhaft deaktivieren
+                    </button>
+                </div>
             </div>
 
             <MudIconButton Icon="@Icons.Material.Filled.Close"
@@ -40,6 +41,12 @@
     {
         Navigation.LocationChanged += OnLocationChanged;
         AcademyInfo.Changed += OnAcademyInfoChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await AcademyInfo.InitializeAsync();
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs args)

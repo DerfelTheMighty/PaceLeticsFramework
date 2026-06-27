@@ -39,3 +39,32 @@ if (el) {
     });
     }
 };
+
+window.paceleticsAcademyInfo = (() => {
+    const key = "paceletics.academyInfo.enabled";
+
+    function isEnabled() {
+        try {
+            return window.localStorage.getItem(key) !== "false";
+        } catch {
+            return true;
+        }
+    }
+
+    function setEnabled(enabled) {
+        try {
+            window.localStorage.setItem(key, enabled ? "true" : "false");
+        } catch {
+        }
+
+        window.dispatchEvent(new CustomEvent("paceletics-academy-info-changed", {
+            detail: { enabled }
+        }));
+    }
+
+    return {
+        isEnabled,
+        setEnabled,
+        disable: () => setEnabled(false)
+    };
+})();

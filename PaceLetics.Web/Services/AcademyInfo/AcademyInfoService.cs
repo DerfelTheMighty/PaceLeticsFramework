@@ -1,7 +1,11 @@
+using Microsoft.JSInterop;
+
 namespace PaceLetics.Web.Services.AcademyInfo;
 
 public sealed class AcademyInfoService : IDisposable
 {
+    private const string EnabledStorageKey = "paceletics.academyInfo.enabled";
+
     private static readonly AcademyInfoTip[] TipRepertoire =
     [
         new("Pacegesteuertes Training", "Pace ist aeussere Last; Puls zeigt innere Beanspruchung. Beides erzaehlt etwas anderes.", "/Athletes/academy/pace-controlled-training"),
@@ -20,63 +24,112 @@ public sealed class AcademyInfoService : IDisposable
 
     private readonly TimeProvider _timeProvider;
     private readonly Random _random;
-    private readonly TimeSpan _displayDuration;
     private readonly TimeSpan _minimumGap;
     private readonly int _navigationCadence;
+    private readonly IJSRuntime? _js;
     private readonly object _syncRoot = new();
     private DateTimeOffset _lastShownAt = DateTimeOffset.MinValue;
-    private CancellationTokenSource? _hideCancellation;
     private int _navigationCount;
     private int? _lastTipIndex;
+    private bool _preferenceLoaded;
     private bool _disposed;
 
-    public AcademyInfoService()
+    public AcademyInfoService(IJSRuntime js)
         : this(
             TimeProvider.System,
             Random.Shared,
-            TimeSpan.FromMilliseconds(4300),
             navigationCadence: 3,
-            minimumGap: TimeSpan.FromSeconds(14))
+            minimumGap: TimeSpan.FromSeconds(14),
+            js)
     {
     }
 
     public AcademyInfoService(
         TimeProvider timeProvider,
         Random random,
-        TimeSpan displayDuration,
         int navigationCadence,
-        TimeSpan minimumGap)
+        TimeSpan minimumGap,
+        IJSRuntime? js = null)
     {
         _timeProvider = timeProvider;
         _random = random;
-        _displayDuration = displayDuration;
         _navigationCadence = Math.Max(1, navigationCadence);
         _minimumGap = minimumGap < TimeSpan.Zero ? TimeSpan.Zero : minimumGap;
+        _js = js;
     }
 
     public event Action? Changed;
 
+    public bool IsEnabled { get; private set; } = true;
     public bool IsVisible { get; private set; }
     public AcademyInfoTip? CurrentTip { get; private set; }
     public IReadOnlyList<AcademyInfoTip> Tips => TipRepertoire;
 
     public async Task TrackNavigationAsync(string absoluteUri)
     {
+        await InitializeAsync();
+
         if (_disposed || !ShouldConsiderRoute(absoluteUri))
             return;
 
-        if (!TryShowForNavigation())
+        if (!IsEnabled)
+            return;
+
+        TryShowForNavigation();
+    }
+
+    public async Task InitializeAsync()
+    {
+        if (_preferenceLoaded || _js is null)
             return;
 
         try
         {
-            var cancellation = _hideCancellation?.Token ?? CancellationToken.None;
-            await Task.Delay(_displayDuration, _timeProvider, cancellation);
-            Hide();
+            var storedValue = await _js.InvokeAsync<string?>("localStorage.getItem", EnabledStorageKey);
+            IsEnabled = !string.Equals(storedValue, "false", StringComparison.OrdinalIgnoreCase);
+            _preferenceLoaded = true;
+            NotifyChanged();
         }
-        catch (OperationCanceledException)
+        catch (InvalidOperationException)
         {
         }
+        catch (JSException)
+        {
+            _preferenceLoaded = true;
+        }
+    }
+
+    public Task DisableAsync()
+    {
+        return SetEnabledAsync(false);
+    }
+
+    public async Task SetEnabledAsync(bool enabled)
+    {
+        if (_disposed)
+            return;
+
+        IsEnabled = enabled;
+        _preferenceLoaded = true;
+
+        if (!enabled)
+            Hide();
+
+        if (_js is not null)
+        {
+            try
+            {
+                await _js.InvokeVoidAsync("localStorage.setItem", EnabledStorageKey, enabled ? "true" : "false");
+            }
+            catch (InvalidOperationException)
+            {
+            }
+            catch (JSException)
+            {
+            }
+        }
+
+        NotifyChanged();
     }
 
     public void Hide()
@@ -89,9 +142,6 @@ public sealed class AcademyInfoService : IDisposable
             if (!IsVisible && CurrentTip is null)
                 return;
 
-            _hideCancellation?.Cancel();
-            _hideCancellation?.Dispose();
-            _hideCancellation = null;
             IsVisible = false;
             CurrentTip = null;
         }
@@ -115,9 +165,6 @@ public sealed class AcademyInfoService : IDisposable
             CurrentTip = SelectTip();
             IsVisible = true;
             _lastShownAt = now;
-            _hideCancellation?.Cancel();
-            _hideCancellation?.Dispose();
-            _hideCancellation = new CancellationTokenSource();
         }
 
         NotifyChanged();
@@ -159,7 +206,5 @@ public sealed class AcademyInfoService : IDisposable
     public void Dispose()
     {
         _disposed = true;
-        _hideCancellation?.Cancel();
-        _hideCancellation?.Dispose();
     }
 }

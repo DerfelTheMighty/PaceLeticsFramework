@@ -80,19 +80,14 @@
     gap: 6px;
 }
 
-.pl-academy-info__loading {
+.pl-academy-info__eyebrow {
     display: inline-flex;
     align-items: center;
     min-width: 0;
-    gap: 7px;
     color: var(--mud-palette-text-secondary);
     font-size: .72rem;
     font-weight: 700;
     line-height: 1.2;
-}
-
-.pl-academy-info__loading span {
-    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -108,22 +103,43 @@
     overflow-wrap: anywhere;
 }
 
-.pl-academy-info__source {
-    justify-self: start;
+.pl-academy-info__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    min-width: 0;
+}
+
+.pl-academy-info__source,
+.pl-academy-info__disable {
     min-width: 0;
     max-width: 100%;
     overflow: hidden;
-    color: var(--mud-palette-primary);
     font-size: .7rem;
     font-weight: 800;
     line-height: 1.2;
+    border: 0;
+    background: transparent;
     text-decoration: none;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
+.pl-academy-info__source {
+    color: var(--mud-palette-primary);
+}
+
+.pl-academy-info__disable {
+    padding: 0;
+    color: var(--mud-palette-text-secondary);
+    cursor: pointer;
+}
+
 .pl-academy-info__source:hover,
-.pl-academy-info__source:focus-visible {
+.pl-academy-info__source:focus-visible,
+.pl-academy-info__disable:hover,
+.pl-academy-info__disable:focus-visible {
     text-decoration: underline;
     outline: none;
 }

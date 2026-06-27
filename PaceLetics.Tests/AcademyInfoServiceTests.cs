@@ -17,13 +17,49 @@ public sealed class AcademyInfoServiceTests
         Assert.False(service.IsVisible);
         Assert.Null(service.CurrentTip);
 
-        var displayTask = service.TrackNavigationAsync("https://localhost/Athletes/racepaces");
+        await service.TrackNavigationAsync("https://localhost/Athletes/racepaces");
 
         Assert.True(service.IsVisible);
         Assert.NotNull(service.CurrentTip);
         Assert.True(changes > 0);
 
-        await displayTask;
+        service.Hide();
+
+        Assert.False(service.IsVisible);
+    }
+
+    [Fact]
+    public async Task TrackNavigationAsync_KeepsTipVisibleUntilUserDismisses()
+    {
+        var service = CreateService(navigationCadence: 1);
+
+        await service.TrackNavigationAsync("https://localhost/Athletes/dashboard");
+
+        Assert.True(service.IsVisible);
+
+        await Task.Delay(5);
+
+        Assert.True(service.IsVisible);
+
+        service.Hide();
+
+        Assert.False(service.IsVisible);
+    }
+
+    [Fact]
+    public async Task DisableAsync_HidesVisibleTipAndPreventsFutureTips()
+    {
+        var service = CreateService(navigationCadence: 1);
+
+        await service.TrackNavigationAsync("https://localhost/Athletes/dashboard");
+        Assert.True(service.IsVisible);
+
+        await service.DisableAsync();
+
+        Assert.False(service.IsEnabled);
+        Assert.False(service.IsVisible);
+
+        await service.TrackNavigationAsync("https://localhost/Athletes/academy");
 
         Assert.False(service.IsVisible);
     }
@@ -58,7 +94,6 @@ public sealed class AcademyInfoServiceTests
         return new AcademyInfoService(
             TimeProvider.System,
             new Random(7),
-            TimeSpan.FromMilliseconds(1),
             navigationCadence,
             TimeSpan.Zero);
     }
