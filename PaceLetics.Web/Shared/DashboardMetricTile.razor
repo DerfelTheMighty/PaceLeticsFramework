@@ -50,6 +50,13 @@ else
                 <MudIcon Icon="@Icons.Material.Filled.ArrowForward" Size="Size.Small" Class="pl-metric-arrow" />
             }
         </MudStack>
+
+        @if (ChildContent is not null)
+        {
+            <div class="pl-metric-preview">
+                @ChildContent
+            </div>
+        }
     </MudPaper>;
 
     [Parameter, EditorRequired]
@@ -72,6 +79,9 @@ else
 
     [Parameter]
     public string? Tooltip { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
     private string TileClass => $"pl-metric-tile pl-metric-{Accent}";
 }

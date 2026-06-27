@@ -42,6 +42,7 @@
   <data name="Tooltip_NextSession" xml:space="preserve"><value>Einheit &#xF6;ffnen</value></data>
   <data name="Tooltip_Academy" xml:space="preserve"><value>Academy &#xF6;ffnen</value></data>
   <data name="Tooltip_WorkoutArea" xml:space="preserve"><value>Workout Area &#xF6;ffnen</value></data>
+  <data name="Tooltip_VdotCs" xml:space="preserve"><value>Pace-Werte &#xF6;ffnen</value></data>
   <data name="TrainingOverview_Title" xml:space="preserve"><value>Trainingsübersicht</value></data>
   <data name="TrainingOverview_Empty" xml:space="preserve"><value>Aktuell ist keine anstehende Einheit geplant.</value></data>
   <data name="TrainingOverview_PreviewTitle" xml:space="preserve"><value>Planvorschau</value></data>

@@ -32,27 +32,58 @@
     <MudStack Spacing="4">
 
         <MudGrid Spacing="3" Class="pl-dashboard-metrics">
-            <MudItem xs="12" md="6" xl="3">
+            <MudItem xs="12" md="6">
                 <DashboardMetricTile Label="@L["Metric_TrainingCalendar"]"
                                      Value="@GetCalendarValue()"
                                      Detail="@GetCalendarDetail()"
                                      Icon="@Icons.Material.Filled.CalendarMonth"
                                      Accent="blue"
                                      Href="/Athletes/trainingcalendar"
-                                     Tooltip="@L["Tooltip_TrainingCalendar"]" />
+                                     Tooltip="@L["Tooltip_TrainingCalendar"]">
+                    <div class="pl-dashboard-calendar-days">
+                        @foreach (var day in CalendarPreviewDays)
+                        {
+                            var items = GetCalendarItemsForDay(day).Take(3).ToList();
+                            <div class="@GetCalendarPreviewDayClass(day, items.Count > 0)">
+                                <span class="pl-dashboard-calendar-weekday">@day.ToString("ddd")</span>
+                                <span class="pl-dashboard-calendar-date">@day.Day</span>
+                                <span class="pl-dashboard-calendar-dots" aria-hidden="true">
+                                    @foreach (var item in items)
+                                    {
+                                        <span class="@GetCalendarDotClass(item)"></span>
+                                    }
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </DashboardMetricTile>
             </MudItem>
 
-            <MudItem xs="12" md="6" xl="3">
+            <MudItem xs="12" md="6">
                 <DashboardMetricTile Label="@L["Metric_NextSession"]"
                                      Value="@GetNextSessionValue()"
                                      Detail="@GetNextSessionDetail()"
                                      Icon="@Icons.Material.Filled.EventAvailable"
                                      Accent="green"
                                      Href="/Athletes/courses?section=plans"
-                                     Tooltip="@L["Tooltip_NextSession"]" />
+                                     Tooltip="@L["Tooltip_NextSession"]">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pl-dashboard-session-preview">
+                        <MudIcon Icon="@Icons.Material.Filled.Timeline"
+                                 Color="Color.Primary" />
+
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.subtitle2">
+                                @( _nextSession?.Name ?? L["Metric_NoSession"] )
+                            </MudText>
+                            <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
+                                @( _nextSession is null ? L["Metric_NoSession"] : $"{_nextSession.Date:dd.MM.yyyy} / {GetSessionComposition(_nextSession)}" )
+                            </MudText>
+                        </MudStack>
+                    </MudStack>
+                </DashboardMetricTile>
             </MudItem>
 
-            <MudItem xs="12" md="6" xl="3">
+            <MudItem xs="12" md="4">
                 <DashboardMetricTile Label="@L["Metric_Academy"]"
                                      Value="@L["Metric_AcademyValue"]"
                                      Detail="@L["Metric_AcademyDetail"]"
@@ -62,7 +93,7 @@
                                      Tooltip="@L["Tooltip_Academy"]" />
             </MudItem>
 
-            <MudItem xs="12" md="6" xl="3">
+            <MudItem xs="12" md="4">
                 <DashboardMetricTile Label="@L["Metric_WorkoutArea"]"
                                      Value="@L["Metric_WorkoutAreaValue"]"
                                      Detail="@L["Metric_WorkoutAreaDetail"]"
@@ -71,48 +102,15 @@
                                      Href="/Workouts/WorkoutArea"
                                      Tooltip="@L["Tooltip_WorkoutArea"]" />
             </MudItem>
-        </MudGrid>
 
-        <MudGrid Spacing="3">
-            <MudItem xs="12" md="6">
-                <MudLink Href="/Athletes/trainingcalendar" Underline="Underline.None" Class="pl-dashboard-preview-link">
-                    <MudTooltip Text="@L["Tooltip_TrainingCalendar"]">
-                        <MudPaper Elevation="0" Class="pa-4 pl-panel pl-dashboard-calendar-preview">
-                            <MudStack Spacing="3">
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                    <MudStack Spacing="0" Style="min-width:0;">
-                                        <MudText Typo="Typo.h6">@L["CalendarPreviewTitle"]</MudText>
-                                        <MudText Typo="Typo.body2" Class="pl-dashboard-muted">@GetCalendarPreviewSubtitle()</MudText>
-                                    </MudStack>
-                                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
-                                </MudStack>
-
-                                <div class="pl-dashboard-calendar-days">
-                                    @foreach (var day in CalendarPreviewDays)
-                                    {
-                                        var items = GetCalendarItemsForDay(day).Take(3).ToList();
-                                        <div class="@GetCalendarPreviewDayClass(day, items.Count > 0)">
-                                            <span class="pl-dashboard-calendar-weekday">@day.ToString("ddd")</span>
-                                            <span class="pl-dashboard-calendar-date">@day.Day</span>
-                                            <span class="pl-dashboard-calendar-dots" aria-hidden="true">
-                                                @foreach (var item in items)
-                                                {
-                                                    <span class="@GetCalendarDotClass(item)"></span>
-                                                }
-                                            </span>
-                                        </div>
-                                    }
-                                </div>
-                            </MudStack>
-                        </MudPaper>
-                    </MudTooltip>
-                </MudLink>
-            </MudItem>
-
-            <MudItem xs="12" md="6">
-                <DashboardNextTrainingSessionTile Session="_nextSession"
-                                                  Href="/Athletes/courses?section=plans"
-                                                  Tooltip="@L["Tooltip_NextSession"]" />
+            <MudItem xs="12" md="4">
+                <DashboardMetricTile Label="@L["Metric_VdotCs"]"
+                                     Value="@GetVdotCsValue()"
+                                     Detail="@GetReferenceDetail()"
+                                     Icon="@Icons.Material.Filled.Speed"
+                                     Accent="blue"
+                                     Href="/Athletes/pacezones"
+                                     Tooltip="@L["Tooltip_VdotCs"]" />
             </MudItem>
         </MudGrid>
     </MudStack>
@@ -262,7 +260,7 @@
     {
         return _nextSession is null
             ? L["Metric_NoSession"]
-            : $"{_nextSession.Name} / {GetSessionComposition(_nextSession)}";
+            : GetSessionComposition(_nextSession);
     }
 
     private string GetCalendarValue()
@@ -279,14 +277,6 @@
         return nextItem is null
             ? L["CalendarNoUpcoming"]
             : $"{nextItem.StartsAt:dd.MM.} / {nextItem.Title}";
-    }
-
-    private string GetCalendarPreviewSubtitle()
-    {
-        var nextItem = UpcomingCalendarItems.FirstOrDefault();
-        return nextItem is null
-            ? L["CalendarNoUpcoming"]
-            : string.Format(L["CalendarNextItem"], nextItem.StartsAt, nextItem.Title);
     }
 
     private IReadOnlyList<TrainingCalendarItem> UpcomingCalendarItems => _calendarItems

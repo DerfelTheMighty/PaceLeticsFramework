@@ -745,6 +745,10 @@
     gap: 14px;
 }
 
+.pl-metric-preview {
+    padding: 0 18px 18px;
+}
+
 .pl-metric-icon {
     display: inline-flex;
     align-items: center;
@@ -795,32 +799,6 @@
 .pl-dashboard-next-session {
     background: color-mix(in srgb, var(--mud-palette-surface) 88%, transparent);
     backdrop-filter: blur(10px);
-}
-
-.pl-dashboard-preview-link {
-    display: block;
-    height: 100%;
-    color: var(--mud-palette-text-primary);
-}
-
-.pl-dashboard-preview-link:hover,
-.pl-dashboard-preview-link:focus-visible {
-    color: var(--mud-palette-text-primary);
-    text-decoration: none;
-    outline: none;
-}
-
-.pl-dashboard-preview-link:hover .pl-dashboard-calendar-preview,
-.pl-dashboard-preview-link:focus-visible .pl-dashboard-calendar-preview {
-    border-color: color-mix(in srgb, var(--mud-palette-primary) 52%, var(--mud-palette-lines-default));
-    transform: translateY(-1px);
-}
-
-.pl-dashboard-calendar-preview {
-    height: 100%;
-    background: color-mix(in srgb, var(--mud-palette-surface) 88%, transparent);
-    backdrop-filter: blur(10px);
-    transition: border-color 160ms ease, transform 160ms ease;
 }
 
 .pl-dashboard-calendar-days {
@@ -883,6 +861,14 @@
     background: var(--mud-palette-primary);
 }
 
+.pl-dashboard-session-preview {
+    min-height: 72px;
+    padding: 10px 12px;
+    border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 24%, var(--mud-palette-lines-default));
+    border-radius: var(--pl-radius);
+    background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 7%, var(--pl-dashboard-surface, var(--mud-palette-surface)));
+}
+
 @media (max-width: 599.98px) {
     .pl-dashboard-page .pl-pageheader {
         padding: 14px 16px;
@@ -891,6 +877,10 @@
     .pl-metric-content {
         min-height: 104px;
         padding: 16px;
+    }
+
+    .pl-metric-preview {
+        padding: 0 16px 16px;
     }
 
     .pl-dashboard-calendar-days {

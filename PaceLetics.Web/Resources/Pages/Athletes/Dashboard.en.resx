@@ -42,6 +42,7 @@
   <data name="Tooltip_NextSession" xml:space="preserve"><value>Open next session</value></data>
   <data name="Tooltip_Academy" xml:space="preserve"><value>Open Academy</value></data>
   <data name="Tooltip_WorkoutArea" xml:space="preserve"><value>Open Workout Area</value></data>
+  <data name="Tooltip_VdotCs" xml:space="preserve"><value>Open pace values</value></data>
   <data name="TrainingOverview_Title" xml:space="preserve"><value>Training overview</value></data>
   <data name="TrainingOverview_Empty" xml:space="preserve"><value>There is no upcoming session planned right now.</value></data>
   <data name="TrainingOverview_PreviewTitle" xml:space="preserve"><value>Plan preview</value></data>
