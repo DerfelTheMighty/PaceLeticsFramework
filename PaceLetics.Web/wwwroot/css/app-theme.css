@@ -719,6 +719,7 @@
 }
 
 .pl-metric-tile {
+    width: 100%;
     height: 100%;
     border: 1px solid color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) 28%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
@@ -735,8 +736,15 @@
 
 .pl-metric-link {
     display: block;
+    width: 100%;
     height: 100%;
     color: var(--mud-palette-text-primary);
+}
+
+.pl-dashboard-metrics .mud-tooltip-root {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .pl-metric-content {
