@@ -1,5 +1,6 @@
 using System.Globalization;
 using PaceLetics.Web.Services.Articles;
+using PaceLetics.Web.Services.Localization;
 
 namespace PaceLetics.Tests;
 
@@ -75,6 +76,21 @@ public sealed class ArticleServiceTests
         Assert.NotNull(article);
         Assert.Equal("Running as a mental resource", article.Title);
         Assert.Contains("low-threshold mental resource", article.BodyHtml);
+    }
+
+    [Fact]
+    public void GetArticles_UsesAppCultureWhenThreadCultureDiffers()
+    {
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("en");
+        var appCulture = new AppCultureService();
+        appCulture.SetCulture(CultureInfo.GetCultureInfo("de"));
+        var service = new ArticleService(new MarkdownArticleRepository(FindWebProjectRoot(), appCulture));
+
+        var article = service.GetArticle("mental-resource-running");
+
+        Assert.NotNull(article);
+        Assert.Equal("Laufen als mentale Ressource", article.Title);
+        Assert.Contains("niedrigschwellige mentale Ressource", article.BodyHtml);
     }
 
     [Fact]

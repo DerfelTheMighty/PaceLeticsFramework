@@ -1,6 +1,7 @@
 using System.Globalization;
 using Markdig;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
+using PaceLetics.Web.Services.Localization;
 
 namespace PaceLetics.Web.Services.Articles;
 
@@ -11,15 +12,17 @@ public sealed class MarkdownArticleRepository : IArticleRepository
         .Build();
 
     private readonly string _academyContentRoot;
+    private readonly AppCultureService? _appCulture;
 
-    public MarkdownArticleRepository(string contentRootPath)
+    public MarkdownArticleRepository(string contentRootPath, AppCultureService? appCulture = null)
     {
         _academyContentRoot = Path.Combine(contentRootPath, "Content", "Academy");
+        _appCulture = appCulture;
     }
 
     public IReadOnlyList<Article> GetArticles()
     {
-        var cultureNames = GetCultureFallbacks(CultureInfo.CurrentUICulture).ToList();
+        var cultureNames = GetCultureFallbacks(_appCulture?.CurrentCulture ?? CultureInfo.CurrentUICulture).ToList();
         var articleIds = cultureNames
             .Select(cultureName => Path.Combine(_academyContentRoot, cultureName))
             .Where(Directory.Exists)

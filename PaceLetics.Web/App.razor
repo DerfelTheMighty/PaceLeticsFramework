@@ -1,5 +1,7 @@
 @using System.Globalization
+@using PaceLetics.Web.Services.Localization
 @inject IStringLocalizer<App> L
+@inject AppCultureService AppCulture
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
@@ -26,6 +28,7 @@
             var culture = new CultureInfo(InitialCulture);
             CultureInfo.CurrentCulture = culture;
             CultureInfo.CurrentUICulture = culture;
+            AppCulture.SetCulture(culture);
         }
     }
 }

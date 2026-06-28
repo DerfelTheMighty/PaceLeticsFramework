@@ -36,7 +36,9 @@ using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
 using PaceLetics.Web.Services.Loading;
 using PaceLetics.Web.Services.AcademyInfo;
+using PaceLetics.Web.Services.Localization;
 using PaceLetics.Web.Services.Workouts;
+using PaceLetics.Web.Services.SignalBot;
 using PaceLetics.TrainingPlanModule.CodeBase.Interfaces;
 using PaceLetics.TrainingPlanModule.CodeBase.Repositories;
 using PaceLetics.TrainingPlanModule.CodeBase.Services;
@@ -138,6 +140,7 @@ builder.Services.Configure<TrainerVerificationOptions>(options =>
         options.Code = Environment.GetEnvironmentVariable("PaceLeticsTrainerVerificationCode");
     }
 });
+builder.Services.Configure<SignalBotOptions>(builder.Configuration.GetSection(SignalBotOptions.SectionName));
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<CosmosCourseRepository>();
 builder.Services.AddScoped<ICourseRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
@@ -165,13 +168,24 @@ builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunn
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddScoped<ITrainingCalendarService, TrainingCalendarService>();
-builder.Services.AddScoped<IArticleRepository>(_ => new MarkdownArticleRepository(builder.Environment.ContentRootPath));
+builder.Services.AddScoped<AppCultureService>();
+builder.Services.AddScoped<IArticleRepository>(x => new MarkdownArticleRepository(
+    builder.Environment.ContentRootPath,
+    x.GetRequiredService<AppCultureService>()));
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IMateService, MateService>();
 builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
 builder.Services.AddScoped<ThemePreferenceService>();
 builder.Services.AddScoped<LoadingStateService>();
 builder.Services.AddScoped<AcademyInfoService>();
+builder.Services.AddHttpClient<ISignalMessageClient, SignalCliRestApiMessageClient>((services, client) =>
+{
+    var options = services.GetRequiredService<IOptionsMonitor<SignalBotOptions>>().CurrentValue;
+    if (Uri.TryCreate(options.BaseUrl, UriKind.Absolute, out var baseUrl))
+        client.BaseAddress = baseUrl.AbsoluteUri.EndsWith("/", StringComparison.Ordinal) ? baseUrl : new Uri($"{baseUrl.AbsoluteUri}/");
+});
+builder.Services.AddScoped<ISignalTrainingSessionNotifier, SignalTrainingSessionNotifier>();
+builder.Services.AddHostedService<SignalTrainingSessionPosterHostedService>();
 builder.Services.AddSingleton<DashboardMessageFeedOptions>();
 builder.Services.AddSingleton<TrainingGuardEvaluator>();
 builder.Services.AddScoped<IAthleteMessageProvider, ReferenceRunDashboardMessageProvider>();
@@ -213,14 +227,31 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseRequestLocalization(new RequestLocalizationOptions()
+var requestLocalizationOptions = new RequestLocalizationOptions()
     .SetDefaultCulture("de")
     .AddSupportedCultures(SupportedCultures.Codes)
-    .AddSupportedUICultures(SupportedCultures.Codes));
+    .AddSupportedUICultures(SupportedCultures.Codes);
+requestLocalizationOptions.RequestCultureProviders =
+[
+    new QueryStringRequestCultureProvider(),
+    new CookieRequestCultureProvider()
+];
+app.UseRequestLocalization(requestLocalizationOptions);
 
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCookiePolicy();
+app.MapPost(
+        "/api/signal/training-sessions/current",
+        async (ISignalTrainingSessionNotifier notifier, CancellationToken cancellationToken) =>
+        {
+            var result = await notifier.PostCurrentTrainingSessionsAsync(cancellationToken);
+
+            return result.Success
+                ? Results.Ok(result)
+                : Results.BadRequest(result);
+        })
+    .RequireAuthorization(policy => policy.RequireRole(ApplicationRoles.Trainer));
 app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
