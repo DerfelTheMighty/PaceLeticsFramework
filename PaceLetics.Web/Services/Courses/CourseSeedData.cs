@@ -55,7 +55,8 @@ public static class CourseSeedData
                     "Techniktraining Level 2",
                     TechniqueCourseDates,
                     new TimeSpan(18, 30, 0),
-                    TimeSpan.FromMinutes(90))),
+                    TimeSpan.FromMinutes(90)),
+                new[] { CreateChristophOCourseLead() }),
             CreateCourse(
                 "technik-schnelligkeit-level-3",
                 "Schnelligkeits- und Techniktraining Level 3",
@@ -69,7 +70,8 @@ public static class CourseSeedData
                     "Techniktraining Level 3",
                     TechniqueCourseDates,
                     new TimeSpan(19, 0, 0),
-                    TimeSpan.FromMinutes(90)))
+                    TimeSpan.FromMinutes(90)),
+                new[] { CreateChristophOCourseLead() })
         };
     }
 
@@ -99,8 +101,11 @@ public static class CourseSeedData
         DateTime startDate,
         DateTime endDate,
         IEnumerable<string> trainingPlanIds,
-        IEnumerable<CourseDateDocument> dates)
+        IEnumerable<CourseDateDocument> dates,
+        IEnumerable<CourseTrainerDocument>? trainers = null)
     {
+        var trainerList = trainers?.ToList() ?? new List<CourseTrainerDocument>();
+
         return new CourseDocument
         {
             Id = id,
@@ -112,7 +117,9 @@ public static class CourseSeedData
             Description = description,
             StartDate = startDate,
             EndDate = endDate,
+            CreatedByTrainerUserId = trainerList.FirstOrDefault()?.TrainerUserId ?? string.Empty,
             Dates = dates.ToList(),
+            Trainers = trainerList,
             TrainingPlanPublications = trainingPlanIds
                 .Select(planId => new CourseTrainingPlanPublicationDocument
                 {
@@ -122,6 +129,19 @@ public static class CourseSeedData
                     Target = FeedTarget.Course(id)
                 })
                 .ToList()
+        };
+    }
+
+    private static CourseTrainerDocument CreateChristophOCourseLead()
+    {
+        return new CourseTrainerDocument
+        {
+            TrainerUserId = "d64812",
+            DisplayName = "ChristophO",
+            Role = "Kursleitung",
+            CanManagePlans = true,
+            CanManageEvents = true,
+            CanManageMembers = true
         };
     }
 

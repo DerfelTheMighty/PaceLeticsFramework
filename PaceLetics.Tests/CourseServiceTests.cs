@@ -66,6 +66,27 @@ public sealed class CourseServiceTests
         Assert.Equal(course.Id, course.TeamId);
     }
 
+    [Fact]
+    public void CreateDefaultCourses_AssignsChristophOToTechniqueCourses()
+    {
+        var courses = CourseSeedData.CreateDefaultCourses()
+            .Where(course => course.Id is "technik-schnelligkeit-level-2" or "technik-schnelligkeit-level-3")
+            .ToList();
+
+        Assert.Equal(2, courses.Count);
+        Assert.All(courses, course =>
+        {
+            Assert.Equal("d64812", course.CreatedByTrainerUserId);
+            var trainer = Assert.Single(course.Trainers);
+            Assert.Equal("d64812", trainer.TrainerUserId);
+            Assert.Equal("ChristophO", trainer.DisplayName);
+            Assert.Equal("Kursleitung", trainer.Role);
+            Assert.True(trainer.CanManagePlans);
+            Assert.True(trainer.CanManageEvents);
+            Assert.True(trainer.CanManageMembers);
+        });
+    }
+
     [Theory]
     [InlineData("1", "Level 1")]
     [InlineData("Level 2", "Level 2")]

@@ -293,14 +293,21 @@ public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
             _options.DatabaseName,
             _options.CourseContainerName,
             CourseDocumentTypes.Course);
-        var existingIds = existingCourses.Select(course => course.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var existingCoursesById = existingCourses
+            .Where(course => !string.IsNullOrWhiteSpace(course.Id))
+            .GroupBy(course => course.Id, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
 
-        foreach (var course in CourseSeedData.CreateDefaultCourses())
+        foreach (var seedCourse in CourseSeedData.CreateDefaultCourses())
         {
-            if (existingIds.Contains(course.Id))
+            if (!existingCoursesById.TryGetValue(seedCourse.Id, out var existingCourse))
+            {
+                await UpsertCourseAsync(seedCourse);
                 continue;
+            }
 
-            await UpsertCourseAsync(course);
+            if (ApplySeedCourseUpdates(existingCourse, seedCourse))
+                await UpsertCourseAsync(existingCourse);
         }
     }
 
@@ -328,6 +335,44 @@ public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
 
         course.DocumentType = CourseDocumentTypes.Course;
         course.Slug = string.IsNullOrWhiteSpace(course.Slug) ? course.Id : course.Slug;
+    }
+
+    private static bool ApplySeedCourseUpdates(CourseDocument existingCourse, CourseDocument seedCourse)
+    {
+        var changed = false;
+        existingCourse.Trainers ??= new List<CourseTrainerDocument>();
+
+        foreach (var seedTrainer in seedCourse.Trainers.Where(trainer => !string.IsNullOrWhiteSpace(trainer.TrainerUserId)))
+        {
+            if (existingCourse.Trainers.Any(trainer =>
+                    string.Equals(trainer.TrainerUserId, seedTrainer.TrainerUserId, StringComparison.OrdinalIgnoreCase)))
+                continue;
+
+            existingCourse.Trainers.Add(CloneTrainer(seedTrainer));
+            changed = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(existingCourse.CreatedByTrainerUserId)
+            && !string.IsNullOrWhiteSpace(seedCourse.CreatedByTrainerUserId))
+        {
+            existingCourse.CreatedByTrainerUserId = seedCourse.CreatedByTrainerUserId;
+            changed = true;
+        }
+
+        return changed;
+    }
+
+    private static CourseTrainerDocument CloneTrainer(CourseTrainerDocument trainer)
+    {
+        return new CourseTrainerDocument
+        {
+            TrainerUserId = trainer.TrainerUserId,
+            DisplayName = trainer.DisplayName,
+            Role = trainer.Role,
+            CanManagePlans = trainer.CanManagePlans,
+            CanManageEvents = trainer.CanManageEvents,
+            CanManageMembers = trainer.CanManageMembers
+        };
     }
 }
 
