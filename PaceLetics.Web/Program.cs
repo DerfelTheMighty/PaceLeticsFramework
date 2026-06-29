@@ -145,6 +145,7 @@ builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<CosmosCourseRepository>();
 builder.Services.AddScoped<ICourseRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.AddScoped<IMateRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
+builder.Services.AddHostedService<CourseSeedStartupLoader>();
 builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
 {
     builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
