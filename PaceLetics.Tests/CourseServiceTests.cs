@@ -76,9 +76,9 @@ public sealed class CourseServiceTests
         Assert.Equal(2, courses.Count);
         Assert.All(courses, course =>
         {
-            Assert.Equal("d64812", course.CreatedByTrainerUserId);
+            Assert.Equal("0d14d8e3-755a-46be-81fa-de3f15d64812", course.CreatedByTrainerUserId);
             var trainer = Assert.Single(course.Trainers);
-            Assert.Equal("d64812", trainer.TrainerUserId);
+            Assert.Equal("0d14d8e3-755a-46be-81fa-de3f15d64812", trainer.TrainerUserId);
             Assert.Equal("ChristophO", trainer.DisplayName);
             Assert.Equal("Kursleitung", trainer.Role);
             Assert.True(trainer.CanManagePlans);

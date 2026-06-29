@@ -136,7 +136,7 @@ public static class CourseSeedData
     {
         return new CourseTrainerDocument
         {
-            TrainerUserId = "d64812",
+            TrainerUserId = "0d14d8e3-755a-46be-81fa-de3f15d64812",
             DisplayName = "ChristophO",
             Role = "Kursleitung",
             CanManagePlans = true,
