@@ -293,14 +293,17 @@ public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
             _options.DatabaseName,
             _options.CourseContainerName,
             CourseDocumentTypes.Course);
-        var existingCoursesById = existingCourses
+        var existingCourseList = existingCourses
             .Where(course => !string.IsNullOrWhiteSpace(course.Id))
+            .ToList();
+        var existingCoursesById = existingCourseList
             .GroupBy(course => course.Id, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
 
         foreach (var seedCourse in CourseSeedData.CreateDefaultCourses())
         {
-            if (!existingCoursesById.TryGetValue(seedCourse.Id, out var existingCourse))
+            var existingCourse = FindExistingSeedCourse(seedCourse, existingCoursesById, existingCourseList);
+            if (existingCourse is null)
             {
                 await UpsertCourseAsync(seedCourse);
                 continue;
@@ -360,6 +363,32 @@ public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
         }
 
         return changed;
+    }
+
+    private static CourseDocument? FindExistingSeedCourse(
+        CourseDocument seedCourse,
+        IReadOnlyDictionary<string, CourseDocument> existingCoursesById,
+        IReadOnlyList<CourseDocument> existingCourses)
+    {
+        if (existingCoursesById.TryGetValue(seedCourse.Id, out var existingCourse))
+            return existingCourse;
+
+        existingCourse = existingCourses.FirstOrDefault(course =>
+            string.Equals(course.Name, seedCourse.Name, StringComparison.OrdinalIgnoreCase));
+
+        if (existingCourse is not null)
+            return existingCourse;
+
+        var seedPlanIds = seedCourse.TrainingPlanPublications
+            .Select(publication => publication.TrainingPlanId)
+            .Where(planId => !string.IsNullOrWhiteSpace(planId))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        if (seedPlanIds.Count == 0)
+            return null;
+
+        return existingCourses.FirstOrDefault(course =>
+            course.TrainingPlanPublications.Any(publication => seedPlanIds.Contains(publication.TrainingPlanId)));
     }
 
     private static CourseTrainerDocument CloneTrainer(CourseTrainerDocument trainer)
