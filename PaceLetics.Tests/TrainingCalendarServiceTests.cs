@@ -162,6 +162,56 @@ public sealed class TrainingCalendarServiceTests
         {
             return Array.Empty<RunningSession>();
         }
+
+        public IReadOnlyList<PaceLetics.TrainingPlanModule.CodeBase.Definitions.TrainingPlanDefinition> LoadTrainingPlanDefinitions()
+        {
+            return Array.Empty<PaceLetics.TrainingPlanModule.CodeBase.Definitions.TrainingPlanDefinition>();
+        }
+
+        public TrainingPlan CreateTrainingPlan(string name)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan UpdateTrainingPlan(string planId, string name)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan AddTrainingSession(string planId, PaceLetics.TrainingPlanModule.CodeBase.Definitions.TrainingSessionDefinition session)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan UpdateTrainingSession(string planId, string sessionId, PaceLetics.TrainingPlanModule.CodeBase.Definitions.TrainingSessionDefinition session)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan RemoveTrainingSession(string planId, string sessionId)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan AddTrainingPlanBlock(string planId, PaceLetics.TrainingPlanModule.CodeBase.Definitions.TrainingPlanBlockDefinition block)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan UpdateTrainingPlanBlock(string planId, string blockId, PaceLetics.TrainingPlanModule.CodeBase.Definitions.TrainingPlanBlockDefinition block)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan RemoveTrainingPlanBlock(string planId, string blockId)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void SaveTrainingPlanBlocks(string planId, IEnumerable<PaceLetics.TrainingPlanModule.CodeBase.Definitions.TrainingPlanBlockDefinition> blocks)
+        {
+            throw new NotSupportedException();
+        }
     }
 
     private sealed class FakeCourseService : ICourseService

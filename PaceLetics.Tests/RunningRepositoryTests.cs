@@ -171,6 +171,110 @@ public sealed class RunningRepositoryTests
     }
 
     [Fact]
+    public void JsonTrainingPlanRepository_LoadsTrainingPlanBlocks()
+    {
+        var directory = CreateTempDirectory();
+        File.WriteAllText(Path.Combine(directory, "blocked-plan.json"), """
+        {
+          "schemaVersion": 2,
+          "id": "blocked-plan",
+          "name": "Blocked Plan",
+          "blocks": [
+            {
+              "id": "prep",
+              "name": "Vorbereitung",
+              "focus": "Technikgrundlagen",
+              "structure": "3 Aufbauwochen + 1 Entlastungswoche",
+              "order": 1,
+              "sessionIds": [ "session-1", "session-2" ]
+            }
+          ],
+          "sessions": [
+            {
+              "id": "session-1",
+              "name": "Easy Run",
+              "date": "2026-01-01",
+              "runs": [
+                {
+                  "sessionType": "planned",
+                  "id": "run-1",
+                  "name": "Easy Run",
+                  "date": "2026-01-01",
+                  "sequence": [
+                    { "type": "Dauerlauf", "distance": 1000, "paceKey": "E Pace" }
+                  ]
+                }
+              ],
+              "workouts": []
+            },
+            {
+              "id": "session-2",
+              "name": "Strength",
+              "date": "2026-01-08",
+              "workouts": [
+                { "workoutId": "Stabi Handout Easy", "sets": 1, "rounds": 1 }
+              ]
+            }
+          ]
+        }
+        """);
+
+        var plans = LoadTrainingPlans(directory);
+
+        var plan = Assert.Single(plans);
+        var block = Assert.Single(plan.Blocks);
+        Assert.Equal("prep", block.Id);
+        Assert.Equal("Technikgrundlagen", block.Focus);
+        Assert.Equal(["session-1", "session-2"], block.SessionIds);
+        Assert.Equal(2, plan.GetSessionsForBlock(block).Count);
+        Assert.Same(block, plan.GetBlockForSession(plan.Sessions[0]));
+    }
+
+    [Fact]
+    public void JsonTrainingPlanRepository_SavesTrainingPlanBlocks()
+    {
+        var directory = CreateTempDirectory();
+        File.WriteAllText(Path.Combine(directory, "save-blocks-plan.json"), """
+        {
+          "schemaVersion": 1,
+          "id": "save-blocks-plan",
+          "name": "Save Blocks Plan",
+          "sessions": [
+            {
+              "id": "session-1",
+              "name": "Strength",
+              "date": "2026-01-01",
+              "workouts": [
+                { "workoutId": "Stabi Handout Easy", "sets": 1, "rounds": 1 }
+              ]
+            }
+          ]
+        }
+        """);
+        var repository = new JsonTrainingPlanRepository(directory);
+        var definition = Assert.Single(repository.Load());
+        definition.Blocks =
+        [
+            new TrainingPlanBlockDefinition
+            {
+                Id = "strength",
+                Name = "Koordination und Kraft",
+                Focus = "Stabilitaet",
+                Order = 1,
+                SessionIds = [ "session-1" ]
+            }
+        ];
+
+        repository.Save(definition);
+
+        var reloaded = Assert.Single(repository.Load());
+        var block = Assert.Single(reloaded.Blocks);
+        Assert.Equal(2, reloaded.SchemaVersion);
+        Assert.Equal("strength", block.Id);
+        Assert.Equal("session-1", Assert.Single(block.SessionIds));
+    }
+
+    [Fact]
     public void JsonTrainingPlanRepository_UsesAppointmentStartDateWhenSessionDateIsMissing()
     {
         var directory = CreateTempDirectory();

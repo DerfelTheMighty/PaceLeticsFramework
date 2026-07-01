@@ -6,12 +6,26 @@ namespace PaceLetics.TrainingPlanModule.CodeBase.Models;
 public sealed class TrainingPlan
 {
     public TrainingPlan(string id, string name, IEnumerable<TrainingSession> sessions)
+        : this(id, name, sessions, Array.Empty<TrainingPlanBlock>())
+    {
+    }
+
+    public TrainingPlan(
+        string id,
+        string name,
+        IEnumerable<TrainingSession> sessions,
+        IEnumerable<TrainingPlanBlock>? blocks)
     {
         if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException("Id must not be empty.", nameof(id));
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name must not be empty.", nameof(name));
         if (sessions is null) throw new ArgumentNullException(nameof(sessions));
 
         Sessions = sessions.OrderBy(s => s.Date).ToList().AsReadOnly();
+        Blocks = (blocks ?? Enumerable.Empty<TrainingPlanBlock>())
+            .OrderBy(block => block.Order)
+            .ThenBy(block => block.Name)
+            .ToList()
+            .AsReadOnly();
         Id = id;
         Name = name;
     }
@@ -19,14 +33,36 @@ public sealed class TrainingPlan
     public string Id { get; }
     public string Name { get; }
     public IReadOnlyList<TrainingSession> Sessions { get; }
+    public IReadOnlyList<TrainingPlanBlock> Blocks { get; }
     public IEnumerable<RunningSession> RunningSessions => Sessions.SelectMany(session => session.Runs);
     public DateTime? StartDate => Sessions.Count == 0 ? null : Sessions.Min(s => s.Date);
     public DateTime? EndDate => Sessions.Count == 0 ? null : Sessions.Max(s => s.Date);
     public int TotalRunDistance => Sessions.Sum(session => session.TotalRunDistance);
+    public IReadOnlyList<TrainingSession> UnblockedSessions => Sessions
+        .Where(session => GetBlockForSession(session) is null)
+        .ToList()
+        .AsReadOnly();
 
     public IEnumerable<IGrouping<int, TrainingSession>> ByIsoWeek()
     {
         return Sessions.GroupBy(s => ISOWeek.GetWeekOfYear(s.Date));
+    }
+
+    public TrainingPlanBlock? GetBlockForSession(TrainingSession session)
+    {
+        return Blocks.FirstOrDefault(block => block.Contains(session));
+    }
+
+    public IReadOnlyList<TrainingSession> GetSessionsForBlock(TrainingPlanBlock block)
+    {
+        if (block is null) throw new ArgumentNullException(nameof(block));
+
+        var sessionIds = block.SessionIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return Sessions
+            .Where(session => sessionIds.Contains(session.Id))
+            .OrderBy(session => session.Date)
+            .ToList()
+            .AsReadOnly();
     }
 }
 

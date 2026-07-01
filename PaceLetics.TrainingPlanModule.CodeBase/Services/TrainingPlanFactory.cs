@@ -29,7 +29,8 @@ public sealed class TrainingPlanFactory : ITrainingPlanFactory
             return new TrainingPlan(
                 definition.Id,
                 definition.Name,
-                definition.Sessions.Select(CreateTrainingSession));
+                definition.Sessions.Select(CreateTrainingSession),
+                definition.Blocks.Select(CreateTrainingPlanBlock));
         }
         catch (TrainingPlanDefinitionValidationException ex)
         {
@@ -39,6 +40,18 @@ public sealed class TrainingPlanFactory : ITrainingPlanFactory
         {
             throw new InvalidDataException($"Training plan definition '{definition.Id}' is invalid.", ex);
         }
+    }
+
+    private static TrainingPlanBlock CreateTrainingPlanBlock(TrainingPlanBlockDefinition definition)
+    {
+        return new TrainingPlanBlock(
+            definition.Id,
+            definition.Name,
+            definition.SessionIds,
+            definition.Order,
+            definition.Focus,
+            definition.Structure,
+            definition.Description);
     }
 
     public IReadOnlyList<TrainingPlan> Create(IEnumerable<TrainingPlanDefinition> definitions)

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
 using PaceLetics.TrainingModule.CodeBase.Running.Repositories;
 using PaceLetics.TrainingPlanModule.CodeBase.Definitions;
@@ -10,7 +11,13 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
 {
     private static readonly JsonSerializerOptions Options = new()
     {
-        PropertyNameCaseInsensitive = true
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true,
+        Converters =
+        {
+            new JsonStringEnumConverter()
+        }
     };
 
     private readonly string _directoryPath;
@@ -42,6 +49,18 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         }
 
         return plans;
+    }
+
+    public void Save(TrainingPlanDefinition definition)
+    {
+        ArgumentNullException.ThrowIfNull(definition);
+        Directory.CreateDirectory(_directoryPath);
+
+        var filePath = ResolvePlanFilePath(definition);
+        using var stream = File.Create(filePath);
+        using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+
+        WriteTrainingPlan(writer, definition);
     }
 
     private TrainingPlanDefinition LoadPlan(string filePath)
@@ -82,6 +101,7 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
                 SchemaVersion = planDocument.SchemaVersion,
                 Id = id,
                 Name = name,
+                Blocks = planDocument.Blocks,
                 Sessions = sessionsElement.EnumerateArray().Select(ParseTrainingSession).ToList()
             };
         }
@@ -139,6 +159,171 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         };
     }
 
+    private string ResolvePlanFilePath(TrainingPlanDefinition definition)
+    {
+        foreach (var file in Directory.EnumerateFiles(_directoryPath, "*.json"))
+        {
+            try
+            {
+                var plan = LoadPlan(file);
+                if (string.Equals(plan.Id, definition.Id, StringComparison.OrdinalIgnoreCase))
+                    return file;
+            }
+            catch (Exception ex) when (ex is IOException or JsonException or InvalidDataException or ArgumentException or KeyNotFoundException)
+            {
+                // Ignore unrelated broken files while resolving the target file name.
+            }
+        }
+
+        return Path.Combine(_directoryPath, $"{SanitizeFileName(definition.Id)}.json");
+    }
+
+    private static string SanitizeFileName(string value)
+    {
+        var invalidChars = Path.GetInvalidFileNameChars().ToHashSet();
+        var sanitized = new string(value
+            .Select(character => invalidChars.Contains(character) ? '-' : character)
+            .ToArray()).Trim();
+
+        return string.IsNullOrWhiteSpace(sanitized)
+            ? Guid.NewGuid().ToString("N")
+            : sanitized;
+    }
+
+    private static void WriteTrainingPlan(Utf8JsonWriter writer, TrainingPlanDefinition definition)
+    {
+        writer.WriteStartObject();
+        writer.WriteNumber("schemaVersion", Math.Max(definition.SchemaVersion, 2));
+        writer.WriteString("id", definition.Id);
+        writer.WriteString("name", definition.Name);
+
+        if (definition.Blocks.Count > 0)
+        {
+            writer.WritePropertyName("blocks");
+            JsonSerializer.Serialize(writer, definition.Blocks, Options);
+        }
+
+        writer.WritePropertyName("sessions");
+        writer.WriteStartArray();
+        foreach (var session in definition.Sessions)
+            WriteTrainingSession(writer, session);
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+    }
+
+    private static void WriteTrainingSession(Utf8JsonWriter writer, TrainingSessionDefinition session)
+    {
+        writer.WriteStartObject();
+        WriteStringIfNotEmpty(writer, "id", session.Id);
+        WriteStringIfNotEmpty(writer, "name", session.Name);
+
+        if (session.Date != default)
+            writer.WriteString("date", session.Date.ToString("yyyy-MM-dd"));
+
+        if (session.Appointment is not null && !session.Appointment.IsEmpty)
+        {
+            writer.WritePropertyName("appointment");
+            JsonSerializer.Serialize(writer, session.Appointment, Options);
+        }
+
+        if (session.TrainingEffect is not null && !session.TrainingEffect.IsEmpty)
+        {
+            writer.WritePropertyName("trainingEffect");
+            JsonSerializer.Serialize(writer, session.TrainingEffect, Options);
+        }
+
+        if (session.Warmup.Count > 0)
+        {
+            writer.WritePropertyName("warmup");
+            JsonSerializer.Serialize(writer, session.Warmup, Options);
+        }
+
+        if (session.Drills.Count > 0)
+        {
+            writer.WritePropertyName("drills");
+            JsonSerializer.Serialize(writer, session.Drills, Options);
+        }
+
+        writer.WritePropertyName("runs");
+        writer.WriteStartArray();
+        foreach (var run in session.Runs)
+            WriteRun(writer, run);
+        writer.WriteEndArray();
+
+        writer.WritePropertyName("workouts");
+        JsonSerializer.Serialize(writer, session.Workouts, Options);
+        writer.WriteEndObject();
+    }
+
+    private static void WriteRun(Utf8JsonWriter writer, RunningSessionDefinition run)
+    {
+        switch (run)
+        {
+            case PlannedSessionDefinition planned:
+                WritePlannedRun(writer, planned);
+                break;
+            case IntervalSessionDefinition interval:
+                WriteIntervalRun(writer, interval);
+                break;
+            default:
+                throw new InvalidDataException($"Unsupported run definition type '{run.GetType().Name}'.");
+        }
+    }
+
+    private static void WritePlannedRun(Utf8JsonWriter writer, PlannedSessionDefinition run)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("sessionType", "planned");
+        WriteStringIfNotEmpty(writer, "id", run.Id);
+        WriteStringIfNotEmpty(writer, "name", run.Name);
+        if (run.Date != default)
+            writer.WriteString("date", run.Date.ToString("yyyy-MM-dd"));
+
+        writer.WritePropertyName("sequence");
+        JsonSerializer.Serialize(writer, run.Sequence, Options);
+        writer.WriteEndObject();
+    }
+
+    private static void WriteIntervalRun(Utf8JsonWriter writer, IntervalSessionDefinition run)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("sessionType", "interval");
+        WriteStringIfNotEmpty(writer, "id", run.Id);
+        WriteStringIfNotEmpty(writer, "name", run.Name);
+        if (run.Date != default)
+            writer.WriteString("date", run.Date.ToString("yyyy-MM-dd"));
+
+        WriteNumberIfSet(writer, "warmupDistance", run.WarmupDistance);
+        WriteNumberIfSet(writer, "cooldownDistance", run.CooldownDistance);
+
+        writer.WritePropertyName("distances");
+        JsonSerializer.Serialize(writer, run.Distances, Options);
+
+        if (run.Recovery is not null)
+        {
+            writer.WritePropertyName("recovery");
+            JsonSerializer.Serialize(writer, run.Recovery, Options);
+        }
+
+        writer.WritePropertyName("paceKeys");
+        JsonSerializer.Serialize(writer, run.PaceKeys, Options);
+        writer.WriteNumber("sets", run.Sets);
+        writer.WriteNumber("setRecovery", run.SetRecovery);
+        writer.WriteEndObject();
+    }
+
+    private static void WriteStringIfNotEmpty(Utf8JsonWriter writer, string name, string value)
+    {
+        if (!string.IsNullOrWhiteSpace(value))
+            writer.WriteString(name, value);
+    }
+
+    private static void WriteNumberIfSet(Utf8JsonWriter writer, string name, int? value)
+    {
+        if (value is not null)
+            writer.WriteNumber(name, value.Value);
+    }
+
     private static string ToReadableName(string id)
     {
         if (string.IsNullOrWhiteSpace(id))
@@ -153,6 +338,7 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         public int SchemaVersion { get; set; }
         public string Id { get; set; } = "";
         public string Name { get; set; } = "";
+        public List<TrainingPlanBlockDefinition> Blocks { get; set; } = new();
     }
 
     private sealed class TrainingSessionDocument

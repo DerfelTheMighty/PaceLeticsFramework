@@ -2,6 +2,7 @@
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
 @using AthleteDataAccessLibrary.Contracts
 @using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.TrainingPlanModule.CodeBase.Definitions
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services
 @using PaceLetics.Web.Services.Courses
@@ -392,18 +393,136 @@
                                             {
                                                 @foreach (var publication in course.TrainingPlanPublications.OrderBy(publication => publication.TrainingPlanId))
                                                 {
+                                                    var plan = GetTrainingPlan(publication.TrainingPlanId);
+
                                                     <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
-                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                                            <MudStack Spacing="0" Style="min-width:0;">
-                                                                <MudText Typo="Typo.body2">@GetTrainingPlanName(publication.TrainingPlanId)</MudText>
-                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@string.Format(L["PublishedSince"], publication.PublishedAt)</MudText>
+                                                        <MudStack Spacing="2">
+                                                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                                <MudStack Spacing="0" Style="min-width:0;">
+                                                                    <MudText Typo="Typo.body2">@GetTrainingPlanName(publication.TrainingPlanId)</MudText>
+                                                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@string.Format(L["PublishedSince"], publication.PublishedAt)</MudText>
+                                                                </MudStack>
+                                                                <MudTooltip Text="@L["Delete"]">
+                                                                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                                   Color="Color.Default"
+                                                                                   OnClick="@(() => RemoveTrainingPlanAsync(course, publication.TrainingPlanId))"
+                                                                                   aria-label="@L["Delete"]" />
+                                                                </MudTooltip>
                                                             </MudStack>
-                                                            <MudTooltip Text="@L["Delete"]">
-                                                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                                                                               Color="Color.Default"
-                                                                               OnClick="@(() => RemoveTrainingPlanAsync(course, publication.TrainingPlanId))"
-                                                                               aria-label="@L["Delete"]" />
-                                                            </MudTooltip>
+
+                                                            @if (plan is not null)
+                                                            {
+                                                                <MudDivider />
+                                                                <MudStack Spacing="2">
+                                                                    @if (plan.Blocks.Count == 0)
+                                                                    {
+                                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@L["NoPlanBlocks"]</MudText>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @foreach (var block in plan.Blocks)
+                                                                        {
+                                                                            <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default); background:var(--mud-palette-background-grey);">
+                                                                                <MudStack Spacing="1">
+                                                                                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:8px;">
+                                                                                        <MudStack Spacing="0" Style="min-width:0;">
+                                                                                            <MudText Typo="Typo.subtitle2">@block.Name</MudText>
+                                                                                            <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPlanBlockMeta(plan, block)</MudText>
+                                                                                            @if (!string.IsNullOrWhiteSpace(block.Focus))
+                                                                                            {
+                                                                                                <MudText Typo="Typo.caption" Color="Color.Secondary">@block.Focus</MudText>
+                                                                                            }
+                                                                                        </MudStack>
+                                                                                        <MudTooltip Text="@L["UngroupBlock"]">
+                                                                                            <MudIconButton Icon="@Icons.Material.Filled.FolderOff"
+                                                                                                           Color="Color.Default"
+                                                                                                           OnClick="@(() => UngroupTrainingPlanBlockAsync(plan.Id, block.Id))"
+                                                                                                           aria-label="@L["UngroupBlock"]" />
+                                                                                        </MudTooltip>
+                                                                                    </MudStack>
+
+                                                                                    <MudStack Spacing="1">
+                                                                                        @foreach (var session in plan.GetSessionsForBlock(block))
+                                                                                        {
+                                                                                            <MudPaper Elevation="0" Class="pa-2" Style="border:1px solid var(--mud-palette-lines-default);">
+                                                                                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:8px;">
+                                                                                                    <MudStack Spacing="0" Style="min-width:0;">
+                                                                                                        <MudText Typo="Typo.body2">@session.Name</MudText>
+                                                                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatTrainingPlanSession(session)</MudText>
+                                                                                                    </MudStack>
+                                                                                                    <MudTooltip Text="@L["RemoveFromBlock"]">
+                                                                                                        <MudIconButton Icon="@Icons.Material.Filled.LinkOff"
+                                                                                                                       Color="Color.Default"
+                                                                                                                       OnClick="@(() => RemoveSessionFromTrainingPlanBlockAsync(plan.Id, block.Id, session.Id))"
+                                                                                                                       aria-label="@L["RemoveFromBlock"]" />
+                                                                                                    </MudTooltip>
+                                                                                                </MudStack>
+                                                                                            </MudPaper>
+                                                                                        }
+                                                                                    </MudStack>
+                                                                                </MudStack>
+                                                                            </MudPaper>
+                                                                        }
+                                                                    }
+
+                                                                    <MudText Typo="Typo.subtitle2">@L["CreatePlanBlock"]</MudText>
+                                                                    @if (plan.UnblockedSessions.Count == 0)
+                                                                    {
+                                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@L["NoUngroupedSessions"]</MudText>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        var draft = GetBlockDraft(plan.Id);
+
+                                                                        <MudGrid Spacing="2">
+                                                                            <MudItem xs="12" md="4">
+                                                                                <MudTextField Label="@L["BlockName"]"
+                                                                                              Value="@draft.Name"
+                                                                                              ValueChanged="@((string value) => draft.Name = value)"
+                                                                                              Variant="Variant.Outlined" />
+                                                                            </MudItem>
+                                                                            <MudItem xs="12" md="4">
+                                                                                <MudTextField Label="@L["BlockFocus"]"
+                                                                                              Value="@draft.Focus"
+                                                                                              ValueChanged="@((string value) => draft.Focus = value)"
+                                                                                              Variant="Variant.Outlined" />
+                                                                            </MudItem>
+                                                                            <MudItem xs="12" md="4">
+                                                                                <MudTextField Label="@L["BlockStructure"]"
+                                                                                              Value="@draft.Structure"
+                                                                                              ValueChanged="@((string value) => draft.Structure = value)"
+                                                                                              Variant="Variant.Outlined" />
+                                                                            </MudItem>
+                                                                        </MudGrid>
+
+                                                                        <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                                                                            @foreach (var session in plan.UnblockedSessions)
+                                                                            {
+                                                                                var selected = IsBlockSessionSelected(plan.Id, session.Id);
+
+                                                                                <MudButton Size="Size.Small"
+                                                                                           Variant="@(selected ? Variant.Filled : Variant.Outlined)"
+                                                                                           Color="@(selected ? Color.Primary : Color.Default)"
+                                                                                           StartIcon="@(selected ? Icons.Material.Filled.Check : Icons.Material.Filled.Add)"
+                                                                                           OnClick="@(() => ToggleBlockSessionSelection(plan.Id, session.Id))">
+                                                                                    @session.Name
+                                                                                </MudButton>
+                                                                            }
+                                                                        </MudStack>
+
+                                                                        <MudStack Row="true" Justify="Justify.FlexEnd">
+                                                                            <MudTooltip Text="@L["GroupSessions"]">
+                                                                                <MudIconButton Color="Color.Primary"
+                                                                                               Variant="Variant.Filled"
+                                                                                               Icon="@Icons.Material.Filled.CreateNewFolder"
+                                                                                               Disabled="@(!CanCreateTrainingPlanBlock(plan.Id))"
+                                                                                               OnClick="@(() => CreateTrainingPlanBlockAsync(plan.Id))"
+                                                                                               aria-label="@L["GroupSessions"]" />
+                                                                            </MudTooltip>
+                                                                        </MudStack>
+                                                                    }
+                                                                </MudStack>
+                                                            }
                                                         </MudStack>
                                                     </MudPaper>
                                                 }
@@ -542,6 +661,8 @@
     private Dictionary<string, string> _athleteDisplayNamesById = new(StringComparer.OrdinalIgnoreCase);
     private Dictionary<string, IReadOnlyList<CourseEventRegistrationDocument>> _eventParticipants = new(StringComparer.OrdinalIgnoreCase);
     private HashSet<string> _openParticipantLists = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, TrainingPlanBlockDraft> _blockDrafts = new(StringComparer.OrdinalIgnoreCase);
+    private HashSet<string> _selectedBlockSessionKeys = new(StringComparer.OrdinalIgnoreCase);
 
     private string _courseName = string.Empty;
     private string _courseDescription = string.Empty;
@@ -591,6 +712,22 @@
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         return _trainingPlans.Where(plan => !publishedPlanIds.Contains(plan.Id));
+    }
+
+    private TrainingPlan? GetTrainingPlan(string trainingPlanId)
+    {
+        return _trainingPlans.FirstOrDefault(plan => string.Equals(plan.Id, trainingPlanId, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private TrainingPlanBlockDraft GetBlockDraft(string planId)
+    {
+        if (!_blockDrafts.TryGetValue(planId, out var draft))
+        {
+            draft = new TrainingPlanBlockDraft();
+            _blockDrafts[planId] = draft;
+        }
+
+        return draft;
     }
 
     protected override async Task OnInitializedAsync()
@@ -931,6 +1068,94 @@
         }
     }
 
+    private Task CreateTrainingPlanBlockAsync(string planId)
+    {
+        try
+        {
+            var plan = GetTrainingPlan(planId)
+                ?? throw new InvalidOperationException(L["PlanNotFound"]);
+            var draft = GetBlockDraft(planId);
+            var selectedSessionIds = GetSelectedBlockSessionIds(planId).ToList();
+            if (selectedSessionIds.Count == 0)
+                return Task.CompletedTask;
+            if (string.IsNullOrWhiteSpace(draft.Name))
+                throw new InvalidOperationException(L["BlockNameRequired"]);
+
+            var blockDefinitions = CreateBlockDefinitions(plan);
+            blockDefinitions.Add(new TrainingPlanBlockDefinition
+            {
+                Id = CreateUniqueBlockId(plan, draft.Name),
+                Name = draft.Name.Trim(),
+                Focus = draft.Focus.Trim(),
+                Structure = draft.Structure.Trim(),
+                Order = blockDefinitions.Count == 0 ? 1 : blockDefinitions.Max(block => block.Order) + 1,
+                SessionIds = selectedSessionIds
+            });
+
+            SaveTrainingPlanBlocks(planId, blockDefinitions);
+            ClearBlockDraft(planId);
+            Snackbar.Add(L["GroupSessionsSuccess"], Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task UngroupTrainingPlanBlockAsync(string planId, string blockId)
+    {
+        try
+        {
+            var plan = GetTrainingPlan(planId)
+                ?? throw new InvalidOperationException(L["PlanNotFound"]);
+            var blockDefinitions = CreateBlockDefinitions(plan)
+                .Where(block => !string.Equals(block.Id, blockId, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            SaveTrainingPlanBlocks(planId, blockDefinitions);
+            Snackbar.Add(L["UngroupBlockSuccess"], Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task RemoveSessionFromTrainingPlanBlockAsync(string planId, string blockId, string sessionId)
+    {
+        try
+        {
+            var plan = GetTrainingPlan(planId)
+                ?? throw new InvalidOperationException(L["PlanNotFound"]);
+            var blockDefinitions = CreateBlockDefinitions(plan)
+                .Select(block =>
+                {
+                    if (!string.Equals(block.Id, blockId, StringComparison.OrdinalIgnoreCase))
+                        return block;
+
+                    block.SessionIds = block.SessionIds
+                        .Where(id => !string.Equals(id, sessionId, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                    return block;
+                })
+                .Where(block => block.SessionIds.Count > 0)
+                .ToList();
+
+            SaveTrainingPlanBlocks(planId, blockDefinitions);
+            Snackbar.Add(L["RemoveFromBlockSuccess"], Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
     private async Task RemoveTrainingPlanAsync(CourseDocument course, string trainingPlanId)
     {
         var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemovePlanConfirm"], GetTrainingPlanName(trainingPlanId)));
@@ -1126,6 +1351,128 @@
         return _trainingPlans.FirstOrDefault(plan => plan.Id == trainingPlanId)?.Name ?? trainingPlanId;
     }
 
+    private void ToggleBlockSessionSelection(string planId, string sessionId)
+    {
+        var key = BlockSessionSelectionKey(planId, sessionId);
+        if (!_selectedBlockSessionKeys.Add(key))
+            _selectedBlockSessionKeys.Remove(key);
+    }
+
+    private bool IsBlockSessionSelected(string planId, string sessionId)
+    {
+        return _selectedBlockSessionKeys.Contains(BlockSessionSelectionKey(planId, sessionId));
+    }
+
+    private bool CanCreateTrainingPlanBlock(string planId)
+    {
+        return !string.IsNullOrWhiteSpace(GetBlockDraft(planId).Name)
+               && GetSelectedBlockSessionIds(planId).Any();
+    }
+
+    private IEnumerable<string> GetSelectedBlockSessionIds(string planId)
+    {
+        var prefix = $"{planId}|";
+        return _selectedBlockSessionKeys
+            .Where(key => key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            .Select(key => key[prefix.Length..]);
+    }
+
+    private void ClearBlockDraft(string planId)
+    {
+        _blockDrafts.Remove(planId);
+        var prefix = $"{planId}|";
+        _selectedBlockSessionKeys.RemoveWhere(key => key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private void SaveTrainingPlanBlocks(string planId, IReadOnlyList<TrainingPlanBlockDefinition> blockDefinitions)
+    {
+        TrainingPlanService.SaveTrainingPlanBlocks(planId, blockDefinitions);
+        _trainingPlans = TrainingPlanService.LoadTrainingPlans().ToList();
+    }
+
+    private static List<TrainingPlanBlockDefinition> CreateBlockDefinitions(TrainingPlan plan)
+    {
+        return plan.Blocks
+            .Select(block => new TrainingPlanBlockDefinition
+            {
+                Id = block.Id,
+                Name = block.Name,
+                Focus = block.Focus,
+                Structure = block.Structure,
+                Description = block.Description,
+                Order = block.Order,
+                SessionIds = block.SessionIds.ToList()
+            })
+            .ToList();
+    }
+
+    private string CreateUniqueBlockId(TrainingPlan plan, string name)
+    {
+        var baseId = ToSlug(name);
+        var candidate = baseId;
+        var suffix = 2;
+        var existingIds = plan.Blocks.Select(block => block.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        while (existingIds.Contains(candidate))
+        {
+            candidate = $"{baseId}-{suffix}";
+            suffix++;
+        }
+
+        return candidate;
+    }
+
+    private static string ToSlug(string value)
+    {
+        var characters = value
+            .Trim()
+            .ToLowerInvariant()
+            .Select(character => char.IsLetterOrDigit(character) ? character : '-')
+            .ToArray();
+        var slug = string.Join("-", new string(characters).Split('-', StringSplitOptions.RemoveEmptyEntries));
+        return string.IsNullOrWhiteSpace(slug) ? Guid.NewGuid().ToString("N") : slug;
+    }
+
+    private string FormatPlanBlockMeta(TrainingPlan plan, TrainingPlanBlock block)
+    {
+        var sessions = plan.GetSessionsForBlock(block);
+        if (sessions.Count == 0)
+            return string.Format(L["PlanBlockSessionCount"], 0);
+
+        var period = sessions.First().Date.Date == sessions.Last().Date.Date
+            ? sessions.First().Date.ToString("dd.MM.yyyy")
+            : $"{sessions.First().Date:dd.MM.yyyy} - {sessions.Last().Date:dd.MM.yyyy}";
+
+        var parts = new List<string>
+        {
+            string.Format(L["PlanBlockSessionCount"], sessions.Count),
+            period
+        };
+
+        if (!string.IsNullOrWhiteSpace(block.Structure))
+            parts.Add(block.Structure);
+
+        return string.Join(" · ", parts);
+    }
+
+    private string FormatTrainingPlanSession(TrainingSession session)
+    {
+        var parts = new List<string> { session.Date.ToString("dd.MM.yyyy") };
+
+        if (session.Runs.Count > 0)
+            parts.Add($"{session.TotalRunDistance / 1000.0:0.0} km");
+
+        if (session.Workouts.Count > 0)
+            parts.Add(string.Format(L["WorkoutCount"], session.Workouts.Count));
+
+        return string.Join(" · ", parts);
+    }
+
+    private static string BlockSessionSelectionKey(string planId, string sessionId)
+    {
+        return $"{planId}|{sessionId}";
+    }
+
     private bool IsParticipantListOpen(string eventId)
     {
         return _openParticipantLists.Contains(eventId);
@@ -1172,4 +1519,11 @@
     }
 
     private sealed record TrainerCandidate(string UserId, string DisplayName);
+
+    private sealed class TrainingPlanBlockDraft
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Focus { get; set; } = string.Empty;
+        public string Structure { get; set; } = string.Empty;
+    }
 }

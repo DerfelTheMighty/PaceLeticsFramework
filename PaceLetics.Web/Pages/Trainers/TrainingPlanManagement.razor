@@ -1,0 +1,772 @@
+@page "/Trainers/training-plans"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using PaceLetics.CoreModule.Infrastructure.Constants
+@using PaceLetics.TrainingModule.CodeBase.Running.Definitions
+@using PaceLetics.TrainingModule.CodeBase.Running.Models
+@using PaceLetics.TrainingPlanModule.CodeBase.Definitions
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@using PaceLetics.Web.Services
+@inject ITrainingPlanService TrainingPlanService
+@inject ISnackbar Snackbar
+
+<PageTitle>Trainingsplaene verwalten</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Large">
+    <PageHeader Title="Trainingsplaene"
+                Subtitle="Plaene erstellen, Einheiten pflegen und Trainingsbloecke strukturieren." />
+
+    <MudDivider Class="my-4" />
+
+    <MudGrid Spacing="3">
+        <MudItem xs="12" md="4">
+            <MudPaper Elevation="1" Class="pa-4">
+                <MudStack Spacing="3">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                        <MudText Typo="Typo.h6">Planwerkstatt</MudText>
+                        <MudTooltip Text="Plan erstellen">
+                            <MudIconButton Icon="@Icons.Material.Filled.Add"
+                                           Color="Color.Primary"
+                                           Variant="Variant.Filled"
+                                           Disabled="@string.IsNullOrWhiteSpace(_newPlanName)"
+                                           OnClick="CreatePlanAsync"
+                                           aria-label="Plan erstellen" />
+                        </MudTooltip>
+                    </MudStack>
+
+                    <MudTextField Label="Neuer Plan"
+                                  @bind-Value="_newPlanName"
+                                  Variant="Variant.Outlined"
+                                  Immediate="true" />
+
+                    @if (_plans.Count == 0)
+                    {
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                            Es gibt noch keine Trainingsplaene.
+                        </MudAlert>
+                    }
+                    else
+                    {
+                        <MudStack Spacing="1">
+                            @foreach (var plan in _plans.OrderBy(plan => plan.Name))
+                            {
+                                var selected = SelectedPlan?.Id == plan.Id;
+                                <button type="button"
+                                        class="@GetPlanButtonClass(selected)"
+                                        @onclick="@(() => SelectPlan(plan.Id))">
+                                    <span>
+                                        <strong>@plan.Name</strong>
+                                        <small>@FormatPlanMeta(plan)</small>
+                                    </span>
+                                    @if (selected)
+                                    {
+                                        <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" />
+                                    }
+                                </button>
+                            }
+                        </MudStack>
+                    }
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="8">
+            @if (SelectedPlan is null)
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                    Waehle einen Plan aus oder erstelle einen neuen Plan.
+                </MudAlert>
+            }
+            else
+            {
+                <MudStack Spacing="3">
+                    <MudPaper Elevation="1" Class="pa-4">
+                        <MudStack Spacing="3">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                <MudTextField Label="Planname"
+                                              @bind-Value="_planName"
+                                              Variant="Variant.Outlined"
+                                              Immediate="true"
+                                              Style="flex:1;" />
+                                <MudTooltip Text="Planname speichern">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Save"
+                                                   Color="Color.Primary"
+                                                   Variant="Variant.Filled"
+                                                   Disabled="@string.IsNullOrWhiteSpace(_planName)"
+                                                   OnClick="SavePlanNameAsync"
+                                                   aria-label="Planname speichern" />
+                                </MudTooltip>
+                            </MudStack>
+
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPlanMeta(SelectedPlan)</MudText>
+                        </MudStack>
+                    </MudPaper>
+
+                    <MudTabs Elevation="0" Rounded="false">
+                        <MudTabPanel Text="Einheiten">
+                            <MudStack Spacing="3" Class="pt-3">
+                                <MudPaper Elevation="0" Class="pa-3 pl-trainer-editor-panel">
+                                    <MudStack Spacing="2">
+                                        <MudText Typo="Typo.subtitle2">Einheit hinzufuegen</MudText>
+                                        <MudGrid Spacing="2">
+                                            <MudItem xs="12" md="6">
+                                                <MudTextField Label="Name"
+                                                              @bind-Value="_sessionDraft.Name"
+                                                              Variant="Variant.Outlined"
+                                                              Immediate="true" />
+                                            </MudItem>
+                                            <MudItem xs="12" md="6">
+                                                <MudDatePicker Label="Datum"
+                                                               Date="_sessionDraft.Date"
+                                                               DateChanged="@(date => _sessionDraft.Date = date)"
+                                                               Variant="Variant.Outlined" />
+                                            </MudItem>
+                                            <MudItem xs="12" md="4">
+                                                <MudSelect T="SessionDraftKind"
+                                                           Label="Typ"
+                                                           @bind-Value="_sessionDraft.Kind"
+                                                           Variant="Variant.Outlined">
+                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.PlannedRun">Dauerlauf</MudSelectItem>
+                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.IntervalRun">Intervall</MudSelectItem>
+                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.Workout">Workout</MudSelectItem>
+                                                </MudSelect>
+                                            </MudItem>
+
+                                            @if (_sessionDraft.Kind == SessionDraftKind.PlannedRun)
+                                            {
+                                                <MudItem xs="6" md="4">
+                                                    <MudNumericField T="int" Label="Distanz (m)"
+                                                                     @bind-Value="_sessionDraft.Distance"
+                                                                     Min="0"
+                                                                     Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="4">
+                                                    <MudSelect T="string" Label="Pace"
+                                                               @bind-Value="_sessionDraft.PaceKey"
+                                                               Variant="Variant.Outlined">
+                                                        @foreach (var paceKey in PaceKeyOptions)
+                                                        {
+                                                            <MudSelectItem T="string" Value="@paceKey">@paceKey</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </MudItem>
+                                            }
+                                            else if (_sessionDraft.Kind == SessionDraftKind.IntervalRun)
+                                            {
+                                                <MudItem xs="6" md="3">
+                                                    <MudNumericField T="int" Label="Warm-up (m)"
+                                                                     @bind-Value="_sessionDraft.WarmupDistance"
+                                                                     Min="0"
+                                                                     Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="3">
+                                                    <MudNumericField T="int" Label="Intervall (m)"
+                                                                     @bind-Value="_sessionDraft.Distance"
+                                                                     Min="1"
+                                                                     Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="3">
+                                                    <MudNumericField T="int" Label="Wiederholungen"
+                                                                     @bind-Value="_sessionDraft.Repetitions"
+                                                                     Min="1"
+                                                                     Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="3">
+                                                    <MudNumericField T="int" Label="Trabpause (m)"
+                                                                     @bind-Value="_sessionDraft.RecoveryDistance"
+                                                                     Min="0"
+                                                                     Variant="Variant.Outlined" />
+                                                </MudItem>
+                                            }
+                                            else
+                                            {
+                                                <MudItem xs="12" md="6">
+                                                    <MudTextField Label="Workout-ID"
+                                                                  @bind-Value="_sessionDraft.WorkoutId"
+                                                                  Variant="Variant.Outlined"
+                                                                  Immediate="true" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="3">
+                                                    <MudNumericField T="int" Label="Sets"
+                                                                     @bind-Value="_sessionDraft.Sets"
+                                                                     Min="1"
+                                                                     Variant="Variant.Outlined" />
+                                                </MudItem>
+                                                <MudItem xs="6" md="3">
+                                                    <MudNumericField T="int" Label="Runden"
+                                                                     @bind-Value="_sessionDraft.Rounds"
+                                                                     Min="1"
+                                                                     Variant="Variant.Outlined" />
+                                                </MudItem>
+                                            }
+                                        </MudGrid>
+
+                                        <MudStack Row="true" Justify="Justify.FlexEnd">
+                                            <MudTooltip Text="Einheit hinzufuegen">
+                                                <MudIconButton Icon="@Icons.Material.Filled.EventAvailable"
+                                                               Color="Color.Primary"
+                                                               Variant="Variant.Filled"
+                                                               Disabled="@(!CanCreateSession)"
+                                                               OnClick="CreateSessionAsync"
+                                                               aria-label="Einheit hinzufuegen" />
+                                            </MudTooltip>
+                                        </MudStack>
+                                    </MudStack>
+                                </MudPaper>
+
+                                @if (SelectedPlan.Sessions.Count == 0)
+                                {
+                                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                                        Dieser Plan hat noch keine Einheiten.
+                                    </MudAlert>
+                                }
+                                else
+                                {
+                                    <MudStack Spacing="1">
+                                        @foreach (var session in SelectedPlan.Sessions)
+                                        {
+                                            <MudPaper Elevation="0" Class="pa-3 pl-trainer-list-row">
+                                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                    <MudStack Spacing="0" Style="min-width:0;">
+                                                        <MudText Typo="Typo.body2">@session.Name</MudText>
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatSession(session)</MudText>
+                                                    </MudStack>
+                                                    <MudTooltip Text="Einheit entfernen">
+                                                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                       Color="Color.Default"
+                                                                       OnClick="@(() => RemoveSessionAsync(session.Id))"
+                                                                       aria-label="Einheit entfernen" />
+                                                    </MudTooltip>
+                                                </MudStack>
+                                            </MudPaper>
+                                        }
+                                    </MudStack>
+                                }
+                            </MudStack>
+                        </MudTabPanel>
+
+                        <MudTabPanel Text="Bloecke">
+                            <MudStack Spacing="3" Class="pt-3">
+                                <MudPaper Elevation="0" Class="pa-3 pl-trainer-editor-panel">
+                                    <MudStack Spacing="2">
+                                        <MudText Typo="Typo.subtitle2">Block hinzufuegen</MudText>
+                                        <MudGrid Spacing="2">
+                                            <MudItem xs="12" md="4">
+                                                <MudTextField Label="Name"
+                                                              @bind-Value="_blockDraft.Name"
+                                                              Variant="Variant.Outlined"
+                                                              Immediate="true" />
+                                            </MudItem>
+                                            <MudItem xs="12" md="4">
+                                                <MudTextField Label="Fokus"
+                                                              @bind-Value="_blockDraft.Focus"
+                                                              Variant="Variant.Outlined"
+                                                              Immediate="true" />
+                                            </MudItem>
+                                            <MudItem xs="12" md="4">
+                                                <MudTextField Label="Struktur"
+                                                              @bind-Value="_blockDraft.Structure"
+                                                              Variant="Variant.Outlined"
+                                                              Immediate="true" />
+                                            </MudItem>
+                                        </MudGrid>
+
+                                        @if (SelectedPlan.UnblockedSessions.Count == 0)
+                                        {
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">Keine freien Einheiten verfuegbar.</MudText>
+                                        }
+                                        else
+                                        {
+                                            <MudStack Spacing="1">
+                                                @foreach (var session in SelectedPlan.UnblockedSessions)
+                                                {
+                                                    <MudCheckBox T="bool"
+                                                                 Label="@($"{session.Date:dd.MM.yyyy} - {session.Name}")"
+                                                                 Value="@IsBlockSessionSelected(session.Id)"
+                                                                 ValueChanged="@((selected) => SetBlockSessionSelection(session.Id, selected))" />
+                                                }
+                                            </MudStack>
+                                        }
+
+                                        <MudStack Row="true" Justify="Justify.FlexEnd">
+                                            <MudTooltip Text="Block hinzufuegen">
+                                                <MudIconButton Icon="@Icons.Material.Filled.Inventory2"
+                                                               Color="Color.Primary"
+                                                               Variant="Variant.Filled"
+                                                               Disabled="@(!CanCreateBlock)"
+                                                               OnClick="CreateBlockAsync"
+                                                               aria-label="Block hinzufuegen" />
+                                            </MudTooltip>
+                                        </MudStack>
+                                    </MudStack>
+                                </MudPaper>
+
+                                @if (SelectedPlan.Blocks.Count == 0)
+                                {
+                                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                                        Dieser Plan hat noch keine Bloecke.
+                                    </MudAlert>
+                                }
+                                else
+                                {
+                                    @foreach (var block in SelectedPlan.Blocks)
+                                    {
+                                        <MudPaper Elevation="0" Class="pa-3 pl-trainer-list-row">
+                                            <MudStack Spacing="2">
+                                                <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                    <MudStack Spacing="0" Style="min-width:0;">
+                                                        <MudText Typo="Typo.subtitle2">@block.Name</MudText>
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatBlock(SelectedPlan, block)</MudText>
+                                                        @if (!string.IsNullOrWhiteSpace(block.Focus))
+                                                        {
+                                                            <MudText Typo="Typo.caption" Color="Color.Secondary">@block.Focus</MudText>
+                                                        }
+                                                    </MudStack>
+                                                    <MudTooltip Text="Block entfernen">
+                                                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                       Color="Color.Default"
+                                                                       OnClick="@(() => RemoveBlockAsync(block.Id))"
+                                                                       aria-label="Block entfernen" />
+                                                    </MudTooltip>
+                                                </MudStack>
+
+                                                @foreach (var session in SelectedPlan.GetSessionsForBlock(block))
+                                                {
+                                                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                        <MudText Typo="Typo.caption">@($"{session.Date:dd.MM.yyyy} - {session.Name}")</MudText>
+                                                        <MudTooltip Text="Aus Block entfernen">
+                                                            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline"
+                                                                           Size="Size.Small"
+                                                                           Color="Color.Default"
+                                                                           OnClick="@(() => RemoveSessionFromBlockAsync(block, session.Id))"
+                                                                           aria-label="Aus Block entfernen" />
+                                                        </MudTooltip>
+                                                    </MudStack>
+                                                }
+                                            </MudStack>
+                                        </MudPaper>
+                                    }
+                                }
+                            </MudStack>
+                        </MudTabPanel>
+                    </MudTabs>
+                </MudStack>
+            }
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+<style>
+    .pl-training-plan-selector {
+        width: 100%;
+        border: 1px solid var(--mud-palette-lines-default);
+        background: var(--mud-palette-surface);
+        color: var(--mud-palette-text-primary);
+        border-radius: 8px;
+        padding: 10px 12px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        cursor: pointer;
+    }
+
+    .pl-training-plan-selector-selected {
+        border-color: var(--mud-palette-primary);
+        background: color-mix(in srgb, var(--mud-palette-primary) 10%, var(--mud-palette-surface));
+    }
+
+    .pl-training-plan-selector span {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .pl-training-plan-selector small {
+        color: var(--mud-palette-text-secondary);
+    }
+
+    .pl-trainer-editor-panel,
+    .pl-trainer-list-row {
+        border: 1px solid var(--mud-palette-lines-default);
+        border-radius: 8px;
+    }
+</style>
+
+@code {
+    private static readonly string[] PaceKeyOptions =
+    [
+        PaceKeys.Easy,
+        PaceKeys.Marathon,
+        PaceKeys.Threshold,
+        PaceKeys.Intervall,
+        PaceKeys.Repetition,
+        PaceKeys.Recovery,
+        PaceKeys.Free
+    ];
+
+    private List<TrainingPlan> _plans = new();
+    private string? _selectedPlanId;
+    private string _newPlanName = string.Empty;
+    private string _planName = string.Empty;
+    private SessionDraft _sessionDraft = SessionDraft.CreateDefault();
+    private BlockDraft _blockDraft = new();
+    private HashSet<string> _selectedBlockSessionIds = new(StringComparer.OrdinalIgnoreCase);
+
+    private TrainingPlan? SelectedPlan => _plans.FirstOrDefault(plan =>
+        string.Equals(plan.Id, _selectedPlanId, StringComparison.OrdinalIgnoreCase));
+
+    private bool CanCreateSession =>
+        SelectedPlan is not null
+        && !string.IsNullOrWhiteSpace(_sessionDraft.Name)
+        && _sessionDraft.Date is not null
+        && (_sessionDraft.Kind != SessionDraftKind.Workout || !string.IsNullOrWhiteSpace(_sessionDraft.WorkoutId));
+
+    private bool CanCreateBlock =>
+        SelectedPlan is not null
+        && !string.IsNullOrWhiteSpace(_blockDraft.Name)
+        && _selectedBlockSessionIds.Count > 0;
+
+    protected override void OnInitialized()
+    {
+        ReloadPlans();
+    }
+
+    private void ReloadPlans()
+    {
+        _plans = TrainingPlanService.LoadTrainingPlans().ToList();
+
+        if (_plans.Count == 0)
+        {
+            _selectedPlanId = null;
+            _planName = string.Empty;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(_selectedPlanId)
+            || _plans.All(plan => !string.Equals(plan.Id, _selectedPlanId, StringComparison.OrdinalIgnoreCase)))
+        {
+            _selectedPlanId = _plans.OrderBy(plan => plan.Name).First().Id;
+        }
+
+        _planName = SelectedPlan?.Name ?? string.Empty;
+    }
+
+    private void SelectPlan(string planId)
+    {
+        _selectedPlanId = planId;
+        _planName = SelectedPlan?.Name ?? string.Empty;
+        _selectedBlockSessionIds.Clear();
+        _blockDraft = new();
+    }
+
+    private Task CreatePlanAsync()
+    {
+        try
+        {
+            var plan = TrainingPlanService.CreateTrainingPlan(_newPlanName);
+            _newPlanName = string.Empty;
+            _selectedPlanId = plan.Id;
+            ReloadPlans();
+            Snackbar.Add("Trainingsplan erstellt.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task SavePlanNameAsync()
+    {
+        if (SelectedPlan is null)
+            return Task.CompletedTask;
+
+        try
+        {
+            TrainingPlanService.UpdateTrainingPlan(SelectedPlan.Id, _planName);
+            ReloadPlans();
+            Snackbar.Add("Planname gespeichert.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task CreateSessionAsync()
+    {
+        if (SelectedPlan is null)
+            return Task.CompletedTask;
+
+        try
+        {
+            TrainingPlanService.AddTrainingSession(SelectedPlan.Id, _sessionDraft.ToDefinition());
+            _sessionDraft = SessionDraft.CreateDefault();
+            ReloadPlans();
+            Snackbar.Add("Einheit hinzugefuegt.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task RemoveSessionAsync(string sessionId)
+    {
+        if (SelectedPlan is null)
+            return Task.CompletedTask;
+
+        try
+        {
+            TrainingPlanService.RemoveTrainingSession(SelectedPlan.Id, sessionId);
+            _selectedBlockSessionIds.Remove(sessionId);
+            ReloadPlans();
+            Snackbar.Add("Einheit entfernt.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task CreateBlockAsync()
+    {
+        if (SelectedPlan is null)
+            return Task.CompletedTask;
+
+        try
+        {
+            TrainingPlanService.AddTrainingPlanBlock(
+                SelectedPlan.Id,
+                new TrainingPlanBlockDefinition
+                {
+                    Name = _blockDraft.Name,
+                    Focus = _blockDraft.Focus,
+                    Structure = _blockDraft.Structure,
+                    SessionIds = _selectedBlockSessionIds.ToList()
+                });
+
+            _blockDraft = new();
+            _selectedBlockSessionIds.Clear();
+            ReloadPlans();
+            Snackbar.Add("Block hinzugefuegt.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task RemoveBlockAsync(string blockId)
+    {
+        if (SelectedPlan is null)
+            return Task.CompletedTask;
+
+        try
+        {
+            TrainingPlanService.RemoveTrainingPlanBlock(SelectedPlan.Id, blockId);
+            ReloadPlans();
+            Snackbar.Add("Block entfernt.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task RemoveSessionFromBlockAsync(TrainingPlanBlock block, string sessionId)
+    {
+        if (SelectedPlan is null)
+            return Task.CompletedTask;
+
+        try
+        {
+            var updated = new TrainingPlanBlockDefinition
+            {
+                Id = block.Id,
+                Name = block.Name,
+                Focus = block.Focus,
+                Structure = block.Structure,
+                Description = block.Description,
+                Order = block.Order,
+                SessionIds = block.SessionIds
+                    .Where(id => !string.Equals(id, sessionId, StringComparison.OrdinalIgnoreCase))
+                    .ToList()
+            };
+
+            if (updated.SessionIds.Count == 0)
+                TrainingPlanService.RemoveTrainingPlanBlock(SelectedPlan.Id, block.Id);
+            else
+                TrainingPlanService.UpdateTrainingPlanBlock(SelectedPlan.Id, block.Id, updated);
+
+            ReloadPlans();
+            Snackbar.Add("Einheit aus Block entfernt.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private void SetBlockSessionSelection(string sessionId, bool selected)
+    {
+        if (selected)
+            _selectedBlockSessionIds.Add(sessionId);
+        else
+            _selectedBlockSessionIds.Remove(sessionId);
+    }
+
+    private bool IsBlockSessionSelected(string sessionId)
+    {
+        return _selectedBlockSessionIds.Contains(sessionId);
+    }
+
+    private static string GetPlanButtonClass(bool selected)
+    {
+        return selected
+            ? "pl-training-plan-selector pl-training-plan-selector-selected"
+            : "pl-training-plan-selector";
+    }
+
+    private static string FormatPlanMeta(TrainingPlan plan)
+    {
+        var range = plan.StartDate is null || plan.EndDate is null
+            ? "ohne Datum"
+            : $"{plan.StartDate:dd.MM.yyyy} - {plan.EndDate:dd.MM.yyyy}";
+
+        return $"{plan.Sessions.Count} Einheiten - {plan.Blocks.Count} Bloecke - {range}";
+    }
+
+    private static string FormatSession(TrainingSession session)
+    {
+        var parts = new List<string> { session.Date.ToString("dd.MM.yyyy") };
+
+        if (session.Runs.Count > 0)
+            parts.Add($"{session.TotalRunDistance / 1000.0:0.0} km");
+
+        if (session.Workouts.Count > 0)
+            parts.Add($"{session.Workouts.Count} Workout(s)");
+
+        return string.Join(" - ", parts);
+    }
+
+    private static string FormatBlock(TrainingPlan plan, TrainingPlanBlock block)
+    {
+        var sessions = plan.GetSessionsForBlock(block);
+        var structure = string.IsNullOrWhiteSpace(block.Structure) ? null : block.Structure;
+        return structure is null
+            ? $"{sessions.Count} Einheiten"
+            : $"{sessions.Count} Einheiten - {structure}";
+    }
+
+    private enum SessionDraftKind
+    {
+        PlannedRun,
+        IntervalRun,
+        Workout
+    }
+
+    private sealed class SessionDraft
+    {
+        public string Name { get; set; } = string.Empty;
+        public DateTime? Date { get; set; }
+        public SessionDraftKind Kind { get; set; }
+        public int Distance { get; set; }
+        public string PaceKey { get; set; } = PaceKeys.Easy;
+        public int WarmupDistance { get; set; }
+        public int RecoveryDistance { get; set; }
+        public int Repetitions { get; set; }
+        public string WorkoutId { get; set; } = string.Empty;
+        public int Sets { get; set; }
+        public int Rounds { get; set; }
+
+        public static SessionDraft CreateDefault()
+        {
+            return new SessionDraft
+            {
+                Date = DateTime.Today,
+                Kind = SessionDraftKind.PlannedRun,
+                Distance = 8_000,
+                PaceKey = PaceKeys.Easy,
+                WarmupDistance = 2_000,
+                RecoveryDistance = 400,
+                Repetitions = 6,
+                Sets = 1,
+                Rounds = 1
+            };
+        }
+
+        public TrainingSessionDefinition ToDefinition()
+        {
+            var date = Date?.Date ?? DateTime.Today;
+            var definition = new TrainingSessionDefinition
+            {
+                Name = Name.Trim(),
+                Date = date
+            };
+
+            if (Kind == SessionDraftKind.PlannedRun)
+            {
+                definition.Runs.Add(new PlannedSessionDefinition
+                {
+                    Name = Name.Trim(),
+                    Date = date,
+                    Sequence =
+                    [
+                        new RunningSegmentDefinition
+                        {
+                            Type = SegmentType.Dauerlauf,
+                            Distance = Math.Max(1, Distance),
+                            PaceKey = PaceKey
+                        }
+                    ]
+                });
+            }
+            else if (Kind == SessionDraftKind.IntervalRun)
+            {
+                definition.Runs.Add(new IntervalSessionDefinition
+                {
+                    Name = Name.Trim(),
+                    Date = date,
+                    WarmupDistance = Math.Max(0, WarmupDistance),
+                    Distances = Enumerable.Repeat(Math.Max(1, Distance), Math.Max(1, Repetitions)).ToList(),
+                    Recovery = Enumerable.Repeat(Math.Max(0, RecoveryDistance), Math.Max(1, Repetitions)).ToList(),
+                    PaceKeys = [PaceKeys.Intervall],
+                    Sets = 1
+                });
+            }
+            else
+            {
+                definition.Workouts.Add(new WorkoutSessionDefinition(
+                    WorkoutId.Trim(),
+                    Name.Trim(),
+                    Math.Max(1, Sets),
+                    Math.Max(1, Rounds)));
+            }
+
+            return definition;
+        }
+    }
+
+    private sealed class BlockDraft
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Focus { get; set; } = string.Empty;
+        public string Structure { get; set; } = string.Empty;
+    }
+}

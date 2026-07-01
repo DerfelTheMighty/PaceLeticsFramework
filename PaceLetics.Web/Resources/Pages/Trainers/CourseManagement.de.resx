@@ -87,4 +87,20 @@
   <data name="ValidationTimeFormat" xml:space="preserve"><value>Bitte eine Uhrzeit im Format HH:mm eingeben.</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>Trainer:in konnte nicht ermittelt werden.</value></data>
   <data name="PublishedSince" xml:space="preserve"><value>Seit {0:dd.MM.yyyy}</value></data>
+  <data name="NoPlanBlocks" xml:space="preserve"><value>Noch keine Blöcke definiert.</value></data>
+  <data name="CreatePlanBlock" xml:space="preserve"><value>Block erstellen</value></data>
+  <data name="NoUngroupedSessions" xml:space="preserve"><value>Alle Einheiten sind bereits einem Block zugeordnet.</value></data>
+  <data name="BlockName" xml:space="preserve"><value>Blockname</value></data>
+  <data name="BlockFocus" xml:space="preserve"><value>Fokus</value></data>
+  <data name="BlockStructure" xml:space="preserve"><value>Struktur</value></data>
+  <data name="GroupSessions" xml:space="preserve"><value>Ausgewählte Einheiten gruppieren</value></data>
+  <data name="GroupSessionsSuccess" xml:space="preserve"><value>Einheiten wurden gruppiert.</value></data>
+  <data name="UngroupBlock" xml:space="preserve"><value>Block auflösen</value></data>
+  <data name="UngroupBlockSuccess" xml:space="preserve"><value>Block wurde aufgelöst.</value></data>
+  <data name="RemoveFromBlock" xml:space="preserve"><value>Aus Block entfernen</value></data>
+  <data name="RemoveFromBlockSuccess" xml:space="preserve"><value>Einheit wurde aus dem Block entfernt.</value></data>
+  <data name="PlanBlockSessionCount" xml:space="preserve"><value>{0} Einheit(en)</value></data>
+  <data name="WorkoutCount" xml:space="preserve"><value>{0} Workout(s)</value></data>
+  <data name="PlanNotFound" xml:space="preserve"><value>Der Trainingsplan wurde nicht gefunden.</value></data>
+  <data name="BlockNameRequired" xml:space="preserve"><value>Bitte gib einen Blocknamen ein.</value></data>
 </root>

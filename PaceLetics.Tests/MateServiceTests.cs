@@ -3,6 +3,7 @@ using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.CoreModule.Infrastructure.Constants;
 using PaceLetics.CoreModule.Infrastructure.Models;
 using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.TrainingPlanModule.CodeBase.Definitions;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.Web.Services;
 using PaceLetics.Web.Services.Courses;
@@ -243,6 +244,56 @@ public sealed class MateServiceTests
         public IReadOnlyList<RunningSession> LoadLegacySessions()
         {
             return Array.Empty<RunningSession>();
+        }
+
+        public IReadOnlyList<TrainingPlanDefinition> LoadTrainingPlanDefinitions()
+        {
+            return Array.Empty<TrainingPlanDefinition>();
+        }
+
+        public TrainingPlan CreateTrainingPlan(string name)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan UpdateTrainingPlan(string planId, string name)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan AddTrainingSession(string planId, TrainingSessionDefinition session)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan UpdateTrainingSession(string planId, string sessionId, TrainingSessionDefinition session)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan RemoveTrainingSession(string planId, string sessionId)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan AddTrainingPlanBlock(string planId, TrainingPlanBlockDefinition block)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan UpdateTrainingPlanBlock(string planId, string blockId, TrainingPlanBlockDefinition block)
+        {
+            throw new NotSupportedException();
+        }
+
+        public TrainingPlan RemoveTrainingPlanBlock(string planId, string blockId)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void SaveTrainingPlanBlocks(string planId, IEnumerable<TrainingPlanBlockDefinition> blocks)
+        {
+            throw new NotSupportedException();
         }
     }
 

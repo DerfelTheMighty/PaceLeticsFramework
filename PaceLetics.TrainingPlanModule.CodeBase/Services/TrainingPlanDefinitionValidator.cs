@@ -21,7 +21,7 @@ public sealed class TrainingPlanDefinitionValidator : ITrainingPlanDefinitionVal
 
         var errors = new List<string>();
 
-        if (definition.SchemaVersion is < 0 or > 1)
+        if (definition.SchemaVersion is < 0 or > 2)
             errors.Add($"Training plan '{definition.Id}' has unsupported schemaVersion '{definition.SchemaVersion}'.");
 
         if (string.IsNullOrWhiteSpace(definition.Id))
@@ -30,17 +30,84 @@ public sealed class TrainingPlanDefinitionValidator : ITrainingPlanDefinitionVal
         if (string.IsNullOrWhiteSpace(definition.Name))
             errors.Add($"Training plan '{definition.Id}' name must not be empty.");
 
-        if (definition.Sessions.Count == 0)
-            errors.Add($"Training plan '{definition.Id}' must contain at least one session.");
-
         foreach (var session in definition.Sessions)
             ValidateSession(definition, session, errors);
+
+        ValidateBlocks(definition, errors);
 
         if (errors.Count > 0)
         {
             throw new TrainingPlanDefinitionValidationException(
                 $"Training plan definition '{definition.Id}' is invalid.",
                 errors);
+        }
+    }
+
+    private static void ValidateBlocks(
+        TrainingPlanDefinition plan,
+        List<string> errors)
+    {
+        var sessionIds = plan.Sessions
+            .Where(session => !string.IsNullOrWhiteSpace(session.Id))
+            .Select(session => session.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        var duplicateSessionIds = plan.Sessions
+            .Where(session => !string.IsNullOrWhiteSpace(session.Id))
+            .GroupBy(session => session.Id, StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
+            .ToList();
+
+        foreach (var duplicateSessionId in duplicateSessionIds)
+            errors.Add($"Training plan '{plan.Id}' contains duplicate session id '{duplicateSessionId}'.");
+
+        var blockIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var assignedSessionIds = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var block in plan.Blocks)
+        {
+            if (block is null)
+            {
+                errors.Add($"Training plan '{plan.Id}' contains an empty block.");
+                continue;
+            }
+
+            var label = string.IsNullOrWhiteSpace(block.Id)
+                ? $"Training plan '{plan.Id}' block '{block.Name}'"
+                : $"Training plan '{plan.Id}' block '{block.Id}'";
+
+            if (string.IsNullOrWhiteSpace(block.Id))
+                errors.Add($"{label} id must not be empty.");
+            else if (!blockIds.Add(block.Id))
+                errors.Add($"Training plan '{plan.Id}' contains duplicate block id '{block.Id}'.");
+
+            if (string.IsNullOrWhiteSpace(block.Name))
+                errors.Add($"{label} name must not be empty.");
+
+            if (block.SessionIds.Count == 0)
+                errors.Add($"{label} must contain at least one session.");
+
+            var blockSessionIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var sessionId in block.SessionIds)
+            {
+                if (string.IsNullOrWhiteSpace(sessionId))
+                {
+                    errors.Add($"{label} contains an empty session id.");
+                    continue;
+                }
+
+                if (!blockSessionIds.Add(sessionId))
+                    errors.Add($"{label} references session '{sessionId}' more than once.");
+
+                if (!sessionIds.Contains(sessionId))
+                    errors.Add($"{label} references unknown session '{sessionId}'.");
+
+                if (assignedSessionIds.TryGetValue(sessionId, out var existingBlockId))
+                    errors.Add($"{label} references session '{sessionId}' that is already assigned to block '{existingBlockId}'.");
+                else
+                    assignedSessionIds[sessionId] = block.Id;
+            }
         }
     }
 

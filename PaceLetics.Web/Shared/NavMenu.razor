@@ -9,6 +9,7 @@
     <AuthorizeView Roles="@ApplicationRoles.Trainer">
         <Authorized>
             <MudNavLink Href="/Trainers/courses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerCourses"]</MudNavLink>
+            <MudNavLink Href="/Trainers/training-plans" Match="NavLinkMatch.Prefix">@L["Nav_TrainingPlan"]</MudNavLink>
             <MudNavLink Href="/Trainers/running-analyses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerRunningAnalyses"]</MudNavLink>
             <MudNavLink Href="/Trainers/workout-catalog" Match="NavLinkMatch.Prefix">@L["Nav_TrainerWorkoutCatalog"]</MudNavLink>
         </Authorized>
