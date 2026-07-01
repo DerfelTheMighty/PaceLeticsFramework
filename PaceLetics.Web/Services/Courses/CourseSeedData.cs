@@ -41,7 +41,8 @@ public static class CourseSeedData
                         new DateTime(2026, 6, 24)
                     },
                     new TimeSpan(18, 0, 0),
-                    TimeSpan.FromMinutes(90))),
+                    TimeSpan.FromMinutes(90)),
+                new[] { CreateChristophOCourseLead() }),
             CreateCourse(
                 "technik-schnelligkeit-level-2",
                 "Schnelligkeits- und Techniktraining Level 2",

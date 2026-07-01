@@ -67,13 +67,13 @@ public sealed class CourseServiceTests
     }
 
     [Fact]
-    public void CreateDefaultCourses_AssignsChristophOToTechniqueCourses()
+    public void CreateDefaultCourses_AssignsChristophOToTrainerLedSeedCourses()
     {
         var courses = CourseSeedData.CreateDefaultCourses()
-            .Where(course => course.Id is "technik-schnelligkeit-level-2" or "technik-schnelligkeit-level-3")
+            .Where(course => course.Id is "laufschule-einsteigende" or "technik-schnelligkeit-level-2" or "technik-schnelligkeit-level-3")
             .ToList();
 
-        Assert.Equal(2, courses.Count);
+        Assert.Equal(3, courses.Count);
         Assert.All(courses, course =>
         {
             Assert.Equal("0d14d8e3-755a-46be-81fa-de3f15d64812", course.CreatedByTrainerUserId);
