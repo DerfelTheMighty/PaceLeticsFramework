@@ -17,7 +17,8 @@ public static class AppThemeCatalog
         new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false, PaceZones: CreateTropicalPaceZones()),
         new(AppThemeName.GoldenHour, "Baltic Sunset", CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false, PaceZones: CreateGoldenHourPaceZones()),
         new(AppThemeName.StellarForge, "Stellar Forge", CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome, IsDarkMode: true, PaceZones: CreateStellarForgePaceZones()),
-        new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false, PaceZones: CreateSummitBlazePaceZones())
+        new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false, PaceZones: CreateSummitBlazePaceZones()),
+        new(AppThemeName.UpsideDown, "Upside Down", CreateUpsideDownTheme(), Icons.Material.Filled.FlashOn, IsDarkMode: true, PaceZones: CreateUpsideDownPaceZones())
     ];
 
     public static AppThemeDefinition GetThemeDefinition(AppThemeName name)
@@ -173,6 +174,18 @@ public static class AppThemeCatalog
             Threshold: "#E87500",
             Intervall: "#FC4C02",
             Repetition: "#D84373");
+    }
+
+    private static PaceZonePalette CreateUpsideDownPaceZones()
+    {
+        return new(
+            Free: "#7E7486",
+            Recovery: "#5BC0EB",
+            Easy: "#27D17F",
+            Marathon: "#E0B24A",
+            Threshold: "#F26430",
+            Intervall: "#FF2A23",
+            Repetition: "#C1121F");
     }
 
     private static MudTheme CreatePaceLeticsTheme()
@@ -466,6 +479,33 @@ public static class AppThemeCatalog
             });
     }
 
+    private static MudTheme CreateUpsideDownTheme()
+    {
+        return CreateTheme(
+            dark: new PaletteDark
+            {
+                Primary = "#FF2A23",
+                Secondary = "#E0B24A",
+                Tertiary = "#5BC0EB",
+                Info = "#5BC0EB",
+                Success = "#27D17F",
+                Warning = "#E0B24A",
+                Error = "#FF4D4A",
+                Background = "#09070C",
+                BackgroundGray = "#151018",
+                Surface = "#1F151A",
+                AppbarBackground = "#0C070A",
+                AppbarText = "#FFE9D6",
+                DrawerBackground = "#120B0F",
+                DrawerText = "#F4D8C5",
+                TextPrimary = "#FFF2E8",
+                TextSecondary = "#D9A998",
+                LinesDefault = "#54313A",
+                Divider = "#54313A"
+            },
+            typography: CreateUpsideDownTypography());
+    }
+
     private static MudTheme CreateTheme(
         PaletteLight? light = null,
         PaletteDark? dark = null,
@@ -507,6 +547,21 @@ public static class AppThemeCatalog
         var displayFamily = new[] { "Arial Black", "Impact", "Segoe UI", "sans-serif" };
 
         typography.Default = new DefaultTypography { FontFamily = displayFamily };
+        typography.H1 = new H1Typography { FontFamily = displayFamily, FontSize = "2.5rem", FontWeight = "700" };
+        typography.H2 = new H2Typography { FontFamily = displayFamily, FontSize = "2rem", FontWeight = "700" };
+        typography.H3 = new H3Typography { FontFamily = displayFamily, FontSize = "1.6rem", FontWeight = "700" };
+        typography.H4 = new H4Typography { FontFamily = displayFamily, FontSize = "1.3rem", FontWeight = "700" };
+        typography.H5 = new H5Typography { FontFamily = displayFamily, FontSize = "1.1rem", FontWeight = "700" };
+        typography.H6 = new H6Typography { FontFamily = displayFamily, FontSize = "1rem", FontWeight = "700" };
+
+        return typography;
+    }
+
+    private static Typography CreateUpsideDownTypography()
+    {
+        var typography = CreateDefaultTypography();
+        var displayFamily = new[] { "Benguiat", "Georgia", "Times New Roman", "serif" };
+
         typography.H1 = new H1Typography { FontFamily = displayFamily, FontSize = "2.5rem", FontWeight = "700" };
         typography.H2 = new H2Typography { FontFamily = displayFamily, FontSize = "2rem", FontWeight = "700" };
         typography.H3 = new H3Typography { FontFamily = displayFamily, FontSize = "1.6rem", FontWeight = "700" };

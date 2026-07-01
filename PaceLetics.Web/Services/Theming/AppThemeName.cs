@@ -13,5 +13,6 @@ public enum AppThemeName
     Tropical,
     GoldenHour,
     StellarForge,
-    SummitBlaze
+    SummitBlaze,
+    UpsideDown
 }

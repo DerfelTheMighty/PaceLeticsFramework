@@ -11,7 +11,8 @@
 .pl-dark-romance-layout,
 .pl-wildflowers-layout,
 .pl-maritime-layout,
-.pl-tropical-layout {
+.pl-tropical-layout,
+.pl-upside-down-layout {
     position: relative;
     isolation: isolate;
     min-height: 100vh;
@@ -41,7 +42,9 @@
 .pl-maritime-layout::before,
 .pl-maritime-layout::after,
 .pl-tropical-layout::before,
-.pl-tropical-layout::after {
+.pl-tropical-layout::after,
+.pl-upside-down-layout::before,
+.pl-upside-down-layout::after {
     content: "";
     position: fixed;
     pointer-events: none;
@@ -264,6 +267,30 @@
         linear-gradient(180deg, rgba(230, 250, 239, 0.28) 0%, rgba(230, 250, 239, 0.46) 50%, rgba(247, 255, 251, 0.74) 100%),
         linear-gradient(90deg, rgba(230, 250, 239, 0.72), transparent 28%, transparent 68%, rgba(247, 255, 251, 0.64));
 }
+.pl-upside-down-layout {
+    background:
+        radial-gradient(ellipse at 50% 34%, rgba(255, 42, 35, 0.18), transparent 36%),
+        radial-gradient(ellipse at 26% 72%, rgba(224, 178, 74, 0.08), transparent 38%),
+        linear-gradient(180deg, #050407 0%, #150A0D 48%, #09070C 100%);
+}
+
+.pl-upside-down-layout::before {
+    inset: 0;
+    z-index: 0;
+    opacity: 0.52;
+    background:
+        url("../images/theme/upside-down-background.png") center center / cover no-repeat;
+    filter: saturate(0.96) contrast(1.04) brightness(0.72);
+}
+
+.pl-upside-down-layout::after {
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 38%, rgba(255, 42, 35, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(5, 4, 7, 0.48) 0%, rgba(9, 7, 12, 0.68) 48%, rgba(5, 4, 7, 0.9) 100%),
+        linear-gradient(90deg, rgba(5, 4, 7, 0.84), transparent 30%, transparent 70%, rgba(5, 4, 7, 0.84));
+}
 
 .pl-synthwave-layout .mud-main-content,
 .pl-ocean-layout .mud-main-content,
@@ -273,7 +300,8 @@
 .pl-dark-romance-layout .mud-main-content,
 .pl-wildflowers-layout .mud-main-content,
 .pl-maritime-layout .mud-main-content,
-.pl-tropical-layout .mud-main-content {
+.pl-tropical-layout .mud-main-content,
+.pl-upside-down-layout .mud-main-content {
     position: relative;
     z-index: 1;
 }
@@ -393,6 +421,56 @@
     z-index: 2;
     background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 96%, transparent) !important;
     border-right: 1px solid rgba(255, 144, 120, 0.18);
+}
+.pl-upside-down-layout .mud-appbar {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 88%, transparent) !important;
+    border-bottom: 1px solid rgba(255, 42, 35, 0.3);
+    box-shadow: 0 8px 28px rgba(255, 42, 35, 0.1);
+    backdrop-filter: blur(12px);
+}
+
+.pl-upside-down-layout .mud-drawer {
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--mud-palette-drawer-background) 92%, transparent) !important;
+    border-right: 1px solid rgba(224, 178, 74, 0.16);
+}
+
+.pl-upside-down-layout {
+    --pl-upside-down-glass-surface: rgba(31, 21, 26, .78);
+    --pl-upside-down-glass-surface-strong: rgba(31, 21, 26, .9);
+    --pl-upside-down-glass-border: rgba(255, 42, 35, .26);
+}
+
+.pl-upside-down-layout .pl-pageheader,
+.pl-upside-down-layout .pl-panel,
+.pl-upside-down-layout .pl-surface-card,
+.pl-upside-down-layout .pl-loading-panel,
+.pl-upside-down-layout .pl-modal-panel,
+.pl-upside-down-layout .pl-bottom-sheet,
+.pl-upside-down-layout .pl-bottom-sheet-item,
+.pl-upside-down-layout .pl-course-card,
+.pl-upside-down-layout .pl-course-detail,
+.pl-upside-down-layout .pl-academy-tile,
+.pl-upside-down-layout .pl-academy-article,
+.pl-upside-down-layout .pl-message-menu-panel {
+    border-color: var(--pl-upside-down-glass-border);
+    background: var(--pl-upside-down-glass-surface);
+    backdrop-filter: blur(12px) saturate(1.12);
+    box-shadow: 0 14px 34px rgba(5, 4, 7, .3);
+}
+
+.pl-upside-down-layout .mud-main-content :where(.mud-paper) {
+    border-color: var(--pl-upside-down-glass-border);
+    background: var(--pl-upside-down-glass-surface);
+    backdrop-filter: blur(12px) saturate(1.12);
+}
+
+.pl-upside-down-layout .pl-surface-card,
+.pl-upside-down-layout .pl-loading-panel,
+.pl-upside-down-layout .pl-modal-panel,
+.pl-upside-down-layout .pl-bottom-sheet {
+    background: var(--pl-upside-down-glass-surface-strong);
 }
 
 .pl-tropical-layout {
