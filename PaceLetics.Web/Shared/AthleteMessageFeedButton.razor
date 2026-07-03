@@ -33,6 +33,17 @@
                                   Framed="false"
                                   AllowDelete="true"
                                   OnDelete="DeleteMessageAsync" />
+            <MudDivider />
+            <div class="pl-message-menu-footer">
+                <MudTooltip Text="@L["CollapseFeed"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowUp"
+                                   Size="Size.Small"
+                                   Color="Color.Primary"
+                                   Class="pl-message-menu-collapse"
+                                   OnClick="CloseFeed"
+                                   aria-label="@L["CollapseFeed"]" />
+                </MudTooltip>
+            </div>
         </div>
     }
 }

@@ -1001,6 +1001,23 @@
     box-shadow: var(--mud-elevation-8);
 }
 
+.pl-message-menu-footer {
+    display: flex;
+    justify-content: center;
+    padding: 8px 16px 12px;
+}
+
+.pl-message-menu-collapse {
+    min-width: 48px;
+    border-radius: var(--pl-radius);
+    background: color-mix(in srgb, var(--mud-palette-primary) 10%, transparent);
+}
+
+.pl-message-menu-collapse:hover,
+.pl-message-menu-collapse:focus-visible {
+    background: color-mix(in srgb, var(--mud-palette-primary) 18%, transparent);
+}
+
 .pl-message-button-unread {
     color: var(--mud-palette-warning) !important;
     background: color-mix(in srgb, var(--mud-palette-warning) 22%, transparent) !important;
