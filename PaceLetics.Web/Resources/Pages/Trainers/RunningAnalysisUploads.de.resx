@@ -9,21 +9,25 @@
   <data name="Subtitle" xml:space="preserve"><value>Lokal gespeicherte Aufnahmen in die passenden Teilnehmerordner hochladen.</value></data>
   <data name="Loading" xml:space="preserve"><value>Upload-Queue wird geladen</value></data>
   <data name="BackToAnalyses" xml:space="preserve"><value>Zurück zu Aufnahmen</value></data>
-  <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmeordner</value></data>
+  <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmespeicher</value></data>
   <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner wählen</value></data>
+  <data name="ChooseRecordingFiles" xml:space="preserve"><value>Aufnahmedateien wählen</value></data>
   <data name="RefreshQueue" xml:space="preserve"><value>Aktualisieren</value></data>
   <data name="RefreshFolderAccess" xml:space="preserve"><value>Zugriff erneuern</value></data>
-  <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmeordner ist bereit.</value></data>
+  <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmespeicher ist bereit.</value></data>
   <data name="LocalStorageReadyText" xml:space="preserve"><value>Aufnahmen werden aus "{0}" geladen. Speicherort: {1}</value></data>
-  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprüft.</value></data>
-  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser kann Aufnahmen nicht direkt aus einem lokalen Geräteordner lesen.</value></data>
+  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmespeicher wird geprüft.</value></data>
+  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser kann Aufnahmen nicht lokal speichern.</value></data>
   <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Wähle den lokalen Ordner mit den gespeicherten Aufnahme-Video- und JSON-Dateien.</value></data>
   <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewählten lokalen Aufnahmeordner.</value></data>
   <data name="LocalRecordingsTitle" xml:space="preserve"><value>Upload-Queue</value></data>
   <data name="LocalRecordingsQueueText" xml:space="preserve"><value>{0} lokal, {1} offen, {2} fehlgeschlagen, {3} hochgeladen.</value></data>
-  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine vollständigen Aufnahmen im gewählten Ordner gefunden.</value></data>
+  <data name="NoLocalRecordings" xml:space="preserve"><value>Keine vollständigen lokalen Aufnahmen gefunden.</value></data>
   <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>Der lokale Ordner ist noch gewählt, aber der Browser braucht nach dem Reload erneut Zugriff. Klicke auf "Zugriff erneuern", damit die vorhandenen Video- und JSON-Dateien wieder gescannt werden.</value></data>
   <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>Der lokale Ordner konnte nicht gescannt werden: {0}</value></data>
+  <data name="RecordingFilesImportSuccess" xml:space="preserve"><value>{0} Aufnahmedatei-Set(s) wurden zur Upload-Queue hinzugefügt.</value></data>
+  <data name="RecordingFilesImportSkipped" xml:space="preserve"><value>{0} ausgewählte Datei(en) konnten keiner vollständigen Aufnahme zugeordnet werden.</value></data>
+  <data name="RecordingFilesImportCanceled" xml:space="preserve"><value>Keine Aufnahmedateien ausgewählt.</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
   <data name="UploadSingle" xml:space="preserve"><value>Upload starten</value></data>
   <data name="RetryUpload" xml:space="preserve"><value>Erneut uploaden</value></data>
@@ -38,6 +42,11 @@
   <data name="UploadStatus_Uploading" xml:space="preserve"><value>Wird hochgeladen</value></data>
   <data name="UploadStatus_Uploaded" xml:space="preserve"><value>Hochgeladen</value></data>
   <data name="UploadStatus_Failed" xml:space="preserve"><value>Fehlgeschlagen</value></data>
+  <data name="UploadStatus_NeedsExport" xml:space="preserve"><value>Export erforderlich</value></data>
+  <data name="ExportRecordingFile" xml:space="preserve"><value>Aufnahmedatei speichern</value></data>
+  <data name="ExportRecordingSuccess" xml:space="preserve"><value>{0} wurde an den Speichern-Dialog des Geräts übergeben und kann jetzt hochgeladen werden.</value></data>
+  <data name="ExportRecordingFailed" xml:space="preserve"><value>Die Aufnahme wurde nicht in den Gerätedateien gespeichert: {0}</value></data>
+  <data name="ExportRequiredBeforeUpload" xml:space="preserve"><value>Speichere diese Aufnahme vor dem Upload in den Gerätedateien. Die Browser-Kopie ist nur temporär.</value></data>
   <data name="UploadPendingOffline" xml:space="preserve"><value>Upload ist nur online moeglich.</value></data>
   <data name="UploadPendingSuccess" xml:space="preserve"><value>{0} Aufnahme(n) wurden hochgeladen.</value></data>
   <data name="UploadPendingFailed" xml:space="preserve"><value>{0} Aufnahme(n) konnten nicht hochgeladen werden.</value></data>
@@ -46,7 +55,8 @@
   <data name="UploadSingleFailedWithError" xml:space="preserve"><value>{0} konnte nicht hochgeladen werden: {1}</value></data>
   <data name="NoPendingUploads" xml:space="preserve"><value>Keine ausstehenden Uploads.</value></data>
   <data name="UploadQueueUploading" xml:space="preserve"><value>Upload-Queue läuft. Lokale Dateien werden in die jeweiligen Teilnehmerordner hochgeladen.</value></data>
-  <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload-Queue wartet auf Zugriff auf den lokalen Aufnahmeordner.</value></data>
+  <data name="UploadQueueNeedsExport" xml:space="preserve"><value>{0} Aufnahme(n) müssen vor dem Upload in den Gerätedateien gespeichert werden. Browser-Speicher ist nur temporär.</value></data>
+  <data name="UploadQueueNeedsFolder" xml:space="preserve"><value>Upload-Queue wartet auf Zugriff auf den lokalen Aufnahmespeicher.</value></data>
   <data name="UploadQueueOffline" xml:space="preserve"><value>Upload-Queue wartet auf Online-Verbindung.</value></data>
   <data name="UploadQueueReady" xml:space="preserve"><value>{0} Upload(s) warten. Automatischer Upload ist aktiv, solange diese Seite geöffnet ist.</value></data>
   <data name="UploadQueueFailed" xml:space="preserve"><value>{0} Upload(s) sind fehlgeschlagen. Stoße sie nach Prüfung der Metadaten manuell erneut an.</value></data>

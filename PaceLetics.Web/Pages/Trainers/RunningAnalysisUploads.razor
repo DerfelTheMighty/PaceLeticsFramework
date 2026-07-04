@@ -43,12 +43,23 @@
                 </MudStack>
 
                 <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                    <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
+                    @if (SupportsDeviceFolderStorage)
+                    {
+                        <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
+                            <MudIconButton Color="Color.Primary"
+                                           Variant="Variant.Outlined"
+                                           Icon="@Icons.Material.Filled.FolderOpen"
+                                           OnClick="ChooseRecordingDirectoryAsync"
+                                           aria-label="@L["ChooseLocalStorageFolder"]" />
+                        </MudTooltip>
+                    }
+
+                    <MudTooltip Text="@L["ChooseRecordingFiles"]">
                         <MudIconButton Color="Color.Primary"
                                        Variant="Variant.Outlined"
-                                       Icon="@Icons.Material.Filled.FolderOpen"
-                                       OnClick="ChooseRecordingDirectoryAsync"
-                                       aria-label="@L["ChooseLocalStorageFolder"]" />
+                                       Icon="@Icons.Material.Filled.AttachFile"
+                                       OnClick="ChooseRecordingFilesAsync"
+                                       aria-label="@L["ChooseRecordingFiles"]" />
                     </MudTooltip>
 
                     <MudTooltip Text="@(IsLocalRecordingStorageReady ? L["RefreshQueue"] : L["RefreshFolderAccess"])">
@@ -86,6 +97,9 @@
 
                 <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
                     <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
+                        @($"{L["UploadStatus_NeedsExport"]}: {ExportRequiredCount}")
+                    </MudChip>
+                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
                         @($"{L["UploadStatus_Queued"]}: {QueuedUploadCount}")
                     </MudChip>
                     <MudChip T="string" Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined">
@@ -176,14 +190,27 @@
                                         </MudTooltip>
                                     }
 
-                                    <MudTooltip Text="@(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])">
-                                        <MudIconButton Color="Color.Primary"
-                                                       Variant="Variant.Outlined"
-                                                       Icon="@(IsUploaded(recording) ? Icons.Material.Filled.Refresh : Icons.Material.Filled.CloudUpload)"
-                                                       Disabled="@(!_isOnline || isUploading)"
-                                                       OnClick="@(() => UploadQueuedRecordingAsync(recording))"
-                                                       aria-label="@(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])" />
-                                    </MudTooltip>
+                                    @if (IsExportRequired(recording))
+                                    {
+                                        <MudTooltip Text="@L["ExportRecordingFile"]">
+                                            <MudIconButton Color="Color.Warning"
+                                                           Variant="Variant.Outlined"
+                                                           Icon="@Icons.Material.Filled.FileDownload"
+                                                           OnClick="@(() => ExportRecordingAsync(recording))"
+                                                           aria-label="@L["ExportRecordingFile"]" />
+                                        </MudTooltip>
+                                    }
+                                    else
+                                    {
+                                        <MudTooltip Text="@(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])">
+                                            <MudIconButton Color="Color.Primary"
+                                                           Variant="Variant.Outlined"
+                                                           Icon="@(IsUploaded(recording) ? Icons.Material.Filled.Refresh : Icons.Material.Filled.CloudUpload)"
+                                                           Disabled="@(!_isOnline || isUploading)"
+                                                           OnClick="@(() => UploadQueuedRecordingAsync(recording))"
+                                                           aria-label="@(IsUploaded(recording) ? L["RetryUpload"] : L["UploadSingle"])" />
+                                        </MudTooltip>
+                                    }
                                 </MudStack>
                             </MudStack>
                         </div>
@@ -215,10 +242,12 @@
     private IJSObjectReference? _recorderModule;
 
     private bool IsLocalRecordingStorageReady => _recordingStorageStatus?.IsReady == true;
+    private bool SupportsDeviceFolderStorage => _recordingStorageStatus?.SupportsDeviceFolder == true;
+    private int ExportRequiredCount => _pendingRecordings.Count(IsExportRequired);
     private int QueuedUploadCount => _pendingRecordings.Count(IsQueued);
     private int FailedUploadCount => _pendingRecordings.Count(IsFailed);
     private int UploadedUploadCount => _pendingRecordings.Count(IsUploaded);
-    private int PendingUploadCount => _pendingRecordings.Count(recording => !IsUploaded(recording));
+    private int PendingUploadCount => _pendingRecordings.Count(CanUploadRecording);
 
     protected override async Task OnInitializedAsync()
     {
@@ -319,6 +348,34 @@
         }
     }
 
+    private async Task ChooseRecordingFilesAsync()
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            var importResult = await module.InvokeAsync<RecordingFileImportResult>(
+                "chooseRecordingFiles");
+
+            await LoadPendingRecordingsAsync(requestDirectoryPermission: false);
+            await LoadRecordingStorageStatusAsync();
+            QueueAutomaticUploadIfReady();
+
+            if (importResult.ImportedCount > 0)
+                Snackbar.Add(string.Format(L["RecordingFilesImportSuccess"], importResult.ImportedCount), Severity.Success);
+            else if (!string.IsNullOrWhiteSpace(importResult.ErrorMessage))
+                Snackbar.Add(importResult.ErrorMessage, Severity.Warning);
+            else
+                Snackbar.Add(L["RecordingFilesImportCanceled"], Severity.Info);
+
+            if (importResult.SkippedCount > 0)
+                Snackbar.Add(string.Format(L["RecordingFilesImportSkipped"], importResult.SkippedCount), Severity.Warning);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
     private async Task UploadPendingRecordingsAsync(bool showSummary = true, bool includeFailed = true)
     {
         if (_pendingRecordings.Count == 0)
@@ -340,7 +397,7 @@
         try
         {
             var candidates = _pendingRecordings
-                .Where(recording => includeFailed ? !IsUploaded(recording) : IsQueued(recording))
+                .Where(recording => includeFailed ? CanUploadRecording(recording) : IsQueued(recording))
                 .ToList();
             if (candidates.Count == 0)
             {
@@ -449,6 +506,16 @@
         RunningAnalysisRecordedVideo pendingRecording,
         bool showSnackbar = true)
     {
+        if (IsExportRequired(pendingRecording))
+        {
+            var errorMessage = L["ExportRequiredBeforeUpload"].ToString();
+            if (showSnackbar)
+                Snackbar.Add(errorMessage, Severity.Warning);
+
+            SetLastUploadError(pendingRecording, errorMessage);
+            return false;
+        }
+
         if (string.IsNullOrWhiteSpace(pendingRecording.LocalId)
             || string.IsNullOrWhiteSpace(pendingRecording.AthleteUserId))
         {
@@ -550,6 +617,24 @@
         finally
         {
             _uploadingRecordingIds.Remove(pendingRecording.LocalId);
+        }
+    }
+
+    private async Task ExportRecordingAsync(RunningAnalysisRecordedVideo recording)
+    {
+        try
+        {
+            var module = await GetRecorderModuleAsync();
+            await module.InvokeAsync<RunningAnalysisRecordedVideo>(
+                "exportSavedRecording",
+                recording.LocalId);
+            await LoadPendingRecordingsAsync();
+            QueueAutomaticUploadIfReady();
+            Snackbar.Add(string.Format(L["ExportRecordingSuccess"], recording.FileName), Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(string.Format(L["ExportRecordingFailed"], ex.Message), Severity.Error);
         }
     }
 
@@ -726,6 +811,9 @@
         if (_isUploadingQueuedRecordings || _isAutomaticUploadQueued)
             return L["UploadQueueUploading"];
 
+        if (ExportRequiredCount > 0)
+            return string.Format(L["UploadQueueNeedsExport"], ExportRequiredCount);
+
         if (!IsLocalRecordingStorageReady)
             return L["UploadQueueNeedsFolder"];
 
@@ -789,6 +877,11 @@
         return string.Equals(recording.UploadStatus, "uploaded", StringComparison.OrdinalIgnoreCase);
     }
 
+    private static bool IsExportRequired(RunningAnalysisRecordedVideo recording)
+    {
+        return string.Equals(recording.UploadStatus, "needs-export", StringComparison.OrdinalIgnoreCase);
+    }
+
     private static bool IsFailed(RunningAnalysisRecordedVideo recording)
     {
         return string.Equals(recording.UploadStatus, "failed", StringComparison.OrdinalIgnoreCase);
@@ -796,7 +889,12 @@
 
     private static bool IsQueued(RunningAnalysisRecordedVideo recording)
     {
-        return !IsUploaded(recording) && !IsFailed(recording);
+        return !IsUploaded(recording) && !IsFailed(recording) && !IsExportRequired(recording);
+    }
+
+    private static bool CanUploadRecording(RunningAnalysisRecordedVideo recording)
+    {
+        return !IsUploaded(recording) && !IsExportRequired(recording);
     }
 
     private Color GetQueueStatusColor(RunningAnalysisRecordedVideo recording)
@@ -806,6 +904,7 @@
             "uploaded" => Color.Success,
             "uploading" => Color.Info,
             "failed" => Color.Error,
+            "needs-export" => Color.Warning,
             _ => Color.Warning
         };
     }
@@ -817,6 +916,7 @@
             "uploaded" => L["UploadStatus_Uploaded"],
             "uploading" => L["UploadStatus_Uploading"],
             "failed" => L["UploadStatus_Failed"],
+            "needs-export" => L["UploadStatus_NeedsExport"],
             _ => L["UploadStatus_Queued"]
         };
     }
@@ -838,11 +938,19 @@
     private sealed class BrowserRecordingStorageStatus
     {
         public bool IsSupported { get; set; }
+        public bool SupportsDeviceFolder { get; set; }
         public bool IsConfigured { get; set; }
         public bool IsReady { get; set; }
         public string FolderName { get; set; } = string.Empty;
         public string PermissionState { get; set; } = string.Empty;
         public string StorageLocation { get; set; } = string.Empty;
+        public string ErrorMessage { get; set; } = string.Empty;
+    }
+
+    private sealed class RecordingFileImportResult
+    {
+        public int ImportedCount { get; set; }
+        public int SkippedCount { get; set; }
         public string ErrorMessage { get; set; } = string.Empty;
     }
 

@@ -46,13 +46,16 @@
                     </MudStack>
 
                     <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                        <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
-                            <MudIconButton Color="Color.Primary"
-                                           Variant="Variant.Outlined"
-                                           Icon="@Icons.Material.Filled.FolderOpen"
-                                           OnClick="ChooseRecordingDirectoryAsync"
-                                           aria-label="@L["ChooseLocalStorageFolder"]" />
-                        </MudTooltip>
+                        @if (SupportsDeviceFolderStorage)
+                        {
+                            <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
+                                <MudIconButton Color="Color.Primary"
+                                               Variant="Variant.Outlined"
+                                               Icon="@Icons.Material.Filled.FolderOpen"
+                                               OnClick="ChooseRecordingDirectoryAsync"
+                                               aria-label="@L["ChooseLocalStorageFolder"]" />
+                            </MudTooltip>
+                        }
 
                         <MudTooltip Text="@L["OpenUploadPage"]">
                             <MudIconButton Color="Color.Primary"
@@ -303,6 +306,7 @@
             : _roster.FirstOrDefault(participant => participant.ParticipantId == _selectedParticipantId);
 
     private bool IsLocalRecordingStorageReady => _recordingStorageStatus?.IsReady == true;
+    private bool SupportsDeviceFolderStorage => _recordingStorageStatus?.SupportsDeviceFolder == true;
     private IReadOnlyList<RunningAnalysisAssessmentItem> CurrentAssessment =>
         _selectedAnalysisPerspective == RunningAnalysisPerspective.Rear
             ? _rearAssessment
@@ -566,10 +570,32 @@
         await OpenCaptureAsync(next.ParticipantId);
     }
 
-    private Task OnRecordingSavedAsync(RunningAnalysisRecordedVideo video)
+    private async Task OnRecordingSavedAsync(RunningAnalysisRecordedVideo video)
     {
+        if (IsExportRequired(video))
+        {
+            try
+            {
+                var module = await GetRecorderModuleAsync();
+                await module.InvokeAsync<RunningAnalysisRecordedVideo>(
+                    "exportSavedRecording",
+                    video.LocalId);
+                Snackbar.Add(string.Format(L["LocalExportSuccess"], video.FileName), Severity.Success);
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add(string.Format(L["LocalExportRequired"], ex.Message), Severity.Error);
+            }
+
+            return;
+        }
+
         Snackbar.Add(string.Format(L["LocalSaveSuccess"], video.FileName), Severity.Success);
-        return Task.CompletedTask;
+    }
+
+    private static bool IsExportRequired(RunningAnalysisRecordedVideo video)
+    {
+        return string.Equals(video.UploadStatus, "needs-export", StringComparison.OrdinalIgnoreCase);
     }
 
     private async Task RefreshOnlineStateAsync()
@@ -778,6 +804,7 @@
     private sealed class BrowserRecordingStorageStatus
     {
         public bool IsSupported { get; set; }
+        public bool SupportsDeviceFolder { get; set; }
         public bool IsConfigured { get; set; }
         public bool IsReady { get; set; }
         public string FolderName { get; set; } = string.Empty;

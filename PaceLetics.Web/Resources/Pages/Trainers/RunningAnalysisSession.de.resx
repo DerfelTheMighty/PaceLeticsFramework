@@ -36,14 +36,14 @@
   <data name="NoLocalRecordings" xml:space="preserve"><value>Keine lokalen Aufnahmen im gewählten Ordner gefunden.</value></data>
   <data name="LocalRecordingsNeedFolderAccess" xml:space="preserve"><value>Der lokale Ordner ist noch gewählt, aber der Browser braucht nach dem Reload erneut Zugriff. Klicke auf "Zugriff erneuern", damit die vorhandenen Video- und JSON-Dateien wieder gescannt werden.</value></data>
   <data name="LocalRecordingsScanFailed" xml:space="preserve"><value>Der lokale Ordner konnte nicht gescannt werden: {0}</value></data>
-  <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmeordner</value></data>
+  <data name="LocalStorageTitle" xml:space="preserve"><value>Lokaler Aufnahmespeicher</value></data>
   <data name="ChooseLocalStorageFolder" xml:space="preserve"><value>Ordner wählen</value></data>
   <data name="OpenUploadPage" xml:space="preserve"><value>Upload-Queue</value></data>
   <data name="RefreshFolderAccess" xml:space="preserve"><value>Zugriff erneuern</value></data>
-  <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmeordner ist bereit.</value></data>
-  <data name="LocalStorageReadyText" xml:space="preserve"><value>Aufnahmen werden direkt im Ordner "{0}" gespeichert. Speicherort: {1}</value></data>
-  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmeordner wird geprüft.</value></data>
-  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser unterstützt keine direkte Speicherung in einen lokalen Geräteordner.</value></data>
+  <data name="LocalStorageReady" xml:space="preserve"><value>Lokaler Aufnahmespeicher ist bereit.</value></data>
+  <data name="LocalStorageReadyText" xml:space="preserve"><value>Aufnahmen werden in "{0}" gespeichert. Speicherort: {1}</value></data>
+  <data name="LocalStorageUnknown" xml:space="preserve"><value>Lokaler Aufnahmespeicher wird geprüft.</value></data>
+  <data name="LocalStorageUnsupported" xml:space="preserve"><value>Dieser Browser kann Aufnahmen nicht lokal speichern.</value></data>
   <data name="LocalStorageNotConfigured" xml:space="preserve"><value>Wähle zuerst einen lokalen Ordner auf diesem Gerät. Danach werden neue Aufnahmen dort als Videodatei gespeichert.</value></data>
   <data name="LocalStoragePermissionMissing" xml:space="preserve"><value>Der Browser braucht erneut Zugriff auf den gewählten lokalen Aufnahmeordner.</value></data>
   <data name="UploadPendingRecordings" xml:space="preserve"><value>Aufnahmen hochladen</value></data>
@@ -62,6 +62,8 @@
   <data name="UploadStatus_Uploaded" xml:space="preserve"><value>Hochgeladen</value></data>
   <data name="UploadStatus_Failed" xml:space="preserve"><value>Fehlgeschlagen</value></data>
   <data name="LocalSaveSuccess" xml:space="preserve"><value>{0} wurde auf diesem Gerät gespeichert.</value></data>
+  <data name="LocalExportSuccess" xml:space="preserve"><value>{0} wurde an den Speichern-Dialog des Geräts übergeben und ist bereit für den Upload.</value></data>
+  <data name="LocalExportRequired" xml:space="preserve"><value>Die Aufnahme liegt nur im temporären Browser-Speicher. Speichere sie vor dem Upload in den Gerätedateien. Details: {0}</value></data>
   <data name="UploadPendingOffline" xml:space="preserve"><value>Upload ist nur online moeglich.</value></data>
   <data name="UploadPendingSuccess" xml:space="preserve"><value>{0} Aufnahme(n) wurden hochgeladen.</value></data>
   <data name="UploadPendingFailed" xml:space="preserve"><value>{0} Aufnahme(n) konnten nicht hochgeladen werden.</value></data>

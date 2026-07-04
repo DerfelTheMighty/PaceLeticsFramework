@@ -163,7 +163,8 @@
                 payload.EffectiveCaptureExternalEventId,
                 payload.EffectiveCaptureTitle,
                 payload.EffectiveCaptureStartsAt,
-                payload.Perspective));
+                payload.Perspective,
+                payload.StorageMode));
         }
         catch (Exception ex)
         {
@@ -239,6 +240,7 @@
         public string? LastError { get; set; }
         public string? DriveFileUrl { get; set; }
         public string Perspective { get; set; } = "side";
+        public string StorageMode { get; set; } = string.Empty;
         public string EffectiveCaptureSessionId => string.IsNullOrWhiteSpace(CaptureSessionId) ? AnalysisEventId : CaptureSessionId;
         public string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
         public string EffectiveCaptureTitle => string.IsNullOrWhiteSpace(CaptureTitle) ? AnalysisTitle : CaptureTitle;

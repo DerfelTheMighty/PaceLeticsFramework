@@ -26,7 +26,8 @@ public sealed record RunningAnalysisRecordedVideo(
     string CaptureExternalEventId = "",
     string CaptureTitle = "",
     DateTime? CaptureStartsAt = null,
-    string Perspective = "side")
+    string Perspective = "side",
+    string StorageMode = "")
 {
     public string EffectiveCaptureSessionId => string.IsNullOrWhiteSpace(CaptureSessionId) ? AnalysisEventId : CaptureSessionId;
     public string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
