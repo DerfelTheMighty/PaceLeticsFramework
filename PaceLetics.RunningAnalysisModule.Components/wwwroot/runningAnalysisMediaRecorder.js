@@ -330,15 +330,17 @@ export async function exportSavedRecording(localId) {
     storageMode: fileSystemStorageMode,
     exportedAt: new Date().toISOString()
   });
+  const metadataFileName = metadata.metadataFileName || `${recording.fileName}${metadataFileSuffix}`;
   const metadataFile = new File(
     [JSON.stringify(metadata, null, 2)],
-    metadata.metadataFileName || `${recording.fileName}${metadataFileSuffix}`,
+    metadataFileName,
     {
       type: "application/json",
       lastModified: Date.now()
     });
+  const packageFile = await createRecordingPackageFile(recording, [file, metadataFile]);
 
-  await shareRecordingFiles([file, metadataFile]);
+  await shareRecordingFiles([file, metadataFile], packageFile);
 
   return await updateSavedRecording(localId, current => {
     current.exportedAt = new Date().toISOString();
@@ -347,6 +349,22 @@ export async function exportSavedRecording(localId) {
   });
 }
 
+export async function openSavedRecordingMetadata(localId) {
+  const recording = await getSavedRecording(localId);
+  if (!recording) {
+    throw new Error("The saved recording was not found on this device.");
+  }
+
+  const metadata = toRecordingMetadata(recording);
+  const metadataFileName = metadata.metadataFileName || `${recording.fileName}${metadataFileSuffix}`;
+  return new File(
+    [JSON.stringify(metadata, null, 2)],
+    metadataFileName,
+    {
+      type: "application/json",
+      lastModified: Date.now()
+    });
+}
 export async function markSavedRecordingUploadStarted(localId) {
   return await updateSavedRecording(localId, recording => {
     if (recording.uploadStatus === uploadStatusNeedsExport) {
@@ -717,8 +735,12 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
 
 async function importRecordingsFromFiles(files) {
   const selectedFiles = Array.from(files || []);
-  const metadataFiles = selectedFiles.filter(file => file.name.endsWith(metadataFileSuffix));
-  const videoFilesByName = new Map(selectedFiles
+  const expandedFiles = [
+    ...selectedFiles.filter(file => !isZipFileName(file.name)),
+    ...await extractRecordingFilesFromZipPackages(selectedFiles.filter(file => isZipFileName(file.name)))
+  ];
+  const metadataFiles = expandedFiles.filter(file => file.name.endsWith(metadataFileSuffix));
+  const videoFilesByName = new Map(expandedFiles
     .filter(file => file.type.startsWith("video/") || isVideoFileName(file.name))
     .map(file => [file.name, file]));
   const recordings = [];
@@ -761,7 +783,7 @@ async function importRecordingsFromFiles(files) {
     importedCount: recordings.length,
     skippedCount: skippedCount + Math.max(0, metadataFiles.length === 0 ? selectedFiles.length : 0),
     errorMessage: metadataFiles.length === 0
-      ? "Select the PaceLetics JSON metadata file together with the recording video file."
+      ? "Select a PaceLetics ZIP package, or select the PaceLetics JSON metadata file together with the recording video file."
       : ""
   };
 }
@@ -1110,15 +1132,268 @@ function getRecordingStorageLocation(recording) {
   return `Browser IndexedDB: ${databaseName}/${recordingStoreName}/${recording.localId}`;
 }
 
-async function shareRecordingFiles(files) {
+async function shareRecordingFiles(files, packageFile) {
+  if (packageFile && navigator.canShare?.({ files: [packageFile] }) && navigator.share) {
+    await navigator.share({ files: [packageFile] });
+    return;
+  }
+
   if (navigator.canShare?.({ files }) && navigator.share) {
     await navigator.share({ files });
     return;
   }
 
-  throw new Error("This browser cannot open a confirmed device save dialog for the recording files.");
+  throw new Error("This browser cannot open a confirmed device save dialog for the recording package or files.");
 }
 
+async function createRecordingPackageFile(recording, files) {
+  const packageName = `${getFileNameWithoutExtension(recording.fileName)}.paceletics.zip`;
+  const zipBlob = await createStoredZipBlob(files);
+  return new File([zipBlob], packageName, {
+    type: "application/zip",
+    lastModified: Date.now()
+  });
+}
+
+async function createStoredZipBlob(files) {
+  const encoder = new TextEncoder();
+  const localParts = [];
+  const centralParts = [];
+  let offset = 0;
+
+  for (const file of files) {
+    const fileNameBytes = encoder.encode(file.name);
+    const data = new Uint8Array(await file.arrayBuffer());
+    const crc = crc32(data);
+    const dosDateTime = getDosDateTime(file.lastModified || Date.now());
+    const localHeader = createZipLocalFileHeader(fileNameBytes, data.length, crc, dosDateTime);
+    const centralHeader = createZipCentralDirectoryHeader(fileNameBytes, data.length, crc, dosDateTime, offset);
+
+    localParts.push(localHeader, data);
+    centralParts.push(centralHeader);
+    offset += localHeader.length + data.length;
+  }
+
+  const centralDirectoryOffset = offset;
+  const centralDirectorySize = centralParts.reduce((sum, part) => sum + part.length, 0);
+  const endRecord = createZipEndOfCentralDirectory(files.length, centralDirectorySize, centralDirectoryOffset);
+
+  return new Blob([...localParts, ...centralParts, endRecord], { type: "application/zip" });
+}
+
+function createZipLocalFileHeader(fileNameBytes, size, crc, dosDateTime) {
+  const header = new Uint8Array(30 + fileNameBytes.length);
+  const view = new DataView(header.buffer);
+  view.setUint32(0, zipLocalFileHeaderSignature, true);
+  view.setUint16(4, 20, true);
+  view.setUint16(6, 0, true);
+  view.setUint16(8, 0, true);
+  view.setUint16(10, dosDateTime.time, true);
+  view.setUint16(12, dosDateTime.date, true);
+  view.setUint32(14, crc, true);
+  view.setUint32(18, size, true);
+  view.setUint32(22, size, true);
+  view.setUint16(26, fileNameBytes.length, true);
+  view.setUint16(28, 0, true);
+  header.set(fileNameBytes, 30);
+  return header;
+}
+
+function createZipCentralDirectoryHeader(fileNameBytes, size, crc, dosDateTime, localHeaderOffset) {
+  const header = new Uint8Array(46 + fileNameBytes.length);
+  const view = new DataView(header.buffer);
+  view.setUint32(0, zipCentralDirectorySignature, true);
+  view.setUint16(4, 20, true);
+  view.setUint16(6, 20, true);
+  view.setUint16(8, 0, true);
+  view.setUint16(10, 0, true);
+  view.setUint16(12, dosDateTime.time, true);
+  view.setUint16(14, dosDateTime.date, true);
+  view.setUint32(16, crc, true);
+  view.setUint32(20, size, true);
+  view.setUint32(24, size, true);
+  view.setUint16(28, fileNameBytes.length, true);
+  view.setUint16(30, 0, true);
+  view.setUint16(32, 0, true);
+  view.setUint16(34, 0, true);
+  view.setUint16(36, 0, true);
+  view.setUint32(38, 0, true);
+  view.setUint32(42, localHeaderOffset, true);
+  header.set(fileNameBytes, 46);
+  return header;
+}
+
+function createZipEndOfCentralDirectory(fileCount, centralDirectorySize, centralDirectoryOffset) {
+  const record = new Uint8Array(22);
+  const view = new DataView(record.buffer);
+  view.setUint32(0, zipEndOfCentralDirectorySignature, true);
+  view.setUint16(4, 0, true);
+  view.setUint16(6, 0, true);
+  view.setUint16(8, fileCount, true);
+  view.setUint16(10, fileCount, true);
+  view.setUint32(12, centralDirectorySize, true);
+  view.setUint32(16, centralDirectoryOffset, true);
+  view.setUint16(20, 0, true);
+  return record;
+}
+
+function getDosDateTime(value) {
+  const date = new Date(value);
+  const year = Math.max(1980, date.getFullYear());
+  return {
+    time: (date.getHours() << 11) | (date.getMinutes() << 5) | Math.floor(date.getSeconds() / 2),
+    date: ((year - 1980) << 9) | ((date.getMonth() + 1) << 5) | date.getDate()
+  };
+}
+
+let crc32Table = null;
+
+function crc32(data) {
+  if (!crc32Table) {
+    crc32Table = new Uint32Array(256);
+    for (let index = 0; index < 256; index++) {
+      let value = index;
+      for (let bit = 0; bit < 8; bit++) {
+        value = value & 1 ? 0xedb88320 ^ (value >>> 1) : value >>> 1;
+      }
+
+      crc32Table[index] = value >>> 0;
+    }
+  }
+
+  let crc = 0xffffffff;
+  for (const byte of data) {
+    crc = crc32Table[(crc ^ byte) & 0xff] ^ (crc >>> 8);
+  }
+
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+async function extractRecordingFilesFromZipPackages(zipFiles) {
+  const extractedFiles = [];
+  for (const zipFile of zipFiles) {
+    try {
+      extractedFiles.push(...extractStoredZipFiles(zipFile, new Uint8Array(await zipFile.arrayBuffer())));
+    } catch {
+      // Ignore invalid ZIP packages; the import summary reports unmatched selections.
+    }
+  }
+
+  return extractedFiles;
+}
+
+function extractStoredZipFiles(zipFile, bytes) {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const endOffset = findZipEndOfCentralDirectory(view);
+  if (endOffset < 0) {
+    return [];
+  }
+
+  const decoder = new TextDecoder();
+  const entryCount = view.getUint16(endOffset + 10, true);
+  let centralOffset = view.getUint32(endOffset + 16, true);
+  const files = [];
+
+  for (let index = 0; index < entryCount; index++) {
+    if (view.getUint32(centralOffset, true) !== zipCentralDirectorySignature) {
+      break;
+    }
+
+    const compressionMethod = view.getUint16(centralOffset + 10, true);
+    const compressedSize = view.getUint32(centralOffset + 20, true);
+    const uncompressedSize = view.getUint32(centralOffset + 24, true);
+    const fileNameLength = view.getUint16(centralOffset + 28, true);
+    const extraLength = view.getUint16(centralOffset + 30, true);
+    const commentLength = view.getUint16(centralOffset + 32, true);
+    const localHeaderOffset = view.getUint32(centralOffset + 42, true);
+    const rawName = decoder.decode(bytes.slice(centralOffset + 46, centralOffset + 46 + fileNameLength));
+    const fileName = getZipEntryFileName(rawName);
+
+    if (compressionMethod === 0
+      && compressedSize === uncompressedSize
+      && fileName
+      && (fileName.endsWith(metadataFileSuffix) || isVideoFileName(fileName))) {
+      const localFile = extractStoredZipFile(bytes, view, localHeaderOffset, compressedSize, fileName, zipFile.lastModified);
+      if (localFile) {
+        files.push(localFile);
+      }
+    }
+
+    centralOffset += 46 + fileNameLength + extraLength + commentLength;
+  }
+
+  return files;
+}
+
+function extractStoredZipFile(bytes, view, localHeaderOffset, size, fileName, lastModified) {
+  if (view.getUint32(localHeaderOffset, true) !== zipLocalFileHeaderSignature) {
+    return null;
+  }
+
+  const fileNameLength = view.getUint16(localHeaderOffset + 26, true);
+  const extraLength = view.getUint16(localHeaderOffset + 28, true);
+  const dataStart = localHeaderOffset + 30 + fileNameLength + extraLength;
+  const dataEnd = dataStart + size;
+  if (dataEnd > bytes.length) {
+    return null;
+  }
+
+  return new File([bytes.slice(dataStart, dataEnd)], fileName, {
+    type: getRecordingFileContentType(fileName),
+    lastModified: lastModified || Date.now()
+  });
+}
+
+function findZipEndOfCentralDirectory(view) {
+  const minOffset = Math.max(0, view.byteLength - 65557);
+  for (let offset = view.byteLength - 22; offset >= minOffset; offset--) {
+    if (view.getUint32(offset, true) === zipEndOfCentralDirectorySignature) {
+      return offset;
+    }
+  }
+
+  return -1;
+}
+
+function getZipEntryFileName(value) {
+  const normalized = `${value || ""}`.replaceAll("\\", "/");
+  const fileName = normalized.split("/").filter(Boolean).pop() || "";
+  return sanitizeFileName(fileName);
+}
+
+function getRecordingFileContentType(fileName) {
+  const extension = getFileExtension(fileName).toLowerCase();
+  if (extension === "json") {
+    return "application/json";
+  }
+
+  if (extension === "mp4") {
+    return "video/mp4";
+  }
+
+  if (extension === "mov") {
+    return "video/quicktime";
+  }
+
+  if (extension === "webm") {
+    return "video/webm";
+  }
+
+  if (extension === "zip") {
+    return "application/zip";
+  }
+
+  return "application/octet-stream";
+}
+
+function getFileNameWithoutExtension(fileName) {
+  const extensionStart = fileName.lastIndexOf(".");
+  return extensionStart > 0 ? fileName.slice(0, extensionStart) : fileName;
+}
+
+function isZipFileName(fileName) {
+  return getFileExtension(fileName).toLowerCase() === "zip";
+}
 function buildFileName(fileNamePrefix, fileExtension, localId, perspective = defaultPerspective) {
   const safePrefix = sanitizeFileName(fileNamePrefix || "recording");
   const safePerspective = sanitizeFileName(normalizePerspective(perspective));
@@ -1168,7 +1443,8 @@ function selectRecordingFiles() {
       ".mp4",
       ".mov",
       ".json",
-      metadataFileSuffix
+      metadataFileSuffix,
+      ".zip"
     ].join(",");
     input.style.position = "fixed";
     input.style.left = "-10000px";

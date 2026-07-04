@@ -563,9 +563,23 @@
                     pendingRecording.ContentType,
                     content),
                 cancellationToken: default);
-
             if (!string.IsNullOrWhiteSpace(driveFile.FileId))
             {
+                await using var metadataStreamReference = await module.InvokeAsync<IJSStreamReference>(
+                    "openSavedRecordingMetadata",
+                    pendingRecording.LocalId);
+                await using var metadataContent = await metadataStreamReference.OpenReadStreamAsync(MaxQueuedRecordingBytes);
+                await UserDriveFolderService.UploadAnalysisResultAsync(
+                    new UserDriveAnalysisResultUploadRequest(
+                        pendingRecording.AthleteUserId,
+                        pendingRecording.AthleteEmail,
+                        GetCaptureFolderTitle(pendingRecording),
+                        pendingRecording.EffectiveCaptureStartsAt,
+                        $"{pendingRecording.FileName}.paceletics.json",
+                        "application/json",
+                        metadataContent),
+                    cancellationToken: default);
+
                 if (!string.IsNullOrWhiteSpace(pendingRecording.EffectiveCaptureSessionId)
                     && !string.IsNullOrWhiteSpace(pendingRecording.ParticipantId))
                 {
