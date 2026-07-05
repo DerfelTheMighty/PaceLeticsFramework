@@ -47,7 +47,7 @@ Ziel der Trainingsanpassung ist eine steifere Sehne. Also eine Sehne, die sich b
 |---|---|---|---|---|
 | Alfredson-Protokoll | Exzentrische Belastung der Achillessehne | Fersenheber auf Stufe: langsames Absenken mit gestrecktem und gebeugtem Knie | 3 x 15 gestrecktes Knie plus 3 x 15 gebeugtes Knie, 2-mal täglich, 7 Tage pro Woche, 12 Wochen | Sehr hohes Wiederholungsvolumen; Zusatzgewicht bei guter Toleranz |
 | HSR-Protokoll | Heavy Slow Resistance: langsames schweres Krafttraining | Sitzendes Wadenheben, Leg-Press-Wadenheben, stehendes Wadenheben | 3-mal pro Woche, 12 Wochen; Progression von 15RM zu 6RM, je Wiederholung ca. 3 Sekunden hoch plus 3 Sekunden runter | Weniger häufig als Alfredson, stärker krafttrainingsorientiert |
-| Berlin-Protokoll | Hochintensive isometrische Sehnenbelastung | Isometrische Plantarflexion gegen fixierten Vorfuß | 4-mal pro Woche, 12 Wochen; 5 x 4 Wiederholungen bei ca. 90 Prozent maximaler isometrischer Kraft; 3 Sekunden Spannung plus 3 Sekunden Pause | Sehr hohe, kontrollierte Spannung bei wenig Bewegung |
+| Berlin-Protokoll | Hochintensive isometrische Sehnenbelastung | Sitzend mit gestrecktem Knie, Fuß etwa 90 Grad, Vorfuß fixiert; isometrische Plantarflexion gegen Fußplatte oder Gurt | 4-mal pro Woche, 12 Wochen; nach Aufwärmen und Kraftbestimmung 5 x 4 Wiederholungen bei ca. 90 Prozent der maximalen isometrischen Kraft; 3 Sekunden Spannung plus 3 Sekunden Pause | Sehr hohe, kontrollierte Spannung bei wenig Bewegung; in der Studie mit Kraftmessung und Feedback-Gurt dosiert |
 
 Diese Protokolle sind keine konkurrierenden Glaubensrichtungen. Sie sind verschiedene Wege, Sehnenspannung zu organisieren. Die entscheidende Frage ist nicht nur, ob eine Übung exzentrisch, langsam oder isometrisch ist, sondern ob die Achillessehne eine ausreichend hohe, kontrollierte und wiederholbare Zugspannung erfährt.
 
@@ -71,22 +71,6 @@ Für symptomatische Achillessehnen bleibt die direkte Evidenz für mehr Sehnenst
 Aus den Arbeiten an gesunden Achillessehnen lässt sich aber ableiten, warum dieser Ansatz plausibel ist. Wiederholt hohe, kontrollierte Zugspannung kann Sehnensteifigkeit, Querschnitt und Materialeigenschaften verbessern. Das wurde für zyklische isometrische Belastungen, schweres exzentrisches Training und in systematischen Übersichtsarbeiten gezeigt. [[4]](https://doi.org/10.1242/jeb.112268) [[5]](https://doi.org/10.1186/s40798-015-0009-9) [[6]](https://doi.org/10.1007/s00421-018-3904-1) [[7]](https://doi.org/10.1007/s40279-022-01695-y)
 
 Für die Trainingsplanung heißt das: Die Achillessehne braucht nicht nur Wiederholungen, sondern einen ausreichend hohen und reproduzierbaren Spannungsreiz. Schweres langsames Wadenheben, hochintensive Isometrie und später auch reaktive Sprungformen können sinnvolle Bausteine sein. Ruhiges Laufen, Stretching oder sehr leichte Reha-Übungen reichen für diese mechanische Anpassung wahrscheinlich nicht aus. Gleichzeitig muss der Reiz planbar bleiben: erst kontrollierte Kraft, dann mehr Laufumfang, dann Tempo, Hügel und Sprünge. Eine neuere Studie mit gesunden Männern spricht dafür, dass bei hoher Intensität nicht jedes Detail der Wochenverteilung entscheidend ist; wichtiger ist, dass der hohe Reiz regelmäßig über Wochen wiederkehrt. [[8]](https://doi.org/10.1038/s41598-024-56840-6)
-
-## Das Berlin-Protokoll konkret
-
-In der Studie saßen die Teilnehmer mit gestrecktem Knie am Boden. Der Fuß stand im rechten Winkel, der Vorfuß wurde in einer Fußplatte mit Zuggurt fixiert. Trainiert wurde nur das symptomatische Bein. Die Kontraktion war isometrisch: Die Wade drückt maximal in Plantarflexion, aber der Fuß bewegt sich nicht. [[3]](https://doi.org/10.1186/s40798-022-00545-5)
-
-Der Ablauf war:
-
-1. Aufwärmen: 3 Sätze mit 5 submaximalen isometrischen Kontraktionen, jeweils 3 Sekunden Spannung und 3 Sekunden Pause, mit 1 Minute Satzpause.
-2. Kraftbestimmung: 5 maximale isometrische Plantarflexionen. Die Trainingslast wurde aus 90 Prozent des Mittelwerts dieser Versuche berechnet.
-3. Hauptteil: 5 Sätze mit 4 Wiederholungen bei ungefähr 90 Prozent der maximalen isometrischen Kraft.
-4. Rhythmus: 3 Sekunden hohe Spannung, 3 Sekunden Pause zwischen den Wiederholungen, 1 Minute Pause zwischen den Sätzen.
-5. Frequenz: 4 Einheiten pro Woche über 12 Wochen.
-
-Das ist wenig Volumen, aber sehr hohe Intensität. Genau darin liegt der Unterschied zu vielen Reha-Übungen, die sich zwar "viel" anfühlen, aber mechanisch nicht zwingend in den Bereich kommen, in dem Sehnensteifigkeit und Querschnitt messbar reagieren.
-
-Auch technisch ist das Protokoll anspruchsvoll. 90 Prozent einer maximalen isometrischen Plantarflexion lassen sich nicht sauber über Bauchgefühl dosieren. In der Studie wurde ein Feedback-Gurt mit Kraftmessung verwendet. In der Praxis braucht es deshalb entweder geeignetes Equipment, erfahrene Betreuung oder eine gute Annäherung über reproduzierbare Mess- und Belastungsbedingungen. Ein schweres Fersenheben kann sinnvoll sein, ist aber nicht automatisch dasselbe Protokoll.
 
 ## Praktische Aspekte für gesunde Läufer:innen
 
