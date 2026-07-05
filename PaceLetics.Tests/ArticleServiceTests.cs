@@ -19,7 +19,8 @@ public sealed class ArticleServiceTests
             article => Assert.Equal("injured-athletes", article.Id),
             article => Assert.Equal("evidence-based-running-analysis", article.Id),
             article => Assert.Equal("pace-controlled-training", article.Id),
-            article => Assert.Equal("tendon-adaptation", article.Id));
+            article => Assert.Equal("tendon-adaptation", article.Id),
+            article => Assert.Equal("berlin-protocol-achilles-tendinopathy", article.Id));
 
         var mentalResource = Assert.Single(articles, article => article.Id == "mental-resource-running");
         Assert.Equal(ArticleCategories.Fundamentals, mentalResource.Category);
@@ -64,6 +65,13 @@ public sealed class ArticleServiceTests
         Assert.Contains("Mechanotransduktion", tendonAdaptation.BodyHtml);
         Assert.Contains(tendonAdaptation.References, reference => reference.Url.Contains("s40798-015-0009-9"));
         Assert.Contains(tendonAdaptation.References, reference => reference.Url.Contains("PMC11301520"));
+
+        var achillesTraining = Assert.Single(articles, article => article.Id == "berlin-protocol-achilles-tendinopathy");
+        Assert.Equal(ArticleCategories.Training, achillesTraining.Category);
+        Assert.Equal(ArticleContentKind.Generic, achillesTraining.ContentKind);
+        Assert.Equal("Evidenzbasiertes Training für die Achillessehne", achillesTraining.Title);
+        Assert.Contains("Warum Sehnen langsam adaptieren", achillesTraining.BodyHtml);
+        Assert.Contains(achillesTraining.References, reference => reference.Url.Contains("s40798-022-00545-5"));
     }
 
     [Fact]
@@ -130,6 +138,12 @@ public sealed class ArticleServiceTests
             {
                 Assert.Equal("tendon-adaptation", preview.Id);
                 Assert.Equal("Warum Sehnen langsam adaptieren", preview.Title);
+                Assert.Equal(ArticleContentKind.Generic, preview.ContentKind);
+            },
+            preview =>
+            {
+                Assert.Equal("berlin-protocol-achilles-tendinopathy", preview.Id);
+                Assert.Equal("Evidenzbasiertes Training für die Achillessehne", preview.Title);
                 Assert.Equal(ArticleContentKind.Generic, preview.ContentKind);
             });
 
