@@ -17,8 +17,32 @@
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
     <MudStack Spacing="3">
+        <nav class="pl-section-nav" aria-label="@L["Title"]">
+            <button type="button"
+                    class="@GetSectionButtonClass(RunningAnalysesSection.Recordings)"
+                    aria-pressed="@(_activeSection == RunningAnalysesSection.Recordings)"
+                    @onclick="@(() => SelectSection(RunningAnalysesSection.Recordings))">
+                <MudIcon Icon="@Icons.Material.Filled.Videocam" Size="Size.Small" />
+                <span>Aufnahmen</span>
+            </button>
+            <button type="button"
+                    class="@GetSectionButtonClass(RunningAnalysesSection.Analyses)"
+                    aria-pressed="@(_activeSection == RunningAnalysesSection.Analyses)"
+                    @onclick="@(() => SelectSection(RunningAnalysesSection.Analyses))">
+                <MudIcon Icon="@Icons.Material.Filled.RateReview" Size="Size.Small" />
+                <span>Analysen</span>
+            </button>
+            <button type="button"
+                    class="@GetSectionButtonClass(RunningAnalysesSection.UploadQueue)"
+                    aria-pressed="@(_activeSection == RunningAnalysesSection.UploadQueue)"
+                    @onclick="@(() => SelectSection(RunningAnalysesSection.UploadQueue))">
+                <MudIcon Icon="@Icons.Material.Filled.CloudUpload" Size="Size.Small" />
+                <span>Uploadqueue</span>
+            </button>
+        </nav>
+
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
             <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
@@ -67,95 +91,102 @@
         }
         else
         {
-            <MudPaper Elevation="1" Class="pa-4">
-                <MudTabs Elevation="0" Rounded="false">
-                    <MudTabPanel Text="Aufnahmen">
-                        <MudStack Spacing="2" Class="pt-3">
-                            @foreach (var analysis in _analyses)
-                            {
-                                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                                        @RenderAnalysisSummary(analysis)
+            <MudDivider />
 
-                                        <MudButton Variant="Variant.Filled"
-                                                   Color="Color.Primary"
-                                                   StartIcon="@Icons.Material.Filled.Videocam"
-                                                   OnClick="@(() => OpenRecording(analysis))">
-                                            Aufnahme starten
-                                        </MudButton>
-                                    </MudStack>
-                                </MudPaper>
-                            }
-                        </MudStack>
-                    </MudTabPanel>
+            @if (_activeSection == RunningAnalysesSection.Recordings)
+            {
+                <MudStack Spacing="2">
+                    @foreach (var analysis in _analyses)
+                    {
+                        <MudPaper Elevation="1" Class="pa-4">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                @RenderAnalysisSummary(analysis)
 
-                    <MudTabPanel Text="Analysen">
-                        <MudStack Spacing="2" Class="pt-3">
-                            @foreach (var analysis in _analyses)
-                            {
-                                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                                        @RenderAnalysisSummary(analysis)
-
-                                        <MudButton Variant="Variant.Filled"
-                                                   Color="Color.Primary"
-                                                   StartIcon="@Icons.Material.Filled.RateReview"
-                                                   Disabled="@(analysis.Status?.RecordedParticipantCount == 0)"
-                                                   OnClick="@(() => OpenReview(analysis))">
-                                            Analyse öffnen
-                                        </MudButton>
-                                    </MudStack>
-                                </MudPaper>
-                            }
-                        </MudStack>
-                    </MudTabPanel>
-
-                    <MudTabPanel Text="Uploadqueue">
-                        <MudStack Spacing="3" Class="pt-3">
-                            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                                Hier werden lokal gespeicherte Laufaufnahmen später hochgeladen.
-                            </MudAlert>
-
-                            <MudButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       StartIcon="@Icons.Material.Filled.CloudUpload"
-                                       OnClick="OpenUploadQueue">
-                                Uploadqueue öffnen
-                            </MudButton>
-
-                            <MudStack Spacing="2">
-                                @foreach (var analysis in _analyses)
-                                {
-                                    <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                                            @RenderAnalysisSummary(analysis)
-
-                                            @if (analysis.Status is not null)
-                                            {
-                                                <MudChip T="string"
-                                                         Size="Size.Small"
-                                                         Color="@GetUploadStatusColor(analysis.Status)"
-                                                         Variant="Variant.Outlined"
-                                                         Icon="@Icons.Material.Filled.CloudDone">
-                                                    @FormatProgress(L["Uploads"].ToString(), analysis.Status.UploadedParticipantCount, analysis.Status.RecordedParticipantCount)
-                                                </MudChip>
-                                            }
-                                        </MudStack>
-                                    </MudPaper>
-                                }
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.Videocam"
+                                           OnClick="@(() => OpenRecording(analysis))">
+                                    Aufnahme starten
+                                </MudButton>
                             </MudStack>
-                        </MudStack>
-                    </MudTabPanel>
-                </MudTabs>
-            </MudPaper>
+                        </MudPaper>
+                    }
+                </MudStack>
+            }
+            else if (_activeSection == RunningAnalysesSection.Analyses)
+            {
+                <MudStack Spacing="2">
+                    @foreach (var analysis in _analyses)
+                    {
+                        <MudPaper Elevation="1" Class="pa-4">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                @RenderAnalysisSummary(analysis)
+
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.RateReview"
+                                           Disabled="@(analysis.Status?.RecordedParticipantCount == 0)"
+                                           OnClick="@(() => OpenReview(analysis))">
+                                    Analyse öffnen
+                                </MudButton>
+                            </MudStack>
+                        </MudPaper>
+                    }
+                </MudStack>
+            }
+            else
+            {
+                <MudStack Spacing="3">
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        Hier werden lokal gespeicherte Laufaufnahmen später hochgeladen.
+                    </MudAlert>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.CloudUpload"
+                               OnClick="OpenUploadQueue">
+                        Uploadqueue öffnen
+                    </MudButton>
+
+                    <MudStack Spacing="2">
+                        @foreach (var analysis in _analyses)
+                        {
+                            <MudPaper Elevation="1" Class="pa-4">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                                    @RenderAnalysisSummary(analysis)
+
+                                    @if (analysis.Status is not null)
+                                    {
+                                        <MudChip T="string"
+                                                 Size="Size.Small"
+                                                 Color="@GetUploadStatusColor(analysis.Status)"
+                                                 Variant="Variant.Outlined"
+                                                 Icon="@Icons.Material.Filled.CloudDone">
+                                            @FormatProgress(L["Uploads"].ToString(), analysis.Status.UploadedParticipantCount, analysis.Status.RecordedParticipantCount)
+                                        </MudChip>
+                                    }
+                                </MudStack>
+                            </MudPaper>
+                        }
+                    </MudStack>
+                </MudStack>
+            }
         }
     </MudStack>
 </MudContainer>
 
 @code {
+    private enum RunningAnalysesSection
+    {
+        Recordings,
+        Analyses,
+        UploadQueue
+    }
+
     private string? _userId;
     private string? _errorMessage;
     private IReadOnlyList<RunningAnalysisCourseEvent> _analyses = Array.Empty<RunningAnalysisCourseEvent>();
+    private RunningAnalysesSection _activeSection = RunningAnalysesSection.Recordings;
 
     private bool HasDriveCredentials =>
         !string.IsNullOrWhiteSpace(DriveOptions.Value.ServiceAccountJsonPath)
@@ -249,6 +280,18 @@
     private void OpenRecording(RunningAnalysisCourseEvent analysis)
     {
         Navigation.NavigateTo($"/Trainers/courses/{analysis.Course.Id}/events/{analysis.Event.Id}/running-analysis");
+    }
+
+    private void SelectSection(RunningAnalysesSection section)
+    {
+        _activeSection = section;
+    }
+
+    private string GetSectionButtonClass(RunningAnalysesSection section)
+    {
+        return _activeSection == section
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
     }
 
     private void OpenReview(RunningAnalysisCourseEvent analysis)
