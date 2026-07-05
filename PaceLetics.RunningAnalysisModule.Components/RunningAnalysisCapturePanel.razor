@@ -194,13 +194,14 @@
                 </MudButton>
 
                 <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                    <MudButton Variant="Variant.Text"
-                               Color="Color.Error"
-                               StartIcon="@Icons.Material.Filled.Close"
-                               Disabled="@IsRecordingActive"
-                               OnClick="CancelAsync">
-                        Cancel
-                    </MudButton>
+                    <MudTooltip Text="Abbrechen">
+                        <MudIconButton Variant="Variant.Text"
+                                       Color="Color.Error"
+                                       Icon="@Icons.Material.Filled.Close"
+                                       Disabled="@IsRecordingActive"
+                                       OnClick="CancelAsync"
+                                       aria-label="Abbrechen" />
+                    </MudTooltip>
 
                     <MudButton Variant="Variant.Outlined"
                                Color="Color.Primary"
@@ -212,23 +213,34 @@
 
                     @if (!IsRecordingActive)
                     {
-                        <MudButton Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   StartIcon="@Icons.Material.Filled.FiberManualRecord"
-                                   Disabled="@(!CanUseRecorder)"
-                                   OnClick="StartRecordingAsync">
-                            Record
-                        </MudButton>
+                        <MudTooltip Text="Aufnahme starten">
+                            <MudIconButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           Icon="@Icons.Material.Filled.FiberManualRecord"
+                                           Disabled="@(!CanUseRecorder)"
+                                           OnClick="StartRecordingAsync"
+                                           aria-label="Aufnahme starten" />
+                        </MudTooltip>
                     }
                     else
                     {
-                        <MudButton Variant="Variant.Filled"
-                                   Color="Color.Error"
-                                   StartIcon="@Icons.Material.Filled.Stop"
-                                   OnClick="StopRecordingAsync">
-                            Stop
-                        </MudButton>
+                        <MudTooltip Text="Aufnahme stoppen">
+                            <MudIconButton Variant="Variant.Filled"
+                                           Color="Color.Error"
+                                           Icon="@Icons.Material.Filled.Stop"
+                                           OnClick="StopRecordingAsync"
+                                           aria-label="Aufnahme stoppen" />
+                        </MudTooltip>
                     }
+
+                    <MudTooltip Text="Nächste Person">
+                        <MudIconButton Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       Icon="@Icons.Material.Filled.ArrowForward"
+                                       Disabled="@IsRecordingActive"
+                                       OnClick="NextParticipantFromRecordingAsync"
+                                       aria-label="Nächste Person" />
+                    </MudTooltip>
                 </MudStack>
             }
             else if (_wizardStep == CaptureWizardStep.Storage)
@@ -533,6 +545,14 @@
         await MoveToNextParticipantAsync($"{ActiveParticipantName} wurde übersprungen.");
     }
 
+    private async Task NextParticipantFromRecordingAsync()
+    {
+        if (IsRecordingActive)
+            return;
+
+        await MoveToNextParticipantAsync(null);
+    }
+
     private async Task MoveToNextParticipantAsync(string? statusMessage)
     {
         var nextParticipant = GetNextParticipant();
@@ -609,8 +629,8 @@
             return;
         }
 
-        await OnRecorded.InvokeAsync(video);
         await MoveToNextParticipantAsync($"{video.ParticipantName} wurde erfolgreich gespeichert.");
+        await OnRecorded.InvokeAsync(video);
     }
 
     private async Task ExportRecordingAsync()
@@ -624,9 +644,10 @@
         try
         {
             var module = await GetRecorderModuleAsync();
-            await module.InvokeAsync<object>("exportSavedRecording", _recordedVideo.LocalId);
-            await OnRecorded.InvokeAsync(_recordedVideo);
-            await MoveToNextParticipantAsync($"{_recordedVideo.ParticipantName} wurde erfolgreich gespeichert.");
+            var recordedVideo = _recordedVideo;
+            await module.InvokeAsync<object>("exportSavedRecording", recordedVideo.LocalId);
+            await MoveToNextParticipantAsync($"{recordedVideo.ParticipantName} wurde erfolgreich gespeichert.");
+            await OnRecorded.InvokeAsync(recordedVideo);
         }
         catch (Exception ex)
         {
