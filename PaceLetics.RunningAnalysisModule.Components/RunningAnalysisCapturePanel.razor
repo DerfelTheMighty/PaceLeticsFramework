@@ -65,6 +65,17 @@
                         </MudText>
                     </MudStack>
                 </MudPaper>
+
+                @if (CanChooseStorageFolder)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.FolderOpen"
+                               Disabled="@_isChoosingStorage"
+                               OnClick="ChooseStorageAsync">
+                        Ordner wählen
+                    </MudButton>
+                }
             </MudStack>
         }
         else if (_wizardStep == CaptureWizardStep.Perspective)
@@ -334,8 +345,13 @@
         IsNavigationBusy
         || _wizardStep == CaptureWizardStep.Complete
         || (_wizardStep == CaptureWizardStep.Roster && OrderedParticipants.Count == 0)
+        || (_wizardStep == CaptureWizardStep.Storage && !IsStorageDecisionReady)
         || (_wizardStep == CaptureWizardStep.ManualSave && _recordedVideo is null)
         || (_wizardStep == CaptureWizardStep.Recording && !CanUseRecorder);
+    private bool CanChooseStorageFolder =>
+        SupportsDeviceFolderStorage && !IsStorageReady && !_folderChoiceAttempted;
+    private bool IsStorageDecisionReady =>
+        IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private bool CanUseRecorder => CanRecord || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private RunningAnalysisRosterItem? ActiveParticipant =>
         OrderedParticipants.FirstOrDefault(participant => participant.ParticipantId == _activeParticipantId)
@@ -421,9 +437,6 @@
                 _wizardStep = CaptureWizardStep.Storage;
                 break;
             case CaptureWizardStep.Storage:
-                if (SupportsDeviceFolderStorage && !IsStorageReady && !_folderChoiceAttempted)
-                    await ChooseStorageAsync();
-
                 _wizardStep = CaptureWizardStep.Perspective;
                 break;
             case CaptureWizardStep.Perspective:
@@ -649,8 +662,8 @@
         if (IsStorageReady)
             return "Der Ordnerzugriff ist bereit. Weiter führt zur Perspektive.";
 
-        return SupportsDeviceFolderStorage && !_folderChoiceAttempted
-            ? "Weiter öffnet die Ordnerauswahl."
+        return CanChooseStorageFolder
+            ? "Wähle zuerst den lokalen Ordner. Danach wird Weiter frei."
             : "Weiter führt zur Perspektive; jedes Video wird einzeln gespeichert.";
     }
 
