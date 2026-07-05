@@ -63,8 +63,6 @@ Die Tabelle zeigt ein zentrales Problem der Studienlage: Klinische Verbesserung 
 
 Die Studie von Radovanovic et al. ist deshalb interessant. Dort wurden nicht nur Symptome, sondern auch Sehnensteifigkeit, Querschnitt, maximale Sehnendehnung und Young's Modulus gemessen. In dieser Studie war das hochintensive isometrische High-Loading-Protokoll der einzige Arm mit klarer mechanisch-morphologischer Anpassung. [[1]](https://doi.org/10.1186/s40798-022-00545-5)
 
-Für die Praxis verschiebt das den Fokus weg vom Namen des Protokolls hin zur Qualität des Reizes. "Exzentrisch", "HSR" oder "isometrisch" sind keine magischen Kategorien. Entscheidend ist, ob die Sehne eine ausreichend hohe, kontrollierte und wiederholbare Zugspannung erfährt. Alfredson organisiert diesen Reiz über hohes Wiederholungsvolumen, HSR über langsame schwere Wiederholungen, das Berlin-Protokoll über kurze hochintensive isometrische Kontraktionen.
-
 ## Das Berlin-Protokoll konkret
 
 In der Studie saßen die Teilnehmer mit gestrecktem Knie am Boden. Der Fuß stand im rechten Winkel, der Vorfuß wurde in einer Fußplatte mit Zuggurt fixiert. Trainiert wurde nur das symptomatische Bein. Die Kontraktion war isometrisch: Die Wade drückt maximal in Plantarflexion, aber der Fuß bewegt sich nicht. [[1]](https://doi.org/10.1186/s40798-022-00545-5)
