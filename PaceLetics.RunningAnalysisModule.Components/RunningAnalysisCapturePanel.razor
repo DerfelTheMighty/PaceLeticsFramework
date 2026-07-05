@@ -68,13 +68,14 @@
 
                 @if (CanChooseStorageFolder)
                 {
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Filled.FolderOpen"
-                               Disabled="@_isChoosingStorage"
-                               OnClick="ChooseStorageAsync">
-                        Ordner wählen
-                    </MudButton>
+                    <MudTooltip Text="Ordner wählen">
+                        <MudIconButton Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       Icon="@Icons.Material.Filled.FolderOpen"
+                                       Disabled="@_isChoosingStorage"
+                                       OnClick="ChooseStorageAsync"
+                                       aria-label="Ordner wählen" />
+                    </MudTooltip>
                 }
             </MudStack>
         }
@@ -348,8 +349,7 @@
         || (_wizardStep == CaptureWizardStep.Storage && !IsStorageDecisionReady)
         || (_wizardStep == CaptureWizardStep.ManualSave && _recordedVideo is null)
         || (_wizardStep == CaptureWizardStep.Recording && !CanUseRecorder);
-    private bool CanChooseStorageFolder =>
-        SupportsDeviceFolderStorage && !IsStorageReady && !_folderChoiceAttempted;
+    private bool CanChooseStorageFolder => SupportsDeviceFolderStorage;
     private bool IsStorageDecisionReady =>
         IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private bool CanUseRecorder => CanRecord || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
@@ -660,9 +660,9 @@
     private string GetStorageInstruction()
     {
         if (IsStorageReady)
-            return "Der Ordnerzugriff ist bereit. Weiter führt zur Perspektive.";
+            return "Der Ordnerzugriff ist bereit. Du kannst einen anderen Ordner wählen oder weitergehen.";
 
-        return CanChooseStorageFolder
+        return SupportsDeviceFolderStorage && !_folderChoiceAttempted
             ? "Wähle zuerst den lokalen Ordner. Danach wird Weiter frei."
             : "Weiter führt zur Perspektive; jedes Video wird einzeln gespeichert.";
     }
