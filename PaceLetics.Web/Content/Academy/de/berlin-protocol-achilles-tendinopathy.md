@@ -18,7 +18,6 @@ references:
   - Bohm et al. Human tendon adaptation in response to mechanical loading: a systematic review and meta-analysis. Sports Med Open. 2015. | https://doi.org/10.1186/s40798-015-0009-9
   - Alfredson et al. Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis. Am J Sports Med. 1998. | https://doi.org/10.1177/03635465980260030301
   - Beyer et al. Heavy Slow Resistance Versus Eccentric Training as Treatment for Achilles Tendinopathy: A Randomized Controlled Trial. Am J Sports Med. 2015. | https://doi.org/10.1177/0363546515584760
-  - Demangeot et al. Exercise parameters to consider for Achilles tendinopathy: a modified Delphi study with international experts. Br J Sports Med. 2025. | https://doi.org/10.1136/bjsports-2025-110183
   - Chimenti et al. Achilles Pain, Stiffness, and Muscle Power Deficits: Midportion Achilles Tendinopathy Revision - 2024. J Orthop Sports Phys Ther. 2024. | https://doi.org/10.2519/jospt.2024.0302
   - Silbernagel & Crossley. A Proposed Return-to-Sport Program for Patients With Midportion Achilles Tendinopathy. J Orthop Sports Phys Ther. 2015. | https://doi.org/10.2519/jospt.2015.5885
 ---
@@ -63,8 +62,6 @@ Diese Protokolle sind keine konkurrierenden Glaubensrichtungen. Sie sind verschi
 Die Tabelle zeigt ein zentrales Problem der Studienlage: Klinische Verbesserung und strukturelle Sehnenadaptation sind nicht dasselbe. Viele Arbeiten messen Schmerz, Funktion oder VISA-A. Das ist für Patient:innen wichtig, sagt aber nur begrenzt aus, ob sich die mechanische Belastbarkeit der Sehne verändert hat. Dafür bräuchte man Messungen wie Querschnittsfläche, Sehnensteifigkeit, maximale Sehnendehnung oder Young's Modulus.
 
 Deshalb sollte man bei Trainingsstudien genau hinschauen, was eigentlich gemessen wurde. Schmerz und Funktion sind wichtig, beantworten aber nicht automatisch die Frage, welches Training die mechanischen Eigenschaften der Achillessehne verändert. Genau deshalb ist die Studie von Radovanovic et al. interessant. Dort wurden nicht nur Symptome, sondern auch Sehnensteifigkeit, Querschnitt, maximale Sehnendehnung und Young's Modulus gemessen. In dieser Studie war das hochintensive isometrische High-Loading-Protokoll der einzige Arm mit klarer mechanisch-morphologischer Anpassung. [[1]](https://doi.org/10.1186/s40798-022-00545-5)
-
-Eine neuere Expert:innenbefragung von Demangeot et al. passt gut dazu. Die Forschenden haben internationale Fachleute mehrfach befragt und die Antworten Schritt für Schritt zusammengeführt, bis sichtbar wurde, worauf sich die Gruppe am ehesten einigen kann. Für die Midportion-Achillessehnentendinopathie wurden vier Trainingsparameter als besonders relevant eingeschätzt: wie hoch die Kontraktionsintensität ist, wie lange die Sehne unter Spannung steht, wie viele Wiederholungen und Sätze absolviert werden und welche Art von Muskelarbeit genutzt wird. In der Priorisierung landete die Kontraktionsintensität ganz oben. Mit anderen Worten: Für die Rehabilitation scheint nicht nur wichtig zu sein, welche Übung man macht, sondern vor allem, ob die Sehne ausreichend hoch und kontrolliert belastet wird. [[6]](https://doi.org/10.1136/bjsports-2025-110183)
 
 Für die Praxis verschiebt das den Fokus weg vom Namen des Protokolls hin zur Qualität des Reizes. "Exzentrisch", "HSR" oder "isometrisch" sind keine magischen Kategorien. Entscheidend ist, ob die Sehne eine ausreichend hohe, kontrollierte und wiederholbare Zugspannung erfährt. Alfredson organisiert diesen Reiz über hohes Wiederholungsvolumen, HSR über langsame schwere Wiederholungen, das Berlin-Protokoll über kurze hochintensive isometrische Kontraktionen.
 
@@ -127,7 +124,7 @@ Krafttraining bleibt sinnvoll, aber es sollte kontrolliert sein. Bei gereizter S
 | Beidbeinig statt einbeinig | wenn einbeinig noch zu aggressiv ist |
 | Sitzendes Wadenheben | gute Option, wenn stehendes Wadenheben zu stark reizt |
 
-Die wichtigste Kontrolle ist der nächste Morgen. Wenn die Sehne morgens deutlich steifer, druckempfindlicher oder beim Einlaufen schlechter ist, war die letzte Belastung wahrscheinlich zu viel. Wenn sie gleich bleibt oder ruhiger wird, war die Dosis eher passend. Das passt zur Idee des Schmerzmonitorings in der Achillessehnenrehabilitation: nicht jeder Reiz muss komplett symptomfrei sein, aber er muss kontrollierbar bleiben und darf nicht nachhallen. [[7]](https://doi.org/10.2519/jospt.2024.0302) [[8]](https://doi.org/10.2519/jospt.2015.5885)
+Die wichtigste Kontrolle ist der nächste Morgen. Wenn die Sehne morgens deutlich steifer, druckempfindlicher oder beim Einlaufen schlechter ist, war die letzte Belastung wahrscheinlich zu viel. Wenn sie gleich bleibt oder ruhiger wird, war die Dosis eher passend. Das passt zur Idee des Schmerzmonitorings in der Achillessehnenrehabilitation: nicht jeder Reiz muss komplett symptomfrei sein, aber er muss kontrollierbar bleiben und darf nicht nachhallen. [[6]](https://doi.org/10.2519/jospt.2024.0302) [[7]](https://doi.org/10.2519/jospt.2015.5885)
 
 Für den Wiedereinstieg gilt:
 
@@ -150,6 +147,5 @@ Belastungstraining ist die zentrale konservative Strategie bei Achillessehnenten
 3. [Bohm et al. Human tendon adaptation in response to mechanical loading: a systematic review and meta-analysis. Sports Med Open. 2015.](https://doi.org/10.1186/s40798-015-0009-9)
 4. [Alfredson et al. Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis. Am J Sports Med. 1998.](https://doi.org/10.1177/03635465980260030301)
 5. [Beyer et al. Heavy Slow Resistance Versus Eccentric Training as Treatment for Achilles Tendinopathy: A Randomized Controlled Trial. Am J Sports Med. 2015.](https://doi.org/10.1177/0363546515584760)
-6. [Demangeot et al. Exercise parameters to consider for Achilles tendinopathy: a modified Delphi study with international experts. Br J Sports Med. 2025.](https://doi.org/10.1136/bjsports-2025-110183)
-7. [Chimenti et al. Achilles Pain, Stiffness, and Muscle Power Deficits: Midportion Achilles Tendinopathy Revision - 2024. J Orthop Sports Phys Ther. 2024.](https://doi.org/10.2519/jospt.2024.0302)
-8. [Silbernagel & Crossley. A Proposed Return-to-Sport Program for Patients With Midportion Achilles Tendinopathy. J Orthop Sports Phys Ther. 2015.](https://doi.org/10.2519/jospt.2015.5885)
+6. [Chimenti et al. Achilles Pain, Stiffness, and Muscle Power Deficits: Midportion Achilles Tendinopathy Revision - 2024. J Orthop Sports Phys Ther. 2024.](https://doi.org/10.2519/jospt.2024.0302)
+7. [Silbernagel & Crossley. A Proposed Return-to-Sport Program for Patients With Midportion Achilles Tendinopathy. J Orthop Sports Phys Ther. 2015.](https://doi.org/10.2519/jospt.2015.5885)
