@@ -34,19 +34,21 @@ Inzwischen gibt es mehrere Trainingsansätze, die auf Sehnenanpassung und Sympto
 
 Heavy Slow Resistance Training, kurz HSR, verfolgt eine ähnliche Grundidee, aber mit anderer Dosierung. Statt isolierter Exzentrik werden langsame konzentrische und exzentrische Wadenübungen mit zunehmend schwerer Last trainiert. Beyer et al. verglichen HSR mit exzentrischem Training bei Midportion-Achillessehnentendinopathie. Beide Gruppen verbesserten sich klinisch über 12 Wochen und die Effekte hielten bis 52 Wochen an; HSR war dabei mit höherer Zufriedenheit und besserer Adhärenz verbunden. [[5]](https://doi.org/10.1177/0363546515584760)
 
-Isometrisches Training setzt wieder einen anderen Schwerpunkt. Hier wird hohe Kraft aufgebaut, ohne dass sich das Gelenk sichtbar bewegt. Das kann in der Rehabilitation hilfreich sein, weil hohe Sehnenspannung kontrolliert dosiert werden kann. Für die Achillessehne sollte Isometrie aber nicht nur als frühe Reha-Übung verstanden werden. Aktuelle Studien legen nahe, dass sie auch als hochintensiver, wiederholter Strukturreiz eingesetzt werden kann. Genau hier setzt die High-Loading-Intervention von Radovanovic et al. an, die häufig als Berlin-Protokoll bezeichnet wird. In der Primärstudie bestand sie aus hoher isometrischer Plantarflexionskraft, kurzer Haltezeit, wenig Gesamtvolumen und einer konsequenten Durchführung über 12 Wochen bei Männern mit chronischer Achillessehnentendinopathie. [[1]](https://doi.org/10.1186/s40798-022-00545-5)
+Isometrisches Training setzt wieder einen anderen Schwerpunkt. Hier wird hohe Kraft aufgebaut, ohne dass sich das Gelenk sichtbar bewegt. Das kann in der Rehabilitation hilfreich sein, weil hohe Sehnenspannung besser dosiert werden kann. In einer viel beachteten Studie von Radovanovic et al. wurde ein Ansatz untersucht, der als Berlin-Protokoll bezeichnet wird. In der Primärstudie heißt er "high-loading intervention": hohe isometrische Plantarflexionskraft, kurze Haltezeit, wenig Gesamtvolumen und eine konsequente Durchführung über 12 Wochen bei Männern mit chronischer Achillessehnentendinopathie. [[1]](https://doi.org/10.1186/s40798-022-00545-5)
 
 Die Idee passt zur Sehnenmechanobiologie: Sehnen reagieren nicht einfach auf "viel Training", sondern auf die Qualität der Spannung, die im Gewebe ankommt. In Studien an gesunden Achillessehnen waren hohe zyklische Belastungen mit etwa 3 Sekunden Belastung und 3 Sekunden Entlastung wirksame Reize für Sehnensteifigkeit, Querschnitt und Materialeigenschaften. [[2]](https://doi.org/10.1242/jeb.112268) [[3]](https://doi.org/10.1186/s40798-015-0009-9)
 
+## Was trainiert werden soll
+
+Ziel der Trainingsanpassung ist eine steifere Sehne. Also eine Sehne, die sich bei gleicher Kraft weniger stark verlängert. Dadurch kann bei hoher Belastung die maximale Sehnendehnung sinken, was theoretisch vor wiederholter Überdehnung und Mikroschäden schützen kann. [[1]](https://doi.org/10.1186/s40798-022-00545-5) [[3]](https://doi.org/10.1186/s40798-015-0009-9)
+
 ## Trainingsansätze im Vergleich
 
-Die Protokolle unterscheiden sich vor allem darin, wie sie Spannung, Bewegungsumfang, Wiederholungszahl und Erholung gewichten.
-
-| Protokoll | Belastungsform | Typische Dosierung | Trainingslogik |
-|---|---|---|---|
-| Alfredson | Exzentrisch | 3 x 15 mit gestrecktem Knie plus 3 x 15 mit gebeugtem Knie, 2-mal täglich über 12 Wochen | Viel wiederholte Sehnenbelastung, gut alltagstauglich, historisch stark etabliert |
-| HSR | Langsames schweres Krafttraining | 3-mal pro Woche über 12 Wochen, Progression von 15RM zu 6RM, ca. 3 Sekunden konzentrisch und 3 Sekunden exzentrisch | Hohe Last, langsame Bewegung, weniger Einheiten, stärker krafttrainingsorientiert |
-| Berlin-Protokoll | Hochintensiv isometrisch | 4-mal pro Woche über 12 Wochen, 5 x 4 Wiederholungen bei ca. 90 Prozent maximaler isometrischer Kraft, 3 Sekunden Spannung und 3 Sekunden Pause | Sehr hohe, kontrollierte Sehnenspannung bei wenig Bewegung und geringem Gesamtvolumen |
+| Protokoll | Grundidee | Typische Übungen | Dosierung | Besonderheit |
+|---|---|---|---|---|
+| Alfredson-Protokoll | Exzentrische Belastung der Achillessehne | Fersenheber auf Stufe: langsames Absenken mit gestrecktem und gebeugtem Knie | 3 x 15 gestrecktes Knie plus 3 x 15 gebeugtes Knie, 2-mal täglich, 7 Tage pro Woche, 12 Wochen | Sehr hohes Wiederholungsvolumen; Zusatzgewicht bei guter Toleranz |
+| HSR-Protokoll | Heavy Slow Resistance: langsames schweres Krafttraining | Sitzendes Wadenheben, Leg-Press-Wadenheben, stehendes Wadenheben | 3-mal pro Woche, 12 Wochen; Progression von 15RM zu 6RM, je Wiederholung ca. 3 Sekunden hoch plus 3 Sekunden runter | Weniger häufig als Alfredson, stärker krafttrainingsorientiert |
+| Berlin-Protokoll | Hochintensive isometrische Sehnenbelastung | Isometrische Plantarflexion gegen fixierten Vorfuß | 4-mal pro Woche, 12 Wochen; 5 x 4 Wiederholungen bei ca. 90 Prozent maximaler isometrischer Kraft; 3 Sekunden Spannung plus 3 Sekunden Pause | Sehr hohe, kontrollierte Spannung bei wenig Bewegung |
 
 Diese Protokolle sind keine konkurrierenden Glaubensrichtungen. Sie sind verschiedene Wege, Sehnenspannung zu organisieren. Die entscheidende Frage ist nicht nur, ob eine Übung exzentrisch, langsam oder isometrisch ist, sondern ob die Achillessehne eine ausreichend hohe, kontrollierte und wiederholbare Zugspannung erfährt.
 
