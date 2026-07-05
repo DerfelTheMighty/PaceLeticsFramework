@@ -22,19 +22,34 @@ references:
  - Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019. | https://pubmed.ncbi.nlm.nih.gov/30805204/
 ---
 
-Ingen indgriben uden indikation. Gør ingen skade. Et bevægelsesmønster er kun et problem, hvis det er et problem i en bestemt sammenhæng.
+Ingen indgriben uden indikation. Gør ingen skade. Et bevægelsesmønster er kun et problem, hvis det
+er et problem i en bestemt sammenhæng.
 
-> Løbestil er et selvoptimerende system. Vi retter ikke op på udseendet af en bevægelse, men undersøger derimod om et dynamisk mønster virkelig er relateret til ubehag, belastning eller manglende kontrol.
+> Løbestil er et selvoptimerende system. Vi retter ikke op på udseendet af en bevægelse, men
+> undersøger derimod om et dynamisk mønster virkelig er relateret til ubehag, belastning eller
+> manglende kontrol.
 
 ## Fra formkorrektion til systemforståelse
 
-Før i tiden var øvelsen ofte: Alle skulle have en så perfekt form som muligt. I dag er den bedre kropsholdning: Kroppen er anderledes, løbeteknik er individuel, og et bevægelsesmønster er ikke automatisk forkert, bare fordi det afviger fra et ideal. Kroppen er et selvoptimerende system. Mange løbere vælger deres kadence, skridtlængde og bevægelsesstrategi meget tæt på en løsning, der er økonomisk for dem, især da deres løbeoplevelse øges. [[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
+Før i tiden var øvelsen ofte: Alle skulle have en så perfekt form som muligt. I dag er den bedre
+kropsholdning: Kroppen er anderledes, løbeteknik er individuel, og et bevægelsesmønster er ikke
+automatisk forkert, bare fordi det afviger fra et ideal. Kroppen er et selvoptimerende system. Mange
+løbere vælger deres kadence, skridtlængde og bevægelsesstrategi meget tæt på en løsning, der er
+økonomisk for dem, især da deres løbeoplevelse øges.
+[[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
 
-Hvis en atlet med en bestemt løbeform er symptomfri i årevis, specifikt med hensyn til dette bevægelsesmønster, så er dette i første omgang en indikation på et velfungerende dynamisk system. Selv en velmenende intervention kan flytte dette system mod det negative.
+Hvis en atlet med en bestemt løbeform er symptomfri i årevis, specifikt med hensyn til dette
+bevægelsesmønster, så er dette i første omgang en indikation på et velfungerende dynamisk system.
+Selv en velmenende intervention kan flytte dette system mod det negative.
 
 ## Indgreb har bivirkninger
 
-Ændringer i teknologien reducerer sjældent blot stress; de udsætter dem. Mindre belastning af knæet kan betyde mere belastning af akillessene, læg eller fod. Mere stabilitet kan betyde mere stivhed. En anderledes fodplacering kan overvælde nye strukturer. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0) [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Ændringer i teknologien reducerer sjældent blot stress; de udsætter dem. Mindre belastning af knæet
+kan betyde mere belastning af akillessene, læg eller fod. Mere stabilitet kan betyde mere stivhed.
+En anderledes fodplacering kan overvælde nye strukturer.
+[[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0)
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 Indgreb kræver derfor en indikation. Det kan være:
 
@@ -45,11 +60,23 @@ Disse krav er ikke opfyldt for de fleste af de gængse kriterier for god løbete
 
 ## Hensyn på lige fod
 
-Det kan selvfølgelig også give mening at ændre individuelle parametre for din løbestil af præstationsorienterede årsager. Samtidig har ethvert indgreb en pris, fordi det ikke blot fjerner stress, men flytter det i systemet og kan skabe nye bivirkninger. Hvorvidt en mulig præstationsgevinst retfærdiggør disse bivirkninger, bør derfor ikke afgøres ved råb, gruppepres eller en korrektion fra sidelinjen. Denne overvejelse er en del af langsigtet, individuel støtte og kræver atletens informerede samtykke. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Det kan selvfølgelig også give mening at ændre individuelle parametre for din løbestil af
+præstationsorienterede årsager. Samtidig har ethvert indgreb en pris, fordi det ikke blot fjerner
+stress, men flytter det i systemet og kan skabe nye bivirkninger. Hvorvidt en mulig
+præstationsgevinst retfærdiggør disse bivirkninger, bør derfor ikke afgøres ved råb, gruppepres
+eller en korrektion fra sidelinjen. Denne overvejelse er en del af langsigtet, individuel støtte og
+kræver atletens informerede samtykke. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 ## Undgå illusion af kontrol
 
-Mange old-school trænere er ofte underlagt en illusion af kontrol. Du giver en korrektion, atleten bliver bedre over uger, men muligvis ikke på grund af rettelsen, men fordi træning, væv, koordination og selvorganisering tilpasser sig alligevel. Omvendt kan en korrektion flytte stressen og give symptomer. I begge tilfælde hævdes der kausalitet, som ofte ikke er klart bevist. Det er netop derfor, vi har brug for indikationer, beviser og kontekst. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290) [[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
+Mange old-school trænere er ofte underlagt en illusion af kontrol. Du giver en korrektion, atleten
+bliver bedre over uger, men muligvis ikke på grund af rettelsen, men fordi træning, væv,
+koordination og selvorganisering tilpasser sig alligevel. Omvendt kan en korrektion flytte stressen
+og give symptomer. I begge tilfælde hævdes der kausalitet, som ofte ikke er klart bevist. Det er
+netop derfor, vi har brug for indikationer, beviser og kontekst.
+[[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/)
+[[5]](https://bjsm.bmj.com/content/49/20/1290) [[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
 
 ## Sådan taler vi om løbestil
 

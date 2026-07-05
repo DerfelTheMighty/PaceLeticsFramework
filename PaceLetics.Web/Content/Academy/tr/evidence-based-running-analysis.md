@@ -22,19 +22,34 @@ references:
  - Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019. | https://pubmed.ncbi.nlm.nih.gov/30805204/
 ---
 
-Endikasyon olmadan müdahale yapılmaz. Zarar verme. Bir hareket modeli yalnızca belirli bir bağlamda sorun teşkil ediyorsa sorundur.
+Endikasyon olmadan müdahale yapılmaz. Zarar verme. Bir hareket modeli yalnızca belirli bir bağlamda
+sorun teşkil ediyorsa sorundur.
 
-> Koşu stili, kendi kendini optimize eden bir sistemdir. Bir hareketin görünümünü düzeltmiyoruz, bunun yerine dinamik bir modelin gerçekten rahatsızlık, gerginlik veya kontrol eksikliği ile ilişkili olup olmadığını inceliyoruz.
+> Koşu stili, kendi kendini optimize eden bir sistemdir. Bir hareketin görünümünü düzeltmiyoruz,
+> bunun yerine dinamik bir modelin gerçekten rahatsızlık, gerginlik veya kontrol eksikliği ile
+> ilişkili olup olmadığını inceliyoruz.
 
 ## Form düzeltmeden sistem anlayışına
 
-Geçmişte tatbikat sıklıkla şuydu: Herkesin mümkün olduğu kadar mükemmel bir forma sahip olması gerekiyordu. Günümüzde daha iyi duruş şu şekildedir: Vücutlar farklıdır, koşu tekniği kişiye özeldir ve bir hareket modeli sırf idealden saptığı için otomatik olarak yanlış değildir. Vücut kendi kendini optimize eden bir sistemdir. Birçok koşucu, özellikle koşu deneyimleri arttıkça temposunu, adım uzunluğunu ve hareket stratejisini kendileri için ekonomik olan bir çözüme çok yakın bir şekilde seçer. [[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
+Geçmişte tatbikat sıklıkla şuydu: Herkesin mümkün olduğu kadar mükemmel bir forma sahip olması
+gerekiyordu. Günümüzde daha iyi duruş şu şekildedir: Vücutlar farklıdır, koşu tekniği kişiye özeldir
+ve bir hareket modeli sırf idealden saptığı için otomatik olarak yanlış değildir. Vücut kendi
+kendini optimize eden bir sistemdir. Birçok koşucu, özellikle koşu deneyimleri arttıkça temposunu,
+adım uzunluğunu ve hareket stratejisini kendileri için ekonomik olan bir çözüme çok yakın bir
+şekilde seçer. [[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
 
-Belirli bir koşu formuna sahip bir sporcunun özellikle bu hareket şekliyle ilgili olarak yıllarca semptom göstermemesi, başlangıçta dinamik bir sistemin iyi çalıştığının bir göstergesidir. İyi niyetli bir müdahale bile bu sistemi olumsuza doğru kaydırabilmektedir.
+Belirli bir koşu formuna sahip bir sporcunun özellikle bu hareket şekliyle ilgili olarak yıllarca
+semptom göstermemesi, başlangıçta dinamik bir sistemin iyi çalıştığının bir göstergesidir. İyi
+niyetli bir müdahale bile bu sistemi olumsuza doğru kaydırabilmektedir.
 
 ## Müdahalelerin yan etkileri var
 
-Teknolojideki değişiklikler nadiren basitçe stresi azaltır; onları erteliyorlar. Daha az diz gerginliği, daha fazla Aşil tendonu, baldır veya ayak gerginliği anlamına gelebilir. Daha fazla stabilite, daha fazla sağlamlık anlamına gelebilir. Farklı bir ayak yerleşimi yeni yapıların üstesinden gelebilir. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0) [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Teknolojideki değişiklikler nadiren basitçe stresi azaltır; onları erteliyorlar. Daha az diz
+gerginliği, daha fazla Aşil tendonu, baldır veya ayak gerginliği anlamına gelebilir. Daha fazla
+stabilite, daha fazla sağlamlık anlamına gelebilir. Farklı bir ayak yerleşimi yeni yapıların
+üstesinden gelebilir. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0)
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 Bu nedenle müdahalelerin bir endikasyona ihtiyacı vardır. Olabilir:
 
@@ -45,11 +60,25 @@ Bu gereksinimler, iyi koşu tekniğine ilişkin ortak kriterlerin çoğu için k
 
 ## Eşit temelde değerlendirme
 
-Elbette performans odaklı nedenlerden dolayı koşu tarzınızın bireysel parametrelerini değiştirmek de mantıklı olabilir. Aynı zamanda her müdahalenin bir bedeli vardır çünkü sadece stresi ortadan kaldırmaz, aynı zamanda onu sistemde kaydırır ve yeni yan etkiler yaratabilir. Bu nedenle, olası bir performans artışının bu yan etkileri haklı gösterip göstermediğine bağırarak, akran baskısıyla veya kenardan düzeltme yaparak karar verilmemelidir. Bu değerlendirme, uzun vadeli bireysel desteğin bir parçasıdır ve sporcunun bilgilendirilmiş onamını gerektirir. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Elbette performans odaklı nedenlerden dolayı koşu tarzınızın bireysel parametrelerini değiştirmek de
+mantıklı olabilir. Aynı zamanda her müdahalenin bir bedeli vardır çünkü sadece stresi ortadan
+kaldırmaz, aynı zamanda onu sistemde kaydırır ve yeni yan etkiler yaratabilir. Bu nedenle, olası bir
+performans artışının bu yan etkileri haklı gösterip göstermediğine bağırarak, akran baskısıyla veya
+kenardan düzeltme yaparak karar verilmemelidir. Bu değerlendirme, uzun vadeli bireysel desteğin bir
+parçasıdır ve sporcunun bilgilendirilmiş onamını gerektirir.
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 ## Kontrol yanılsamasından kaçının
 
-Birçok eski tarz antrenör genellikle kontrol yanılsamasına maruz kalır. Bir düzeltme yaparsanız, sporcu haftalar içinde daha iyi hale gelir, ancak muhtemelen bu düzeltme nedeniyle değil, antrenman, doku, koordinasyon ve kendi kendini organize etme yeteneğinin yine de uyum sağlaması nedeniyle. Tersine, bir düzeltme stresi değiştirebilir ve semptomlara neden olabilir. Her iki durumda da çoğu zaman açıkça kanıtlanamayan nedensellik iddia edilmektedir. İşte tam da bu yüzden göstergeye, kanıta ve bağlama ihtiyacımız var. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290) [[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
+Birçok eski tarz antrenör genellikle kontrol yanılsamasına maruz kalır. Bir düzeltme yaparsanız,
+sporcu haftalar içinde daha iyi hale gelir, ancak muhtemelen bu düzeltme nedeniyle değil, antrenman,
+doku, koordinasyon ve kendi kendini organize etme yeteneğinin yine de uyum sağlaması nedeniyle.
+Tersine, bir düzeltme stresi değiştirebilir ve semptomlara neden olabilir. Her iki durumda da çoğu
+zaman açıkça kanıtlanamayan nedensellik iddia edilmektedir. İşte tam da bu yüzden göstergeye, kanıta
+ve bağlama ihtiyacımız var. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/)
+[[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290)
+[[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
 
 ## Koşu stili hakkında nasıl konuşuyoruz?
 

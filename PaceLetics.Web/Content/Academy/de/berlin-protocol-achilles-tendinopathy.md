@@ -25,27 +25,57 @@ references:
   - Silbernagel & Crossley. A Proposed Return-to-Sport Program for Patients With Midportion Achilles Tendinopathy. J Orthop Sports Phys Ther. 2015. | https://doi.org/10.2519/jospt.2015.5885
 ---
 
-Die Achillessehne ist beim Laufen nicht nur eine Struktur, die verletzt werden kann. Sie ist ein zentrales Leistungsgewebe: Sie überträgt Kraft, speichert elastische Energie und muss bei jedem Schritt hohe Zugkräfte kontrollieren. Deshalb ist Achillessehnentraining nicht erst dann relevant, wenn Beschwerden da sind. Es gehört zur Belastungsvorbereitung.
+Die Achillessehne ist beim Laufen nicht nur eine Struktur, die verletzt werden kann. Sie ist ein
+zentrales Leistungsgewebe: Sie überträgt Kraft, speichert elastische Energie und muss bei jedem
+Schritt hohe Zugkräfte kontrollieren. Deshalb ist Achillessehnentraining nicht erst dann relevant,
+wenn Beschwerden da sind. Es gehört zur Belastungsvorbereitung.
 
-Die Anpassung von Sehnen ist langwierig und braucht sehr spezifische Trainingsreize. Warum das so ist, ist im Grundlagenartikel [Warum Sehnen langsam adaptieren](/Athletes/academy/tendon-adaptation) beschrieben: Sehnen bestehen zu einem großen Teil aus langlebiger extrazellulärer Matrix, werden langsamer umgebaut als Muskelgewebe und reagieren besonders auf hohe, kontrollierte Zugspannung.
+Die Anpassung von Sehnen ist langwierig und braucht sehr spezifische Trainingsreize. Warum das so
+ist, ist im Grundlagenartikel [Warum Sehnen langsam adaptieren](/Athletes/academy/tendon-adaptation)
+beschrieben: Sehnen bestehen zu einem großen Teil aus langlebiger extrazellulärer Matrix, werden
+langsamer umgebaut als Muskelgewebe und reagieren besonders auf hohe, kontrollierte Zugspannung.
 
-Für die Trainingsplanung hat das zwei Konsequenzen. Auf der einen Seite sollte man Laufbelastung langsam adaptieren: Umfang, Tempo, Hügel, Sprünge und Wettkampfnähe dürfen nicht gleichzeitig stark steigen. Auf der anderen Seite kann man die Adaptation der Achillessehne durch spezifisches Krafttraining unterstützen, wenn der Reiz hoch genug, kontrolliert genug und lange genug wiederholt wird.
+Für die Trainingsplanung hat das zwei Konsequenzen. Auf der einen Seite sollte man Laufbelastung
+langsam adaptieren: Umfang, Tempo, Hügel, Sprünge und Wettkampfnähe dürfen nicht gleichzeitig stark
+steigen. Auf der anderen Seite kann man die Adaptation der Achillessehne durch spezifisches
+Krafttraining unterstützen, wenn der Reiz hoch genug, kontrolliert genug und lange genug wiederholt
+wird.
 
 ## Was trainiert werden soll
 
-Ziel ist nicht einfach eine "kräftige Wade", sondern eine belastbare Muskel-Sehnen-Einheit. Für die Achillessehne ist besonders interessant, ob sich ihre mechanischen Eigenschaften verändern: Querschnitt, Sehnensteifigkeit, maximale Sehnendehnung und Materialeigenschaften.
+Ziel ist nicht einfach eine "kräftige Wade", sondern eine belastbare Muskel-Sehnen-Einheit. Für die
+Achillessehne ist besonders interessant, ob sich ihre mechanischen Eigenschaften verändern:
+Querschnitt, Sehnensteifigkeit, maximale Sehnendehnung und Materialeigenschaften.
 
-Eine steifere Sehne ist in diesem Kontext nichts Negatives. Gemeint ist eine Sehne, die sich bei gleicher Kraft weniger stark verlängert. Dadurch kann bei hoher Belastung die maximale Sehnendehnung sinken, was theoretisch vor wiederholter Überdehnung und Mikroschäden schützen kann. Gleichzeitig kann eine gut angepasste Sehne Kraft effizient übertragen und elastische Energie besser nutzen. [[3]](https://doi.org/10.1186/s40798-022-00545-5) [[5]](https://doi.org/10.1186/s40798-015-0009-9)
+Eine steifere Sehne ist in diesem Kontext nichts Negatives. Gemeint ist eine Sehne, die sich bei
+gleicher Kraft weniger stark verlängert. Dadurch kann bei hoher Belastung die maximale Sehnendehnung
+sinken, was theoretisch vor wiederholter Überdehnung und Mikroschäden schützen kann. Gleichzeitig
+kann eine gut angepasste Sehne Kraft effizient übertragen und elastische Energie besser nutzen.
+[[3]](https://doi.org/10.1186/s40798-022-00545-5) [[5]](https://doi.org/10.1186/s40798-015-0009-9)
 
-Entscheidend ist deshalb nicht nur die Übungsauswahl, sondern die Qualität des Reizes: ausreichend hohe Zugspannung, kontrollierte Ausführung, genug Zeit unter Spannung und Wiederholung über viele Wochen. Sehr leichte Reha-Übungen, Stretching oder ruhiges Laufen können sinnvoll sein, reichen für eine gezielte mechanische Sehnenanpassung aber wahrscheinlich nicht aus.
+Entscheidend ist deshalb nicht nur die Übungsauswahl, sondern die Qualität des Reizes: ausreichend
+hohe Zugspannung, kontrollierte Ausführung, genug Zeit unter Spannung und Wiederholung über viele
+Wochen. Sehr leichte Reha-Übungen, Stretching oder ruhiges Laufen können sinnvoll sein, reichen für
+eine gezielte mechanische Sehnenanpassung aber wahrscheinlich nicht aus.
 
 ## Was die Evidenz zeigt
 
-Bohm et al. zeigten, dass hohe zyklische Belastungen mit kontrollierter Dauer Sehnensteifigkeit, Querschnitt und Materialeigenschaften verbessern können. [[4]](https://doi.org/10.1242/jeb.112268) Geremia et al. zeigten ähnliche mechanische Anpassungen nach schwerem exzentrischem Triceps-surae-Training. [[6]](https://doi.org/10.1007/s00421-018-3904-1)
+Bohm et al. zeigten, dass hohe zyklische Belastungen mit kontrollierter Dauer Sehnensteifigkeit,
+Querschnitt und Materialeigenschaften verbessern können. [[4]](https://doi.org/10.1242/jeb.112268)
+Geremia et al. zeigten ähnliche mechanische Anpassungen nach schwerem exzentrischem
+Triceps-surae-Training. [[6]](https://doi.org/10.1007/s00421-018-3904-1)
 
-Meta-Analysen stützen diesen Schwerpunkt: Mechanische Belastung kann Sehnensteifigkeit, Materialeigenschaften und teilweise den Querschnitt verbessern. Besonders relevant scheint die lokale Sehnendehnung beziehungsweise die Lastintensität zu sein. Die konkrete Muskelaktionsform - isometrisch, konzentrisch oder exzentrisch - ist wahrscheinlich weniger entscheidend als die Frage, welche Spannung tatsächlich in der Sehne ankommt. [[5]](https://doi.org/10.1186/s40798-015-0009-9) [[7]](https://doi.org/10.1007/s40279-022-01695-y)
+Meta-Analysen stützen diesen Schwerpunkt: Mechanische Belastung kann Sehnensteifigkeit,
+Materialeigenschaften und teilweise den Querschnitt verbessern. Besonders relevant scheint die
+lokale Sehnendehnung beziehungsweise die Lastintensität zu sein. Die konkrete Muskelaktionsform -
+isometrisch, konzentrisch oder exzentrisch - ist wahrscheinlich weniger entscheidend als die Frage,
+welche Spannung tatsächlich in der Sehne ankommt. [[5]](https://doi.org/10.1186/s40798-015-0009-9)
+[[7]](https://doi.org/10.1007/s40279-022-01695-y)
 
-Eine neuere Studie von Tsai et al. passt dazu: Bei hoher lokaler Belastung verbesserten sich Querschnitt und Sehnensteifigkeit. Innerhalb des untersuchten Bereichs schienen Timing und Wochenverteilung weniger wichtig als der wiederholte hohe Reiz selbst. [[8]](https://doi.org/10.1038/s41598-024-56840-6)
+Eine neuere Studie von Tsai et al. passt dazu: Bei hoher lokaler Belastung verbesserten sich
+Querschnitt und Sehnensteifigkeit. Innerhalb des untersuchten Bereichs schienen Timing und
+Wochenverteilung weniger wichtig als der wiederholte hohe Reiz selbst.
+[[8]](https://doi.org/10.1038/s41598-024-56840-6)
 
 ## Belastungsmodelle im Vergleich
 
@@ -59,11 +89,16 @@ Eine neuere Studie von Tsai et al. passt dazu: Bei hoher lokaler Belastung verbe
 | Berlin-Protokoll / High-Loading [[3]](https://doi.org/10.1186/s40798-022-00545-5) | chronische Achillessehnentendinopathie | hochintensive isometrische Plantarflexion bei fixiertem Vorfuß | 4-mal pro Woche, 12 Wochen; 5 x 4 Wiederholungen bei ca. 90 Prozent maximaler isometrischer Kraft; 3 Sekunden Spannung plus 3 Sekunden Pause | Direkter Nachweis für mehr Sehnensteifigkeit und Querschnitt in dieser Studie; technisch anspruchsvoll, weil die Intensität sauber dosiert werden muss |
 | Meta-Analysen von Bohm et al. und Lazarczuk et al. [[5]](https://doi.org/10.1186/s40798-015-0009-9) [[7]](https://doi.org/10.1007/s40279-022-01695-y) | mehrere Sehnen und Trainingsstudien | Auswertung über verschiedene Belastungsformen | kein einzelnes Protokoll | Stützen den Schwerpunkt auf hohe lokale Sehnendehnung, hohe Zugspannung und progressive Belastung statt auf ein einzelnes Übungsetikett |
 
-Die Tabelle verschiebt den Fokus weg vom Namen des Protokolls hin zur Qualität des Reizes. "Exzentrisch", "HSR" oder "isometrisch" sind keine magischen Kategorien. Entscheidend ist, ob die Achillessehne eine ausreichend hohe, kontrollierte und wiederholbare Zugspannung erfährt.
+Die Tabelle verschiebt den Fokus weg vom Namen des Protokolls hin zur Qualität des Reizes.
+"Exzentrisch", "HSR" oder "isometrisch" sind keine magischen Kategorien. Entscheidend ist, ob die
+Achillessehne eine ausreichend hohe, kontrollierte und wiederholbare Zugspannung erfährt.
 
 ## Was bei Beschwerden untersucht wurde
 
-Bei Achillessehnenbeschwerden ist die direkte Evidenz für mechanische Sehnenanpassung schmaler als bei gesunden Sehnen. Viele klinische Studien messen Schmerz, Funktion oder VISA-A. Das ist wichtig, beantwortet aber nicht automatisch die Frage, ob sich Sehnensteifigkeit, Querschnitt oder maximale Sehnendehnung verändern.
+Bei Achillessehnenbeschwerden ist die direkte Evidenz für mechanische Sehnenanpassung schmaler als
+bei gesunden Sehnen. Viele klinische Studien messen Schmerz, Funktion oder VISA-A. Das ist wichtig,
+beantwortet aber nicht automatisch die Frage, ob sich Sehnensteifigkeit, Querschnitt oder maximale
+Sehnendehnung verändern.
 
 | Studie / Protokoll | Vergleichsgruppe | Morphologische Anpassung | Mechanische / strukturelle Anpassung | Kurzinterpretation |
 |---|---|---|---|---|
@@ -74,13 +109,23 @@ Bei Achillessehnenbeschwerden ist die direkte Evidenz für mechanische Sehnenanp
 | Radovanovic et al. 2022, Berlin-Protokoll / High-Loading | Alfredson / passive Therapie | mittlere Achilles-CSA +8,98 +/- 5,8 Prozent | Sehnensteifigkeit +20,1 +/- 20,5 Prozent; maximale Sehnendehnung -12,4 +/- 10,3 Prozent; Young's Modulus unverändert | einziger Arm mit klarer mechanischer und morphologischer Adaptation der Achillessehne |
 | Radovanovic et al. 2022, passive Therapie | Alfredson / High-Loading | mittlere Achilles-CSA: keine signifikante Veränderung | Sehnensteifigkeit -7,7 +/- 21,2 Prozent; maximale Sehnendehnung unverändert; Young's Modulus unverändert | Symptome verbesserten sich, aber die mechanische Sehnenkapazität verbesserte sich nicht; Steifigkeit nahm sogar ab |
 
-Das Berlin-Protokoll ist deshalb interessant, aber nicht, weil jedes Achillessehnentraining automatisch Reha ist. Interessant ist es, weil es bei symptomatischen Sehnen genau den Reiz prüft, der aus der Sehnenmechanobiologie plausibel ist: kurz, hoch, kontrolliert und konsequent über 12 Wochen. In dieser Studie war das hochintensive isometrische High-Loading-Protokoll der einzige Arm mit klarer mechanisch-morphologischer Anpassung. [[3]](https://doi.org/10.1186/s40798-022-00545-5)
+Das Berlin-Protokoll ist deshalb interessant, aber nicht, weil jedes Achillessehnentraining
+automatisch Reha ist. Interessant ist es, weil es bei symptomatischen Sehnen genau den Reiz prüft,
+der aus der Sehnenmechanobiologie plausibel ist: kurz, hoch, kontrolliert und konsequent über 12
+Wochen. In dieser Studie war das hochintensive isometrische High-Loading-Protokoll der einzige Arm
+mit klarer mechanisch-morphologischer Anpassung. [[3]](https://doi.org/10.1186/s40798-022-00545-5)
 
 ## Was das für Läufer:innen bedeutet
 
-Für gesunde Läufer:innen ist Sehnentraining Belastungsvorbereitung. Die Achillessehne muss nicht nur schmerzfrei sein, sondern wiederholt hohe Kräfte speichern, übertragen und tolerieren können. Das gilt besonders bei schnellen Läufen, Hügeln, Intervallen, Sprüngen, Vorfußlauf, Spikes oder Wettkämpfen.
+Für gesunde Läufer:innen ist Sehnentraining Belastungsvorbereitung. Die Achillessehne muss nicht nur
+schmerzfrei sein, sondern wiederholt hohe Kräfte speichern, übertragen und tolerieren können. Das
+gilt besonders bei schnellen Läufen, Hügeln, Intervallen, Sprüngen, Vorfußlauf, Spikes oder
+Wettkämpfen.
 
-Der wichtigste Grundsatz bleibt: Laufbelastung und Krafttraining müssen zusammen betrachtet werden. Eine zusätzliche schwere Wadeneinheit ist nicht neutral, wenn gleichzeitig Umfang, Tempo oder Höhenmeter steigen. Sehnen reagieren auf die Summe der mechanischen Reize. Wer Krafttraining ergänzt, sollte deshalb nicht in derselben Woche mehrere andere Belastungsfaktoren stark erhöhen.
+Der wichtigste Grundsatz bleibt: Laufbelastung und Krafttraining müssen zusammen betrachtet werden.
+Eine zusätzliche schwere Wadeneinheit ist nicht neutral, wenn gleichzeitig Umfang, Tempo oder
+Höhenmeter steigen. Sehnen reagieren auf die Summe der mechanischen Reize. Wer Krafttraining
+ergänzt, sollte deshalb nicht in derselben Woche mehrere andere Belastungsfaktoren stark erhöhen.
 
 | Ziel | Geeigneter Reiz | Praktische Umsetzung |
 |---|---|---|
@@ -89,15 +134,26 @@ Der wichtigste Grundsatz bleibt: Laufbelastung und Krafttraining müssen zusamme
 | Elastische Funktion | reaktive Belastung | Hops, Sprungseil, kurze Sprünge, Lauf-ABC, erst nach Kraftbasis und guter Verträglichkeit |
 | Sportspezifische Belastbarkeit | Laufen unter steigender Anforderung | Tempo, Hügel, Spikes, Trails oder Wettkampfnähe einzeln und schrittweise steigern |
 
-Ein sinnvoller Einstieg ist zwei- bis dreimal pro Woche Wadentraining, aber nicht immer maximal. Eine Einheit kann schwer und langsam sein, eine zweite eher isometrisch oder moderat. Plyometrie kommt erst dazu, wenn schwere Wadenarbeit und normale Laufbelastung gut toleriert werden. Besonders bei Läufer:innen mit wenig Krafttrainingserfahrung ist weniger am Anfang oft besser: saubere Ausführung, progressive Last, ausreichend Erholung.
+Ein sinnvoller Einstieg ist zwei- bis dreimal pro Woche Wadentraining, aber nicht immer maximal.
+Eine Einheit kann schwer und langsam sein, eine zweite eher isometrisch oder moderat. Plyometrie
+kommt erst dazu, wenn schwere Wadenarbeit und normale Laufbelastung gut toleriert werden. Besonders
+bei Läufer:innen mit wenig Krafttrainingserfahrung ist weniger am Anfang oft besser: saubere
+Ausführung, progressive Last, ausreichend Erholung.
 
-Sehnentraining ist am wirksamsten, wenn es unspektakulär bleibt: regelmäßig, schwer genug, kontrolliert und über Monate gedacht. Für Läufer:innen bedeutet das nicht, jedes Training zu verkomplizieren. Es bedeutet, der Achillessehne denselben Respekt zu geben wie dem Herz-Kreislauf-System: Belastung setzen, Anpassung abwarten, dann weiter steigern.
+Sehnentraining ist am wirksamsten, wenn es unspektakulär bleibt: regelmäßig, schwer genug,
+kontrolliert und über Monate gedacht. Für Läufer:innen bedeutet das nicht, jedes Training zu
+verkomplizieren. Es bedeutet, der Achillessehne denselben Respekt zu geben wie dem
+Herz-Kreislauf-System: Belastung setzen, Anpassung abwarten, dann weiter steigern.
 
 ## Wenn die Achillessehne gereizt ist
 
-Wenn die Achillessehne gereizt ist, wird Reha relevant. Dann geht es nicht zuerst um maximale Adaptation, sondern darum, die Belastung wieder steuerbar zu machen. Die Sehne braucht ein Signal, das sie verarbeiten kann: genug Reiz, um belastbar zu bleiben, aber nicht so viel, dass sie am nächsten Tag schlechter reagiert.
+Wenn die Achillessehne gereizt ist, wird Reha relevant. Dann geht es nicht zuerst um maximale
+Adaptation, sondern darum, die Belastung wieder steuerbar zu machen. Die Sehne braucht ein Signal,
+das sie verarbeiten kann: genug Reiz, um belastbar zu bleiben, aber nicht so viel, dass sie am
+nächsten Tag schlechter reagiert.
 
-Der erste Schritt ist fast immer: Spitzen rausnehmen. Meist ist nicht der lockere Lauf das Hauptproblem, sondern die Kombination aus zu vielen harten Reizen.
+Der erste Schritt ist fast immer: Spitzen rausnehmen. Meist ist nicht der lockere Lauf das
+Hauptproblem, sondern die Kombination aus zu vielen harten Reizen.
 
 | Reiz | Warum vorsichtig? |
 |---|---|
@@ -108,9 +164,14 @@ Der erste Schritt ist fast immer: Spitzen rausnehmen. Meist ist nicht der locker
 | neue Schuhe oder Spikes | ungewohnter Hebel und andere Lastverteilung |
 | deutlich mehr Umfang | mehr Wiederholungen derselben Sehnenbelastung |
 
-Praktisch heißt das: Für ein paar Tage bis Wochen flacher, ruhiger und berechenbarer laufen. Keine Heldentaten im Hügel, keine "nur kurz testen"-Intervalle, keine neuen Schuhe plus Tempo plus müde Beine. Eine Variable nach der anderen.
+Praktisch heißt das: Für ein paar Tage bis Wochen flacher, ruhiger und berechenbarer laufen. Keine
+Heldentaten im Hügel, keine "nur kurz testen"-Intervalle, keine neuen Schuhe plus Tempo plus müde
+Beine. Eine Variable nach der anderen.
 
-Krafttraining bleibt sinnvoll, aber es sollte kontrolliert sein. Bei gereizter Sehne eignen sich zuerst ruhige Übungen: langsames Wadenheben, isometrisches Halten oder festes Drücken ohne Bewegung. Das Ziel ist nicht, der Sehne zu beweisen, dass sie alles kann. Das Ziel ist, ihr regelmäßig einen gut dosierten Reiz zu geben.
+Krafttraining bleibt sinnvoll, aber es sollte kontrolliert sein. Bei gereizter Sehne eignen sich
+zuerst ruhige Übungen: langsames Wadenheben, isometrisches Halten oder festes Drücken ohne Bewegung.
+Das Ziel ist nicht, der Sehne zu beweisen, dass sie alles kann. Das Ziel ist, ihr regelmäßig einen
+gut dosierten Reiz zu geben.
 
 | Übung | Einstieg |
 |---|---|
@@ -119,7 +180,12 @@ Krafttraining bleibt sinnvoll, aber es sollte kontrolliert sein. Bei gereizter S
 | Beidbeinig statt einbeinig | wenn einbeinig noch zu aggressiv ist |
 | Sitzendes Wadenheben | gute Option, wenn stehendes Wadenheben zu stark reizt |
 
-Die wichtigste Kontrolle ist der nächste Morgen. Wenn die Sehne morgens deutlich steifer, druckempfindlicher oder beim Einlaufen schlechter ist, war die letzte Belastung wahrscheinlich zu viel. Wenn sie gleich bleibt oder ruhiger wird, war die Dosis eher passend. Das passt zur Idee des Schmerzmonitorings in der Achillessehnenrehabilitation: nicht jeder Reiz muss komplett symptomfrei sein, aber er muss kontrollierbar bleiben und darf nicht nachhallen. [[9]](https://doi.org/10.2519/jospt.2024.0302) [[10]](https://doi.org/10.2519/jospt.2015.5885)
+Die wichtigste Kontrolle ist der nächste Morgen. Wenn die Sehne morgens deutlich steifer,
+druckempfindlicher oder beim Einlaufen schlechter ist, war die letzte Belastung wahrscheinlich zu
+viel. Wenn sie gleich bleibt oder ruhiger wird, war die Dosis eher passend. Das passt zur Idee des
+Schmerzmonitorings in der Achillessehnenrehabilitation: nicht jeder Reiz muss komplett symptomfrei
+sein, aber er muss kontrollierbar bleiben und darf nicht nachhallen.
+[[9]](https://doi.org/10.2519/jospt.2024.0302) [[10]](https://doi.org/10.2519/jospt.2015.5885)
 
 Für den Wiedereinstieg gilt:
 
@@ -129,11 +195,17 @@ Für den Wiedereinstieg gilt:
 4. Danach Hügel, Sprünge oder Technikreize zurückholen.
 5. Nie mehrere neue Reize gleichzeitig.
 
-Eine gereizte Achillessehne braucht keine Panikpause, aber auch keine Mutprobe. Sie braucht ein Training, das wiederholbar ist. Der beste Plan ist der, den die Sehne am nächsten Tag noch akzeptiert.
+Eine gereizte Achillessehne braucht keine Panikpause, aber auch keine Mutprobe. Sie braucht ein
+Training, das wiederholbar ist. Der beste Plan ist der, den die Sehne am nächsten Tag noch
+akzeptiert.
 
 ## Fazit
 
-Die Achillessehne reagiert auf hohe, kontrollierte und wiederholbare Zugspannung, wenn der Reiz lange genug geplant wird. HSR, Exzentrik, High-Strain-Training und hochintensive Isometrie sind verschiedene Wege, diesen Reiz zu organisieren. Das Berlin-Protokoll ist ein wichtiger Sonderfall, weil es bei symptomatischen Achillessehnen mechanische Anpassungen gezeigt hat. Wer die Achillessehne belastbarer machen will, muss nicht nur laufen, sondern gezielt trainieren.
+Die Achillessehne reagiert auf hohe, kontrollierte und wiederholbare Zugspannung, wenn der Reiz
+lange genug geplant wird. HSR, Exzentrik, High-Strain-Training und hochintensive Isometrie sind
+verschiedene Wege, diesen Reiz zu organisieren. Das Berlin-Protokoll ist ein wichtiger Sonderfall,
+weil es bei symptomatischen Achillessehnen mechanische Anpassungen gezeigt hat. Wer die
+Achillessehne belastbarer machen will, muss nicht nur laufen, sondern gezielt trainieren.
 
 ## Quellen
 

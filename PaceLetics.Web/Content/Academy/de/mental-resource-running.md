@@ -32,23 +32,81 @@ references:
   - Plateau et al. Prospective study of beginner running groups. Behav Med. 2022. | https://doi.org/10.1080/08964289.2022.2100865
 ---
 
-Wer läuft, trainiert nicht nur Muskeln und Kreislauf. Für viele wird der Lauf zu einem kontrollierbaren Moment im Tag: ein Werkzeug, das Stimmung ordnet, Anspannung senkt und Selbstwirksamkeit spürbar macht. Der aktuelle Forschungsstand deutet darauf hin, dass Laufen eine niedrigschwellige mentale Ressource sein kann. Ein Scoping Review zu Laufen und mentaler Gesundheit kommt zu dem Ergebnis, dass sowohl einzelne Laufeinheiten als auch regelmäßiges Laufen mit besserer Stimmung, weniger Anspannung und positiven mentalen Gesundheitsoutcomes verbunden sind. [[1]](https://doi.org/10.3390/ijerph17218059) Dabei helfen einzelne Einheiten bei akuter Anspannung, sich selbst zu regulieren, während regelmäßige Laufeinheiten mit besserer Stimmung und Wohlbefinden assoziiert sind. Ein systematisches Review zu freizeitbezogenem Laufen ergänzt, dass Motivation, Selbstregulation, Gewohnheit und erlebte Kompetenz zentrale psychologische Faktoren dafür sind, dass Menschen beim Laufen bleiben. [[2]](https://doi.org/10.3389/fpsyg.2021.624783) Breitere Übersichtsarbeiten stützen diese Einordnung: Körperliche Aktivität reduziert depressive Symptome, Angst und psychischen Distress, und Walking/Jogging gehört in einer BMJ-Netzwerk-Meta-Analyse zu den gut untersuchten Bewegungsformen bei depressiven Symptomen. [[3]](https://doi.org/10.1136/bjsports-2022-106195) [[4]](https://doi.org/10.1136/bmj-2023-075847) Auch ein aktuelles Cochrane Review kommt zu dem Schluss, dass Bewegung depressive Symptome gegenüber Kontrollbedingungen moderat reduzieren kann, aber bei noch begrenzter Langzeitevidenz. [[5]](https://doi.org/10.1002/14651858.CD004366.pub7) Prospektive Kohortendaten zeigen zudem, dass bereits moderate Aktivitätsmengen mit einem geringeren Depressionsrisiko einhergehen. [[6]](https://doi.org/10.1001/jamapsychiatry.2022.0609) Wir wollen Laufen hier explizit nicht zur Therapie oder zum Therapieersatz aufblasen. Entscheidend ist: Laufen kann eine mentale Ressource sein und wird von vielen auch intuitiv als solche genutzt.
+Wer läuft, trainiert nicht nur Muskeln und Kreislauf. Für viele wird der Lauf zu einem
+kontrollierbaren Moment im Tag: ein Werkzeug, das Stimmung ordnet, Anspannung senkt und
+Selbstwirksamkeit spürbar macht. Der aktuelle Forschungsstand deutet darauf hin, dass Laufen eine
+niedrigschwellige mentale Ressource sein kann. Ein Scoping Review zu Laufen und mentaler Gesundheit
+kommt zu dem Ergebnis, dass sowohl einzelne Laufeinheiten als auch regelmäßiges Laufen mit besserer
+Stimmung, weniger Anspannung und positiven mentalen Gesundheitsoutcomes verbunden sind.
+[[1]](https://doi.org/10.3390/ijerph17218059) Dabei helfen einzelne Einheiten bei akuter Anspannung,
+sich selbst zu regulieren, während regelmäßige Laufeinheiten mit besserer Stimmung und Wohlbefinden
+assoziiert sind. Ein systematisches Review zu freizeitbezogenem Laufen ergänzt, dass Motivation,
+Selbstregulation, Gewohnheit und erlebte Kompetenz zentrale psychologische Faktoren dafür sind, dass
+Menschen beim Laufen bleiben. [[2]](https://doi.org/10.3389/fpsyg.2021.624783) Breitere
+Übersichtsarbeiten stützen diese Einordnung: Körperliche Aktivität reduziert depressive Symptome,
+Angst und psychischen Distress, und Walking/Jogging gehört in einer BMJ-Netzwerk-Meta-Analyse zu den
+gut untersuchten Bewegungsformen bei depressiven Symptomen.
+[[3]](https://doi.org/10.1136/bjsports-2022-106195) [[4]](https://doi.org/10.1136/bmj-2023-075847)
+Auch ein aktuelles Cochrane Review kommt zu dem Schluss, dass Bewegung depressive Symptome gegenüber
+Kontrollbedingungen moderat reduzieren kann, aber bei noch begrenzter Langzeitevidenz.
+[[5]](https://doi.org/10.1002/14651858.CD004366.pub7) Prospektive Kohortendaten zeigen zudem, dass
+bereits moderate Aktivitätsmengen mit einem geringeren Depressionsrisiko einhergehen.
+[[6]](https://doi.org/10.1001/jamapsychiatry.2022.0609) Wir wollen Laufen hier explizit nicht zur
+Therapie oder zum Therapieersatz aufblasen. Entscheidend ist: Laufen kann eine mentale Ressource
+sein und wird von vielen auch intuitiv als solche genutzt.
 
 ## Laufen als soziale Aktivität
 
-Gruppenaktivitäten können die mentale Ressource Laufen stabiler machen, weil sie Bewegung mit sozialer Einbindung verbinden. Soziale Verbundenheit, Unterstützung und ein Gefühl von Zugehörigkeit gelten in der Forschung als Schutzfaktoren für psychische Gesundheit, insbesondere mit Blick auf depressive Symptome und Angst. [[15]](https://doi.org/10.1371/journal.pone.0275004) Eine aktuelle Best-Evidence-Synthese zu körperlicher Aktivität und mentaler Gesundheit zeigt außerdem, dass soziale Unterstützung und soziale Verbindungen wichtige vermittelnde Faktoren zwischen Bewegung und mentaler Gesundheit sind. [[16]](https://doi.org/10.1186/s12966-024-01676-6) Für Laufgruppen ist das praktisch relevant: Sie schaffen Verbindlichkeit, geteilte Routinen und niedrigschwellige Zugehörigkeit. Studien zu Einsteiger:innen in Laufgruppen berichten entsprechend Verbesserungen bei mentalem Wohlbefinden, Selbstwirksamkeit und Laufidentität. [[17]](https://doi.org/10.1080/08964289.2022.2100865)
+Gruppenaktivitäten können die mentale Ressource Laufen stabiler machen, weil sie Bewegung mit
+sozialer Einbindung verbinden. Soziale Verbundenheit, Unterstützung und ein Gefühl von Zugehörigkeit
+gelten in der Forschung als Schutzfaktoren für psychische Gesundheit, insbesondere mit Blick auf
+depressive Symptome und Angst. [[15]](https://doi.org/10.1371/journal.pone.0275004) Eine aktuelle
+Best-Evidence-Synthese zu körperlicher Aktivität und mentaler Gesundheit zeigt außerdem, dass
+soziale Unterstützung und soziale Verbindungen wichtige vermittelnde Faktoren zwischen Bewegung und
+mentaler Gesundheit sind. [[16]](https://doi.org/10.1186/s12966-024-01676-6) Für Laufgruppen ist das
+praktisch relevant: Sie schaffen Verbindlichkeit, geteilte Routinen und niedrigschwellige
+Zugehörigkeit. Studien zu Einsteiger:innen in Laufgruppen berichten entsprechend Verbesserungen bei
+mentalem Wohlbefinden, Selbstwirksamkeit und Laufidentität.
+[[17]](https://doi.org/10.1080/08964289.2022.2100865)
 
 ## Ressourcenerhalt als Trainingsziel
 
-Wenn Laufen als mentale Ressource verstanden wird, dann muss Training diese Ressource zuerst erhalten. Leistungsentwicklung bleibt wichtig: Sie zeigt Anpassung, schafft Kompetenz und kann Motivation stärken. Aber maximale Leistungssteigerung ist nur für einen kleinen Teil der Athlet:innen das eigentliche Ziel. Für viele ist wertvoller, dass Laufen verfügbar bleibt: verlässlich, verletzungsarm, alltagstauglich und so dosiert, dass es Selbstwirksamkeit eher stärkt als erschöpft.
+Wenn Laufen als mentale Ressource verstanden wird, dann muss Training diese Ressource zuerst
+erhalten. Leistungsentwicklung bleibt wichtig: Sie zeigt Anpassung, schafft Kompetenz und kann
+Motivation stärken. Aber maximale Leistungssteigerung ist nur für einen kleinen Teil der
+Athlet:innen das eigentliche Ziel. Für viele ist wertvoller, dass Laufen verfügbar bleibt:
+verlässlich, verletzungsarm, alltagstauglich und so dosiert, dass es Selbstwirksamkeit eher stärkt
+als erschöpft.
 
-Ein Modell für die ressourcenbasierte Stressbewältigung ist die Conservation-of-Resources-Theorie. [[13]](https://doi.org/10.1146/annurev-orgpsych-032117-104640) Eine Kernidee ist, dass Ressourcen nicht nur aufgebaut, sondern auch vor Verlust geschützt werden müssen; Ressourcenschwund kann selbst zu Belastung werden. Im Sportkontext wird Selbstregulation entsprechend nicht nur als Disziplin oder Trainingshärte verstanden, sondern auch als Fähigkeit, den eigenen Zustand wahrzunehmen, Erholung aktiv zu steuern und Belastung so anzupassen, dass Wohlbefinden, Gesundheit und langfristige Leistungsfähigkeit erhalten bleiben. [[14]](https://doi.org/10.1177/1747954119897528) Für Lauftraining folgt daraus: Nicht jede mögliche Leistungssteigerung ist automatisch ein erstrebenswerter Trainingsreiz. Ein guter Reiz ist einer, der die Ressource Laufen wahrscheinlicher macht: mehr Belastbarkeit, mehr Vertrauen, mehr Kontinuität.
+Ein Modell für die ressourcenbasierte Stressbewältigung ist die Conservation-of-Resources-Theorie.
+[[13]](https://doi.org/10.1146/annurev-orgpsych-032117-104640) Eine Kernidee ist, dass Ressourcen
+nicht nur aufgebaut, sondern auch vor Verlust geschützt werden müssen; Ressourcenschwund kann selbst
+zu Belastung werden. Im Sportkontext wird Selbstregulation entsprechend nicht nur als Disziplin oder
+Trainingshärte verstanden, sondern auch als Fähigkeit, den eigenen Zustand wahrzunehmen, Erholung
+aktiv zu steuern und Belastung so anzupassen, dass Wohlbefinden, Gesundheit und langfristige
+Leistungsfähigkeit erhalten bleiben. [[14]](https://doi.org/10.1177/1747954119897528) Für
+Lauftraining folgt daraus: Nicht jede mögliche Leistungssteigerung ist automatisch ein
+erstrebenswerter Trainingsreiz. Ein guter Reiz ist einer, der die Ressource Laufen wahrscheinlicher
+macht: mehr Belastbarkeit, mehr Vertrauen, mehr Kontinuität.
 
-Das ist besonders bei Einsteiger:innen und gesundheitsorientierten Läufer:innen relevant. Studien zu Laufprogrammen zeigen, dass ein relevanter Teil der Teilnehmenden wieder aussteigt und dass Beschwerden oder Verletzungen dabei zentrale Gründe sind. [[11]](https://doi.org/10.1016/j.jsams.2018.06.003) [[12]](https://doi.org/10.3390/ijerph20176682) Qualitative Arbeiten zeigen außerdem, dass Verletzungen von Läufer:innen nicht nur als körperliches Problem erlebt werden, sondern als Unterbrechung von Freiheit, Routine und Kontrolle. [[9]](https://doi.org/10.1136/bmjsem-2021-001117) Deshalb sollte das Primärziel eines Lauftrainings nicht maximale Anpassung um jeden Preis sein, sondern Ressourcenerhalt und Ressourcenausbau. Leistungsentwicklung bleibt erwünscht, aber sie steht im Dienst dieser Ressource, nicht umgekehrt.
+Das ist besonders bei Einsteiger:innen und gesundheitsorientierten Läufer:innen relevant. Studien zu
+Laufprogrammen zeigen, dass ein relevanter Teil der Teilnehmenden wieder aussteigt und dass
+Beschwerden oder Verletzungen dabei zentrale Gründe sind.
+[[11]](https://doi.org/10.1016/j.jsams.2018.06.003) [[12]](https://doi.org/10.3390/ijerph20176682)
+Qualitative Arbeiten zeigen außerdem, dass Verletzungen von Läufer:innen nicht nur als körperliches
+Problem erlebt werden, sondern als Unterbrechung von Freiheit, Routine und Kontrolle.
+[[9]](https://doi.org/10.1136/bmjsem-2021-001117) Deshalb sollte das Primärziel eines Lauftrainings
+nicht maximale Anpassung um jeden Preis sein, sondern Ressourcenerhalt und Ressourcenausbau.
+Leistungsentwicklung bleibt erwünscht, aber sie steht im Dienst dieser Ressource, nicht umgekehrt.
 
 ## PaceLetics
 
-PaceLetics setzt genau dort an: Wir wollen Sport insgesamt als Ressource begreifen. Um diese Ressource zu erhalten, aber auch auszubauen, wollen wir die Belastung dosieren, Routinen verständlich machen, Fortschritt langfristig absichern und Athlet:innen befähigen, eigene Entscheidungen zu treffen. [[8]](https://doi.org/10.3390/ijerph17031044) [[9]](https://doi.org/10.1136/bmjsem-2021-001117) [[11]](https://doi.org/10.1016/j.jsams.2018.06.003)
+PaceLetics setzt genau dort an: Wir wollen Sport insgesamt als Ressource begreifen. Um diese
+Ressource zu erhalten, aber auch auszubauen, wollen wir die Belastung dosieren, Routinen
+verständlich machen, Fortschritt langfristig absichern und Athlet:innen befähigen, eigene
+Entscheidungen zu treffen. [[8]](https://doi.org/10.3390/ijerph17031044)
+[[9]](https://doi.org/10.1136/bmjsem-2021-001117)
+[[11]](https://doi.org/10.1016/j.jsams.2018.06.003)
 
 ## Quellen
 

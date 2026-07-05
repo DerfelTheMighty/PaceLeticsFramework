@@ -22,19 +22,35 @@ references:
   - Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019. | https://pubmed.ncbi.nlm.nih.gov/30805204/
 ---
 
-Keine Intervention ohne Indikation. Do no harm. Ein Bewegungsmuster ist erst dann ein Problem, wenn es im konkreten Kontext ein Problem ist.
+Keine Intervention ohne Indikation. Do no harm. Ein Bewegungsmuster ist erst dann ein Problem, wenn
+es im konkreten Kontext ein Problem ist.
 
-> Laufstil ist ein selbstoptimierendes System. Wir korrigieren nicht das Aussehen einer Bewegung, sondern prüfen, ob ein dynamisches Muster wirklich mit Beschwerden, Belastung oder fehlender Kontrolle zusammenhängt.
+> Laufstil ist ein selbstoptimierendes System. Wir korrigieren nicht das Aussehen einer Bewegung,
+> sondern prüfen, ob ein dynamisches Muster wirklich mit Beschwerden, Belastung oder fehlender
+> Kontrolle zusammenhängt.
 
 ## Von Formkorrektur zu Systemverständnis
 
-Früher war der Drill oft: Alle müssen eine möglichst perfekte Form haben. Heute ist die bessere Haltung: Körper sind unterschiedlich, Lauftechnik ist individuell, und ein Bewegungsmuster ist nicht automatisch falsch, nur weil es von einem Idealbild abweicht. Der Körper ist ein selbstoptimierendes System. Viele Läufer:innen wählen Schrittfrequenz, Schrittlänge und Bewegungsstrategie sehr nah an einer für sie ökonomischen Lösung, besonders mit wachsender Lauferfahrung. [[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
+Früher war der Drill oft: Alle müssen eine möglichst perfekte Form haben. Heute ist die bessere
+Haltung: Körper sind unterschiedlich, Lauftechnik ist individuell, und ein Bewegungsmuster ist nicht
+automatisch falsch, nur weil es von einem Idealbild abweicht. Der Körper ist ein selbstoptimierendes
+System. Viele Läufer:innen wählen Schrittfrequenz, Schrittlänge und Bewegungsstrategie sehr nah an
+einer für sie ökonomischen Lösung, besonders mit wachsender Lauferfahrung.
+[[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
 
-Wenn ein:e Athlet:in mit einer bestimmten Laufform jahrelang beschwerdefrei ist, und zwar beschwerdefrei im Hinblick auf genau dieses Bewegungsmuster, dann ist das zunächst ein Hinweis auf ein gut funktionierendes dynamisches System. Eine auch gut gemeinte Intervention kann dieses System zum Negativen hin verschieben.
+Wenn ein:e Athlet:in mit einer bestimmten Laufform jahrelang beschwerdefrei ist, und zwar
+beschwerdefrei im Hinblick auf genau dieses Bewegungsmuster, dann ist das zunächst ein Hinweis auf
+ein gut funktionierendes dynamisches System. Eine auch gut gemeinte Intervention kann dieses System
+zum Negativen hin verschieben.
 
 ## Interventionen haben Nebenwirkungen
 
-Technikänderungen reduzieren Belastung selten einfach; sie verschieben sie. Weniger Kniebelastung kann mehr Achillessehnen-, Waden- oder Fußbelastung bedeuten. Mehr Stabilität kann mehr Steifigkeit bedeuten. Ein anderer Fußaufsatz kann neue Strukturen überfordern. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0) [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Technikänderungen reduzieren Belastung selten einfach; sie verschieben sie. Weniger Kniebelastung
+kann mehr Achillessehnen-, Waden- oder Fußbelastung bedeuten. Mehr Stabilität kann mehr Steifigkeit
+bedeuten. Ein anderer Fußaufsatz kann neue Strukturen überfordern.
+[[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0)
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 Interventionen brauchen daher eine Indikation. Das kann sein:
 
@@ -45,11 +61,25 @@ Für die meisten gängigen Kriterien einer guten Lauftechnik sind diese Vorausse
 
 ## Abwägung auf Augenhöhe
 
-Natürlich kann es auch aus leistungsorientierten Gründen sinnvoll sein, einzelne Parameter des Laufstils zu verändern. Gleichzeitig gilt: Jede Intervention hat einen Preis, weil sie Belastung nicht einfach entfernt, sondern im System verschiebt und neue Nebenwirkungen erzeugen kann. Ob ein möglicher Performancegewinn diese Nebenwirkungen rechtfertigt, darf deshalb nicht durch Zuruf, Gruppendruck oder eine Korrektur vom Seitenrand entschieden werden. Diese Abwägung gehört in eine langfristige, individuelle Betreuung und braucht die informierte Zustimmung der Athlet:in. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Natürlich kann es auch aus leistungsorientierten Gründen sinnvoll sein, einzelne Parameter des
+Laufstils zu verändern. Gleichzeitig gilt: Jede Intervention hat einen Preis, weil sie Belastung
+nicht einfach entfernt, sondern im System verschiebt und neue Nebenwirkungen erzeugen kann. Ob ein
+möglicher Performancegewinn diese Nebenwirkungen rechtfertigt, darf deshalb nicht durch Zuruf,
+Gruppendruck oder eine Korrektur vom Seitenrand entschieden werden. Diese Abwägung gehört in eine
+langfristige, individuelle Betreuung und braucht die informierte Zustimmung der Athlet:in.
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 ## Kontrollillusion vermeiden
 
-Viele Trainer:innen der alten Schule unterliegen nicht selten einer Kontrollillusion. Sie geben eine Korrektur, die Athlet:in wird über Wochen besser, aber möglicherweise nicht wegen der Korrektur, sondern weil Training, Gewebe, Koordination und Selbstorganisation ohnehin adaptieren. Umgekehrt kann eine Korrektur die Beanspruchung verschieben und Beschwerden auslösen. In beiden Fällen wird eine Kausalität behauptet, die oft gar nicht sauber belegt ist. Genau deshalb brauchen wir Indikation, Evidenz und Kontext. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290) [[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
+Viele Trainer:innen der alten Schule unterliegen nicht selten einer Kontrollillusion. Sie geben eine
+Korrektur, die Athlet:in wird über Wochen besser, aber möglicherweise nicht wegen der Korrektur,
+sondern weil Training, Gewebe, Koordination und Selbstorganisation ohnehin adaptieren. Umgekehrt
+kann eine Korrektur die Beanspruchung verschieben und Beschwerden auslösen. In beiden Fällen wird
+eine Kausalität behauptet, die oft gar nicht sauber belegt ist. Genau deshalb brauchen wir
+Indikation, Evidenz und Kontext. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/)
+[[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290)
+[[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
 
 ## Wie wir über Laufstil sprechen
 

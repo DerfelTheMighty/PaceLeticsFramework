@@ -30,72 +30,225 @@ references:
  - Heinemeier et al. Lack of tissue renewal in human adult Achilles tendon is revealed by nuclear bomb 14C. FASEB J. 2013. | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599
 ---
 
-Les tendons relient les muscles et les os. Mais ce ne sont pas des structures passives. Il s'agit d'un tissu biologique adaptable qui transmet la force et stocke l'énergie.
+Les tendons relient les muscles et les os. Mais ce ne sont pas des structures passives. Il s'agit
+d'un tissu biologique adaptable qui transmet la force et stocke l'énergie.
 
-La majorité d'un tendon est constituée de matrice extracellulaire, principalement de collagène de type I. Ce collagène est organisé hiérarchiquement : les molécules forment des fibrilles, les fibrilles forment des fibres, les fibres forment des faisceaux de fibres et cela crée l'ensemble du tendon. Entre ces structures se trouvent l'eau, les protéoglycanes, les glycoprotéines et d'autres composants de la matrice. Ensemble, ils déterminent la manière dont le tendon transmet les forces de traction, stocke et libère l'énergie élastique. [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html) [[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
+La majorité d'un tendon est constituée de matrice extracellulaire, principalement de collagène de
+type I. Ce collagène est organisé hiérarchiquement : les molécules forment des fibrilles, les
+fibrilles forment des fibres, les fibres forment des faisceaux de fibres et cela crée l'ensemble du
+tendon. Entre ces structures se trouvent l'eau, les protéoglycanes, les glycoprotéines et d'autres
+composants de la matrice. Ensemble, ils déterminent la manière dont le tendon transmet les forces de
+traction, stocke et libère l'énergie élastique.
+[[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
+[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
 
-Les cellules les plus importantes de ce tissu sont les ténocytes. Ils s'allongent entre les fibres de collagène et maintiennent la matrice. En outre, les cellules souches/progénitrices des tendons sont discutées, qui peuvent être impliquées dans les processus de réparation et de remodelage. Par rapport aux muscles, la densité cellulaire des tendons est faible. Ceci est essentiel à la compréhension de l’adaptation tendineuse : la partie dominante du tissu n’est pas une masse cellulaire contractile, mais plutôt une matrice durable. [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html) [[13]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
+Les cellules les plus importantes de ce tissu sont les ténocytes. Ils s'allongent entre les fibres
+de collagène et maintiennent la matrice. En outre, les cellules souches/progénitrices des tendons
+sont discutées, qui peuvent être impliquées dans les processus de réparation et de remodelage. Par
+rapport aux muscles, la densité cellulaire des tendons est faible. Ceci est essentiel à la
+compréhension de l’adaptation tendineuse : la partie dominante du tissu n’est pas une masse
+cellulaire contractile, mais plutôt une matrice durable.
+[[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
+[[13]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 
 ## Pourquoi l'adaptation prend du temps
 
-Les processus d'adaptation se produisent beaucoup plus lentement dans les tendons que dans les muscles. Le tissu musculaire est mieux vascularisé, présente une dynamique de renouvellement protéique élevée et répond également à l’entraînement via des adaptations neuronales rapides. Le tissu tendineux est métaboliquement plus lent. Selon les données du carbone 14, le noyau des tendons d'Achille adultes en particulier présente très peu de renouvellement de collagène. Cela ne veut pas dire que les tendons sont immuables. Toutefois, cela signifie que les ajustements structurels mesurables se produisent généralement sur des périodes de plusieurs semaines ou mois plutôt que de plusieurs jours. [[2]](https://link.springer.com/article/10.1007/s00421-011-2248-x) [[15]](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
+Les processus d'adaptation se produisent beaucoup plus lentement dans les tendons que dans les
+muscles. Le tissu musculaire est mieux vascularisé, présente une dynamique de renouvellement
+protéique élevée et répond également à l’entraînement via des adaptations neuronales rapides. Le
+tissu tendineux est métaboliquement plus lent. Selon les données du carbone 14, le noyau des tendons
+d'Achille adultes en particulier présente très peu de renouvellement de collagène. Cela ne veut pas
+dire que les tendons sont immuables. Toutefois, cela signifie que les ajustements structurels
+mesurables se produisent généralement sur des périodes de plusieurs semaines ou mois plutôt que de
+plusieurs jours. [[2]](https://link.springer.com/article/10.1007/s00421-011-2248-x)
+[[15]](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
 
-Kubo et ses collègues montrent très clairement cette évolution temporelle : après un entraînement en flexion plantaire isométrique, les marqueurs de la synthèse du collagène, de la teneur en collagène et de la structure du collagène ont changé après environ deux mois ; une augmentation significative de la raideur du tendon d'Achille était évidente après trois mois. Le sens inverse est également intéressant : après le désentraînement, une partie de l’adaptation mécanique a été perdue relativement rapidement. L'adaptation tendineuse est donc non seulement lente à se développer, mais également dépendante de la charge dans son maintien. [[2]](https://link.springer.com/article/10.1007/s00421-011-2248-x)
+Kubo et ses collègues montrent très clairement cette évolution temporelle : après un entraînement en
+flexion plantaire isométrique, les marqueurs de la synthèse du collagène, de la teneur en collagène
+et de la structure du collagène ont changé après environ deux mois ; une augmentation significative
+de la raideur du tendon d'Achille était évidente après trois mois. Le sens inverse est également
+intéressant : après le désentraînement, une partie de l’adaptation mécanique a été perdue
+relativement rapidement. L'adaptation tendineuse est donc non seulement lente à se développer, mais
+également dépendante de la charge dans son maintien.
+[[2]](https://link.springer.com/article/10.1007/s00421-011-2248-x)
 
-Quand on parle d’un tendon « plus rigide » à l’entraînement, cela n’a pas été pensé de manière négative. Une rigidité tendineuse plus élevée signifie que le tendon s’allonge moins pour la même force. Cela peut être avantageux pour l'exercice sportif : la force est transmise plus efficacement, l'énergie élastique peut être mieux utilisée et l'étirement relatif de la structure collagène reste plus faible à des forces élevées. Cela devient problématique lorsque la force musculaire augmente plus vite que la résilience du tendon associé. La contrainte mécanique sur le tissu tendineux augmente alors, même si l’athlète se sent subjectivement plus efficace. [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
+Quand on parle d’un tendon « plus rigide » à l’entraînement, cela n’a pas été pensé de manière
+négative. Une rigidité tendineuse plus élevée signifie que le tendon s’allonge moins pour la même
+force. Cela peut être avantageux pour l'exercice sportif : la force est transmise plus efficacement,
+l'énergie élastique peut être mieux utilisée et l'étirement relatif de la structure collagène reste
+plus faible à des forces élevées. Cela devient problématique lorsque la force musculaire augmente
+plus vite que la résilience du tendon associé. La contrainte mécanique sur le tissu tendineux
+augmente alors, même si l’athlète se sent subjectivement plus efficace.
+[[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
+[[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
 
-Cette divergence entre le développement musculaire et tendineux est particulièrement pertinente pour les jeunes athlètes. Mersmann, Bohm et Arampatzis décrivent que les muscles et les tendons ne réagissent pas nécessairement de manière synchrone à la croissance, à l'entraînement et à la maturation. L'entraînement pliométrique et spécifique au sport peut améliorer les performances et la force musculaire relativement rapidement, tandis que les tendons nécessitent des stimuli plus spécifiques et à haute tension. Cette image correspond également à la recherche sur les blessures en course à pied : les coureurs débutants ont une incidence de blessures significativement plus élevée pour 1 000 heures de course que les coureurs récréatifs plus expérimentés. [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[7]](https://link.springer.com/article/10.1007/s40279-015-0333-8)
+Cette divergence entre le développement musculaire et tendineux est particulièrement pertinente pour
+les jeunes athlètes. Mersmann, Bohm et Arampatzis décrivent que les muscles et les tendons ne
+réagissent pas nécessairement de manière synchrone à la croissance, à l'entraînement et à la
+maturation. L'entraînement pliométrique et spécifique au sport peut améliorer les performances et la
+force musculaire relativement rapidement, tandis que les tendons nécessitent des stimuli plus
+spécifiques et à haute tension. Cette image correspond également à la recherche sur les blessures en
+course à pied : les coureurs débutants ont une incidence de blessures significativement plus élevée
+pour 1 000 heures de course que les coureurs récréatifs plus expérimentés.
+[[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
+[[7]](https://link.springer.com/article/10.1007/s40279-015-0333-8)
 
 ## Comment la tension devient un signal
 
-Pour qu’un tendon s’adapte structurellement, la charge mécanique doit se traduire en réponse cellulaire. Deux niveaux peuvent être distingués.
+Pour qu’un tendon s’adapte structurellement, la charge mécanique doit se traduire en réponse
+cellulaire. Deux niveaux peuvent être distingués.
 
-Le premier niveau est neurophysiologique. Les organes tendineux de Golgi sont situés à la jonction muscle-tendon et enregistrent les tensions dans le système muscle-tendon. S'ils sont déformés mécaniquement, les afférents Ib transmettent des informations à la moelle épinière. Ce système sensoriel est important pour la régulation de la force, la proprioception et les mécanismes de protection. D' autres structures sensorielles telles que les terminaisons nerveuses libres et les récepteurs de type Ruffini et Pacini peuvent également jouer un rôle selon les régions. Ces récepteurs transmettent des informations mécaniques au système nerveux. [[14]](https://www.nature.com/articles/s41467-021-21880-3)
+Le premier niveau est neurophysiologique. Les organes tendineux de Golgi sont situés à la jonction
+muscle-tendon et enregistrent les tensions dans le système muscle-tendon. S'ils sont déformés
+mécaniquement, les afférents Ib transmettent des informations à la moelle épinière. Ce système
+sensoriel est important pour la régulation de la force, la proprioception et les mécanismes de
+protection. D' autres structures sensorielles telles que les terminaisons nerveuses libres et les
+récepteurs de type Ruffini et Pacini peuvent également jouer un rôle selon les régions. Ces
+récepteurs transmettent des informations mécaniques au système nerveux.
+[[14]](https://www.nature.com/articles/s41467-021-21880-3)
 
-Le deuxième niveau est cellulaire. Pour l’adaptation structurelle, il est crucial que les ténocytes détectent eux-mêmes la charge mécanique. Lorsque le tendon est étiré, la tension dans la matrice change, le fluide se déplace dans le tissu, les processus cellulaires sont déformés et les forces sont transmises via les points de contact entre la matrice et la cellule. Cette mécanodétection cellulaire est le point de départ du remodelage matriciel. [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html) [[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
+Le deuxième niveau est cellulaire. Pour l’adaptation structurelle, il est crucial que les ténocytes
+détectent eux-mêmes la charge mécanique. Lorsque le tendon est étiré, la tension dans la matrice
+change, le fluide se déplace dans le tissu, les processus cellulaires sont déformés et les forces
+sont transmises via les points de contact entre la matrice et la cellule. Cette mécanodétection
+cellulaire est le point de départ du remodelage matriciel.
+[[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
+[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
 
-La traduction de la charge mécanique en réponse cellulaire biochimique est appelée mécanotransduction. Un mécanisme central passe par les intégrines, c’est-à-dire les protéines reliant la matrice extracellulaire et le cytosquelette. La tension mécanique peut influencer le regroupement des intégrines, les adhérences focales et la tension du cytosquelette. En parallèle, les canaux ioniques mécanosensibles, les signaux calciques, les cils primaires et d'autres structures mécanosensibles sont discutés. [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html) [[13]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
+La traduction de la charge mécanique en réponse cellulaire biochimique est appelée
+mécanotransduction. Un mécanisme central passe par les intégrines, c’est-à-dire les protéines
+reliant la matrice extracellulaire et le cytosquelette. La tension mécanique peut influencer le
+regroupement des intégrines, les adhérences focales et la tension du cytosquelette. En parallèle,
+les canaux ioniques mécanosensibles, les signaux calciques, les cils primaires et d'autres
+structures mécanosensibles sont discutés.
+[[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
+[[13]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 
-À l’intérieur de la cellule, celles-ci deviennent des voies de signalisation qui régulent l’expression des gènes et le métabolisme matriciel. Les chemins pertinents incluent, entre autres FAK, MAPK/ERK, PI3K/Akt/mTOR, TGF-beta/SMAD, IGF-1 et YAP/TAZ. Ils influencent la probabilité que les ténocytes synthétisent le collagène de type I, organisent la matrice, régulent les enzymes de remodelage ou, sous une charge défavorable, se lancent dans des programmes cataboliques et inflammatoires. Le tendon ne répond pas simplement à « plus d’entraînement », mais plutôt à la qualité du signal mécanique. [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html) [[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
+À l’intérieur de la cellule, celles-ci deviennent des voies de signalisation qui régulent
+l’expression des gènes et le métabolisme matriciel. Les chemins pertinents incluent, entre autres
+FAK, MAPK/ERK, PI3K/Akt/mTOR, TGF-beta/SMAD, IGF-1 et YAP/TAZ. Ils influencent la probabilité que
+les ténocytes synthétisent le collagène de type I, organisent la matrice, régulent les enzymes de
+remodelage ou, sous une charge défavorable, se lancent dans des programmes cataboliques et
+inflammatoires. Le tendon ne répond pas simplement à « plus d’entraînement », mais plutôt à la
+qualité du signal mécanique. [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
+[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
 
-Le chargement cyclique peut également influencer les propriétés mécaniques au niveau du réseau de collagène lui-même. Dans un modèle expérimental, Susilo et ses collègues ont montré qu'une charge de traction cyclique peut renforcer un réseau de collagène sans nécessairement impliquer les cellules actives. Cela ne remplace pas la biologie cellulaire pour l’entraînement humain, mais cela montre que la matrice n’est pas seulement un récepteur passif, mais fait partie de l’adaptation mécanique. [[6]](https://royalsocietypublishing.org/doi/10.1098/rsfs.2015.0088)
+Le chargement cyclique peut également influencer les propriétés mécaniques au niveau du réseau de
+collagène lui-même. Dans un modèle expérimental, Susilo et ses collègues ont montré qu'une charge de
+traction cyclique peut renforcer un réseau de collagène sans nécessairement impliquer les cellules
+actives. Cela ne remplace pas la biologie cellulaire pour l’entraînement humain, mais cela montre
+que la matrice n’est pas seulement un récepteur passif, mais fait partie de l’adaptation mécanique.
+[[6]](https://royalsocietypublishing.org/doi/10.1098/rsfs.2015.0088)
 
 ## Quels stimuli d’entraînement fonctionnent ?
 
-Du point de vue de la science de la formation, cela se traduit par un principe important : une charge trop faible ne fournit pas un stimulus suffisant ; une charge très élevée ou mal dosée peut favoriser des microtraumatismes et des modifications matricielles inadaptées. Ce qui est logique, c'est une zone mécanique dans laquelle les ténocytes subissent à plusieurs reprises une contrainte de traction élevée mais contrôlable. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9) [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
+Du point de vue de la science de la formation, cela se traduit par un principe important : une
+charge trop faible ne fournit pas un stimulus suffisant ; une charge très élevée ou mal dosée peut
+favoriser des microtraumatismes et des modifications matricielles inadaptées. Ce qui est logique,
+c'est une zone mécanique dans laquelle les ténocytes subissent à plusieurs reprises une contrainte
+de traction élevée mais contrôlable. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
+[[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
+[[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
 
-Les études d’intervention sur le tendon d’Achille s’inscrivent bien dans cette logique. Bohm et ses collègues ont examiné comment le taux de déformation et la durée de la déformation influencent l'adaptation. Un protocole d'allongement élevé du tendon et de basse fréquence avec environ 3 secondes de chargement plus 3 secondes de déchargement pendant 14 semaines a augmenté de manière significative la rigidité du tendon, la surface transversale et le module d'Young. Des temps de maintien plus longs ont également fonctionné, mais n'étaient pas automatiquement supérieurs. Les charges de saut très rapides conduisent moins clairement à une augmentation globale de la rigidité. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to)
+Les études d’intervention sur le tendon d’Achille s’inscrivent bien dans cette logique. Bohm et ses
+collègues ont examiné comment le taux de déformation et la durée de la déformation influencent
+l'adaptation. Un protocole d'allongement élevé du tendon et de basse fréquence avec environ 3
+secondes de chargement plus 3 secondes de déchargement pendant 14 semaines a augmenté de manière
+significative la rigidité du tendon, la surface transversale et le module d'Young. Des temps de
+maintien plus longs ont également fonctionné, mais n'étaient pas automatiquement supérieurs. Les
+charges de saut très rapides conduisent moins clairement à une augmentation globale de la rigidité.
+[[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to)
 
-Mersmann et ses collègues formulent un protocole tendineux spécifique pour les jeunes athlètes : 5 séries avec 4 contractions, 85 à 90 % de la force isométrique maximale, avec environ 3 secondes de tension tendineuse élevée par contraction. Il ne s’agit pas d’autant de volume que possible, mais plutôt d’un stimulus mécanique clair avec une intensité suffisante et une durée contrôlée. [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
+Mersmann et ses collègues formulent un protocole tendineux spécifique pour les jeunes athlètes : 5
+séries avec 4 contractions, 85 à 90 % de la force isométrique maximale, avec environ 3 secondes de
+tension tendineuse élevée par contraction. Il ne s’agit pas d’autant de volume que possible, mais
+plutôt d’un stimulus mécanique clair avec une intensité suffisante et une durée contrôlée.
+[[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
 
-Les méta-analyses soutiennent cette orientation. Bohm, Mersmann et Arampatzis ainsi que Lazarczuk et ses collègues rapportent que la charge mécanique peut améliorer la rigidité des tendons, les propriétés des matériaux et, dans certains cas, la section transversale. L'étirement local du tendon ou l'intensité de la charge semble être particulièrement pertinent. La forme spécifique de l'action musculaire - isométrique, concentrique ou excentrique - est probablement moins importante que la question de savoir quelle tension se produit réellement dans le tendon. [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9) [[9]](https://link.springer.com/article/10.1007/s40279-022-01695-y)
+Les méta-analyses soutiennent cette orientation. Bohm, Mersmann et Arampatzis ainsi que Lazarczuk et
+ses collègues rapportent que la charge mécanique peut améliorer la rigidité des tendons, les
+propriétés des matériaux et, dans certains cas, la section transversale. L'étirement local du tendon
+ou l'intensité de la charge semble être particulièrement pertinent. La forme spécifique de l'action
+musculaire - isométrique, concentrique ou excentrique - est probablement moins importante que la
+question de savoir quelle tension se produit réellement dans le tendon.
+[[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
+[[9]](https://link.springer.com/article/10.1007/s40279-022-01695-y)
 
 Néanmoins, différentes formes de formation ont des rôles pratiques différents.
 
-La charge isométrique est particulièrement adaptée lorsque la tension doit être dosée avec précision ou lorsque les tendons douloureux doivent d'abord être rendus à nouveau tolérables à la charge. Il génère une force élevée avec peu de mouvement des articulations et sans charge d'impact élevée. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885) [[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
+La charge isométrique est particulièrement adaptée lorsque la tension doit être dosée avec précision
+ou lorsque les tendons douloureux doivent d'abord être rendus à nouveau tolérables à la charge. Il
+génère une force élevée avec peu de mouvement des articulations et sans charge d'impact élevée.
+[[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
+[[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
 
-Heavy Slow Resistance combine une charge élevée avec un mouvement contrôlé et des périodes de tension relativement longues. Pour les tendinopathies, en particulier celles du tendon rotulien, la littérature actuelle suggère que la mise en charge progressive du tendon et l'entraînement en force lourd et lent ne devraient pas être prioritaires par rapport à l'entraînement excentrique seul. [[9]](https://link.springer.com/article/10.1007/s40279-022-01695-y) [[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
+Heavy Slow Resistance combine une charge élevée avec un mouvement contrôlé et des périodes de
+tension relativement longues. Pour les tendinopathies, en particulier celles du tendon rotulien, la
+littérature actuelle suggère que la mise en charge progressive du tendon et l'entraînement en force
+lourd et lent ne devraient pas être prioritaires par rapport à l'entraînement excentrique seul.
+[[9]](https://link.springer.com/article/10.1007/s40279-022-01695-y)
+[[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
 
-La formation excentrique continue d’être pertinente et historiquement bien établie. Cependant, son effet est probablement moindre parce que l'excentricité en tant que telle a un statut particulier, mais plutôt parce que les exercices excentriques permettent des forces tendineuses élevées et un bon contrôle progressif. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
+La formation excentrique continue d’être pertinente et historiquement bien établie. Cependant, son
+effet est probablement moindre parce que l'excentricité en tant que telle a un statut particulier,
+mais plutôt parce que les exercices excentriques permettent des forces tendineuses élevées et un bon
+contrôle progressif. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
+[[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
 
-L’entraînement explosif et la pliométrie sont essentiels à la capacité sportive, mais ils ne constituent pas toujours la première étape vers l’adaptation des tendons. Massey et ses collègues ont montré que de courtes contractions explosives peuvent augmenter la rigidité du tendon rotulien libre. Cependant, pour l’hypertrophie musculaire, l’aponévrose et l’ensemble du complexe musculo-tendineux, une tension élevée prolongée était supérieure. Concrètement, cela signifie : d'abord développer la capacité et la résilience, puis intégrer la vitesse, la réactivité et la fonction ressort spécifique au sport. [[3]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.01170/full)
+L’entraînement explosif et la pliométrie sont essentiels à la capacité sportive, mais ils ne
+constituent pas toujours la première étape vers l’adaptation des tendons. Massey et ses collègues
+ont montré que de courtes contractions explosives peuvent augmenter la rigidité du tendon rotulien
+libre. Cependant, pour l’hypertrophie musculaire, l’aponévrose et l’ensemble du complexe
+musculo-tendineux, une tension élevée prolongée était supérieure. Concrètement, cela signifie :
+d'abord développer la capacité et la résilience, puis intégrer la vitesse, la réactivité et la
+fonction ressort spécifique au sport.
+[[3]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.01170/full)
 
-Cette ordonnance est cruciale pour la reprise du sport. Concernant les problèmes du tendon d'Achille, Silbernagel et Crossley soulignent que le retour au sport ne se décide pas par un seul test. La progression de la douleur, la fonction, la résilience, les exigences sportives et la réaction à la progression sont pertinentes. La douleur n’est pas un marqueur tissulaire parfait, mais c’est un signal de surveillance utile. Si les symptômes augmentent de manière significative au cours de la séance ou persistent le lendemain, le stress était probablement trop élevé pour le niveau d'adaptation actuel. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
+Cette ordonnance est cruciale pour la reprise du sport. Concernant les problèmes du tendon
+d'Achille, Silbernagel et Crossley soulignent que le retour au sport ne se décide pas par un seul
+test. La progression de la douleur, la fonction, la résilience, les exigences sportives et la
+réaction à la progression sont pertinentes. La douleur n’est pas un marqueur tissulaire parfait,
+mais c’est un signal de surveillance utile. Si les symptômes augmentent de manière significative au
+cours de la séance ou persistent le lendemain, le stress était probablement trop élevé pour le
+niveau d'adaptation actuel. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
 ## Cadre de formation pratique
 
-L'entraînement des tendons doit être planifié sur au moins 12 semaines. Le principal stimulus est une tension élevée et contrôlée. En fonction de la charge globale, 2 à 4 séances tendineuses ciblées par semaine sont plausibles. En pratique, cela signifie souvent des intensités d'environ 70 pour cent 1RM ou, pour le travail isométrique, 85 à 90 pour cent de la force isométrique maximale. Ce qui est crucial, c'est que le tendon soit effectivement soumis à une forte contrainte pendant plusieurs secondes. [[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
+L'entraînement des tendons doit être planifié sur au moins 12 semaines. Le principal stimulus est
+une tension élevée et contrôlée. En fonction de la charge globale, 2 à 4 séances tendineuses ciblées
+par semaine sont plausibles. En pratique, cela signifie souvent des intensités d'environ 70 pour
+cent 1RM ou, pour le travail isométrique, 85 à 90 pour cent de la force isométrique maximale. Ce qui
+est crucial, c'est que le tendon soit effectivement soumis à une forte contrainte pendant plusieurs
+secondes.
+[[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to)
+[[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
+[[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
 
-Il n’est pas nécessaire que la portée soit extrêmement élevée. Un cadre utile est, par exemple, 4 à 5 séries de 4 à 8 répétitions ou 5 séries de 4 contractions isométriques lourdes. La progression doit d'abord développer la charge et le contrôle, puis ajouter la vitesse, les sauts, le volume de course et la charge spécifique au sport. [[3]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.01170/full) [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full) [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
+Il n’est pas nécessaire que la portée soit extrêmement élevée. Un cadre utile est, par exemple, 4 à
+5 séries de 4 à 8 répétitions ou 5 séries de 4 contractions isométriques lourdes. La progression
+doit d'abord développer la charge et le contrôle, puis ajouter la vitesse, les sauts, le volume de
+course et la charge spécifique au sport.
+[[3]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.01170/full)
+[[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
+[[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 
-Une logique de phase pratique est la suivante :
+Une logique de phase pratique est la suivante :
 
 1. Établir la tolérance au stress : travail de maintien isométrique, réduction du volume de course ou de saut, surveillance des symptômes.
 2. Renforcer les capacités : Heavy Slow Resistance, haute tension, répétitions lentes, suffisamment de repos.
 3. Fonction élastique d'entraînement : pliométrie modérée, course ABC, sauts, sauts, accélérations courtes.
 4. Faire revenir le sport : augmenter la charge pour que l'intensité, le volume, la surface, la fatigue et la compétitivité n'augmentent pas tous en même temps. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885) [[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
 
-Les tendons s'adaptent lentement car ils sont constitués principalement d'une matrice extracellulaire de longue durée et sont remodelés par relativement peu de cellules. Ces cellules peuvent détecter la tension mécanique et la traduire en synthèse de collagène, en organisation matricielle et en adaptation matérielle via la mécanotransduction. Cela nécessite une tension répétée, suffisamment élevée et contrôlée pendant des semaines, voire des mois. Un bon entraînement des tendons est donc moins spectaculaire que régulier : tension élevée, bon dosage, suffisamment de temps et progression dans le bon ordre. [[2]](https://link.springer.com/article/10.1007/s00421-011-2248-x) [[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/) [[15]](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
+Les tendons s'adaptent lentement car ils sont constitués principalement d'une matrice
+extracellulaire de longue durée et sont remodelés par relativement peu de cellules. Ces cellules
+peuvent détecter la tension mécanique et la traduire en synthèse de collagène, en organisation
+matricielle et en adaptation matérielle via la mécanotransduction. Cela nécessite une tension
+répétée, suffisamment élevée et contrôlée pendant des semaines, voire des mois. Un bon entraînement
+des tendons est donc moins spectaculaire que régulier : tension élevée, bon dosage, suffisamment de
+temps et progression dans le bon ordre.
+[[2]](https://link.springer.com/article/10.1007/s00421-011-2248-x)
+[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
+[[15]](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
 
 ## Sources
 

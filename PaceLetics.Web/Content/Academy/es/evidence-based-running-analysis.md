@@ -22,34 +22,66 @@ references:
  - Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019. | https://pubmed.ncbi.nlm.nih.gov/30805204/
 ---
 
-Ninguna intervención sin indicación. No hagas daño. Un patrón de movimiento sólo es un problema si lo es en un contexto específico.
+Ninguna intervención sin indicación. No hagas daño. Un patrón de movimiento sólo es un problema si
+lo es en un contexto específico.
 
-> El estilo de carrera es un sistema que se optimiza automáticamente. No corregimos la apariencia de un movimiento, sino que examinamos si un patrón dinámico está realmente relacionado con malestar, tensión o falta de control.
+> El estilo de carrera es un sistema que se optimiza automáticamente. No corregimos la apariencia de
+> un movimiento, sino que examinamos si un patrón dinámico está realmente relacionado con malestar,
+> tensión o falta de control.
 
 ## De la corrección de forma a la comprensión del sistema
 
-En el pasado, el ejercicio era frecuente: todos tenían que tener la forma más perfecta posible. Hoy en día, la mejor postura es la siguiente: los cuerpos son diferentes, la técnica de carrera es individual y un patrón de movimiento no es automáticamente incorrecto sólo porque se desvía de un ideal. El cuerpo es un sistema que se optimiza a sí mismo. Muchos corredores eligen su cadencia, longitud de zancada y estrategia de movimiento muy de cerca una solución que les resulte económica, especialmente a medida que aumenta su experiencia de carrera. [[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
+En el pasado, el ejercicio era frecuente: todos tenían que tener la forma más perfecta posible. Hoy
+en día, la mejor postura es la siguiente: los cuerpos son diferentes, la técnica de carrera es
+individual y un patrón de movimiento no es automáticamente incorrecto sólo porque se desvía de un
+ideal. El cuerpo es un sistema que se optimiza a sí mismo. Muchos corredores eligen su cadencia,
+longitud de zancada y estrategia de movimiento muy de cerca una solución que les resulte económica,
+especialmente a medida que aumenta su experiencia de carrera.
+[[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
 
-Si un atleta con una determinada forma de correr no presenta síntomas durante años, especialmente en relación con este patrón de movimiento, esto es inicialmente un indicio de que el sistema dinámico funciona bien. Incluso una intervención bien intencionada puede hacer que este sistema se vuelva negativo.
+Si un atleta con una determinada forma de correr no presenta síntomas durante años, especialmente en
+relación con este patrón de movimiento, esto es inicialmente un indicio de que el sistema dinámico
+funciona bien. Incluso una intervención bien intencionada puede hacer que este sistema se vuelva
+negativo.
 
 ## Las intervenciones tienen efectos secundarios.
 
-Los cambios en la tecnología rara vez simplemente reducen el estrés; los posponen. Menos tensión en la rodilla puede significar más tensión en el tendón de Aquiles, la pantorrilla o el pie. Más estabilidad puede significar más rigidez. Una colocación diferente del pie puede abrumar nuevas estructuras. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0) [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Los cambios en la tecnología rara vez simplemente reducen el estrés; los posponen. Menos tensión en
+la rodilla puede significar más tensión en el tendón de Aquiles, la pantorrilla o el pie. Más
+estabilidad puede significar más rigidez. Una colocación diferente del pie puede abrumar nuevas
+estructuras. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0)
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 Por tanto, las intervenciones necesitan una indicación. Puede ser:
 
 - Evidencia moderada a buena que muestra una relación coste-efectividad positiva para futuras lesiones. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/)
 - Evidencia baja a moderada y presencia concomitante de síntomas asociados a la intervención. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
 
-Estos requisitos no se cumplen en la mayoría de los criterios comunes para una buena técnica de carrera.
+Estos requisitos no se cumplen en la mayoría de los criterios comunes para una buena técnica de
+carrera.
 
 ## Consideración en pie de igualdad
 
-Por supuesto, también puede tener sentido cambiar parámetros individuales de tu estilo de carrera por motivos de rendimiento. Al mismo tiempo, cada intervención tiene un precio porque no simplemente elimina el estrés, sino que lo traslada al sistema y puede crear nuevos efectos secundarios. Por lo tanto, si una posible mejora en el rendimiento justifica estos efectos secundarios no debería decidirse mediante gritos, presión de grupo o una corrección desde el margen. Esta consideración es parte del apoyo individual a largo plazo y requiere el consentimiento informado del atleta. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Por supuesto, también puede tener sentido cambiar parámetros individuales de tu estilo de carrera
+por motivos de rendimiento. Al mismo tiempo, cada intervención tiene un precio porque no simplemente
+elimina el estrés, sino que lo traslada al sistema y puede crear nuevos efectos secundarios. Por lo
+tanto, si una posible mejora en el rendimiento justifica estos efectos secundarios no debería
+decidirse mediante gritos, presión de grupo o una corrección desde el margen. Esta consideración es
+parte del apoyo individual a largo plazo y requiere el consentimiento informado del atleta.
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 ## Evite la ilusión de control
 
-Muchos entrenadores de la vieja escuela suelen estar sujetos a una ilusión de control. Le das una corrección, el atleta mejora con el paso de las semanas, pero posiblemente no por la corrección, sino porque el entrenamiento, los tejidos, la coordinación y la autoorganización se adaptan de todos modos. Por el contrario, una corrección puede cambiar el estrés y provocar síntomas. En ambos casos se afirma una causalidad que a menudo no está claramente demostrada. Es exactamente por eso que necesitamos indicaciones, pruebas y contexto. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290) [[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
+Muchos entrenadores de la vieja escuela suelen estar sujetos a una ilusión de control. Le das una
+corrección, el atleta mejora con el paso de las semanas, pero posiblemente no por la corrección,
+sino porque el entrenamiento, los tejidos, la coordinación y la autoorganización se adaptan de todos
+modos. Por el contrario, una corrección puede cambiar el estrés y provocar síntomas. En ambos casos
+se afirma una causalidad que a menudo no está claramente demostrada. Es exactamente por eso que
+necesitamos indicaciones, pruebas y contexto. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/)
+[[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290)
+[[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
 
 ## Cómo hablamos de estilo de carrera
 

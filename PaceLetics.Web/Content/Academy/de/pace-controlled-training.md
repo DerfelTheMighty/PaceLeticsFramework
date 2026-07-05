@@ -28,15 +28,34 @@ references:
 
 ## Warum pace-gesteuertes Training?
 
-Wir steuern die Trainingsbereiche primär über die Pace, weil Laufgeschwindigkeit ein ziemlich guter Stellvertreter für äußere biomechanische Belastung ist. [[1]](https://link.springer.com/article/10.1007/s40279-026-02410-x) [[2]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/)
+Wir steuern die Trainingsbereiche primär über die Pace, weil Laufgeschwindigkeit ein ziemlich guter
+Stellvertreter für äußere biomechanische Belastung ist.
+[[1]](https://link.springer.com/article/10.1007/s40279-026-02410-x)
+[[2]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/)
 
-Das Kernproblem ist die unterschiedliche Adaptationsgeschwindigkeit der beteiligten Systeme: Anfänger:innen fühlen sich oft nach wenigen Wochen kardiovaskulär leistungsfähiger, während Sehnen, Knochen, Gelenke und Muskel-Sehnen-Strukturen deutlich gradueller an wiederholte Stoßbelastung angepasst werden müssen. [[3]](https://pubmed.ncbi.nlm.nih.gov/28490537/) [[4]](https://pubmed.ncbi.nlm.nih.gov/27748956/) [[5]](https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf) [[6]](https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/) [[11]](https://pubmed.ncbi.nlm.nih.gov/33635519/)
+Das Kernproblem ist die unterschiedliche Adaptationsgeschwindigkeit der beteiligten Systeme:
+Anfänger:innen fühlen sich oft nach wenigen Wochen kardiovaskulär leistungsfähiger, während Sehnen,
+Knochen, Gelenke und Muskel-Sehnen-Strukturen deutlich gradueller an wiederholte Stoßbelastung
+angepasst werden müssen. [[3]](https://pubmed.ncbi.nlm.nih.gov/28490537/)
+[[4]](https://pubmed.ncbi.nlm.nih.gov/27748956/)
+[[5]](https://paulogentil.com/pdf/Time%20Course%20of%20Changes%20in%20Muscle%20and%20Tendon%20Properties%20During%20Strength%20Training%20and%20Detraining.pdf)
+[[6]](https://www.germanjournalsportsmedicine.com/archive/archive-2019/issue-4/functional-adaptation-of-connective-tissue-by-training/)
+[[11]](https://pubmed.ncbi.nlm.nih.gov/33635519/)
 
-Wird Training nur über Herzfrequenz oder generische Zonensysteme gesteuert, wird diese mechanische Exposition leicht unterschätzt. Die Pace gibt ein stabiles äußeres Ziel dafür, wie viel kraftvolles Laufen wiederholt wird; Herzfrequenz bleibt ergänzend nützlich für innere Beanspruchung und Erholung. Für heterogenes Gruppentraining sollte ein Modell außerdem einfach, ausrüstungsarm und über mehrere Monate konsistent sein. Die Pace ist dafür die einfachste gemeinsame Sprache: messbar, vergleichbar und unmittelbar im Training nutzbar.
+Wird Training nur über Herzfrequenz oder generische Zonensysteme gesteuert, wird diese mechanische
+Exposition leicht unterschätzt. Die Pace gibt ein stabiles äußeres Ziel dafür, wie viel kraftvolles
+Laufen wiederholt wird; Herzfrequenz bleibt ergänzend nützlich für innere Beanspruchung und
+Erholung. Für heterogenes Gruppentraining sollte ein Modell außerdem einfach, ausrüstungsarm und
+über mehrere Monate konsistent sein. Die Pace ist dafür die einfachste gemeinsame Sprache: messbar,
+vergleichbar und unmittelbar im Training nutzbar.
 
 ![Adaptation timeline](/images/diagrams/adaptation-timeline.svg)
 
-Das folgende Modell ist bewusst qualitativ: Die vertikale Achse hat keine Einheit und zeigt keine Messwerte, sondern das Verhältnis von Trainingsanforderung und Anpassung. Entscheidend ist die Logik. Wenn die Pace über längere Blöcke stabil gehalten und nur schrittweise erhöht wird, können langsamere Strukturen wie Sehne und Knochen aufschließen, ohne dass die mechanische Anforderung der kardiovaskulären Anpassung permanent davonläuft.
+Das folgende Modell ist bewusst qualitativ: Die vertikale Achse hat keine Einheit und zeigt keine
+Messwerte, sondern das Verhältnis von Trainingsanforderung und Anpassung. Entscheidend ist die
+Logik. Wenn die Pace über längere Blöcke stabil gehalten und nur schrittweise erhöht wird, können
+langsamere Strukturen wie Sehne und Knochen aufschließen, ohne dass die mechanische Anforderung der
+kardiovaskulären Anpassung permanent davonläuft.
 
 ![Six-month step adaptation](/images/diagrams/six-month-step-adaptation.svg)
 
@@ -44,25 +63,54 @@ Das folgende Modell ist bewusst qualitativ: Die vertikale Achse hat keine Einhei
 
 ## Ist hohe Pace grundsätzlich schlecht?
 
-Nein. Mechanische Last ist nicht nur Risiko, sondern auch Voraussetzung für Anpassung. Sehnen und Knochen reagieren auf ausreichend hohe Belastungsreize: Bohm et al. (2015) zeigen in einer Meta-Analyse, dass Sehnensteifigkeit und Materialeigenschaften besonders durch höhere Lastintensitäten zunehmen. [[7]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
+Nein. Mechanische Last ist nicht nur Risiko, sondern auch Voraussetzung für Anpassung. Sehnen und
+Knochen reagieren auf ausreichend hohe Belastungsreize: Bohm et al. (2015) zeigen in einer
+Meta-Analyse, dass Sehnensteifigkeit und Materialeigenschaften besonders durch höhere
+Lastintensitäten zunehmen. [[7]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
 
-Die Grafik darunter zeigt diese berichteten Effektgrößen: hohe Intensitäten über 70 Prozent MVC/RM erzeugten eine deutliche Anpassung der Sehnensteifigkeit, niedrige Intensitäten lagen nahe null.
+Die Grafik darunter zeigt diese berichteten Effektgrößen: hohe Intensitäten über 70 Prozent MVC/RM
+erzeugten eine deutliche Anpassung der Sehnensteifigkeit, niedrige Intensitäten lagen nahe null.
 
-Warden et al. (2021) beschreiben Knochenstressverletzungen nicht als Folge von Belastung an sich, sondern als Fehler in der Workload-Dosierung. Für das Training heißt das: Wir wollen schnelle Paces nicht vermeiden, sondern dosieren. [[11]](https://pubmed.ncbi.nlm.nih.gov/33635519/)
+Warden et al. (2021) beschreiben Knochenstressverletzungen nicht als Folge von Belastung an sich,
+sondern als Fehler in der Workload-Dosierung. Für das Training heißt das: Wir wollen schnelle Paces
+nicht vermeiden, sondern dosieren. [[11]](https://pubmed.ncbi.nlm.nih.gov/33635519/)
 
 ![Load adaptation window](/images/diagrams/load-adaptation-window.svg)
 
 ## Daniels/VDOT
 
-Das Daniels/VDOT-Modell entstand aus den Arbeiten von Jack Daniels und Jimmy Gilbert, die 1979 in *Oxygen Power: Performance Tables for Distance Runners* veröffentlicht wurden. VDOT ist keine direkt gemessene VO2max, sondern eine aus realer Laufleistung abgeleitete effektive oder pseudo-VO2max: Eine Wettkampfzeit wird über Laufgeschwindigkeit, Sauerstoffkosten des Laufens und den über die jeweilige Dauer haltbaren Anteil der VO2max in einen einzelnen Leistungswert übersetzt. Die Stärke des Modells liegt in seiner coachingpraktischen Konsistenz: Aus einem bekannten VDOT werden standardisierte Bereiche wie Easy, Marathon, Threshold, Intervall und Repetition abgeleitet. [[10]](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03026/full)
+Das Daniels/VDOT-Modell entstand aus den Arbeiten von Jack Daniels und Jimmy Gilbert, die 1979 in
+*Oxygen Power: Performance Tables for Distance Runners* veröffentlicht wurden. VDOT ist keine direkt
+gemessene VO2max, sondern eine aus realer Laufleistung abgeleitete effektive oder pseudo-VO2max:
+Eine Wettkampfzeit wird über Laufgeschwindigkeit, Sauerstoffkosten des Laufens und den über die
+jeweilige Dauer haltbaren Anteil der VO2max in einen einzelnen Leistungswert übersetzt. Die Stärke
+des Modells liegt in seiner coachingpraktischen Konsistenz: Aus einem bekannten VDOT werden
+standardisierte Bereiche wie Easy, Marathon, Threshold, Intervall und Repetition abgeleitet.
+[[10]](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03026/full)
 
 ## Critical Speed
 
-Critical Speed (CS) ist die laufbezogene Form des Critical-Power-Konzepts. Es beschreibt die asymptotische Geschwindigkeit der Distanz-Zeit-Beziehung und wird physiologisch als Grenze zwischen heavy und severe intensity interpretiert: Unterhalb von CS kann sich eher ein metabolisches Gleichgewicht einstellen; oberhalb steigen zentrale Ermüdungsmarker progressiv an, bis die Belastung abgebrochen oder die Geschwindigkeit reduziert werden muss. Die endliche Distanzkapazität oberhalb von CS wird als D' modelliert. [[8]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full) [[9]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full)
+Critical Speed (CS) ist die laufbezogene Form des Critical-Power-Konzepts. Es beschreibt die
+asymptotische Geschwindigkeit der Distanz-Zeit-Beziehung und wird physiologisch als Grenze zwischen
+heavy und severe intensity interpretiert: Unterhalb von CS kann sich eher ein metabolisches
+Gleichgewicht einstellen; oberhalb steigen zentrale Ermüdungsmarker progressiv an, bis die Belastung
+abgebrochen oder die Geschwindigkeit reduziert werden muss. Die endliche Distanzkapazität oberhalb
+von CS wird als D' modelliert.
+[[8]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full)
+[[9]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full)
 
 ## Umrechnung in PaceLetics
 
-Alle Berechnungen erfolgen intern über Geschwindigkeit, weil Prozentangaben auf Pace invertiert wären. Für Daniels wird die eingegebene Laufleistung gegen die VDOT-Tabelle gelegt; der nächstliegende Tabellenwert liefert die klassische Pace-Tabelle für Recovery, Easy, Marathon, Threshold, Intervall und Repetition. CS wird nicht mehr als zweite Daniels-Tabelle interpretiert. Wir schätzen aus den Laufdaten Critical Speed und D': Ein einzelner 1200-m-Test schätzt CS konservativ als `0.84 * v1200`, ein einzelner 3-km-Test als `0.90 * v3k`. Liegen 1200 m und 3600 m vor, berechnen wir `CS = (3600 - 1200) / (t3600 - t1200)` und `D' = 1200 - CS * t1200`; bei mehreren Distanzen nutzen wir Regression. [[2]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/) [[8]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full) [[9]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full)
+Alle Berechnungen erfolgen intern über Geschwindigkeit, weil Prozentangaben auf Pace invertiert
+wären. Für Daniels wird die eingegebene Laufleistung gegen die VDOT-Tabelle gelegt; der
+nächstliegende Tabellenwert liefert die klassische Pace-Tabelle für Recovery, Easy, Marathon,
+Threshold, Intervall und Repetition. CS wird nicht mehr als zweite Daniels-Tabelle interpretiert.
+Wir schätzen aus den Laufdaten Critical Speed und D': Ein einzelner 1200-m-Test schätzt CS
+konservativ als `0.84 * v1200`, ein einzelner 3-km-Test als `0.90 * v3k`. Liegen 1200 m und 3600 m
+vor, berechnen wir `CS = (3600 - 1200) / (t3600 - t1200)` und `D' = 1200 - CS * t1200`; bei mehreren
+Distanzen nutzen wir Regression. [[2]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11933073/)
+[[8]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.533391/full)
+[[9]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2024.1378284/full)
 
 ![Pace model](/images/diagrams/pace-model-belastungskurve.svg)
 

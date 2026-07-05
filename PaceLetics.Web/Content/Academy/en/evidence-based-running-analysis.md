@@ -22,19 +22,32 @@ references:
  - Christopher et al. Do strength, flexibility, ROM and alignment predict lower extremity injury in runners? Arch Physiother. 2019. | https://pubmed.ncbi.nlm.nih.gov/30805204/
 ---
 
-No intervention without indication. Do no harm. A movement pattern only becomes a problem when it is a problem in its specific context.
+No intervention without indication. Do no harm. A movement pattern only becomes a problem when it is
+a problem in its specific context.
 
-> Running style is a self-optimizing system. We do not correct the appearance of movement; we check whether a dynamic pattern is actually linked to symptoms, load, or missing control.
+> Running style is a self-optimizing system. We do not correct the appearance of movement; we check
+> whether a dynamic pattern is actually linked to symptoms, load, or missing control.
 
 ## From form correction to system understanding
 
-In the past, the drill was often: everyone needs a perfect-looking form. Today, the better stance is: bodies differ, running style is individual, and a movement pattern is not automatically wrong just because it differs from an ideal image. The body is a self-optimizing system. Many runners choose cadence, stride length, and movement strategy very close to an economical solution for them, especially as experience grows. [[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
+In the past, the drill was often: everyone needs a perfect-looking form. Today, the better stance
+is: bodies differ, running style is individual, and a movement pattern is not automatically wrong
+just because it differs from an ideal image. The body is a self-optimizing system. Many runners
+choose cadence, stride length, and movement strategy very close to an economical solution for them,
+especially as experience grows. [[4]](https://link.springer.com/article/10.1007/s40279-016-0474-4)
 
-If an athlete has been symptom-free for years with a certain running style, specifically symptom-free with regard to that exact movement pattern, this is initially a sign of a well-functioning dynamic system. Even a well-intentioned intervention can shift that system in a negative direction.
+If an athlete has been symptom-free for years with a certain running style, specifically
+symptom-free with regard to that exact movement pattern, this is initially a sign of a
+well-functioning dynamic system. Even a well-intentioned intervention can shift that system in a
+negative direction.
 
 ## Interventions have side effects
 
-Technique changes rarely just reduce load; they shift it. Less knee load can mean more Achilles tendon, calf, or foot load. More stability can mean more stiffness. A different foot strike can overload new structures. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0) [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+Technique changes rarely just reduce load; they shift it. Less knee load can mean more Achilles
+tendon, calf, or foot load. More stability can mean more stiffness. A different foot strike can
+overload new structures. [[3]](https://link.springer.com/article/10.1186/s40798-022-00504-0)
+[[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 Interventions therefore need an indication. This can be:
 
@@ -45,11 +58,23 @@ For most common criteria of good running form, these requirements are not met.
 
 ## Shared decision-making
 
-It can make sense to modify individual running-style parameters for performance reasons. At the same time, every intervention has a price: it does not simply remove load, but shifts it within the system and can create new side effects. Whether a possible performance gain justifies accepting those side effects cannot be dictated by shouting from the sideline, group pressure, or a quick correction. This trade-off belongs in long-term, individual support and requires the athlete's informed consent. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/) [[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
+It can make sense to modify individual running-style parameters for performance reasons. At the same
+time, every intervention has a price: it does not simply remove load, but shifts it within the
+system and can create new side effects. Whether a possible performance gain justifies accepting
+those side effects cannot be dictated by shouting from the sideline, group pressure, or a quick
+correction. This trade-off belongs in long-term, individual support and requires the athlete's
+informed consent. [[6]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9655004/)
+[[7]](https://pubmed.ncbi.nlm.nih.gov/23439417/)
 
 ## Avoiding the illusion of control
 
-Many old-school coaches quite often fall into an illusion of control. They give a correction, the athlete improves over weeks, but possibly not because of the correction. Training, tissue, coordination, and self-organization may have been adapting anyway. Conversely, a correction can shift load and trigger symptoms. In both cases, causality is claimed without being clearly established. That is exactly why we need indication, evidence, and context. [[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/) [[5]](https://bjsm.bmj.com/content/49/20/1290) [[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
+Many old-school coaches quite often fall into an illusion of control. They give a correction, the
+athlete improves over weeks, but possibly not because of the correction. Training, tissue,
+coordination, and self-organization may have been adapting anyway. Conversely, a correction can
+shift load and trigger symptoms. In both cases, causality is claimed without being clearly
+established. That is exactly why we need indication, evidence, and context.
+[[1]](https://pubmed.ncbi.nlm.nih.gov/31028658/) [[2]](https://pubmed.ncbi.nlm.nih.gov/35247202/)
+[[5]](https://bjsm.bmj.com/content/49/20/1290) [[8]](https://pubmed.ncbi.nlm.nih.gov/30805204/)
 
 ## How we talk about running style
 
