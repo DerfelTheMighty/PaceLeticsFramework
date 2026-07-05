@@ -41,15 +41,13 @@ Entscheidend ist deshalb nicht nur die Übungsauswahl, sondern die Qualität des
 
 ## Was die Evidenz zeigt
 
-Die stärkste mechanische Evidenz kommt nicht ausschließlich aus Reha-Studien. Ein wichtiger Teil stammt aus Studien an gesunden Achillessehnen. Bohm et al. zeigten, dass hohe zyklische Belastungen mit kontrollierter Dauer Sehnensteifigkeit, Querschnitt und Materialeigenschaften verbessern können. [[4]](https://doi.org/10.1242/jeb.112268) Geremia et al. zeigten ähnliche mechanische Anpassungen nach schwerem exzentrischem Triceps-surae-Training. [[6]](https://doi.org/10.1007/s00421-018-3904-1)
+Bohm et al. zeigten, dass hohe zyklische Belastungen mit kontrollierter Dauer Sehnensteifigkeit, Querschnitt und Materialeigenschaften verbessern können. [[4]](https://doi.org/10.1242/jeb.112268) Geremia et al. zeigten ähnliche mechanische Anpassungen nach schwerem exzentrischem Triceps-surae-Training. [[6]](https://doi.org/10.1007/s00421-018-3904-1)
 
 Meta-Analysen stützen diesen Schwerpunkt: Mechanische Belastung kann Sehnensteifigkeit, Materialeigenschaften und teilweise den Querschnitt verbessern. Besonders relevant scheint die lokale Sehnendehnung beziehungsweise die Lastintensität zu sein. Die konkrete Muskelaktionsform - isometrisch, konzentrisch oder exzentrisch - ist wahrscheinlich weniger entscheidend als die Frage, welche Spannung tatsächlich in der Sehne ankommt. [[5]](https://doi.org/10.1186/s40798-015-0009-9) [[7]](https://doi.org/10.1007/s40279-022-01695-y)
 
-Eine neuere Studie von Tsai et al. passt dazu: Bei hoher lokaler Belastung verbesserten sich Querschnitt und normalisierte Achillessehnensteifigkeit. Innerhalb des untersuchten Bereichs schienen Timing und Wochenverteilung weniger wichtig als der wiederholte hohe Reiz selbst. [[8]](https://doi.org/10.1038/s41598-024-56840-6)
+Eine neuere Studie von Tsai et al. passt dazu: Bei hoher lokaler Belastung verbesserten sich Querschnitt und Sehnensteifigkeit. Innerhalb des untersuchten Bereichs schienen Timing und Wochenverteilung weniger wichtig als der wiederholte hohe Reiz selbst. [[8]](https://doi.org/10.1038/s41598-024-56840-6)
 
 ## Belastungsmodelle im Vergleich
-
-Nicht alle zitierten Ansätze sind im gleichen Sinne Reha-Protokolle. Einige Arbeiten untersuchten gesunde Achillessehnen, andere klinische Achillessehnenbeschwerden, wieder andere fassen mehrere Trainingsstudien zusammen. Für die Trainingsplanung gehören sie trotzdem zusammen, weil sie dieselbe Grundfrage beantworten: Welche Art von Belastung verändert die mechanische Kapazität einer Sehne?
 
 | Ansatz | Untersucht bei | Reizprinzip | Typische Dosierung | Was man daraus ableiten kann |
 |---|---|---|---|---|
@@ -135,7 +133,7 @@ Eine gereizte Achillessehne braucht keine Panikpause, aber auch keine Mutprobe. 
 
 ## Fazit
 
-Evidenzbasiertes Training für die Achillessehne beginnt nicht mit einem Reha-Protokoll, sondern mit dem Prinzip der Sehnenadaptation. Die Achillessehne reagiert auf hohe, kontrollierte und wiederholbare Zugspannung, wenn der Reiz lange genug geplant wird. HSR, Exzentrik, High-Strain-Training und hochintensive Isometrie sind verschiedene Wege, diesen Reiz zu organisieren. Das Berlin-Protokoll ist ein wichtiger Sonderfall, weil es bei symptomatischen Achillessehnen mechanische Anpassungen gezeigt hat. Der größere Punkt bleibt aber: Wer die Achillessehne belastbarer machen will, muss nicht nur laufen, sondern den mechanischen Reiz gezielt planen.
+Die Achillessehne reagiert auf hohe, kontrollierte und wiederholbare Zugspannung, wenn der Reiz lange genug geplant wird. HSR, Exzentrik, High-Strain-Training und hochintensive Isometrie sind verschiedene Wege, diesen Reiz zu organisieren. Das Berlin-Protokoll ist ein wichtiger Sonderfall, weil es bei symptomatischen Achillessehnen mechanische Anpassungen gezeigt hat. Der größere Punkt bleibt aber: Wer die Achillessehne belastbarer machen will, muss nicht nur laufen, sondern den mechanischen Reiz gezielt planen.
 
 ## Quellen
 
