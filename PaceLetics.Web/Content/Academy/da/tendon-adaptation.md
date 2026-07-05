@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "Hvorfor sener tilpasser sig langsomt"
 summary: "Hvordan sener overfører kraft, lagrer energi og reagerer på træning."
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

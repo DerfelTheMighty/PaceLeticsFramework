@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "چرا تاندون ها به کندی تطبیق می یابند؟"
 summary: "چگونه تاندون ها نیرو را منتقل می کنند، انرژی را ذخیره می کنند و به تمرین پاسخ می دهند."
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

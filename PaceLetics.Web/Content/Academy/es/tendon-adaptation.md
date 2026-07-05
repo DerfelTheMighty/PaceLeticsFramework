@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "¿Por qué los tendones se adaptan lentamente?"
 summary: "Cómo los tendones transmiten fuerza, almacenan energía y responden al entrenamiento."
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

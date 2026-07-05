@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: Warum Sehnen langsam adaptieren
 summary: Wie Sehnen Kraft übertragen, Energie speichern und auf Training reagieren.
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "为什么肌腱适应缓慢"
 summary: "肌腱如何传递力量、储存能量和对训练做出反应。"
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

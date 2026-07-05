@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "Why tendons adapt slowly"
 summary: "How tendons transmit force, store energy and respond to training."
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

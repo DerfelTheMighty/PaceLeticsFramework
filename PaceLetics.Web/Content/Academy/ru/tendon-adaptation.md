@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "Почему сухожилия адаптируются медленно"
 summary: "Как сухожилия передают силу, хранят энергию и реагируют на тренировки."
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

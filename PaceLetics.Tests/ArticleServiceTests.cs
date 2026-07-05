@@ -59,7 +59,7 @@ public sealed class ArticleServiceTests
         Assert.Contains(paceTraining.References, reference => reference.Url.Contains("11933073"));
 
         var tendonAdaptation = Assert.Single(articles, article => article.Id == "tendon-adaptation");
-        Assert.Equal(ArticleCategories.Training, tendonAdaptation.Category);
+        Assert.Equal(ArticleCategories.Fundamentals, tendonAdaptation.Category);
         Assert.Equal(ArticleContentKind.Generic, tendonAdaptation.ContentKind);
         Assert.Equal("Warum Sehnen langsam adaptieren", tendonAdaptation.Title);
         Assert.Contains("Mechanotransduktion", tendonAdaptation.BodyHtml);

@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "لماذا تتكيف الأوتار ببطء"
 summary: "كيف تنقل الأوتار القوة وتخزن الطاقة وتستجيب للتدريب."
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40

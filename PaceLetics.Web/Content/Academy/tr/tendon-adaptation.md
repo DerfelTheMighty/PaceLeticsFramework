@@ -2,7 +2,7 @@
 id: tendon-adaptation
 title: "Tendonlar neden yavaş uyum sağlar?"
 summary: "Tendonların kuvveti nasıl ilettiği, enerjiyi nasıl depoladığı ve antrenmana nasıl tepki verdiği."
-category: training
+category: fundamentals
 sourceModule: Markdown
 contentKind: Generic
 sortOrder: 40
