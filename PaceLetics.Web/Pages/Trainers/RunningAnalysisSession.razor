@@ -36,36 +36,39 @@
         }
         else if (_captureSession is not null)
         {
-            <MudPaper Elevation="1" Class="pa-4">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                    <MudStack Spacing="0" Style="min-width:0;">
-                        <MudText Typo="Typo.h6">@L["LocalStorageTitle"]</MudText>
-                        <MudText Typo="Typo.body2" Color="@GetLocalStorageTextColor()" Style="word-break:break-word;">
-                            @GetLocalStorageText()
-                        </MudText>
-                    </MudStack>
+            @if (!_isCaptureMode)
+            {
+                <MudPaper Elevation="1" Class="pa-4">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="0" Style="min-width:0;">
+                            <MudText Typo="Typo.h6">@L["LocalStorageTitle"]</MudText>
+                            <MudText Typo="Typo.body2" Color="@GetLocalStorageTextColor()" Style="word-break:break-word;">
+                                @GetLocalStorageText()
+                            </MudText>
+                        </MudStack>
 
-                    <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                        @if (SupportsDeviceFolderStorage)
-                        {
-                            <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
+                        <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                            @if (SupportsDeviceFolderStorage)
+                            {
+                                <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
+                                    <MudIconButton Color="Color.Primary"
+                                                   Variant="Variant.Outlined"
+                                                   Icon="@Icons.Material.Filled.FolderOpen"
+                                                   OnClick="ChooseRecordingDirectoryAsync"
+                                                   aria-label="@L["ChooseLocalStorageFolder"]" />
+                                </MudTooltip>
+                            }
+
+                            <MudTooltip Text="@L["OpenUploadPage"]">
                                 <MudIconButton Color="Color.Primary"
-                                               Variant="Variant.Outlined"
-                                               Icon="@Icons.Material.Filled.FolderOpen"
-                                               OnClick="ChooseRecordingDirectoryAsync"
-                                               aria-label="@L["ChooseLocalStorageFolder"]" />
+                                               Icon="@Icons.Material.Filled.CloudUpload"
+                                               OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))"
+                                               aria-label="@L["OpenUploadPage"]" />
                             </MudTooltip>
-                        }
-
-                        <MudTooltip Text="@L["OpenUploadPage"]">
-                            <MudIconButton Color="Color.Primary"
-                                           Icon="@Icons.Material.Filled.CloudUpload"
-                                           OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))"
-                                           aria-label="@L["OpenUploadPage"]" />
-                        </MudTooltip>
+                        </MudStack>
                     </MudStack>
-                </MudStack>
-            </MudPaper>
+                </MudPaper>
+            }
 
             @if (_isCaptureMode && CurrentParticipant is not null)
             {
@@ -74,6 +77,9 @@
                                              CourseId="@_captureSession.CourseId"
                                              CaptureTitle="@_captureSession.Title"
                                              CaptureStartsAt="@_captureSession.StartsAt"
+                                             Participants="_roster"
+                                             SelectedParticipantId="_selectedParticipantId"
+                                             SelectedParticipantIdChanged="OnParticipantSelectedAsync"
                                              ParticipantId="@CurrentParticipant.ParticipantId"
                                              AthleteUserId="@CurrentParticipant.AthleteUserId"
                                              AthleteEmail="@CurrentParticipant.AthleteEmail"
@@ -82,6 +88,11 @@
                                              IsOnline="_isOnline"
                                              CanRecord="@IsLocalRecordingStorageReady"
                                              IsRecording="_isRecording"
+                                             SupportsDeviceFolderStorage="@SupportsDeviceFolderStorage"
+                                             IsStorageReady="@IsLocalRecordingStorageReady"
+                                             StorageText="@GetLocalStorageText()"
+                                             StorageTextColor="@GetLocalStorageTextColor()"
+                                             OnChooseStorage="ChooseRecordingDirectoryAsync"
                                              OnStartRecording="EnsureAnalysisStartedAsync"
                                              OnStopRecording="OnStopRecordingAsync"
                                              OnRecorded="OnRecordingSavedAsync"
@@ -382,6 +393,9 @@
             _selectedParticipantId = null;
             _isCaptureMode = false;
         }
+
+        if (string.IsNullOrWhiteSpace(_selectedParticipantId))
+            _selectedParticipantId = GetOrderedRoster().FirstOrDefault()?.ParticipantId;
     }
 
     private async Task LoadRecordingStorageStatusAsync()
@@ -447,7 +461,9 @@
     {
         await RefreshOnlineStateAsync();
         await LoadRecordingStorageStatusAsync();
-        _selectedParticipantId = participantId;
+        _selectedParticipantId = string.IsNullOrWhiteSpace(participantId)
+            ? GetOrderedRoster().FirstOrDefault()?.ParticipantId
+            : participantId;
         _isCaptureMode = true;
     }
 
@@ -574,19 +590,7 @@
     {
         if (IsExportRequired(video))
         {
-            try
-            {
-                var module = await GetRecorderModuleAsync();
-                await module.InvokeAsync<RunningAnalysisRecordedVideo>(
-                    "exportSavedRecording",
-                    video.LocalId);
-                Snackbar.Add(string.Format(L["LocalExportSuccess"], video.FileName), Severity.Success);
-            }
-            catch (Exception ex)
-            {
-                Snackbar.Add(string.Format(L["LocalExportRequired"], ex.Message), Severity.Error);
-            }
-
+            Snackbar.Add(string.Format(L["LocalExportSuccess"], video.FileName), Severity.Success);
             return;
         }
 
@@ -799,6 +803,14 @@
         safeName = string.IsNullOrWhiteSpace(safeName) ? participant.ParticipantId : safeName;
 
         return $"{DateTime.UtcNow:yyyyMMdd-HHmmss}-{safeName}";
+    }
+
+    private IReadOnlyList<RunningAnalysisRosterItem> GetOrderedRoster()
+    {
+        return _roster
+            .OrderBy(participant => participant.SortOrder)
+            .ThenBy(participant => participant.DisplayName)
+            .ToList();
     }
 
     private sealed class BrowserRecordingStorageStatus
