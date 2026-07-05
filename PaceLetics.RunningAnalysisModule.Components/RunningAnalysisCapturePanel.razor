@@ -174,35 +174,33 @@
                 }
 
                 <MudStack Row="true" Justify="Justify.Center" Style="gap:8px; flex-wrap:wrap;">
-                    <MudButton Variant="Variant.Outlined"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Filled.SkipNext"
-                               Disabled="@IsRecordingActive"
-                               OnClick="SkipParticipantAsync">
-                        Skip
-                    </MudButton>
-
                     @if (!IsRecordingActive)
                     {
-                        <MudTooltip Text="Aufnahme starten">
-                            <MudIconButton Variant="Variant.Filled"
-                                           Color="Color.Primary"
-                                           Icon="@Icons.Material.Filled.FiberManualRecord"
-                                           Disabled="@(!CanUseRecorder)"
-                                           OnClick="StartRecordingAsync"
-                                           aria-label="Aufnahme starten" />
-                        </MudTooltip>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.FiberManualRecord"
+                                   Disabled="@(!CanUseRecorder)"
+                                   OnClick="StartRecordingAsync">
+                            Record
+                        </MudButton>
                     }
                     else
                     {
-                        <MudTooltip Text="Aufnahme stoppen">
-                            <MudIconButton Variant="Variant.Filled"
-                                           Color="Color.Error"
-                                           Icon="@Icons.Material.Filled.Stop"
-                                           OnClick="StopRecordingAsync"
-                                           aria-label="Aufnahme stoppen" />
-                        </MudTooltip>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Error"
+                                   StartIcon="@Icons.Material.Filled.Stop"
+                                   OnClick="StopRecordingAsync">
+                            Stop
+                        </MudButton>
                     }
+
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               EndIcon="@Icons.Material.Filled.ArrowForward"
+                               Disabled="@IsRecordingActive"
+                               OnClick="NextRecordingParticipantAsync">
+                        Next
+                    </MudButton>
                 </MudStack>
             </MudStack>
         }
@@ -348,7 +346,7 @@
         || (_wizardStep == CaptureWizardStep.Roster && OrderedParticipants.Count == 0)
         || (_wizardStep == CaptureWizardStep.Storage && !IsStorageDecisionReady)
         || (_wizardStep == CaptureWizardStep.ManualSave && _recordedVideo is null)
-        || (_wizardStep == CaptureWizardStep.Recording && !CanUseRecorder);
+        || _wizardStep == CaptureWizardStep.Recording;
     private bool CanChooseStorageFolder => SupportsDeviceFolderStorage;
     private bool IsStorageDecisionReady =>
         IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
@@ -444,9 +442,6 @@
                 _statusMessage = null;
                 _wizardStep = CaptureWizardStep.Recording;
                 break;
-            case CaptureWizardStep.Recording:
-                await MoveToNextParticipantAsync(null);
-                break;
             case CaptureWizardStep.ManualSave:
                 await ExportRecordingAsync();
                 break;
@@ -494,12 +489,12 @@
         await SelectedParticipantIdChanged.InvokeAsync(firstParticipant.ParticipantId);
     }
 
-    private async Task SkipParticipantAsync()
+    private async Task NextRecordingParticipantAsync()
     {
         if (IsRecordingActive)
             return;
 
-        await MoveToNextParticipantAsync($"{ActiveParticipantName} wurde übersprungen.");
+        await MoveToNextParticipantAsync(null);
     }
 
     private async Task MoveToNextParticipantAsync(string? statusMessage)
@@ -650,7 +645,7 @@
             CaptureWizardStep.Roster => "Prüfe kurz, ob die Liste stimmt. Weiter führt zum Speicherort.",
             CaptureWizardStep.Storage => GetStorageInstruction(),
             CaptureWizardStep.Perspective => "Wähle genau eine Perspektive für diese Runde.",
-            CaptureWizardStep.Recording => "Nimm die Person auf. Weiter springt zur nächsten Person.",
+            CaptureWizardStep.Recording => "Nimm die Person auf oder gehe mit Next zur nächsten Person.",
             CaptureWizardStep.ManualSave => "Der Browser braucht jetzt einen manuellen Speicherschritt. Weiter speichert das Video.",
             CaptureWizardStep.Complete => "Alle Personen sind für diese Perspektive durchlaufen.",
             _ => string.Empty
