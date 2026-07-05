@@ -5,6 +5,7 @@ const recordingStoreName = "recordings";
 const settingsStoreName = "settings";
 const recordingDirectoryKey = "recordingDirectory";
 const metadataFileSuffix = ".paceletics.json";
+const recordingPackageSuffix = ".paceletics.zip";
 const recordingArtifactType = "paceletics-running-analysis-recording";
 const defaultPerspective = "side";
 const missingAthleteUserIdMessage = "The local recording metadata does not contain an athlete user id.";
@@ -152,7 +153,9 @@ export async function stopRecording(videoElement) {
     if (state.writable) {
       await state.writable.close();
       if (state.directoryHandle) {
-        await writeRecordingMetadataFile(state.directoryHandle, state.recording);
+        await writeRecordingPackageFile(state.directoryHandle, state.recording);
+        await removeDirectoryFile(state.directoryHandle, state.recording.fileName);
+        delete state.recording.fileHandle;
       }
     } else {
       state.recording.blob = new Blob(state.chunks, { type: state.recording.contentType });
@@ -283,6 +286,13 @@ export async function openSavedRecording(localId) {
   }
 
   if (recording.storageMode === "file-system") {
+    if (recording.packageFileHandle || recording.packageFileName) {
+      const packageFileHandle = recording.packageFileHandle
+        || await getFileHandleFromDirectory(recording.packageFileName);
+      await ensureHandlePermission(packageFileHandle, "read", true);
+      return await openRecordingFromPackageFile(await packageFileHandle.getFile(), recording);
+    }
+
     const fileHandle = recording.fileHandle
       || await getFileHandleFromDirectory(recording.fileName);
     await ensureHandlePermission(fileHandle, "read", true);
@@ -649,11 +659,16 @@ async function importRecordingsFromDirectory(directoryHandle, requestPermission 
 
   const recordings = [];
   for await (const [metadataFileName, handle] of directoryHandle.entries()) {
-    if (handle.kind !== "file" || !metadataFileName.endsWith(metadataFileSuffix)) {
+    if (handle.kind !== "file") {
       continue;
     }
 
-    const recording = await readRecordingMetadataFile(directoryHandle, metadataFileName, handle);
+    const recording = isZipFileName(metadataFileName)
+      ? await readRecordingPackageFile(directoryHandle, metadataFileName, handle)
+      : metadataFileName.endsWith(metadataFileSuffix)
+        ? await readRecordingMetadataFile(directoryHandle, metadataFileName, handle)
+        : null;
+
     if (recording) {
       recordings.push(recording);
     }
@@ -727,6 +742,36 @@ async function readRecordingMetadataFile(directoryHandle, metadataFileName, meta
       lastUploadAt: metadata.lastUploadAt || null,
       lastError: isMissingAthleteUserId ? missingAthleteUserIdMessage : metadata.lastError || "",
       driveFileUrl: metadata.driveFileUrl || ""
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function readRecordingPackageFile(directoryHandle, packageFileName, packageHandle) {
+  try {
+    const packageFile = await packageHandle.getFile();
+    const files = extractStoredZipFiles(packageFile, new Uint8Array(await packageFile.arrayBuffer()));
+    const metadataFile = files.find(file => file.name.endsWith(metadataFileSuffix));
+    if (!metadataFile) {
+      return null;
+    }
+
+    const metadata = JSON.parse(await metadataFile.text());
+    const videoFile = files.find(file => file.name === metadata.fileName)
+      || files.find(file => file.type.startsWith("video/") || isVideoFileName(file.name));
+    const recording = createRecordingFromImportedFiles(metadata, metadataFile.name, videoFile);
+    if (!recording) {
+      return null;
+    }
+
+    return {
+      ...recording,
+      storageMode: fileSystemStorageMode,
+      folderName: directoryHandle.name || metadata.folderName || "",
+      packageFileName,
+      packageFileHandle: packageHandle,
+      blob: null
     };
   } catch {
     return null;
@@ -846,8 +891,55 @@ async function writeRecordingMetadataFile(directoryHandle, recording) {
   await writable.close();
 }
 
+async function writeRecordingPackageFile(directoryHandle, recording) {
+  const fileHandle = recording.fileHandle
+    || await directoryHandle.getFileHandle(recording.fileName, { create: false });
+  const videoFile = await fileHandle.getFile();
+  recording.packageFileName = recording.packageFileName
+    || `${getFileNameWithoutExtension(recording.fileName)}${recordingPackageSuffix}`;
+  const metadata = toRecordingMetadata(recording);
+  const metadataFileName = metadata.metadataFileName || `${recording.fileName}${metadataFileSuffix}`;
+  const metadataFile = new File(
+    [JSON.stringify(metadata, null, 2)],
+    metadataFileName,
+    {
+      type: "application/json",
+      lastModified: Date.now()
+    });
+  const packageFile = await createRecordingPackageFile(recording, [videoFile, metadataFile]);
+  const packageHandle = await directoryHandle.getFileHandle(packageFile.name, { create: true });
+  const writable = await packageHandle.createWritable();
+  await writable.write(packageFile);
+  await writable.close();
+
+  recording.packageFileName = packageFile.name;
+  recording.packageFileHandle = packageHandle;
+}
+
+async function openRecordingFromPackageFile(packageFile, recording) {
+  const files = extractStoredZipFiles(packageFile, new Uint8Array(await packageFile.arrayBuffer()));
+  const videoFile = files.find(file => file.name === recording.fileName)
+    || files.find(file => file.type.startsWith("video/") || isVideoFileName(file.name));
+
+  if (!videoFile) {
+    throw new Error("The recording package does not contain the video file.");
+  }
+
+  return videoFile;
+}
+
+async function removeDirectoryFile(directoryHandle, fileName) {
+  try {
+    if (directoryHandle?.removeEntry && fileName) {
+      await directoryHandle.removeEntry(fileName);
+    }
+  } catch {
+    // Best-effort cleanup; the packaged recording is already written.
+  }
+}
+
 async function tryWriteRecordingMetadataFile(recording) {
-  if (recording.storageMode !== "file-system") {
+  if (recording.storageMode !== "file-system" || recording.packageFileName) {
     return;
   }
 
@@ -1009,6 +1101,7 @@ function toRecordingMetadata(recording) {
     storageMode: recording.storageMode || fileSystemStorageMode,
     folderName: recording.folderName || "",
     metadataFileName: recording.metadataFileName || `${recording.fileName}${metadataFileSuffix}`,
+    packageFileName: recording.packageFileName || "",
     browserFileName: recording.browserFileName || "",
     uploadStatus: recording.uploadStatus || uploadStatusQueued,
     uploadAttempts: recording.uploadAttempts || 0,
@@ -1122,7 +1215,7 @@ function getUnsupportedStorageStatus(errorMessage) {
 
 function getRecordingStorageLocation(recording) {
   if (recording.storageMode === fileSystemStorageMode) {
-    return `Device folder: ${recording.folderName || "(selected folder)"}/${recording.fileName}`;
+    return `Device folder: ${recording.folderName || "(selected folder)"}/${recording.packageFileName || recording.fileName}`;
   }
 
   if (recording.browserFileName) {
@@ -1147,7 +1240,8 @@ async function shareRecordingFiles(files, packageFile) {
 }
 
 async function createRecordingPackageFile(recording, files) {
-  const packageName = `${getFileNameWithoutExtension(recording.fileName)}.paceletics.zip`;
+  const packageName = recording.packageFileName
+    || `${getFileNameWithoutExtension(recording.fileName)}${recordingPackageSuffix}`;
   const zipBlob = await createStoredZipBlob(files);
   return new File([zipBlob], packageName, {
     type: "application/zip",

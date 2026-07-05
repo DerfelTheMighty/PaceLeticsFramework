@@ -113,7 +113,7 @@
                 <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-primary);">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
                         <MudStack Spacing="0" Style="min-width:0;">
-                            <MudText Typo="Typo.h6">@ParticipantName</MudText>
+                            <MudText Typo="Typo.h6">@ActiveParticipantName</MudText>
                             <MudText Typo="Typo.body2" Color="Color.Secondary">
                                 @RunningAnalysisPerspectiveFormatting.ToDisplayName(_selectedPerspective) - Teilnehmer:in @GetCurrentParticipantNumber() von @OrderedParticipants.Count
                             </MudText>
@@ -141,11 +141,11 @@
                                                       CourseId="@CourseId"
                                                       CaptureTitle="@EffectiveCaptureTitle"
                                                       CaptureStartsAt="@EffectiveCaptureStartsAt"
-                                                      ParticipantId="@ParticipantId"
-                                                      AthleteUserId="@AthleteUserId"
-                                                      AthleteEmail="@AthleteEmail"
-                                                      ParticipantName="@ParticipantName"
-                                                      FileNamePrefix="@FileNamePrefix"
+                                                      ParticipantId="@ActiveParticipantId"
+                                                      AthleteUserId="@ActiveAthleteUserId"
+                                                      AthleteEmail="@ActiveAthleteEmail"
+                                                      ParticipantName="@ActiveParticipantName"
+                                                      FileNamePrefix="@ActiveFileNamePrefix"
                                                       Perspective="@_selectedPerspective"
                                                       CanRecord="CanUseRecorder"
                                                       ShowControls="false"
@@ -166,7 +166,7 @@
         {
             <MudStack Spacing="3">
                 <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                    Speichere jetzt das Video von @ParticipantName. Danach geht es automatisch mit der nächsten Person weiter.
+                    Speichere jetzt das Video von @ActiveParticipantName. Danach geht es automatisch mit der nächsten Person weiter.
                 </MudAlert>
 
                 @if (!string.IsNullOrWhiteSpace(_saveError))
@@ -355,6 +355,7 @@
     private bool _folderChoiceAttempted;
     private string? _saveError;
     private string? _statusMessage;
+    private string? _activeParticipantId;
     private RunningAnalysisRecordedVideo? _recordedVideo;
     private RunningAnalysisPerspective _selectedPerspective = RunningAnalysisPerspective.Side;
 
@@ -395,6 +396,18 @@
     private bool IsRecordingActive => IsRecording || _recorderIsRecording;
     private bool IsNextDisabled => _wizardStep == CaptureWizardStep.Roster && OrderedParticipants.Count == 0;
     private bool CanUseRecorder => CanRecord || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
+    private RunningAnalysisRosterItem? ActiveParticipant =>
+        OrderedParticipants.FirstOrDefault(participant => participant.ParticipantId == _activeParticipantId)
+        ?? OrderedParticipants.FirstOrDefault(participant => participant.ParticipantId == SelectedParticipantId)
+        ?? OrderedParticipants.FirstOrDefault();
+
+    private string ActiveParticipantId => ActiveParticipant?.ParticipantId ?? ParticipantId;
+    private string ActiveAthleteUserId => ActiveParticipant?.AthleteUserId ?? AthleteUserId;
+    private string ActiveAthleteEmail => ActiveParticipant?.AthleteEmail ?? AthleteEmail;
+    private string ActiveParticipantName => ActiveParticipant?.DisplayName ?? ParticipantName;
+    private string ActiveFileNamePrefix => ActiveParticipant is null
+        ? FileNamePrefix
+        : BuildFileNamePrefix(ActiveParticipant);
 
     private IReadOnlyList<RunningAnalysisRosterItem> OrderedParticipants =>
         Participants
@@ -406,6 +419,25 @@
     private string EffectiveCaptureExternalEventId => string.IsNullOrWhiteSpace(CaptureExternalEventId) ? AnalysisExternalEventId : CaptureExternalEventId;
     private string EffectiveCaptureTitle => string.IsNullOrWhiteSpace(CaptureTitle) ? AnalysisTitle : CaptureTitle;
     private DateTime? EffectiveCaptureStartsAt => CaptureStartsAt ?? AnalysisStartsAt;
+
+    protected override void OnParametersSet()
+    {
+        if (OrderedParticipants.Count == 0)
+        {
+            _activeParticipantId = null;
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(_activeParticipantId)
+            && OrderedParticipants.Any(participant => participant.ParticipantId == _activeParticipantId))
+        {
+            return;
+        }
+
+        _activeParticipantId = !string.IsNullOrWhiteSpace(SelectedParticipantId)
+            ? SelectedParticipantId
+            : OrderedParticipants.First().ParticipantId;
+    }
 
     private async Task ChooseStorageAsync()
     {
@@ -489,6 +521,7 @@
             return;
         }
 
+        _activeParticipantId = firstParticipant.ParticipantId;
         await SelectedParticipantIdChanged.InvokeAsync(firstParticipant.ParticipantId);
     }
 
@@ -497,7 +530,7 @@
         if (IsRecordingActive)
             return;
 
-        await MoveToNextParticipantAsync($"{ParticipantName} wurde übersprungen.");
+        await MoveToNextParticipantAsync($"{ActiveParticipantName} wurde übersprungen.");
     }
 
     private async Task MoveToNextParticipantAsync(string? statusMessage)
@@ -512,6 +545,7 @@
 
         ResetRecordingState();
         _statusMessage = statusMessage;
+        _activeParticipantId = nextParticipant.ParticipantId;
         await SelectedParticipantIdChanged.InvokeAsync(nextParticipant.ParticipantId);
         _wizardStep = CaptureWizardStep.Recording;
     }
@@ -519,7 +553,8 @@
     private RunningAnalysisRosterItem? GetNextParticipant()
     {
         var participants = OrderedParticipants;
-        var currentIndex = participants.ToList().FindIndex(participant => participant.ParticipantId == SelectedParticipantId);
+        var currentParticipantId = _activeParticipantId ?? SelectedParticipantId;
+        var currentIndex = participants.ToList().FindIndex(participant => participant.ParticipantId == currentParticipantId);
         if (currentIndex < 0)
             return participants.FirstOrDefault();
 
@@ -631,7 +666,7 @@
             CaptureWizardStep.Roster => "Registrierte Teilnehmer:innen",
             CaptureWizardStep.Storage => "Speicher vorbereiten",
             CaptureWizardStep.Perspective => "Perspektive wählen",
-            CaptureWizardStep.Recording => $"Jetzt aufnehmen: {ParticipantName}",
+            CaptureWizardStep.Recording => $"Jetzt aufnehmen: {ActiveParticipantName}",
             CaptureWizardStep.ManualSave => "Video speichern",
             CaptureWizardStep.Complete => "Fertig",
             _ => string.Empty
@@ -664,8 +699,21 @@
 
     private int GetCurrentParticipantNumber()
     {
-        var index = OrderedParticipants.ToList().FindIndex(participant => participant.ParticipantId == SelectedParticipantId);
+        var currentParticipantId = _activeParticipantId ?? SelectedParticipantId;
+        var index = OrderedParticipants.ToList().FindIndex(participant => participant.ParticipantId == currentParticipantId);
         return index < 0 ? 1 : index + 1;
+    }
+
+    private static string BuildFileNamePrefix(RunningAnalysisRosterItem participant)
+    {
+        var safeName = new string(participant.DisplayName
+            .Trim()
+            .Select(character => char.IsLetterOrDigit(character) ? character : '-')
+            .ToArray());
+
+        safeName = string.IsNullOrWhiteSpace(safeName) ? participant.ParticipantId : safeName;
+
+        return $"{DateTime.UtcNow:yyyyMMdd-HHmmss}-{safeName}";
     }
 
     private string GetParticipantRecordingText(RunningAnalysisRosterItem item)
