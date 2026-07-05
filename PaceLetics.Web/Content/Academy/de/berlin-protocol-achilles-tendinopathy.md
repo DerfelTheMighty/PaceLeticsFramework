@@ -133,7 +133,7 @@ Eine gereizte Achillessehne braucht keine Panikpause, aber auch keine Mutprobe. 
 
 ## Fazit
 
-Die Achillessehne reagiert auf hohe, kontrollierte und wiederholbare Zugspannung, wenn der Reiz lange genug geplant wird. HSR, Exzentrik, High-Strain-Training und hochintensive Isometrie sind verschiedene Wege, diesen Reiz zu organisieren. Das Berlin-Protokoll ist ein wichtiger Sonderfall, weil es bei symptomatischen Achillessehnen mechanische Anpassungen gezeigt hat. Der größere Punkt bleibt aber: Wer die Achillessehne belastbarer machen will, muss nicht nur laufen, sondern den mechanischen Reiz gezielt planen.
+Die Achillessehne reagiert auf hohe, kontrollierte und wiederholbare Zugspannung, wenn der Reiz lange genug geplant wird. HSR, Exzentrik, High-Strain-Training und hochintensive Isometrie sind verschiedene Wege, diesen Reiz zu organisieren. Das Berlin-Protokoll ist ein wichtiger Sonderfall, weil es bei symptomatischen Achillessehnen mechanische Anpassungen gezeigt hat. Wer die Achillessehne belastbarer machen will, muss nicht nur laufen, sondern gezielt trainieren.
 
 ## Quellen
 
