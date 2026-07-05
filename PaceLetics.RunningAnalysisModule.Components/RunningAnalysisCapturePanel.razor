@@ -50,32 +50,32 @@
                         Oh, das klappt leider nicht. Wir speichern jedes Video einzeln nach der Aufnahme.
                     </MudAlert>
                 }
-                else
-                {
-                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                        Wähle jetzt den lokalen Ordner für diese Laufanalyse.
-                    </MudAlert>
-                }
 
-                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                    <MudStack Spacing="0">
-                        <MudText Typo="Typo.subtitle1">@GetStorageStatusTitle()</MudText>
-                        <MudText Typo="Typo.body2" Color="@StorageTextColor" Style="word-break:break-word;">
-                            @StorageText
-                        </MudText>
-                    </MudStack>
-                </MudPaper>
+                @if (ShowStorageStatusDetails)
+                {
+                    <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.subtitle1">@GetStorageStatusTitle()</MudText>
+                            <MudText Typo="Typo.body2" Color="@StorageTextColor" Style="word-break:break-word;">
+                                @StorageText
+                            </MudText>
+                        </MudStack>
+                    </MudPaper>
+                }
 
                 @if (CanChooseStorageFolder)
                 {
-                    <MudTooltip Text="Ordner wählen">
-                        <MudIconButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       Icon="@Icons.Material.Filled.FolderOpen"
-                                       Disabled="@_isChoosingStorage"
-                                       OnClick="ChooseStorageAsync"
-                                       aria-label="Ordner wählen" />
-                    </MudTooltip>
+                    <div class="running-analysis-storage-action">
+                        <MudTooltip Text="Ordner wählen">
+                            <MudIconButton Class="running-analysis-storage-button"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           Icon="@Icons.Material.Filled.FolderOpen"
+                                           Disabled="@_isChoosingStorage"
+                                           OnClick="ChooseStorageAsync"
+                                           aria-label="Ordner wählen" />
+                        </MudTooltip>
+                    </div>
                 }
             </MudStack>
         }
@@ -278,6 +278,23 @@
     .running-analysis-choice:hover {
         border-color: var(--mud-palette-primary);
     }
+
+    .running-analysis-storage-action {
+        min-height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .running-analysis-storage-button {
+        width: 92px;
+        height: 92px;
+        border-radius: 16px;
+    }
+
+    .running-analysis-storage-button .mud-icon-root {
+        font-size: 3rem;
+    }
 </style>
 
 @code {
@@ -349,6 +366,8 @@
         || _wizardStep == CaptureWizardStep.Recording;
     private bool CanChooseStorageFolder => SupportsDeviceFolderStorage;
     private bool IsStorageDecisionReady =>
+        IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
+    private bool ShowStorageStatusDetails =>
         IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private bool CanUseRecorder => CanRecord || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private RunningAnalysisRosterItem? ActiveParticipant =>
@@ -655,10 +674,10 @@
     private string GetStorageInstruction()
     {
         if (IsStorageReady)
-            return "Der Ordnerzugriff ist bereit. Du kannst einen anderen Ordner wählen oder weitergehen.";
+            return "Speicherort bereit. Du kannst weitergehen oder ihn ändern.";
 
         return SupportsDeviceFolderStorage && !_folderChoiceAttempted
-            ? "Wähle zuerst den lokalen Ordner. Danach wird Weiter frei."
+            ? "Wähle den Speicherort für die Aufnahmen."
             : "Weiter führt zur Perspektive; jedes Video wird einzeln gespeichert.";
     }
 
