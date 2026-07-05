@@ -14,6 +14,7 @@ public sealed class AcademyInfoService : IDisposable
         new("Sehnenadaptation", "Sehnen denken in Wochen und Monaten. Kleine Progressionen sind oft die kluegere Abkuerzung.", "/Athletes/academy/tendon-adaptation"),
         new("Sehnenadaptation", "Fuer Sehnen zaehlt kontrollierte Spannung mehr als Hektik. Langsam, schwer, sauber bleibt stark.", "/Athletes/academy/tendon-adaptation"),
         new("Sehnenadaptation", "Wenn du dich aerob schnell fitter fuehlst: Gib Sehnen und Knochen trotzdem Zeit zum Nachziehen.", "/Athletes/academy/tendon-adaptation"),
+        new("Berlin-Protokoll", "Achillessehnen brauchen nicht mehr Chaos, sondern messbare hohe Spannung und genug Wochen.", "/Athletes/academy/berlin-protocol-achilles-tendinopathy"),
         new("Mentale Ressource", "Ein lockerer Lauf darf einfach den Tag sortieren. Nicht jede Einheit braucht Heldentum.", "/Athletes/academy/mental-resource-running"),
         new("Mentale Ressource", "Training ist auch dann gelungen, wenn es Laufen morgen wahrscheinlicher macht.", "/Athletes/academy/mental-resource-running"),
         new("Mentale Ressource", "Gute Routinen schuetzen die Ressource Laufen: verlaesslich, dosiert und alltagstauglich.", "/Athletes/academy/mental-resource-running"),
