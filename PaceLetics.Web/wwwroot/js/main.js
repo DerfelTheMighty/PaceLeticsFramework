@@ -68,3 +68,35 @@ window.paceleticsAcademyInfo = (() => {
         disable: () => setEnabled(false)
     };
 })();
+
+window.paceleticsAcademy = (() => {
+    function enhanceTables(selector) {
+        const root = selector ? document.querySelector(selector) : document;
+        if (!root) return;
+
+        root.querySelectorAll("table").forEach(table => {
+            const headers = Array.from(table.querySelectorAll("thead th"))
+                .map(header => header.textContent.trim())
+                .filter(Boolean);
+
+            if (headers.length === 0) return;
+
+            table.querySelectorAll("tbody tr").forEach(row => {
+                Array.from(row.children).forEach((cell, index) => {
+                    if (cell.tagName !== "TD") return;
+
+                    const label = headers[index];
+                    if (label) {
+                        cell.setAttribute("data-label", label);
+                    }
+                });
+            });
+
+            table.classList.add("pl-academy-table--enhanced");
+        });
+    }
+
+    return {
+        enhanceTables
+    };
+})();

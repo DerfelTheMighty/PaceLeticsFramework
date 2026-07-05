@@ -6,6 +6,7 @@
 @using PaceLetics.Web.Services.Articles
 @inject IArticleService ArticleService
 @inject IStringLocalizer<Academy> L
+@inject IJSRuntime JS
 
 <PageTitle>@PageTitleText</PageTitle>
 
@@ -77,6 +78,14 @@
     protected override void OnParametersSet()
     {
         _article = ArticleService.GetArticle(ArticleId);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_article is not null)
+        {
+            await JS.InvokeVoidAsync("paceleticsAcademy.enhanceTables", ".pl-academy-article__markdown");
+        }
     }
 
     private string FormatCategory(string category)

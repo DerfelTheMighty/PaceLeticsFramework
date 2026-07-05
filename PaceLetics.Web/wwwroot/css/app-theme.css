@@ -1754,6 +1754,74 @@
     background: color-mix(in srgb, var(--pl-academy-accent) 8%, transparent);
 }
 
+@media (max-width: 720px) {
+    .pl-academy-article__markdown table.pl-academy-table--enhanced,
+    .pl-academy-article__markdown table.pl-academy-table--enhanced thead,
+    .pl-academy-article__markdown table.pl-academy-table--enhanced tbody,
+    .pl-academy-article__markdown table.pl-academy-table--enhanced tr,
+    .pl-academy-article__markdown table.pl-academy-table--enhanced th,
+    .pl-academy-article__markdown table.pl-academy-table--enhanced td {
+        display: block;
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced tbody {
+        display: grid;
+        gap: .75rem;
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced tr {
+        padding: .65rem;
+        border: 1px solid color-mix(in srgb, var(--pl-academy-accent) 22%, var(--mud-palette-lines-default));
+        border-radius: var(--pl-radius);
+        background: color-mix(in srgb, var(--pl-academy-accent) 5%, var(--mud-palette-surface));
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced td {
+        display: grid;
+        grid-template-columns: minmax(7.25rem, 36%) 1fr;
+        gap: .75rem;
+        padding: .55rem 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--mud-palette-lines-default) 75%, transparent);
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced td:first-child {
+        padding-top: 0;
+        font-weight: 700;
+        color: var(--mud-palette-text-primary);
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced td:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .pl-academy-article__markdown table.pl-academy-table--enhanced td::before {
+        content: attr(data-label);
+        color: var(--mud-palette-text-secondary);
+        font-size: .72rem;
+        font-weight: 700;
+        line-height: 1.35;
+        text-transform: uppercase;
+    }
+}
+
 .pl-academy-article__markdown a {
     color: var(--mud-palette-primary);
     font-weight: 700;
