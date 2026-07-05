@@ -19,16 +19,8 @@
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
     <MudStack Spacing="3">
-        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-            <PageHeader Title="@(_courseEvent?.Title ?? L["Title"].ToString())"
-                        Subtitle="@GetHeaderSubtitle()" />
-
-            <MudTooltip Text="Zur Laufanalyse-Auswahl">
-                <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
-                               OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analyses"))"
-                               aria-label="Zur Laufanalyse-Auswahl" />
-            </MudTooltip>
-        </MudStack>
+        <PageHeader Title="@(_courseEvent?.Title ?? L["Title"].ToString())"
+                    Subtitle="@GetHeaderSubtitle()" />
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
         {
@@ -64,7 +56,6 @@
                                              OnRecorded="OnRecordingSavedAsync"
                                              IsRecordingChanged="OnRecordingChangedAsync"
                                              OnRetake="RetakeAsync"
-                                             OnNextParticipant="NextParticipantAsync"
                                              OnBackToRoster="CancelCaptureAsync" />
             }
             else if (_isAnalysisMode && CurrentParticipant is not null)
@@ -549,29 +540,6 @@
     {
         Snackbar.Add(L["RetakeHint"], Severity.Info);
         return Task.CompletedTask;
-    }
-
-    private async Task NextParticipantAsync()
-    {
-        if (_roster.Count == 0)
-        {
-            _isCaptureMode = false;
-            return;
-        }
-
-        var currentIndex = _roster.ToList().FindIndex(participant => participant.ParticipantId == _selectedParticipantId);
-        var next = currentIndex >= 0 && currentIndex < _roster.Count - 1
-            ? _roster[currentIndex + 1]
-            : null;
-
-        if (next is null)
-        {
-            _isCaptureMode = false;
-            Snackbar.Add(L["NoNextParticipant"], Severity.Info);
-            return;
-        }
-
-        await OpenCaptureAsync(next.ParticipantId);
     }
 
     private async Task OnRecordingSavedAsync(RunningAnalysisRecordedVideo video)

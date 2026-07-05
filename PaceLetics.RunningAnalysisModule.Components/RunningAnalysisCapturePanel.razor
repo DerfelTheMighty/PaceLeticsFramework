@@ -160,49 +160,8 @@
                         Der lokale Speicher ist noch nicht bereit.
                     </MudAlert>
                 }
-            </MudStack>
-        }
-        else if (_wizardStep == CaptureWizardStep.ManualSave)
-        {
-            <MudStack Spacing="3">
-                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                    Speichere jetzt das Video von @ActiveParticipantName. Danach geht es automatisch mit der nächsten Person weiter.
-                </MudAlert>
 
-                @if (!string.IsNullOrWhiteSpace(_saveError))
-                {
-                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_saveError</MudAlert>
-                }
-            </MudStack>
-        }
-        else if (_wizardStep == CaptureWizardStep.Complete)
-        {
-            <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
-                Alle registrierten Teilnehmer:innen wurden für diese Perspektive durchlaufen.
-            </MudAlert>
-        }
-
-        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
-            @if (_wizardStep == CaptureWizardStep.Recording)
-            {
-                <MudButton Variant="Variant.Text"
-                           Color="Color.Default"
-                           StartIcon="@Icons.Material.Filled.ArrowBack"
-                           Disabled="@IsRecordingActive"
-                           OnClick="BackToPerspectiveAsync">
-                    Zurück
-                </MudButton>
-
-                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                    <MudTooltip Text="Abbrechen">
-                        <MudIconButton Variant="Variant.Text"
-                                       Color="Color.Error"
-                                       Icon="@Icons.Material.Filled.Close"
-                                       Disabled="@IsRecordingActive"
-                                       OnClick="CancelAsync"
-                                       aria-label="Abbrechen" />
-                    </MudTooltip>
-
+                <MudStack Row="true" Justify="Justify.Center" Style="gap:8px; flex-wrap:wrap;">
                     <MudButton Variant="Variant.Outlined"
                                Color="Color.Primary"
                                StartIcon="@Icons.Material.Filled.SkipNext"
@@ -232,91 +191,55 @@
                                            aria-label="Aufnahme stoppen" />
                         </MudTooltip>
                     }
-
-                    <MudTooltip Text="Nächste Person">
-                        <MudIconButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       Icon="@Icons.Material.Filled.ArrowForward"
-                                       Disabled="@IsRecordingActive"
-                                       OnClick="NextParticipantFromRecordingAsync"
-                                       aria-label="Nächste Person" />
-                    </MudTooltip>
                 </MudStack>
-            }
-            else if (_wizardStep == CaptureWizardStep.Storage)
-            {
-                <MudButton Variant="Variant.Text"
-                           Color="Color.Error"
-                           StartIcon="@Icons.Material.Filled.Close"
-                           OnClick="CancelAsync">
-                    Cancel
-                </MudButton>
+            </MudStack>
+        }
+        else if (_wizardStep == CaptureWizardStep.ManualSave)
+        {
+            <MudStack Spacing="3">
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                    Speichere jetzt das Video von @ActiveParticipantName. Danach geht es automatisch mit der nächsten Person weiter.
+                </MudAlert>
 
-                @if (SupportsDeviceFolderStorage && !IsStorageReady && !_folderChoiceAttempted)
+                @if (!string.IsNullOrWhiteSpace(_saveError))
                 {
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Filled.FolderOpen"
-                               Disabled="@_isChoosingStorage"
-                               OnClick="ChooseStorageAsync">
-                        Ordner wählen
-                    </MudButton>
+                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_saveError</MudAlert>
                 }
-                else
-                {
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               EndIcon="@Icons.Material.Filled.ArrowForward"
-                               OnClick="NextAsync">
-                        Weiter
-                    </MudButton>
-                }
-            }
-            else if (_wizardStep == CaptureWizardStep.ManualSave)
-            {
-                <MudButton Variant="Variant.Text"
-                           Color="Color.Error"
-                           StartIcon="@Icons.Material.Filled.Close"
-                           Disabled="@_isSavingExport"
-                           OnClick="CancelAsync">
-                    Cancel
-                </MudButton>
+            </MudStack>
+        }
+        else if (_wizardStep == CaptureWizardStep.Complete)
+        {
+            <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
+                Alle registrierten Teilnehmer:innen wurden für diese Perspektive durchlaufen.
+            </MudAlert>
+        }
 
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Primary"
-                           StartIcon="@Icons.Material.Filled.Save"
-                           Disabled="@_isSavingExport"
-                           OnClick="ExportRecordingAsync">
-                    Speichern
-                </MudButton>
-            }
-            else if (_wizardStep == CaptureWizardStep.Complete)
-            {
-                <span></span>
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Primary"
-                           EndIcon="@Icons.Material.Filled.Done"
-                           OnClick="CancelAsync">
-                    Zur Auswahl
-                </MudButton>
-            }
-            else
-            {
-                <MudButton Variant="Variant.Text"
-                           Color="Color.Error"
-                           StartIcon="@Icons.Material.Filled.Close"
-                           OnClick="CancelAsync">
-                    Cancel
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+            <MudButton Variant="Variant.Text"
+                       Color="Color.Error"
+                       StartIcon="@Icons.Material.Filled.Close"
+                       Disabled="@IsNavigationBusy"
+                       OnClick="CancelAsync">
+                Cancel
+            </MudButton>
+
+            <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                <MudButton Variant="Variant.Outlined"
+                           Color="Color.Default"
+                           StartIcon="@Icons.Material.Filled.ArrowBack"
+                           Disabled="@IsBackDisabled"
+                           OnClick="BackAsync">
+                    Zurück
                 </MudButton>
 
                 <MudButton Variant="Variant.Filled"
                            Color="Color.Primary"
                            EndIcon="@Icons.Material.Filled.ArrowForward"
-                           Disabled="@IsNextDisabled"
-                           OnClick="NextAsync">
+                           Disabled="@IsForwardDisabled"
+                           OnClick="ContinueAsync">
                     Weiter
                 </MudButton>
-            }
+            </MudStack>
         </MudStack>
     </MudStack>
 </MudPaper>
@@ -402,11 +325,17 @@
     [Parameter] public EventCallback<RunningAnalysisRecordedVideo> OnRecorded { get; set; }
     [Parameter] public EventCallback<bool> IsRecordingChanged { get; set; }
     [Parameter] public EventCallback OnRetake { get; set; }
-    [Parameter] public EventCallback OnNextParticipant { get; set; }
     [Parameter] public EventCallback OnBackToRoster { get; set; }
 
     private bool IsRecordingActive => IsRecording || _recorderIsRecording;
-    private bool IsNextDisabled => _wizardStep == CaptureWizardStep.Roster && OrderedParticipants.Count == 0;
+    private bool IsNavigationBusy => IsRecordingActive || _isChoosingStorage || _isSavingExport;
+    private bool IsBackDisabled => IsNavigationBusy || _wizardStep == CaptureWizardStep.Roster;
+    private bool IsForwardDisabled =>
+        IsNavigationBusy
+        || _wizardStep == CaptureWizardStep.Complete
+        || (_wizardStep == CaptureWizardStep.Roster && OrderedParticipants.Count == 0)
+        || (_wizardStep == CaptureWizardStep.ManualSave && _recordedVideo is null)
+        || (_wizardStep == CaptureWizardStep.Recording && !CanUseRecorder);
     private bool CanUseRecorder => CanRecord || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private RunningAnalysisRosterItem? ActiveParticipant =>
         OrderedParticipants.FirstOrDefault(participant => participant.ParticipantId == _activeParticipantId)
@@ -480,39 +409,54 @@
         _statusMessage = null;
     }
 
-    private async Task NextAsync()
+    private async Task ContinueAsync()
     {
-        if (IsNextDisabled)
+        if (IsForwardDisabled)
             return;
 
-        if (_wizardStep == CaptureWizardStep.Roster)
+        switch (_wizardStep)
         {
-            await SelectFirstParticipantAsync();
-            _wizardStep = CaptureWizardStep.Storage;
-            return;
-        }
+            case CaptureWizardStep.Roster:
+                await SelectFirstParticipantAsync();
+                _wizardStep = CaptureWizardStep.Storage;
+                break;
+            case CaptureWizardStep.Storage:
+                if (SupportsDeviceFolderStorage && !IsStorageReady && !_folderChoiceAttempted)
+                    await ChooseStorageAsync();
 
-        if (_wizardStep == CaptureWizardStep.Storage)
-        {
-            _wizardStep = CaptureWizardStep.Perspective;
-            return;
-        }
-
-        if (_wizardStep == CaptureWizardStep.Perspective)
-        {
-            await SelectFirstParticipantAsync();
-            _statusMessage = null;
-            _wizardStep = CaptureWizardStep.Recording;
+                _wizardStep = CaptureWizardStep.Perspective;
+                break;
+            case CaptureWizardStep.Perspective:
+                await SelectFirstParticipantAsync();
+                _statusMessage = null;
+                _wizardStep = CaptureWizardStep.Recording;
+                break;
+            case CaptureWizardStep.Recording:
+                await MoveToNextParticipantAsync(null);
+                break;
+            case CaptureWizardStep.ManualSave:
+                await ExportRecordingAsync();
+                break;
         }
     }
 
-    private async Task BackToPerspectiveAsync()
+    private async Task BackAsync()
     {
-        if (IsRecordingActive)
+        if (IsBackDisabled)
             return;
 
         _statusMessage = null;
-        _wizardStep = CaptureWizardStep.Perspective;
+
+        _wizardStep = _wizardStep switch
+        {
+            CaptureWizardStep.Storage => CaptureWizardStep.Roster,
+            CaptureWizardStep.Perspective => CaptureWizardStep.Storage,
+            CaptureWizardStep.Recording => CaptureWizardStep.Perspective,
+            CaptureWizardStep.ManualSave => CaptureWizardStep.Recording,
+            CaptureWizardStep.Complete => CaptureWizardStep.Recording,
+            _ => _wizardStep
+        };
+
         await Task.CompletedTask;
     }
 
@@ -543,14 +487,6 @@
             return;
 
         await MoveToNextParticipantAsync($"{ActiveParticipantName} wurde übersprungen.");
-    }
-
-    private async Task NextParticipantFromRecordingAsync()
-    {
-        if (IsRecordingActive)
-            return;
-
-        await MoveToNextParticipantAsync(null);
     }
 
     private async Task MoveToNextParticipantAsync(string? statusMessage)
@@ -698,14 +634,24 @@
     {
         return _wizardStep switch
         {
-            CaptureWizardStep.Roster => "Prüfe kurz, ob die Liste stimmt. Danach geht es mit dem Speicherort weiter.",
-            CaptureWizardStep.Storage => IsStorageReady ? "Der Ordnerzugriff ist bereit." : "Bereite die lokale Speicherung vor.",
+            CaptureWizardStep.Roster => "Prüfe kurz, ob die Liste stimmt. Weiter führt zum Speicherort.",
+            CaptureWizardStep.Storage => GetStorageInstruction(),
             CaptureWizardStep.Perspective => "Wähle genau eine Perspektive für diese Runde.",
-            CaptureWizardStep.Recording => "Nimm die Person auf, überspringe sie oder gehe zur Perspektive zurück.",
-            CaptureWizardStep.ManualSave => "Der Browser braucht jetzt einen manuellen Speicherschritt.",
-            CaptureWizardStep.Complete => "Du kannst zur Auswahl der Laufanalyse zurückkehren.",
+            CaptureWizardStep.Recording => "Nimm die Person auf. Weiter springt zur nächsten Person.",
+            CaptureWizardStep.ManualSave => "Der Browser braucht jetzt einen manuellen Speicherschritt. Weiter speichert das Video.",
+            CaptureWizardStep.Complete => "Alle Personen sind für diese Perspektive durchlaufen.",
             _ => string.Empty
         };
+    }
+
+    private string GetStorageInstruction()
+    {
+        if (IsStorageReady)
+            return "Der Ordnerzugriff ist bereit. Weiter führt zur Perspektive.";
+
+        return SupportsDeviceFolderStorage && !_folderChoiceAttempted
+            ? "Weiter öffnet die Ordnerauswahl."
+            : "Weiter führt zur Perspektive; jedes Video wird einzeln gespeichert.";
     }
 
     private string GetStorageStatusTitle()
