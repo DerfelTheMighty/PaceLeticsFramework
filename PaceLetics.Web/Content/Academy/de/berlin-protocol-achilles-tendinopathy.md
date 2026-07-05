@@ -1,6 +1,6 @@
 ---
 id: berlin-protocol-achilles-tendinopathy
-title: Das Berlin-Protokoll bei Achillessehnentendinopathie
+title: Evidenzbasiertes Training für die Achillessehne
 summary: Wie ein hochintensives isometrisches Sehnenprotokoll über 12 Wochen Achillessehnensteifigkeit, Querschnitt und Belastbarkeit beeinflussen kann.
 category: training
 sourceModule: Markdown
