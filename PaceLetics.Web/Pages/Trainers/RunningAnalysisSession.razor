@@ -23,10 +23,10 @@
             <PageHeader Title="@(_courseEvent?.Title ?? L["Title"].ToString())"
                         Subtitle="@GetHeaderSubtitle()" />
 
-            <MudTooltip Text="@L["BackToCourses"]">
+            <MudTooltip Text="Zur Laufanalyse-Auswahl">
                 <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
-                               OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))"
-                               aria-label="@L["BackToCourses"]" />
+                               OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analyses"))"
+                               aria-label="Zur Laufanalyse-Auswahl" />
             </MudTooltip>
         </MudStack>
 

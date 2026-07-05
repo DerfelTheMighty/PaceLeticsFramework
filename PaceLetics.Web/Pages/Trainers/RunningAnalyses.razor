@@ -43,17 +43,7 @@
             </button>
         </nav>
 
-        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-            <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
-
-            <MudTooltip Text="@L["ManageCourses"]">
-                <MudIconButton Variant="Variant.Outlined"
-                               Color="Color.Primary"
-                               Icon="@Icons.Material.Filled.Event"
-                               OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))"
-                               aria-label="@L["ManageCourses"]" />
-            </MudTooltip>
-        </MudStack>
+        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
         @if (!HasDriveCredentials)
         {
