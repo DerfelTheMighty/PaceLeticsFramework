@@ -44,6 +44,12 @@
                         Erfolgreicher Ordnerzugriff. Die Videos werden direkt im gewählten Ordner gespeichert.
                     </MudAlert>
                 }
+                else if (IsCheckingStorage)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        Ordnerzugriff wird geprüft.
+                    </MudAlert>
+                }
                 else if (!SupportsDeviceFolderStorage || _folderChoiceAttempted)
                 {
                     <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
@@ -365,10 +371,11 @@
         || (_wizardStep == CaptureWizardStep.ManualSave && _recordedVideo is null)
         || _wizardStep == CaptureWizardStep.Recording;
     private bool CanChooseStorageFolder => SupportsDeviceFolderStorage;
+    private bool IsCheckingStorage => _isChoosingStorage;
     private bool IsStorageDecisionReady =>
         IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private bool ShowStorageStatusDetails =>
-        IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
+        !IsCheckingStorage && (IsStorageReady || !SupportsDeviceFolderStorage || _folderChoiceAttempted);
     private bool CanUseRecorder => CanRecord || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
     private RunningAnalysisRosterItem? ActiveParticipant =>
         OrderedParticipants.FirstOrDefault(participant => participant.ParticipantId == _activeParticipantId)
@@ -675,6 +682,9 @@
     {
         if (IsStorageReady)
             return "Speicherort bereit. Du kannst weitergehen oder ihn ändern.";
+
+        if (IsCheckingStorage)
+            return "Bitte kurz warten. Der Browser prüft den Ordnerzugriff.";
 
         return SupportsDeviceFolderStorage && !_folderChoiceAttempted
             ? "Wähle den Speicherort für die Aufnahmen."
