@@ -4,79 +4,67 @@
 
 <MudPaper Elevation="1" Class="pa-4">
     <MudStack Spacing="3">
-        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-            <MudStack Spacing="0" Style="min-width:0;">
-                <MudText Typo="Typo.h6">@GetStepTitle()</MudText>
-                <MudText Typo="Typo.body2" Color="Color.Secondary">@GetStepSubtitle()</MudText>
-            </MudStack>
-
-            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
-                Schritt @((int)_wizardStep + 1) von 6
-            </MudChip>
+        <MudStack Spacing="0">
+            <MudText Typo="Typo.h5">@GetStepTitle()</MudText>
+            <MudText Typo="Typo.body1" Color="Color.Secondary">@GetStepInstruction()</MudText>
         </MudStack>
 
-        <MudProgressLinear Value="@GetProgressValue()" Color="Color.Primary" Rounded="true" />
-
-        @if (_wizardStep == CaptureWizardStep.Storage)
-        {
-            <MudStack Spacing="3">
-                <MudAlert Severity="@(SupportsDeviceFolderStorage ? Severity.Info : Severity.Warning)" Variant="Variant.Outlined">
-                    @GetStorageGuidanceText()
-                </MudAlert>
-
-                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                        <MudStack Spacing="0" Style="min-width:0;">
-                            <MudText Typo="Typo.subtitle1">@GetStorageStatusTitle()</MudText>
-                            <MudText Typo="Typo.body2" Color="@StorageTextColor" Style="word-break:break-word;">
-                                @StorageText
-                            </MudText>
-                        </MudStack>
-
-                        @if (SupportsDeviceFolderStorage)
-                        {
-                            <MudTooltip Text="Lokalen Ordner wählen">
-                                <MudIconButton Color="Color.Primary"
-                                               Variant="Variant.Outlined"
-                                               Icon="@Icons.Material.Filled.FolderOpen"
-                                               Disabled="@_isChoosingStorage"
-                                               OnClick="ChooseStorageAsync"
-                                               aria-label="Lokalen Ordner wählen" />
-                            </MudTooltip>
-                        }
-                    </MudStack>
-                </MudPaper>
-            </MudStack>
-        }
-        else if (_wizardStep == CaptureWizardStep.Athlete)
+        @if (_wizardStep == CaptureWizardStep.Roster)
         {
             <MudStack Spacing="2">
-                @if (Participants.Count == 0)
+                @if (OrderedParticipants.Count == 0)
                 {
-                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">Keine Athleten angemeldet.</MudAlert>
+                    <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                        Es sind keine Teilnehmer:innen registriert.
+                    </MudAlert>
                 }
                 else
                 {
                     @foreach (var participant in OrderedParticipants)
                     {
-                        var selected = participant.ParticipantId == SelectedParticipantId;
-                        <div role="button" tabindex="0" style="cursor:pointer;" @onclick="@(() => SelectParticipantAsync(participant.ParticipantId))">
-                            <MudPaper Elevation="0" Class="pa-3" Style="@GetParticipantRowStyle(selected)">
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                    <MudStack Spacing="0" Style="min-width:0;">
-                                        <MudText Typo="Typo.body1">@participant.DisplayName</MudText>
-                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@GetParticipantRecordingText(participant)</MudText>
-                                    </MudStack>
-
-                                    @if (selected)
-                                    {
-                                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Primary" />
-                                    }
+                        <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                <MudStack Spacing="0" Style="min-width:0;">
+                                    <MudText Typo="Typo.body1">@participant.DisplayName</MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@GetParticipantRecordingText(participant)</MudText>
                                 </MudStack>
-                            </MudPaper>
-                        </div>
+                                <MudIcon Icon="@Icons.Material.Filled.Person" Color="Color.Primary" />
+                            </MudStack>
+                        </MudPaper>
                     }
                 }
+            </MudStack>
+        }
+        else if (_wizardStep == CaptureWizardStep.Storage)
+        {
+            <MudStack Spacing="3">
+                @if (IsStorageReady)
+                {
+                    <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
+                        Erfolgreicher Ordnerzugriff. Die Videos werden direkt im gewählten Ordner gespeichert.
+                    </MudAlert>
+                }
+                else if (!SupportsDeviceFolderStorage || _folderChoiceAttempted)
+                {
+                    <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                        Oh, das klappt leider nicht. Wir speichern jedes Video einzeln nach der Aufnahme.
+                    </MudAlert>
+                }
+                else
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        Wähle jetzt den lokalen Ordner für diese Laufanalyse.
+                    </MudAlert>
+                }
+
+                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
+                    <MudStack Spacing="0">
+                        <MudText Typo="Typo.subtitle1">@GetStorageStatusTitle()</MudText>
+                        <MudText Typo="Typo.body2" Color="@StorageTextColor" Style="word-break:break-word;">
+                            @StorageText
+                        </MudText>
+                    </MudStack>
+                </MudPaper>
             </MudStack>
         }
         else if (_wizardStep == CaptureWizardStep.Perspective)
@@ -91,7 +79,7 @@
                                 <MudIcon Icon="@Icons.Material.Filled.DirectionsRun" Size="Size.Large" Color="@GetPerspectiveIconColor(RunningAnalysisPerspective.Side)" />
                                 <MudText Typo="Typo.h6">Seite</MudText>
                                 <MudText Typo="Typo.body2" Align="Align.Center" Color="Color.Secondary">
-                                    Laufbewegung seitlich aufnehmen.
+                                    Der Lauf wird von der Seite aufgenommen.
                                 </MudText>
                             </MudStack>
                         </MudPaper>
@@ -106,7 +94,7 @@
                                 <MudIcon Icon="@Icons.Material.Filled.AssistantDirection" Size="Size.Large" Color="@GetPerspectiveIconColor(RunningAnalysisPerspective.Rear)" />
                                 <MudText Typo="Typo.h6">Hinten</MudText>
                                 <MudText Typo="Typo.body2" Align="Align.Center" Color="Color.Secondary">
-                                    Laufrichtung von hinten aufnehmen.
+                                    Der Lauf wird von hinten aufgenommen.
                                 </MudText>
                             </MudStack>
                         </MudPaper>
@@ -114,37 +102,31 @@
                 </MudItem>
             </MudGrid>
         }
-        else if (_wizardStep == CaptureWizardStep.Instructions)
-        {
-            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                @GetPerspectiveInstructionIntro()
-            </MudAlert>
-
-            <MudList T="string" Dense="true">
-                @foreach (var instruction in GetInstructions())
-                {
-                    <MudListItem Icon="@Icons.Material.Filled.CheckCircleOutline">
-                        @instruction
-                    </MudListItem>
-                }
-            </MudList>
-        }
         else if (_wizardStep == CaptureWizardStep.Recording)
         {
             <MudStack Spacing="3">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                    <MudStack Spacing="0" Style="min-width:0;">
-                        <MudText Typo="Typo.subtitle1">@ParticipantName</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">@RunningAnalysisPerspectiveFormatting.ToDisplayName(_selectedPerspective)</MudText>
-                    </MudStack>
+                @if (!string.IsNullOrWhiteSpace(_statusMessage))
+                {
+                    <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">@_statusMessage</MudAlert>
+                }
 
-                    <MudChip T="string"
-                             Size="Size.Small"
-                             Color="@(IsOnline ? Color.Success : Color.Error)"
-                             Variant="Variant.Outlined">
-                        @(IsOnline ? "Online" : "Offline")
-                    </MudChip>
-                </MudStack>
+                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-primary);">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="0" Style="min-width:0;">
+                            <MudText Typo="Typo.h6">@ParticipantName</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                @RunningAnalysisPerspectiveFormatting.ToDisplayName(_selectedPerspective) - Teilnehmer:in @GetCurrentParticipantNumber() von @OrderedParticipants.Count
+                            </MudText>
+                        </MudStack>
+
+                        <MudChip T="string"
+                                 Size="Size.Small"
+                                 Color="@(IsOnline ? Color.Success : Color.Error)"
+                                 Variant="Variant.Outlined">
+                            @(IsOnline ? "Online" : "Offline")
+                        </MudChip>
+                    </MudStack>
+                </MudPaper>
 
                 <div class="running-analysis-camera-frame">
                     @if (ChildContent is not null)
@@ -165,14 +147,14 @@
                                                       ParticipantName="@ParticipantName"
                                                       FileNamePrefix="@FileNamePrefix"
                                                       Perspective="@_selectedPerspective"
-                                                      CanRecord="CanRecord"
+                                                      CanRecord="CanUseRecorder"
                                                       ShowControls="false"
                                                       OnRecorded="OnRecorderRecordedAsync"
                                                       IsRecordingChanged="OnRecorderStateChangedAsync" />
                     }
                 </div>
 
-                @if (!CanRecord)
+                @if (!CanUseRecorder)
                 {
                     <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
                         Der lokale Speicher ist noch nicht bereit.
@@ -180,123 +162,149 @@
                 }
             </MudStack>
         }
-        else if (_wizardStep == CaptureWizardStep.Saved)
+        else if (_wizardStep == CaptureWizardStep.ManualSave)
         {
             <MudStack Spacing="3">
-                @if (_manualSaveRequired && !_manualSaveCompleted)
-                {
-                    <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                        Diese Aufnahme liegt im Browser-Speicher. Bitte speichere sie jetzt als Datei, damit sie später hochgeladen werden kann.
-                    </MudAlert>
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
+                    Speichere jetzt das Video von @ParticipantName. Danach geht es automatisch mit der nächsten Person weiter.
+                </MudAlert>
 
-                    @if (!string.IsNullOrWhiteSpace(_saveError))
-                    {
-                        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_saveError</MudAlert>
-                    }
-                }
-                else
+                @if (!string.IsNullOrWhiteSpace(_saveError))
                 {
-                    <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
-                        Aufnahme gespeichert: @_recordedVideo?.FileName
-                    </MudAlert>
+                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_saveError</MudAlert>
                 }
-
-                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                    <MudStack Spacing="0">
-                        <MudText Typo="Typo.subtitle1">@ParticipantName</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">
-                            @RunningAnalysisPerspectiveFormatting.ToDisplayName(_selectedPerspective)
-                        </MudText>
-                    </MudStack>
-                </MudPaper>
             </MudStack>
+        }
+        else if (_wizardStep == CaptureWizardStep.Complete)
+        {
+            <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
+                Alle registrierten Teilnehmer:innen wurden für diese Perspektive durchlaufen.
+            </MudAlert>
         }
 
         <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
-            <MudTooltip Text="@GetBackTooltip()">
-                <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
-                               Disabled="@IsBackDisabled"
-                               OnClick="BackAsync"
-                               aria-label="@GetBackTooltip()" />
-            </MudTooltip>
+            @if (_wizardStep == CaptureWizardStep.Recording)
+            {
+                <MudButton Variant="Variant.Text"
+                           Color="Color.Default"
+                           StartIcon="@Icons.Material.Filled.ArrowBack"
+                           Disabled="@IsRecordingActive"
+                           OnClick="BackToPerspectiveAsync">
+                    Zurück
+                </MudButton>
 
-            <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                @if (_wizardStep == CaptureWizardStep.Recording)
-                {
+                <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
+                    <MudButton Variant="Variant.Text"
+                               Color="Color.Error"
+                               StartIcon="@Icons.Material.Filled.Close"
+                               Disabled="@IsRecordingActive"
+                               OnClick="CancelAsync">
+                        Cancel
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.SkipNext"
+                               Disabled="@IsRecordingActive"
+                               OnClick="SkipParticipantAsync">
+                        Skip
+                    </MudButton>
+
                     @if (!IsRecordingActive)
                     {
-                        <MudTooltip Text="Aufnahme starten">
-                            <MudIconButton Color="Color.Primary"
-                                           Variant="Variant.Filled"
-                                           Disabled="@(!CanRecord)"
-                                           Icon="@Icons.Material.Filled.FiberManualRecord"
-                                           OnClick="StartRecordingAsync"
-                                           aria-label="Aufnahme starten" />
-                        </MudTooltip>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.FiberManualRecord"
+                                   Disabled="@(!CanUseRecorder)"
+                                   OnClick="StartRecordingAsync">
+                            Record
+                        </MudButton>
                     }
                     else
                     {
-                        <MudTooltip Text="Aufnahme stoppen">
-                            <MudIconButton Color="Color.Error"
-                                           Variant="Variant.Filled"
-                                           Icon="@Icons.Material.Filled.Stop"
-                                           OnClick="StopRecordingAsync"
-                                           aria-label="Aufnahme stoppen" />
-                        </MudTooltip>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Error"
+                                   StartIcon="@Icons.Material.Filled.Stop"
+                                   OnClick="StopRecordingAsync">
+                            Stop
+                        </MudButton>
                     }
-                }
-                else if (_wizardStep == CaptureWizardStep.Saved)
+                </MudStack>
+            }
+            else if (_wizardStep == CaptureWizardStep.Storage)
+            {
+                <MudButton Variant="Variant.Text"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Close"
+                           OnClick="CancelAsync">
+                    Cancel
+                </MudButton>
+
+                @if (SupportsDeviceFolderStorage && !IsStorageReady && !_folderChoiceAttempted)
                 {
-                    @if (_manualSaveRequired && !_manualSaveCompleted)
-                    {
-                        <MudTooltip Text="Speichern">
-                            <MudIconButton Color="Color.Primary"
-                                           Variant="Variant.Filled"
-                                           Disabled="@_isSavingExport"
-                                           Icon="@Icons.Material.Filled.Save"
-                                           OnClick="ExportRecordingAsync"
-                                           aria-label="Speichern" />
-                        </MudTooltip>
-                    }
-                    else
-                    {
-                        <MudTooltip Text="Weitere Perspektive">
-                            <MudIconButton Color="Color.Primary"
-                                           Variant="Variant.Outlined"
-                                           Icon="@Icons.Material.Filled.SwitchVideo"
-                                           OnClick="RecordAnotherPerspectiveAsync"
-                                           aria-label="Weitere Perspektive" />
-                        </MudTooltip>
-
-                        <MudTooltip Text="Nächster Athlet">
-                            <MudIconButton Color="Color.Primary"
-                                           Variant="Variant.Filled"
-                                           Icon="@Icons.Material.Filled.ArrowForward"
-                                           OnClick="NextParticipantAsync"
-                                           aria-label="Nächster Athlet" />
-                        </MudTooltip>
-
-                        <MudTooltip Text="Fertig">
-                            <MudIconButton Color="Color.Success"
-                                           Variant="Variant.Outlined"
-                                           Icon="@Icons.Material.Filled.Done"
-                                           OnClick="OnBackToRoster"
-                                           aria-label="Fertig" />
-                        </MudTooltip>
-                    }
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.FolderOpen"
+                               Disabled="@_isChoosingStorage"
+                               OnClick="ChooseStorageAsync">
+                        Ordner wählen
+                    </MudButton>
                 }
                 else
                 {
-                    <MudTooltip Text="Weiter">
-                        <MudIconButton Color="Color.Primary"
-                                       Variant="Variant.Filled"
-                                       Disabled="@IsNextDisabled"
-                                       Icon="@Icons.Material.Filled.ArrowForward"
-                                       OnClick="NextAsync"
-                                       aria-label="Weiter" />
-                    </MudTooltip>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               EndIcon="@Icons.Material.Filled.ArrowForward"
+                               OnClick="NextAsync">
+                        Weiter
+                    </MudButton>
                 }
-            </MudStack>
+            }
+            else if (_wizardStep == CaptureWizardStep.ManualSave)
+            {
+                <MudButton Variant="Variant.Text"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Close"
+                           Disabled="@_isSavingExport"
+                           OnClick="CancelAsync">
+                    Cancel
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Save"
+                           Disabled="@_isSavingExport"
+                           OnClick="ExportRecordingAsync">
+                    Speichern
+                </MudButton>
+            }
+            else if (_wizardStep == CaptureWizardStep.Complete)
+            {
+                <span></span>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           EndIcon="@Icons.Material.Filled.Done"
+                           OnClick="CancelAsync">
+                    Zur Auswahl
+                </MudButton>
+            }
+            else
+            {
+                <MudButton Variant="Variant.Text"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Close"
+                           OnClick="CancelAsync">
+                    Cancel
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           EndIcon="@Icons.Material.Filled.ArrowForward"
+                           Disabled="@IsNextDisabled"
+                           OnClick="NextAsync">
+                    Weiter
+                </MudButton>
+            }
         </MudStack>
     </MudStack>
 </MudPaper>
@@ -330,12 +338,12 @@
 @code {
     private enum CaptureWizardStep
     {
+        Roster,
         Storage,
-        Athlete,
         Perspective,
-        Instructions,
         Recording,
-        Saved
+        ManualSave,
+        Complete
     }
 
     private RunningAnalysisMediaRecorder? _mediaRecorder;
@@ -344,9 +352,9 @@
     private bool _recorderIsRecording;
     private bool _isChoosingStorage;
     private bool _isSavingExport;
-    private bool _manualSaveRequired;
-    private bool _manualSaveCompleted;
+    private bool _folderChoiceAttempted;
     private string? _saveError;
+    private string? _statusMessage;
     private RunningAnalysisRecordedVideo? _recordedVideo;
     private RunningAnalysisPerspective _selectedPerspective = RunningAnalysisPerspective.Side;
 
@@ -385,16 +393,8 @@
     [Parameter] public EventCallback OnBackToRoster { get; set; }
 
     private bool IsRecordingActive => IsRecording || _recorderIsRecording;
-    private bool IsBackDisabled => IsRecordingActive || _wizardStep == CaptureWizardStep.Storage || _wizardStep == CaptureWizardStep.Saved;
-    private bool IsNextDisabled =>
-        _wizardStep switch
-        {
-            CaptureWizardStep.Storage => SupportsDeviceFolderStorage && !IsStorageReady,
-            CaptureWizardStep.Athlete => string.IsNullOrWhiteSpace(SelectedParticipantId),
-            CaptureWizardStep.Perspective => false,
-            CaptureWizardStep.Instructions => false,
-            _ => true
-        };
+    private bool IsNextDisabled => _wizardStep == CaptureWizardStep.Roster && OrderedParticipants.Count == 0;
+    private bool CanUseRecorder => CanRecord || !SupportsDeviceFolderStorage || _folderChoiceAttempted;
 
     private IReadOnlyList<RunningAnalysisRosterItem> OrderedParticipants =>
         Participants
@@ -413,6 +413,8 @@
             return;
 
         _isChoosingStorage = true;
+        _folderChoiceAttempted = true;
+
         try
         {
             await OnChooseStorage.InvokeAsync();
@@ -423,15 +425,6 @@
         }
     }
 
-    private async Task SelectParticipantAsync(string participantId)
-    {
-        if (IsRecordingActive)
-            return;
-
-        await SelectedParticipantIdChanged.InvokeAsync(participantId);
-        ResetRecordingState();
-    }
-
     private void SelectPerspective(RunningAnalysisPerspective perspective)
     {
         if (IsRecordingActive)
@@ -440,7 +433,7 @@
         _selectedPerspective = perspective == RunningAnalysisPerspective.Rear
             ? RunningAnalysisPerspective.Rear
             : RunningAnalysisPerspective.Side;
-        ResetRecordingState();
+        _statusMessage = null;
     }
 
     private async Task NextAsync()
@@ -448,29 +441,100 @@
         if (IsNextDisabled)
             return;
 
-        _wizardStep = (CaptureWizardStep)((int)_wizardStep + 1);
+        if (_wizardStep == CaptureWizardStep.Roster)
+        {
+            await SelectFirstParticipantAsync();
+            _wizardStep = CaptureWizardStep.Storage;
+            return;
+        }
 
-        if (_wizardStep == CaptureWizardStep.Recording)
-            ResetRecordingState();
+        if (_wizardStep == CaptureWizardStep.Storage)
+        {
+            _wizardStep = CaptureWizardStep.Perspective;
+            return;
+        }
 
+        if (_wizardStep == CaptureWizardStep.Perspective)
+        {
+            await SelectFirstParticipantAsync();
+            _statusMessage = null;
+            _wizardStep = CaptureWizardStep.Recording;
+        }
+    }
+
+    private async Task BackToPerspectiveAsync()
+    {
+        if (IsRecordingActive)
+            return;
+
+        _statusMessage = null;
+        _wizardStep = CaptureWizardStep.Perspective;
         await Task.CompletedTask;
     }
 
-    private async Task BackAsync()
+    private async Task CancelAsync()
     {
-        if (IsBackDisabled)
+        if (IsRecordingActive)
             return;
 
-        _wizardStep = (CaptureWizardStep)Math.Max(0, (int)_wizardStep - 1);
-        await Task.CompletedTask;
+        await OnBackToRoster.InvokeAsync();
+    }
+
+    private async Task SelectFirstParticipantAsync()
+    {
+        var firstParticipant = OrderedParticipants.FirstOrDefault();
+        if (firstParticipant is null)
+        {
+            _wizardStep = CaptureWizardStep.Complete;
+            return;
+        }
+
+        await SelectedParticipantIdChanged.InvokeAsync(firstParticipant.ParticipantId);
+    }
+
+    private async Task SkipParticipantAsync()
+    {
+        if (IsRecordingActive)
+            return;
+
+        await MoveToNextParticipantAsync($"{ParticipantName} wurde übersprungen.");
+    }
+
+    private async Task MoveToNextParticipantAsync(string? statusMessage)
+    {
+        var nextParticipant = GetNextParticipant();
+        if (nextParticipant is null)
+        {
+            _statusMessage = statusMessage;
+            _wizardStep = CaptureWizardStep.Complete;
+            return;
+        }
+
+        ResetRecordingState();
+        _statusMessage = statusMessage;
+        await SelectedParticipantIdChanged.InvokeAsync(nextParticipant.ParticipantId);
+        _wizardStep = CaptureWizardStep.Recording;
+    }
+
+    private RunningAnalysisRosterItem? GetNextParticipant()
+    {
+        var participants = OrderedParticipants;
+        var currentIndex = participants.ToList().FindIndex(participant => participant.ParticipantId == SelectedParticipantId);
+        if (currentIndex < 0)
+            return participants.FirstOrDefault();
+
+        return currentIndex < participants.Count - 1
+            ? participants[currentIndex + 1]
+            : null;
     }
 
     private async Task StartRecordingAsync()
     {
-        if (!CanRecord)
+        if (!CanUseRecorder)
             return;
 
         ResetRecordingState();
+        _statusMessage = null;
         await OnStartRecording.InvokeAsync();
 
         if (_mediaRecorder is not null)
@@ -502,13 +566,16 @@
     private async Task OnRecorderRecordedAsync(RunningAnalysisRecordedVideo video)
     {
         _recordedVideo = video;
-        _manualSaveRequired = IsExportRequired(video);
-        _manualSaveCompleted = !_manualSaveRequired;
         _saveError = null;
-        _wizardStep = CaptureWizardStep.Saved;
 
-        if (!_manualSaveRequired)
-            await OnRecorded.InvokeAsync(video);
+        if (IsExportRequired(video))
+        {
+            _wizardStep = CaptureWizardStep.ManualSave;
+            return;
+        }
+
+        await OnRecorded.InvokeAsync(video);
+        await MoveToNextParticipantAsync($"{video.ParticipantName} wurde erfolgreich gespeichert.");
     }
 
     private async Task ExportRecordingAsync()
@@ -523,8 +590,8 @@
         {
             var module = await GetRecorderModuleAsync();
             await module.InvokeAsync<object>("exportSavedRecording", _recordedVideo.LocalId);
-            _manualSaveCompleted = true;
             await OnRecorded.InvokeAsync(_recordedVideo);
+            await MoveToNextParticipantAsync($"{_recordedVideo.ParticipantName} wurde erfolgreich gespeichert.");
         }
         catch (Exception ex)
         {
@@ -536,23 +603,6 @@
         }
     }
 
-    private async Task RecordAnotherPerspectiveAsync()
-    {
-        ResetRecordingState();
-        _selectedPerspective = _selectedPerspective == RunningAnalysisPerspective.Side
-            ? RunningAnalysisPerspective.Rear
-            : RunningAnalysisPerspective.Side;
-        _wizardStep = CaptureWizardStep.Perspective;
-        await Task.CompletedTask;
-    }
-
-    private async Task NextParticipantAsync()
-    {
-        ResetRecordingState();
-        await OnNextParticipant.InvokeAsync();
-        _wizardStep = CaptureWizardStep.Athlete;
-    }
-
     private async Task OnRecorderStateChangedAsync(bool isRecording)
     {
         _recorderIsRecording = isRecording;
@@ -562,8 +612,6 @@
     private void ResetRecordingState()
     {
         _recordedVideo = null;
-        _manualSaveRequired = false;
-        _manualSaveCompleted = false;
         _saveError = null;
     }
 
@@ -580,77 +628,44 @@
     {
         return _wizardStep switch
         {
-            CaptureWizardStep.Storage => "Speicherort",
-            CaptureWizardStep.Athlete => "Athlet auswählen",
+            CaptureWizardStep.Roster => "Registrierte Teilnehmer:innen",
+            CaptureWizardStep.Storage => "Speicher vorbereiten",
             CaptureWizardStep.Perspective => "Perspektive wählen",
-            CaptureWizardStep.Instructions => "Hinweise",
-            CaptureWizardStep.Recording => "Aufnahme",
-            CaptureWizardStep.Saved => _manualSaveRequired && !_manualSaveCompleted ? "Speichern erforderlich" : "Gespeichert",
+            CaptureWizardStep.Recording => $"Jetzt aufnehmen: {ParticipantName}",
+            CaptureWizardStep.ManualSave => "Video speichern",
+            CaptureWizardStep.Complete => "Fertig",
             _ => string.Empty
         };
     }
 
-    private string GetStepSubtitle()
+    private string GetStepInstruction()
     {
         return _wizardStep switch
         {
-            CaptureWizardStep.Storage => SupportsDeviceFolderStorage ? "Wähle den lokalen Ordner für die Laufaufnahmen." : "Dieser Browser nutzt temporären Browser-Speicher.",
-            CaptureWizardStep.Athlete => "Der nächste Athlet ist automatisch vorausgewählt.",
-            CaptureWizardStep.Perspective => "Für diese Aufnahme: Seite oder Hinten.",
-            CaptureWizardStep.Instructions => "Kurz prüfen, dann direkt aufnehmen.",
-            CaptureWizardStep.Recording => "Starten, Lauf aufnehmen, stoppen.",
-            CaptureWizardStep.Saved => "Die Aufnahme ist für den späteren Upload vorbereitet.",
+            CaptureWizardStep.Roster => "Prüfe kurz, ob die Liste stimmt. Danach geht es mit dem Speicherort weiter.",
+            CaptureWizardStep.Storage => IsStorageReady ? "Der Ordnerzugriff ist bereit." : "Bereite die lokale Speicherung vor.",
+            CaptureWizardStep.Perspective => "Wähle genau eine Perspektive für diese Runde.",
+            CaptureWizardStep.Recording => "Nimm die Person auf, überspringe sie oder gehe zur Perspektive zurück.",
+            CaptureWizardStep.ManualSave => "Der Browser braucht jetzt einen manuellen Speicherschritt.",
+            CaptureWizardStep.Complete => "Du kannst zur Auswahl der Laufanalyse zurückkehren.",
             _ => string.Empty
         };
-    }
-
-    private string GetStorageGuidanceText()
-    {
-        if (SupportsDeviceFolderStorage)
-            return "Der Browser kann direkt in einen lokalen Ordner schreiben. Wähle diesen Ordner einmal aus, bevor du mit den Athleten beginnst.";
-
-        return "Dieser Browser kann keinen Geräteordner wählen. Die Aufnahme wird zunächst im Browser abgelegt und nach der Aufnahme manuell gespeichert.";
     }
 
     private string GetStorageStatusTitle()
     {
         if (IsStorageReady)
-            return "Speicher bereit";
+            return "Ordnerzugriff erfolgreich";
 
-        return SupportsDeviceFolderStorage ? "Ordner noch nicht gewählt" : "Browser-Speicher";
+        return SupportsDeviceFolderStorage && !_folderChoiceAttempted
+            ? "Ordner noch nicht gewählt"
+            : "Einzelspeicherung";
     }
 
-    private string GetBackTooltip()
+    private int GetCurrentParticipantNumber()
     {
-        return _wizardStep == CaptureWizardStep.Storage ? "Zurück" : "Vorheriger Schritt";
-    }
-
-    private double GetProgressValue()
-    {
-        return ((int)_wizardStep + 1) / 6d * 100d;
-    }
-
-    private string GetPerspectiveInstructionIntro()
-    {
-        return _selectedPerspective == RunningAnalysisPerspective.Rear
-            ? "Für die Rückansicht zählt vor allem eine gerade Laufrichtung zur Kamera."
-            : "Für die Seitenansicht zählt vor allem, dass der ganze Körper im Bild bleibt.";
-    }
-
-    private IEnumerable<string> GetInstructions()
-    {
-        yield return "Kamera stabil positionieren.";
-        yield return "Athlet vollständig sichtbar halten.";
-        yield return "Gute Beleuchtung und freie Laufbahn sicherstellen.";
-
-        if (_selectedPerspective == RunningAnalysisPerspective.Rear)
-        {
-            yield return "Athlet läuft möglichst gerade von der Kamera weg.";
-        }
-        else
-        {
-            yield return "Athlet läuft quer durchs Bild, mit kompletter Körperseite sichtbar.";
-        }
+        var index = OrderedParticipants.ToList().FindIndex(participant => participant.ParticipantId == SelectedParticipantId);
+        return index < 0 ? 1 : index + 1;
     }
 
     private string GetParticipantRecordingText(RunningAnalysisRosterItem item)
@@ -661,13 +676,6 @@
         var side = string.IsNullOrWhiteSpace(item.SideRecordingUrl) ? "Seite fehlt" : "Seite vorhanden";
         var rear = string.IsNullOrWhiteSpace(item.RearRecordingUrl) ? "Hinten fehlt" : "Hinten vorhanden";
         return $"{side}, {rear}";
-    }
-
-    private string GetParticipantRowStyle(bool selected)
-    {
-        var borderColor = selected ? "var(--mud-palette-primary)" : "var(--mud-palette-lines-default)";
-        var background = selected ? "var(--mud-palette-primary-hover)" : "transparent";
-        return $"border:1px solid {borderColor}; background:{background};";
     }
 
     private string GetPerspectiveStyle(RunningAnalysisPerspective perspective)

@@ -36,40 +36,6 @@
         }
         else if (_captureSession is not null)
         {
-            @if (!_isCaptureMode)
-            {
-                <MudPaper Elevation="1" Class="pa-4">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                        <MudStack Spacing="0" Style="min-width:0;">
-                            <MudText Typo="Typo.h6">@L["LocalStorageTitle"]</MudText>
-                            <MudText Typo="Typo.body2" Color="@GetLocalStorageTextColor()" Style="word-break:break-word;">
-                                @GetLocalStorageText()
-                            </MudText>
-                        </MudStack>
-
-                        <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
-                            @if (SupportsDeviceFolderStorage)
-                            {
-                                <MudTooltip Text="@L["ChooseLocalStorageFolder"]">
-                                    <MudIconButton Color="Color.Primary"
-                                                   Variant="Variant.Outlined"
-                                                   Icon="@Icons.Material.Filled.FolderOpen"
-                                                   OnClick="ChooseRecordingDirectoryAsync"
-                                                   aria-label="@L["ChooseLocalStorageFolder"]" />
-                                </MudTooltip>
-                            }
-
-                            <MudTooltip Text="@L["OpenUploadPage"]">
-                                <MudIconButton Color="Color.Primary"
-                                               Icon="@Icons.Material.Filled.CloudUpload"
-                                               OnClick="@(() => Navigation.NavigateTo("/Trainers/running-analysis/uploads"))"
-                                               aria-label="@L["OpenUploadPage"]" />
-                            </MudTooltip>
-                        </MudStack>
-                    </MudStack>
-                </MudPaper>
-            }
-
             @if (_isCaptureMode && CurrentParticipant is not null)
             {
                 <RunningAnalysisCapturePanel CaptureSessionId="@_captureSession.Id"
@@ -99,7 +65,7 @@
                                              IsRecordingChanged="OnRecordingChangedAsync"
                                              OnRetake="RetakeAsync"
                                              OnNextParticipant="NextParticipantAsync"
-                                             OnBackToRoster="BackToRosterAsync" />
+                                             OnBackToRoster="CancelCaptureAsync" />
             }
             else if (_isAnalysisMode && CurrentParticipant is not null)
             {
@@ -273,15 +239,25 @@
             else
             {
                 <MudPaper Elevation="1" Class="pa-4">
-                <MudStack Spacing="2">
-                    <MudText Typo="Typo.h6">@L["Roster"]</MudText>
-                    <RunningAnalysisRoster Items="_roster"
-                                           SelectedParticipantId="_selectedParticipantId"
-                                           SelectedParticipantIdChanged="OnParticipantSelectedAsync"
-                                           OnRecord="OpenCaptureAsync" />
-                </MudStack>
-            </MudPaper>
-        }
+                    <MudStack Spacing="3" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Videocam" Size="Size.Large" Color="Color.Primary" />
+                        <MudStack Spacing="0" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h6">Laufanalyse aufnehmen</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary" Align="Align.Center">
+                                Starte den geführten Ablauf für die registrierten Teilnehmer:innen.
+                            </MudText>
+                        </MudStack>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Size="Size.Large"
+                                   StartIcon="@Icons.Material.Filled.PlayArrow"
+                                   Disabled="@(_roster.Count == 0)"
+                                   OnClick="StartCaptureWizardAsync">
+                            Starte Analyse
+                        </MudButton>
+                    </MudStack>
+                </MudPaper>
+            }
         }
     </MudStack>
 </MudContainer>
@@ -470,6 +446,18 @@
     private Task BackToRosterAsync()
     {
         _isCaptureMode = false;
+        return Task.CompletedTask;
+    }
+
+    private async Task StartCaptureWizardAsync()
+    {
+        await OpenCaptureAsync(GetOrderedRoster().FirstOrDefault()?.ParticipantId ?? string.Empty);
+    }
+
+    private Task CancelCaptureAsync()
+    {
+        _isCaptureMode = false;
+        Navigation.NavigateTo("/Trainers/running-analyses");
         return Task.CompletedTask;
     }
 
