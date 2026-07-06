@@ -38,13 +38,7 @@
         else if (_wizardStep == CaptureWizardStep.Storage)
         {
             <MudStack Spacing="3">
-                @if (IsStorageReady)
-                {
-                    <MudAlert Severity="Severity.Success" Variant="Variant.Outlined">
-                        Erfolgreicher Ordnerzugriff. Die Videos werden direkt im gewählten Ordner gespeichert.
-                    </MudAlert>
-                }
-                else if (IsCheckingStorage)
+                @if (IsCheckingStorage)
                 {
                     <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
                         Ordnerzugriff wird geprüft.
