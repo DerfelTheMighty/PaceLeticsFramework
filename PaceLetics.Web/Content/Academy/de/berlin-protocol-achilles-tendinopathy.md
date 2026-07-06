@@ -1,7 +1,7 @@
 ---
 id: berlin-protocol-achilles-tendinopathy
 title: Evidenzbasiertes Training für die Achillessehne
-summary: Wie hohe, kontrollierte Belastung die mechanische Kapazität der Achillessehne verbessern kann.
+summary: Wie spezifisches Training die mechanische Kapazität der Achillessehne verbessern kann.
 category: training
 sourceModule: Markdown
 contentKind: Generic
@@ -10,48 +10,89 @@ tags:
   - Achillessehne
   - Tendinopathie
   - Berlin-Protokoll
+  - Alfredson-Protokoll
   - Sehnentraining
   - Rehabilitation
 references:
-  - Alfredson et al. Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis. Am J Sports Med. 1998. | https://doi.org/10.1177/03635465980260030301
-  - Beyer et al. Heavy Slow Resistance Versus Eccentric Training as Treatment for Achilles Tendinopathy: A Randomized Controlled Trial. Am J Sports Med. 2015. | https://doi.org/10.1177/0363546515584760
-  - Radovanovic et al. Evidence-Based High-Loading Tendon Exercise for 12 Weeks Leads to Increased Tendon Stiffness and Cross-Sectional Area in Achilles Tendinopathy. Sports Med Open. 2022. | https://doi.org/10.1186/s40798-022-00545-5
-  - Bohm et al. Human Achilles tendon plasticity in response to cyclic strain: effect of rate and duration. J Exp Biol. 2014. | https://doi.org/10.1242/jeb.112268
-  - Bohm et al. Human tendon adaptation in response to mechanical loading: a systematic review and meta-analysis. Sports Med Open. 2015. | https://doi.org/10.1186/s40798-015-0009-9
-  - Geremia et al. Effects of high loading by eccentric triceps surae training on Achilles tendon properties in humans. Eur J Appl Physiol. 2018. | https://doi.org/10.1007/s00421-018-3904-1
-  - Lazarczuk et al. Mechanical, Material and Morphological Adaptations of Healthy Lower Limb Tendons to Mechanical Loading: A Systematic Review and Meta-Analysis. Sports Med. 2022. | https://doi.org/10.1007/s40279-022-01695-y
-  - Tsai et al. Effect of the temporal coordination and volume of cyclic mechanical loading on human Achilles tendon adaptation in men. Sci Rep. 2024. | https://doi.org/10.1038/s41598-024-56840-6
-  - Chimenti et al. Achilles Pain, Stiffness, and Muscle Power Deficits: Midportion Achilles Tendinopathy Revision - 2024. J Orthop Sports Phys Ther. 2024. | https://doi.org/10.2519/jospt.2024.0302
-  - Silbernagel & Crossley. A Proposed Return-to-Sport Program for Patients With Midportion Achilles Tendinopathy. J Orthop Sports Phys Ther. 2015. | https://doi.org/10.2519/jospt.2015.5885
+  - 'Alfredson et al. Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis. Am J Sports Med. 1998. | https://doi.org/10.1177/03635465980260030301'
+  - 'Beyer et al. Heavy Slow Resistance Versus Eccentric Training as Treatment for Achilles Tendinopathy: A Randomized Controlled Trial. Am J Sports Med. 2015. | https://doi.org/10.1177/0363546515584760'
+  - 'Radovanović et al. Evidence-Based High-Loading Tendon Exercise for 12 Weeks Leads to Increased Tendon Stiffness and Cross-Sectional Area in Achilles Tendinopathy. Sports Med Open. 2022. | https://doi.org/10.1186/s40798-022-00545-5'
+  - 'Mylle et al. Achilles Tendon Mechanical but Not Morphological Properties Change with Rehabilitation in Patients with Chronic Midportion Achilles Tendinopathy. Med Sci Sports Exerc. 2025. | https://doi.org/10.1249/MSS.0000000000003606'
+  - 'Bohm et al. Human Achilles tendon plasticity in response to cyclic strain: effect of rate and duration. J Exp Biol. 2014. | https://doi.org/10.1242/jeb.112268'
+  - 'Bohm et al. Human tendon adaptation in response to mechanical loading: a systematic review and meta-analysis. Sports Med Open. 2015. | https://doi.org/10.1186/s40798-015-0009-9'
+  - 'Geremia et al. Effects of high loading by eccentric triceps surae training on Achilles tendon properties in humans. Eur J Appl Physiol. 2018. | https://doi.org/10.1007/s00421-018-3904-1'
+  - 'Lazarczuk et al. Mechanical, Material and Morphological Adaptations of Healthy Lower Limb Tendons to Mechanical Loading: A Systematic Review and Meta-Analysis. Sports Med. 2022. | https://doi.org/10.1007/s40279-022-01695-y'
+  - 'Tsai et al. Effect of the temporal coordination and volume of cyclic mechanical loading on human Achilles tendon adaptation in men. Sci Rep. 2024. | https://doi.org/10.1038/s41598-024-56840-6'
+  - 'Funaro et al. Subject-Specific 3D Models to Investigate the Influence of Rehabilitation Exercises and the Twisted Structure on Achilles Tendon Strains. Front Bioeng Biotechnol. 2022. | https://doi.org/10.3389/fbioe.2022.914137'
+  - 'Funaro et al. Subject-specific biomechanics influences tendon strains in patients with Achilles tendinopathy. Sci Rep. 2025. | https://doi.org/10.1038/s41598-024-84202-9'
+  - 'Mylle et al. Achilles tendon compliance influences tendon loading more than Achilles tendon twist in Achilles tendinopathy: a musculoskeletal modeling approach. Front Bioeng Biotechnol. 2024. | https://doi.org/10.3389/fbioe.2024.1399611'
+  - 'Murphy et al. Can we really say getting stronger makes your tendon feel better? No current evidence of a relationship between change in Achilles tendinopathy pain or disability and changes in Triceps Surae structure or function when completing rehabilitation: A systematic review. J Sci Med Sport. 2023. | https://doi.org/10.1016/j.jsams.2023.03.007'
+  - 'Chimenti et al. Achilles Pain, Stiffness, and Muscle Power Deficits: Midportion Achilles Tendinopathy Revision - 2024. J Orthop Sports Phys Ther. 2024. | https://doi.org/10.2519/jospt.2024.0302'
+  - 'Silbernagel & Crossley. A Proposed Return-to-Sport Program for Patients With Midportion Achilles Tendinopathy. J Orthop Sports Phys Ther. 2015. | https://doi.org/10.2519/jospt.2015.5885'
 ---
 
-Die Anpassung von Sehnen ist langwierig und braucht sehr spezifische Trainingsreize. Warum das so
+Die Anpassung von Sehnen ist langwierig und braucht spezifische Trainingsreize. Warum das so
 ist, ist im Grundlagenartikel [Warum Sehnen langsam adaptieren](/Athletes/academy/tendon-adaptation)
-beschrieben: Sehnen bestehen zu einem großen Teil aus langlebiger extrazellulärer Matrix, werden
-langsamer umgebaut als Muskelgewebe und reagieren besonders auf hohe, kontrollierte Zugspannung.
+beschrieben: Sehnen werden langsamer umgebaut als Muskelgewebe und reagieren besonders auf ausreichend 
+hohe und kontrollierte Zugspannung.
 
-Für die Trainingsplanung hat das zwei Konsequenzen. Auf der einen Seite sollte man Laufbelastung
-langsam adaptieren: Umfang, Tempo, Hügel, Sprünge und Wettkampfnähe dürfen nicht gleichzeitig stark
-steigen. Auf der anderen Seite kann man die Adaptation der Achillessehne durch spezifisches
-Krafttraining unterstützen, wenn der Reiz hoch genug, kontrolliert genug und lange genug wiederholt
-wird.
+Gesunde Sportler:innen trainieren die Achillessehne vor allem zur
+Prävention und Leistungsfähigkeit. Verletzte Sportler:innen trainieren sie zur Rehabilitation. Das Ziel
+ist aber in beiden Fällen ähnlich: Die Sehne soll mechanische Kapazität entwickeln, damit sie den
+Belastungen standhält, die später im Alltag, Training oder Wettkampf tatsächlich auftreten.
+
+Für die Trainingsplanung hat das zwei Konsequenzen. Erstens sollte Laufbelastung langsam angepasst
+werden: Umfang, Tempo, Hügel, Sprünge und Wettkampfnähe dürfen nicht gleichzeitig stark steigen.
+Zweitens sollte man die Adaptation der Achillessehne durch Krafttraining unterstützen.
 
 ## Was trainiert werden soll
 
-Ziel ist nicht einfach eine "kräftige Wade", sondern eine belastbare Muskel-Sehnen-Einheit. Für die
-Achillessehne ist besonders interessant, ob sich ihre mechanischen Eigenschaften verändern:
-Querschnitt, Sehnensteifigkeit, maximale Sehnendehnung.
+Ziel beim Training der Achillessehne ist eine belastbare Muskel-Sehnen-Einheit. Für die Achillessehne 
+ist deshalb besonders interessant, ob sich ihre mechanischen Eigenschaften verändern: Querschnitt, Sehnensteifigkeit und maximale Sehnendehnung.
 
-Eine steifere Sehne ist in diesem Kontext nichts Negatives. Gemeint ist eine Sehne, die sich bei
+Eine steifere Sehne ist in diesem Kontext etwas gutes. Gemeint ist eine Sehne, die sich bei
 gleicher Kraft weniger stark verlängert. Dadurch kann bei hoher Belastung die maximale Sehnendehnung
-sinken, was theoretisch vor wiederholter Überdehnung und Mikroschäden schützen kann. Gleichzeitig
+sinken, was in der Theorie vor wiederholter Überdehnung und Mikroschäden schützen kann. Gleichzeitig
 kann eine gut angepasste Sehne Kraft effizient übertragen und elastische Energie besser nutzen.
-[[3]](https://doi.org/10.1186/s40798-022-00545-5) [[5]](https://doi.org/10.1186/s40798-015-0009-9)
+[[3]](https://doi.org/10.1186/s40798-022-00545-5) [[6]](https://doi.org/10.1186/s40798-015-0009-9)
 
-Entscheidend ist deshalb nicht nur die Übungsauswahl, sondern die Qualität des Reizes: ausreichend
-hohe Zugspannung, kontrollierte Ausführung, genug Zeit unter Spannung und Wiederholung über viele
-Wochen. Sehr leichte Reha-Übungen, Stretching oder ruhiges Laufen können sinnvoll sein, reichen für
-eine gezielte mechanische Sehnenanpassung aber wahrscheinlich nicht aus.
+Entscheidend ist dabei weniger, ob eine Übung exzentrisch, konzentrisch oder isometrisch ist. Wichtiger
+ist, welche Zugspannung tatsächlich in der Sehne ankommt, wie lange sie wirkt und wie oft dieser Reiz
+wiederholt wird. Eine Übung kann auf dem Papier sinnvoll sein und trotzdem zu leicht ausgeführt werden.
+Umgekehrt kann eine einfache Wadenübung sehr wirksam sein, wenn sie schwer genug, kontrolliert genug
+und über ausreichend viele Wochen trainiert wird.
+
+Wichtig ist außerdem: Sehnensteifigkeit ist keine einzige feste Zahl. Eine Sehne verhält sich nicht in
+jedem Lastbereich gleich. Im unteren Bereich der Kraft-Dehnungs-Kurve werden zunächst mehr wellige
+Kollagenfasern ausgerichtet. Im höheren Bereich geht es stärker um die Materialsteifigkeit des bereits
+gespannten Gewebes. Das gilt nicht nur für schmerzhafte Sehnen, sondern grundsätzlich auch für gesunde
+Sehnen.
+
+Daraus folgt eine einfache Trainingslogik: Man muss für den Bereich trainieren, der später gebraucht
+wird. Leichtere oder moderate Reize können ein sinnvoller Einstieg sein und wahrscheinlich schon
+Anpassungen im unteren bis mittleren Bereich auslösen. Wer aber Belastbarkeit für Tempo, Hügel, Sprint
+oder Sprünge möchte, muss später auch hohe Zugkräfte kontrolliert trainieren.
+
+## Untersuchte Trainingsansätze
+
+Inzwischen wurden einige Trainingsmethoden untersucht. Manche Studien wurden mit gesunden Sehnen
+durchgeführt, andere mit schmerzhaften Achillessehnen. Für die praktische Einordnung ist beides
+interessant. Die folgende Tabelle zeigt eine Übersicht zu Trainingsprotokollen.
+
+| Artikel | Trainingsprotokoll | Umsetzung | Ergebnis |
+|---|---|---|---|
+| Alfredson et al. [[1]](https://doi.org/10.1177/03635465980260030301) | Alfredson-Protokoll / Heavy-load eccentric | 12 Wochen; einbeinige exzentrische Fersenabsenkungen auf einer Stufe; Knie gestreckt und gebeugt; 3 x 15 Wdh., 2-mal täglich, 7 Tage/Woche; Rückweg mit dem gesunden Bein; Zusatzgewicht bei abnehmenden Schmerzen. | Schmerz und Kraft verbesserten sich deutlich; die Teilnehmenden konnten wieder auf ihr vorheriges Aktivitätsniveau zurückkehren. |
+| Beyer et al. [[2]](https://doi.org/10.1177/0363546515584760) | Exzentrisches Training | 12 Wochen; Alfredson-basiert; Fersenabsenkungen mit gestrecktem und gebeugtem Knie; 3 x 15 Wdh., 2-mal täglich, 7 Tage/Woche; Laststeigerung über Rucksack. | Schmerz und Funktion verbesserten sich ähnlich stark wie bei Heavy Slow Resistance. Compliance und Zufriedenheit waren geringer als in der HSR-Gruppe. |
+| Beyer et al. [[2]](https://doi.org/10.1177/0363546515584760) | Heavy Slow Resistance | 12 Wochen; 3-mal/Woche; sitzendes Wadenheben, Wadenheben in der Beinpresse, stehendes Wadenheben mit Zusatzlast; Progression von 15RM zu 6RM; je 3 s konzentrisch und 3 s exzentrisch. | Ähnlich gute klinische Ergebnisse wie exzentrisches Training; höhere Compliance und tendenziell höhere Zufriedenheit nach 12 Wochen. |
+| Radovanović et al. [[3]](https://doi.org/10.1186/s40798-022-00545-5) | High-loading / isometrisches Berlin-Protokoll | 12 Wochen; isometrische Plantarflexion bei ca. 90 % MVC; 5 Sätze x 4 Wdh.; 3 s halten, 3 s Pause; 4-mal/Woche; Progression ca. 5 %/Woche, abhängig von Schmerz und Anstrengung. | Nur die High-load-Gruppe zeigte deutliche mechanische und morphologische Anpassungen der Sehne: mehr Steifigkeit, größere CSA und geringere maximale Sehnendehnung. |
+| Radovanović et al. [[3]](https://doi.org/10.1186/s40798-022-00545-5) | Alfredson-Vergleichsgruppe | 12 Wochen; exzentrische Fersenabsenkung auf Stufe; 3 s exzentrische Phase; gestrecktes und gebeugtes Knie; tägliche Durchführung nach Alfredson-Protokoll. | Klinische Verbesserung, aber keine vergleichbare Verbesserung der Sehnensteifigkeit, CSA oder maximalen Sehnendehnung wie beim High-load-Protokoll. |
+| Mylle et al. [[4]](https://doi.org/10.1249/MSS.0000000000003606) | 12-wöchige exzentrische Rehabilitation | 12 Wochen Rehabilitation bei chronischer Midportion-Achillestendinopathie; im Kern Alfredson-orientiert, aber praxisnah mit individuellen Abweichungen und Progression durch Physiotherapeut:innen. | VISA-A und funktionelle Tests verbesserten sich; Sehnensteifigkeit und Young’s Modulus stiegen, morphologische Eigenschaften wie Volumen und CSA änderten sich nicht signifikant. |
+| Bohm et al. [[5]](https://doi.org/10.1242/jeb.112268) | Zyklische High-strain-Belastung | 14 Wochen; 4-mal/Woche; isometrische Plantarflexion bei ca. 90 % MVC; 5 Sätze mit 4 Wiederholungen; 3 s Belastung und 3 s Entlastung; Vergleich mit höherer Belastungsrate und längerer Haltedauer. | Hohe Sehnendehnung mit kontrollierter Belastungsdauer erhöhte Sehnensteifigkeit, CSA und Young’s Modulus. Sehr schnelle Belastung war weniger wirksam als kontrollierte isometrische Belastung. |
+| Geremia et al. [[7]](https://doi.org/10.1007/s00421-018-3904-1) | High-load exzentrisches Training | 12 Wochen; isokinetisches exzentrisches Training der Plantarflexoren; 2-mal/Woche; maximale exzentrische Wiederholungen; Progression von 3 auf 5 Sätze mit je 10 Wdh. | Maximalkraft, CSA, Sehnensteifigkeit und Young’s Modulus stiegen deutlich. Mechanische Anpassungen waren bereits nach 4 Wochen messbar, CSA-Anstieg nach 8 Wochen. |
+| Tsai et al. [[9]](https://doi.org/10.1038/s41598-024-56840-6) | Varianten zyklischer High-load-Belastung | 16 Wochen; isometrische Plantarflexion bei ca. 90 % MVC; 3 s Belastung / 3 s Entlastung; Vergleich unterschiedlicher Frequenzen und Volumina: 2,5-5 Einheiten/Woche und 180-300 s wöchentliche Hochlast-Zeit. | Kraft, Sehnensteifigkeit und CSA nahmen zu. Innerhalb dieses Bereichs waren Frequenz und Gesamtvolumen weniger entscheidend als ausreichend hohe kontrollierte Belastung. |
+
+Die Übersicht zeigt vor allem eins: Es gibt nicht das eine magische Achillessehnenprotokoll. Die Protokolle unterscheiden sich darin, wie viel Zugspannung sie erzeugen, wie lange diese Spannung wirkt und welche Endpunkte überhaupt gemessen wurden. Für mechanische Anpassung scheint die konkrete
+Muskelaktionsform weniger entscheidend zu sein als die Frage, ob die Sehne einen ausreichend hohen, kontrollierten und wiederholbaren Reiz bekommt.
 
 ## Was die Evidenz zeigt
 
