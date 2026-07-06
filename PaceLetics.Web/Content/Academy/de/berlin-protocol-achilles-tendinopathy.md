@@ -89,7 +89,7 @@ Achillessehne eine ausreichend hohe, kontrollierte und wiederholbare Zugspannung
 ## Was bei Beschwerden untersucht wurde
 
 Bei Achillessehnenbeschwerden ist die direkte Evidenz für mechanische Sehnenanpassung nicht so stark wie
-bei gesunden Sehnen. Das liegt aber vor allem am Endpunkt der verfügbaren Studien. 
+bei gesunden Sehnen. Das liegt auch an den Endpunkten der verfügbaren Studien. 
 Viele klinische Studien messen Schmerz, Funktion oder VISA-A. Das ist wichtig,
 beantwortet aber nicht automatisch die Frage, ob sich Sehnensteifigkeit, Querschnitt oder maximale
 Sehnendehnung verändern.
