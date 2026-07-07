@@ -40,46 +40,41 @@ beschrieben: Sehnen werden langsamer umgebaut als Muskelgewebe und reagieren bes
 hohe und kontrollierte Zugspannung.
 
 Gesunde Sportler:innen trainieren die Achillessehne vor allem zur
-Prävention und Leistungsfähigkeit. Verletzte Sportler:innen trainieren sie zur Rehabilitation. Das Ziel
-ist aber in beiden Fällen ähnlich: Die Sehne soll mechanische Kapazität entwickeln, damit sie den
-Belastungen standhält, die später im Alltag, Training oder Wettkampf tatsächlich auftreten.
+Prävention und Leistungsfähigkeit. Verletzte Sportler:innen trainieren sie zur Rehabilitation. In beiden Fällen 
+soll die Sehne mechanische Kapazität entwickeln, damit sie den Belastungen standhält, 
+die später im Alltag, Training oder Wettkampf auftreten.
 
 Für die Trainingsplanung hat das zwei Konsequenzen. Erstens sollte Laufbelastung langsam angepasst
-werden: Umfang, Tempo, Hügel, Sprünge und Wettkampfnähe dürfen nicht gleichzeitig stark steigen.
+werden: Umfang, Tempo, Hügel, Sprünge und Wettkämpfe dürfen nicht gleichzeitig stark steigen.
 Zweitens sollte man die Adaptation der Achillessehne durch Krafttraining unterstützen.
 
 ## Was trainiert werden soll
 
-Ziel beim Training der Achillessehne ist eine belastbare Muskel-Sehnen-Einheit. Für die Achillessehne 
-ist deshalb besonders interessant, ob sich ihre mechanischen Eigenschaften verändern: Querschnitt, Sehnensteifigkeit und maximale Sehnendehnung.
+Ziel beim Training der Achillessehne ist eine belastbare Muskel-Sehnen-Einheit. Dafür müssen sich 
+ihre mechanischen Eigenschaften verändern: Querschnitt, Sehnensteifigkeit und maximal auftretende 
+Sehnendehnung unter Last.
 
-Eine steifere Sehne ist in diesem Kontext etwas gutes. Gemeint ist eine Sehne, die sich bei
-gleicher Kraft weniger stark verlängert. Dadurch kann bei hoher Belastung die maximale Sehnendehnung
-sinken, was in der Theorie vor wiederholter Überdehnung und Mikroschäden schützen kann. Gleichzeitig
-kann eine gut angepasste Sehne Kraft effizient übertragen und elastische Energie besser nutzen.
+Eine steifere Sehne ist in diesem Kontext etwas Gutes. Gemeint ist eine Sehne, die sich bei
+gleicher Kraft weniger stark verlängert. Dadurch kann bei hoher Belastung die maximal auftretende 
+Sehnendehnung unter Last sinken, was in der Theorie vor wiederholter Überdehnung und Mikroschäden schützen kann.
+Gleichzeitig kann eine gut angepasste Sehne Kraft effizient übertragen und sportartspezifisch 
+elastische Energie aufnehmen und zurückgeben.
 [[3]](https://doi.org/10.1186/s40798-022-00545-5) [[6]](https://doi.org/10.1186/s40798-015-0009-9)
 
-Entscheidend ist dabei weniger, ob eine Übung exzentrisch, konzentrisch oder isometrisch ist. Wichtiger
-ist, welche Zugspannung tatsächlich in der Sehne ankommt, wie lange sie wirkt und wie oft dieser Reiz
-wiederholt wird. Eine Übung kann auf dem Papier sinnvoll sein und trotzdem zu leicht ausgeführt werden.
-Umgekehrt kann eine einfache Wadenübung sehr wirksam sein, wenn sie schwer genug, kontrolliert genug
-und über ausreichend viele Wochen trainiert wird.
-
-Wichtig ist außerdem: Sehnensteifigkeit ist keine einzige feste Zahl. Eine Sehne verhält sich nicht in
+Aber Sehnensteifigkeit ist keine einzige feste Zahl. Eine Sehne verhält sich nicht in
 jedem Lastbereich gleich. Im unteren Bereich der Kraft-Dehnungs-Kurve werden zunächst mehr wellige
 Kollagenfasern ausgerichtet. Im höheren Bereich geht es stärker um die Materialsteifigkeit des bereits
-gespannten Gewebes. Das gilt nicht nur für schmerzhafte Sehnen, sondern grundsätzlich auch für gesunde
-Sehnen.
+gespannten Gewebes.
 
 Daraus folgt eine einfache Trainingslogik: Man muss für den Bereich trainieren, der später gebraucht
-wird. Leichtere oder moderate Reize können ein sinnvoller Einstieg sein und wahrscheinlich schon
-Anpassungen im unteren bis mittleren Bereich auslösen. Wer aber Belastbarkeit für Tempo, Hügel, Sprint
+wird. Leichtere oder moderate Reize können ein sinnvoller Einstieg sein und Anpassungen im unteren bis 
+mittleren Bereich auslösen. Wer aber Belastbarkeit für Tempo, Hügel, Sprint
 oder Sprünge möchte, muss später auch hohe Zugkräfte kontrolliert trainieren.
 
 ## Untersuchte Trainingsansätze
 
-In der wissenschaftlichen Literatur wurden zahlreiche Trainingsmethoden an gesunden und schmerzhaften Sehnen untersucht. 
-Für die praktische Einordnung ist beides interessant. 
+In der wissenschaftlichen Literatur wurden zahlreiche Trainingsmethoden an gesunden 
+und schmerzhaften Sehnen untersucht. Für die praktische Einordnung ist beides interessant. 
 Die folgende Tabelle zeigt eine Übersicht zu Trainingsprotokollen.
 
 | Artikel | Trainingsprotokoll | Umsetzung | Ergebnis |
@@ -94,8 +89,14 @@ Die folgende Tabelle zeigt eine Übersicht zu Trainingsprotokollen.
 | Geremia et al. [[7]](https://doi.org/10.1007/s00421-018-3904-1) | High-load exzentrisches Training | 12 Wochen; isokinetisches exzentrisches Training der Plantarflexoren; 2-mal/Woche; maximale exzentrische Wiederholungen; Progression von 3 auf 5 Sätze mit je 10 Wdh. | Maximalkraft, CSA, Sehnensteifigkeit und Young’s Modulus stiegen deutlich. Mechanische Anpassungen waren bereits nach 4 Wochen messbar, CSA-Anstieg nach 8 Wochen. |
 | Tsai et al. [[9]](https://doi.org/10.1038/s41598-024-56840-6) | Varianten zyklischer High-load-Belastung | 16 Wochen; isometrische Plantarflexion bei ca. 90 % MVC; 3 s Belastung / 3 s Entlastung; Vergleich unterschiedlicher Frequenzen und Volumina: 2,5-5 Einheiten/Woche und 180-300 s wöchentliche Hochlast-Zeit. | Kraft, Sehnensteifigkeit und CSA nahmen zu. Innerhalb dieses Bereichs waren Frequenz und Gesamtvolumen weniger entscheidend als ausreichend hohe kontrollierte Belastung. |
 
-Die Protokolle unterscheiden sich darin, wie viel Zugspannung sie erzeugen, wie lange diese Spannung wirkt und welche Endpunkte überhaupt gemessen wurden. Für mechanische Anpassung scheint die konkrete
-Muskelaktionsform weniger entscheidend zu sein als die Frage, ob die Sehne einen ausreichend hohen, kontrollierten und wiederholbaren Reiz bekommt.
+Die Protokolle unterscheiden sich darin, wie viel Zugspannung sie erzeugen, 
+wie lange diese Spannung wirkt und welche Endpunkte überhaupt gemessen wurden. 
+Für mechanische Anpassung scheint die konkrete Muskelaktionsform weniger 
+entscheidend zu sein als die Frage, ob die Sehne einen ausreichend hohen, 
+kontrollierten und wiederholbaren Reiz bekommt. 
+
+Das ist eine wichtige Erkenntnis. Es scheint nicht notwendig zu sein, die teilweise unpraktikablen 
+Protokolle 1:1 umzusetzen, solange die Trainingsprinzipien beachtet werden. 
 
 ## Was die Evidenz zeigt
 
@@ -106,18 +107,11 @@ Lazarczuk et al. bestätigen für gesunde untere Extremitätsehnen, dass mechani
 Sehnensteifigkeit, Materialeigenschaften und teilweise den Querschnitt verbessern 
 kann [[8]](https://doi.org/10.1007/s40279-022-01695-y).
 
-Praktisch bedeutet das: Eine Achillessehne wird nicht dadurch belastbarer, dass irgendeine 
-Wadenübung gemacht wird, sondern dadurch, dass die Muskel-Sehnen-Einheit wiederholt hohe Kräfte 
-tolerieren und kontrollieren muss.
-
 Gleichzeitig muss man klinische Verbesserung und strukturelle Anpassung trennen. Bei Menschen mit 
 Achillestendinopathie verbessern sich Schmerzen und Funktion häufig auch dann, wenn sich 
 Sehnenstruktur oder Muskel-Sehnen-Eigenschaften nicht eindeutig parallel verändern. 
 Murphy et al. fanden keine klare Evidenz dafür, dass Verbesserungen von Schmerz und Einschränkung 
 direkt mit Veränderungen von Struktur oder Funktion zusammenhängen [[13]](https://doi.org/10.1016/j.jsams.2023.03.007).
-
-Das heißt nicht, dass Krafttraining unwichtig ist. Es heißt nur: 
-Weniger Schmerz beweist nicht automatisch, dass die Sehne mechanisch vollständig angepasst ist.
 
 Für die Praxis ergibt sich daraus eine nüchterne Trainingslogik: 
 In der frühen Phase kann ein verträglicher Einstieg über isometrische oder moderat schwere 
@@ -125,42 +119,38 @@ Wadenarbeit sinnvoll sein. Danach sollte die Belastung schrittweise in Richtung 
 kontrollierter Kräfte gesteigert werden, zum Beispiel über Heavy Slow Resistance, 
 schweres exzentrisches Training oder isometrische High-Load-Protokolle.
 
-Wer später wieder laufen, sprinten, bergauf laufen oder springen will, braucht am Ende nicht nur 
-Schmerzreduktion, sondern eine Sehne, die diese hohen Zugkräfte wiederholt toleriert.
-
 ## Praktische Rolle der Trainingsformen
 
 Trotzdem haben unterschiedliche Trainingsformen unterschiedliche praktische Rollen. 
 Die Studienlage spricht nicht dafür, eine Übungsform grundsätzlich über alle anderen zu stellen. 
-Sinnvoller ist die Frage: Welche Art von Belastung passt zur aktuellen Phase?
 
-Isometrische Belastung eignet sich besonders, wenn Spannung gut dosiert werden soll oder wenn 
-schmerzhafte Sehnen zunächst wieder belastungsverträglicher werden müssen. Sie erzeugt hohe Kraft 
+Isometrische Belastung eignet sich besonders, wenn Spannung gut dosiert werden soll. Das ist hilfeich, um 
+schmerzhafte Sehnen zunächst wieder belastungsverträglicher zu machen. Sie erzeugt kontrollierte Kraft 
 bei wenig Gelenkbewegung und ohne hohe Stoßlast. Für die Achillessehne passt das zu 
 High-Load-Protokollen wie bei Radovanović et al., aber auch zu klinischen Return-to-Sport-Ansätzen, 
 bei denen Schmerzreaktion und Belastungsverträglichkeit laufend überprüft werden [[3]](https://doi.org/10.1186/s40798-022-00545-5) [[14]](https://doi.org/10.2519/jospt.2024.0302) [[15]](https://doi.org/10.2519/jospt.2015.5885).
+
+Exzentrisches Training bleibt relevant und historisch gut etabliert. Das Alfredson-Protokoll ist bis 
+heute ein wichtiger Referenzpunkt in der Rehabilitation der Achillessehne [[1]](https://doi.org/10.1177/03635465980260030301). 
+Seine Wirkung dürfte nicht allein an der exzentrischen Muskelaktion liegen, sondern auch daran, dass das Protokoll hohe,
+wiederholte und meist kontrollierte Zugspannung erzeugt. Dafür erfordert Exzentrik aber ein hohes Maß an Konzentration
+und ist deshalb mit weniger Zufriedenheit und Compliance verbunden [[2]](https://doi.org/10.1177/0363546515584760). 
 
 Heavy Slow Resistance kombiniert hohe Last mit kontrollierter Bewegung und relativ langer Zeit unter 
 Spannung. Bei Achillestendinopathie zeigte Beyer et al., dass Heavy Slow Resistance klinisch ähnlich 
 wirksam sein kann wie exzentrisches Training, bei höherer Compliance und Zufriedenheit 
 nach 12 Wochen [[2]](https://doi.org/10.1177/0363546515584760). Auch über die Achillessehne 
-hinaus spricht die Tendon-Literatur dafür, progressive Sehnenbelastung und schweres langsames 
+hinaus spricht die Evidenz dafür, progressive Sehnenbelastung und schweres langsames 
 Krafttraining nicht hinter exzentrisches Training allein zurückzustellen [[8]](https://doi.org/10.1007/s40279-022-01695-y) [[18]](https://doi.org/10.1016/j.heliyon.2024.e39171).
 
-Exzentrisches Training bleibt relevant und historisch gut etabliert. Das Alfredson-Protokoll ist bis 
-heute ein wichtiger Referenzpunkt in der Rehabilitation der Achillessehne [[1]](https://doi.org/10.1177/03635465980260030301). 
-Seine Wirkung dürfte aber weniger daran liegen, dass Exzentrik als solche eine Sonderstellung hat, 
-sondern daran, dass exzentrische Übungen hohe Sehnenkräfte und eine gute progressive Dosierbarkeit 
-erlauben [[6]](https://doi.org/10.1186/s40798-015-0009-9) [[7]](https://doi.org/10.1007/s00421-018-3904-1).
-
-Explosives Training und Plyometrie sind für Sportfähigkeit wichtig, aber sie sind nicht immer der 
+Explosives Training und Plyometrie sind für spezifische Sportfähigkeit wichtig, aber sie sind nicht der 
 erste Schritt zur Sehnenanpassung. Massey et al. zeigten an der Patellarsehne, dass kurze explosive 
 Kontraktionen die Steifigkeit der freien Sehne erhöhen können. Für Muskelhypertrophie, Aponeurose und 
 den gesamten Muskel-Sehnen-Komplex war länger gehaltene hohe Spannung jedoch überlegen [[16]](https://doi.org/10.3389/fphys.2018.01170). 
 Praktisch heißt das: Zuerst Kapazität und Belastbarkeit aufbauen, danach Geschwindigkeit, 
 Reaktivität und sportartspezifische Federfunktion integrieren.
 
-Für die Rückkehr in den Sport ist diese Reihenfolge entscheidend. Silbernagel und Crossley betonen 
+Für die Rückkehr in den Sport ist die Reihenfolge entscheidend. Silbernagel und Crossley betonen 
 bei Achillessehnenbeschwerden, dass Return-to-Sport nicht durch einen einzelnen Test entschieden wird. 
 Relevant sind Schmerzverlauf, Funktion, Belastbarkeit, Sportanforderung und die Reaktion auf Progression. 
 Schmerz ist dabei kein perfekter Gewebemarker, aber ein nützliches Monitoring-Signal: 
@@ -175,40 +165,27 @@ In der Praxis bedeutet das häufig Intensitäten ab etwa 70 % 1RM oder, bei isom
 etwa 85 bis 90 % der maximalen isometrischen Kraft. Entscheidend ist, dass die Sehne tatsächlich 
 über mehrere Sekunden hoch belastet wird [[5]](https://doi.org/10.1242/jeb.112268) [[17]](https://doi.org/10.3389/fphys.2017.00987) [[6]](https://doi.org/10.1186/s40798-015-0009-9).
 
-Der Umfang muss dafür nicht extrem hoch sein. Ein sinnvoller Rahmen sind zum Beispiel 4 bis 5 Sätze 
-mit 4 bis 8 Wiederholungen oder 5 Sätze mit 4 schweren isometrischen Kontraktionen. 
-Die Progression sollte zuerst Last und Kontrolle entwickeln. Später werden Geschwindigkeit, 
-Sprünge, Laufumfang und sportartspezifische Belastung ergänzt [[3]](https://doi.org/10.1186/s40798-022-00545-5) [[16]](https://doi.org/10.3389/fphys.2018.01170) [[17]](https://doi.org/10.3389/fphys.2017.00987).
-
-Eine praktische Phasenlogik ist:
-
-1. Belastungsverträglichkeit herstellen: isometrische Haltearbeit, reduzierter Lauf- oder Sprungumfang, Symptommonitoring.
-2. Kapazität aufbauen: Heavy Slow Resistance, hohe Spannung, langsame Wiederholungen, ausreichend Erholung.
-3. Elastische Funktion trainieren: moderate Plyometrie, Lauf-ABC, Hops, Sprünge, kurze Beschleunigungen.
-4. Sport zurückholen: Belastung so steigern, dass Intensität, Umfang, Untergrund, Ermüdung und Wettkampfnähe nicht alle gleichzeitig hochgehen [[15]](https://doi.org/10.2519/jospt.2015.5885) [[18]](https://doi.org/10.1016/j.heliyon.2024.e39171).
+Der Umfang muss dafür nicht extrem hoch sein. Ein sinnvoller Rahmen sind zum Beispiel 3 bis 5 Sätze 
+mit 4 bis 8 Wiederholungen oder 5 Sätze mit 4 schweren isometrischen Kontraktionen [[3]](https://doi.org/10.1186/s40798-022-00545-5) [[16]](https://doi.org/10.3389/fphys.2018.01170) [[17]](https://doi.org/10.3389/fphys.2017.00987).
 
 ## Was das für Läufer:innen bedeutet
 
 Für gesunde Läufer:innen ist Sehnentraining Verletzungsprävention. Die Achillessehne soll wiederholt hohe Kräfte 
 speichern, übertragen und tolerieren können. Das gilt besonders bei schnellen Läufen, Hügeln, Intervallen, Sprüngen, 
-Vorfußlauf, Spikes oder Wettkämpfen.
-
-Ein sinnvoller Einstieg ist zwei- bis dreimal pro Woche Wadentraining, aber nicht immer maximal.
-Eine Einheit kann schwer und langsam sein, eine zweite eher isometrisch oder moderat. Plyometrie
-kommt erst dazu, wenn schwere Wadenarbeit und normale Laufbelastung gut toleriert werden. Besonders
-bei Läufer:innen mit wenig Krafttrainingserfahrung ist weniger am Anfang oft besser: saubere
-Ausführung, progressive Last, ausreichend Erholung.
+Vorfußlauf, Spikes oder Wettkämpfen. Ein sinnvoller Trainingszyklus könnte wie folgt aussehen:
 
 | Ziel | Geeigneter Reiz | Praktische Umsetzung |
 |---|---|---|
-| Grundkapazität | langsames schweres Krafttraining | Wadenheben stehend und sitzend, 2-mal pro Woche, 3 bis 4 Sätze mit 6 bis 10 schweren Wiederholungen |
-| Kontrollierte hohe Spannung | isometrische Wadenarbeit | 3 bis 5 Sätze mit 3 bis 5 kurzen, sehr festen Kontraktionen von 3 bis 5 Sekunden |
+| Grundkapazität | langsames schweres Krafttraining | Wadenheben stehend und sitzend, 2-mal pro Woche, 3 bis 5 Sätze mit 4 bis 10 schweren Wiederholungen |
+| Kontrollierte hohe Spannung | isometrische Wadenarbeit | 3 bis 5 Sätze mit 3 bis 5 Kontraktionen von 3 bis 5 Sekunden |
 | Elastische Funktion | reaktive Belastung | Hops, Sprungseil, kurze Sprünge, Lauf-ABC, erst nach Kraftbasis und guter Verträglichkeit |
 | Sportspezifische Belastbarkeit | Laufen unter steigender Anforderung | Tempo, Hügel, Spikes, Trails oder Wettkampfnähe einzeln und schrittweise steigern |
 
-Sehnentraining ist am wirksamsten, wenn es tatsächlich umgesetzt wird: regelmäßig, schwer genug,
+Sehnentraining ist nur dann wirksam, wenn es auch tatsächlich umgesetzt wird: regelmäßig, schwer genug,
 kontrolliert und über Monate. Für Läufer:innen sollte das Training deshalb nicht zu umständlich sein. 
-Nicht jede Läufer:in hat ein Abo im Fitnessstudio wo entsprechende Geräte verfügbar sind.
+Nicht alle Läufer:innen haben Zugang zu einem Fitnessstudio mit entsprechenden Geräten. Auf der einen Seite sind
+die untersuchten Methoden zwar an Geräte und zusätzliches Equipment gebunden. Auf der anderen Seite zeigt die Variabilität
+in der Literatur, dass bei der konkreten Umsetzung großer Spielraum besteht. 
 
 ## Wenn die Achillessehne gereizt ist
 
@@ -221,6 +198,7 @@ Hilfreich ist dabei eine grobe Unterscheidung der Belastungsbereiche:
 
 | Bereich | Ziel | Typische Umsetzung |
 |---|---|---|
+| Belastungsverträglichkeit / Einstieg | gut dosierbare isometrische Wadenarbeit | beidbeinig oder einbeinig halten/drücken, zunächst mit Körpergewicht oder leichter Zusatzlast; ruhig, kontrolliert, ohne deutliche Nachreaktion am nächsten Morgen |
 | ca. 30-60 % der maximalen Kraft | Einstieg, Reizbarkeit senken, Belastung wieder steuerbar machen | beidbeiniges oder einbeiniges Wadenheben, langsame Exzentrik, Alfredson-orientierte Fersenabsenkungen ohne oder mit wenig Zusatzgewicht |
 | ca. 60-90 % der maximalen Kraft | mechanische Kapazität gezielt aufbauen | Heavy Slow Resistance, schweres exzentrisches Training oder isometrisches High-Load-Training wie im Berlin-Protokoll |
 
@@ -228,7 +206,10 @@ Das Alfredson-Protokoll ist dafür ein klassisches Beispiel im moderaten bis sch
 einbeinige Fersenabsenkungen auf einer Stufe, mit gestrecktem und gebeugtem Knie, 
 meist 3 x 15 Wiederholungen, 2-mal täglich. Mylle et al. zeigten, dass ein 12-wöchiges 
 Alfredson-orientiertes Rehabilitationsprogramm bei chronischer Midportion-Achillestendinopathie 
-Schmerzen und Funktion verbessern und die mechanischen Eigenschaften der Sehne verändern kann[[4]](https://doi.org/10.1249/MSS.0000000000003606).
+Schmerzen und Funktion verbessern und die mechanischen Eigenschaften der Sehne verändern kann[[4]](https://doi.org/10.1249/MSS.0000000000003606). 
+Wichtig: Der Artikel bezieht sich vor allem auf Midportion-Beschwerden der Achillessehne. 
+Bei Schmerzen direkt am Ansatz am Fersenbein sollten tiefe Fersenabsenkungen über eine Stufe
+vorsichtiger eingesetzt oder zunächst vermieden werden, weil dort zusätzliche Kompression entstehen kann.
 
 Wenn die Sehne diesen Bereich gut toleriert, sollte die Belastung später weiter gesteigert werden. 
 Radovanović et al. untersuchten dafür ein deutlich schwereres High-Load-Protokoll: 
