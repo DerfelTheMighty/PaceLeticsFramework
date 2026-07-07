@@ -41,21 +41,20 @@ Zugkräfte überträgt, elastische Energie speichert und wieder abgibt.
 [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
 [[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
 
-Die wichtigsten Zellen in diesem Gewebe sind Tenocyten. Sie liegen langgestreckt zwischen den
-Kollagenfasern und halten die Matrix instand. Daneben werden tendon stem/progenitor cells
-diskutiert, die an Reparatur- und Umbauprozessen beteiligt sein können. Im Vergleich zum Muskel ist
-die Zelldichte der Sehne niedrig. Das ist zentral für das Verständnis von Sehnenadaptation: Der
-dominante Anteil des Gewebes ist nicht kontraktile Zellmasse, sondern langlebige Matrix.
+Die wichtigsten Zellen in diesem Gewebe sind Tenozyten. Sie liegen langgestreckt zwischen den
+Kollagenfasern und halten die Matrix instand. Im Vergleich zum Muskel ist
+die Zelldichte der Sehne aber ziemlich niedrig. Das ist wichtig für das Verständnis von Sehnenadaptation: Der
+größte Anteil des Gewebes ist nicht Zellmasse, sondern langlebige Matrix.
 [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
 [[13]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
 
 ## Warum Anpassung Zeit braucht
 
-Anpassungsprozesse verlaufen in Sehnen deutlich langsamer als in Muskulatur. Muskelgewebe ist besser
-vaskularisiert, besitzt eine hohe Proteinturnover-Dynamik und reagiert auf Training zusätzlich über
-schnelle neuronale Anpassungen. Sehnengewebe ist metabolisch träger. Besonders der Kern erwachsener
-Achillessehnen zeigt nach Kohlenstoff-14-Daten nur sehr geringen Kollagenumsatz. Das bedeutet nicht,
-dass Sehnen unveränderlich sind. Es bedeutet aber, dass messbare strukturelle Anpassungen meist eher
+Anpassungsprozesse verlaufen in Sehnen deutlich langsamer als in Muskulatur. Muskelgewebe ist 
+besser versorgt mit Sauerstoff und Nährstoffen und reagiert auf Training zusätzlich über
+schnelle neuronale Anpassungen. Sehnengewebe ist metabolisch eher träge. Der Kern erwachsener
+Achillessehnen zeigt auf Basis von Kohlenstoff-14-Daten sehr geringen Kollagenumsatz. Das bedeutet nicht,
+dass Sehnen unveränderlich sind. Es bedeutet aber, dass strukturelle Anpassungen eher
 in Zeiträumen von Wochen bis Monaten als von Tagen entstehen.
 [[2]](https://link.springer.com/article/10.1007/s00421-011-2248-x)
 [[15]](https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.12-225599)
@@ -74,55 +73,48 @@ sportliche Bewegung kann das vorteilhaft sein: Kraft wird effizienter übertrage
 kann besser genutzt werden und die relative Dehnung des Kollagengerüsts bleibt bei hohen Kräften
 geringer. Problematisch wird es, wenn Muskelkraft schneller zunimmt als die Belastbarkeit der
 zugehörigen Sehne. Dann steigt die mechanische Beanspruchung im Sehnengewebe, obwohl sich die
-Athletin oder der Athlet subjektiv leistungsfähiger fühlt.
+Athlet:in subjektiv leistungsfähiger fühlt.
 [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
 [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
 
 Dieses Auseinanderlaufen von Muskel- und Sehnenentwicklung ist besonders für junge Athletinnen und
 Athleten relevant. Mersmann, Bohm und Arampatzis beschreiben, dass Muskulatur und Sehne nicht
 zwingend synchron auf Wachstum, Training und Reifung reagieren. Plyometrisches und
-sportartspezifisches Training kann Leistung und Muskelkraft relativ schnell verbessern, während
-Sehnen spezifischere, hochspannige Reize brauchen. Auch aus der Laufverletzungsforschung passt
-dieses Bild: Laufanfängerinnen und -anfänger haben pro 1000 Laufstunden eine deutlich höhere
-Verletzungsinzidenz als erfahrenere Freizeitläuferinnen und -läufer.
+sportartspezifisches Training kann Leistung und Muskelkraft schnell verbessern, während
+Sehnen spezifischere Reize brauchen. Auch aus der Laufverletzungsforschung passt
+dieses Bild: Laufanfänger:innen haben pro 1000 Laufstunden eine deutlich höhere
+Verletzungsinzidenz als erfahrenere Freizeitläufer:innen.
 [[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
 [[7]](https://link.springer.com/article/10.1007/s40279-015-0333-8)
 
 ## Wie Spannung zum Signal wird
 
 Damit eine Sehne strukturell adaptieren kann, muss mechanische Last in eine zelluläre Antwort
-übersetzt werden. Dabei sind zwei Ebenen zu unterscheiden.
-
-Die erste Ebene ist neurophysiologisch. Golgi-Sehnenorgane liegen am Muskel-Sehnen-Übergang und
-registrieren Spannung im Muskel-Sehnen-System. Werden sie mechanisch verformt, leiten Ib-Afferenzen
-Informationen an das Rückenmark weiter. Diese Sensorik ist wichtig für Kraftregulation,
-Propriozeption und Schutzmechanismen. Weitere sensorische Strukturen wie freie Nervenendigungen
-sowie Ruffini- und Pacini-ähnliche Rezeptoren können je nach Region ebenfalls eine Rolle spielen.
-Diese Rezeptoren melden mechanische Information an das Nervensystem.
-[[14]](https://www.nature.com/articles/s41467-021-21880-3)
-
-Die zweite Ebene ist zellulär. Für strukturelle Anpassung ist entscheidend, dass Tenocyten
+übersetzt werden. Dabei sind zwei Ebenen zu unterscheiden. Dafür ist entscheidend, dass Tenozyten
 mechanische Last selbst wahrnehmen. Wird die Sehne gedehnt, verändert sich die Spannung in der
 Matrix, Flüssigkeit bewegt sich im Gewebe, Zellfortsätze werden verformt und Kräfte werden über
-Kontaktstellen zwischen Matrix und Zelle übertragen. Dieses zelluläre Mechanosensing ist der
+Kontaktstellen zwischen Matrix und Zelle übertragen. Dieses zelluläre Mechanosensorik ist der
 Ausgangspunkt für Matrixumbau. [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
 [[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
 
-Die Übersetzung von mechanischer Last in biochemische Zellantwort wird Mechanotransduktion genannt.
-Ein zentraler Mechanismus läuft über Integrine, also Verbindungsproteine zwischen extrazellulärer
-Matrix und Zytoskelett. Mechanische Spannung kann Integrin-Clustering, Fokaladhäsionen und
-Zytoskelettspannung beeinflussen. Parallel werden mechanosensitive Ionenkanäle, Kalziumsignale,
-Primärzilien und weitere mechanosensitive Strukturen diskutiert.
+Die Übersetzung mechanischer Belastung in eine biologische Zellantwort wird
+**Mechanotransduktion** genannt. Ein wichtiger Mechanismus läuft über Verbindungsproteine zwischen 
+der extrazellulären Matrix und dem Zytoskelett der Tenozyten. 
+Wird die Sehne belastet, registrieren diese Strukturen die Zugspannung und leiten sie als 
+Signal ins Zellinnere weiter. Auch mechanosensitive Ionenkanäle und weitere mechanosensitive 
+Strukturen tragen dazu bei, dass aus einem mechanischen Reiz eine biologische Antwort entsteht.
 [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
-[[13]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full)
+[[13]](https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1560025/full) 
 
-Im Zellinneren werden daraus Signalwege, die Genexpression und Matrixstoffwechsel regulieren.
-Relevante Pfade sind unter anderem FAK, MAPK/ERK, PI3K/Akt/mTOR, TGF-beta/SMAD, IGF-1 und YAP/TAZ.
-Sie beeinflussen, ob Tenocyten eher Kollagen Typ I synthetisieren, Matrix organisieren, Umbau-Enzyme
-regulieren oder bei ungünstiger Last in katabole und entzündungsnahe Programme kippen. Die Sehne
-reagiert also nicht einfach auf "mehr Training", sondern auf die Qualität des mechanischen Signals.
+Im Zellinneren beeinflussen diese Signale, welche Gene aktiviert werden und wie die Zelle 
+mit ihrer Umgebung interagiert. Bei einer physiologischen Belastung fördern 
+Tenozyten die Kollagensynthese, organisieren die extrazelluläre Matrix und erhalten die 
+Gewebehomöostase. Ist die Belastung dagegen dauerhaft zu hoch, zu gering oder anderweitig 
+unphysiologisch, verschiebt sich die Zellantwort zunehmend in Richtung Matrixabbau und 
+entzündungsnaher Umbauprozesse. Die Sehne reagiert also nicht einfach auf **mehr Training**, 
+sondern vor allem darauf, **wie** sie belastet wird.
 [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
-[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
+[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/ 
 
 Auch auf Ebene des Kollagennetzwerks selbst kann zyklische Last mechanische Eigenschaften
 beeinflussen. Susilo et al. zeigten in einem experimentellen Modell, dass zyklische Zugbelastung ein
@@ -133,15 +125,15 @@ Empfänger, sondern Teil der mechanischen Anpassung.
 
 ## Welche Trainingsreize wirken
 
-Aus trainingswissenschaftlicher Sicht ergibt sich daraus ein wichtiges Prinzip: Zu geringe Last
+Aus der Trainingsperspektive ergibt sich daraus ein wichtiges Prinzip: Zu geringe Last
 liefert keinen ausreichenden Stimulus, sehr hohe oder schlecht dosierte Last kann Mikrotrauma und
-maladaptive Matrixveränderungen begünstigen. Sinnvoll ist eine mechanische Zone, in der Tenocyten
+maladaptive Matrixveränderungen begünstigen. Sinnvoll ist eine mechanische Zone, in der Tenozyten
 wiederholt hohe, aber kontrollierbare Zugspannung erfahren.
 [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
 [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
 [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
 
-Die Interventionsstudien zur Achillessehne passen gut zu dieser Logik. Bohm et al. untersuchten, wie
+Interventionsstudien zur Achillessehne passen gut zu dieser Logik. Bohm et al. untersuchten, wie
 Strain-Rate und Strain-Duration die Anpassung beeinflussen. Ein Protokoll mit hoher Sehnendehnung,
 niedriger Frequenz und etwa 3 Sekunden Belastung plus 3 Sekunden Entlastung über 14 Wochen erhöhte
 Sehnensteifigkeit, Querschnitt und Young's Modulus deutlich. Längere Haltezeiten wirkten ebenfalls,
@@ -158,72 +150,11 @@ Volumen, sondern ein klarer mechanischer Reiz mit ausreichender Intensität und 
 Meta-Analysen stützen diesen Schwerpunkt. Bohm, Mersmann und Arampatzis sowie Lazarczuk et al.
 berichten, dass mechanische Last Sehnensteifigkeit, Materialeigenschaften und teilweise auch den
 Querschnitt verbessern kann. Besonders relevant scheint die lokale Sehnendehnung beziehungsweise die
-Lastintensität zu sein. Die konkrete Muskelaktionsform - isometrisch, konzentrisch oder exzentrisch
-- ist wahrscheinlich weniger entscheidend als die Frage, welche Spannung tatsächlich in der Sehne
-ankommt. [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
+Lastintensität zu sein. Die konkrete Muskelaktionsform ist wahrscheinlich weniger entscheidend 
+als die Frage, welche Spannung tatsächlich in der Sehne ankommt. [[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
 [[9]](https://link.springer.com/article/10.1007/s40279-022-01695-y)
 
-Trotzdem haben unterschiedliche Trainingsformen unterschiedliche praktische Rollen.
-
-Isometrische Belastung eignet sich besonders, wenn Spannung exakt dosiert werden soll oder wenn
-schmerzhafte Sehnen zunächst wieder belastungsverträglich gemacht werden müssen. Sie erzeugt hohe
-Kraft bei wenig Gelenkbewegung und ohne hohe Stoßlast.
-[[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
-[[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
-
-Heavy Slow Resistance kombiniert hohe Last mit kontrollierter Bewegung und relativ langer Zeit unter
-Spannung. Für Tendinopathien, insbesondere an der Patellarsehne, spricht aktuelle Literatur dafür,
-progressive Sehnenbelastung und schweres langsames Krafttraining nicht hinter exzentrisches Training
-allein zurückzustellen. [[9]](https://link.springer.com/article/10.1007/s40279-022-01695-y)
-[[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
-
-Exzentrisches Training ist weiterhin relevant und historisch gut etabliert. Seine Wirkung dürfte
-aber weniger daran liegen, dass Exzentrik als solche eine Sonderstellung hat, sondern daran, dass
-exzentrische Übungen hohe Sehnenkräfte und eine gute progressive Dosierbarkeit erlauben.
-[[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
-[[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
-
-Explosives Training und Plyometrie sind für Sportfähigkeit unverzichtbar, aber sie sind nicht immer
-der erste Schritt zur Sehnenanpassung. Massey et al. zeigten, dass kurze explosive Kontraktionen die
-Steifigkeit der freien Patellarsehne erhöhen können. Für Muskelhypertrophie, Aponeurose und den
-gesamten Muskel-Sehnen-Komplex war länger gehaltene hohe Spannung jedoch überlegen. Praktisch heißt
-das: Zuerst Kapazität und Belastbarkeit aufbauen, danach Geschwindigkeit, Reaktivität und
-sportartspezifische Federfunktion integrieren.
-[[3]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.01170/full)
-
-Für die Rückkehr in den Sport ist diese Reihenfolge entscheidend. Silbernagel und Crossley betonen
-bei Achillessehnenbeschwerden, dass Return-to-Sport nicht durch einen einzelnen Test entschieden
-wird. Relevant sind Schmerzverlauf, Funktion, Belastbarkeit, Sportanforderung und die Reaktion auf
-Progression. Schmerz ist dabei kein perfekter Gewebemarker, aber ein nützliches Monitoring-Signal.
-Wenn Symptome während der Einheit deutlich steigen oder am nächsten Tag nachhallen, war die
-Belastung für den aktuellen Anpassungsstand wahrscheinlich zu hoch.
-[[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
-
-## Praktischer Trainingsrahmen
-
-Sehnentraining sollte über mindestens 12 Wochen geplant werden. Der Hauptreiz ist hohe,
-kontrollierte Zugspannung. Je nach Gesamtbelastung sind 2 bis 4 gezielte Sehneneinheiten pro Woche
-plausibel. In der Praxis bedeutet das häufig Intensitäten ab etwa 70 Prozent 1RM oder, bei
-isometrischer Arbeit, 85 bis 90 Prozent der maximalen isometrischen Kraft. Entscheidend ist, dass
-die Sehne tatsächlich über mehrere Sekunden hoch belastet wird.
-[[1]](https://journals.biologists.com/jeb/article/217/22/4010/13248/Human-Achilles-tendon-plasticity-in-response-to)
-[[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
-[[8]](https://link.springer.com/article/10.1186/s40798-015-0009-9)
-
-Der Umfang muss dafür nicht extrem hoch sein. Ein sinnvoller Rahmen sind zum Beispiel 4 bis 5 Sätze
-mit 4 bis 8 Wiederholungen oder 5 Sätze mit 4 schweren isometrischen Kontraktionen. Die Progression
-sollte zuerst Last und Kontrolle entwickeln, später Geschwindigkeit, Sprünge, Laufumfang und
-sportartspezifische Belastung ergänzen.
-[[3]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.01170/full)
-[[4]](https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00987/full)
-[[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885)
-
-Eine praktische Phasenlogik ist:
-
-1. Belastungsverträglichkeit herstellen: isometrische Haltearbeit, reduzierter Lauf- oder Sprungumfang, Symptommonitoring.
-2. Kapazität aufbauen: Heavy Slow Resistance, hohe Spannung, langsame Wiederholungen, ausreichend Erholung.
-3. Elastische Funktion trainieren: moderate Plyometrie, Lauf-ABC, Hops, Sprünge, kurze Beschleunigungen.
-4. Sport zurückholen: Belastung so steigern, dass Intensität, Umfang, Untergrund, Ermüdung und Wettkampfnähe nicht alle gleichzeitig hochgehen. [[5]](https://www.jospt.org/doi/10.2519/jospt.2015.5885) [[10]](https://www.cell.com/heliyon/fulltext/S2405-8440(24)15181-7)
+## Fazit
 
 Sehnen adaptieren langsam, weil sie vor allem aus langlebiger extrazellulärer Matrix bestehen und
 von vergleichsweise wenigen Zellen umgebaut werden. Diese Zellen können mechanische Spannung
