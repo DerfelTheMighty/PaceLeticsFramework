@@ -29,6 +29,9 @@ references:
   - 'Murphy et al. Can we really say getting stronger makes your tendon feel better? No current evidence of a relationship between change in Achilles tendinopathy pain or disability and changes in Triceps Surae structure or function when completing rehabilitation: A systematic review. J Sci Med Sport. 2023. | https://doi.org/10.1016/j.jsams.2023.03.007'
   - 'Chimenti et al. Achilles Pain, Stiffness, and Muscle Power Deficits: Midportion Achilles Tendinopathy Revision - 2024. J Orthop Sports Phys Ther. 2024. | https://doi.org/10.2519/jospt.2024.0302'
   - 'Silbernagel & Crossley. A Proposed Return-to-Sport Program for Patients With Midportion Achilles Tendinopathy. J Orthop Sports Phys Ther. 2015. | https://doi.org/10.2519/jospt.2015.5885'
+  - 'Massey et al. Tendinous Tissue Adaptation to Explosive- vs. Sustained-Contraction Strength Training. Front Physiol. 2018. | https://doi.org/10.3389/fphys.2018.01170'
+  - 'Mersmann et al. Imbalances in the Development of Muscle and Tendon as Risk Factor for Tendinopathies in Youth Athletes: A Review of Current Evidence and Concepts of Prevention. Front Physiol. 2017. | https://doi.org/10.3389/fphys.2017.00987'
+  - 'Li et al. Mixed comparison of intervention with eccentric, isometric, and heavy slow resistance for Victorian Institute of Sport Assessment Patella Questionnaire in adults with patellar tendinopathy: A systematic review and network meta-analysis. Heliyon. 2024. | https://doi.org/10.1016/j.heliyon.2024.e39171'
 ---
 
 Die Anpassung von Sehnen ist langwierig und braucht spezifische Trainingsreize. Warum das so

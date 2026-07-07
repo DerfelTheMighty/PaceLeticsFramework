@@ -114,7 +114,7 @@ unphysiologisch, verschiebt sich die Zellantwort zunehmend in Richtung Matrixabb
 entzündungsnaher Umbauprozesse. Die Sehne reagiert also nicht einfach auf **mehr Training**, 
 sondern vor allem darauf, **wie** sie belastet wird.
 [[11]](https://www.cellphysiolbiochem.com/Articles/000743/index.html)
-[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/ 
+[[12]](https://pmc.ncbi.nlm.nih.gov/articles/PMC11301520/)
 
 Auch auf Ebene des Kollagennetzwerks selbst kann zyklische Last mechanische Eigenschaften
 beeinflussen. Susilo et al. zeigten in einem experimentellen Modell, dass zyklische Zugbelastung ein
