@@ -15,10 +15,7 @@ public static class AppThemeCatalog
         new(AppThemeName.DarkRomance, "Dark Romance", CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite, IsDarkMode: true, PaceZones: CreateDarkRomancePaceZones()),
         new(AppThemeName.Maritime, "Maritime", CreateMaritimeTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false, PaceZones: CreateMaritimePaceZones()),
         new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false, PaceZones: CreateTropicalPaceZones()),
-        new(AppThemeName.GoldenHour, "Baltic Sunset", CreateGoldenHourTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false, PaceZones: CreateGoldenHourPaceZones()),
-        new(AppThemeName.StellarForge, "Stellar Forge", CreateStellarForgeTheme(), Icons.Material.Filled.AutoAwesome, IsDarkMode: true, PaceZones: CreateStellarForgePaceZones()),
-        new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false, PaceZones: CreateSummitBlazePaceZones()),
-        new(AppThemeName.UpsideDown, "Upside Down", CreateUpsideDownTheme(), Icons.Material.Filled.FlashOn, IsDarkMode: true, PaceZones: CreateUpsideDownPaceZones())
+        new(AppThemeName.SummitBlaze, "Summit Blaze", CreateSummitBlazeTheme(), Icons.Material.Filled.LocalFireDepartment, IsDarkMode: false, PaceZones: CreateSummitBlazePaceZones())
     ];
 
     public static AppThemeDefinition GetThemeDefinition(AppThemeName name)
@@ -140,30 +137,6 @@ public static class AppThemeCatalog
             Repetition: "#F06FA9");
     }
 
-    private static PaceZonePalette CreateGoldenHourPaceZones()
-    {
-        return new(
-            Free: "#8C7762",
-            Recovery: "#4F8CFF",
-            Easy: "#2EAD78",
-            Marathon: "#2F66D0",
-            Threshold: "#FBBF24",
-            Intervall: "#F97316",
-            Repetition: "#E65A78");
-    }
-
-    private static PaceZonePalette CreateStellarForgePaceZones()
-    {
-        return new(
-            Free: "#8B92A8",
-            Recovery: "#4CC9F0",
-            Easy: "#49D4AA",
-            Marathon: "#FFE81F",
-            Threshold: "#FFB703",
-            Intervall: "#FF5D72",
-            Repetition: "#C77DFF");
-    }
-
     private static PaceZonePalette CreateSummitBlazePaceZones()
     {
         return new(
@@ -174,18 +147,6 @@ public static class AppThemeCatalog
             Threshold: "#E87500",
             Intervall: "#FC4C02",
             Repetition: "#D84373");
-    }
-
-    private static PaceZonePalette CreateUpsideDownPaceZones()
-    {
-        return new(
-            Free: "#7E7486",
-            Recovery: "#5BC0EB",
-            Easy: "#27D17F",
-            Marathon: "#E0B24A",
-            Threshold: "#F26430",
-            Intervall: "#FF2A23",
-            Repetition: "#C1121F");
     }
 
     private static MudTheme CreatePaceLeticsTheme()
@@ -406,55 +367,6 @@ public static class AppThemeCatalog
             });
     }
 
-    private static MudTheme CreateGoldenHourTheme()
-    {
-        return CreateTheme(
-            light: new PaletteLight
-            {
-                Primary = "#F97316",
-                Secondary = "#2563EB",
-                Tertiary = "#FBBF24",
-                Info = "#3B82F6",
-                Success = "#2EAD78",
-                Warning = "#F59E0B",
-                Error = "#E65A78",
-                Background = "#FFF5E3",
-                BackgroundGray = "#FFE1A8",
-                Surface = "#FFFFFF",
-                AppbarBackground = "#3267A8",
-                AppbarText = "#FFFFFF",
-                DrawerBackground = "#FFFFFF",
-                DrawerText = "#344054",
-                TextPrimary = "#2E2A25",
-                TextSecondary = "#70604E"
-            });
-    }
-
-    private static MudTheme CreateStellarForgeTheme()
-    {
-        return CreateTheme(
-            dark: new PaletteDark
-            {
-                Primary = "#FFE81F",
-                Secondary = "#4CC9F0",
-                Tertiary = "#FFB703",
-                Info = "#4CC9F0",
-                Success = "#49D4AA",
-                Warning = "#FFE81F",
-                Error = "#FF5D72",
-                Background = "#101522",
-                BackgroundGray = "#1A2236",
-                Surface = "#242B43",
-                AppbarBackground = "#0B101C",
-                AppbarText = "#FFE81F",
-                DrawerBackground = "#151C2D",
-                DrawerText = "#FFEFB0",
-                TextPrimary = "#FFF7C2",
-                TextSecondary = "#BFC7DA"
-            },
-            typography: CreateStellarForgeTypography());
-    }
-
     private static MudTheme CreateSummitBlazeTheme()
     {
         return CreateTheme(
@@ -477,33 +389,6 @@ public static class AppThemeCatalog
                 TextPrimary = "#202020",
                 TextSecondary = "#6B5D57"
             });
-    }
-
-    private static MudTheme CreateUpsideDownTheme()
-    {
-        return CreateTheme(
-            dark: new PaletteDark
-            {
-                Primary = "#FF2A23",
-                Secondary = "#E0B24A",
-                Tertiary = "#5BC0EB",
-                Info = "#5BC0EB",
-                Success = "#27D17F",
-                Warning = "#E0B24A",
-                Error = "#FF4D4A",
-                Background = "#171118",
-                BackgroundGray = "#241A22",
-                Surface = "#30232B",
-                AppbarBackground = "#1A1118",
-                AppbarText = "#FFE9D6",
-                DrawerBackground = "#21171F",
-                DrawerText = "#F4D8C5",
-                TextPrimary = "#FFF2E8",
-                TextSecondary = "#D9A998",
-                LinesDefault = "#66404A",
-                Divider = "#66404A"
-            },
-            typography: CreateUpsideDownTypography());
     }
 
     private static MudTheme CreateTheme(
@@ -541,34 +426,4 @@ public static class AppThemeCatalog
         };
     }
 
-    private static Typography CreateStellarForgeTypography()
-    {
-        var typography = CreateDefaultTypography();
-        var displayFamily = new[] { "Arial Black", "Impact", "Segoe UI", "sans-serif" };
-
-        typography.Default = new DefaultTypography { FontFamily = displayFamily };
-        typography.H1 = new H1Typography { FontFamily = displayFamily, FontSize = "2.5rem", FontWeight = "700" };
-        typography.H2 = new H2Typography { FontFamily = displayFamily, FontSize = "2rem", FontWeight = "700" };
-        typography.H3 = new H3Typography { FontFamily = displayFamily, FontSize = "1.6rem", FontWeight = "700" };
-        typography.H4 = new H4Typography { FontFamily = displayFamily, FontSize = "1.3rem", FontWeight = "700" };
-        typography.H5 = new H5Typography { FontFamily = displayFamily, FontSize = "1.1rem", FontWeight = "700" };
-        typography.H6 = new H6Typography { FontFamily = displayFamily, FontSize = "1rem", FontWeight = "700" };
-
-        return typography;
-    }
-
-    private static Typography CreateUpsideDownTypography()
-    {
-        var typography = CreateDefaultTypography();
-        var displayFamily = new[] { "Benguiat", "Georgia", "Times New Roman", "serif" };
-
-        typography.H1 = new H1Typography { FontFamily = displayFamily, FontSize = "2.5rem", FontWeight = "700" };
-        typography.H2 = new H2Typography { FontFamily = displayFamily, FontSize = "2rem", FontWeight = "700" };
-        typography.H3 = new H3Typography { FontFamily = displayFamily, FontSize = "1.6rem", FontWeight = "700" };
-        typography.H4 = new H4Typography { FontFamily = displayFamily, FontSize = "1.3rem", FontWeight = "700" };
-        typography.H5 = new H5Typography { FontFamily = displayFamily, FontSize = "1.1rem", FontWeight = "700" };
-        typography.H6 = new H6Typography { FontFamily = displayFamily, FontSize = "1rem", FontWeight = "700" };
-
-        return typography;
-    }
 }

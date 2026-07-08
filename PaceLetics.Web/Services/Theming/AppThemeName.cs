@@ -11,8 +11,5 @@ public enum AppThemeName
     DarkRomance,
     Maritime,
     Tropical,
-    GoldenHour,
-    StellarForge,
-    SummitBlaze,
-    UpsideDown
+    SummitBlaze
 }
