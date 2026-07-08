@@ -11,7 +11,7 @@ public static class AppThemeCatalog
         new(AppThemeName.Forest, "Forest", CreateForestTheme(), Icons.Material.Filled.Park, IsDarkMode: true, PaceZones: CreateForestPaceZones()),
         new(AppThemeName.HighContrast, "High Contrast", CreateHighContrastTheme(), Icons.Material.Filled.Contrast, IsDarkMode: false, PaceZones: CreateHighContrastPaceZones()),
         new(AppThemeName.Wildflowers, "Wildflowers", CreateWildflowersTheme(), Icons.Material.Filled.LocalFlorist, IsDarkMode: false, PaceZones: CreateWildflowersPaceZones()),
-        new(AppThemeName.CoteDAzur, "Cote d'Azur", CreateCoteDAzurTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false, PaceZones: CreateCoteDAzurPaceZones()),
+        new(AppThemeName.CoteDAzur, "Cote d'Azur", CreateCoteDAzurTheme(), Icons.Material.Filled.WbSunny, IsDarkMode: false, PaceZones: CreateCoteDAzurPaceZones()),
         new(AppThemeName.DarkRomance, "Dark Romance", CreateDarkRomanceTheme(), Icons.Material.Filled.Favorite, IsDarkMode: true, PaceZones: CreateDarkRomancePaceZones()),
         new(AppThemeName.Maritime, "Maritime", CreateMaritimeTheme(), Icons.Material.Filled.Sailing, IsDarkMode: false, PaceZones: CreateMaritimePaceZones()),
         new(AppThemeName.Tropical, "Tropical", CreateTropicalTheme(), Icons.Material.Filled.BeachAccess, IsDarkMode: false, PaceZones: CreateTropicalPaceZones()),
