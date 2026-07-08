@@ -142,6 +142,7 @@ builder.Services.Configure<TrainerVerificationOptions>(options =>
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<CosmosCourseRepository>();
 builder.Services.AddScoped<ICourseRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
+builder.Services.AddScoped<IGroupRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.AddScoped<IMateRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.AddHostedService<CourseSeedStartupLoader>();
 builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
@@ -164,6 +165,7 @@ builder.Services.AddScoped<IUserDriveFolderStorageProvider>(x =>
 builder.Services.AddScoped<IRunningAnalysisService, RunningAnalysisService>();
 builder.Services.AddScoped<IUserDriveFolderService, UserDriveFolderService>();
 builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunningAnalysisRegistrationAdapter>();
+builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddScoped<ITrainingCalendarService, TrainingCalendarService>();

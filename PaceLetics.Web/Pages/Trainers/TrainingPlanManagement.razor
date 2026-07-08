@@ -1,12 +1,17 @@
 @page "/Trainers/training-plans"
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.CoreModule.Infrastructure.Constants
 @using PaceLetics.TrainingModule.CodeBase.Running.Definitions
 @using PaceLetics.TrainingModule.CodeBase.Running.Models
 @using PaceLetics.TrainingPlanModule.CodeBase.Definitions
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services
+@using PaceLetics.Web.Services.Courses
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ITrainingPlanService TrainingPlanService
+@inject ICourseService CourseService
+@inject IGroupService GroupService
 @inject ISnackbar Snackbar
 
 <PageTitle>Trainingsplaene verwalten</PageTitle>
@@ -102,6 +107,83 @@
                     </MudPaper>
 
                     <MudTabs Elevation="0" Rounded="false">
+                        <MudTabPanel Text="Sichtbarkeit">
+                            <MudStack Spacing="3" Class="pt-3">
+                                <MudPaper Elevation="0" Class="pa-3 pl-trainer-editor-panel">
+                                    <MudStack Spacing="2">
+                                        <MudText Typo="Typo.subtitle2">Sichtbarkeit setzen</MudText>
+                                        <MudGrid Spacing="2">
+                                            <MudItem xs="12" md="4">
+                                                <MudSelect T="string" Label="Sichtbarkeit" @bind-Value="_publicationTargetType" Variant="Variant.Outlined">
+                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Global">Alle</MudSelectItem>
+                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Group">Gruppe</MudSelectItem>
+                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Course">Kurs</MudSelectItem>
+                                                </MudSelect>
+                                            </MudItem>
+                                            @if (_publicationTargetType == FeedTargetTypes.Group)
+                                            {
+                                                <MudItem xs="12" md="8">
+                                                    <MudSelect T="string" Label="Gruppe" @bind-Value="_publicationTargetId" Variant="Variant.Outlined">
+                                                        @foreach (var group in _groups)
+                                                        {
+                                                            <MudSelectItem T="string" Value="@group.Id">@group.Name</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </MudItem>
+                                            }
+                                            else if (_publicationTargetType == FeedTargetTypes.Course)
+                                            {
+                                                <MudItem xs="12" md="8">
+                                                    <MudSelect T="string" Label="Kurs" @bind-Value="_publicationTargetId" Variant="Variant.Outlined">
+                                                        @foreach (var course in _courses)
+                                                        {
+                                                            <MudSelectItem T="string" Value="@course.Id">@course.Name</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </MudItem>
+                                            }
+                                        </MudGrid>
+                                        <MudStack Row="true" Justify="Justify.FlexEnd">
+                                            <MudTooltip Text="Sichtbarkeit speichern">
+                                                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                                                               Color="Color.Primary"
+                                                               Variant="Variant.Filled"
+                                                               OnClick="SavePublicationAsync"
+                                                               aria-label="Sichtbarkeit speichern" />
+                                            </MudTooltip>
+                                        </MudStack>
+                                    </MudStack>
+                                </MudPaper>
+
+                                @if (SelectedPlanPublications.Count == 0)
+                                {
+                                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">Dieser Plan ist noch nicht veröffentlicht.</MudAlert>
+                                }
+                                else
+                                {
+                                    <MudStack Spacing="1">
+                                        @foreach (var publication in SelectedPlanPublications)
+                                        {
+                                            <MudPaper Elevation="0" Class="pa-3 pl-trainer-list-row">
+                                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                                    <MudStack Spacing="0" Style="min-width:0;">
+                                                        <MudText Typo="Typo.body2">@publication.Label</MudText>
+                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@publication.PublishedAt.ToString("dd.MM.yyyy")</MudText>
+                                                    </MudStack>
+                                                    <MudTooltip Text="Sichtbarkeit entfernen">
+                                                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                       Color="Color.Default"
+                                                                       OnClick="@(() => RemovePublicationAsync(publication))"
+                                                                       aria-label="Sichtbarkeit entfernen" />
+                                                    </MudTooltip>
+                                                </MudStack>
+                                            </MudPaper>
+                                        }
+                                    </MudStack>
+                                }
+                            </MudStack>
+                        </MudTabPanel>
+
                         <MudTabPanel Text="Einheiten">
                             <MudStack Spacing="3" Class="pt-3">
                                 <MudPaper Elevation="0" Class="pa-3 pl-trainer-editor-panel">
@@ -407,15 +489,26 @@
     ];
 
     private List<TrainingPlan> _plans = new();
+    private List<CourseDocument> _courses = new();
+    private List<GroupDocument> _groups = new();
+    private List<TrainingPlanPublicationDocument> _publications = new();
+    private string? _userId;
     private string? _selectedPlanId;
     private string _newPlanName = string.Empty;
     private string _planName = string.Empty;
+    private string _publicationTargetType = FeedTargetTypes.Global;
+    private string? _publicationTargetId;
     private SessionDraft _sessionDraft = SessionDraft.CreateDefault();
     private BlockDraft _blockDraft = new();
     private HashSet<string> _selectedBlockSessionIds = new(StringComparer.OrdinalIgnoreCase);
 
     private TrainingPlan? SelectedPlan => _plans.FirstOrDefault(plan =>
         string.Equals(plan.Id, _selectedPlanId, StringComparison.OrdinalIgnoreCase));
+
+    private IReadOnlyList<PlanPublicationView> SelectedPlanPublications =>
+        SelectedPlan is null
+            ? Array.Empty<PlanPublicationView>()
+            : BuildPublicationViews(SelectedPlan.Id);
 
     private bool CanCreateSession =>
         SelectedPlan is not null
@@ -428,9 +521,12 @@
         && !string.IsNullOrWhiteSpace(_blockDraft.Name)
         && _selectedBlockSessionIds.Count > 0;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
         ReloadPlans();
+        await ReloadPublicationContextAsync();
     }
 
     private void ReloadPlans()
@@ -461,6 +557,16 @@
         _blockDraft = new();
     }
 
+    private async Task ReloadPublicationContextAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        _courses = (await CourseService.GetCoursesForTrainerAsync(_userId)).ToList();
+        _groups = (await GroupService.GetGroupsForTrainerAsync(_userId)).ToList();
+        _publications = (await GroupService.GetTrainingPlanPublicationsAsync()).ToList();
+    }
+
     private Task CreatePlanAsync()
     {
         try
@@ -477,6 +583,57 @@
         }
 
         return Task.CompletedTask;
+    }
+
+    private async Task SavePublicationAsync()
+    {
+        if (SelectedPlan is null)
+            return;
+
+        try
+        {
+            var target = CreatePublicationTarget();
+            if (string.Equals(target.TargetType, FeedTargetTypes.Course, StringComparison.OrdinalIgnoreCase))
+            {
+                await CourseService.PublishTrainingPlanAsync(
+                    target.TargetId,
+                    SelectedPlan.Id,
+                    _userId ?? string.Empty,
+                    target: target);
+            }
+            else
+            {
+                await GroupService.UpsertTrainingPlanPublicationAsync(
+                    SelectedPlan.Id,
+                    target,
+                    _userId ?? string.Empty);
+            }
+
+            Snackbar.Add("Sichtbarkeit gespeichert.", Severity.Success);
+            await ReloadPublicationContextAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task RemovePublicationAsync(PlanPublicationView publication)
+    {
+        try
+        {
+            if (publication.IsCoursePublication)
+                await CourseService.RemoveTrainingPlanPublicationAsync(publication.TargetId, publication.TrainingPlanId, _userId ?? string.Empty);
+            else
+                await GroupService.RemoveTrainingPlanPublicationAsync(publication.Id, _userId ?? string.Empty);
+
+            Snackbar.Add("Sichtbarkeit entfernt.", Severity.Success);
+            await ReloadPublicationContextAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
     }
 
     private Task SavePlanNameAsync()
@@ -652,6 +809,82 @@
         return $"{plan.Sessions.Count} Einheiten - {plan.Blocks.Count} Bloecke - {range}";
     }
 
+    private FeedTarget CreatePublicationTarget()
+    {
+        if (_publicationTargetType == FeedTargetTypes.Global)
+            return FeedTarget.Global();
+
+        if (string.IsNullOrWhiteSpace(_publicationTargetId))
+            throw new InvalidOperationException("Bitte wähle ein Ziel aus.");
+
+        return _publicationTargetType switch
+        {
+            FeedTargetTypes.Group => FeedTarget.Group(_publicationTargetId),
+            FeedTargetTypes.Course => FeedTarget.Course(_publicationTargetId),
+            _ => FeedTarget.Global()
+        };
+    }
+
+    private IReadOnlyList<PlanPublicationView> BuildPublicationViews(string planId)
+    {
+        var views = new List<PlanPublicationView>();
+
+        foreach (var publication in _publications.Where(publication =>
+                     string.Equals(publication.TrainingPlanId, planId, StringComparison.OrdinalIgnoreCase)))
+        {
+            var target = publication.Target.NormalizeCopy();
+            views.Add(new PlanPublicationView(
+                publication.Id,
+                publication.TrainingPlanId,
+                target.TargetType,
+                target.TargetId,
+                FormatPublicationTarget(target),
+                publication.PublishedAt,
+                false));
+        }
+
+        foreach (var course in _courses)
+        {
+            foreach (var publication in course.TrainingPlanPublications.Where(publication =>
+                         string.Equals(publication.TrainingPlanId, planId, StringComparison.OrdinalIgnoreCase)))
+            {
+                views.Add(new PlanPublicationView(
+                    $"{course.Id}:{publication.TrainingPlanId}",
+                    publication.TrainingPlanId,
+                    FeedTargetTypes.Course,
+                    course.Id,
+                    $"Kurs: {course.Name}",
+                    publication.PublishedAt,
+                    true));
+            }
+        }
+
+        return views
+            .OrderBy(view => view.TargetType)
+            .ThenBy(view => view.Label)
+            .ToList();
+    }
+
+    private string FormatPublicationTarget(FeedTarget target)
+    {
+        if (target.IsGlobal)
+            return "Alle";
+
+        if (string.Equals(target.TargetType, FeedTargetTypes.Group, StringComparison.OrdinalIgnoreCase))
+        {
+            var groupName = _groups.FirstOrDefault(group => group.Id == target.TargetId)?.Name ?? target.TargetId;
+            return $"Gruppe: {groupName}";
+        }
+
+        if (string.Equals(target.TargetType, FeedTargetTypes.Course, StringComparison.OrdinalIgnoreCase))
+        {
+            var courseName = _courses.FirstOrDefault(course => course.Id == target.TargetId)?.Name ?? target.TargetId;
+            return $"Kurs: {courseName}";
+        }
+
+        return $"{target.TargetType}: {target.TargetId}";
+    }
+
     private static string FormatSession(TrainingSession session)
     {
         var parts = new List<string> { session.Date.ToString("dd.MM.yyyy") };
@@ -769,4 +1002,13 @@
         public string Focus { get; set; } = string.Empty;
         public string Structure { get; set; } = string.Empty;
     }
+
+    private sealed record PlanPublicationView(
+        string Id,
+        string TrainingPlanId,
+        string TargetType,
+        string TargetId,
+        string Label,
+        DateTime PublishedAt,
+        bool IsCoursePublication);
 }

@@ -5,6 +5,7 @@ public static class FeedTargetTypes
     public const string Global = "global";
     public const string User = "user";
     public const string Course = "course";
+    public const string Group = "group";
     public const string Team = "team";
     public const string Organization = "organization";
 
@@ -13,6 +14,7 @@ public static class FeedTargetTypes
         Global,
         User,
         Course,
+        Group,
         Team,
         Organization
     };
@@ -48,6 +50,11 @@ public sealed class FeedTarget : IEquatable<FeedTarget>
     public static FeedTarget Course(string courseId)
     {
         return Addressed(FeedTargetTypes.Course, courseId);
+    }
+
+    public static FeedTarget Group(string groupId)
+    {
+        return Addressed(FeedTargetTypes.Group, groupId);
     }
 
     public static FeedTarget Team(string teamId)

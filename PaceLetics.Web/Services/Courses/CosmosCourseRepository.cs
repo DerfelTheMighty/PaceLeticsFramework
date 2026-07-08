@@ -1,10 +1,11 @@
 using AthleteDataAccessLibrary;
 using AthleteDataAccessLibrary.Contracts;
+using PaceLetics.CoreModule.Infrastructure.Models;
 using PaceLetics.Web.Services.Mates;
 
 namespace PaceLetics.Web.Services.Courses;
 
-public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
+public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository, IMateRepository
 {
     private readonly IDataAccess _db;
     private readonly AthleteDataOptions _options;
@@ -287,6 +288,124 @@ public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
             courseId);
     }
 
+    public async Task<IReadOnlyList<GroupDocument>> GetGroupsAsync()
+    {
+        var groups = await _db.LoadData<GroupDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            CourseDocumentTypes.Group);
+
+        return groups
+            .Where(group => !string.IsNullOrWhiteSpace(group.Id))
+            .OrderBy(group => group.Name)
+            .ToList();
+    }
+
+    public Task<GroupDocument?> GetGroupAsync(string groupId)
+    {
+        return _db.LoadItem<GroupDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            groupId,
+            groupId);
+    }
+
+    public Task UpsertGroupAsync(GroupDocument group)
+    {
+        NormalizeGroup(group);
+        return _db.UpsertItem(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            group,
+            group.GroupId);
+    }
+
+    public async Task DeleteGroupAsync(string groupId)
+    {
+        var memberships = await GetMembershipsForGroupAsync(groupId);
+        foreach (var membership in memberships)
+        {
+            await _db.DeleteItem<GroupMembershipDocument>(
+                _options.DatabaseName,
+                _options.CourseContainerName,
+                membership.Id,
+                groupId);
+        }
+
+        await _db.DeleteItem<GroupDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            groupId,
+            groupId);
+    }
+
+    public async Task<IReadOnlyList<GroupMembershipDocument>> GetMembershipsForAthleteAsync(string athleteUserId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            return Array.Empty<GroupMembershipDocument>();
+
+        var memberships = await _db.LoadData<GroupMembershipDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            CourseDocumentTypes.GroupMembership);
+
+        return memberships
+            .Where(membership => string.Equals(membership.AthleteUserId, athleteUserId, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    public Task<IReadOnlyList<GroupMembershipDocument>> GetMembershipsForGroupAsync(string groupId)
+    {
+        return LoadPartitionItems<GroupMembershipDocument>(groupId, CourseDocumentTypes.GroupMembership);
+    }
+
+    public Task<GroupMembershipDocument?> GetMembershipAsync(string groupId, string athleteUserId)
+    {
+        return _db.LoadItem<GroupMembershipDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            CourseDocumentIds.GroupMembership(groupId, athleteUserId),
+            groupId);
+    }
+
+    public Task UpsertMembershipAsync(GroupMembershipDocument membership)
+    {
+        membership.DocumentType = CourseDocumentTypes.GroupMembership;
+        membership.Id = CourseDocumentIds.GroupMembership(membership.GroupId, membership.AthleteUserId);
+
+        return _db.UpsertItem(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            membership,
+            membership.GroupId);
+    }
+
+    public Task<IReadOnlyList<TrainingPlanPublicationDocument>> GetTrainingPlanPublicationsAsync()
+    {
+        return LoadPartitionItems<TrainingPlanPublicationDocument>(
+            TrainingPlanPublicationDocument.PartitionKey,
+            CourseDocumentTypes.TrainingPlanPublication);
+    }
+
+    public Task UpsertTrainingPlanPublicationAsync(TrainingPlanPublicationDocument publication)
+    {
+        NormalizeTrainingPlanPublication(publication);
+        return _db.UpsertItem(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            publication,
+            TrainingPlanPublicationDocument.PartitionKey);
+    }
+
+    public Task DeleteTrainingPlanPublicationAsync(string publicationId)
+    {
+        return _db.DeleteItem<TrainingPlanPublicationDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            publicationId,
+            TrainingPlanPublicationDocument.PartitionKey);
+    }
+
     private async Task EnsureDefaultCoursesAsync()
     {
         var existingCourses = await _db.LoadData<CourseDocument>(
@@ -338,6 +457,40 @@ public sealed class CosmosCourseRepository : ICourseRepository, IMateRepository
 
         course.DocumentType = CourseDocumentTypes.Course;
         course.Slug = string.IsNullOrWhiteSpace(course.Slug) ? course.Id : course.Slug;
+        course.VisibilityTarget = (course.VisibilityTarget is null || course.VisibilityTarget.IsEmpty)
+            ? FeedTarget.Global()
+            : course.VisibilityTarget.NormalizeCopy();
+    }
+
+    private static void NormalizeGroup(GroupDocument group)
+    {
+        if (string.IsNullOrWhiteSpace(group.Id))
+            group.Id = group.GroupId;
+
+        if (string.IsNullOrWhiteSpace(group.GroupId))
+            group.GroupId = group.Id;
+
+        group.DocumentType = CourseDocumentTypes.Group;
+        group.Slug = string.IsNullOrWhiteSpace(group.Slug) ? group.Id : group.Slug;
+        group.JoinMode = string.Equals(group.JoinMode, GroupJoinModes.ApprovalRequired, StringComparison.OrdinalIgnoreCase)
+            ? GroupJoinModes.ApprovalRequired
+            : GroupJoinModes.Open;
+    }
+
+    private static void NormalizeTrainingPlanPublication(TrainingPlanPublicationDocument publication)
+    {
+        publication.DocumentType = CourseDocumentTypes.TrainingPlanPublication;
+        publication.PublicationPartitionKey = TrainingPlanPublicationDocument.PartitionKey;
+        publication.Target = (publication.Target is null || publication.Target.IsEmpty)
+            ? FeedTarget.Global()
+            : publication.Target.NormalizeCopy();
+
+        if (string.IsNullOrWhiteSpace(publication.Id))
+        {
+            publication.Id = CourseDocumentIds.TrainingPlanPublication(
+                publication.TrainingPlanId,
+                publication.Target);
+        }
     }
 
     private static bool ApplySeedCourseUpdates(CourseDocument existingCourse, CourseDocument seedCourse)
@@ -415,5 +568,23 @@ public static class CourseDocumentIds
     public static string EventRegistration(string eventId, string athleteUserId)
     {
         return $"event-registration:{eventId}:{athleteUserId}";
+    }
+
+    public static string GroupMembership(string groupId, string athleteUserId)
+    {
+        return $"group-membership:{Normalize(groupId)}:{Normalize(athleteUserId)}";
+    }
+
+    public static string TrainingPlanPublication(string trainingPlanId, FeedTarget target)
+    {
+        var normalized = target.NormalizeCopy();
+        return $"training-plan-publication:{Normalize(trainingPlanId)}:{Normalize(normalized.TargetType)}:{Normalize(normalized.TargetId)}";
+    }
+
+    private static string Normalize(string value)
+    {
+        return string.IsNullOrWhiteSpace(value)
+            ? "global"
+            : value.Trim().Replace(":", "-", StringComparison.Ordinal);
     }
 }

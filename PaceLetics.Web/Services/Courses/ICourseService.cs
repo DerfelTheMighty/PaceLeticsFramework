@@ -1,3 +1,5 @@
+using PaceLetics.CoreModule.Infrastructure.Models;
+
 namespace PaceLetics.Web.Services.Courses;
 
 public interface ICourseService
@@ -11,6 +13,8 @@ public interface ICourseService
     Task<IReadOnlyList<string>> GetPublishedTrainingPlanIdsForAthleteAsync(string athleteUserId);
 
     Task<CourseDocument> CreateCourseAsync(CourseCreateRequest request, string creatorTrainerUserId, string creatorDisplayName);
+
+    Task UpdateCourseVisibilityAsync(string courseId, FeedTarget visibilityTarget, string requestingTrainerUserId);
 
     Task DeleteCourseAsync(string courseId, string requestingTrainerUserId);
 
@@ -35,7 +39,7 @@ public interface ICourseService
 
     Task RemoveCourseDateAsync(string courseId, string dateId, string requestingTrainerUserId);
 
-    Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null);
+    Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null, FeedTarget? target = null);
 
     Task RemoveTrainingPlanPublicationAsync(string courseId, string trainingPlanId, string requestingTrainerUserId);
 

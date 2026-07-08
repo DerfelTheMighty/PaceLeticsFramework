@@ -2,12 +2,14 @@
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
 @using AthleteDataAccessLibrary.Contracts
 @using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.TrainingPlanModule.CodeBase.Definitions
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services
 @using PaceLetics.Web.Services.Courses
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ICourseService CourseService
+@inject IGroupService GroupService
 @inject ITrainingPlanService TrainingPlanService
 @inject IAthleteData AthleteData
 @inject IJSRuntime JS
@@ -67,6 +69,29 @@
                                            DateChanged="@(date => _courseEndDate = date)"
                                            Variant="Variant.Outlined" />
                         </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudSelect T="string"
+                                       Label="Sichtbarkeit"
+                                       @bind-Value="_courseVisibilityMode"
+                                       Variant="Variant.Outlined">
+                                <MudSelectItem T="string" Value="@VisibilityModeGlobal">Alle</MudSelectItem>
+                                <MudSelectItem T="string" Value="@VisibilityModeGroup">Gruppe</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+                        @if (_courseVisibilityMode == VisibilityModeGroup)
+                        {
+                            <MudItem xs="12" md="6">
+                                <MudSelect T="string"
+                                           Label="Gruppe"
+                                           @bind-Value="_courseVisibilityGroupId"
+                                           Variant="Variant.Outlined">
+                                    @foreach (var group in _groups)
+                                    {
+                                        <MudSelectItem T="string" Value="@group.Id">@group.Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
                     </MudGrid>
 
                     <MudStack Row="true" Justify="Justify.FlexEnd">
@@ -116,6 +141,7 @@
                                         <MudText Typo="Typo.h6">@course.Name</MudText>
                                         <MudText Typo="Typo.body2" Color="Color.Secondary">@course.Description</MudText>
                                         <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatPeriod(course)</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatVisibility(course.VisibilityTarget)</MudText>
                                     </MudStack>
 
                                     @if (isCreator)
@@ -139,6 +165,41 @@
                                         </MudTooltip>
                                     }
                                 </MudStack>
+
+                                <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
+                                    <MudStack Row="true" AlignItems="AlignItems.End" Style="gap:12px; flex-wrap:wrap;">
+                                        <MudSelect T="string"
+                                                   Label="Sichtbarkeit"
+                                                   Value="@GetCourseVisibilityDraftMode(course)"
+                                                   ValueChanged="@((string value) => SetCourseVisibilityDraft(course.Id, value, null))"
+                                                   Variant="Variant.Outlined"
+                                                   Style="min-width:180px;">
+                                            <MudSelectItem T="string" Value="@VisibilityModeGlobal">Alle</MudSelectItem>
+                                            <MudSelectItem T="string" Value="@VisibilityModeGroup">Gruppe</MudSelectItem>
+                                        </MudSelect>
+                                        @if (GetCourseVisibilityDraftMode(course) == VisibilityModeGroup)
+                                        {
+                                            <MudSelect T="string"
+                                                       Label="Gruppe"
+                                                       Value="@GetCourseVisibilityDraftGroupId(course)"
+                                                       ValueChanged="@((string value) => SetCourseVisibilityDraft(course.Id, VisibilityModeGroup, value))"
+                                                       Variant="Variant.Outlined"
+                                                       Style="min-width:220px; flex:1;">
+                                                @foreach (var group in _groups)
+                                                {
+                                                    <MudSelectItem T="string" Value="@group.Id">@group.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        }
+                                        <MudTooltip Text="Sichtbarkeit speichern">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                                                           Color="Color.Primary"
+                                                           Variant="Variant.Filled"
+                                                           OnClick="@(() => SaveCourseVisibilityAsync(course))"
+                                                           aria-label="Sichtbarkeit speichern" />
+                                        </MudTooltip>
+                                    </MudStack>
+                                </MudPaper>
 
                                 <MudText Typo="Typo.subtitle2">@L["Trainers"]</MudText>
                                 <MudStack Spacing="1">
@@ -648,6 +709,9 @@
 </MudContainer>
 
 @code {
+    private const string VisibilityModeGlobal = "global";
+    private const string VisibilityModeGroup = "group";
+
     private string? _userId;
     private string _displayName = string.Empty;
     private string? _errorMessage;
@@ -655,6 +719,7 @@
     private string? _selectedTrainerToAddId;
     private string? _selectedTrainingPlanId;
     private List<CourseDocument> _courses = new();
+    private List<GroupDocument> _groups = new();
     private List<TrainerCandidate> _trainerCandidates = new();
     private List<CourseEventDocument> _selectedCourseEvents = new();
     private List<TrainingPlan> _trainingPlans = new();
@@ -663,12 +728,15 @@
     private HashSet<string> _openParticipantLists = new(StringComparer.OrdinalIgnoreCase);
     private Dictionary<string, TrainingPlanBlockDraft> _blockDrafts = new(StringComparer.OrdinalIgnoreCase);
     private HashSet<string> _selectedBlockSessionKeys = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, CourseVisibilityDraft> _courseVisibilityDrafts = new(StringComparer.OrdinalIgnoreCase);
 
     private string _courseName = string.Empty;
     private string _courseDescription = string.Empty;
     private CourseLevel _courseLevel = CourseLevel.Level1;
     private DateTime? _courseStartDate = DateTime.Today;
     private DateTime? _courseEndDate = DateTime.Today.AddMonths(3);
+    private string _courseVisibilityMode = VisibilityModeGlobal;
+    private string? _courseVisibilityGroupId;
 
     private string _dateTitle = string.Empty;
     private string _dateLocation = string.Empty;
@@ -765,6 +833,7 @@
                     .ToList();
 
                 _courses = (await CourseService.GetCoursesForTrainerAsync(_userId)).ToList();
+                _groups = (await GroupService.GetGroupsForTrainerAsync(_userId)).ToList();
                 _trainingPlans = TrainingPlanService.LoadTrainingPlans().ToList();
                 EnsureSelection();
                 await LoadSelectedCourseEventsAsync();
@@ -816,6 +885,59 @@
         return Task.CompletedTask;
     }
 
+    private void SetCourseVisibilityDraft(string courseId, string mode, string? groupId)
+    {
+        var draft = GetCourseVisibilityDraft(courseId);
+        draft.Mode = mode == VisibilityModeGroup ? VisibilityModeGroup : VisibilityModeGlobal;
+        if (groupId is not null)
+            draft.GroupId = groupId;
+    }
+
+    private string GetCourseVisibilityDraftMode(CourseDocument course)
+    {
+        return GetCourseVisibilityDraft(course.Id).Mode;
+    }
+
+    private string? GetCourseVisibilityDraftGroupId(CourseDocument course)
+    {
+        return GetCourseVisibilityDraft(course.Id).GroupId;
+    }
+
+    private CourseVisibilityDraft GetCourseVisibilityDraft(string courseId)
+    {
+        if (!_courseVisibilityDrafts.TryGetValue(courseId, out var draft))
+        {
+            var course = _courses.FirstOrDefault(course => course.Id == courseId);
+            draft = new CourseVisibilityDraft
+            {
+                Mode = GetVisibilityMode(course?.VisibilityTarget),
+                GroupId = GetVisibilityGroupId(course?.VisibilityTarget)
+            };
+            _courseVisibilityDrafts[courseId] = draft;
+        }
+
+        return draft;
+    }
+
+    private async Task SaveCourseVisibilityAsync(CourseDocument course)
+    {
+        try
+        {
+            var draft = GetCourseVisibilityDraft(course.Id);
+            await CourseService.UpdateCourseVisibilityAsync(
+                course.Id,
+                CreateVisibilityTarget(draft.Mode, draft.GroupId),
+                _userId ?? string.Empty);
+
+            Snackbar.Add("Sichtbarkeit gespeichert.", Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
     private async Task LoadSelectedCourseEventsAsync()
     {
         _selectedCourseEvents = SelectedCourse is null
@@ -838,7 +960,8 @@
                     Level = _courseLevel,
                     StartDate = _courseStartDate ?? DateTime.Today,
                     EndDate = _courseEndDate ?? DateTime.Today,
-                    IsPublished = true
+                    IsPublished = true,
+                    VisibilityTarget = CreateVisibilityTarget(_courseVisibilityMode, _courseVisibilityGroupId)
                 },
                 _userId ?? string.Empty,
                 _displayName);
@@ -1228,6 +1351,8 @@
         _courseLevel = CourseLevel.Level1;
         _courseStartDate = DateTime.Today;
         _courseEndDate = DateTime.Today.AddMonths(3);
+        _courseVisibilityMode = VisibilityModeGlobal;
+        _courseVisibilityGroupId = null;
     }
 
     private void ResetDateForm()
@@ -1277,6 +1402,52 @@
     private string FormatPeriod(CourseDocument course)
     {
         return string.Format(L["Period"], course.StartDate, course.EndDate);
+    }
+
+    private string FormatVisibility(FeedTarget? target)
+    {
+        var mode = GetVisibilityMode(target);
+        if (mode == VisibilityModeGlobal)
+            return "Sichtbar für alle";
+
+        var groupId = GetVisibilityGroupId(target);
+        var groupName = _groups.FirstOrDefault(group => group.Id == groupId)?.Name ?? groupId;
+        return string.IsNullOrWhiteSpace(groupName)
+            ? "Sichtbar für Gruppe"
+            : $"Sichtbar für Gruppe: {groupName}";
+    }
+
+    private static string GetVisibilityMode(FeedTarget? target)
+    {
+        var normalized = target is null || target.IsEmpty
+            ? FeedTarget.Global()
+            : target.NormalizeCopy();
+
+        return string.Equals(normalized.TargetType, FeedTargetTypes.Group, StringComparison.OrdinalIgnoreCase)
+            ? VisibilityModeGroup
+            : VisibilityModeGlobal;
+    }
+
+    private static string? GetVisibilityGroupId(FeedTarget? target)
+    {
+        var normalized = target is null || target.IsEmpty
+            ? FeedTarget.Global()
+            : target.NormalizeCopy();
+
+        return string.Equals(normalized.TargetType, FeedTargetTypes.Group, StringComparison.OrdinalIgnoreCase)
+            ? normalized.TargetId
+            : null;
+    }
+
+    private static FeedTarget CreateVisibilityTarget(string mode, string? groupId)
+    {
+        if (mode != VisibilityModeGroup)
+            return FeedTarget.Global();
+
+        if (string.IsNullOrWhiteSpace(groupId))
+            throw new InvalidOperationException("Bitte wähle eine Gruppe aus.");
+
+        return FeedTarget.Group(groupId);
     }
 
     private string FormatDateRange(DateTime startsAt, DateTime endsAt)
@@ -1525,5 +1696,11 @@
         public string Name { get; set; } = string.Empty;
         public string Focus { get; set; } = string.Empty;
         public string Structure { get; set; } = string.Empty;
+    }
+
+    private sealed class CourseVisibilityDraft
+    {
+        public string Mode { get; set; } = VisibilityModeGlobal;
+        public string? GroupId { get; set; }
     }
 }

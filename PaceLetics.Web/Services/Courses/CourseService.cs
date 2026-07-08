@@ -6,15 +6,18 @@ namespace PaceLetics.Web.Services.Courses;
 public sealed class CourseService : ICourseService
 {
     private readonly ICourseRepository _repository;
+    private readonly IGroupService _groupService;
     private readonly IStringLocalizer<CourseService>? _localizer;
     private readonly ICourseRunningAnalysisRegistrationAdapter? _runningAnalysisRegistrationAdapter;
 
     public CourseService(
         ICourseRepository repository,
+        IGroupService? groupService = null,
         IStringLocalizer<CourseService>? localizer = null,
         ICourseRunningAnalysisRegistrationAdapter? runningAnalysisRegistrationAdapter = null)
     {
         _repository = repository;
+        _groupService = groupService ?? NullGroupService.Instance;
         _localizer = localizer;
         _runningAnalysisRegistrationAdapter = runningAnalysisRegistrationAdapter;
     }
@@ -23,12 +26,17 @@ public sealed class CourseService : ICourseService
     {
         var courses = await _repository.GetCoursesAsync();
         var enrollments = await _repository.GetEnrollmentsForAthleteAsync(athleteUserId);
+        var activeGroupIds = await _groupService.GetActiveGroupIdsForAthleteAsync(athleteUserId);
+        var activeGroupIdSet = activeGroupIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
         var enrollmentByCourse = enrollments
             .GroupBy(enrollment => enrollment.CourseId)
             .ToDictionary(group => group.Key, group => group.OrderByDescending(enrollment => enrollment.RegisteredAt).First());
 
         return courses
             .Where(course => course.IsPublished)
+            .Where(course => IsVisibleForAthlete(course, activeGroupIdSet)
+                             || enrollmentByCourse.TryGetValue(course.Id, out var enrollment)
+                             && enrollment.Status == CourseEnrollmentStatus.Active)
             .Select(course =>
             {
                 enrollmentByCourse.TryGetValue(course.Id, out var enrollment);
@@ -64,8 +72,8 @@ public sealed class CourseService : ICourseService
     {
         var now = DateTime.UtcNow;
         var joinedCourses = await GetJoinedCoursesAsync(athleteUserId);
-
-        return joinedCourses
+        var planIds = await _groupService.GetVisibleTrainingPlanIdsForAthleteAsync(athleteUserId, joinedCourses);
+        var legacyPlanIds = joinedCourses
             .SelectMany(course => course.TrainingPlanPublications.Select(publication => new
             {
                 CourseId = course.Id,
@@ -73,6 +81,12 @@ public sealed class CourseService : ICourseService
             }))
             .Where(item => item.Publication.IsVisibleInCourse(item.CourseId, now))
             .Select(item => item.Publication.TrainingPlanId)
+            .Where(planId => !string.IsNullOrWhiteSpace(planId))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        return planIds
+            .Concat(legacyPlanIds)
             .Where(planId => !string.IsNullOrWhiteSpace(planId))
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
@@ -112,6 +126,7 @@ public sealed class CourseService : ICourseService
             CreatedByTrainerUserId = creatorTrainerUserId,
             CreatedAt = now,
             IsPublished = request.IsPublished,
+            VisibilityTarget = ResolveCourseVisibilityTarget(request.VisibilityTarget),
             Trainers =
             {
                 new CourseTrainerDocument
@@ -128,6 +143,17 @@ public sealed class CourseService : ICourseService
 
         await _repository.UpsertCourseAsync(course);
         return course;
+    }
+
+    public async Task UpdateCourseVisibilityAsync(string courseId, FeedTarget visibilityTarget, string requestingTrainerUserId)
+    {
+        var course = await _repository.GetCourseAsync(courseId)
+            ?? throw new InvalidOperationException(Text("CourseNotFound", "The course was not found."));
+
+        RequireTrainerManagement(course, requestingTrainerUserId);
+        course.VisibilityTarget = ResolveCourseVisibilityTarget(visibilityTarget);
+
+        await _repository.UpsertCourseAsync(course);
     }
 
     public async Task DeleteCourseAsync(string courseId, string requestingTrainerUserId)
@@ -300,7 +326,12 @@ public sealed class CourseService : ICourseService
         await _repository.UpsertCourseAsync(course);
     }
 
-    public async Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null)
+    public async Task PublishTrainingPlanAsync(
+        string courseId,
+        string trainingPlanId,
+        string publishedByUserId,
+        DateTime? visibleFrom = null,
+        FeedTarget? target = null)
     {
         if (string.IsNullOrWhiteSpace(trainingPlanId))
             throw new InvalidOperationException(Text("TrainingPlanRequired", "Please select a training plan."));
@@ -310,9 +341,20 @@ public sealed class CourseService : ICourseService
 
         RequirePlanManagement(course, publishedByUserId);
 
+        var resolvedTarget = target is null || target.IsEmpty
+            ? FeedTarget.Course(course.Id)
+            : target.NormalizeCopy();
+
+        if (!string.Equals(resolvedTarget.TargetType, FeedTargetTypes.Course, StringComparison.OrdinalIgnoreCase)
+            || !string.Equals(resolvedTarget.TargetId, course.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            await _groupService.UpsertTrainingPlanPublicationAsync(trainingPlanId, resolvedTarget, publishedByUserId, visibleFrom);
+            return;
+        }
+
         var existing = course.TrainingPlanPublications
             .FirstOrDefault(publication => publication.TrainingPlanId == trainingPlanId);
-        var target = FeedTarget.Course(course.Id);
+        var courseTarget = FeedTarget.Course(course.Id);
 
         if (existing is null)
         {
@@ -322,13 +364,13 @@ public sealed class CourseService : ICourseService
                 PublishedAt = DateTime.UtcNow,
                 PublishedByUserId = publishedByUserId,
                 VisibleFrom = visibleFrom,
-                Target = target
+                Target = courseTarget
             });
         }
         else
         {
             existing.VisibleFrom = visibleFrom;
-            existing.Target = target;
+            existing.Target = courseTarget;
             existing.PublishedByUserId = string.IsNullOrWhiteSpace(existing.PublishedByUserId)
                 ? publishedByUserId
                 : existing.PublishedByUserId;
@@ -653,6 +695,28 @@ public sealed class CourseService : ICourseService
         return CourseChallengeTypes.General;
     }
 
+    private static FeedTarget ResolveCourseVisibilityTarget(FeedTarget? target)
+    {
+        if (target is null || target.IsEmpty || target.IsGlobal)
+            return FeedTarget.Global();
+
+        var normalized = target.NormalizeCopy();
+        if (string.Equals(normalized.TargetType, FeedTargetTypes.Group, StringComparison.OrdinalIgnoreCase))
+            return normalized;
+
+        return FeedTarget.Global();
+    }
+
+    private static bool IsVisibleForAthlete(CourseDocument course, IReadOnlySet<string> activeGroupIds)
+    {
+        var target = ResolveCourseVisibilityTarget(course.VisibilityTarget);
+        if (target.IsGlobal)
+            return true;
+
+        return string.Equals(target.TargetType, FeedTargetTypes.Group, StringComparison.OrdinalIgnoreCase)
+               && activeGroupIds.Contains(target.TargetId);
+    }
+
     private void RequireTrainerManagement(CourseDocument course, string requestingTrainerUserId)
     {
         var trainer = course.Trainers.FirstOrDefault(trainer => trainer.TrainerUserId == requestingTrainerUserId);
@@ -681,5 +745,32 @@ public sealed class CourseService : ICourseService
 
         var localized = _localizer[key];
         return localized.ResourceNotFound ? fallback : localized.Value;
+    }
+
+    private sealed class NullGroupService : IGroupService
+    {
+        public static NullGroupService Instance { get; } = new();
+
+        public Task<IReadOnlyList<GroupOverview>> GetGroupsForAthleteAsync(string athleteUserId) => Empty<GroupOverview>();
+        public Task<IReadOnlyList<GroupDocument>> GetGroupsForTrainerAsync(string trainerUserId) => Empty<GroupDocument>();
+        public Task<IReadOnlyList<GroupMembershipDocument>> GetMembershipsForGroupAsync(string groupId, string requestingTrainerUserId) => Empty<GroupMembershipDocument>();
+        public Task<IReadOnlyList<string>> GetActiveGroupIdsForAthleteAsync(string athleteUserId) => Empty<string>();
+        public Task<GroupDocument?> GetGroupAsync(string groupId) => Task.FromResult<GroupDocument?>(null);
+        public Task<GroupDocument> CreateGroupAsync(GroupCreateRequest request, string trainerUserId, string trainerDisplayName) => throw new NotSupportedException();
+        public Task<GroupDocument> UpdateGroupAsync(string groupId, GroupCreateRequest request, string requestingTrainerUserId) => throw new NotSupportedException();
+        public Task DeleteGroupAsync(string groupId, string requestingTrainerUserId) => throw new NotSupportedException();
+        public Task<GroupMembershipDocument> JoinGroupAsync(string groupId, string athleteUserId) => throw new NotSupportedException();
+        public Task<GroupMembershipDocument> LeaveGroupAsync(string groupId, string athleteUserId) => throw new NotSupportedException();
+        public Task<GroupMembershipDocument> ApproveMembershipAsync(string groupId, string athleteUserId, string requestingTrainerUserId) => throw new NotSupportedException();
+        public Task<GroupMembershipDocument> RejectMembershipAsync(string groupId, string athleteUserId, string requestingTrainerUserId) => throw new NotSupportedException();
+        public Task<IReadOnlyList<TrainingPlanPublicationDocument>> GetTrainingPlanPublicationsAsync() => Empty<TrainingPlanPublicationDocument>();
+        public Task UpsertTrainingPlanPublicationAsync(string trainingPlanId, FeedTarget target, string publishedByUserId, DateTime? visibleFrom = null, DateTime? visibleUntil = null) => throw new NotSupportedException();
+        public Task RemoveTrainingPlanPublicationAsync(string publicationId, string requestingTrainerUserId) => throw new NotSupportedException();
+        public Task<IReadOnlyList<string>> GetVisibleTrainingPlanIdsForAthleteAsync(string athleteUserId, IReadOnlyList<CourseDocument> joinedCourses) => Empty<string>();
+
+        private static Task<IReadOnlyList<T>> Empty<T>()
+        {
+            return Task.FromResult<IReadOnlyList<T>>(Array.Empty<T>());
+        }
     }
 }

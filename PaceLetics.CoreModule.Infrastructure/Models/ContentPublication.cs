@@ -33,7 +33,7 @@ public sealed class ContentPublication
 
     public bool IsVisibleFor(FeedTarget target, DateTime utcNow)
     {
-        return Target.Matches(target) && IsVisibleAt(utcNow);
+        return (Target.IsGlobal || Target.Matches(target)) && IsVisibleAt(utcNow);
     }
 
     public void Validate()

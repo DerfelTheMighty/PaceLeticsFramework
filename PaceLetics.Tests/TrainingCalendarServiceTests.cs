@@ -1,4 +1,5 @@
-﻿using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.CoreModule.Infrastructure.Models;
+using PaceLetics.TrainingModule.CodeBase.Running.Models;
 using PaceLetics.TrainingPlanModule.CodeBase.Models;
 using PaceLetics.Web.Services;
 using PaceLetics.Web.Services.Calendar;
@@ -248,6 +249,7 @@ public sealed class TrainingCalendarServiceTests
         public Task<IReadOnlyList<CourseDocument>> GetCoursesForTrainerAsync(string trainerUserId) => throw new NotSupportedException();
         public Task<IReadOnlyList<string>> GetPublishedTrainingPlanIdsForAthleteAsync(string athleteUserId) => throw new NotSupportedException();
         public Task<CourseDocument> CreateCourseAsync(CourseCreateRequest request, string creatorTrainerUserId, string creatorDisplayName) => throw new NotSupportedException();
+        public Task UpdateCourseVisibilityAsync(string courseId, FeedTarget visibilityTarget, string requestingTrainerUserId) => throw new NotSupportedException();
         public Task DeleteCourseAsync(string courseId, string requestingTrainerUserId) => throw new NotSupportedException();
         public Task<CourseEnrollmentDocument> JoinCourseAsync(string courseId, string athleteUserId) => throw new NotSupportedException();
         public Task<CourseEnrollmentDocument> LeaveCourseAsync(string courseId, string athleteUserId) => throw new NotSupportedException();
@@ -256,7 +258,7 @@ public sealed class TrainingCalendarServiceTests
         public Task RemoveTrainerAsync(string courseId, string trainerUserId, string requestingTrainerUserId) => throw new NotSupportedException();
         public Task<CourseDateDocument> AddCourseDateAsync(string courseId, string title, DateTime startsAt, DateTime endsAt, string requestingTrainerUserId, string location = "", string notes = "") => throw new NotSupportedException();
         public Task RemoveCourseDateAsync(string courseId, string dateId, string requestingTrainerUserId) => throw new NotSupportedException();
-        public Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null) => throw new NotSupportedException();
+        public Task PublishTrainingPlanAsync(string courseId, string trainingPlanId, string publishedByUserId, DateTime? visibleFrom = null, FeedTarget? target = null) => throw new NotSupportedException();
         public Task RemoveTrainingPlanPublicationAsync(string courseId, string trainingPlanId, string requestingTrainerUserId) => throw new NotSupportedException();
         public Task<CourseChallengeDocument> CreateChallengeAsync(string courseId, CourseChallengeCreateRequest request, string requestingTrainerUserId) => throw new NotSupportedException();
         public Task RemoveChallengeAsync(string courseId, string challengeId, string requestingTrainerUserId) => throw new NotSupportedException();

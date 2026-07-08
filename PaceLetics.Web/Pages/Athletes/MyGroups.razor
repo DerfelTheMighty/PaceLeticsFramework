@@ -1,0 +1,156 @@
+@page "/Athletes/groups"
+@attribute [Authorize]
+@using PaceLetics.Web.Services.Courses
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IGroupService GroupService
+@inject IJSRuntime JS
+@inject ISnackbar Snackbar
+
+<PageTitle>Gruppen</PageTitle>
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="Gruppen" Subtitle="Tritt Gruppen bei und erhalte Zugriff auf passende Kurse und Trainingspläne." />
+
+    <MudDivider Class="my-4" />
+
+    @if (_groups.Count == 0)
+    {
+        <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Gruppen verfügbar.</MudText>
+    }
+    else
+    {
+        <MudStack Spacing="2">
+            @foreach (var overview in _groups)
+            {
+                var group = overview.Group;
+                <MudPaper Elevation="0" Class="pa-3 pl-group-card">
+                    <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                        <MudStack Spacing="1" Style="min-width:0;">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:6px; flex-wrap:wrap;">
+                                <MudText Typo="Typo.subtitle2">@group.Name</MudText>
+                                @if (RequiresApproval(group))
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
+                                        <MudIcon Icon="@Icons.Material.Filled.Lock" Size="Size.Small" />
+                                        Bestätigung
+                                    </MudChip>
+                                }
+                                else
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">Offen</MudChip>
+                                }
+                                @if (overview.IsJoined)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Filled">Beigetreten</MudChip>
+                                }
+                                else if (overview.IsPending)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Filled">Angefragt</MudChip>
+                                }
+                            </MudStack>
+                            @if (!string.IsNullOrWhiteSpace(group.Description))
+                            {
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">@group.Description</MudText>
+                            }
+                        </MudStack>
+
+                        @if (overview.IsJoined)
+                        {
+                            <MudTooltip Text="Austreten">
+                                <MudIconButton Icon="@Icons.Material.Filled.Logout"
+                                               Color="Color.Default"
+                                               OnClick="@(() => LeaveGroupAsync(group))"
+                                               aria-label="Austreten" />
+                            </MudTooltip>
+                        }
+                        else if (overview.IsPending)
+                        {
+                            <MudTooltip Text="Anfrage zurückziehen">
+                                <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                               Color="Color.Default"
+                                               OnClick="@(() => LeaveGroupAsync(group))"
+                                               aria-label="Anfrage zurückziehen" />
+                            </MudTooltip>
+                        }
+                        else
+                        {
+                            <MudTooltip Text="Beitreten">
+                                <MudIconButton Icon="@(RequiresApproval(group) ? Icons.Material.Filled.LockOpen : Icons.Material.Filled.HowToReg)"
+                                               Color="Color.Primary"
+                                               Variant="Variant.Filled"
+                                               OnClick="@(() => JoinGroupAsync(group))"
+                                               aria-label="Beitreten" />
+                            </MudTooltip>
+                        }
+                    </MudStack>
+                </MudPaper>
+            }
+        </MudStack>
+    }
+</MudContainer>
+
+<style>
+    .pl-group-card {
+        border: 1px solid var(--mud-palette-lines-default);
+        border-radius: 8px;
+    }
+</style>
+
+@code {
+    private string? _userId;
+    private IReadOnlyList<GroupOverview> _groups = Array.Empty<GroupOverview>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _groups = await GroupService.GetGroupsForAthleteAsync(_userId ?? string.Empty);
+    }
+
+    private async Task JoinGroupAsync(GroupDocument group)
+    {
+        try
+        {
+            var membership = await GroupService.JoinGroupAsync(group.Id, _userId ?? string.Empty);
+            Snackbar.Add(IsPending(membership) ? "Beitritt angefragt." : "Du bist der Gruppe beigetreten.", Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task LeaveGroupAsync(GroupDocument group)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Gruppe \"{group.Name}\" verlassen?");
+        if (!confirmed)
+            return;
+
+        try
+        {
+            await GroupService.LeaveGroupAsync(group.Id, _userId ?? string.Empty);
+            Snackbar.Add("Gruppe verlassen.", Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private static bool RequiresApproval(GroupDocument group)
+    {
+        return string.Equals(group.JoinMode, GroupJoinModes.ApprovalRequired, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsPending(GroupMembershipDocument membership)
+    {
+        return string.Equals(membership.Status, GroupMembershipStatus.Pending, StringComparison.OrdinalIgnoreCase);
+    }
+}

@@ -10,6 +10,9 @@ public static class CourseDocumentTypes
     public const string Event = "courseEvent";
     public const string EventRegistration = "courseEventRegistration";
     public const string MateAvailability = "mateAvailability";
+    public const string Group = "group";
+    public const string GroupMembership = "groupMembership";
+    public const string TrainingPlanPublication = "trainingPlanPublication";
 }
 
 public static class CourseEnrollmentStatus
@@ -101,6 +104,7 @@ public sealed class CourseDocument : IQueryItem
     public string CreatedByTrainerUserId { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public bool IsPublished { get; set; } = true;
+    public FeedTarget VisibilityTarget { get; set; } = FeedTarget.Global();
     public List<CourseDateDocument> Dates { get; set; } = new();
     public List<CourseTrainerDocument> Trainers { get; set; } = new();
     public List<CourseTrainingPlanPublicationDocument> TrainingPlanPublications { get; set; } = new();
@@ -117,6 +121,7 @@ public sealed class CourseCreateRequest
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool IsPublished { get; set; } = true;
+    public FeedTarget VisibilityTarget { get; set; } = FeedTarget.Global();
 }
 
 public sealed class CourseChallengeCreateRequest
@@ -254,4 +259,99 @@ public sealed class CourseOverview
     public CourseDocument Course { get; }
     public CourseEnrollmentDocument? Enrollment { get; }
     public bool IsJoined => Enrollment?.Status == CourseEnrollmentStatus.Active;
+}
+
+public static class GroupJoinModes
+{
+    public const string Open = "open";
+    public const string ApprovalRequired = "approvalRequired";
+}
+
+public static class GroupMembershipStatus
+{
+    public const string Active = "active";
+    public const string Pending = "pending";
+    public const string Cancelled = "cancelled";
+    public const string Rejected = "rejected";
+}
+
+public sealed class GroupDocument : IQueryItem
+{
+    public string Id { get; set; } = string.Empty;
+    public string GroupId { get; set; } = string.Empty;
+    public string DocumentType { get; set; } = CourseDocumentTypes.Group;
+    public string Slug { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string CreatedByTrainerUserId { get; set; } = string.Empty;
+    public string CreatedByDisplayName { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public bool IsPublished { get; set; } = true;
+    public string JoinMode { get; set; } = GroupJoinModes.Open;
+}
+
+public sealed class GroupCreateRequest
+{
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string JoinMode { get; set; } = GroupJoinModes.Open;
+    public bool IsPublished { get; set; } = true;
+}
+
+public sealed class GroupMembershipDocument : IQueryItem
+{
+    public string Id { get; set; } = string.Empty;
+    public string GroupId { get; set; } = string.Empty;
+    public string DocumentType { get; set; } = CourseDocumentTypes.GroupMembership;
+    public string AthleteUserId { get; set; } = string.Empty;
+    public string Status { get; set; } = GroupMembershipStatus.Active;
+    public DateTime RequestedAt { get; set; }
+    public DateTime? ApprovedAt { get; set; }
+    public string ApprovedByTrainerUserId { get; set; } = string.Empty;
+    public DateTime? CancelledAt { get; set; }
+    public DateTime? RejectedAt { get; set; }
+    public string RejectedByTrainerUserId { get; set; } = string.Empty;
+}
+
+public sealed class GroupOverview
+{
+    public GroupOverview(GroupDocument group, GroupMembershipDocument? membership)
+    {
+        Group = group;
+        Membership = membership;
+    }
+
+    public GroupDocument Group { get; }
+    public GroupMembershipDocument? Membership { get; }
+    public bool IsJoined => Membership?.Status == GroupMembershipStatus.Active;
+    public bool IsPending => Membership?.Status == GroupMembershipStatus.Pending;
+}
+
+public sealed class TrainingPlanPublicationDocument : IQueryItem
+{
+    public const string PartitionKey = "training-plan-publications";
+
+    public string Id { get; set; } = string.Empty;
+    public string PublicationPartitionKey { get; set; } = PartitionKey;
+    public string DocumentType { get; set; } = CourseDocumentTypes.TrainingPlanPublication;
+    public string TrainingPlanId { get; set; } = string.Empty;
+    public DateTime PublishedAt { get; set; }
+    public string PublishedByUserId { get; set; } = string.Empty;
+    public DateTime? VisibleFrom { get; set; }
+    public DateTime? VisibleUntil { get; set; }
+    public FeedTarget Target { get; set; } = FeedTarget.Global();
+
+    public ContentPublication ToContentPublication()
+    {
+        return new ContentPublication
+        {
+            ContentType = PublishedContentTypes.TrainingPlan,
+            ContentId = TrainingPlanId,
+            Target = Target.NormalizeCopy(),
+            PublishedAt = PublishedAt,
+            PublishedByUserId = PublishedByUserId,
+            VisibleFrom = VisibleFrom,
+            VisibleUntil = VisibleUntil
+        };
+    }
 }
