@@ -31,11 +31,8 @@
                  Class="pl-mobile-more-menu"
                  AnchorOrigin="Origin.BottomRight"
                  TransformOrigin="Origin.TopRight">
-            <MudMenuItem Href="/profiles" Icon="@Icons.Material.Filled.AccountCircle">
-                @NavL["Nav_Profiles"]
-            </MudMenuItem>
-            <MudMenuItem Href="/Athletes/groups" Icon="@Icons.Material.Filled.Groups">
-                Gruppen
+            <MudMenuItem Href="/Athletes/achievements" Icon="@Icons.Material.Filled.EmojiEvents">
+                Achievements
             </MudMenuItem>
             <MudMenuItem Href="/impressum" Icon="@Icons.Material.Filled.Info">
                 @NavL["Nav_About"]
@@ -51,6 +48,9 @@
                     </MudMenuItem>
                     <MudMenuItem Href="/Trainers/training-plans" Icon="@Icons.Material.Filled.EventNote">
                         @NavL["Nav_TrainingPlan"]
+                    </MudMenuItem>
+                    <MudMenuItem Href="/Trainers/achievements" Icon="@Icons.Material.Filled.EmojiEvents">
+                        Achievements
                     </MudMenuItem>
                     <MudMenuItem Href="/Trainers/running-analyses" Icon="@Icons.Material.Filled.Analytics">
                         @NavL["Nav_TrainerRunningAnalyses"]

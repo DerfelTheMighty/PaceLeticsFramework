@@ -3,14 +3,20 @@
 @inject LoadingStateService Loading
 @inject IStringLocalizer<WorkoutArea> L
 
-<PageTitle>@L["PageTitle"]</PageTitle>
+@if (!Embedded)
+{
+    <PageTitle>@L["PageTitle"]</PageTitle>
+}
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="@ContainerClass" MaxWidth="MaxWidth.Small">
 
-    <PageHeader Title="@L["Title"]"
-                Subtitle="@L["Subtitle"]" />
+    @if (!Embedded)
+    {
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
 
-    <MudDivider Class="my-4" />
+        <MudDivider Class="my-4" />
+    }
 
     <MudStack Spacing="3" AlignItems="AlignItems.Stretch">
 
@@ -40,6 +46,13 @@
 
 
 @code {
+    [Parameter]
+    public bool Embedded { get; set; }
+
+    private string ContainerClass => Embedded
+        ? "pa-0"
+        : "pt-6 px-6 pb-8";
+
     protected override async Task OnInitializedAsync()
     {
         await Loading.RunAsync(L["Loading"], () =>

@@ -23,10 +23,26 @@ namespace PaceLetics.Web.Pages.Athletes
         [SupplyParameterFromQuery(Name = "section")]
         public string? Section { get; set; }
 
+        [Parameter]
+        public bool Embedded { get; set; }
+
+        [Parameter]
+        public string? EmbeddedSection { get; set; }
+
         [Inject] private NavigationManager Navigation { get; set; } = default!;
+
+        private string ContainerClass => Embedded
+            ? "pa-0"
+            : "pl-section-page px-6 pb-8";
 
         protected override void OnParametersSet()
         {
+            if (Embedded && TryParseSection(EmbeddedSection, out var embeddedSection))
+            {
+                _activeSection = embeddedSection;
+                return;
+            }
+
             if (Navigation.ToBaseRelativePath(Navigation.Uri)
                 .Split('?', '#')[0]
                 .Equals("Athletes/pacezones", StringComparison.OrdinalIgnoreCase))

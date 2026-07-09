@@ -19,31 +19,37 @@
 @inject IStringLocalizer<RacePaces> L
 @inject IJSRuntime JS
 
-<PageTitle>@L["PageTitle"]</PageTitle>
+@if (!Embedded)
+{
+    <PageTitle>@L["PageTitle"]</PageTitle>
+}
 
-<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
+<MudContainer Class="@ContainerClass" MaxWidth="MaxWidth.Small">
 
-    <nav class="pl-section-nav" aria-label="@L["Title"]">
-        <button type="button"
-                class="@GetSectionButtonClass(RacePacesSection.RaceData)"
-                aria-pressed="@(_activeSection == RacePacesSection.RaceData)"
-                @onclick="@(() => SelectSection(RacePacesSection.RaceData))">
-            <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" />
-            <span>@L["TabRaceData"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(RacePacesSection.PaceZones)"
-                aria-pressed="@(_activeSection == RacePacesSection.PaceZones)"
-                @onclick="@(() => SelectSection(RacePacesSection.PaceZones))">
-            <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
-            <span>@L["TabPaceZones"]</span>
-        </button>
-    </nav>
+    @if (!Embedded)
+    {
+        <nav class="pl-section-nav" aria-label="@L["Title"]">
+            <button type="button"
+                    class="@GetSectionButtonClass(RacePacesSection.RaceData)"
+                    aria-pressed="@(_activeSection == RacePacesSection.RaceData)"
+                    @onclick="@(() => SelectSection(RacePacesSection.RaceData))">
+                <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" />
+                <span>@L["TabRaceData"]</span>
+            </button>
+            <button type="button"
+                    class="@GetSectionButtonClass(RacePacesSection.PaceZones)"
+                    aria-pressed="@(_activeSection == RacePacesSection.PaceZones)"
+                    @onclick="@(() => SelectSection(RacePacesSection.PaceZones))">
+                <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
+                <span>@L["TabPaceZones"]</span>
+            </button>
+        </nav>
 
-    <PageHeader Title="@L["Title"]"
-                Subtitle="@L["Subtitle"]" />
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
 
-    <MudDivider Class="my-4" />
+        <MudDivider Class="my-4" />
+    }
 
     <MudStack Spacing="3">
 

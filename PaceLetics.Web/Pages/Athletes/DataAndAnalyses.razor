@@ -12,6 +12,7 @@
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
 @inject IStringLocalizer<DataAndAnalyses> L
+@inject NavigationManager Navigation
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -19,6 +20,20 @@
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
     <nav class="pl-section-nav" aria-label="@L["Title"]">
+        <button type="button"
+                class="@GetSectionButtonClass(DataAnalysesSection.RunningData)"
+                aria-pressed="@(_activeSection == DataAnalysesSection.RunningData)"
+                @onclick="@(() => SelectSection(DataAnalysesSection.RunningData))">
+            <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" />
+            <span>@L["TabRunningData"]</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(DataAnalysesSection.PaceZones)"
+                aria-pressed="@(_activeSection == DataAnalysesSection.PaceZones)"
+                @onclick="@(() => SelectSection(DataAnalysesSection.PaceZones))">
+            <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
+            <span>@L["TabPaceZones"]</span>
+        </button>
         <button type="button"
                 class="@GetSectionButtonClass(DataAnalysesSection.Recordings)"
                 aria-pressed="@(_activeSection == DataAnalysesSection.Recordings)"
@@ -35,7 +50,17 @@
         </button>
     </nav>
 
-    @if (_activeSection == DataAnalysesSection.Recordings)
+    @if (_activeSection == DataAnalysesSection.RunningData)
+    {
+        <MudDivider Class="my-4" />
+        <RacePaces Embedded="true" EmbeddedSection="racedata" />
+    }
+    else if (_activeSection == DataAnalysesSection.PaceZones)
+    {
+        <MudDivider Class="my-4" />
+        <RacePaces Embedded="true" EmbeddedSection="pacezones" />
+    }
+    else if (_activeSection == DataAnalysesSection.Recordings)
     {
         <MudPaper Elevation="0" Class="pa-4 pl-panel mt-4">
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
@@ -147,6 +172,8 @@
 @code {
     private enum DataAnalysesSection
     {
+        RunningData,
+        PaceZones,
         Recordings,
         Analyses
     }
@@ -156,7 +183,7 @@
     private string? _errorMessage;
     private DriveFolderReference? _folder;
     private IReadOnlyList<RunningAnalysisLink> _analyses = Array.Empty<RunningAnalysisLink>();
-    private DataAnalysesSection _activeSection = DataAnalysesSection.Recordings;
+    private DataAnalysesSection _activeSection = DataAnalysesSection.RunningData;
     private bool _isBusy;
 
     [Parameter]
@@ -216,11 +243,12 @@
     private void SelectSection(DataAnalysesSection section)
     {
         _activeSection = section;
+        Navigation.NavigateTo(GetSectionUri(section), replace: true);
     }
 
     private static bool TryParseSection(string? value, out DataAnalysesSection section)
     {
-        section = DataAnalysesSection.Recordings;
+        section = DataAnalysesSection.RunningData;
 
         if (string.IsNullOrWhiteSpace(value))
             return false;
@@ -228,16 +256,35 @@
         var normalized = value.Trim().ToLowerInvariant();
         section = normalized switch
         {
+            "running-data" or "racedata" or "laufdaten" => DataAnalysesSection.RunningData,
+            "pace-zones" or "pacezones" or "pacebereiche" => DataAnalysesSection.PaceZones,
             "recordings" or "aufnahmen" => DataAnalysesSection.Recordings,
             "analyses" or "analysis" or "analysen" => DataAnalysesSection.Analyses,
-            _ => DataAnalysesSection.Recordings
+            _ => DataAnalysesSection.RunningData
         };
 
-        return normalized is "recordings"
+        return normalized is "running-data"
+            or "racedata"
+            or "laufdaten"
+            or "pace-zones"
+            or "pacezones"
+            or "pacebereiche"
+            or "recordings"
             or "aufnahmen"
             or "analyses"
             or "analysis"
             or "analysen";
+    }
+
+    private static string GetSectionUri(DataAnalysesSection section)
+    {
+        return section switch
+        {
+            DataAnalysesSection.PaceZones => "/Athletes/data-analyses?section=pacezones",
+            DataAnalysesSection.Recordings => "/Athletes/data-analyses?section=recordings",
+            DataAnalysesSection.Analyses => "/Athletes/data-analyses?section=analyses",
+            _ => "/Athletes/data-analyses"
+        };
     }
 
     private string GetSectionButtonClass(DataAnalysesSection section)

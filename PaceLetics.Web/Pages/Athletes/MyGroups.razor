@@ -6,12 +6,18 @@
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
 
-<PageTitle>Gruppen</PageTitle>
+@if (!Embedded)
+{
+    <PageTitle>Gruppen</PageTitle>
+}
 
-<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Small">
-    <PageHeader Title="Gruppen" Subtitle="Tritt Gruppen bei und erhalte Zugriff auf passende Kurse und Trainingspläne." />
+<MudContainer Class="@ContainerClass" MaxWidth="MaxWidth.Small">
+    @if (!Embedded)
+    {
+        <PageHeader Title="Gruppen" Subtitle="Tritt Gruppen bei und erhalte Zugriff auf passende Kurse und Trainingspläne." />
 
-    <MudDivider Class="my-4" />
+        <MudDivider Class="my-4" />
+    }
 
     @if (_groups.Count == 0)
     {
@@ -97,8 +103,15 @@
 </style>
 
 @code {
+    [Parameter]
+    public bool Embedded { get; set; }
+
     private string? _userId;
     private IReadOnlyList<GroupOverview> _groups = Array.Empty<GroupOverview>();
+
+    private string ContainerClass => Embedded
+        ? "pa-0"
+        : "pt-6 px-6 pb-8";
 
     protected override async Task OnInitializedAsync()
     {

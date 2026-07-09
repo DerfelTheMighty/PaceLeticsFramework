@@ -1,0 +1,106 @@
+@page "/Athletes/teams"
+@attribute [Authorize]
+@using PaceLetics.Web.Pages
+@inject NavigationManager Navigation
+
+<PageTitle>Teams</PageTitle>
+
+<MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <nav class="pl-section-nav" aria-label="Teams">
+        <button type="button"
+                class="@GetSectionButtonClass(TeamsSection.Groups)"
+                aria-pressed="@(_activeSection == TeamsSection.Groups)"
+                @onclick="@(() => SelectSection(TeamsSection.Groups))">
+            <MudIcon Icon="@Icons.Material.Filled.Groups" Size="Size.Small" />
+            <span>Gruppen</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(TeamsSection.PaceMate)"
+                aria-pressed="@(_activeSection == TeamsSection.PaceMate)"
+                @onclick="@(() => SelectSection(TeamsSection.PaceMate))">
+            <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Small" />
+            <span>PaceMate</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(TeamsSection.Profiles)"
+                aria-pressed="@(_activeSection == TeamsSection.Profiles)"
+                @onclick="@(() => SelectSection(TeamsSection.Profiles))">
+            <MudIcon Icon="@Icons.Material.Filled.AccountCircle" Size="Size.Small" />
+            <span>Profile</span>
+        </button>
+    </nav>
+
+    <PageHeader Title="Teams" Subtitle="Gruppen, Trainingspartner und Profile" />
+
+    <MudDivider Class="my-4" />
+
+    @if (_activeSection == TeamsSection.Groups)
+    {
+        <MyGroups Embedded="true" />
+    }
+    else if (_activeSection == TeamsSection.PaceMate)
+    {
+        <Mate Embedded="true" />
+    }
+    else
+    {
+        <Profiles Embedded="true" />
+    }
+</MudContainer>
+
+@code {
+    private enum TeamsSection
+    {
+        Groups,
+        PaceMate,
+        Profiles
+    }
+
+    [SupplyParameterFromQuery(Name = "section")]
+    public string? Section { get; set; }
+
+    private TeamsSection _activeSection = TeamsSection.Groups;
+    private string? _appliedSection;
+
+    protected override void OnParametersSet()
+    {
+        if (string.Equals(_appliedSection, Section, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        _appliedSection = Section;
+        _activeSection = ParseSection(Section);
+    }
+
+    private void SelectSection(TeamsSection section)
+    {
+        _activeSection = section;
+        Navigation.NavigateTo(GetSectionUri(section), replace: true);
+    }
+
+    private string GetSectionButtonClass(TeamsSection section)
+    {
+        return _activeSection == section
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
+    }
+
+    private static TeamsSection ParseSection(string? value)
+    {
+        return value?.Trim().ToLowerInvariant() switch
+        {
+            "pace-mate" or "pacemate" or "mate" => TeamsSection.PaceMate,
+            "profiles" or "profile" => TeamsSection.Profiles,
+            _ => TeamsSection.Groups
+        };
+    }
+
+    private static string GetSectionUri(TeamsSection section)
+    {
+        return section switch
+        {
+            TeamsSection.PaceMate => "/Athletes/teams?section=pacemate",
+            TeamsSection.Profiles => "/Athletes/teams?section=profiles",
+            _ => "/Athletes/teams"
+        };
+    }
+}

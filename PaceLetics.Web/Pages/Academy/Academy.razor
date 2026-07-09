@@ -2,86 +2,132 @@
 @page "/Athletes/academy"
 @attribute [Authorize]
 @using PaceLetics.Web.Services.Articles
+@using PaceLetics.Web.Pages.Workouts
 @inject IArticleService ArticleService
 @inject IStringLocalizer<Academy> L
+@inject NavigationManager Navigation
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Large">
     <nav class="pl-section-nav" aria-label="@L["Title"]">
         <button type="button"
-                class="@GetSectionButtonClass(null)"
-                aria-pressed="@(_selectedCategory is null)"
-                @onclick="@(() => SelectCategory(null))">
+                class="@GetSectionButtonClass(AcademySection.Bib)"
+                aria-pressed="@(_activeSection == AcademySection.Bib)"
+                @onclick="@(() => SelectSection(AcademySection.Bib))">
             <MudIcon Icon="@Icons.Material.Filled.AutoStories" Size="Size.Small" />
-            <span>@L["TabAll"]</span>
+            <span>@L["TabBib"]</span>
         </button>
-
-        @foreach (var category in _categories)
-        {
-            <button type="button"
-                    class="@GetSectionButtonClass(category)"
-                    aria-pressed="@IsCategorySelected(category)"
-                    @onclick="@(() => SelectCategory(category))">
-                <MudIcon Icon="@GetCategoryIcon(category)" Size="Size.Small" />
-                <span>@FormatCategory(category)</span>
-            </button>
-        }
+        <button type="button"
+                class="@GetSectionButtonClass(AcademySection.Gym)"
+                aria-pressed="@(_activeSection == AcademySection.Gym)"
+                @onclick="@(() => SelectSection(AcademySection.Gym))">
+            <MudIcon Icon="@Icons.Material.Filled.FitnessCenter" Size="Size.Small" />
+            <span>@L["TabGym"]</span>
+        </button>
     </nav>
 
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    <div class="pl-academy-grid mt-4">
-        @foreach (var article in VisibleArticles)
-        {
-            <a href="@GetArticleHref(article)" class="pl-academy-tile-link" aria-label="@article.Title">
-                <article class="@GetArticleTileClass(article)">
-                    <div class="pl-academy-tile__header">
-                        <span class="pl-academy-tile__chip">
-                            @FormatCategory(article.Category)
-                        </span>
-                        <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
-                    </div>
+    @if (_activeSection == AcademySection.Bib)
+    {
+        <MudPaper Elevation="0" Class="pa-3 mt-4 pl-panel">
+            <MudSelect T="string"
+                       Label="@L["FilterLabel"]"
+                       Value="_selectedCategory"
+                       ValueChanged="SelectCategory"
+                       Dense="true"
+                       Variant="Variant.Outlined"
+                       AnchorOrigin="Origin.BottomCenter">
+                <MudSelectItem T="string" Value="@AllCategories">@L["TabAll"]</MudSelectItem>
+                @foreach (var category in _categories)
+                {
+                    <MudSelectItem T="string" Value="@category">
+                        @FormatCategory(category)
+                    </MudSelectItem>
+                }
+            </MudSelect>
+        </MudPaper>
 
-                    <div class="pl-academy-tile__icon" aria-hidden="true">
-                        @if (IsMentalResourceArticle(article))
-                        {
-                            <MentalResourceIcon />
-                        }
-                        else if (IsRunningAnalysisArticle(article))
-                        {
-                            <RunningAnalysisIcon />
-                        }
-                        else if (IsTendonAdaptationArticle(article))
-                        {
-                            <TendonIcon />
-                        }
-                        else if (IsInjuredAthletesArticle(article))
-                        {
-                            <InjuryIcon />
-                        }
-                        else
-                        {
-                            <MudIcon Icon="@GetArticleIcon(article)" />
-                        }
-                    </div>
+        <div class="pl-academy-grid mt-4">
+            @foreach (var article in VisibleArticles)
+            {
+                <a href="@GetArticleHref(article)" class="pl-academy-tile-link" aria-label="@article.Title">
+                    <article class="@GetArticleTileClass(article)">
+                        <div class="pl-academy-tile__header">
+                            <span class="pl-academy-tile__chip">
+                                @FormatCategory(article.Category)
+                            </span>
+                            <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
+                        </div>
 
-                    <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
-                </article>
-            </a>
-        }
-    </div>
+                        <div class="pl-academy-tile__icon" aria-hidden="true">
+                            @if (IsMentalResourceArticle(article))
+                            {
+                                <MentalResourceIcon />
+                            }
+                            else if (IsRunningAnalysisArticle(article))
+                            {
+                                <RunningAnalysisIcon />
+                            }
+                            else if (IsTendonAdaptationArticle(article))
+                            {
+                                <TendonIcon />
+                            }
+                            else if (IsInjuredAthletesArticle(article))
+                            {
+                                <InjuryIcon />
+                            }
+                            else
+                            {
+                                <MudIcon Icon="@GetArticleIcon(article)" />
+                            }
+                        </div>
+
+                        <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
+                    </article>
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <MudDivider Class="my-4" />
+        <WorkoutArea Embedded="true" />
+    }
 </MudContainer>
 
 @code {
+    private const string AllCategories = "__all";
+
+    private enum AcademySection
+    {
+        Bib,
+        Gym
+    }
+
     private IReadOnlyList<ArticlePreview> _articles = Array.Empty<ArticlePreview>();
     private IReadOnlyList<string> _categories = Array.Empty<string>();
-    private string? _selectedCategory;
+    private string _selectedCategory = AllCategories;
+    private AcademySection _activeSection = AcademySection.Bib;
+    private string? _appliedSection;
+
+    [SupplyParameterFromQuery(Name = "section")]
+    public string? Section { get; set; }
 
     private IEnumerable<ArticlePreview> VisibleArticles =>
-        string.IsNullOrWhiteSpace(_selectedCategory)
+        string.Equals(_selectedCategory, AllCategories, StringComparison.Ordinal)
             ? _articles
             : _articles.Where(article => string.Equals(article.Category, _selectedCategory, StringComparison.OrdinalIgnoreCase));
+
+    protected override void OnParametersSet()
+    {
+        if (string.Equals(_appliedSection, Section, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        _appliedSection = Section;
+        _activeSection = ParseSection(Section);
+    }
 
     protected override void OnInitialized()
     {
@@ -89,22 +135,38 @@
         _categories = ArticleService.GetCategories();
     }
 
-    private void SelectCategory(string? category)
+    private void SelectCategory(string category)
     {
-        _selectedCategory = category;
+        _selectedCategory = string.IsNullOrWhiteSpace(category) ? AllCategories : category;
     }
 
-    private bool IsCategorySelected(string category)
+    private void SelectSection(AcademySection section)
     {
-        return string.Equals(_selectedCategory, category, StringComparison.OrdinalIgnoreCase);
+        _activeSection = section;
+        Navigation.NavigateTo(GetSectionUri(section), replace: true);
     }
 
-    private string GetSectionButtonClass(string? category)
+    private string GetSectionButtonClass(AcademySection section)
     {
-        return (string.IsNullOrWhiteSpace(category) && _selectedCategory is null)
-            || (!string.IsNullOrWhiteSpace(category) && IsCategorySelected(category))
+        return _activeSection == section
             ? "pl-section-nav__item pl-section-nav__item--active"
             : "pl-section-nav__item";
+    }
+
+    private static AcademySection ParseSection(string? value)
+    {
+        return value?.Trim().ToLowerInvariant() switch
+        {
+            "gym" => AcademySection.Gym,
+            _ => AcademySection.Bib
+        };
+    }
+
+    private static string GetSectionUri(AcademySection section)
+    {
+        return section == AcademySection.Gym
+            ? "/Athletes/academy?section=gym"
+            : "/Athletes/academy";
     }
 
     private string FormatCategory(string category)

@@ -1,22 +1,43 @@
-﻿@inject IStringLocalizer<NavMenu> L
+@inject IStringLocalizer<NavMenu> L
 
 <MudNavMenu>
-    <MudNavLink Href="/Athletes/dashboard" Match="NavLinkMatch.All">@L["Nav_Dashboard"]</MudNavLink>
-    <MudNavLink Href="/Athletes/academy" Match="NavLinkMatch.Prefix">@L["Nav_Academy"]</MudNavLink>
-    <MudNavLink Href="/Athletes/racepaces" Match="NavLinkMatch.Prefix">@L["Nav_RaceData"]</MudNavLink>
-    <MudNavLink Href="/Athletes/courses" Match="NavLinkMatch.Prefix">@L["Nav_Courses"]</MudNavLink>
-    <MudNavLink Href="/Athletes/groups" Match="NavLinkMatch.Prefix">Gruppen</MudNavLink>
-    <MudNavLink Href="/Athletes/data-analyses" Match="NavLinkMatch.Prefix">@L["Nav_DataAnalyses"]</MudNavLink>
+    <MudNavLink Href="/Athletes/dashboard"
+                Icon="@Icons.Material.Filled.Dashboard"
+                Match="NavLinkMatch.All">
+        @L["Nav_Dashboard"]
+    </MudNavLink>
+    <MudNavLink Href="/Athletes/teams"
+                Icon="@Icons.Material.Filled.Groups"
+                Match="NavLinkMatch.Prefix">
+        @L["Nav_Teams"]
+    </MudNavLink>
+    <MudNavLink Href="/Athletes/academy"
+                Icon="@Icons.Material.Filled.AutoStories"
+                Match="NavLinkMatch.Prefix">
+        @L["Nav_Academy"]
+    </MudNavLink>
+    <MudNavLink Href="/Athletes/data-analyses"
+                Icon="@Icons.Material.Filled.Analytics"
+                Match="NavLinkMatch.Prefix">
+        @L["Nav_DataAnalyses"]
+    </MudNavLink>
+    <MudNavLink Href="/Workouts/WorkoutArea"
+                Icon="@Icons.Material.Filled.FitnessCenter"
+                Match="NavLinkMatch.Prefix">
+        @L["Nav_Workouts"]
+    </MudNavLink>
+
     <AuthorizeView Roles="@ApplicationRoles.Trainer">
         <Authorized>
-            <MudNavLink Href="/Trainers/courses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerCourses"]</MudNavLink>
-            <MudNavLink Href="/Trainers/groups" Match="NavLinkMatch.Prefix">Gruppen</MudNavLink>
-            <MudNavLink Href="/Trainers/training-plans" Match="NavLinkMatch.Prefix">@L["Nav_TrainingPlan"]</MudNavLink>
-            <MudNavLink Href="/Trainers/running-analyses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerRunningAnalyses"]</MudNavLink>
-            <MudNavLink Href="/Trainers/workout-catalog" Match="NavLinkMatch.Prefix">@L["Nav_TrainerWorkoutCatalog"]</MudNavLink>
+            <MudDivider Class="my-2" />
+            <MudNavGroup Title="Trainer" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="false">
+                <MudNavLink Href="/Trainers/courses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerCourses"]</MudNavLink>
+                <MudNavLink Href="/Trainers/groups" Match="NavLinkMatch.Prefix">Gruppen</MudNavLink>
+                <MudNavLink Href="/Trainers/training-plans" Match="NavLinkMatch.Prefix">@L["Nav_TrainingPlan"]</MudNavLink>
+                <MudNavLink Href="/Trainers/achievements" Match="NavLinkMatch.Prefix">Achievements</MudNavLink>
+                <MudNavLink Href="/Trainers/running-analyses" Match="NavLinkMatch.Prefix">@L["Nav_TrainerRunningAnalyses"]</MudNavLink>
+                <MudNavLink Href="/Trainers/workout-catalog" Match="NavLinkMatch.Prefix">@L["Nav_TrainerWorkoutCatalog"]</MudNavLink>
+            </MudNavGroup>
         </Authorized>
     </AuthorizeView>
-    <MudNavLink Href="/Workouts/WorkoutArea" Match="NavLinkMatch.Prefix">@L["Nav_Workouts"]</MudNavLink>
-    <MudNavLink Href="/profiles" Match="NavLinkMatch.Prefix">@L["Nav_Profiles"]</MudNavLink>
-    <MudNavLink Href="/impressum" Match="NavLinkMatch.Prefix">@L["Nav_About"]</MudNavLink>
 </MudNavMenu>
