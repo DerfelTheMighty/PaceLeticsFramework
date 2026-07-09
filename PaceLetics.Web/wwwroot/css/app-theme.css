@@ -1888,6 +1888,16 @@
     gap: 12px;
 }
 
+.pl-achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.pl-achievement-card {
+    min-height: 112px;
+}
+
 .pl-training-plan-card {
     min-height: 168px;
     cursor: pointer;
@@ -1923,6 +1933,21 @@
     border: 0;
     border-bottom: 1px solid var(--mud-palette-lines-default);
     cursor: pointer;
+}
+
+.pl-training-session-row-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+}
+
+.pl-training-session-row-shell .pl-training-session-row {
+    border-bottom: 0;
+}
+
+.pl-training-session-row-shell-next {
+    background: color-mix(in srgb, var(--mud-palette-primary) 6%, transparent);
 }
 
 .pl-training-session-row:hover,

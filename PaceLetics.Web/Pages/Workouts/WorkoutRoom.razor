@@ -6,6 +6,9 @@
 @inject IDialogService dialogService
 @inject NavigationManager navManager
 @inject IStringLocalizer<WorkoutRoom> L
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+@inject IAchievementService AchievementService
+@inject ISnackbar Snackbar
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
 
@@ -36,11 +39,38 @@
     {
         await InvokeAsync(async () =>
         {
+            await RecordWorkoutAchievementAsync();
             var options = new DialogOptions { CloseOnEscapeKey = true };
             await dialogService.ShowAsync<WorkoutFinishedDialog>(
                 L["WorkoutCompleted"],
                 options);
         });
+    }
+
+    private async Task RecordWorkoutAchievementAsync()
+    {
+        if (ViewModel.Workout is null)
+            return;
+
+        try
+        {
+            var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+            var userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+            if (string.IsNullOrWhiteSpace(userId))
+                return;
+
+            var result = await AchievementService.RecordWorkoutCompletedAsync(
+                userId,
+                ViewModel.Workout.Id,
+                ViewModel.Workout.Name);
+
+            foreach (var award in result.Awarded)
+                Snackbar.Add($"Achievement freigeschaltet: {award.TitleSnapshot}", Severity.Success);
+        }
+        catch
+        {
+            Snackbar.Add("Das Workout wurde abgeschlossen, aber Achievements konnten nicht aktualisiert werden.", Severity.Warning);
+        }
     }
 
     private ValueTask LocationChangingHandler(LocationChangingContext arg)

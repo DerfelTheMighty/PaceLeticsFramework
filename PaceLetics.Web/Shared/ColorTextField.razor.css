@@ -1,0 +1,13 @@
+.pl-color-field {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+}
+
+.pl-color-field__swatch {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 8px;
+}

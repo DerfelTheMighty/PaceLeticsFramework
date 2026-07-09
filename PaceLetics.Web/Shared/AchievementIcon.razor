@@ -1,0 +1,58 @@
+@using PaceLetics.Web.Services.Achievements
+
+<div class="@GetClass()"
+     style="@GetStyle()"
+     title="@Title">
+    <MudIcon Icon="@ResolveIcon(Icon.MaterialIcon)"
+             Size="@Size"
+             Style="@($"color:{Icon.ForegroundColor};")" />
+</div>
+
+@code {
+    [Parameter]
+    public AchievementIconDesignDocument Icon { get; set; } = AchievementIconDesignDocument.Default();
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Medium;
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool Muted { get; set; }
+
+    private string GetClass()
+    {
+        return Muted ? "pl-achievement-icon pl-achievement-icon-muted" : "pl-achievement-icon";
+    }
+
+    private string GetStyle()
+    {
+        Icon.Normalize();
+        var radius = string.Equals(Icon.Shape, "square", StringComparison.OrdinalIgnoreCase) ? "8px" : "999px";
+        return string.Join(";", new[]
+        {
+            $"background:{Icon.BackgroundColor}",
+            $"border-color:{Icon.AccentColor}",
+            $"border-radius:{radius}"
+        });
+    }
+
+    private static string ResolveIcon(string iconName)
+    {
+        return iconName switch
+        {
+            "CheckCircle" => Icons.Material.Filled.CheckCircle,
+            "DirectionsRun" => Icons.Material.Filled.DirectionsRun,
+            "EventAvailable" => Icons.Material.Filled.EventAvailable,
+            "FitnessCenter" => Icons.Material.Filled.FitnessCenter,
+            "Flag" => Icons.Material.Filled.Flag,
+            "LocalFireDepartment" => Icons.Material.Filled.LocalFireDepartment,
+            "School" => Icons.Material.Filled.School,
+            "Speed" => Icons.Material.Filled.Speed,
+            "Star" => Icons.Material.Filled.Star,
+            "WorkspacePremium" => Icons.Material.Filled.WorkspacePremium,
+            _ => Icons.Material.Filled.EmojiEvents
+        };
+    }
+}

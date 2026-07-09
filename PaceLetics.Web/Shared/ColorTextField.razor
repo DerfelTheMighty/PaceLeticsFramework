@@ -1,0 +1,18 @@
+<div class="pl-color-field">
+    <span class="pl-color-field__swatch" style="@($"background:{Value}")" aria-hidden="true"></span>
+    <MudTextField Value="@Value"
+                  ValueChanged="@ValueChanged"
+                  Label="@Label"
+                  Variant="Variant.Outlined" />
+</div>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Value { get; set; } = "#FFFFFF";
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+}

@@ -1,0 +1,368 @@
+@page "/Trainers/achievements"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+@inject IAchievementService AchievementService
+@inject ISnackbar Snackbar
+
+<MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Large">
+    <PageHeader Title="Achievements" Subtitle="Auszeichnungen gestalten und mit generischen Regeln freischalten." />
+
+    <MudDivider Class="my-4" />
+
+    <MudGrid Spacing="3">
+        <MudItem xs="12" md="5">
+            <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+                <MudStack Spacing="2">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                        <MudText Typo="Typo.subtitle1">Definitionen</MudText>
+                        <MudTooltip Text="Neu">
+                            <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="ResetEditor" />
+                        </MudTooltip>
+                    </MudStack>
+
+                    @if (_isLoading)
+                    {
+                        <MudProgressLinear Indeterminate="true" Color="Color.Primary" />
+                    }
+                    else if (_definitions.Count == 0)
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Achievements angelegt.</MudText>
+                    }
+                    else
+                    {
+                        @foreach (var definition in _definitions)
+                        {
+                            <MudPaper Elevation="0" Class="pa-3 pl-bottom-sheet-item">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                                    <AchievementIcon Icon="@definition.Icon" Title="@definition.Title" />
+                                    <MudStack Spacing="0" Style="min-width:0;flex:1;">
+                                        <MudText Typo="Typo.subtitle2">@definition.Title</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@DescribeRules(definition)</MudText>
+                                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                            <MudChip T="string"
+                                                     Size="Size.Small"
+                                                     Color="@(definition.IsPublished ? Color.Success : Color.Default)"
+                                                     Variant="Variant.Outlined">
+                                                @(definition.IsPublished ? "Veröffentlicht" : "Entwurf")
+                                            </MudChip>
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">@($"v{definition.Version}")</MudText>
+                                        </MudStack>
+                                    </MudStack>
+                                    <MudTooltip Text="Bearbeiten">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="@(() => Edit(definition))" />
+                                    </MudTooltip>
+                                </MudStack>
+                            </MudPaper>
+                        }
+                    }
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="7">
+            <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
+                <MudStack Spacing="3">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                        <MudText Typo="Typo.subtitle1">@(_editingDefinitionId is null ? "Neues Achievement" : "Achievement bearbeiten")</MudText>
+                        <AchievementIcon Icon="@BuildIcon()" Size="Size.Large" Title="@_title" />
+                    </MudStack>
+
+                    <MudTextField @bind-Value="_title" Label="Titel" Variant="Variant.Outlined" />
+                    <MudTextField @bind-Value="_description" Label="Beschreibung" Variant="Variant.Outlined" Lines="3" />
+                    <MudSwitch T="bool" @bind-Value="_isPublished" Color="Color.Success" Label="Veröffentlicht" />
+
+                    <MudDivider />
+
+                    <MudText Typo="Typo.subtitle2">Icon</MudText>
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" sm="6">
+                            <MudSelect T="string" @bind-Value="_iconName" Label="Symbol" Variant="Variant.Outlined">
+                                @foreach (var option in IconOptions)
+                                {
+                                    <MudSelectItem T="string" Value="@option.Value">@option.Label</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudSelect T="string" @bind-Value="_iconShape" Label="Form" Variant="Variant.Outlined">
+                                <MudSelectItem T="string" Value="@("circle")">Rund</MudSelectItem>
+                                <MudSelectItem T="string" Value="@("square")">Eckig</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12" sm="4">
+                            <ColorTextField Label="Hintergrund" @bind-Value="_backgroundColor" />
+                        </MudItem>
+                        <MudItem xs="12" sm="4">
+                            <ColorTextField Label="Symbolfarbe" @bind-Value="_foregroundColor" />
+                        </MudItem>
+                        <MudItem xs="12" sm="4">
+                            <ColorTextField Label="Akzent" @bind-Value="_accentColor" />
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudDivider />
+
+                    <MudText Typo="Typo.subtitle2">Regel</MudText>
+                    <MudSelect T="string" @bind-Value="_ruleType" Label="Regeltyp" Variant="Variant.Outlined">
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingSessionCompleted">Bestimmte Trainingseinheit(en) abgehakt</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingSessionCount">Anzahl Trainingseinheiten abgehakt</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingPlanCompleted">Trainingsplan vollständig abgehakt</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.WorkoutCompleted">Workout abgeschlossen</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.WorkoutCount">Anzahl Workouts abgeschlossen</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.CourseEventCompleted">Kurstermin erfolgreich absolviert</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.CourseCompleted">Kurs erfolgreich absolviert</MudSelectItem>
+                    </MudSelect>
+
+                    @if (UsesPlanId)
+                    {
+                        <MudTextField @bind-Value="_planId" Label="Plan-ID" Variant="Variant.Outlined" />
+                    }
+                    @if (UsesSessionIds)
+                    {
+                        <MudTextField @bind-Value="_sessionIdsText" Label="Session-IDs, getrennt mit Komma" Variant="Variant.Outlined" />
+                    }
+                    @if (UsesWorkoutId)
+                    {
+                        <MudTextField @bind-Value="_workoutId" Label="Workout-ID optional" Variant="Variant.Outlined" />
+                    }
+                    @if (UsesCourseId)
+                    {
+                        <MudTextField @bind-Value="_courseId" Label="Kurs-ID optional" Variant="Variant.Outlined" />
+                    }
+                    @if (UsesCourseEventId)
+                    {
+                        <MudTextField @bind-Value="_courseEventId" Label="Kurstermin-ID optional" Variant="Variant.Outlined" />
+                    }
+                    @if (UsesTargetCount)
+                    {
+                        <MudNumericField T="int" @bind-Value="_targetCount" Min="1" Label="Zielanzahl" Variant="Variant.Outlined" />
+                    }
+
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Spacing="2">
+                        <MudButton Variant="Variant.Outlined" OnClick="ResetEditor">Zurücksetzen</MudButton>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.Save"
+                                   Disabled="@_isSaving"
+                                   OnClick="SaveAsync">
+                            Speichern
+                        </MudButton>
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private static readonly IReadOnlyList<IconOption> IconOptions = new List<IconOption>
+    {
+        new("EmojiEvents", "Pokal"),
+        new("WorkspacePremium", "Medaille"),
+        new("Star", "Stern"),
+        new("FitnessCenter", "Workout"),
+        new("DirectionsRun", "Laufen"),
+        new("EventAvailable", "Termin"),
+        new("School", "Kurs"),
+        new("Flag", "Ziel"),
+        new("Speed", "Tempo"),
+        new("LocalFireDepartment", "Serie"),
+        new("CheckCircle", "Check")
+    };
+
+    private bool _isLoading = true;
+    private bool _isSaving;
+    private string? _userId;
+    private List<AchievementDefinitionDocument> _definitions = new();
+
+    private string? _editingDefinitionId;
+    private string _title = string.Empty;
+    private string _description = string.Empty;
+    private bool _isPublished = true;
+    private string _iconName = "EmojiEvents";
+    private string _iconShape = "circle";
+    private string _backgroundColor = "#F59E0B";
+    private string _foregroundColor = "#111827";
+    private string _accentColor = "#FDE68A";
+    private string _ruleType = AchievementRuleTypes.TrainingSessionCount;
+    private string _planId = string.Empty;
+    private string _sessionIdsText = string.Empty;
+    private string _workoutId = string.Empty;
+    private string _courseId = string.Empty;
+    private string _courseEventId = string.Empty;
+    private int _targetCount = 1;
+
+    private bool UsesPlanId => _ruleType is AchievementRuleTypes.TrainingSessionCompleted
+        or AchievementRuleTypes.TrainingSessionCount
+        or AchievementRuleTypes.TrainingPlanCompleted;
+
+    private bool UsesSessionIds => _ruleType == AchievementRuleTypes.TrainingSessionCompleted;
+
+    private bool UsesWorkoutId => _ruleType is AchievementRuleTypes.WorkoutCompleted
+        or AchievementRuleTypes.WorkoutCount;
+
+    private bool UsesCourseId => _ruleType is AchievementRuleTypes.CourseEventCompleted
+        or AchievementRuleTypes.CourseCompleted;
+
+    private bool UsesCourseEventId => _ruleType == AchievementRuleTypes.CourseEventCompleted;
+
+    private bool UsesTargetCount => _ruleType is AchievementRuleTypes.TrainingSessionCount
+        or AchievementRuleTypes.WorkoutCount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+        await LoadDefinitionsAsync();
+    }
+
+    private async Task LoadDefinitionsAsync()
+    {
+        _isLoading = true;
+        try
+        {
+            _definitions = (await AchievementService.GetDefinitionsAsync(includeUnpublished: true)).ToList();
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId) || _isSaving)
+            return;
+
+        _isSaving = true;
+        try
+        {
+            var request = new AchievementDefinitionRequest
+            {
+                Id = _editingDefinitionId ?? string.Empty,
+                Title = _title,
+                Description = _description,
+                IsPublished = _isPublished,
+                Icon = BuildIcon(),
+                Rules = new List<AchievementRuleDocument> { BuildRule() }
+            };
+
+            var saved = await AchievementService.SaveDefinitionAsync(request, _userId);
+            Snackbar.Add($"Achievement gespeichert: {saved.Title}", Severity.Success);
+            await LoadDefinitionsAsync();
+            Edit(saved);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private void Edit(AchievementDefinitionDocument definition)
+    {
+        definition.Normalize();
+        _editingDefinitionId = definition.Id;
+        _title = definition.Title;
+        _description = definition.Description;
+        _isPublished = definition.IsPublished;
+        _iconName = definition.Icon.MaterialIcon;
+        _iconShape = definition.Icon.Shape;
+        _backgroundColor = definition.Icon.BackgroundColor;
+        _foregroundColor = definition.Icon.ForegroundColor;
+        _accentColor = definition.Icon.AccentColor;
+
+        var rule = definition.Rules.FirstOrDefault() ?? new AchievementRuleDocument();
+        rule.Normalize();
+        _ruleType = rule.RuleType;
+        _planId = rule.PlanId;
+        _sessionIdsText = string.Join(", ", rule.SessionIds);
+        _workoutId = rule.WorkoutId;
+        _courseId = rule.CourseId;
+        _courseEventId = rule.CourseEventId;
+        _targetCount = rule.TargetCount;
+    }
+
+    private void ResetEditor()
+    {
+        _editingDefinitionId = null;
+        _title = string.Empty;
+        _description = string.Empty;
+        _isPublished = true;
+        _iconName = "EmojiEvents";
+        _iconShape = "circle";
+        _backgroundColor = "#F59E0B";
+        _foregroundColor = "#111827";
+        _accentColor = "#FDE68A";
+        _ruleType = AchievementRuleTypes.TrainingSessionCount;
+        _planId = string.Empty;
+        _sessionIdsText = string.Empty;
+        _workoutId = string.Empty;
+        _courseId = string.Empty;
+        _courseEventId = string.Empty;
+        _targetCount = 1;
+    }
+
+    private AchievementIconDesignDocument BuildIcon()
+    {
+        var icon = new AchievementIconDesignDocument
+        {
+            MaterialIcon = _iconName,
+            Shape = _iconShape,
+            BackgroundColor = _backgroundColor,
+            ForegroundColor = _foregroundColor,
+            AccentColor = _accentColor
+        };
+        icon.Normalize();
+        return icon;
+    }
+
+    private AchievementRuleDocument BuildRule()
+    {
+        var rule = new AchievementRuleDocument
+        {
+            RuleType = _ruleType,
+            PlanId = _planId,
+            WorkoutId = _workoutId,
+            CourseId = _courseId,
+            CourseEventId = _courseEventId,
+            TargetCount = _targetCount,
+            SessionIds = _sessionIdsText
+                .Split(new[] { ',', ';', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .ToList()
+        };
+        rule.Normalize();
+        return rule;
+    }
+
+    private static string DescribeRules(AchievementDefinitionDocument definition)
+    {
+        if (definition.Rules.Count == 0)
+            return "Keine Regel";
+
+        return string.Join(" + ", definition.Rules.Select(DescribeRule));
+    }
+
+    private static string DescribeRule(AchievementRuleDocument rule)
+    {
+        return rule.RuleType switch
+        {
+            AchievementRuleTypes.TrainingSessionCompleted when rule.SessionIds.Count > 0 =>
+                $"{rule.SessionIds.Count} bestimmte Einheit(en)",
+            AchievementRuleTypes.TrainingSessionCompleted => "Eine Einheit abhaken",
+            AchievementRuleTypes.TrainingSessionCount => $"{rule.TargetCount} Einheit(en) abhaken",
+            AchievementRuleTypes.TrainingPlanCompleted => "Plan vollständig abhaken",
+            AchievementRuleTypes.WorkoutCompleted => "Workout abschließen",
+            AchievementRuleTypes.WorkoutCount => $"{rule.TargetCount} Workout(s)",
+            AchievementRuleTypes.CourseEventCompleted => "Kurstermin absolviert",
+            AchievementRuleTypes.CourseCompleted => "Kurs absolviert",
+            _ => "Regel"
+        };
+    }
+
+    private sealed record IconOption(string Value, string Label);
+}

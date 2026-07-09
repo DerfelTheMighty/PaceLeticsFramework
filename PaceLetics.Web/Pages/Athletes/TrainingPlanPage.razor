@@ -14,7 +14,9 @@
 @inject IDialogService dialogService
 @inject IStringLocalizer<TrainingPlanPage> L
 @inject ITrainingPlanService TrainingPlanService
+@inject IAchievementService AchievementService
 @inject NavigationManager Navigation
+@inject ISnackbar Snackbar
 
 
 <MudContainer Class="@ContainerClass" MaxWidth="MaxWidth.Small">
@@ -106,27 +108,38 @@ else
                 {
                     var isNext = session.Id == _nextSessionId;
 
-                    <button id="@(isNext ? "next-session" : null)"
-                            type="button"
-                            class="@GetSessionRowClass(isNext)"
-                            @onclick="@(() => OpenDetails(session.Id))">
-                        <span class="pl-training-session-date">
-                            <span>@session.Date.ToString("dd.MM.")</span>
-                            @if (session.Appointment.StartsAt is not null)
+                    <div id="@(isNext ? "next-session" : null)"
+                         class="@GetSessionRowShellClass(isNext)">
+                        <button type="button"
+                                class="@GetSessionRowClass(isNext)"
+                                @onclick="@(() => OpenDetails(session.Id))">
+                            <span class="pl-training-session-date">
+                                <span>@session.Date.ToString("dd.MM.")</span>
+                                @if (session.Appointment.StartsAt is not null)
+                                {
+                                    <small>@session.Appointment.StartsAt.Value.ToString("HH:mm")</small>
+                                }
+                            </span>
+                            <span class="pl-training-session-copy">
+                                <span class="pl-training-session-title">@session.Name</span>
+                                <span class="pl-training-session-meta">@GetSessionTimelineDetail(session)</span>
+                            </span>
+                            @if (isNext)
                             {
-                                <small>@session.Appointment.StartsAt.Value.ToString("HH:mm")</small>
+                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@L["NextSession"]</MudChip>
                             }
-                        </span>
-                        <span class="pl-training-session-copy">
-                            <span class="pl-training-session-title">@session.Name</span>
-                            <span class="pl-training-session-meta">@GetSessionTimelineDetail(session)</span>
-                        </span>
-                        @if (isNext)
-                        {
-                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@L["NextSession"]</MudChip>
-                        }
-                        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
-                    </button>
+                            <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                        </button>
+
+                        <MudTooltip Text="@GetCompletionTooltip(session)">
+                            <MudCheckBox T="bool"
+                                         Color="Color.Success"
+                                         Value="@IsSessionCompleted(session)"
+                                         ValueChanged="@((bool value) => ToggleSessionCompletionAsync(session, value))"
+                                         Disabled="@(_isSavingCompletion || Plan is null)"
+                                         aria-label="@GetCompletionTooltip(session)" />
+                        </MudTooltip>
+                    </div>
                 }
             </MudStack>
         </MudStack>
@@ -327,6 +340,8 @@ else
     private List<TrainingPlan> _plans = new();
     private string? _selectedPlanId;
     private HashSet<string> _subscribedPlanIds = new(StringComparer.OrdinalIgnoreCase);
+    private HashSet<string> _completedSessionKeys = new(StringComparer.OrdinalIgnoreCase);
+    private bool _isSavingCompletion;
 
     private string ContainerClass => Embedded
         ? "pa-0 pb-8"
@@ -357,6 +372,7 @@ else
 
             _plans = (await TrainingPlanService.LoadTrainingPlansForUserAsync(userID)).ToList();
             await LoadPlanSubscriptionsAsync(userID);
+            await LoadTrainingSessionCompletionsAsync(userID);
 
             // Auswahl: gespeicherter Plan wenn vorhanden (Server-Athlete.SelectedTrainingPlanId), sonst Browser localStorage, sonst nächster oder erster Plan
             string? storedPlan = null;
@@ -679,6 +695,84 @@ else
         return isNext
             ? "pl-training-session-row pl-training-session-row-next"
             : "pl-training-session-row";
+    }
+
+    private static string GetSessionRowShellClass(bool isNext)
+    {
+        return isNext
+            ? "pl-training-session-row-shell pl-training-session-row-shell-next"
+            : "pl-training-session-row-shell";
+    }
+
+    private bool IsSessionCompleted(TrainingSession session)
+    {
+        return Plan is not null && _completedSessionKeys.Contains(CompletionKey(Plan.Id, session.Id));
+    }
+
+    private string GetCompletionTooltip(TrainingSession session)
+    {
+        return IsSessionCompleted(session)
+            ? "Einheit als offen markieren"
+            : "Einheit als absolviert abhaken";
+    }
+
+    private async Task ToggleSessionCompletionAsync(TrainingSession session, bool isCompleted)
+    {
+        if (Plan is null || string.IsNullOrWhiteSpace(_userId) || _isSavingCompletion)
+            return;
+
+        var key = CompletionKey(Plan.Id, session.Id);
+        _isSavingCompletion = true;
+
+        try
+        {
+            var result = await AchievementService.SetTrainingSessionCompletionAsync(
+                _userId,
+                Plan.Id,
+                session.Id,
+                isCompleted);
+
+            if (isCompleted)
+                _completedSessionKeys.Add(key);
+            else
+                _completedSessionKeys.Remove(key);
+
+            foreach (var award in result.Awarded)
+                Snackbar.Add($"Achievement freigeschaltet: {award.TitleSnapshot}", Severity.Success);
+        }
+        catch
+        {
+            Snackbar.Add("Der Status der Einheit konnte nicht gespeichert werden.", Severity.Error);
+        }
+        finally
+        {
+            _isSavingCompletion = false;
+        }
+    }
+
+    private async Task LoadTrainingSessionCompletionsAsync(string? userId)
+    {
+        _completedSessionKeys.Clear();
+
+        if (string.IsNullOrWhiteSpace(userId))
+            return;
+
+        try
+        {
+            var completions = await AchievementService.GetTrainingSessionCompletionsForAthleteAsync(userId);
+            _completedSessionKeys = completions
+                .Select(completion => CompletionKey(completion.PlanId, completion.SessionId))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            _completedSessionKeys.Clear();
+        }
+    }
+
+    private static string CompletionKey(string planId, string sessionId)
+    {
+        return $"{planId}:{sessionId}";
     }
 
     private string FormatPlanSummary(TrainingPlan plan)

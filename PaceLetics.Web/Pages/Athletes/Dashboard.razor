@@ -19,101 +19,136 @@
 @inject ITrainingPlanService TrainingPlanService
 @inject ICriticalSpeedService CriticalSpeedService
 @inject ITrainingCalendarService CalendarService
+@inject IAchievementService AchievementService
+@inject NavigationManager Navigation
 
-<PageTitle>@L["PageTitle"]</PageTitle>
+<PageTitle>@GetDocumentTitle()</PageTitle>
 
 
-<MudContainer Class="pt-5 px-4 px-sm-6 pb-8 pl-dashboard-page" MaxWidth="MaxWidth.Large">
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8 pl-dashboard-page" MaxWidth="MaxWidth.Large">
+    <nav class="pl-section-nav" aria-label="@L["Title"]">
+        <button type="button"
+                class="@GetSectionButtonClass(DashboardSection.Overview)"
+                aria-pressed="@(_activeSection == DashboardSection.Overview)"
+                @onclick="@(() => SelectSection(DashboardSection.Overview))">
+            <MudIcon Icon="@Icons.Material.Filled.Dashboard" Size="Size.Small" />
+            <span>Uebersicht</span>
+        </button>
+        <button type="button"
+                class="@GetSectionButtonClass(DashboardSection.Achievements)"
+                aria-pressed="@(_activeSection == DashboardSection.Achievements)"
+                @onclick="@(() => SelectSection(DashboardSection.Achievements))">
+            <MudIcon Icon="@Icons.Material.Filled.EmojiEvents" Size="Size.Small" />
+            <span>Achievements</span>
+        </button>
+    </nav>
 
-    <PageHeader Title="@L["Title"]" Subtitle="@L["WelcomeText", _name]" />
+    <PageHeader Title="@GetHeaderTitle()" Subtitle="@GetHeaderSubtitle()" />
 
     <MudDivider Class="my-4" />
 
-    <MudStack Spacing="4">
+    @if (_activeSection == DashboardSection.Overview)
+    {
+        <MudStack Spacing="4">
 
-        <MudGrid Spacing="3" Class="pl-dashboard-metrics">
-            <MudItem xs="12">
-                <DashboardMetricTile Label="@L["Metric_TrainingCalendar"]"
-                                     Value="@GetCalendarValue()"
-                                     Detail="@GetCalendarDetail()"
-                                     Icon="@Icons.Material.Filled.CalendarMonth"
-                                     Accent="blue"
-                                     Href="/Athletes/trainingcalendar"
-                                     Tooltip="@L["Tooltip_TrainingCalendar"]">
-                    <div class="pl-dashboard-calendar-days">
-                        @foreach (var day in CalendarPreviewDays)
-                        {
-                            var items = GetCalendarItemsForDay(day).Take(3).ToList();
-                            <div class="@GetCalendarPreviewDayClass(day, items.Count > 0)">
-                                <span class="pl-dashboard-calendar-weekday">@day.ToString("ddd")</span>
-                                <span class="pl-dashboard-calendar-date">@day.Day</span>
-                                <span class="pl-dashboard-calendar-dots" aria-hidden="true">
-                                    @foreach (var item in items)
-                                    {
-                                        <span class="@GetCalendarDotClass(item)"></span>
-                                    }
-                                </span>
-                            </div>
-                        }
-                    </div>
-                </DashboardMetricTile>
-            </MudItem>
+            <MudGrid Spacing="3" Class="pl-dashboard-metrics">
+                <MudItem xs="12">
+                    <DashboardMetricTile Label="@L["Metric_TrainingCalendar"]"
+                                         Value="@GetCalendarValue()"
+                                         Detail="@GetCalendarDetail()"
+                                         Icon="@Icons.Material.Filled.CalendarMonth"
+                                         Accent="blue"
+                                         Href="/Athletes/trainingcalendar"
+                                         Tooltip="@L["Tooltip_TrainingCalendar"]">
+                        <div class="pl-dashboard-calendar-days">
+                            @foreach (var day in CalendarPreviewDays)
+                            {
+                                var items = GetCalendarItemsForDay(day).Take(3).ToList();
+                                <div class="@GetCalendarPreviewDayClass(day, items.Count > 0)">
+                                    <span class="pl-dashboard-calendar-weekday">@day.ToString("ddd")</span>
+                                    <span class="pl-dashboard-calendar-date">@day.Day</span>
+                                    <span class="pl-dashboard-calendar-dots" aria-hidden="true">
+                                        @foreach (var item in items)
+                                        {
+                                            <span class="@GetCalendarDotClass(item)"></span>
+                                        }
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    </DashboardMetricTile>
+                </MudItem>
 
-            <MudItem xs="12">
-                <DashboardMetricTile Label="@L["Metric_NextSession"]"
-                                     Value="@GetNextSessionValue()"
-                                     Detail="@GetNextSessionDetail()"
-                                     Icon="@Icons.Material.Filled.EventAvailable"
-                                     Accent="green"
-                                     Href="/Athletes/courses?section=plans"
-                                     Tooltip="@L["Tooltip_NextSession"]">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pl-dashboard-session-preview">
-                        <MudIcon Icon="@Icons.Material.Filled.Timeline"
-                                 Color="Color.Primary" />
+                <MudItem xs="12">
+                    <DashboardMetricTile Label="@L["Metric_NextSession"]"
+                                         Value="@GetNextSessionValue()"
+                                         Detail="@GetNextSessionDetail()"
+                                         Icon="@Icons.Material.Filled.EventAvailable"
+                                         Accent="green"
+                                         Href="/Athletes/courses?section=plans"
+                                         Tooltip="@L["Tooltip_NextSession"]">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pl-dashboard-session-preview">
+                            <MudIcon Icon="@Icons.Material.Filled.Timeline"
+                                     Color="Color.Primary" />
 
-                        <MudStack Spacing="0">
-                            <MudText Typo="Typo.subtitle2">
-                                @( _nextSession?.Name ?? L["Metric_NoSession"] )
-                            </MudText>
-                            <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
-                                @( _nextSession is null ? L["Metric_NoSession"] : $"{_nextSession.Date:dd.MM.yyyy} / {GetSessionComposition(_nextSession)}" )
-                            </MudText>
+                            <MudStack Spacing="0">
+                                <MudText Typo="Typo.subtitle2">
+                                    @( _nextSession?.Name ?? L["Metric_NoSession"] )
+                                </MudText>
+                                <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
+                                    @( _nextSession is null ? L["Metric_NoSession"] : $"{_nextSession.Date:dd.MM.yyyy} / {GetSessionComposition(_nextSession)}" )
+                                </MudText>
+                            </MudStack>
                         </MudStack>
-                    </MudStack>
-                </DashboardMetricTile>
-            </MudItem>
+                    </DashboardMetricTile>
+                </MudItem>
 
-            <MudItem xs="12">
-                <DashboardMetricTile Label="@L["Metric_Academy"]"
-                                     Value="@L["Metric_AcademyValue"]"
-                                     Detail="@L["Metric_AcademyDetail"]"
-                                     Icon="@Icons.Material.Filled.AutoStories"
-                                     Accent="orange"
-                                     Href="/Athletes/academy"
-                                     Tooltip="@L["Tooltip_Academy"]" />
-            </MudItem>
+                <MudItem xs="12">
+                    <DashboardMetricTile Label="Achievements"
+                                         Value="@GetAchievementValue()"
+                                         Detail="Freigeschaltete Auszeichnungen"
+                                         Icon="@Icons.Material.Filled.EmojiEvents"
+                                         Accent="orange"
+                                         Href="/Athletes/dashboard?section=achievements"
+                                         Tooltip="Deine Achievements ansehen" />
+                </MudItem>
 
-            <MudItem xs="12">
-                <DashboardMetricTile Label="@L["Metric_WorkoutArea"]"
-                                     Value="@L["Metric_WorkoutAreaValue"]"
-                                     Detail="@L["Metric_WorkoutAreaDetail"]"
-                                     Icon="@Icons.Material.Filled.FitnessCenter"
-                                     Accent="red"
-                                     Href="/Workouts/WorkoutArea"
-                                     Tooltip="@L["Tooltip_WorkoutArea"]" />
-            </MudItem>
+                <MudItem xs="12">
+                    <DashboardMetricTile Label="@L["Metric_Academy"]"
+                                         Value="@L["Metric_AcademyValue"]"
+                                         Detail="@L["Metric_AcademyDetail"]"
+                                         Icon="@Icons.Material.Filled.AutoStories"
+                                         Accent="orange"
+                                         Href="/Athletes/academy"
+                                         Tooltip="@L["Tooltip_Academy"]" />
+                </MudItem>
 
-            <MudItem xs="12">
-                <DashboardMetricTile Label="@L["Metric_VdotCs"]"
-                                     Value="@GetVdotCsValue()"
-                                     Detail="@GetReferenceDetail()"
-                                     Icon="@Icons.Material.Filled.Speed"
-                                     Accent="blue"
-                                     Href="/Athletes/pacezones"
-                                     Tooltip="@L["Tooltip_VdotCs"]" />
-            </MudItem>
-        </MudGrid>
-    </MudStack>
+                <MudItem xs="12">
+                    <DashboardMetricTile Label="@L["Metric_WorkoutArea"]"
+                                         Value="@L["Metric_WorkoutAreaValue"]"
+                                         Detail="@L["Metric_WorkoutAreaDetail"]"
+                                         Icon="@Icons.Material.Filled.FitnessCenter"
+                                         Accent="red"
+                                         Href="/Workouts/WorkoutArea"
+                                         Tooltip="@L["Tooltip_WorkoutArea"]" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <DashboardMetricTile Label="@L["Metric_VdotCs"]"
+                                         Value="@GetVdotCsValue()"
+                                         Detail="@GetReferenceDetail()"
+                                         Icon="@Icons.Material.Filled.Speed"
+                                         Accent="blue"
+                                         Href="/Athletes/pacezones"
+                                         Tooltip="@L["Tooltip_VdotCs"]" />
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    }
+    else
+    {
+        <AchievementGallery />
+    }
 
 </MudContainer>
 
@@ -122,14 +157,35 @@
 
 @code
 {
+    private enum DashboardSection
+    {
+        Overview,
+        Achievements
+    }
+
+    [SupplyParameterFromQuery(Name = "section")]
+    public string? SectionQuery { get; set; }
+
     AthleteModel? Athlete;
     string _name = String.Empty;
     IReadOnlyList<TrainingPlan> _trainingPlans = Array.Empty<TrainingPlan>();
     IReadOnlyList<TrainingCalendarItem> _calendarItems = Array.Empty<TrainingCalendarItem>();
+    int _achievementCount;
     TrainingPlan? _activePlan;
     TrainingSession? _nextSession;
     RaceResultModel? _referenceResult;
     CriticalSpeedModel _criticalSpeed = new();
+    private DashboardSection _activeSection = DashboardSection.Overview;
+    private string? _appliedSectionQuery;
+
+    protected override void OnParametersSet()
+    {
+        if (string.Equals(_appliedSectionQuery, SectionQuery, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        _appliedSectionQuery = SectionQuery;
+        _activeSection = ParseSectionQuery(SectionQuery);
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -162,6 +218,16 @@
             {
                 _calendarItems = Array.Empty<TrainingCalendarItem>();
             }
+            try
+            {
+                _achievementCount = string.IsNullOrWhiteSpace(id)
+                    ? 0
+                    : (await AchievementService.GetAwardsForAthleteAsync(id)).Count;
+            }
+            catch
+            {
+                _achievementCount = 0;
+            }
             _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
             _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
             _referenceResult = Athlete?.ActiveReferenceResult;
@@ -169,6 +235,58 @@
         });
 
         await base.OnInitializedAsync();
+    }
+
+    private void SelectSection(DashboardSection section)
+    {
+        _activeSection = section;
+        Navigation.NavigateTo(GetSectionUri(section), replace: true);
+    }
+
+    private string GetSectionButtonClass(DashboardSection section)
+    {
+        return _activeSection == section
+            ? "pl-section-nav__item pl-section-nav__item--active"
+            : "pl-section-nav__item";
+    }
+
+    private string GetDocumentTitle()
+    {
+        return _activeSection == DashboardSection.Achievements
+            ? "Achievements"
+            : L["PageTitle"].Value;
+    }
+
+    private string GetHeaderTitle()
+    {
+        return _activeSection == DashboardSection.Achievements
+            ? "Achievements"
+            : L["Title"].Value;
+    }
+
+    private string GetHeaderSubtitle()
+    {
+        return _activeSection == DashboardSection.Achievements
+            ? "Deine dauerhaft freigeschalteten Auszeichnungen."
+            : L["WelcomeText", _name].Value;
+    }
+
+    private static DashboardSection ParseSectionQuery(string? section)
+    {
+        return section?.Trim().ToLowerInvariant() switch
+        {
+            "achievements" or "awards" => DashboardSection.Achievements,
+            _ => DashboardSection.Overview
+        };
+    }
+
+    private static string GetSectionUri(DashboardSection section)
+    {
+        return section switch
+        {
+            DashboardSection.Achievements => "/Athletes/dashboard?section=achievements",
+            _ => "/Athletes/dashboard"
+        };
     }
 
     private static TrainingPlan? ResolveActivePlan(IReadOnlyList<TrainingPlan> trainingPlans, AthleteModel? athlete)
@@ -277,6 +395,11 @@
         return nextItem is null
             ? L["CalendarNoUpcoming"]
             : $"{nextItem.StartsAt:dd.MM.} / {nextItem.Title}";
+    }
+
+    private string GetAchievementValue()
+    {
+        return _achievementCount == 0 ? "Noch keine" : _achievementCount.ToString();
     }
 
     private IReadOnlyList<TrainingCalendarItem> UpcomingCalendarItems => _calendarItems

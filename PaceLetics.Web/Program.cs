@@ -36,6 +36,7 @@ using PaceLetics.Web.Services.RunningAnalysis;
 using PaceLetics.Web.Services.Theming;
 using PaceLetics.Web.Services.Loading;
 using PaceLetics.Web.Services.AcademyInfo;
+using PaceLetics.Web.Services.Achievements;
 using PaceLetics.Web.Services.Localization;
 using PaceLetics.Web.Services.Workouts;
 using PaceLetics.TrainingPlanModule.CodeBase.Interfaces;
@@ -169,6 +170,9 @@ builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 builder.Services.AddScoped<ITrainingCalendarService, TrainingCalendarService>();
+builder.Services.AddScoped<CosmosAchievementRepository>();
+builder.Services.AddScoped<IAchievementRepository>(x => x.GetRequiredService<CosmosAchievementRepository>());
+builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<AppCultureService>();
 builder.Services.AddScoped<IArticleRepository>(x => new MarkdownArticleRepository(
     builder.Environment.ContentRootPath,
