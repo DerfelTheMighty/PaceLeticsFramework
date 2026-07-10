@@ -16,15 +16,15 @@
                 Match="NavLinkMatch.Prefix">
         @L["Nav_Courses"]
     </MudNavLink>
-    <MudNavLink Href="/Athletes/data-analyses"
-                Icon="@Icons.Material.Filled.Analytics"
-                Match="NavLinkMatch.Prefix">
-        @L["Nav_DataAnalyses"]
-    </MudNavLink>
     <MudNavLink Href="/Athletes/academy"
                 Icon="@Icons.Material.Filled.AutoStories"
                 Match="NavLinkMatch.Prefix">
         @L["Nav_Academy"]
+    </MudNavLink>
+    <MudNavLink Href="/Athletes/data-analyses"
+                Icon="@Icons.Material.Filled.Analytics"
+                Match="NavLinkMatch.Prefix">
+        @L["Nav_DataAnalyses"]
     </MudNavLink>
 
     <AuthorizeView Roles="@ApplicationRoles.Trainer">
