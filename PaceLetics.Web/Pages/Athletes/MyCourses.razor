@@ -42,9 +42,10 @@
 
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    @if (_activeSection == CoursesSection.Courses)
-    {
-        <MudDivider Class="my-4" />
+    <SwipeSection OnSwipeLeft="SelectNextSection" OnSwipeRight="SelectPreviousSection">
+        @if (_activeSection == CoursesSection.Courses)
+        {
+            <MudDivider Class="my-4" />
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
         {
@@ -393,23 +394,31 @@
                 }
             </MudStack>
         }
-    }
-    else if (_activeSection == CoursesSection.TrainingPlans)
-    {
-        <MudDivider Class="my-4" />
+        }
+        else if (_activeSection == CoursesSection.TrainingPlans)
+        {
+            <MudDivider Class="my-4" />
 
-        <TrainingPlanPage Embedded="true"
-                          AutoScrollToNextSession="true" />
-    }
-    else
-    {
-        <MudDivider Class="my-4" />
+            <TrainingPlanPage Embedded="true"
+                              AutoScrollToNextSession="true" />
+        }
+        else
+        {
+            <MudDivider Class="my-4" />
 
-        <TrainingCalendar UserId="@_userId" />
-    }
+            <TrainingCalendar UserId="@_userId" />
+        }
+    </SwipeSection>
 </MudContainer>
 
 @code {
+    private static readonly CoursesSection[] Sections =
+    [
+        CoursesSection.Courses,
+        CoursesSection.TrainingPlans,
+        CoursesSection.Calendar
+    ];
+
     private enum CoursesSection
     {
         Courses,
@@ -528,6 +537,26 @@
     {
         _activeSection = section;
         Navigation.NavigateTo(GetSectionUri(section), replace: true);
+    }
+
+    private void SelectNextSection()
+    {
+        SelectSection(GetAdjacentSection(1));
+    }
+
+    private void SelectPreviousSection()
+    {
+        SelectSection(GetAdjacentSection(-1));
+    }
+
+    private CoursesSection GetAdjacentSection(int offset)
+    {
+        var index = Array.IndexOf(Sections, _activeSection);
+        if (index < 0)
+            return Sections[0];
+
+        var nextIndex = Math.Clamp(index + offset, 0, Sections.Length - 1);
+        return Sections[nextIndex];
     }
 
     private string GetSectionButtonClass(CoursesSection section)

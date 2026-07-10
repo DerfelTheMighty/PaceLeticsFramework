@@ -1,0 +1,62 @@
+<div class="pl-swipe-section"
+     @onpointerdown="HandlePointerDown"
+     @onpointerup="HandlePointerUp"
+     @onpointercancel="ResetSwipe">
+    @ChildContent
+</div>
+
+@code {
+    private const double MinimumSwipeDistance = 70;
+    private const double DirectionBias = 1.35;
+
+    private double? _startX;
+    private double? _startY;
+    private long? _pointerId;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnSwipeLeft { get; set; }
+
+    [Parameter]
+    public EventCallback OnSwipeRight { get; set; }
+
+    private void HandlePointerDown(PointerEventArgs args)
+    {
+        _pointerId = args.PointerId;
+        _startX = args.ClientX;
+        _startY = args.ClientY;
+    }
+
+    private async Task HandlePointerUp(PointerEventArgs args)
+    {
+        if (_pointerId != args.PointerId || _startX is null || _startY is null)
+        {
+            ResetSwipe();
+            return;
+        }
+
+        var deltaX = args.ClientX - _startX.Value;
+        var deltaY = args.ClientY - _startY.Value;
+        ResetSwipe();
+
+        if (Math.Abs(deltaX) < MinimumSwipeDistance)
+            return;
+
+        if (Math.Abs(deltaX) < Math.Abs(deltaY) * DirectionBias)
+            return;
+
+        if (deltaX < 0)
+            await OnSwipeLeft.InvokeAsync();
+        else
+            await OnSwipeRight.InvokeAsync();
+    }
+
+    private void ResetSwipe()
+    {
+        _pointerId = null;
+        _startX = null;
+        _startY = null;
+    }
+}

@@ -34,21 +34,30 @@
 
     <MudDivider Class="my-4" />
 
-    @if (_activeSection == TeamsSection.Groups)
-    {
-        <MyGroups Embedded="true" />
-    }
-    else if (_activeSection == TeamsSection.PaceMate)
-    {
-        <Mate Embedded="true" />
-    }
-    else
-    {
-        <Profiles Embedded="true" />
-    }
+    <SwipeSection OnSwipeLeft="SelectNextSection" OnSwipeRight="SelectPreviousSection">
+        @if (_activeSection == TeamsSection.Groups)
+        {
+            <MyGroups Embedded="true" />
+        }
+        else if (_activeSection == TeamsSection.PaceMate)
+        {
+            <Mate Embedded="true" />
+        }
+        else
+        {
+            <Profiles Embedded="true" />
+        }
+    </SwipeSection>
 </MudContainer>
 
 @code {
+    private static readonly TeamsSection[] Sections =
+    [
+        TeamsSection.Groups,
+        TeamsSection.PaceMate,
+        TeamsSection.Profiles
+    ];
+
     private enum TeamsSection
     {
         Groups,
@@ -75,6 +84,26 @@
     {
         _activeSection = section;
         Navigation.NavigateTo(GetSectionUri(section), replace: true);
+    }
+
+    private void SelectNextSection()
+    {
+        SelectSection(GetAdjacentSection(1));
+    }
+
+    private void SelectPreviousSection()
+    {
+        SelectSection(GetAdjacentSection(-1));
+    }
+
+    private TeamsSection GetAdjacentSection(int offset)
+    {
+        var index = Array.IndexOf(Sections, _activeSection);
+        if (index < 0)
+            return Sections[0];
+
+        var nextIndex = Math.Clamp(index + offset, 0, Sections.Length - 1);
+        return Sections[nextIndex];
     }
 
     private string GetSectionButtonClass(TeamsSection section)

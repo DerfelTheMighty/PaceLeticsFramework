@@ -50,19 +50,20 @@
         </button>
     </nav>
 
-    @if (_activeSection == DataAnalysesSection.RunningData)
-    {
-        <MudDivider Class="my-4" />
-        <RacePaces Embedded="true" EmbeddedSection="racedata" />
-    }
-    else if (_activeSection == DataAnalysesSection.PaceZones)
-    {
-        <MudDivider Class="my-4" />
-        <RacePaces Embedded="true" EmbeddedSection="pacezones" />
-    }
-    else if (_activeSection == DataAnalysesSection.Recordings)
-    {
-        <MudPaper Elevation="0" Class="pa-4 pl-panel mt-4">
+    <SwipeSection OnSwipeLeft="SelectNextSection" OnSwipeRight="SelectPreviousSection">
+        @if (_activeSection == DataAnalysesSection.RunningData)
+        {
+            <MudDivider Class="my-4" />
+            <RacePaces Embedded="true" EmbeddedSection="racedata" />
+        }
+        else if (_activeSection == DataAnalysesSection.PaceZones)
+        {
+            <MudDivider Class="my-4" />
+            <RacePaces Embedded="true" EmbeddedSection="pacezones" />
+        }
+        else if (_activeSection == DataAnalysesSection.Recordings)
+        {
+            <MudPaper Elevation="0" Class="pa-4 pl-panel mt-4">
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
                 <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px; min-width:0; flex:1 1 260px;">
                     <MudIcon Icon="@GetDriveIcon()" Color="@GetDriveIconColor()" />
@@ -143,10 +144,10 @@
                 }
             </MudStack>
         </MudPaper>
-    }
-    else if (_activeSection == DataAnalysesSection.Analyses)
-    {
-        <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
+        }
+        else if (_activeSection == DataAnalysesSection.Analyses)
+        {
+            <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
             <MudStack Spacing="3">
                 <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
                     <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Primary" />
@@ -165,11 +166,20 @@
                     <AthleteAnalysisOverview Items="_analyses" OnDelete="RemoveAnalysisAsync" />
                 }
             </MudStack>
-        </MudPaper>
-    }
+            </MudPaper>
+        }
+    </SwipeSection>
 </MudContainer>
 
 @code {
+    private static readonly DataAnalysesSection[] Sections =
+    [
+        DataAnalysesSection.RunningData,
+        DataAnalysesSection.PaceZones,
+        DataAnalysesSection.Recordings,
+        DataAnalysesSection.Analyses
+    ];
+
     private enum DataAnalysesSection
     {
         RunningData,
@@ -244,6 +254,26 @@
     {
         _activeSection = section;
         Navigation.NavigateTo(GetSectionUri(section), replace: true);
+    }
+
+    private void SelectNextSection()
+    {
+        SelectSection(GetAdjacentSection(1));
+    }
+
+    private void SelectPreviousSection()
+    {
+        SelectSection(GetAdjacentSection(-1));
+    }
+
+    private DataAnalysesSection GetAdjacentSection(int offset)
+    {
+        var index = Array.IndexOf(Sections, _activeSection);
+        if (index < 0)
+            return Sections[0];
+
+        var nextIndex = Math.Clamp(index + offset, 0, Sections.Length - 1);
+        return Sections[nextIndex];
     }
 
     private static bool TryParseSection(string? value, out DataAnalysesSection section)

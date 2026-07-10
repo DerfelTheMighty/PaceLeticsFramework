@@ -29,76 +29,83 @@
 
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    @if (_activeSection == AcademySection.Bib)
-    {
-        <MudPaper Elevation="0" Class="pa-3 mt-4 pl-panel">
-            <MudSelect T="string"
-                       Label="@L["FilterLabel"]"
-                       Value="_selectedCategory"
-                       ValueChanged="SelectCategory"
-                       Dense="true"
-                       Variant="Variant.Outlined"
-                       AnchorOrigin="Origin.BottomCenter">
-                <MudSelectItem T="string" Value="@AllCategories">@L["TabAll"]</MudSelectItem>
-                @foreach (var category in _categories)
+    <SwipeSection OnSwipeLeft="SelectNextSection" OnSwipeRight="SelectPreviousSection">
+        @if (_activeSection == AcademySection.Bib)
+        {
+            <MudPaper Elevation="0" Class="pa-3 mt-4 pl-panel">
+                <MudSelect T="string"
+                           Label="@L["FilterLabel"]"
+                           Value="_selectedCategory"
+                           ValueChanged="SelectCategory"
+                           Dense="true"
+                           Variant="Variant.Outlined"
+                           AnchorOrigin="Origin.BottomCenter">
+                    <MudSelectItem T="string" Value="@AllCategories">@L["TabAll"]</MudSelectItem>
+                    @foreach (var category in _categories)
+                    {
+                        <MudSelectItem T="string" Value="@category">
+                            @FormatCategory(category)
+                        </MudSelectItem>
+                    }
+                </MudSelect>
+            </MudPaper>
+
+            <div class="pl-academy-grid mt-4">
+                @foreach (var article in VisibleArticles)
                 {
-                    <MudSelectItem T="string" Value="@category">
-                        @FormatCategory(category)
-                    </MudSelectItem>
+                    <a href="@GetArticleHref(article)" class="pl-academy-tile-link" aria-label="@article.Title">
+                        <article class="@GetArticleTileClass(article)">
+                            <div class="pl-academy-tile__header">
+                                <span class="pl-academy-tile__chip">
+                                    @FormatCategory(article.Category)
+                                </span>
+                                <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
+                            </div>
+
+                            <div class="pl-academy-tile__icon" aria-hidden="true">
+                                @if (IsMentalResourceArticle(article))
+                                {
+                                    <MentalResourceIcon />
+                                }
+                                else if (IsRunningAnalysisArticle(article))
+                                {
+                                    <RunningAnalysisIcon />
+                                }
+                                else if (IsTendonAdaptationArticle(article))
+                                {
+                                    <TendonIcon />
+                                }
+                                else if (IsInjuredAthletesArticle(article))
+                                {
+                                    <InjuryIcon />
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@GetArticleIcon(article)" />
+                                }
+                            </div>
+
+                            <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
+                        </article>
+                    </a>
                 }
-            </MudSelect>
-        </MudPaper>
-
-        <div class="pl-academy-grid mt-4">
-            @foreach (var article in VisibleArticles)
-            {
-                <a href="@GetArticleHref(article)" class="pl-academy-tile-link" aria-label="@article.Title">
-                    <article class="@GetArticleTileClass(article)">
-                        <div class="pl-academy-tile__header">
-                            <span class="pl-academy-tile__chip">
-                                @FormatCategory(article.Category)
-                            </span>
-                            <MudText Typo="Typo.subtitle1" Class="pl-academy-tile__title">@article.Title</MudText>
-                        </div>
-
-                        <div class="pl-academy-tile__icon" aria-hidden="true">
-                            @if (IsMentalResourceArticle(article))
-                            {
-                                <MentalResourceIcon />
-                            }
-                            else if (IsRunningAnalysisArticle(article))
-                            {
-                                <RunningAnalysisIcon />
-                            }
-                            else if (IsTendonAdaptationArticle(article))
-                            {
-                                <TendonIcon />
-                            }
-                            else if (IsInjuredAthletesArticle(article))
-                            {
-                                <InjuryIcon />
-                            }
-                            else
-                            {
-                                <MudIcon Icon="@GetArticleIcon(article)" />
-                            }
-                        </div>
-
-                        <MudText Typo="Typo.caption" Class="pl-academy-tile__subtitle">@article.Summary</MudText>
-                    </article>
-                </a>
-            }
-        </div>
-    }
-    else
-    {
-        <MudDivider Class="my-4" />
-        <WorkoutArea Embedded="true" />
-    }
+            </div>
+        }
+        else
+        {
+            <MudDivider Class="my-4" />
+            <WorkoutArea Embedded="true" />
+        }
+    </SwipeSection>
 </MudContainer>
 
 @code {
     private const string AllCategories = "__all";
+    private static readonly AcademySection[] Sections =
+    [
+        AcademySection.Bib,
+        AcademySection.Gym
+    ];
 
     private enum AcademySection
     {
@@ -144,6 +151,26 @@
     {
         _activeSection = section;
         Navigation.NavigateTo(GetSectionUri(section), replace: true);
+    }
+
+    private void SelectNextSection()
+    {
+        SelectSection(GetAdjacentSection(1));
+    }
+
+    private void SelectPreviousSection()
+    {
+        SelectSection(GetAdjacentSection(-1));
+    }
+
+    private AcademySection GetAdjacentSection(int offset)
+    {
+        var index = Array.IndexOf(Sections, _activeSection);
+        if (index < 0)
+            return Sections[0];
+
+        var nextIndex = Math.Clamp(index + offset, 0, Sections.Length - 1);
+        return Sections[nextIndex];
     }
 
     private string GetSectionButtonClass(AcademySection section)
