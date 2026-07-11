@@ -100,17 +100,6 @@
                                 </MudText>
                             </MudStack>
 
-                            @if (!string.IsNullOrWhiteSpace(CurrentParticipant.DriveFolderUrl))
-                            {
-                                <MudTooltip Text="@L["OpenAthleteFolder"]">
-                                    <MudIconButton Href="@CurrentParticipant.DriveFolderUrl"
-                                                   Target="_blank"
-                                                   Icon="@Icons.Material.Filled.FolderOpen"
-                                                   Color="Color.Primary"
-                                                   Variant="Variant.Outlined"
-                                                   aria-label="@L["OpenAthleteFolder"]" />
-                                </MudTooltip>
-                            }
                         </MudStack>
 
                         <MudStack Row="true" Style="gap:8px; flex-wrap:wrap;">
