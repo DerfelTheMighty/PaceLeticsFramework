@@ -19,6 +19,8 @@
 
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
     <MudStack Spacing="3">
+        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
         <nav class="pl-section-nav" aria-label="@L["Title"]">
             <button type="button"
                     class="@GetSectionButtonClass(RunningAnalysesSection.Recordings)"
@@ -42,8 +44,6 @@
                 <span>Uploadqueue</span>
             </button>
         </nav>
-
-        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
         @if (!HasDriveCredentials)
         {

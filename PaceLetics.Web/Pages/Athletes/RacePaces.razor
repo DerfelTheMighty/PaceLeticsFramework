@@ -28,6 +28,9 @@
 
     @if (!Embedded)
     {
+        <PageHeader Title="@L["Title"]"
+                    Subtitle="@L["Subtitle"]" />
+
         <nav class="pl-section-nav" aria-label="@L["Title"]">
             <button type="button"
                     class="@GetSectionButtonClass(RacePacesSection.RaceData)"
@@ -44,9 +47,6 @@
                 <span>@L["TabPaceZones"]</span>
             </button>
         </nav>
-
-        <PageHeader Title="@L["Title"]"
-                    Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
     }

@@ -26,6 +26,8 @@
 
 
 <MudContainer Class="pl-section-page px-4 px-sm-6 pb-8 pl-dashboard-page" MaxWidth="MaxWidth.Large">
+    <PageHeader Title="@GetHeaderTitle()" Subtitle="@GetHeaderSubtitle()" />
+
     <nav class="pl-section-nav" aria-label="@L["Title"]">
         <button type="button"
                 class="@GetSectionButtonClass(DashboardSection.Overview)"
@@ -42,8 +44,6 @@
             <span>Achievements</span>
         </button>
     </nav>
-
-    <PageHeader Title="@GetHeaderTitle()" Subtitle="@GetHeaderSubtitle()" />
 
     <MudDivider Class="my-4" />
 

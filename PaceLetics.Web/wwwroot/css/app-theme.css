@@ -423,10 +423,20 @@
 }
 
 .pl-pageheader {
-    padding: 12px 14px;
+    padding: 8px 12px;
     border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 22%, var(--mud-palette-lines-default));
     border-radius: var(--pl-radius);
     background: var(--pl-pageheader-background, linear-gradient(135deg, color-mix(in srgb, var(--mud-palette-primary) 10%, var(--mud-palette-surface)), var(--mud-palette-surface) 68%));
+}
+
+.pl-pageheader .mud-typography-h5 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.pl-pageheader .mud-typography-subtitle2 {
+    line-height: 1.25;
 }
 
 .pl-dashboard-page {
@@ -434,7 +444,7 @@
 }
 
 .pl-dashboard-page .pl-pageheader {
-    padding: 18px 20px;
+    padding: 8px 12px;
 }
 
 .pl-panel {
@@ -444,26 +454,24 @@
 }
 
 .pl-section-page {
-    padding-top: 72px;
+    padding-top: 16px;
 }
 
 .pl-section-nav {
-    position: fixed;
+    position: sticky;
     top: 64px;
-    right: 0;
-    left: 0;
     z-index: 1200;
     display: flex;
     justify-content: center;
     gap: 6px;
-    min-height: 56px;
-    padding: 6px 10px;
+    min-height: 48px;
+    margin-top: 10px;
+    padding: 4px 8px;
     border: 1px solid var(--mud-palette-lines-default);
-    border-right: 0;
-    border-left: 0;
+    border-radius: var(--pl-radius);
     background: color-mix(in srgb, var(--mud-palette-surface) 94%, transparent);
     backdrop-filter: blur(12px);
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--mud-palette-black) 14%, transparent);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--mud-palette-black) 10%, transparent);
 }
 
 .pl-section-nav__item {
@@ -510,12 +518,13 @@
 
 @media (max-width: 959.98px) {
     .pl-section-page {
-        padding-top: 58px;
+        padding-top: 12px;
     }
 
     .pl-section-nav {
         top: 56px;
-        min-height: 48px;
+        min-height: 44px;
+        margin-top: 8px;
     }
 
     .pl-section-nav__item {
@@ -833,7 +842,7 @@
 
 @media (max-width: 599.98px) {
     .pl-dashboard-page .pl-pageheader {
-        padding: 14px 16px;
+        padding: 8px 12px;
     }
 
     .pl-metric-content {

@@ -16,6 +16,8 @@
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
     <nav class="pl-section-nav" aria-label="@L["Title"]">
         <button type="button"
                 class="@GetSectionButtonClass(CoursesSection.Courses)"
@@ -39,8 +41,6 @@
             <span>@L["TabCalendar"]</span>
         </button>
     </nav>
-
-    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
     <SwipeSection OnSwipeLeft="SelectNextSection" OnSwipeRight="SelectPreviousSection">
         @if (_activeSection == CoursesSection.Courses)
