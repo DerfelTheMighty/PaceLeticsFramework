@@ -27,6 +27,7 @@
             PL
         </MudText>
         <MudSpacer />
+        <AthleteMessageFeedButton />
         <AuthorizeView Roles="@ApplicationRoles.Trainer">
             <Authorized>
                 <MudMenu Icon="@Icons.Material.Filled.MoreVert"
@@ -66,7 +67,6 @@
                 </MudTooltip>
             </Authorized>
         </AuthorizeView>
-        <AthleteMessageFeedButton />
         <MudMenu Icon="@GetThemeMenuIcon()"
                  Color="Color.Inherit"
                  AnchorOrigin="Origin.BottomRight"
