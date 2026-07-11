@@ -41,7 +41,7 @@
   <data name="Nav_Courses" xml:space="preserve"><value>Kurse &amp; Plaene</value></data>
   <data name="Nav_DataAnalyses" xml:space="preserve"><value>Daten &amp; Analysen</value></data>
   <data name="Nav_Analyses" xml:space="preserve"><value>Meine Analysen</value></data>
-  <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
+  <data name="Nav_MyDrive" xml:space="preserve"><value>Drive-Ordner</value></data>
   <data name="Nav_TrainerCourses" xml:space="preserve"><value>Kurse verwalten</value></data>
   <data name="Nav_TrainerRunningAnalyses" xml:space="preserve"><value>Laufanalysen</value></data>
   <data name="Nav_TrainingPlan" xml:space="preserve"><value>Trainingsplanung</value></data>

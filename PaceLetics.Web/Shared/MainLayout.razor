@@ -27,6 +27,17 @@
             PL
         </MudText>
         <MudSpacer />
+        <AuthorizeView>
+            <Authorized>
+                <MudTooltip Text="@NavL["Nav_MyDrive"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.FolderOpen"
+                                   Color="Color.Inherit"
+                                   Size="Size.Small"
+                                   Href="/Athletes/drive"
+                                   aria-label="@NavL["Nav_MyDrive"]" />
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
         <AthleteMessageFeedButton />
         <MudMenu Icon="@Icons.Material.Filled.MoreVert"
                  Color="Color.Inherit"
