@@ -39,20 +39,20 @@
             </Authorized>
         </AuthorizeView>
         <AthleteMessageFeedButton />
-        <MudMenu Icon="@Icons.Material.Filled.MoreVert"
-                 Color="Color.Inherit"
-                 Class="pl-mobile-more-menu"
-                 AnchorOrigin="Origin.BottomRight"
-                 TransformOrigin="Origin.TopRight">
-            <MudMenuItem Href="/Athletes/dashboard?section=achievements" Icon="@Icons.Material.Filled.EmojiEvents">
-                Achievements
-            </MudMenuItem>
-            <MudMenuItem Href="/impressum" Icon="@Icons.Material.Filled.Info">
-                @NavL["Nav_About"]
-            </MudMenuItem>
-            <AuthorizeView Roles="@ApplicationRoles.Trainer">
-                <Authorized>
-                    <MudDivider />
+        <MudTooltip Text="@NavL["Nav_About"]">
+            <MudIconButton Icon="@Icons.Material.Filled.Info"
+                           Color="Color.Inherit"
+                           Size="Size.Small"
+                           Href="/impressum"
+                           aria-label="@NavL["Nav_About"]" />
+        </MudTooltip>
+        <AuthorizeView Roles="@ApplicationRoles.Trainer">
+            <Authorized>
+                <MudMenu Icon="@Icons.Material.Filled.MoreVert"
+                         Color="Color.Inherit"
+                         Class="pl-mobile-more-menu"
+                         AnchorOrigin="Origin.BottomRight"
+                         TransformOrigin="Origin.TopRight">
                     <MudMenuItem Href="/Trainers/courses" Icon="@Icons.Material.Filled.School">
                         @NavL["Nav_TrainerCourses"]
                     </MudMenuItem>
@@ -71,9 +71,9 @@
                     <MudMenuItem Href="/Trainers/workout-catalog" Icon="@Icons.Material.Filled.FitnessCenter">
                         @NavL["Nav_TrainerWorkoutCatalog"]
                     </MudMenuItem>
-                </Authorized>
-            </AuthorizeView>
-        </MudMenu>
+                </MudMenu>
+            </Authorized>
+        </AuthorizeView>
         <MudMenu Icon="@GetThemeMenuIcon()"
                  Color="Color.Inherit"
                  AnchorOrigin="Origin.BottomRight"
