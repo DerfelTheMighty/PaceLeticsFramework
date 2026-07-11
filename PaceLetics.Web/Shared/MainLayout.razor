@@ -23,7 +23,9 @@
                        Edge="Edge.Start"
                        Class="pl-desktop-only"
                        OnClick="@((e) => DrawerToggle())" />
-        <MudText Align="Align.Start">PL</MudText>
+        <MudText Align="Align.Start" Class="pl-appbar-logo" aria-label="PaceLetics">
+            PL
+        </MudText>
         <MudSpacer />
         <AthleteMessageFeedButton />
         <MudMenu Icon="@Icons.Material.Filled.MoreVert"
