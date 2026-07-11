@@ -15,10 +15,15 @@
   <data name="TabDrive" xml:space="preserve"><value>Drive</value></data>
   <data name="CompletedAnalysesTitle" xml:space="preserve"><value>Completed analyses</value></data>
   <data name="CompletedAnalysesSubtitle" xml:space="preserve"><value>Completed running analyses with ratings and result details</value></data>
+  <data name="RecordingsTitle" xml:space="preserve"><value>Recordings</value></data>
+  <data name="RecordingsSubtitle" xml:space="preserve"><value>Uploaded running recordings separated from completed analyses</value></data>
   <data name="AnalysesTitle" xml:space="preserve"><value>Recordings</value></data>
   <data name="AnalysesSubtitle" xml:space="preserve"><value>Your shared running recording folders</value></data>
   <data name="DriveRequiredForAnalyses" xml:space="preserve"><value>Link your Drive folder before recordings can be shown here.</value></data>
   <data name="NoAnalyses" xml:space="preserve"><value>No recordings available yet.</value></data>
+  <data name="NoRecordings" xml:space="preserve"><value>No recordings available yet.</value></data>
+  <data name="OpenSideRecording" xml:space="preserve"><value>Open side recording</value></data>
+  <data name="OpenRearRecording" xml:space="preserve"><value>Open rear recording</value></data>
   <data name="RemoveAnalysis" xml:space="preserve"><value>Delete</value></data>
   <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>Delete "{0}"? This will delete the Drive files and remove the entry from your overview.</value></data>
   <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Drive files deleted and entry removed from your overview.</value></data>

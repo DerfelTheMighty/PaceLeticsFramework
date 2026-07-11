@@ -17,19 +17,30 @@
                     </MudStack>
 
                     <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
-                        @if (!string.IsNullOrWhiteSpace(item.DriveFolderUrl)
-                             && item.FolderStatus == RunningAnalysisFolderStatus.Ready)
+                        @if (!string.IsNullOrWhiteSpace(item.SideRecordingUrl))
                         {
-                            <MudTooltip Text="@OpenText">
-                                <MudIconButton Href="@item.DriveFolderUrl"
+                            <MudTooltip Text="@OpenSideRecordingText">
+                                <MudIconButton Href="@item.SideRecordingUrl"
                                                Target="_blank"
-                                               Icon="@Icons.Material.Filled.FolderOpen"
+                                               Icon="@Icons.Material.Filled.Videocam"
                                                Color="Color.Primary"
                                                Variant="Variant.Outlined"
-                                               aria-label="@OpenText" />
+                                               aria-label="@OpenSideRecordingText" />
                             </MudTooltip>
                         }
-                        else
+                        @if (!string.IsNullOrWhiteSpace(item.RearRecordingUrl))
+                        {
+                            <MudTooltip Text="@OpenRearRecordingText">
+                                <MudIconButton Href="@item.RearRecordingUrl"
+                                               Target="_blank"
+                                               Icon="@Icons.Material.Filled.VideoCameraBack"
+                                               Color="Color.Primary"
+                                               Variant="Variant.Outlined"
+                                               aria-label="@OpenRearRecordingText" />
+                            </MudTooltip>
+                        }
+                        @if (string.IsNullOrWhiteSpace(item.SideRecordingUrl)
+                             && string.IsNullOrWhiteSpace(item.RearRecordingUrl))
                         {
                             <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
                                 @item.FolderStatus
@@ -55,7 +66,8 @@
 @code {
     [Parameter] public IReadOnlyList<RunningAnalysisLink> Items { get; set; } = Array.Empty<RunningAnalysisLink>();
     [Parameter] public string EmptyText { get; set; } = "No analyses available.";
-    [Parameter] public string OpenText { get; set; } = "Open";
+    [Parameter] public string OpenSideRecordingText { get; set; } = "Open side recording";
+    [Parameter] public string OpenRearRecordingText { get; set; } = "Open rear recording";
     [Parameter] public string DeleteText { get; set; } = "Remove";
     [Parameter] public EventCallback<RunningAnalysisLink> OnDelete { get; set; }
 }

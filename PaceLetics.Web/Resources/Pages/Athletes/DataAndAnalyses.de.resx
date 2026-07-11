@@ -17,10 +17,15 @@
   <data name="TabDrive" xml:space="preserve"><value>Drive</value></data>
   <data name="CompletedAnalysesTitle" xml:space="preserve"><value>Fertige Analysen</value></data>
   <data name="CompletedAnalysesSubtitle" xml:space="preserve"><value>Abgeschlossene Laufanalysen mit Bewertung und Ergebnisdetails</value></data>
+  <data name="RecordingsTitle" xml:space="preserve"><value>Aufnahmen</value></data>
+  <data name="RecordingsSubtitle" xml:space="preserve"><value>Hochgeladene Laufaufnahmen, getrennt von den fertigen Analysen</value></data>
   <data name="AnalysesTitle" xml:space="preserve"><value>Aufnahmen</value></data>
   <data name="AnalysesSubtitle" xml:space="preserve"><value>Deine freigegebenen Laufaufnahme-Ordner</value></data>
   <data name="DriveRequiredForAnalyses" xml:space="preserve"><value>Verlinke zuerst deinen Drive-Ordner, damit hier Aufnahmen angezeigt werden koennen.</value></data>
   <data name="NoAnalyses" xml:space="preserve"><value>Noch keine Aufnahmen verfügbar.</value></data>
+  <data name="NoRecordings" xml:space="preserve"><value>Noch keine Aufnahmen verfügbar.</value></data>
+  <data name="OpenSideRecording" xml:space="preserve"><value>Seitliche Aufnahme öffnen</value></data>
+  <data name="OpenRearRecording" xml:space="preserve"><value>Aufnahme von hinten öffnen</value></data>
   <data name="RemoveAnalysis" xml:space="preserve"><value>Löschen</value></data>
   <data name="RemoveAnalysisConfirm" xml:space="preserve"><value>"{0}" löschen? Dadurch werden die Drive-Dateien gelöscht und der Eintrag aus deiner Übersicht entfernt.</value></data>
   <data name="RemoveAnalysisSuccess" xml:space="preserve"><value>Drive-Dateien wurden gelöscht und der Eintrag wurde aus deiner Übersicht entfernt.</value></data>
