@@ -423,9 +423,11 @@
 }
 
 .pl-pageheader {
-    padding: 8px 12px;
+    padding: 8px max(12px, calc((100vw - 1184px) / 2 + 24px));
     border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 22%, var(--mud-palette-lines-default));
-    border-radius: var(--pl-radius);
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
     background: var(--pl-pageheader-background, linear-gradient(135deg, color-mix(in srgb, var(--mud-palette-primary) 10%, var(--mud-palette-surface)), var(--mud-palette-surface) 68%));
 }
 
@@ -444,7 +446,7 @@
 }
 
 .pl-dashboard-page .pl-pageheader {
-    padding: 8px 12px;
+    padding: 8px max(12px, calc((100vw - 1184px) / 2 + 24px));
 }
 
 .pl-panel {
@@ -454,7 +456,17 @@
 }
 
 .pl-section-page {
-    padding-top: 16px;
+    margin-top: -24px;
+    padding-top: 0;
+}
+
+.pl-section-page > .pl-pageheader,
+.pl-section-page > .pl-section-nav,
+.pl-section-page > .mud-stack > .pl-pageheader,
+.pl-section-page > .mud-stack > .pl-section-nav {
+    width: 100vw;
+    margin-right: calc(50% - 50vw);
+    margin-left: calc(50% - 50vw);
 }
 
 .pl-section-nav {
@@ -465,13 +477,16 @@
     justify-content: center;
     gap: 6px;
     min-height: 48px;
-    margin-top: 10px;
-    padding: 4px 8px;
+    margin-top: 0;
+    padding: 4px max(8px, calc((100vw - 1184px) / 2 + 24px));
     border: 1px solid var(--mud-palette-lines-default);
-    border-radius: var(--pl-radius);
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
     background: color-mix(in srgb, var(--mud-palette-surface) 94%, transparent);
     backdrop-filter: blur(12px);
-    box-shadow: 0 6px 18px color-mix(in srgb, var(--mud-palette-black) 10%, transparent);
+    box-shadow: none;
 }
 
 .pl-section-nav__item {
@@ -518,13 +533,13 @@
 
 @media (max-width: 959.98px) {
     .pl-section-page {
-        padding-top: 12px;
+        margin-top: -24px;
+        padding-top: 0;
     }
 
     .pl-section-nav {
         top: 56px;
         min-height: 44px;
-        margin-top: 8px;
     }
 
     .pl-section-nav__item {
@@ -842,7 +857,7 @@
 
 @media (max-width: 599.98px) {
     .pl-dashboard-page .pl-pageheader {
-        padding: 8px 12px;
+        padding: 8px max(12px, calc((100vw - 1184px) / 2 + 24px));
     }
 
     .pl-metric-content {
