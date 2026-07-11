@@ -55,33 +55,12 @@
         else if (_activeSection == DataAnalysesSection.Analyses)
         {
             <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
-            <MudStack Spacing="3">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
-                    <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Primary" />
-                    <div>
-                        <MudText Typo="Typo.subtitle2">@L["CompletedAnalysesTitle"]</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["CompletedAnalysesSubtitle"]</MudText>
-                    </div>
-                </MudStack>
-
-                @if (!string.IsNullOrWhiteSpace(_errorMessage))
-                {
-                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
-                }
-                else
-                {
-                    <AthleteAnalysisOverview Items="_analyses" OnDelete="RemoveAnalysisAsync" />
-                }
-            </MudStack>
-            </MudPaper>
-
-            <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
                 <MudStack Spacing="3">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
-                        <MudIcon Icon="@Icons.Material.Filled.VideoLibrary" Color="Color.Primary" />
+                        <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Primary" />
                         <div>
-                            <MudText Typo="Typo.subtitle2">@L["RecordingsTitle"]</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["RecordingsSubtitle"]</MudText>
+                            <MudText Typo="Typo.subtitle2">@L["RunningAnalysesTitle"]</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@L["RunningAnalysesSubtitle"]</MudText>
                         </div>
                     </MudStack>
 
@@ -92,9 +71,17 @@
                     else
                     {
                         <RunningAnalysisLinks Items="_analyses"
-                                              EmptyText="@L["NoRecordings"]"
+                                              EmptyText="@L["NoRunningAnalyses"]"
+                                              RecordingText="@L["Recording"]"
+                                              EvaluationText="@L["Evaluation"]"
+                                              NoRecordingText="@L["NoRecording"]"
+                                              NoResultText="@L["NoResult"]"
                                               OpenSideRecordingText="@L["OpenSideRecording"]"
                                               OpenRearRecordingText="@L["OpenRearRecording"]"
+                                              OpenResultText="@L["OpenResult"]"
+                                              StatusStartedText="@L["StatusStarted"]"
+                                              StatusInProgressText="@L["StatusInProgress"]"
+                                              StatusFinishedText="@L["StatusFinished"]"
                                               DeleteText="@L["RemoveAnalysis"]"
                                               OnDelete="RemoveAnalysisAsync" />
                     }

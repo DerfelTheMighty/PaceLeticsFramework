@@ -17,6 +17,17 @@
   <data name="TabDrive" xml:space="preserve"><value>Drive</value></data>
   <data name="CompletedAnalysesTitle" xml:space="preserve"><value>Fertige Analysen</value></data>
   <data name="CompletedAnalysesSubtitle" xml:space="preserve"><value>Abgeschlossene Laufanalysen mit Bewertung und Ergebnisdetails</value></data>
+  <data name="RunningAnalysesTitle" xml:space="preserve"><value>Laufanalysen</value></data>
+  <data name="RunningAnalysesSubtitle" xml:space="preserve"><value>Jede Laufanalyse zeigt Aufnahme und Auswertung zusammen mit einem klaren Status</value></data>
+  <data name="NoRunningAnalyses" xml:space="preserve"><value>Noch keine Laufanalysen verfügbar.</value></data>
+  <data name="Recording" xml:space="preserve"><value>Aufnahme</value></data>
+  <data name="Evaluation" xml:space="preserve"><value>Auswertung</value></data>
+  <data name="NoRecording" xml:space="preserve"><value>Keine Aufnahme</value></data>
+  <data name="NoResult" xml:space="preserve"><value>Keine Auswertung</value></data>
+  <data name="OpenResult" xml:space="preserve"><value>Analyseergebnis öffnen</value></data>
+  <data name="StatusStarted" xml:space="preserve"><value>Started</value></data>
+  <data name="StatusInProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="StatusFinished" xml:space="preserve"><value>Finished</value></data>
   <data name="RecordingsTitle" xml:space="preserve"><value>Aufnahmen</value></data>
   <data name="RecordingsSubtitle" xml:space="preserve"><value>Hochgeladene Laufaufnahmen, getrennt von den fertigen Analysen</value></data>
   <data name="AnalysesTitle" xml:space="preserve"><value>Aufnahmen</value></data>

@@ -1,4 +1,5 @@
 @namespace PaceLetics.RunningAnalysisModule.Components
+@using System.Globalization
 
 <MudStack Spacing="2">
     @if (Items.Count == 0)
@@ -10,42 +11,72 @@
         @foreach (var item in Items.OrderByDescending(item => item.StartsAt))
         {
             <MudPaper Elevation="0" Class="pa-3" Style="border:1px solid var(--mud-palette-lines-default);">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
-                    <MudStack Spacing="0" Style="min-width:0;">
-                        <MudText Typo="Typo.body1">@item.Title</MudText>
-                        <MudText Typo="Typo.caption" Color="Color.Secondary">@item.StartsAt.ToString("g")</MudText>
+                <MudStack Spacing="2">
+                    <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="0" Style="min-width:0; flex:1 1 220px;">
+                            <MudText Typo="Typo.body1">@item.Title</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@item.StartsAt.ToString("g", CultureInfo.CurrentCulture)</MudText>
+                        </MudStack>
+
+                        <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(item)" Variant="Variant.Outlined">
+                            @GetStatusText(item)
+                        </MudChip>
                     </MudStack>
 
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
-                        @if (!string.IsNullOrWhiteSpace(item.SideRecordingUrl))
-                        {
-                            <MudTooltip Text="@OpenSideRecordingText">
-                                <MudIconButton Href="@item.SideRecordingUrl"
-                                               Target="_blank"
-                                               Icon="@Icons.Material.Filled.Videocam"
-                                               Color="Color.Primary"
-                                               Variant="Variant.Outlined"
-                                               aria-label="@OpenSideRecordingText" />
-                            </MudTooltip>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.RearRecordingUrl))
-                        {
-                            <MudTooltip Text="@OpenRearRecordingText">
-                                <MudIconButton Href="@item.RearRecordingUrl"
-                                               Target="_blank"
-                                               Icon="@Icons.Material.Filled.VideoCameraBack"
-                                               Color="Color.Primary"
-                                               Variant="Variant.Outlined"
-                                               aria-label="@OpenRearRecordingText" />
-                            </MudTooltip>
-                        }
-                        @if (string.IsNullOrWhiteSpace(item.SideRecordingUrl)
-                             && string.IsNullOrWhiteSpace(item.RearRecordingUrl))
-                        {
-                            <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
-                                @item.FolderStatus
-                            </MudChip>
-                        }
+                    <MudStack Row="true" AlignItems="AlignItems.Start" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap;">
+                        <MudStack Spacing="1" Style="min-width:140px;">
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@RecordingText</MudText>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Style="gap:8px; flex-wrap:wrap;">
+                                @if (!string.IsNullOrWhiteSpace(item.SideRecordingUrl))
+                                {
+                                    <MudTooltip Text="@OpenSideRecordingText">
+                                        <MudIconButton Href="@item.SideRecordingUrl"
+                                                       Target="_blank"
+                                                       Icon="@Icons.Material.Filled.Videocam"
+                                                       Color="Color.Primary"
+                                                       Variant="Variant.Outlined"
+                                                       aria-label="@OpenSideRecordingText" />
+                                    </MudTooltip>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(item.RearRecordingUrl))
+                                {
+                                    <MudTooltip Text="@OpenRearRecordingText">
+                                        <MudIconButton Href="@item.RearRecordingUrl"
+                                                       Target="_blank"
+                                                       Icon="@Icons.Material.Filled.VideoCameraBack"
+                                                       Color="Color.Primary"
+                                                       Variant="Variant.Outlined"
+                                                       aria-label="@OpenRearRecordingText" />
+                                    </MudTooltip>
+                                }
+                                @if (!HasRecording(item))
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Outlined">
+                                        @NoRecordingText
+                                    </MudChip>
+                                }
+                            </MudStack>
+                        </MudStack>
+
+                        <MudStack Spacing="1" Style="min-width:140px;">
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@EvaluationText</MudText>
+                            @if (IsFinished(item))
+                            {
+                                <MudButton Size="Size.Small"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.Assessment"
+                                           Href="@GetResultHref(item)">
+                                    @OpenResultText
+                                </MudButton>
+                            }
+                            else
+                            {
+                                <MudChip T="string" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Outlined">
+                                    @NoResultText
+                                </MudChip>
+                            }
+                        </MudStack>
 
                         @if (OnDelete.HasDelegate)
                         {
@@ -66,8 +97,55 @@
 @code {
     [Parameter] public IReadOnlyList<RunningAnalysisLink> Items { get; set; } = Array.Empty<RunningAnalysisLink>();
     [Parameter] public string EmptyText { get; set; } = "No analyses available.";
+    [Parameter] public string RecordingText { get; set; } = "Recording";
+    [Parameter] public string EvaluationText { get; set; } = "Evaluation";
+    [Parameter] public string NoRecordingText { get; set; } = "No recording";
+    [Parameter] public string NoResultText { get; set; } = "No result";
     [Parameter] public string OpenSideRecordingText { get; set; } = "Open side recording";
     [Parameter] public string OpenRearRecordingText { get; set; } = "Open rear recording";
+    [Parameter] public string OpenResultText { get; set; } = "Open result";
+    [Parameter] public string StatusStartedText { get; set; } = "Started";
+    [Parameter] public string StatusInProgressText { get; set; } = "In Progress";
+    [Parameter] public string StatusFinishedText { get; set; } = "Finished";
     [Parameter] public string DeleteText { get; set; } = "Remove";
     [Parameter] public EventCallback<RunningAnalysisLink> OnDelete { get; set; }
+
+    private static bool HasRecording(RunningAnalysisLink item)
+    {
+        return !string.IsNullOrWhiteSpace(item.SideRecordingUrl)
+            || !string.IsNullOrWhiteSpace(item.RearRecordingUrl);
+    }
+
+    private static bool IsFinished(RunningAnalysisLink item)
+    {
+        return item.ResultStatus == RunningAnalysisResultStatus.Completed
+            && !string.IsNullOrWhiteSpace(item.ResultId);
+    }
+
+    private string GetStatusText(RunningAnalysisLink item)
+    {
+        if (IsFinished(item))
+            return StatusFinishedText;
+
+        return HasRecording(item)
+            ? StatusInProgressText
+            : StatusStartedText;
+    }
+
+    private static Color GetStatusColor(RunningAnalysisLink item)
+    {
+        if (IsFinished(item))
+            return Color.Success;
+
+        return HasRecording(item)
+            ? Color.Info
+            : Color.Warning;
+    }
+
+    private static string GetResultHref(RunningAnalysisLink item)
+    {
+        return string.IsNullOrWhiteSpace(item.ResultId)
+            ? string.Empty
+            : $"/Athletes/analyses/{Uri.EscapeDataString(item.ResultId)}";
+    }
 }
