@@ -27,25 +27,6 @@
             PL
         </MudText>
         <MudSpacer />
-        <AuthorizeView>
-            <Authorized>
-                <MudTooltip Text="@NavL["Nav_MyDrive"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.FolderOpen"
-                                   Color="Color.Inherit"
-                                   Size="Size.Small"
-                                   Href="/Athletes/drive"
-                                   aria-label="@NavL["Nav_MyDrive"]" />
-                </MudTooltip>
-            </Authorized>
-        </AuthorizeView>
-        <AthleteMessageFeedButton />
-        <MudTooltip Text="@NavL["Nav_About"]">
-            <MudIconButton Icon="@Icons.Material.Filled.Info"
-                           Color="Color.Inherit"
-                           Size="Size.Small"
-                           Href="/impressum"
-                           aria-label="@NavL["Nav_About"]" />
-        </MudTooltip>
         <AuthorizeView Roles="@ApplicationRoles.Trainer">
             <Authorized>
                 <MudMenu Icon="@Icons.Material.Filled.MoreVert"
@@ -74,6 +55,18 @@
                 </MudMenu>
             </Authorized>
         </AuthorizeView>
+        <AuthorizeView>
+            <Authorized>
+                <MudTooltip Text="@NavL["Nav_MyDrive"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.FolderOpen"
+                                   Color="Color.Inherit"
+                                   Size="Size.Small"
+                                   Href="/Athletes/drive"
+                                   aria-label="@NavL["Nav_MyDrive"]" />
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
+        <AthleteMessageFeedButton />
         <MudMenu Icon="@GetThemeMenuIcon()"
                  Color="Color.Inherit"
                  AnchorOrigin="Origin.BottomRight"
@@ -97,6 +90,13 @@
             }
         </MudMenu>
         <LoginDisplay />
+        <MudTooltip Text="@NavL["Nav_About"]">
+            <MudIconButton Icon="@Icons.Material.Filled.Info"
+                           Color="Color.Inherit"
+                           Size="Size.Small"
+                           Href="/impressum"
+                           aria-label="@NavL["Nav_About"]" />
+        </MudTooltip>
 
     </MudAppBar>
 
