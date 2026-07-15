@@ -2,6 +2,7 @@
 @implements IDisposable
 @using MudBlazor
 @inject ThemePreferenceService ThemePreferences
+@inject IStringLocalizer<MainLayout> L
 @inject IStringLocalizer<NavMenu> NavL
 @inject NavigationManager Navigation
 
@@ -35,6 +36,31 @@
         <MudText Align="Align.Start" Class="pl-appbar-title">@GetAppBarTitle()</MudText>
         <MudSpacer />
         <AthleteMessageFeedButton />
+        <MudMenu Icon="@ThemePreferences.CurrentThemeDefinition.Icon"
+                 Color="Color.Inherit"
+                 Class="pl-topbar-quick-action"
+                 aria-label="@L["ThemeSelector", GetThemeName(ThemePreferences.ThemeName)]"
+                 AnchorOrigin="Origin.BottomRight"
+                 TransformOrigin="Origin.TopRight">
+            <MudMenuItem Disabled="true">
+                <MudText Typo="Typo.caption" Color="Color.Secondary">@L["Theme"]</MudText>
+            </MudMenuItem>
+            @foreach (var theme in ThemePreferences.Themes)
+            {
+                <MudMenuItem OnClick="@(() => ThemePreferences.SetThemeAsync(theme.Name))">
+                    <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Style="min-width:180px;">
+                        <MudIcon Icon="@theme.Icon" Size="Size.Small" />
+                        <MudText>@GetThemeName(theme.Name)</MudText>
+                        <MudSpacer />
+                        @if (ThemePreferences.ThemeName == theme.Name)
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" />
+                        }
+                    </MudStack>
+                </MudMenuItem>
+            }
+        </MudMenu>
+        <CultureSelector Class="pl-topbar-quick-action" />
         <LoginDisplay />
 
     </MudAppBar>
@@ -84,6 +110,9 @@
     {
         _drawerOpen = !_drawerOpen;
     }
+
+    private static string GetThemeName(AppThemeName themeName) =>
+        AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
 
     private string GetLayoutClass()
     {

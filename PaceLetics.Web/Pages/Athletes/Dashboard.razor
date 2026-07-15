@@ -173,10 +173,17 @@
                             <div class="pl-integration-grid">
                                 @foreach (var integration in _integrations)
                                 {
-                                    <div class="@(integration.IsConnected ? "pl-integration pl-integration--connected" : "pl-integration")">
+                                    <div class="@GetIntegrationClass(integration)">
                                         <span class="pl-integration__dot" aria-hidden="true"></span>
                                         <span><strong>@GetProviderName(integration.Provider)</strong><small>@GetIntegrationDetail(integration)</small></span>
-                                        @if (integration.HasReadySession) { <MudIcon Icon="@Icons.Material.Filled.CloudDone" Size="Size.Small" /> }
+                                        @if (!integration.IsAvailable)
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.LockClock" Size="Size.Small" aria-label="@L["NotAvailable"]" />
+                                        }
+                                        else if (integration.HasReadySession)
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.CloudDone" Size="Size.Small" />
+                                        }
                                     </div>
                                 }
                             </div>
@@ -540,12 +547,16 @@
 
     private string GetIntegrationSummary()
     {
+        if (_integrations.All(item => !item.IsAvailable))
+            return L["IntegrationsComingSoon"];
         var connected = _integrations.Count(item => item.IsConnected);
         return connected == 0 ? L["NoIntegrations"] : L["ConnectedIntegrations", connected];
     }
 
     private string GetIntegrationDetail(IntegrationStatus integration)
     {
+        if (!integration.IsAvailable)
+            return L["NotAvailable"];
         if (!integration.IsConnected)
             return L["NotConnected"];
         if (!string.IsNullOrWhiteSpace(integration.Error))
@@ -553,6 +564,15 @@
         return integration.LastSyncAt is { } lastSync
             ? L["LastSync", lastSync.ToLocalTime()]
             : L["Connected"];
+    }
+
+    private static string GetIntegrationClass(IntegrationStatus integration)
+    {
+        if (!integration.IsAvailable)
+            return "pl-integration pl-integration--unavailable";
+        return integration.IsConnected
+            ? "pl-integration pl-integration--connected"
+            : "pl-integration";
     }
 
     private static string GetProviderName(string provider) => provider switch

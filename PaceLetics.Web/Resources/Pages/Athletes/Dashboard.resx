@@ -170,4 +170,6 @@
   <data name="SectionContext" xml:space="preserve"><value>Weather and equipment</value></data>
   <data name="SectionMessages" xml:space="preserve"><value>Messages</value></data>
   <data name="SectionIntegrations" xml:space="preserve"><value>Platforms and wearables</value></data>
+  <data name="NotAvailable" xml:space="preserve"><value>Not available yet</value></data>
+  <data name="IntegrationsComingSoon" xml:space="preserve"><value>Garmin, Strava, Apple Health, and COROS are planned but not connected yet.</value></data>
 </root>

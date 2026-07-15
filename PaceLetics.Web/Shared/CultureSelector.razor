@@ -5,6 +5,7 @@
 
 <MudMenu Icon="@Icons.Material.Filled.Language"
          Color="Color.Inherit"
+         Class="@Class"
          aria-label="Language"
          AnchorOrigin="Origin.BottomRight"
          TransformOrigin="Origin.TopRight">
@@ -23,6 +24,8 @@
 </MudMenu>
 
 @code {
+    [Parameter] public string? Class { get; set; }
+
     private bool IsCurrentCulture(string culture)
         => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == culture;
 

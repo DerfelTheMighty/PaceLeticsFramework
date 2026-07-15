@@ -15,7 +15,8 @@ public sealed record IntegrationStatus(
     bool IsConnected = false,
     DateTime? LastSyncAt = null,
     bool HasReadySession = false,
-    string? Error = null);
+    string? Error = null,
+    bool IsAvailable = false);
 
 public sealed class IntegrationStatusService
 {

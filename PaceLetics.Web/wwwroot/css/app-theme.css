@@ -1099,6 +1099,11 @@
 .pl-integration small { color: var(--mud-palette-text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pl-integration__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mud-palette-lines-default); }
 .pl-integration--connected .pl-integration__dot { background: var(--mud-palette-success); }
+.pl-integration--unavailable {
+    color: var(--mud-palette-text-secondary);
+    background: color-mix(in srgb, var(--mud-palette-text-primary) 3%, var(--mud-palette-surface));
+}
+.pl-integration--unavailable .pl-integration__dot { background: var(--mud-palette-text-disabled); }
 
 .pl-context-card {
     padding: 16px;
@@ -1119,6 +1124,15 @@
     .pl-integration-grid { grid-template-columns: 1fr; }
     .pl-week-summary strong { font-size: .82rem; }
     .pl-undo-bar { right: 12px; bottom: max(76px, calc(62px + env(safe-area-inset-bottom))); }
+    .mud-appbar .mud-icon-button {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+    .pl-appbar-title {
+        max-width: min(28vw, 104px);
+        font-size: .82rem;
+    }
 }
 
 @media (min-width: 700px) {

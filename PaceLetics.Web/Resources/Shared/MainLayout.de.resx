@@ -6,4 +6,5 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Theme" xml:space="preserve"><value>Theme</value></data>
   <data name="Settings" xml:space="preserve"><value>Einstellungen öffnen</value></data>
+  <data name="ThemeSelector" xml:space="preserve"><value>Theme auswählen. Aktuell: {0}</value></data>
 </root>
