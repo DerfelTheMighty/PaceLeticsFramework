@@ -20,4 +20,10 @@
   <data name="Nav_Analyses" xml:space="preserve"><value>Mes analyses</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
   <data name="Nav_TrainerRunningAnalyses" xml:space="preserve"><value>Analyses de course</value></data>
+  <data name="MobileNavigation" xml:space="preserve"><value>Navigation principale</value></data>
+  <data name="Nav_Today" xml:space="preserve"><value>Aujourd’hui</value></data>
+  <data name="Nav_Plan" xml:space="preserve"><value>Programme</value></data>
+  <data name="Nav_Train" xml:space="preserve"><value>S’entraîner</value></data>
+  <data name="Nav_Progress" xml:space="preserve"><value>Progrès</value></data>
+  <data name="Nav_More" xml:space="preserve"><value>Plus</value></data>
 </root>

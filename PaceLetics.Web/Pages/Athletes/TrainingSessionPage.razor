@@ -1,0 +1,373 @@
+@page "/Athletes/session/{PlanId}/{SessionId}"
+@attribute [Authorize]
+@implements IDisposable
+@using PaceLetics.TrainingModule.CodeBase.Running.Models
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ITrainingPlanService TrainingPlanService
+@inject IAchievementService AchievementService
+@inject ITrainingFeedbackService FeedbackService
+@inject IWorkoutService WorkoutService
+@inject IDialogService DialogService
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<TrainingSessionPage> L
+
+<PageTitle>@(_session?.Name ?? L["PageTitle"])</PageTitle>
+
+<MudContainer Class="px-4 px-sm-6 pb-8 pt-4 pl-session-page" MaxWidth="MaxWidth.Small">
+    <MudButton Href="/Athletes/plan"
+               Variant="Variant.Text"
+               Color="Color.Inherit"
+               StartIcon="@Icons.Material.Filled.ArrowBack"
+               Class="mb-2">
+        @L["BackToWeek"]
+    </MudButton>
+
+    @if (_isLoading)
+    {
+        <div class="pl-loading"><MudProgressCircular Indeterminate="true" /></div>
+    }
+    else if (_session is null)
+    {
+        <MudAlert Severity="Severity.Warning">@L["NotFound"]</MudAlert>
+    }
+    else
+    {
+        <MudStack Spacing="4">
+            <header class="pl-session-page__header">
+                <MudText Typo="Typo.overline" Color="Color.Primary">@GetDateLabel()</MudText>
+                <MudText Typo="Typo.h4" HtmlTag="h1">@_session.Name</MudText>
+                @if (!string.IsNullOrWhiteSpace(_plan?.Name))
+                {
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@_plan.Name</MudText>
+                }
+            </header>
+
+            <section class="pl-session-page__briefing" aria-labelledby="briefing-title">
+                <MudText Typo="Typo.h6" HtmlTag="h2" id="briefing-title">@L["Briefing"]</MudText>
+                <TrainingSessionSummary Session="@_session" />
+            </section>
+
+            @if (_session.HasTrainingEffect)
+            {
+                <section class="pl-session-page__section" aria-labelledby="why-title">
+                    <MudText Typo="Typo.h6" HtmlTag="h2" id="why-title">@L["Why"]</MudText>
+                    <MudStack Spacing="1">
+                        @if (!string.IsNullOrWhiteSpace(_session.TrainingEffect.Stimulus))
+                        {
+                            <MudText Typo="Typo.body2">@_session.TrainingEffect.Stimulus</MudText>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(_session.TrainingEffect.Adaptation))
+                        {
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@_session.TrainingEffect.Adaptation</MudText>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(_session.TrainingEffect.Recovery))
+                        {
+                            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
+                                @_session.TrainingEffect.Recovery
+                            </MudAlert>
+                        }
+                    </MudStack>
+                </section>
+            }
+
+            <section class="pl-session-page__section" aria-labelledby="steps-title">
+                <MudText Typo="Typo.h6" HtmlTag="h2" id="steps-title">@L["Sequence"]</MudText>
+                <div class="pl-session-sequence">
+                    @foreach (var step in GetSequenceSteps())
+                    {
+                        <div class="pl-session-sequence__step">
+                            <span class="pl-session-sequence__index">@step.Index</span>
+                            <span>
+                                <strong>@step.Title</strong>
+                                @if (!string.IsNullOrWhiteSpace(step.Detail))
+                                {
+                                    <small>@step.Detail</small>
+                                }
+                            </span>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            @if (_isRunning)
+            {
+                <section class="pl-session-page__active" aria-live="polite">
+                    <MudIcon Icon="@Icons.Material.Filled.DirectionsRun" Color="Color.Primary" Size="Size.Large" />
+                    <span>
+                        <small>@L["TrainingRunning"]</small>
+                        <strong>@FormatElapsed()</strong>
+                    </span>
+                </section>
+            }
+
+            @if (_recommendation is not null)
+            {
+                <MudAlert Severity="@GetRecommendationSeverity()" Variant="Variant.Outlined">
+                    <MudText Typo="Typo.subtitle2">@GetRecommendationTitle()</MudText>
+                    <MudText Typo="Typo.body2">@GetRecommendationDetail()</MudText>
+                </MudAlert>
+            }
+
+            <div class="pl-session-page__primary-action">
+                @if (_isCompleted && !_isRunning)
+                {
+                    <MudButton Href="/Athletes/plan"
+                               FullWidth="true"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.CheckCircle">
+                        @L["CompletedBackToPlan"]
+                    </MudButton>
+                }
+                else if (_isRunning)
+                {
+                    <MudButton FullWidth="true"
+                               Variant="Variant.Filled"
+                               Color="Color.Success"
+                               StartIcon="@Icons.Material.Filled.Flag"
+                               OnClick="FinishTrainingAsync">
+                        @L["FinishTraining"]
+                    </MudButton>
+                }
+                else
+                {
+                    <MudButton FullWidth="true"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.PlayArrow"
+                               OnClick="StartTraining">
+                        @L["StartTraining"]
+                    </MudButton>
+                }
+            </div>
+        </MudStack>
+    }
+</MudContainer>
+
+@code {
+    [Parameter]
+    public string PlanId { get; set; } = string.Empty;
+
+    [Parameter]
+    public string SessionId { get; set; } = string.Empty;
+
+    private string? _userId;
+    private TrainingPlan? _plan;
+    private TrainingSession? _session;
+    private System.Threading.Timer? _timer;
+    private DateTime _startedAt;
+    private TimeSpan _elapsed;
+    private bool _isLoading = true;
+    private bool _isRunning;
+    private bool _isCompleted;
+    private TrainingRecommendation? _recommendation;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        try
+        {
+            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            _userId = state.User.FindFirst(claim =>
+                claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+            var plans = await TrainingPlanService.LoadTrainingPlansForUserAsync(_userId);
+            _plan = plans.FirstOrDefault(plan =>
+                string.Equals(plan.Id, PlanId, StringComparison.OrdinalIgnoreCase));
+            _session = _plan?.Sessions.FirstOrDefault(session =>
+                string.Equals(session.Id, SessionId, StringComparison.OrdinalIgnoreCase));
+
+            if (!string.IsNullOrWhiteSpace(_userId))
+            {
+                var completions = await AchievementService.GetTrainingSessionCompletionsForAthleteAsync(_userId);
+                _isCompleted = completions.Any(item =>
+                    string.Equals(item.PlanId, PlanId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(item.SessionId, SessionId, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private void StartTraining()
+    {
+        if (_session is null)
+            return;
+
+        if (_session.Runs.Count == 0 && _session.Workouts.FirstOrDefault() is { } workout)
+        {
+            WorkoutService.SetActiveWorkout(workout.WorkoutId, workout.Sets, workout.Rounds);
+            Navigation.NavigateTo(
+                $"/Workouts/WorkoutRoom?planId={Uri.EscapeDataString(PlanId)}&sessionId={Uri.EscapeDataString(SessionId)}");
+            return;
+        }
+
+        _startedAt = DateTime.UtcNow;
+        _elapsed = TimeSpan.Zero;
+        _isRunning = true;
+        _timer = new System.Threading.Timer(_ =>
+        {
+            _elapsed = DateTime.UtcNow - _startedAt;
+            _ = InvokeAsync(StateHasChanged);
+        }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+    }
+
+    private async Task FinishTrainingAsync()
+    {
+        if (_session is null || string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        StopTimer();
+        _isRunning = false;
+
+        try
+        {
+            var result = await AchievementService.SetTrainingSessionCompletionAsync(
+                _userId,
+                PlanId,
+                SessionId,
+                true);
+            _isCompleted = true;
+            foreach (var award in result.Awarded)
+                Snackbar.Add(L["AchievementUnlocked", award.TitleSnapshot], Severity.Success);
+        }
+        catch
+        {
+            Snackbar.Add(L["CompletionFailed"], Severity.Error);
+            return;
+        }
+
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            FullWidth = true,
+            MaxWidth = MaxWidth.ExtraSmall
+        };
+        var parameters = new DialogParameters<TrainingFeedbackDialog>
+        {
+            { dialog => dialog.TrainingName, _session.Name }
+        };
+        var dialog = await DialogService.ShowAsync<TrainingFeedbackDialog>(L["FeedbackTitle"], parameters, options);
+        var dialogResult = await dialog.Result;
+        if (dialogResult is not { Canceled: false, Data: TrainingFeedbackInput input })
+            return;
+
+        try
+        {
+            await FeedbackService.SaveAsync(
+                _userId,
+                input,
+                _session.Name,
+                "planned-session",
+                PlanId,
+                SessionId);
+            _recommendation = await FeedbackService.GetRecommendationAsync(_userId, hasUpcomingTraining: true);
+            Snackbar.Add(L["FeedbackSaved"], Severity.Success);
+        }
+        catch
+        {
+            Snackbar.Add(L["FeedbackFailed"], Severity.Warning);
+        }
+    }
+
+    private IReadOnlyList<SequenceStep> GetSequenceSteps()
+    {
+        if (_session is null)
+            return Array.Empty<SequenceStep>();
+
+        var steps = new List<SequenceStep>();
+        foreach (var activity in _session.Warmup)
+            steps.Add(new(0, activity.Title, GetActivityDetail(activity)));
+        foreach (var activity in _session.Drills)
+            steps.Add(new(0, activity.Title, GetActivityDetail(activity)));
+        foreach (var run in _session.Runs)
+        {
+            foreach (var segment in run.Sequence)
+            {
+                var detail = segment.Duration is not null
+                    ? L["Minutes", Math.Round(segment.Duration.Value.TotalMinutes)]
+                    : segment.Distance > 0 ? $"{segment.Distance} m" : string.Empty;
+                if (!string.IsNullOrWhiteSpace(segment.PaceKey))
+                    detail = string.IsNullOrWhiteSpace(detail) ? segment.PaceKey : $"{detail} · {segment.PaceKey}";
+                steps.Add(new(0, GetSegmentTitle(segment.Type), detail));
+            }
+        }
+        foreach (var workout in _session.Workouts)
+            steps.Add(new(0, workout.Name, L["WorkoutSetsRounds", workout.Sets, workout.Rounds]));
+
+        if (steps.Count == 0)
+            steps.Add(new(0, _session.Name, TrainingSessionPresentation.GetComposition(_session)));
+
+        return steps.Select((step, index) => step with { Index = index + 1 }).ToList();
+    }
+
+    private string GetActivityDetail(TrainingSessionActivity activity)
+    {
+        var values = new List<string>();
+        if (activity.DurationSeconds > 0)
+            values.Add(L["Minutes", Math.Ceiling(activity.DurationSeconds / 60.0)]);
+        if (!string.IsNullOrWhiteSpace(activity.Description))
+            values.Add(activity.Description);
+        return string.Join(" · ", values);
+    }
+
+    private string GetSegmentTitle(SegmentType type) => type switch
+    {
+        SegmentType.Warmup => L["SegmentWarmup"],
+        SegmentType.Walking => L["SegmentWalking"],
+        SegmentType.Intervall => L["SegmentInterval"],
+        SegmentType.Recovery => L["SegmentRecovery"],
+        SegmentType.SetRecovery => L["SegmentSetRecovery"],
+        SegmentType.Cooldown => L["SegmentCooldown"],
+        _ => L["SegmentRun"]
+    };
+
+    private string GetDateLabel()
+    {
+        if (_session is null)
+            return string.Empty;
+        var date = _session.Appointment.StartsAt ?? _session.Date;
+        return _session.Appointment.StartsAt is null
+            ? date.ToString("dddd, dd. MMMM")
+            : date.ToString("dddd, dd. MMMM · HH:mm");
+    }
+
+    private string FormatElapsed() => _elapsed.TotalHours >= 1
+        ? _elapsed.ToString(@"hh\:mm\:ss")
+        : _elapsed.ToString(@"mm\:ss");
+
+    private Severity GetRecommendationSeverity() => _recommendation?.Kind switch
+    {
+        TrainingRecommendationKind.PrioritizeRecovery => Severity.Warning,
+        TrainingRecommendationKind.TakeItEasy => Severity.Info,
+        _ => Severity.Success
+    };
+
+    private string GetRecommendationTitle() => _recommendation?.Kind switch
+    {
+        TrainingRecommendationKind.PrioritizeRecovery => L["RecommendationRecoveryTitle"],
+        TrainingRecommendationKind.TakeItEasy => L["RecommendationEasyTitle"],
+        _ => L["RecommendationOnTrackTitle"]
+    };
+
+    private string GetRecommendationDetail() => _recommendation?.Kind switch
+    {
+        TrainingRecommendationKind.PrioritizeRecovery => L["RecommendationRecoveryDetail"],
+        TrainingRecommendationKind.TakeItEasy => L["RecommendationEasyDetail"],
+        _ => L["RecommendationOnTrackDetail"]
+    };
+
+    private void StopTimer()
+    {
+        _timer?.Dispose();
+        _timer = null;
+    }
+
+    public void Dispose() => StopTimer();
+
+    private sealed record SequenceStep(int Index, string Title, string Detail);
+}

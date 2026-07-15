@@ -97,4 +97,38 @@
   <data name="Section_Achievements" xml:space="preserve"><value>Auszeichnungen</value></data>
   <data name="Metric_AchievementsDetail" xml:space="preserve"><value>Freigeschaltete Auszeichnungen</value></data>
   <data name="Tooltip_Achievements" xml:space="preserve"><value>Deine Auszeichnungen ansehen</value></data>
+  <data name="TodayPageTitle" xml:space="preserve"><value>Heute</value></data>
+  <data name="TodaySubtitle" xml:space="preserve"><value>Dein nächster sinnvoller Schritt – ohne Ablenkung.</value></data>
+  <data name="GoodMorning" xml:space="preserve"><value>Guten Morgen</value></data>
+  <data name="GoodDay" xml:space="preserve"><value>Hallo</value></data>
+  <data name="GoodEvening" xml:space="preserve"><value>Guten Abend</value></data>
+  <data name="RecoveryTitle" xml:space="preserve"><value>Heute Erholung priorisieren</value></data>
+  <data name="RecoveryDetail" xml:space="preserve"><value>Dein letztes Feedback zeigt eine hohe Belastung. Halte die nächste Einheit locker oder erhole dich zusätzlich.</value></data>
+  <data name="EasyTitle" xml:space="preserve"><value>Nächste Einheit locker halten</value></data>
+  <data name="EasyDetail" xml:space="preserve"><value>Du hast zuletzt mehrere intensive Einheiten gemeldet. Vermeide direkt den nächsten harten Reiz.</value></data>
+  <data name="OnTrackTitle" xml:space="preserve"><value>Dein Training ist im grünen Bereich</value></data>
+  <data name="OnTrackDetail" xml:space="preserve"><value>Dein Feedback passt zur aktuellen Belastung. Fahre mit der nächsten geplanten Einheit fort.</value></data>
+  <data name="UpcomingTitle" xml:space="preserve"><value>Deine nächste Einheit ist bereit</value></data>
+  <data name="UpcomingDetail" xml:space="preserve"><value>Öffne vor dem Start das Briefing. Dein Feedback danach personalisiert die nächste Empfehlung.</value></data>
+  <data name="NoDataTitle" xml:space="preserve"><value>Starte mit deinem Gefühl</value></data>
+  <data name="NoDataDetail" xml:space="preserve"><value>Bewerte nach der nächsten Einheit kurz dein Training, damit PaceLetics deine Belastung einordnen kann.</value></data>
+  <data name="TodayTraining" xml:space="preserve"><value>Dein Training heute</value></data>
+  <data name="NextTraining" xml:space="preserve"><value>Dein nächstes Training</value></data>
+  <data name="MinutesShort" xml:space="preserve"><value>Min.</value></data>
+  <data name="StartTraining" xml:space="preserve"><value>Training beginnen</value></data>
+  <data name="NoTrainingTitle" xml:space="preserve"><value>Keine Einheit geplant</value></data>
+  <data name="NoTrainingDetail" xml:space="preserve"><value>Öffne deinen Plan oder wähle ein freies Workout.</value></data>
+  <data name="OpenPlan" xml:space="preserve"><value>Meinen Plan öffnen</value></data>
+  <data name="ThisWeek" xml:space="preserve"><value>Diese Woche</value></data>
+  <data name="ViewPlan" xml:space="preserve"><value>Plan ansehen</value></data>
+  <data name="NoSessionsThisWeek" xml:space="preserve"><value>Diese Woche sind keine Einheiten geplant</value></data>
+  <data name="WeekProgress" xml:space="preserve"><value>{0} von {1} Einheiten erledigt</value></data>
+  <data name="Progress" xml:space="preserve"><value>Fortschritt</value></data>
+  <data name="ProgressSubtitle" xml:space="preserve"><value>Dein aktueller Trainingsstand auf einen Blick.</value></data>
+  <data name="ViewProgress" xml:space="preserve"><value>Details ansehen</value></data>
+  <data name="Vdot" xml:space="preserve"><value>VDOT</value></data>
+  <data name="SessionsCompleted" xml:space="preserve"><value>Einheiten erledigt</value></data>
+  <data name="FeedbackLast28Days" xml:space="preserve"><value>Feedbacks · 28 Tage</value></data>
+  <data name="Notice" xml:space="preserve"><value>Demnächst</value></data>
+  <data name="NextCourseDate" xml:space="preserve"><value>Dein nächster Kurstermin oder dein nächstes Event.</value></data>
 </root>

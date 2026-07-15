@@ -1,486 +1,373 @@
-﻿@page "/"
-@using AthleteDataAccessLibrary;
-@using AthleteDataAccessLibrary.Contracts;
-
-@using MudBlazor;
-@using PaceLetics.AthleteModule.CodeBase.Models;
-@using PaceLetics.CoreModule.Infrastructure.Interfaces
-@using PaceLetics.CoreModule.Infrastructure.Models
-@using PaceLetics.CoreModule.Infrastructure.Services
+@page "/"
+@using AthleteDataAccessLibrary.Contracts
+@using PaceLetics.AthleteModule.CodeBase.Models
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
-@using PaceLetics.Web.Services
 @using PaceLetics.Web.Services.Calendar
-
 @inject IAthleteData AthleteData
-@inject AuthenticationStateProvider GetAuthenticationStateAsync
-@inject IStringLocalizer<Dashboard> L
-@inject LoadingStateService Loading
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ITrainingPlanService TrainingPlanService
-@inject ICriticalSpeedService CriticalSpeedService
 @inject ITrainingCalendarService CalendarService
 @inject IAchievementService AchievementService
+@inject ITrainingFeedbackService FeedbackService
+@inject LoadingStateService Loading
 @inject NavigationManager Navigation
+@inject IStringLocalizer<Dashboard> L
 
-<PageTitle>@GetDocumentTitle()</PageTitle>
+<PageTitle>@L["TodayPageTitle"]</PageTitle>
 
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8 pl-today-page" MaxWidth="MaxWidth.Medium">
+    <PageHeader Title="@GetGreeting()" Subtitle="@L["TodaySubtitle"]" />
 
-<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8 pl-dashboard-page" MaxWidth="MaxWidth.Large">
-    <PageHeader Title="@GetHeaderTitle()" Subtitle="@GetHeaderSubtitle()" />
+    <MudStack Spacing="4" Class="pt-4">
+        @if (_hasLoadError)
+        {
+            <RetryAlert Message="@L["PartialLoadError"]" OnRetry="LoadDashboardAsync" />
+        }
 
-    <nav class="pl-section-nav" aria-label="@L["Title"]">
-        <button type="button"
-                class="@GetSectionButtonClass(DashboardSection.Overview)"
-                aria-pressed="@(_activeSection == DashboardSection.Overview)"
-                @onclick="@(() => SelectSection(DashboardSection.Overview))">
-            <MudIcon Icon="@Icons.Material.Filled.Dashboard" Size="Size.Small" />
-            <span>@L["Section_Overview"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(DashboardSection.Achievements)"
-                aria-pressed="@(_activeSection == DashboardSection.Achievements)"
-                @onclick="@(() => SelectSection(DashboardSection.Achievements))">
-            <MudIcon Icon="@Icons.Material.Filled.EmojiEvents" Size="Size.Small" />
-            <span>@L["Section_Achievements"]</span>
-        </button>
-    </nav>
+        <section class="@GetRecommendationClass()" aria-labelledby="daily-guidance-title">
+            <span class="pl-guidance__icon"><MudIcon Icon="@GetRecommendationIcon()" /></span>
+            <span>
+                <MudText Typo="Typo.subtitle2" HtmlTag="h2" id="daily-guidance-title">@GetRecommendationTitle()</MudText>
+                <MudText Typo="Typo.body2">@GetRecommendationDetail()</MudText>
+            </span>
+        </section>
 
-    <MudDivider Class="my-4" />
+        <section class="pl-today-hero" aria-labelledby="today-training-title">
+            @if (NextSession is { } next)
+            {
+                <MudStack Spacing="3">
+                    <div class="pl-today-hero__heading">
+                        <span>
+                            <MudText Typo="Typo.overline" Color="Color.Primary">@GetNextLabel(next.Session)</MudText>
+                            <MudText Typo="Typo.h4" HtmlTag="h2" id="today-training-title">@next.Session.Name</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetSessionDate(next.Session)</MudText>
+                        </span>
+                        <span class="pl-today-hero__duration">
+                            <strong>@TrainingSessionPresentation.EstimateDurationMinutes(next.Session)</strong>
+                            <small>@L["MinutesShort"]</small>
+                        </span>
+                    </div>
 
-    @if (_hasLoadError)
-    {
-        <RetryAlert Message="@L["PartialLoadError"]" OnRetry="LoadDashboardAsync" Class="mb-4" />
-    }
+                    <TrainingSessionSummary Session="@next.Session" Compact="true" />
 
-    @if (_activeSection == DashboardSection.Overview)
-    {
-        <MudStack Spacing="4">
+                    <MudButton Href="@GetSessionHref(next)"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Size="Size.Large"
+                               FullWidth="true"
+                               StartIcon="@Icons.Material.Filled.PlayArrow">
+                        @L["StartTraining"]
+                    </MudButton>
+                </MudStack>
+            }
+            else
+            {
+                <MudStack Spacing="3" AlignItems="AlignItems.Center" Class="py-4">
+                    <span class="pl-today-hero__empty-icon"><MudIcon Icon="@Icons.Material.Filled.EventAvailable" Size="Size.Large" /></span>
+                    <MudText Typo="Typo.h5" HtmlTag="h2" id="today-training-title" Align="Align.Center">@L["NoTrainingTitle"]</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary" Align="Align.Center">@L["NoTrainingDetail"]</MudText>
+                    <MudButton Href="/Athletes/plan"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               StartIcon="@Icons.Material.Filled.CalendarMonth">
+                        @L["OpenPlan"]
+                    </MudButton>
+                </MudStack>
+            }
+        </section>
 
-            <MudGrid Spacing="3" Class="pl-dashboard-metrics">
-                <MudItem xs="12" md="6">
-                    <DashboardMetricTile Label="@L["Metric_TrainingCalendar"]"
-                                         Value="@GetCalendarValue()"
-                                         Detail="@GetCalendarDetail()"
-                                         Icon="@Icons.Material.Filled.CalendarMonth"
-                                         Accent="blue"
-                                         Href="/Athletes/courses?section=calendar"
-                                         Tooltip="@L["Tooltip_TrainingCalendar"]">
-                        <div class="pl-dashboard-calendar-days">
-                            @foreach (var day in CalendarPreviewDays)
-                            {
-                                var items = GetCalendarItemsForDay(day).Take(3).ToList();
-                                <div class="@GetCalendarPreviewDayClass(day, items.Count > 0)">
-                                    <span class="pl-dashboard-calendar-weekday">@day.ToString("ddd")</span>
-                                    <span class="pl-dashboard-calendar-date">@day.Day</span>
-                                    <span class="pl-dashboard-calendar-dots" aria-hidden="true">
-                                        @foreach (var item in items)
-                                        {
-                                            <span class="@GetCalendarDotClass(item)"></span>
-                                        }
-                                    </span>
-                                </div>
-                            }
-                        </div>
-                    </DashboardMetricTile>
-                </MudItem>
+        <section class="pl-today-section" aria-labelledby="week-title">
+            <div class="pl-today-section__heading">
+                <span>
+                    <MudText Typo="Typo.h6" HtmlTag="h2" id="week-title">@L["ThisWeek"]</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@GetWeekProgressText()</MudText>
+                </span>
+                <a href="/Athletes/plan">@L["ViewPlan"]</a>
+            </div>
+            <div class="pl-today-week" aria-label="@GetWeekProgressText()">
+                @foreach (var day in CurrentWeekDays)
+                {
+                    var state = GetDayState(day);
+                    <a class="@GetWeekDayClass(day, state)" href="/Athletes/plan">
+                        <small>@day.ToString("ddd")</small>
+                        <strong>@day.Day</strong>
+                        <span aria-hidden="true"></span>
+                    </a>
+                }
+            </div>
+        </section>
 
-                <MudItem xs="12" md="6">
-                    <DashboardMetricTile Label="@L["Metric_NextSession"]"
-                                         Value="@GetNextSessionValue()"
-                                         Detail="@GetNextSessionDetail()"
-                                         Icon="@Icons.Material.Filled.EventAvailable"
-                                         Accent="green"
-                                         Href="/Athletes/courses?section=plans"
-                                         Tooltip="@L["Tooltip_NextSession"]">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pl-dashboard-session-preview">
-                            <MudIcon Icon="@Icons.Material.Filled.Timeline"
-                                     Color="Color.Primary" />
+        <section class="pl-today-section" aria-labelledby="progress-title">
+            <div class="pl-today-section__heading">
+                <span>
+                    <MudText Typo="Typo.h6" HtmlTag="h2" id="progress-title">@L["Progress"]</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["ProgressSubtitle"]</MudText>
+                </span>
+                <a href="/Athletes/data-analyses">@L["ViewProgress"]</a>
+            </div>
+            <div class="pl-today-stats">
+                <div>
+                    <small>@L["Vdot"]</small>
+                    <strong>@GetVdot()</strong>
+                </div>
+                <div>
+                    <small>@L["SessionsCompleted"]</small>
+                    <strong>@_completions.Count</strong>
+                </div>
+                <div>
+                    <small>@L["FeedbackLast28Days"]</small>
+                    <strong>@_recentFeedbackCount</strong>
+                </div>
+            </div>
+        </section>
 
-                            <MudStack Spacing="0">
-                                <MudText Typo="Typo.subtitle2">
-                                    @( _nextSession?.Name ?? L["Metric_NoSession"] )
-                                </MudText>
-                                <MudText Typo="Typo.body2" Class="pl-dashboard-muted">
-                                    @( _nextSession is null ? L["Metric_NoSession"] : $"{_nextSession.Date:dd.MM.yyyy} / {GetSessionComposition(_nextSession)}" )
-                                </MudText>
-                            </MudStack>
-                        </MudStack>
-                    </DashboardMetricTile>
-                </MudItem>
-
-                <MudItem xs="12" sm="6" md="3">
-                    <DashboardMetricTile Label="@L["Section_Achievements"]"
-                                         Value="@GetAchievementValue()"
-                                         Detail="@L["Metric_AchievementsDetail"]"
-                                         Icon="@Icons.Material.Filled.EmojiEvents"
-                                         Accent="orange"
-                                         Href="/?section=achievements"
-                                         Tooltip="@L["Tooltip_Achievements"]" />
-                </MudItem>
-
-                <MudItem xs="12" sm="6" md="3">
-                    <DashboardMetricTile Label="@L["Metric_Academy"]"
-                                         Value="@L["Metric_AcademyValue"]"
-                                         Detail="@L["Metric_AcademyDetail"]"
-                                         Icon="@Icons.Material.Filled.AutoStories"
-                                         Accent="orange"
-                                         Href="/Athletes/academy"
-                                         Tooltip="@L["Tooltip_Academy"]" />
-                </MudItem>
-
-                <MudItem xs="12" sm="6" md="3">
-                    <DashboardMetricTile Label="@L["Metric_WorkoutArea"]"
-                                         Value="@L["Metric_WorkoutAreaValue"]"
-                                         Detail="@L["Metric_WorkoutAreaDetail"]"
-                                         Icon="@Icons.Material.Filled.FitnessCenter"
-                                         Accent="red"
-                                         Href="/Workouts/WorkoutArea"
-                                         Tooltip="@L["Tooltip_WorkoutArea"]" />
-                </MudItem>
-
-                <MudItem xs="12" sm="6" md="3">
-                    <DashboardMetricTile Label="@L["Metric_VdotCs"]"
-                                         Value="@GetVdotCsValue()"
-                                         Detail="@GetReferenceDetail()"
-                                         Icon="@Icons.Material.Filled.Speed"
-                                         Accent="blue"
-                                         Href="/Athletes/data-analyses?section=pacezones"
-                                         Tooltip="@L["Tooltip_VdotCs"]" />
-                </MudItem>
-            </MudGrid>
-        </MudStack>
-    }
-    else
-    {
-        <AchievementGallery />
-    }
-
+        @if (NextNonTrainingItem is { } notice)
+        {
+            <section class="pl-today-section" aria-labelledby="notice-title">
+                <div class="pl-today-section__heading">
+                    <span>
+                        <MudText Typo="Typo.h6" HtmlTag="h2" id="notice-title">@L["Notice"]</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NextCourseDate"]</MudText>
+                    </span>
+                </div>
+                <a class="pl-today-notice" href="/Athletes/plan">
+                    <span class="pl-today-notice__date">
+                        <strong>@notice.StartsAt.Day</strong>
+                        <small>@notice.StartsAt.ToString("MMM")</small>
+                    </span>
+                    <span>
+                        <strong>@notice.Title</strong>
+                        <small>@GetNoticeMeta(notice)</small>
+                    </span>
+                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                </a>
+            </section>
+        }
+    </MudStack>
 </MudContainer>
 
-    
+@code {
+    [SupplyParameterFromQuery(Name = "section")]
+    public string? LegacySection { get; set; }
 
+    private AthleteModel? _athlete;
+    private string _name = string.Empty;
+    private IReadOnlyList<TrainingPlan> _plans = Array.Empty<TrainingPlan>();
+    private IReadOnlyList<TrainingCalendarItem> _calendarItems = Array.Empty<TrainingCalendarItem>();
+    private IReadOnlyList<TrainingSessionCompletionDocument> _completions = Array.Empty<TrainingSessionCompletionDocument>();
+    private TrainingRecommendation _recommendation = new(TrainingRecommendationKind.NoData, 0);
+    private int _recentFeedbackCount;
+    private bool _hasLoadError;
 
-@code
-{
-    private enum DashboardSection
+    private PlannedSession? NextSession
     {
-        Overview,
-        Achievements
+        get
+        {
+            var completed = _completions
+                .Select(item => CompletionKey(item.PlanId, item.SessionId))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            return _plans
+                .SelectMany(plan => plan.Sessions.Select(session => new PlannedSession(plan.Id, session)))
+                .Where(item => GetSessionStart(item.Session).Date >= DateTime.Today)
+                .Where(item => !completed.Contains(CompletionKey(item.PlanId, item.Session.Id)))
+                .OrderBy(item => item.Session.Appointment.StartsAt ?? item.Session.Date)
+                .FirstOrDefault();
+        }
     }
 
-    [SupplyParameterFromQuery(Name = "section")]
-    public string? SectionQuery { get; set; }
+    private TrainingCalendarItem? NextNonTrainingItem => _calendarItems
+        .Where(item => item.Kind != TrainingCalendarItemKinds.TrainingSession)
+        .Where(item => item.StartsAt >= DateTime.Now)
+        .OrderBy(item => item.StartsAt)
+        .FirstOrDefault();
 
-    AthleteModel? Athlete;
-    string _name = String.Empty;
-    IReadOnlyList<TrainingPlan> _trainingPlans = Array.Empty<TrainingPlan>();
-    IReadOnlyList<TrainingCalendarItem> _calendarItems = Array.Empty<TrainingCalendarItem>();
-    int _achievementCount;
-    TrainingPlan? _activePlan;
-    TrainingSession? _nextSession;
-    RaceResultModel? _referenceResult;
-    CriticalSpeedModel _criticalSpeed = new();
-    private DashboardSection _activeSection = DashboardSection.Overview;
-    private string? _appliedSectionQuery;
-    private bool _hasLoadError;
+    private IEnumerable<DateTime> CurrentWeekDays
+    {
+        get
+        {
+            var offset = ((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+            var monday = DateTime.Today.AddDays(-offset);
+            return Enumerable.Range(0, 7).Select(day => monday.AddDays(day));
+        }
+    }
 
     protected override void OnParametersSet()
     {
-        if (string.Equals(_appliedSectionQuery, SectionQuery, StringComparison.OrdinalIgnoreCase))
-            return;
-
-        _appliedSectionQuery = SectionQuery;
-        _activeSection = ParseSectionQuery(SectionQuery);
+        if (string.Equals(LegacySection, "achievements", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(LegacySection, "awards", StringComparison.OrdinalIgnoreCase))
+        {
+            Navigation.NavigateTo("/Athletes/achievements", replace: true);
+        }
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadDashboardAsync();
-        await base.OnInitializedAsync();
-    }
+    protected override async Task OnInitializedAsync() => await LoadDashboardAsync();
 
     private async Task LoadDashboardAsync()
     {
         _hasLoadError = false;
         await Loading.RunAsync(L["Loading"], async () =>
         {
-            var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-            var user = authstate.User;
-            var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userId = state.User.FindFirst(claim =>
+                claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+            _name = state.User.Identity?.Name ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(userId))
+                return;
+
             try
             {
-                Athlete = string.IsNullOrWhiteSpace(id)
-                    ? null
-                    : await AthleteData.GetAthlete(id);
+                _athlete = await AthleteData.GetAthlete(userId);
+                if (!string.IsNullOrWhiteSpace(_athlete?.Name))
+                    _name = _athlete.Name;
             }
             catch
             {
-                Athlete = null;
+                _athlete = null;
                 _hasLoadError = true;
             }
-            _name = string.IsNullOrWhiteSpace(Athlete?.Name)
-                ? user.Identity?.Name ?? string.Empty
-                : Athlete.Name;
+
             try
             {
-                _trainingPlans = await TrainingPlanService.LoadTrainingPlansForUserAsync(id);
+                var plansTask = TrainingPlanService.LoadTrainingPlansForUserAsync(userId);
+                var calendarTask = CalendarService.GetCalendarItemsForAthleteAsync(userId);
+                var completionsTask = AchievementService.GetTrainingSessionCompletionsForAthleteAsync(userId);
+                var feedbackTask = FeedbackService.GetRecentAsync(userId, 28);
+                await Task.WhenAll(plansTask, calendarTask, completionsTask, feedbackTask);
+                _plans = await plansTask;
+                _calendarItems = await calendarTask;
+                _completions = await completionsTask;
+                _recentFeedbackCount = (await feedbackTask).Count;
+                _recommendation = await FeedbackService.GetRecommendationAsync(userId, NextSession is not null);
             }
             catch
             {
-                _trainingPlans = Array.Empty<TrainingPlan>();
-                _hasLoadError = true;
-            }
-            try
-            {
-                _calendarItems = string.IsNullOrWhiteSpace(id)
-                    ? Array.Empty<TrainingCalendarItem>()
-                    : await CalendarService.GetCalendarItemsForAthleteAsync(id);
-            }
-            catch
-            {
+                _plans = Array.Empty<TrainingPlan>();
                 _calendarItems = Array.Empty<TrainingCalendarItem>();
+                _completions = Array.Empty<TrainingSessionCompletionDocument>();
+                _recommendation = new TrainingRecommendation(TrainingRecommendationKind.NoData, 0);
+                _recentFeedbackCount = 0;
                 _hasLoadError = true;
             }
-            try
-            {
-                _achievementCount = string.IsNullOrWhiteSpace(id)
-                    ? 0
-                    : (await AchievementService.GetAwardsForAthleteAsync(id)).Count;
-            }
-            catch
-            {
-                _achievementCount = 0;
-                _hasLoadError = true;
-            }
-            _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
-            _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
-            _referenceResult = Athlete?.ActiveReferenceResult;
-            _criticalSpeed = CriticalSpeedService.Estimate(GetCriticalSpeedResults(Athlete));
         });
     }
 
-    private void SelectSection(DashboardSection section)
+    private string GetGreeting()
     {
-        _activeSection = section;
-        Navigation.NavigateTo(GetSectionUri(section), replace: true);
-    }
-
-    private string GetSectionButtonClass(DashboardSection section)
-    {
-        return _activeSection == section
-            ? "pl-section-nav__item pl-section-nav__item--active"
-            : "pl-section-nav__item";
-    }
-
-    private string GetDocumentTitle()
-    {
-        return _activeSection == DashboardSection.Achievements
-            ? L["Section_Achievements"]
-            : L["PageTitle"].Value;
-    }
-
-    private string GetHeaderTitle()
-    {
-        return _activeSection == DashboardSection.Achievements
-            ? L["Section_Achievements"]
-            : L["Title"].Value;
-    }
-
-    private string GetHeaderSubtitle()
-    {
-        return _activeSection == DashboardSection.Achievements
-            ? "Deine dauerhaft freigeschalteten Auszeichnungen."
-            : L["WelcomeText", _name].Value;
-    }
-
-    private static DashboardSection ParseSectionQuery(string? section)
-    {
-        return section?.Trim().ToLowerInvariant() switch
+        var greeting = DateTime.Now.Hour switch
         {
-            "achievements" or "awards" => DashboardSection.Achievements,
-            _ => DashboardSection.Overview
+            < 11 => L["GoodMorning"].Value,
+            < 18 => L["GoodDay"].Value,
+            _ => L["GoodEvening"].Value
         };
+        var firstName = _name.Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+        return string.IsNullOrWhiteSpace(firstName) ? greeting : $"{greeting}, {firstName}";
     }
 
-    private static string GetSectionUri(DashboardSection section)
+    private string GetRecommendationClass() => _recommendation.Kind switch
     {
-        return section switch
-        {
-            DashboardSection.Achievements => "/?section=achievements",
-            _ => "/"
-        };
+        TrainingRecommendationKind.PrioritizeRecovery => "pl-guidance pl-guidance--warning",
+        TrainingRecommendationKind.TakeItEasy => "pl-guidance pl-guidance--info",
+        _ => "pl-guidance pl-guidance--positive"
+    };
+
+    private string GetRecommendationIcon() => _recommendation.Kind switch
+    {
+        TrainingRecommendationKind.PrioritizeRecovery => Icons.Material.Filled.SelfImprovement,
+        TrainingRecommendationKind.TakeItEasy => Icons.Material.Filled.Bedtime,
+        TrainingRecommendationKind.OnTrack => Icons.Material.Filled.CheckCircle,
+        _ => Icons.Material.Filled.Lightbulb
+    };
+
+    private string GetRecommendationTitle() => _recommendation.Kind switch
+    {
+        TrainingRecommendationKind.PrioritizeRecovery => L["RecoveryTitle"],
+        TrainingRecommendationKind.TakeItEasy => L["EasyTitle"],
+        TrainingRecommendationKind.OnTrack => L["OnTrackTitle"],
+        TrainingRecommendationKind.Upcoming => L["UpcomingTitle"],
+        _ => L["NoDataTitle"]
+    };
+
+    private string GetRecommendationDetail() => _recommendation.Kind switch
+    {
+        TrainingRecommendationKind.PrioritizeRecovery => L["RecoveryDetail"],
+        TrainingRecommendationKind.TakeItEasy => L["EasyDetail"],
+        TrainingRecommendationKind.OnTrack => L["OnTrackDetail"],
+        TrainingRecommendationKind.Upcoming => L["UpcomingDetail"],
+        _ => L["NoDataDetail"]
+    };
+
+    private string GetNextLabel(TrainingSession session) => GetSessionStart(session).Date == DateTime.Today
+        ? L["TodayTraining"]
+        : L["NextTraining"];
+
+    private static string GetSessionDate(TrainingSession session)
+    {
+        var date = GetSessionStart(session);
+        return session.Appointment.StartsAt is null
+            ? date.ToString("dddd, dd. MMMM")
+            : date.ToString("dddd, dd. MMMM · HH:mm");
     }
 
-    private static TrainingPlan? ResolveActivePlan(IReadOnlyList<TrainingPlan> trainingPlans, AthleteModel? athlete)
+    private string GetWeekProgressText()
     {
-        if (trainingPlans.Count == 0)
-            return null;
-
-        if (!string.IsNullOrWhiteSpace(athlete?.SelectedTrainingPlanId))
-        {
-            var selected = trainingPlans.FirstOrDefault(plan => plan.Id == athlete.SelectedTrainingPlanId);
-            if (selected is not null)
-                return selected;
-        }
-
-        return trainingPlans.FirstOrDefault(plan => plan.Sessions.Any(session => session.Date.Date >= DateTime.Today))
-            ?? trainingPlans.FirstOrDefault();
+        var days = CurrentWeekDays.ToList();
+        var start = days[0].Date;
+        var end = days[^1].Date;
+        var planned = _plans
+            .SelectMany(plan => plan.Sessions.Select(session => new PlannedSession(plan.Id, session)))
+            .Where(item => GetSessionStart(item.Session).Date >= start && GetSessionStart(item.Session).Date <= end)
+            .ToList();
+        var completedKeys = _completions.Select(item => CompletionKey(item.PlanId, item.SessionId))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var completed = planned.Count(item => completedKeys.Contains(CompletionKey(item.PlanId, item.Session.Id)));
+        return planned.Count == 0 ? L["NoSessionsThisWeek"] : L["WeekProgress", completed, planned.Count];
     }
 
-    private static TrainingSession? ResolveNextSession(TrainingPlan? activePlan, IReadOnlyList<TrainingPlan> trainingPlans)
+    private WeekDayState GetDayState(DateTime day)
     {
-        if (activePlan is not null)
-        {
-            var selectedNext = activePlan.Sessions
-                .Where(session => session.Date.Date >= DateTime.Today)
-                .OrderBy(session => session.Date)
-                .FirstOrDefault();
-
-            if (selectedNext is not null)
-                return selectedNext;
-        }
-
-        return trainingPlans
-            .SelectMany(plan => plan.Sessions)
-            .Where(session => session.Date.Date >= DateTime.Today)
-            .OrderBy(session => session.Date)
-            .FirstOrDefault();
+        var sessions = _plans
+            .SelectMany(plan => plan.Sessions.Select(session => new PlannedSession(plan.Id, session)))
+            .Where(item => GetSessionStart(item.Session).Date == day.Date)
+            .ToList();
+        if (sessions.Count == 0)
+            return WeekDayState.Empty;
+        var completedKeys = _completions.Select(item => CompletionKey(item.PlanId, item.SessionId))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return sessions.All(item => completedKeys.Contains(CompletionKey(item.PlanId, item.Session.Id)))
+            ? WeekDayState.Completed
+            : WeekDayState.Planned;
     }
 
-    private string GetVdotCsValue()
+    private static string GetWeekDayClass(DateTime day, WeekDayState state)
     {
-        var vdot = Athlete?.Vdot > 0
-            ? Athlete.Vdot.ToString("0.0")
-            : L["Metric_NotAvailable"].Value;
-
-        var criticalSpeed = _criticalSpeed.IsValid
-            ? $"{_criticalSpeed.CriticalSpeedMps:0.00} m/s"
-            : L["Metric_NotAvailable"].Value;
-
-        return $"{vdot} / {criticalSpeed}";
-    }
-
-    private static IEnumerable<RaceResultModel> GetCriticalSpeedResults(AthleteModel? athlete)
-    {
-        if (athlete?.ActiveReferenceResult is null)
-            return Enumerable.Empty<RaceResultModel>();
-
-        var results = new List<RaceResultModel>();
-
-        if (athlete.RaceResults is not null)
-            results.AddRange(athlete.RaceResults);
-
-        if (athlete.ActiveReferenceResult is not null && !results.Any(result => IsSameRaceResult(result, athlete.ActiveReferenceResult)))
-            results.Add(athlete.ActiveReferenceResult);
-
-        return results;
-    }
-
-    private static bool IsSameRaceResult(RaceResultModel left, RaceResultModel right)
-    {
-        return left.DistanceM == right.DistanceM
-            && left.Time == right.Time
-            && left.Date.Date == right.Date.Date
-            && string.Equals(left.Id, right.Id, StringComparison.OrdinalIgnoreCase);
-    }
-
-    private string GetReferenceDetail()
-    {
-        return _referenceResult is null
-            ? L["Metric_ReferenceMissing"]
-            : string.Format(L["Metric_ReferenceDate"], _referenceResult.Date);
-    }
-
-    private string GetNextSessionValue()
-    {
-        return _nextSession?.Date.ToString("dd.MM.") ?? L["Metric_NotAvailable"];
-    }
-
-    private string GetNextSessionDetail()
-    {
-        return _nextSession is null
-            ? L["Metric_NoSession"]
-            : GetSessionComposition(_nextSession);
-    }
-
-    private string GetCalendarValue()
-    {
-        var upcomingCount = UpcomingCalendarItems.Count;
-        return upcomingCount == 0
-            ? L["Metric_NotAvailable"]
-            : string.Format(L["CalendarUpcomingCount"], upcomingCount);
-    }
-
-    private string GetCalendarDetail()
-    {
-        var nextItem = UpcomingCalendarItems.FirstOrDefault();
-        return nextItem is null
-            ? L["CalendarNoUpcoming"]
-            : $"{nextItem.StartsAt:dd.MM.} / {nextItem.Title}";
-    }
-
-    private string GetAchievementValue()
-    {
-        return _achievementCount == 0 ? "Noch keine" : _achievementCount.ToString();
-    }
-
-    private IReadOnlyList<TrainingCalendarItem> UpcomingCalendarItems => _calendarItems
-        .Where(item => item.StartsAt.Date >= DateTime.Today)
-        .OrderBy(item => item.StartsAt)
-        .ThenBy(item => item.Kind)
-        .ThenBy(item => item.Title)
-        .Take(5)
-        .ToList();
-
-    private IEnumerable<DateTime> CalendarPreviewDays
-    {
-        get
-        {
-            for (var i = 0; i < 7; i++)
-                yield return DateTime.Today.AddDays(i);
-        }
-    }
-
-    private IEnumerable<TrainingCalendarItem> GetCalendarItemsForDay(DateTime day)
-    {
-        return _calendarItems
-            .Where(item => item.StartsAt.Date == day.Date)
-            .OrderBy(item => item.StartsAt)
-            .ThenBy(item => item.Kind)
-            .ThenBy(item => item.Title);
-    }
-
-    private static string GetCalendarPreviewDayClass(DateTime day, bool hasItems)
-    {
-        var classes = new List<string> { "pl-dashboard-calendar-day" };
+        var classes = new List<string> { "pl-today-week__day" };
         if (day.Date == DateTime.Today)
-            classes.Add("pl-dashboard-calendar-day-today");
-        if (hasItems)
-            classes.Add("pl-dashboard-calendar-day-active");
+            classes.Add("pl-today-week__day--today");
+        if (state == WeekDayState.Planned)
+            classes.Add("pl-today-week__day--planned");
+        if (state == WeekDayState.Completed)
+            classes.Add("pl-today-week__day--completed");
         return string.Join(" ", classes);
     }
 
-    private static string GetCalendarDotClass(TrainingCalendarItem item)
+    private string GetVdot() => _athlete?.Vdot > 0 ? _athlete.Vdot.ToString("0.0") : "–";
+
+    private static string GetNoticeMeta(TrainingCalendarItem item)
     {
-        return item.Kind switch
-        {
-            TrainingCalendarItemKinds.TrainingSession => "pl-dashboard-calendar-dot pl-calendar-kind-training",
-            TrainingCalendarItemKinds.CourseDate => "pl-dashboard-calendar-dot pl-calendar-kind-course-date",
-            TrainingCalendarItemKinds.CourseEvent => "pl-dashboard-calendar-dot pl-calendar-kind-event",
-            _ => "pl-dashboard-calendar-dot"
-        };
+        var parts = new List<string> { item.StartsAt.ToString("HH:mm") };
+        if (!string.IsNullOrWhiteSpace(item.Location))
+            parts.Add(item.Location);
+        if (!string.IsNullOrWhiteSpace(item.CourseName))
+            parts.Add(item.CourseName);
+        return string.Join(" · ", parts);
     }
 
-    private string GetSessionComposition(TrainingSession session)
-    {
-        var parts = new List<string>();
+    private static string CompletionKey(string planId, string sessionId) => $"{planId}:{sessionId}";
+    private static DateTime GetSessionStart(TrainingSession session) => session.Appointment.StartsAt ?? session.Date;
+    private static string GetSessionHref(PlannedSession item) =>
+        $"/Athletes/session/{Uri.EscapeDataString(item.PlanId)}/{Uri.EscapeDataString(item.Session.Id)}";
 
-        if (session.Runs.Count > 0)
-            parts.Add(string.Format(L["SessionRuns"], session.Runs.Count));
-
-        if (session.Workouts.Count > 0)
-            parts.Add(string.Format(L["SessionWorkouts"], session.Workouts.Count));
-
-        return parts.Count == 0 ? L["SessionEmpty"] : string.Join(" / ", parts);
-    }
-
+    private enum WeekDayState { Empty, Planned, Completed }
+    private sealed record PlannedSession(string PlanId, TrainingSession Session);
 }

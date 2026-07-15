@@ -1,0 +1,26 @@
+@page "/Athletes/plan"
+@page "/Athletes/trainingplanpage"
+@page "/Athletes/trainingcalendar"
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStringLocalizer<Plan> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+    <div class="pt-4">
+        <WeeklyPlan UserId="@_userId" />
+    </div>
+</MudContainer>
+
+@code {
+    private string? _userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _userId = state.User.FindFirst(claim =>
+            claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+    }
+}

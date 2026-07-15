@@ -1,11 +1,12 @@
 @page "/Athletes/achievements"
 @attribute [Authorize]
+@inject IStringLocalizer<Achievements> L
 
-@inject NavigationManager Navigation
+<PageTitle>@L["PageTitle"]</PageTitle>
 
-@code {
-    protected override void OnInitialized()
-    {
-        Navigation.NavigateTo("/?section=achievements", replace: true);
-    }
-}
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+    <div class="pt-4">
+        <AchievementGallery />
+    </div>
+</MudContainer>

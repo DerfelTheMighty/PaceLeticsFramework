@@ -1,0 +1,289 @@
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@using PaceLetics.Web.Services.Calendar
+@inject ITrainingCalendarService CalendarService
+@inject ITrainingPlanService TrainingPlanService
+@inject IAchievementService AchievementService
+@inject IStringLocalizer<WeeklyPlan> L
+
+<MudStack Spacing="3" Class="pl-week-plan">
+    <div class="pl-week-plan__toolbar">
+        <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft"
+                       Size="Size.Small"
+                       OnClick="PreviousWeek"
+                       aria-label="@L["PreviousWeek"]" />
+        <button type="button" class="pl-week-plan__range" @onclick="GoToCurrentWeek">
+            <strong>@FormatWeekRange()</strong>
+            <small>@L["GoToCurrentWeek"]</small>
+        </button>
+        <MudIconButton Icon="@Icons.Material.Filled.ChevronRight"
+                       Size="Size.Small"
+                       OnClick="NextWeek"
+                       aria-label="@L["NextWeek"]" />
+    </div>
+
+    @if (_isLoading)
+    {
+        <div class="pl-week-plan__loading" aria-live="polite">
+            <MudProgressCircular Indeterminate="true" Size="Size.Small" />
+            <MudText Typo="Typo.body2">@L["Loading"]</MudText>
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
+    }
+    else
+    {
+        @if (FeaturedSession is { } featured)
+        {
+            <section class="pl-week-plan__featured" aria-labelledby="week-focus-title">
+                <MudStack Spacing="2">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                        <div>
+                            <MudText Typo="Typo.overline" Color="Color.Primary">@L["NextUp"]</MudText>
+                            <MudText Typo="Typo.h6" HtmlTag="h2" id="week-focus-title">@featured.Session.Name</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@FormatSessionDate(featured.Session)</MudText>
+                        </div>
+                        @if (IsCompleted(featured.PlanId, featured.Session.Id))
+                        {
+                            <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                                @L["Completed"]
+                            </MudChip>
+                        }
+                    </MudStack>
+                    <TrainingSessionSummary Session="@featured.Session" Compact="true" />
+                    <MudButton Href="@GetSessionHref(featured.PlanId, featured.Session.Id)"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               EndIcon="@Icons.Material.Filled.ArrowForward">
+                        @(IsCompleted(featured.PlanId, featured.Session.Id) ? L["ReviewSession"] : L["OpenSession"])
+                    </MudButton>
+                </MudStack>
+            </section>
+        }
+
+        <div class="pl-week-plan__days" role="list">
+            @foreach (var day in WeekDays)
+            {
+                var items = GetItems(day);
+                <section class="@GetDayClass(day)" role="listitem" aria-label="@day.ToString("D")">
+                    <div class="pl-week-plan__day-heading">
+                        <span>@day.ToString("ddd")</span>
+                        <strong>@day.Day</strong>
+                    </div>
+                    <div class="pl-week-plan__day-content">
+                        @if (items.Count == 0)
+                        {
+                            <span class="pl-week-plan__empty">@L["RestOrUnplanned"]</span>
+                        }
+                        else
+                        {
+                            @foreach (var item in items)
+                            {
+                                var resolved = ResolveSession(item);
+                                @if (resolved is not null)
+                                {
+                                    <a class="pl-week-plan__item" href="@GetSessionHref(resolved.PlanId, resolved.Session.Id)">
+                                        <span class="@GetMarkerClass(item)" aria-hidden="true"></span>
+                                        <span class="pl-week-plan__item-copy">
+                                            <strong>@item.Title</strong>
+                                            <small>@GetSessionMeta(resolved.Session)</small>
+                                        </span>
+                                        @if (IsCompleted(resolved.PlanId, resolved.Session.Id))
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                                        }
+                                        else
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                                        }
+                                    </a>
+                                }
+                                else
+                                {
+                                    <div class="pl-week-plan__item pl-week-plan__item--event">
+                                        <span class="@GetMarkerClass(item)" aria-hidden="true"></span>
+                                        <span class="pl-week-plan__item-copy">
+                                            <strong>@item.Title</strong>
+                                            <small>@GetEventMeta(item)</small>
+                                        </span>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </section>
+            }
+        </div>
+    }
+</MudStack>
+
+@code {
+    [Parameter]
+    public string? UserId { get; set; }
+
+    private DateTime _weekStart = StartOfWeek(DateTime.Today);
+    private IReadOnlyList<TrainingCalendarItem> _items = Array.Empty<TrainingCalendarItem>();
+    private IReadOnlyList<TrainingPlan> _plans = Array.Empty<TrainingPlan>();
+    private HashSet<string> _completed = new(StringComparer.OrdinalIgnoreCase);
+    private string? _loadedUserId;
+    private string? _errorMessage;
+    private bool _isLoading;
+
+    private IEnumerable<DateTime> WeekDays => Enumerable.Range(0, 7).Select(day => _weekStart.AddDays(day));
+
+    private ResolvedSession? FeaturedSession => WeekSessionItems
+        .Select(ResolveSession)
+        .Where(item => item is not null)
+        .Cast<ResolvedSession>()
+        .OrderBy(item => GetSessionStart(item.Session).Date < DateTime.Today ? 1 : 0)
+        .ThenBy(item => item.Session.Appointment.StartsAt ?? item.Session.Date)
+        .FirstOrDefault(item => !IsCompleted(item.PlanId, item.Session.Id))
+        ?? WeekSessionItems
+            .Select(ResolveSession)
+            .FirstOrDefault(item => item is not null);
+
+    private IReadOnlyList<TrainingCalendarItem> WeekSessionItems => _items
+        .Where(item => item.Kind == TrainingCalendarItemKinds.TrainingSession)
+        .Where(item => item.StartsAt.Date >= _weekStart && item.StartsAt.Date < _weekStart.AddDays(7))
+        .OrderBy(item => item.StartsAt)
+        .ToList();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.Equals(_loadedUserId, UserId, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        _loadedUserId = UserId;
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        if (string.IsNullOrWhiteSpace(UserId))
+        {
+            _items = Array.Empty<TrainingCalendarItem>();
+            _plans = Array.Empty<TrainingPlan>();
+            return;
+        }
+
+        _isLoading = true;
+        _errorMessage = null;
+        try
+        {
+            var calendarTask = CalendarService.GetCalendarItemsForAthleteAsync(UserId);
+            var plansTask = TrainingPlanService.LoadTrainingPlansForUserAsync(UserId);
+            var completionsTask = AchievementService.GetTrainingSessionCompletionsForAthleteAsync(UserId);
+            await Task.WhenAll(calendarTask, plansTask, completionsTask);
+            _items = await calendarTask;
+            _plans = await plansTask;
+            _completed = (await completionsTask)
+                .Select(item => CompletionKey(item.PlanId, item.SessionId))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            _items = Array.Empty<TrainingCalendarItem>();
+            _plans = Array.Empty<TrainingPlan>();
+            _completed.Clear();
+            _errorMessage = L["LoadError"];
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private IReadOnlyList<TrainingCalendarItem> GetItems(DateTime day) => _items
+        .Where(item => item.StartsAt.Date == day.Date)
+        .OrderBy(item => item.StartsAt)
+        .ThenBy(item => item.Kind)
+        .ToList();
+
+    private ResolvedSession? ResolveSession(TrainingCalendarItem item)
+    {
+        if (item.Kind != TrainingCalendarItemKinds.TrainingSession)
+            return null;
+
+        var plan = _plans.FirstOrDefault(plan =>
+            string.Equals(plan.Id, item.PlanId, StringComparison.OrdinalIgnoreCase));
+        var session = plan?.Sessions.FirstOrDefault(session =>
+            string.Equals(session.Id, item.SessionId, StringComparison.OrdinalIgnoreCase));
+        return plan is null || session is null ? null : new ResolvedSession(plan.Id, session);
+    }
+
+    private string GetSessionMeta(TrainingSession session) =>
+        $"{TrainingSessionPresentation.EstimateDurationMinutes(session)} {L["MinutesShort"]} · {GetIntensity(session)}";
+
+    private string GetIntensity(TrainingSession session) => TrainingSessionPresentation.GetIntensity(session) switch
+    {
+        TrainingIntensity.High => L["IntensityHigh"],
+        TrainingIntensity.Moderate => L["IntensityModerate"],
+        _ => L["IntensityEasy"]
+    };
+
+    private string GetEventMeta(TrainingCalendarItem item)
+    {
+        var values = new List<string>();
+        if (item.HasTime)
+            values.Add(item.StartsAt.ToString("HH:mm"));
+        if (!string.IsNullOrWhiteSpace(item.CourseName))
+            values.Add(item.CourseName);
+        if (!string.IsNullOrWhiteSpace(item.Location))
+            values.Add(item.Location);
+        return values.Count == 0 ? L["CourseEvent"] : string.Join(" · ", values);
+    }
+
+    private string FormatSessionDate(TrainingSession session)
+    {
+        var date = GetSessionStart(session);
+        return session.Appointment.StartsAt is null
+            ? date.ToString("dddd, dd.MM.")
+            : date.ToString("dddd, dd.MM. · HH:mm");
+    }
+
+    private string FormatWeekRange()
+    {
+        var end = _weekStart.AddDays(6);
+        return _weekStart.Month == end.Month
+            ? $"{_weekStart:dd.}–{end:dd. MMMM}"
+            : $"{_weekStart:dd. MMM}–{end:dd. MMM}";
+    }
+
+    private string GetDayClass(DateTime day)
+    {
+        var classes = new List<string> { "pl-week-plan__day" };
+        if (day.Date == DateTime.Today)
+            classes.Add("pl-week-plan__day--today");
+        return string.Join(" ", classes);
+    }
+
+    private static string GetMarkerClass(TrainingCalendarItem item) => item.Kind switch
+    {
+        TrainingCalendarItemKinds.TrainingSession => "pl-week-plan__marker pl-calendar-kind-training",
+        TrainingCalendarItemKinds.CourseEvent => "pl-week-plan__marker pl-calendar-kind-event",
+        _ => "pl-week-plan__marker pl-calendar-kind-course-date"
+    };
+
+    private bool IsCompleted(string planId, string sessionId) =>
+        _completed.Contains(CompletionKey(planId, sessionId));
+
+    private static string CompletionKey(string planId, string sessionId) => $"{planId}:{sessionId}";
+    private static DateTime GetSessionStart(TrainingSession session) => session.Appointment.StartsAt ?? session.Date;
+
+    private static string GetSessionHref(string planId, string sessionId) =>
+        $"/Athletes/session/{Uri.EscapeDataString(planId)}/{Uri.EscapeDataString(sessionId)}";
+
+    private void PreviousWeek() => _weekStart = _weekStart.AddDays(-7);
+    private void NextWeek() => _weekStart = _weekStart.AddDays(7);
+    private void GoToCurrentWeek() => _weekStart = StartOfWeek(DateTime.Today);
+
+    private static DateTime StartOfWeek(DateTime day)
+    {
+        var offset = ((int)day.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+        return day.Date.AddDays(-offset);
+    }
+
+    private sealed record ResolvedSession(string PlanId, TrainingSession Session);
+}

@@ -97,4 +97,38 @@
   <data name="Section_Achievements" xml:space="preserve"><value>Achievements</value></data>
   <data name="Metric_AchievementsDetail" xml:space="preserve"><value>Unlocked awards</value></data>
   <data name="Tooltip_Achievements" xml:space="preserve"><value>View your achievements</value></data>
+  <data name="TodayPageTitle" xml:space="preserve"><value>Today</value></data>
+  <data name="TodaySubtitle" xml:space="preserve"><value>Your next useful step, without distractions.</value></data>
+  <data name="GoodMorning" xml:space="preserve"><value>Good morning</value></data>
+  <data name="GoodDay" xml:space="preserve"><value>Hello</value></data>
+  <data name="GoodEvening" xml:space="preserve"><value>Good evening</value></data>
+  <data name="RecoveryTitle" xml:space="preserve"><value>Prioritize recovery today</value></data>
+  <data name="RecoveryDetail" xml:space="preserve"><value>Your latest feedback indicates high strain. Keep the next session easy or take extra recovery.</value></data>
+  <data name="EasyTitle" xml:space="preserve"><value>Keep the next session easy</value></data>
+  <data name="EasyDetail" xml:space="preserve"><value>You reported several hard sessions recently. Avoid another intense stimulus right away.</value></data>
+  <data name="OnTrackTitle" xml:space="preserve"><value>Your training is on track</value></data>
+  <data name="OnTrackDetail" xml:space="preserve"><value>Your feedback fits the current load. Continue with the next scheduled session.</value></data>
+  <data name="UpcomingTitle" xml:space="preserve"><value>Your next session is ready</value></data>
+  <data name="UpcomingDetail" xml:space="preserve"><value>Open the briefing before you start. Your feedback afterward personalizes the next recommendation.</value></data>
+  <data name="NoDataTitle" xml:space="preserve"><value>Start with how you feel</value></data>
+  <data name="NoDataDetail" xml:space="preserve"><value>After your next session, add a short rating so PaceLetics can guide your load.</value></data>
+  <data name="TodayTraining" xml:space="preserve"><value>Today's training</value></data>
+  <data name="NextTraining" xml:space="preserve"><value>Next training</value></data>
+  <data name="MinutesShort" xml:space="preserve"><value>min</value></data>
+  <data name="StartTraining" xml:space="preserve"><value>Start training</value></data>
+  <data name="NoTrainingTitle" xml:space="preserve"><value>No session is scheduled</value></data>
+  <data name="NoTrainingDetail" xml:space="preserve"><value>Open your plan or choose a free workout.</value></data>
+  <data name="OpenPlan" xml:space="preserve"><value>Open my plan</value></data>
+  <data name="ThisWeek" xml:space="preserve"><value>This week</value></data>
+  <data name="ViewPlan" xml:space="preserve"><value>View plan</value></data>
+  <data name="NoSessionsThisWeek" xml:space="preserve"><value>No sessions planned this week</value></data>
+  <data name="WeekProgress" xml:space="preserve"><value>{0} of {1} sessions completed</value></data>
+  <data name="Progress" xml:space="preserve"><value>Progress</value></data>
+  <data name="ProgressSubtitle" xml:space="preserve"><value>A compact view of your current training status.</value></data>
+  <data name="ViewProgress" xml:space="preserve"><value>View details</value></data>
+  <data name="Vdot" xml:space="preserve"><value>VDOT</value></data>
+  <data name="SessionsCompleted" xml:space="preserve"><value>Sessions completed</value></data>
+  <data name="FeedbackLast28Days" xml:space="preserve"><value>Ratings · 28 days</value></data>
+  <data name="Notice" xml:space="preserve"><value>Coming up</value></data>
+  <data name="NextCourseDate" xml:space="preserve"><value>Your next course date or event.</value></data>
 </root>

@@ -9,6 +9,7 @@
 @inject IStringLocalizer<WorkoutRoom> L
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAchievementService AchievementService
+@inject ITrainingFeedbackService FeedbackService
 @inject ISnackbar Snackbar
 
 <PageTitle>@(ViewModel.Workout?.Name ?? L["WorkoutTitle"])</PageTitle>
@@ -37,6 +38,12 @@
 </MudContainer>
 
 @code {
+    [SupplyParameterFromQuery(Name = "planId")]
+    public string? PlanId { get; set; }
+
+    [SupplyParameterFromQuery(Name = "sessionId")]
+    public string? SessionId { get; set; }
+
     private IDisposable? _navigationRegistration;
     private bool _allowNavigation;
 
@@ -56,34 +63,57 @@
 
     private async Task HandleWorkoutFinishedAsync()
     {
-        await RecordWorkoutAchievementAsync();
+        var userId = await GetUserIdAsync();
+        await RecordWorkoutAchievementAsync(userId);
+        await RecordPlannedSessionCompletionAsync(userId);
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
-        var parameters = new DialogParameters<WorkoutFinishedDialog>
+        var parameters = new DialogParameters<TrainingFeedbackDialog>
         {
-            { dialog => dialog.WorkoutName, ViewModel.Workout?.Name ?? string.Empty },
-            { dialog => dialog.ExerciseCount, ViewModel.Workout?.Exercises.Count ?? 0 }
+            { dialog => dialog.TrainingName, ViewModel.Workout?.Name ?? string.Empty }
         };
-        var dialog = await dialogService.ShowAsync<WorkoutFinishedDialog>(
+        var dialog = await dialogService.ShowAsync<TrainingFeedbackDialog>(
             L["WorkoutCompleted"],
             parameters,
             options);
-        await dialog.Result;
+        var result = await dialog.Result;
+        if (result is { Canceled: false, Data: TrainingFeedbackInput input }
+            && !string.IsNullOrWhiteSpace(userId))
+        {
+            try
+            {
+                await FeedbackService.SaveAsync(
+                    userId,
+                    input,
+                    ViewModel.Workout?.Name ?? L["WorkoutTitle"],
+                    "workout",
+                    PlanId ?? string.Empty,
+                    SessionId ?? string.Empty,
+                    ViewModel.Workout?.Id ?? string.Empty);
+                Snackbar.Add(L["FeedbackSaved"], Severity.Success);
+            }
+            catch
+            {
+                Snackbar.Add(L["FeedbackSaveFailed"], Severity.Warning);
+            }
+        }
         _allowNavigation = true;
-        navManager.NavigateTo("/Workouts/workoutarea");
+        navManager.NavigateTo("/");
     }
 
-    private async Task RecordWorkoutAchievementAsync()
+    private async Task<string?> GetUserIdAsync()
     {
-        if (ViewModel.Workout is null)
+        var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        return authState.User.FindFirst(claim =>
+            claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+    }
+
+    private async Task RecordWorkoutAchievementAsync(string? userId)
+    {
+        if (ViewModel.Workout is null || string.IsNullOrWhiteSpace(userId))
             return;
 
         try
         {
-            var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-            var userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
-            if (string.IsNullOrWhiteSpace(userId))
-                return;
-
             var result = await AchievementService.RecordWorkoutCompletedAsync(
                 userId,
                 ViewModel.Workout.Id,
@@ -95,6 +125,25 @@
         catch
         {
             Snackbar.Add(L["AchievementUpdateFailed"], Severity.Warning);
+        }
+    }
+
+    private async Task RecordPlannedSessionCompletionAsync(string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId)
+            || string.IsNullOrWhiteSpace(PlanId)
+            || string.IsNullOrWhiteSpace(SessionId))
+        {
+            return;
+        }
+
+        try
+        {
+            await AchievementService.SetTrainingSessionCompletionAsync(userId, PlanId, SessionId, true);
+        }
+        catch
+        {
+            Snackbar.Add(L["PlannedSessionUpdateFailed"], Severity.Warning);
         }
     }
 

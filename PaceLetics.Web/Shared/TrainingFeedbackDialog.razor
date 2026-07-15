@@ -1,0 +1,102 @@
+@inject IStringLocalizer<TrainingFeedbackDialog> L
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3" Class="pt-2">
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.h6">@L["Title"]</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["Subtitle", TrainingName]</MudText>
+            </MudStack>
+
+            <div>
+                <MudText Typo="Typo.subtitle2" Class="mb-2">@L["EffortQuestion"]</MudText>
+                <div class="pl-feedback-scale" role="group" aria-label="@L["EffortQuestion"]">
+                    @for (var value = 1; value <= 10; value++)
+                    {
+                        var effort = value;
+                        <button type="button"
+                                class="@GetScaleButtonClass(effort)"
+                                aria-pressed="@(_effort == effort)"
+                                @onclick="@(() => _effort = effort)">
+                            @effort
+                        </button>
+                    }
+                </div>
+                <div class="pl-feedback-scale-labels">
+                    <span>@L["EffortEasy"]</span>
+                    <span>@L["EffortMax"]</span>
+                </div>
+            </div>
+
+            <div>
+                <MudText Typo="Typo.subtitle2" Class="mb-2">@L["FeelingQuestion"]</MudText>
+                <div class="pl-feedback-feelings" role="group" aria-label="@L["FeelingQuestion"]">
+                    @foreach (var option in FeelingOptions)
+                    {
+                        <button type="button"
+                                class="@GetFeelingButtonClass(option.Value)"
+                                aria-label="@option.Label"
+                                aria-pressed="@(_feeling == option.Value)"
+                                @onclick="@(() => _feeling = option.Value)">
+                            <span aria-hidden="true">@option.Emoji</span>
+                            <small>@option.Label</small>
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <MudTextField T="string"
+                          Label="@L["Comment"]"
+                          HelperText="@L["CommentHint"]"
+                          Lines="2"
+                          MaxLength="500"
+                          Counter="500"
+                          @bind-Value="_comment" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="Cancel">@L["Skip"]</MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Disabled="@(_effort == 0 || _feeling == 0)"
+                   OnClick="Submit">
+            @L["Save"]
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    public IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public string TrainingName { get; set; } = string.Empty;
+
+    private int _effort;
+    private TrainingFeeling _feeling;
+    private string _comment = string.Empty;
+
+    private IReadOnlyList<FeelingOption> FeelingOptions =>
+    [
+        new(TrainingFeeling.VeryPoor, "😣", L["FeelingVeryPoor"]),
+        new(TrainingFeeling.Poor, "🙁", L["FeelingPoor"]),
+        new(TrainingFeeling.Neutral, "😐", L["FeelingNeutral"]),
+        new(TrainingFeeling.Good, "🙂", L["FeelingGood"]),
+        new(TrainingFeeling.VeryGood, "😄", L["FeelingVeryGood"])
+    ];
+
+    private string GetScaleButtonClass(int value) => _effort == value
+        ? "pl-feedback-scale__button pl-feedback-scale__button--selected"
+        : "pl-feedback-scale__button";
+
+    private string GetFeelingButtonClass(TrainingFeeling value) => _feeling == value
+        ? "pl-feedback-feeling pl-feedback-feeling--selected"
+        : "pl-feedback-feeling";
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(
+        new TrainingFeedbackInput(_effort, _feeling, _comment)));
+
+    private sealed record FeelingOption(TrainingFeeling Value, string Emoji, string Label);
+}

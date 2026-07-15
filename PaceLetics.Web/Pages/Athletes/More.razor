@@ -1,0 +1,36 @@
+@page "/Athletes/more"
+@attribute [Authorize]
+@inject IStringLocalizer<More> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+    <nav class="pl-more-list pt-3" aria-label="@L["Title"]">
+        @foreach (var item in Items)
+        {
+            <a class="pl-more-list__item" href="@item.Href">
+                <span class="pl-more-list__icon"><MudIcon Icon="@item.Icon" /></span>
+                <span>
+                    <strong>@item.Title</strong>
+                    <small>@item.Detail</small>
+                </span>
+                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+            </a>
+        }
+    </nav>
+</MudContainer>
+
+@code {
+    private IReadOnlyList<MoreItem> Items =>
+    [
+        new(L["Courses"], L["CoursesDetail"], "/Athletes/courses", Icons.Material.Filled.School),
+        new(L["Teams"], L["TeamsDetail"], "/Athletes/teams", Icons.Material.Filled.Groups),
+        new(L["Academy"], L["AcademyDetail"], "/Athletes/academy", Icons.Material.Filled.AutoStories),
+        new(L["Achievements"], L["AchievementsDetail"], "/Athletes/achievements", Icons.Material.Filled.EmojiEvents),
+        new(L["Drive"], L["DriveDetail"], "/Athletes/drive", Icons.Material.Filled.FolderOpen),
+        new(L["About"], L["AboutDetail"], "/impressum", Icons.Material.Filled.Info)
+    ];
+
+    private sealed record MoreItem(string Title, string Detail, string Href, string Icon);
+}

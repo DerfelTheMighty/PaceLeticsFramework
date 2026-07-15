@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Trainingseinheit</value></data>
+  <data name="BackToWeek" xml:space="preserve"><value>Zurück zur Woche</value></data>
+  <data name="NotFound" xml:space="preserve"><value>Diese Einheit wurde nicht gefunden oder ist nicht mehr sichtbar.</value></data>
+  <data name="Briefing" xml:space="preserve"><value>Dein Briefing</value></data>
+  <data name="Why" xml:space="preserve"><value>Warum diese Einheit?</value></data>
+  <data name="Sequence" xml:space="preserve"><value>Das machst du</value></data>
+  <data name="StartTraining" xml:space="preserve"><value>Training beginnen</value></data>
+  <data name="FinishTraining" xml:space="preserve"><value>Einheit abschließen</value></data>
+  <data name="TrainingRunning" xml:space="preserve"><value>Training läuft</value></data>
+  <data name="CompletedBackToPlan" xml:space="preserve"><value>Erledigt · zurück zum Plan</value></data>
+  <data name="FeedbackTitle" xml:space="preserve"><value>Trainingsfeedback</value></data>
+  <data name="FeedbackSaved" xml:space="preserve"><value>Feedback gespeichert. Deine nächste Empfehlung wurde aktualisiert.</value></data>
+  <data name="FeedbackFailed" xml:space="preserve"><value>Die Einheit ist erledigt, aber das Feedback konnte nicht gespeichert werden.</value></data>
+  <data name="CompletionFailed" xml:space="preserve"><value>Die Einheit konnte nicht als erledigt gespeichert werden.</value></data>
+  <data name="AchievementUnlocked" xml:space="preserve"><value>Auszeichnung freigeschaltet: {0}</value></data>
+  <data name="Minutes" xml:space="preserve"><value>{0} Min.</value></data>
+  <data name="WorkoutSetsRounds" xml:space="preserve"><value>{0} Sätze · {1} Runden</value></data>
+  <data name="SegmentWarmup" xml:space="preserve"><value>Aufwärmen</value></data>
+  <data name="SegmentWalking" xml:space="preserve"><value>Gehen</value></data>
+  <data name="SegmentInterval" xml:space="preserve"><value>Schnelles Intervall</value></data>
+  <data name="SegmentRecovery" xml:space="preserve"><value>Lockere Erholung</value></data>
+  <data name="SegmentSetRecovery" xml:space="preserve"><value>Satzpause</value></data>
+  <data name="SegmentCooldown" xml:space="preserve"><value>Auslaufen</value></data>
+  <data name="SegmentRun" xml:space="preserve"><value>Laufen</value></data>
+  <data name="RecommendationRecoveryTitle" xml:space="preserve"><value>Erholung priorisieren</value></data>
+  <data name="RecommendationRecoveryDetail" xml:space="preserve"><value>Dein letztes Feedback zeigt eine hohe Belastung. Halte die nächste Einheit locker oder ergänze Erholung.</value></data>
+  <data name="RecommendationEasyTitle" xml:space="preserve"><value>Nächste Einheit locker halten</value></data>
+  <data name="RecommendationEasyDetail" xml:space="preserve"><value>Du hast zuletzt mehrere intensive Einheiten gemeldet. Vermeide direkt den nächsten harten Reiz.</value></data>
+  <data name="RecommendationOnTrackTitle" xml:space="preserve"><value>Training im grünen Bereich</value></data>
+  <data name="RecommendationOnTrackDetail" xml:space="preserve"><value>Dein Feedback passt zum aktuellen Plan. Fahre mit der nächsten vorgesehenen Einheit fort.</value></data>
+</root>

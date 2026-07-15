@@ -20,4 +20,10 @@
   <data name="Nav_Analyses" xml:space="preserve"><value>Мои анализы</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
   <data name="Nav_TrainerRunningAnalyses" xml:space="preserve"><value>Анализы бега</value></data>
+  <data name="MobileNavigation" xml:space="preserve"><value>Основная навигация</value></data>
+  <data name="Nav_Today" xml:space="preserve"><value>Сегодня</value></data>
+  <data name="Nav_Plan" xml:space="preserve"><value>План</value></data>
+  <data name="Nav_Train" xml:space="preserve"><value>Тренировка</value></data>
+  <data name="Nav_Progress" xml:space="preserve"><value>Прогресс</value></data>
+  <data name="Nav_More" xml:space="preserve"><value>Ещё</value></data>
 </root>

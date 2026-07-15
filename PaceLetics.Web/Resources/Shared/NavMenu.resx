@@ -53,4 +53,10 @@
   <data name="TrainerMenu" xml:space="preserve"><value>Open trainer menu</value></data>
   <data name="Nav_Groups" xml:space="preserve"><value>Groups</value></data>
   <data name="Nav_Achievements" xml:space="preserve"><value>Achievements</value></data>
+  <data name="MobileNavigation" xml:space="preserve"><value>Main navigation</value></data>
+  <data name="Nav_Today" xml:space="preserve"><value>Today</value></data>
+  <data name="Nav_Plan" xml:space="preserve"><value>Plan</value></data>
+  <data name="Nav_Train" xml:space="preserve"><value>Train</value></data>
+  <data name="Nav_Progress" xml:space="preserve"><value>Progress</value></data>
+  <data name="Nav_More" xml:space="preserve"><value>More</value></data>
 </root>

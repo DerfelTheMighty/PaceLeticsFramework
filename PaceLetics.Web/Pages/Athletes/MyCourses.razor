@@ -30,18 +30,11 @@
             <span>@L["TabCourses"]</span>
         </button>
         <button type="button"
-                class="@GetSectionButtonClass(CoursesSection.TrainingPlans)"
-                aria-pressed="@(_activeSection == CoursesSection.TrainingPlans)"
-                @onclick="@(() => SelectSection(CoursesSection.TrainingPlans))">
-            <MudIcon Icon="@Icons.Material.Filled.EventNote" Size="Size.Small" />
-            <span>@L["TabTrainingPlans"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(CoursesSection.Calendar)"
-                aria-pressed="@(_activeSection == CoursesSection.Calendar)"
-                @onclick="@(() => SelectSection(CoursesSection.Calendar))">
+                class="@GetSectionButtonClass(CoursesSection.Plan)"
+                aria-pressed="@(_activeSection == CoursesSection.Plan)"
+                @onclick="@(() => SelectSection(CoursesSection.Plan))">
             <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Size="Size.Small" />
-            <span>@L["TabCalendar"]</span>
+            <span>@L["TabCombinedPlan"]</span>
         </button>
     </nav>
 
@@ -413,18 +406,10 @@
             </MudStack>
         }
         }
-        else if (_activeSection == CoursesSection.TrainingPlans)
-        {
-            <MudDivider Class="my-4" />
-
-            <TrainingPlanPage Embedded="true"
-                              AutoScrollToNextSession="true" />
-        }
         else
         {
             <MudDivider Class="my-4" />
-
-            <TrainingCalendar UserId="@_userId" />
+            <WeeklyPlan UserId="@_userId" />
         }
     </SwipeSection>
 </MudContainer>
@@ -433,15 +418,13 @@
     private static readonly CoursesSection[] Sections =
     [
         CoursesSection.Courses,
-        CoursesSection.TrainingPlans,
-        CoursesSection.Calendar
+        CoursesSection.Plan
     ];
 
     private enum CoursesSection
     {
         Courses,
-        TrainingPlans,
-        Calendar
+        Plan
     }
 
     private void HandleCourseCardKeyDown(KeyboardEventArgs args, string courseId)
@@ -624,8 +607,7 @@
     {
         return section?.Trim().ToLowerInvariant() switch
         {
-            "plans" or "training-plans" => CoursesSection.TrainingPlans,
-            "calendar" or "kalender" => CoursesSection.Calendar,
+            "plans" or "training-plans" or "calendar" or "kalender" or "plan" => CoursesSection.Plan,
             _ => CoursesSection.Courses
         };
     }
@@ -634,8 +616,7 @@
     {
         var uri = section switch
         {
-            CoursesSection.TrainingPlans => "/Athletes/courses?section=plans",
-            CoursesSection.Calendar => "/Athletes/courses?section=calendar",
+            CoursesSection.Plan => "/Athletes/courses?section=plan",
             _ => "/Athletes/courses?section=courses"
         };
 

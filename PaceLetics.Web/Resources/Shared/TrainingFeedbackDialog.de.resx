@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Wie lief es?</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Dein Feedback zu „{0}“ passt die nächste Empfehlung an.</value></data>
+  <data name="EffortQuestion" xml:space="preserve"><value>Wie anstrengend war es?</value></data>
+  <data name="EffortEasy" xml:space="preserve"><value>sehr locker</value></data>
+  <data name="EffortMax" xml:space="preserve"><value>maximal</value></data>
+  <data name="FeelingQuestion" xml:space="preserve"><value>Wie fühlst du dich jetzt?</value></data>
+  <data name="FeelingVeryPoor" xml:space="preserve"><value>Sehr schlecht</value></data>
+  <data name="FeelingPoor" xml:space="preserve"><value>Schlecht</value></data>
+  <data name="FeelingNeutral" xml:space="preserve"><value>Okay</value></data>
+  <data name="FeelingGood" xml:space="preserve"><value>Gut</value></data>
+  <data name="FeelingVeryGood" xml:space="preserve"><value>Sehr gut</value></data>
+  <data name="Comment" xml:space="preserve"><value>Notiz (optional)</value></data>
+  <data name="CommentHint" xml:space="preserve"><value>Zum Beispiel: schwere Beine, schmerzfrei, viel Energie</value></data>
+  <data name="Skip" xml:space="preserve"><value>Überspringen</value></data>
+  <data name="Save" xml:space="preserve"><value>Feedback speichern</value></data>
+</root>

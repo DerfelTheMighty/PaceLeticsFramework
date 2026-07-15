@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="What" xml:space="preserve"><value>Einheit</value></data>
+  <data name="Duration" xml:space="preserve"><value>Dauer</value></data>
+  <data name="AboutMinutes" xml:space="preserve"><value>ca. {0} Min.</value></data>
+  <data name="Purpose" xml:space="preserve"><value>Ziel</value></data>
+  <data name="Intensity" xml:space="preserve"><value>Intensität</value></data>
+  <data name="Equipment" xml:space="preserve"><value>Du brauchst</value></data>
+  <data name="IntensityEasy" xml:space="preserve"><value>Locker</value></data>
+  <data name="IntensityModerate" xml:space="preserve"><value>Mittel</value></data>
+  <data name="IntensityHigh" xml:space="preserve"><value>Intensiv</value></data>
+  <data name="PurposeSpeed" xml:space="preserve"><value>Schnelligkeit und Laufökonomie</value></data>
+  <data name="PurposeStrength" xml:space="preserve"><value>Laufspezifische Kraft und Stabilität</value></data>
+  <data name="PurposeEndurance" xml:space="preserve"><value>Aerobe Ausdauer</value></data>
+  <data name="RunningShoes" xml:space="preserve"><value>Laufschuhe</value></data>
+  <data name="WorkoutSpace" xml:space="preserve"><value>Matte oder freie Fläche</value></data>
+  <data name="NoEquipment" xml:space="preserve"><value>Keine besondere Ausrüstung</value></data>
+</root>

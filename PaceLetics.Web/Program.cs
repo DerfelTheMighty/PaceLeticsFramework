@@ -51,6 +51,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using PaceLetics.Web.Services.Health;
 using PaceLetics.Web.Services.TrainingPlans;
+using PaceLetics.Web.Services.TrainingFeedback;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -230,6 +231,9 @@ builder.Services.AddScoped<ITrainingCalendarService, TrainingCalendarService>();
 builder.Services.AddScoped<CosmosAchievementRepository>();
 builder.Services.AddScoped<IAchievementRepository>(x => x.GetRequiredService<CosmosAchievementRepository>());
 builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<CosmosTrainingFeedbackRepository>();
+builder.Services.AddScoped<ITrainingFeedbackRepository>(x => x.GetRequiredService<CosmosTrainingFeedbackRepository>());
+builder.Services.AddScoped<ITrainingFeedbackService, TrainingFeedbackService>();
 builder.Services.AddScoped<AppCultureService>();
 builder.Services.AddScoped<IArticleRepository>(x => new MarkdownArticleRepository(
     builder.Environment.ContentRootPath,

@@ -20,4 +20,10 @@
   <data name="Nav_Analyses" xml:space="preserve"><value>Analizlerim</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
   <data name="Nav_TrainerRunningAnalyses" xml:space="preserve"><value>Koşu analizleri</value></data>
+  <data name="MobileNavigation" xml:space="preserve"><value>Ana gezinme</value></data>
+  <data name="Nav_Today" xml:space="preserve"><value>Bugün</value></data>
+  <data name="Nav_Plan" xml:space="preserve"><value>Plan</value></data>
+  <data name="Nav_Train" xml:space="preserve"><value>Antrenman</value></data>
+  <data name="Nav_Progress" xml:space="preserve"><value>İlerleme</value></data>
+  <data name="Nav_More" xml:space="preserve"><value>Daha fazla</value></data>
 </root>

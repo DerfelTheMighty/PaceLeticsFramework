@@ -1,0 +1,82 @@
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@inject IStringLocalizer<TrainingSessionSummary> L
+
+<div class="pl-session-summary @(Compact ? "pl-session-summary--compact" : null)">
+    <div class="pl-session-summary__item">
+        <MudIcon Icon="@Icons.Material.Filled.Route" Size="Size.Small" />
+        <span>
+            <strong>@L["What"]</strong>
+            <small>@TrainingSessionPresentation.GetComposition(Session)</small>
+        </span>
+    </div>
+    <div class="pl-session-summary__item">
+        <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Small" />
+        <span>
+            <strong>@L["Duration"]</strong>
+            <small>@L["AboutMinutes", TrainingSessionPresentation.EstimateDurationMinutes(Session)]</small>
+        </span>
+    </div>
+    <div class="pl-session-summary__item">
+        <MudIcon Icon="@Icons.Material.Filled.TrackChanges" Size="Size.Small" />
+        <span>
+            <strong>@L["Purpose"]</strong>
+            <small>@GetPurpose()</small>
+        </span>
+    </div>
+    <div class="pl-session-summary__item">
+        <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" />
+        <span>
+            <strong>@L["Intensity"]</strong>
+            <small>@GetIntensity()</small>
+        </span>
+    </div>
+    @if (!Compact)
+    {
+        <div class="pl-session-summary__item">
+            <MudIcon Icon="@Icons.Material.Filled.Backpack" Size="Size.Small" />
+            <span>
+                <strong>@L["Equipment"]</strong>
+                <small>@GetEquipment()</small>
+            </span>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public TrainingSession Session { get; set; } = default!;
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    private string GetIntensity() => TrainingSessionPresentation.GetIntensity(Session) switch
+    {
+        TrainingIntensity.High => L["IntensityHigh"],
+        TrainingIntensity.Moderate => L["IntensityModerate"],
+        _ => L["IntensityEasy"]
+    };
+
+    private string GetPurpose()
+    {
+        var purpose = TrainingSessionPresentation.GetPurpose(Session);
+        return purpose switch
+        {
+            "speed" => L["PurposeSpeed"],
+            "strength" => L["PurposeStrength"],
+            "endurance" => L["PurposeEndurance"],
+            _ => purpose
+        };
+    }
+
+    private string GetEquipment()
+    {
+        var equipment = new List<string>();
+        if (Session.Runs.Count > 0)
+            equipment.Add(L["RunningShoes"]);
+        if (Session.Workouts.Count > 0)
+            equipment.Add(L["WorkoutSpace"]);
+        if (!string.IsNullOrWhiteSpace(Session.Appointment.Location))
+            equipment.Add(Session.Appointment.Location);
+        return equipment.Count == 0 ? L["NoEquipment"] : string.Join(" · ", equipment);
+    }
+}

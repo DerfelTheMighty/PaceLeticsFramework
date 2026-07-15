@@ -11,4 +11,7 @@
   <data name="WorkoutTitle" xml:space="preserve"><value>Workout</value></data>
   <data name="BackToWorkouts" xml:space="preserve"><value>Zurück zu den Workouts</value></data>
   <data name="AchievementUpdateFailed" xml:space="preserve"><value>Das Workout wurde abgeschlossen, aber Achievements konnten nicht aktualisiert werden.</value></data>
+  <data name="FeedbackSaved" xml:space="preserve"><value>Feedback gespeichert. Deine nächste Empfehlung wurde aktualisiert.</value></data>
+  <data name="FeedbackSaveFailed" xml:space="preserve"><value>Das Workout ist erledigt, aber das Feedback konnte nicht gespeichert werden.</value></data>
+  <data name="PlannedSessionUpdateFailed" xml:space="preserve"><value>Das Workout ist erledigt, aber die geplante Einheit konnte nicht aktualisiert werden.</value></data>
 </root>

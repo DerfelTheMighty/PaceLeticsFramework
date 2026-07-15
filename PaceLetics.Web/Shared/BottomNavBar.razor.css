@@ -48,6 +48,24 @@
     background: color-mix(in srgb, var(--mud-palette-primary) 16%, transparent);
 }
 
+.pl-bottom-nav ::deep .pl-bottom-nav__item--primary {
+    overflow: visible;
+}
+
+.pl-bottom-nav__icon--primary {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-top: -0.55rem;
+    border-radius: 50%;
+    color: var(--mud-palette-primary-text);
+    background: var(--mud-palette-primary);
+    box-shadow: 0 5px 14px color-mix(in srgb, var(--mud-palette-primary) 34%, transparent);
+}
+
+.pl-bottom-nav ::deep .pl-bottom-nav__item--primary.pl-bottom-nav__item--active {
+    background: transparent;
+}
+
 .pl-bottom-nav__content {
     display: inline-flex;
     flex-direction: column;
@@ -78,6 +96,10 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow-wrap: anywhere;
+}
+
+.pl-bottom-nav__item--primary .pl-bottom-nav__label {
+    color: var(--mud-palette-text-primary);
 }
 
 @media (max-width: 380px) {

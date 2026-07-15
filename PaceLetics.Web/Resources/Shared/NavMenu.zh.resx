@@ -20,4 +20,10 @@
   <data name="Nav_Analyses" xml:space="preserve"><value>我的分析</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
   <data name="Nav_TrainerRunningAnalyses" xml:space="preserve"><value>跑步分析</value></data>
+  <data name="MobileNavigation" xml:space="preserve"><value>主导航</value></data>
+  <data name="Nav_Today" xml:space="preserve"><value>今天</value></data>
+  <data name="Nav_Plan" xml:space="preserve"><value>计划</value></data>
+  <data name="Nav_Train" xml:space="preserve"><value>训练</value></data>
+  <data name="Nav_Progress" xml:space="preserve"><value>进度</value></data>
+  <data name="Nav_More" xml:space="preserve"><value>更多</value></data>
 </root>

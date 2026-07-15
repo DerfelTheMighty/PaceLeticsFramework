@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PreviousWeek" xml:space="preserve"><value>Previous week</value></data>
+  <data name="NextWeek" xml:space="preserve"><value>Next week</value></data>
+  <data name="GoToCurrentWeek" xml:space="preserve"><value>Tap for current week</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading your week…</value></data>
+  <data name="LoadError" xml:space="preserve"><value>Your weekly plan could not be loaded.</value></data>
+  <data name="NextUp" xml:space="preserve"><value>Next up</value></data>
+  <data name="Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="ReviewSession" xml:space="preserve"><value>Review session</value></data>
+  <data name="OpenSession" xml:space="preserve"><value>Open session</value></data>
+  <data name="RestOrUnplanned" xml:space="preserve"><value>Recovery / not planned</value></data>
+  <data name="MinutesShort" xml:space="preserve"><value>min</value></data>
+  <data name="IntensityEasy" xml:space="preserve"><value>easy</value></data>
+  <data name="IntensityModerate" xml:space="preserve"><value>moderate</value></data>
+  <data name="IntensityHigh" xml:space="preserve"><value>hard</value></data>
+  <data name="CourseEvent" xml:space="preserve"><value>Course event</value></data>
+</root>

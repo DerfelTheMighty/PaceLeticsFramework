@@ -2,29 +2,29 @@
 
 <MudNavMenu>
     <MudNavLink Href="/"
-                Icon="@Icons.Material.Filled.Dashboard"
+                Icon="@Icons.Material.Filled.Today"
                 Match="NavLinkMatch.All">
-        @L["Nav_Dashboard"]
+        @L["Nav_Today"]
     </MudNavLink>
-    <MudNavLink Href="/Athletes/teams"
-                Icon="@Icons.Material.Filled.Groups"
+    <MudNavLink Href="/Athletes/plan"
+                Icon="@Icons.Material.Filled.CalendarMonth"
                 Match="NavLinkMatch.Prefix">
-        @L["Nav_Teams"]
+        @L["Nav_Plan"]
     </MudNavLink>
-    <MudNavLink Href="/Athletes/courses"
-                Icon="@Icons.Material.Filled.School"
+    <MudNavLink Href="/Workouts/workoutarea"
+                Icon="@Icons.Material.Filled.PlayArrow"
                 Match="NavLinkMatch.Prefix">
-        @L["Nav_Courses"]
-    </MudNavLink>
-    <MudNavLink Href="/Athletes/academy"
-                Icon="@Icons.Material.Filled.AutoStories"
-                Match="NavLinkMatch.Prefix">
-        @L["Nav_Academy"]
+        @L["Nav_Train"]
     </MudNavLink>
     <MudNavLink Href="/Athletes/data-analyses"
-                Icon="@Icons.Material.Filled.Analytics"
+                Icon="@Icons.Material.Filled.TrendingUp"
                 Match="NavLinkMatch.Prefix">
-        @L["Nav_DataAnalyses"]
+        @L["Nav_Progress"]
+    </MudNavLink>
+    <MudNavLink Href="/Athletes/more"
+                Icon="@Icons.Material.Filled.MoreHoriz"
+                Match="NavLinkMatch.Prefix">
+        @L["Nav_More"]
     </MudNavLink>
 
     <AuthorizeView Roles="@ApplicationRoles.Trainer">

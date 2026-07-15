@@ -11,4 +11,7 @@
   <data name="WorkoutTitle" xml:space="preserve"><value>Workout</value></data>
   <data name="BackToWorkouts" xml:space="preserve"><value>Back to workouts</value></data>
   <data name="AchievementUpdateFailed" xml:space="preserve"><value>The workout was completed, but achievements could not be updated.</value></data>
+  <data name="FeedbackSaved" xml:space="preserve"><value>Feedback saved. Your next recommendation is updated.</value></data>
+  <data name="FeedbackSaveFailed" xml:space="preserve"><value>The workout is complete, but feedback could not be saved.</value></data>
+  <data name="PlannedSessionUpdateFailed" xml:space="preserve"><value>The workout is complete, but the planned session could not be updated.</value></data>
 </root>
