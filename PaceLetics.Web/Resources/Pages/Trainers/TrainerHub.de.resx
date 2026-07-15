@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Trainer-Arbeitsbereich</value></data>
+  <data name="Title" xml:space="preserve"><value>Trainer-Arbeitsbereich</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Heutige Termine, offene Arbeit und Athletensignale an einem Ort.</value></data>
+  <data name="Search" xml:space="preserve"><value>Suchen</value></data>
+  <data name="Loading" xml:space="preserve"><value>Trainer-Arbeitsbereich wird geladen</value></data>
+  <data name="Overview" xml:space="preserve"><value>Übersicht</value></data>
+  <data name="TodaySessions" xml:space="preserve"><value>Heutige Kurse</value></data>
+  <data name="NewMessages" xml:space="preserve"><value>Neue Nachrichten</value></data>
+  <data name="PendingAnalyses" xml:space="preserve"><value>Offene Laufanalysen</value></data>
+  <data name="PlanDeviations" xml:space="preserve"><value>Planabweichungen</value></data>
+  <data name="Today" xml:space="preserve"><value>Heute</value></data>
+  <data name="OpenRequests" xml:space="preserve"><value>{0} offene Anfragen</value></data>
+  <data name="NoSessionsToday" xml:space="preserve"><value>Für heute ist kein Kurs und kein Termin geplant.</value></data>
+  <data name="AthletesWithDeviations" xml:space="preserve"><value>Athlet:innen mit Planabweichungen</value></data>
+  <data name="DeviationWindow" xml:space="preserve"><value>Nicht absolvierte Planeinheiten der letzten 14 Tage.</value></data>
+  <data name="NoDeviations" xml:space="preserve"><value>Keine relevanten Abweichungen erkannt.</value></data>
+  <data name="MissedSessions" xml:space="preserve"><value>{0} von {1} Einheiten offen</value></data>
+  <data name="RecentFeedback" xml:space="preserve"><value>Letzte Trainingsrückmeldungen</value></data>
+  <data name="FeedbackSubtitle" xml:space="preserve"><value>Die zuletzt eingegangenen Antworten deiner Athlet:innen.</value></data>
+  <data name="NoFeedback" xml:space="preserve"><value>Zuletzt ist kein Feedback eingegangen.</value></data>
+  <data name="Workspace" xml:space="preserve"><value>Arbeitsbereich</value></data>
+  <data name="Courses" xml:space="preserve"><value>Kurse</value></data>
+  <data name="CoursesDetail" xml:space="preserve"><value>Termine, Mitglieder und Events</value></data>
+  <data name="Groups" xml:space="preserve"><value>Gruppen</value></data>
+  <data name="GroupsDetail" xml:space="preserve"><value>Teams und Anfragen</value></data>
+  <data name="Plans" xml:space="preserve"><value>Trainingspläne</value></data>
+  <data name="PlansDetail" xml:space="preserve"><value>Einheiten und Veröffentlichungen</value></data>
+  <data name="Analyses" xml:space="preserve"><value>Laufanalysen</value></data>
+  <data name="AnalysesDetail" xml:space="preserve"><value>Aufnahmen und Auswertungen</value></data>
+  <data name="Catalog" xml:space="preserve"><value>Workout-Katalog</value></data>
+  <data name="CatalogDetail" xml:space="preserve"><value>Übungen und Workouts</value></data>
+  <data name="CommandTitle" xml:space="preserve"><value>Athlet:innen, Kurse, Pläne und Analysen finden</value></data>
+  <data name="CommandPlaceholder" xml:space="preserve"><value>Name oder Titel eingeben…</value></data>
+  <data name="NoSearchResults" xml:space="preserve"><value>Kein passendes Ergebnis.</value></data>
+  <data name="Close" xml:space="preserve"><value>Schließen</value></data>
+  <data name="TrainerNotResolved" xml:space="preserve"><value>Das Trainerkonto konnte nicht aufgelöst werden.</value></data>
+  <data name="Kind_athlete" xml:space="preserve"><value>Athlet:in</value></data>
+  <data name="Kind_course" xml:space="preserve"><value>Kurs</value></data>
+  <data name="Kind_group" xml:space="preserve"><value>Gruppe</value></data>
+  <data name="Kind_plan" xml:space="preserve"><value>Plan</value></data>
+  <data name="Kind_analysis" xml:space="preserve"><value>Analyse</value></data>
+</root>

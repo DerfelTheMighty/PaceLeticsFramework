@@ -52,6 +52,10 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using PaceLetics.Web.Services.Health;
 using PaceLetics.Web.Services.TrainingPlans;
 using PaceLetics.Web.Services.TrainingFeedback;
+using PaceLetics.Web.Services.DashboardPreferences;
+using PaceLetics.Web.Services.Integrations;
+using PaceLetics.Web.Services.Undo;
+using PaceLetics.Web.Services.Trainer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -244,6 +248,11 @@ builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
 builder.Services.AddScoped<IProfileImageStore, CosmosProfileImageStore>();
 builder.Services.AddScoped<ThemePreferenceService>();
 builder.Services.AddScoped<LoadingStateService>();
+builder.Services.AddScoped<ClientPreferenceStore>();
+builder.Services.AddScoped<DashboardPreferencesService>();
+builder.Services.AddScoped<IntegrationStatusService>();
+builder.Services.AddScoped<UndoService>();
+builder.Services.AddScoped<TrainerWorkspaceService>();
 builder.Services.AddScoped<AcademyInfoService>();
 builder.Services.AddSingleton<DashboardMessageFeedOptions>();
 builder.Services.AddSingleton<TrainingGuardEvaluator>();

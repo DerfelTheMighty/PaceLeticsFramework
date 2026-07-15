@@ -1,0 +1,96 @@
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@inject IJSRuntime JS
+@inject IStringLocalizer<TrainingContextCard> L
+
+<section class="pl-context-card" aria-labelledby="training-context-title">
+    <div class="pl-context-card__heading">
+        <span>
+            <MudText Typo="Typo.h6" HtmlTag="h2" id="training-context-title">@L["Title"]</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetEquipment()</MudText>
+        </span>
+        @if (_context is not null)
+        {
+            <span class="pl-context-card__weather"><strong>@FormatTemperature()</strong><small>@GetWeatherText()</small></span>
+        }
+    </div>
+
+    @if (_isLoading)
+    {
+        <SkeletonBlock Height="48px" />
+    }
+    else if (_context is null)
+    {
+        <MudText Typo="Typo.caption" Color="Color.Secondary">@(_error ?? L["LocationHint"])</MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="LoadContextAsync">@L["LoadContext"]</MudButton>
+    }
+    else
+    {
+        <details class="pl-disclosure">
+            <summary>@GetDaylightSummary()</summary>
+            <div class="pl-disclosure__content">
+                <span><small>@L["Sunrise"]</small><strong>@FormatTime(_context.Sunrise)</strong></span>
+                <span><small>@L["Sunset"]</small><strong>@FormatTime(_context.Sunset)</strong></span>
+                <span><small>@L["LocationPrivacy"]</small></span>
+            </div>
+        </details>
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired] public TrainingSession Session { get; set; } = default!;
+    private TrainingWeatherContext? _context;
+    private bool _isLoading;
+    private string? _error;
+
+    private async Task LoadContextAsync()
+    {
+        _isLoading = true;
+        _error = null;
+        try
+        {
+            var date = (Session.Appointment.StartsAt ?? Session.Date).ToString("O");
+            _context = await JS.InvokeAsync<TrainingWeatherContext?>("paceleticsTrainingContext.load", date);
+            if (_context is null) _error = L["Unavailable"];
+        }
+        catch (JSException)
+        {
+            _error = L["LocationError"];
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private string GetEquipment()
+    {
+        var values = new List<string>();
+        if (Session.Runs.Count > 0) values.Add(L["RunningShoes"]);
+        if (Session.Workouts.Count > 0) values.Add(L["WorkoutSpace"]);
+        if (!string.IsNullOrWhiteSpace(Session.Appointment.Location)) values.Add(Session.Appointment.Location);
+        return string.Join(" · ", values);
+    }
+
+    private string FormatTemperature() => _context?.TemperatureC is { } value ? $"{value:0}°" : "–";
+    private string GetDaylightSummary() => _context?.IsDaylight == true ? L["Daylight"] : L["AfterDark"];
+    private string GetWeatherText() => (_context?.WeatherCode ?? 0) switch
+    {
+        0 => L["Clear"],
+        <= 3 => L["Cloudy"],
+        <= 67 => L["Rain"],
+        <= 77 => L["Snow"],
+        >= 95 => L["Thunderstorm"],
+        _ => L["Variable"]
+    };
+
+    private static string FormatTime(string? value) => DateTime.TryParse(value, out var date) ? date.ToString("HH:mm") : "–";
+
+    private sealed class TrainingWeatherContext
+    {
+        public double? TemperatureC { get; set; }
+        public int WeatherCode { get; set; }
+        public string? Sunrise { get; set; }
+        public string? Sunset { get; set; }
+        public bool IsDaylight { get; set; }
+    }
+}

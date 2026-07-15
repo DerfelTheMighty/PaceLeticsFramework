@@ -3,8 +3,9 @@
 
 @if (Loading.IsLoading)
 {
-    <div class="pl-overlay pl-loading-overlay" role="status" aria-live="polite" aria-busy="true">
-        <LoadingScreen Label="@Loading.Label" />
+    <div class="pl-loading-indicator" role="status" aria-live="polite" aria-busy="true">
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary" />
+        <span class="pl-visually-hidden">@Loading.Label</span>
     </div>
 }
 

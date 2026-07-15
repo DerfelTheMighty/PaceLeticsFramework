@@ -131,4 +131,43 @@
   <data name="FeedbackLast28Days" xml:space="preserve"><value>Ratings · 28 days</value></data>
   <data name="Notice" xml:space="preserve"><value>Coming up</value></data>
   <data name="NextCourseDate" xml:space="preserve"><value>Your next course date or event.</value></data>
+  <data name="CustomizeDashboard" xml:space="preserve"><value>Customize dashboard</value></data>
+  <data name="CustomizeHint" xml:space="preserve"><value>Choose what appears on Today and arrange sections in the order that helps you most.</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="MoveUp" xml:space="preserve"><value>Move up</value></data>
+  <data name="MoveDown" xml:space="preserve"><value>Move down</value></data>
+  <data name="Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="ReadinessDisclaimer" xml:space="preserve"><value>Guidance based on your recent ratings and load; it is not a medical assessment.</value></data>
+  <data name="WeeklySummary" xml:space="preserve"><value>Weekly summary</value></data>
+  <data name="WeeklyDistance" xml:space="preserve"><value>Distance</value></data>
+  <data name="WeeklyCompleted" xml:space="preserve"><value>Completed</value></data>
+  <data name="WeeklyIntensity" xml:space="preserve"><value>Easy / medium / hard</value></data>
+  <data name="DistanceRatio" xml:space="preserve"><value>{0:0.#} / {1:0.#} km</value></data>
+  <data name="IntensitySummary" xml:space="preserve"><value>{0} / {1} / {2}</value></data>
+  <data name="RecommendationPlanWeek" xml:space="preserve"><value>Add a realistic anchor session for the coming week.</value></data>
+  <data name="RecommendationRecovery" xml:space="preserve"><value>Keep the next week flexible and protect recovery before adding intensity.</value></data>
+  <data name="RecommendationProgress" xml:space="preserve"><value>Your consistency is strong. Progress only one training variable next week.</value></data>
+  <data name="RecommendationConsistency" xml:space="preserve"><value>Prioritize consistency over adding more volume next week.</value></data>
+  <data name="ProgressStory" xml:space="preserve"><value>Your progression</value></data>
+  <data name="ProgressBaseline" xml:space="preserve"><value>Add a second comparable assessment to turn your values into a progress story.</value></data>
+  <data name="ProgressNewReference" xml:space="preserve"><value>Your {0:0.#} km result is the new baseline for the next comparison.</value></data>
+  <data name="ProgressImproved" xml:space="preserve"><value>In {0} weeks your comparable pace improved by {1:0.#}% ({2} s/km faster).</value></data>
+  <data name="ProgressStable" xml:space="preserve"><value>Your comparable result has remained stable over {0} weeks.</value></data>
+  <data name="ThresholdPace" xml:space="preserve"><value>Threshold pace</value></data>
+  <data name="MessagesSection" xml:space="preserve"><value>Training messages</value></data>
+  <data name="IntegrationStatus" xml:space="preserve"><value>Platforms and wearables</value></data>
+  <data name="NoIntegrations" xml:space="preserve"><value>No platform is currently connected.</value></data>
+  <data name="ConnectedIntegrations" xml:space="preserve"><value>{0} platforms connected</value></data>
+  <data name="NotConnected" xml:space="preserve"><value>Not connected</value></data>
+  <data name="Connected" xml:space="preserve"><value>Connected</value></data>
+  <data name="SyncError" xml:space="preserve"><value>Sync needs attention</value></data>
+  <data name="LastSync" xml:space="preserve"><value>Last sync {0:g}</value></data>
+  <data name="SectionReadiness" xml:space="preserve"><value>Training readiness</value></data>
+  <data name="SectionNextSession" xml:space="preserve"><value>Next session</value></data>
+  <data name="SectionWeek" xml:space="preserve"><value>Weekly summary</value></data>
+  <data name="SectionProgress" xml:space="preserve"><value>Progression</value></data>
+  <data name="SectionContext" xml:space="preserve"><value>Weather and equipment</value></data>
+  <data name="SectionMessages" xml:space="preserve"><value>Messages</value></data>
+  <data name="SectionIntegrations" xml:space="preserve"><value>Platforms and wearables</value></data>
 </root>

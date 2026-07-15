@@ -34,4 +34,5 @@
   <data name="RecommendationEasyDetail" xml:space="preserve"><value>Du hast zuletzt mehrere intensive Einheiten gemeldet. Vermeide direkt den nächsten harten Reiz.</value></data>
   <data name="RecommendationOnTrackTitle" xml:space="preserve"><value>Training im grünen Bereich</value></data>
   <data name="RecommendationOnTrackDetail" xml:space="preserve"><value>Dein Feedback passt zum aktuellen Plan. Fahre mit der nächsten vorgesehenen Einheit fort.</value></data>
+  <data name="ChangedBecause" xml:space="preserve"><value>Geändert, weil: {0}</value></data>
 </root>

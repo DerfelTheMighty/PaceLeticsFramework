@@ -34,4 +34,5 @@
   <data name="RecommendationEasyDetail" xml:space="preserve"><value>You reported several hard sessions recently. Avoid another hard stimulus right away.</value></data>
   <data name="RecommendationOnTrackTitle" xml:space="preserve"><value>Training is on track</value></data>
   <data name="RecommendationOnTrackDetail" xml:space="preserve"><value>Your feedback fits the current plan. Continue with the next scheduled session.</value></data>
+  <data name="ChangedBecause" xml:space="preserve"><value>Changed because: {0}</value></data>
 </root>

@@ -45,6 +45,11 @@
                 }
             </header>
 
+            @if (!string.IsNullOrWhiteSpace(_session.Appointment.ChangeReason))
+            {
+                <div class="pl-plan-change-reason"><MudIcon Icon="@Icons.Material.Filled.Update" Size="Size.Small" /><span>@L["ChangedBecause", _session.Appointment.ChangeReason]</span></div>
+            }
+
             <section class="pl-session-page__briefing" aria-labelledby="briefing-title">
                 <MudText Typo="Typo.h6" HtmlTag="h2" id="briefing-title">@L["Briefing"]</MudText>
                 <TrainingSessionSummary Session="@_session" />
@@ -52,9 +57,9 @@
 
             @if (_session.HasTrainingEffect)
             {
-                <section class="pl-session-page__section" aria-labelledby="why-title">
-                    <MudText Typo="Typo.h6" HtmlTag="h2" id="why-title">@L["Why"]</MudText>
-                    <MudStack Spacing="1">
+                <details class="pl-session-page__section pl-session-disclosure">
+                    <summary id="why-title">@L["Why"]</summary>
+                    <MudStack Spacing="1" Class="pt-2">
                         @if (!string.IsNullOrWhiteSpace(_session.TrainingEffect.Stimulus))
                         {
                             <MudText Typo="Typo.body2">@_session.TrainingEffect.Stimulus</MudText>
@@ -70,12 +75,12 @@
                             </MudAlert>
                         }
                     </MudStack>
-                </section>
+                </details>
             }
 
-            <section class="pl-session-page__section" aria-labelledby="steps-title">
-                <MudText Typo="Typo.h6" HtmlTag="h2" id="steps-title">@L["Sequence"]</MudText>
-                <div class="pl-session-sequence">
+            <details class="pl-session-page__section pl-session-disclosure">
+                <summary id="steps-title">@L["Sequence"]</summary>
+                <div class="pl-session-sequence pt-2">
                     @foreach (var step in GetSequenceSteps())
                     {
                         <div class="pl-session-sequence__step">
@@ -90,7 +95,7 @@
                         </div>
                     }
                 </div>
-            </section>
+            </details>
 
             @if (_isRunning)
             {

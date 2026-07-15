@@ -1,0 +1,17 @@
+@implements IDisposable
+@inject PaceLetics.Web.Services.Undo.UndoService Undo
+
+@if (Undo.Current is { } offer)
+{
+    <aside class="pl-undo-bar" role="status" aria-live="polite">
+        <span>@offer.Message</span>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="Undo.UndoAsync">@offer.ActionLabel</MudButton>
+        <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="Undo.Clear" aria-label="Close" />
+    </aside>
+}
+
+@code {
+    protected override void OnInitialized() => Undo.Changed += OnChanged;
+    private void OnChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Undo.Changed -= OnChanged;
+}

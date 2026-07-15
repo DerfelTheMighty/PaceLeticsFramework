@@ -88,4 +88,6 @@
   <data name="NoJoinedCoursesTitle" xml:space="preserve"><value>Choose your first course</value></data>
   <data name="NoAvailableCoursesTitle" xml:space="preserve"><value>You're up to date</value></data>
   <data name="CourseActions" xml:space="preserve"><value>Course actions</value></data>
+  <data name="Undo" xml:space="preserve"><value>Undo</value></data>
+  <data name="LeaveSuccessNamed" xml:space="preserve"><value>You left {0}.</value></data>
 </root>

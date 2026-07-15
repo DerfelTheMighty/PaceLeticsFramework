@@ -5,15 +5,16 @@
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
 @using PaceLetics.Web.Services.Courses
 @using PaceLetics.Web.Services
+@using PaceLetics.Web.Services.Undo
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ICourseService CourseService
 @inject IRunningAnalysisService RunningAnalysisService
 @inject ITrainingPlanService TrainingPlanService
 @inject IJSRuntime JS
-@inject IDialogService DialogService
 @inject NavigationManager Navigation
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
+@inject UndoService Undo
 @inject IStringLocalizer<MyCourses> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
@@ -84,60 +85,35 @@
                                           OnAction="OpenCoursePicker" />
                 }
 
-                @if (_isCoursePickerOpen)
-                {
-                    <div class="pl-overlay pl-modal-overlay" @onclick="CloseCoursePicker" @onkeydown="HandleCoursePickerKeyDown">
-                        <MudFocusTrap>
-                        <MudPaper Elevation="8"
-                                  Class="pa-4 pl-modal-panel"
-                                  role="dialog"
-                                  aria-modal="true"
-                                  aria-labelledby="course-picker-title"
-                                  @onclick:stopPropagation="true">
-                            <MudStack Spacing="3">
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                    <MudText Typo="Typo.h6" HtmlTag="h2" id="course-picker-title">@L["AddCourse"]</MudText>
-                                    <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseCoursePicker" aria-label="@L["Close"]" />
-                                </MudStack>
-
-                                @if (availableCourses.Count == 0)
-                                {
-                                    <ActionableEmptyState Title="@L["NoAvailableCoursesTitle"]" Detail="@L["NoAvailableCourses"]" />
-                                }
-                                else
-                                {
-                                    <MudStack Spacing="2">
-                                        @foreach (var overview in availableCourses)
-                                        {
-                                            var course = overview.Course;
-                                            var nextDate = GetUpcomingDates(course).FirstOrDefault();
-
-                                            <div class="pl-list-row-comfortable">
-                                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                                    <MudStack Spacing="1" Style="min-width:0;">
-                                                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
-                                                            <MudText Typo="Typo.subtitle2">@course.Name</MudText>
-                                                            <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@FormatCourseLevel(course.Level)</MudChip>
-                                                        </MudStack>
-                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatShortPeriod(course)</MudText>
-                                                        <MudText Typo="Typo.caption" Color="Color.Secondary">
-                                                            @FormatUpcomingDate(nextDate)
-                                                        </MudText>
-                                                    </MudStack>
-                                                    <MudButton Size="Size.Small"
-                                                               Variant="Variant.Filled"
-                                                               Color="Color.Primary"
-                                                               OnClick="@(() => JoinCourseAsync(course.Id))">@L["Join"]</MudButton>
-                                                </MudStack>
-                                            </div>
-                                        }
+                <BottomSheet Open="@_isCoursePickerOpen" Title="@L["AddCourse"]" CloseLabel="@L["Close"]" OnClose="CloseCoursePickerAsync">
+                    @if (availableCourses.Count == 0)
+                    {
+                        <ActionableEmptyState Title="@L["NoAvailableCoursesTitle"]" Detail="@L["NoAvailableCourses"]" />
+                    }
+                    else
+                    {
+                        <MudStack Spacing="2">
+                            @foreach (var overview in availableCourses)
+                            {
+                                var course = overview.Course;
+                                var nextDate = GetUpcomingDates(course).FirstOrDefault();
+                                <div class="pl-list-row-comfortable">
+                                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
+                                        <MudStack Spacing="1" Style="min-width:0;">
+                                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Style="flex-wrap:wrap;">
+                                                <MudText Typo="Typo.subtitle2">@course.Name</MudText>
+                                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@FormatCourseLevel(course.Level)</MudChip>
+                                            </MudStack>
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatShortPeriod(course)</MudText>
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatUpcomingDate(nextDate)</MudText>
+                                        </MudStack>
+                                        <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => JoinCourseAsync(course.Id))">@L["Join"]</MudButton>
                                     </MudStack>
-                                }
-                            </MudStack>
-                        </MudPaper>
-                        </MudFocusTrap>
-                    </div>
-                }
+                                </div>
+                            }
+                        </MudStack>
+                    }
+                </BottomSheet>
 
                 @if (selected is not null)
                 {
@@ -386,12 +362,6 @@
         Plan
     }
 
-    private void HandleCoursePickerKeyDown(KeyboardEventArgs args)
-    {
-        if (args.Key == "Escape")
-            CloseCoursePicker();
-    }
-
     [SupplyParameterFromQuery(Name = "section")]
     public string? SectionQuery { get; set; }
 
@@ -585,67 +555,115 @@
         _isCoursePickerOpen = false;
     }
 
+    private Task CloseCoursePickerAsync()
+    {
+        CloseCoursePicker();
+        return Task.CompletedTask;
+    }
+
     private async Task JoinCourseAsync(string courseId)
     {
+        var previous = _courses;
         try
         {
             _selectedCourseId = courseId;
-            await CourseService.JoinCourseAsync(courseId, _userId ?? string.Empty);
-            Snackbar.Add(L["JoinSuccess"], Severity.Success);
+            _courses = _courses.Select(overview => overview.Course.Id == courseId
+                ? new CourseOverview(overview.Course, new CourseEnrollmentDocument
+                {
+                    CourseId = courseId,
+                    AthleteUserId = _userId ?? string.Empty,
+                    Status = CourseEnrollmentStatus.Active,
+                    RegisteredAt = DateTime.UtcNow
+                })
+                : overview).ToList();
             _isCoursePickerOpen = false;
             ResetDetailExpansion();
+            await CourseService.JoinCourseAsync(courseId, _userId ?? string.Empty);
             await LoadCoursesAsync();
+            Snackbar.Add(L["JoinSuccess"], Severity.Success);
         }
         catch (Exception ex)
         {
+            _courses = previous;
             Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task LeaveCourseAsync(string courseId, string courseName)
     {
+        var previous = _courses;
         try
         {
-            var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["LeaveConfirm"], courseName), destructive: false);
-            if (!confirmed)
-                return;
-
-            _selectedCourseId = courseId;
-            await CourseService.LeaveCourseAsync(courseId, _userId ?? string.Empty);
-            Snackbar.Add(L["LeaveSuccess"], Severity.Success);
+            _courses = _courses.Select(overview => overview.Course.Id == courseId
+                ? new CourseOverview(overview.Course, new CourseEnrollmentDocument
+                {
+                    CourseId = courseId,
+                    AthleteUserId = _userId ?? string.Empty,
+                    Status = CourseEnrollmentStatus.Cancelled,
+                    CancelledAt = DateTime.UtcNow
+                })
+                : overview).ToList();
+            _selectedCourseId = JoinedCourses.FirstOrDefault()?.Course.Id;
             ResetDetailExpansion();
+            await CourseService.LeaveCourseAsync(courseId, _userId ?? string.Empty);
             await LoadCoursesAsync();
+            Undo.Offer(string.Format(L["LeaveSuccessNamed"], courseName), L["Undo"], async () =>
+            {
+                await CourseService.JoinCourseAsync(courseId, _userId ?? string.Empty);
+                _selectedCourseId = courseId;
+                await LoadCoursesAsync();
+            });
         }
         catch (Exception ex)
         {
+            _courses = previous;
+            _selectedCourseId = courseId;
             Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task RegisterForEventAsync(string courseId, string eventId)
     {
+        var hadPrevious = _registeredEvents.TryGetValue(eventId, out var previous);
         try
         {
+            _registeredEvents[eventId] = new CourseEventRegistrationDocument
+            {
+                CourseId = courseId,
+                EventId = eventId,
+                AthleteUserId = _userId ?? string.Empty,
+                Status = CourseEventRegistrationStatus.Registered,
+                RegisteredAt = DateTime.UtcNow
+            };
             var registration = await CourseService.RegisterForEventAsync(courseId, eventId, _userId ?? string.Empty);
             _registeredEvents[eventId] = registration;
             Snackbar.Add(L["RegisterSuccess"], Severity.Success);
         }
         catch (Exception ex)
         {
+            if (hadPrevious && previous is not null) _registeredEvents[eventId] = previous;
+            else _registeredEvents.Remove(eventId);
             Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task CancelEventRegistrationAsync(string courseId, string eventId)
     {
+        var hadPrevious = _registeredEvents.TryGetValue(eventId, out var previous);
         try
         {
-            await CourseService.CancelEventRegistrationAsync(courseId, eventId, _userId ?? string.Empty);
             _registeredEvents.Remove(eventId);
-            Snackbar.Add(L["CancelRegistrationSuccess"], Severity.Success);
+            await CourseService.CancelEventRegistrationAsync(courseId, eventId, _userId ?? string.Empty);
+            Undo.Offer(L["CancelRegistrationSuccess"], L["Undo"], async () =>
+            {
+                var restored = await CourseService.RegisterForEventAsync(courseId, eventId, _userId ?? string.Empty);
+                _registeredEvents[eventId] = restored;
+                await InvokeAsync(StateHasChanged);
+            });
         }
         catch (Exception ex)
         {
+            if (hadPrevious && previous is not null) _registeredEvents[eventId] = previous;
             Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }

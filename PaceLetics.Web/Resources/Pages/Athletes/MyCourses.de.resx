@@ -88,4 +88,6 @@
   <data name="NoJoinedCoursesTitle" xml:space="preserve"><value>Wähle deinen ersten Kurs</value></data>
   <data name="NoAvailableCoursesTitle" xml:space="preserve"><value>Du bist auf dem neuesten Stand</value></data>
   <data name="CourseActions" xml:space="preserve"><value>Kursaktionen</value></data>
+  <data name="Undo" xml:space="preserve"><value>Rückgängig</value></data>
+  <data name="LeaveSuccessNamed" xml:space="preserve"><value>Du hast {0} verlassen.</value></data>
 </root>

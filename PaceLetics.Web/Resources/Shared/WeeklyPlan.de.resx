@@ -19,4 +19,5 @@
   <data name="IntensityModerate" xml:space="preserve"><value>mittel</value></data>
   <data name="IntensityHigh" xml:space="preserve"><value>intensiv</value></data>
   <data name="CourseEvent" xml:space="preserve"><value>Kurstermin</value></data>
+  <data name="ChangedBecause" xml:space="preserve"><value>Geändert, weil: {0}</value></data>
 </root>

@@ -1,151 +1,226 @@
 @page "/"
 @using AthleteDataAccessLibrary.Contracts
 @using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.CoreModule.Infrastructure.Models
+@using PaceLetics.CoreModule.Infrastructure.Services
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services.Calendar
+@using PaceLetics.Web.Services.DashboardPreferences
+@using PaceLetics.Web.Services.Integrations
 @inject IAthleteData AthleteData
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ITrainingPlanService TrainingPlanService
 @inject ITrainingCalendarService CalendarService
 @inject IAchievementService AchievementService
 @inject ITrainingFeedbackService FeedbackService
-@inject LoadingStateService Loading
+@inject IAthleteMessageFeedService MessageFeedService
+@inject DashboardPreferencesService DashboardPreferences
+@inject IntegrationStatusService IntegrationStatus
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Dashboard> L
 
 <PageTitle>@L["TodayPageTitle"]</PageTitle>
 
 <MudContainer Class="pl-section-page px-4 px-sm-6 pb-8 pl-today-page" MaxWidth="MaxWidth.Medium">
-    <PageHeader Title="@GetGreeting()" Subtitle="@L["TodaySubtitle"]" />
+    <PageHeader Title="@GetGreeting()" Subtitle="@L["TodaySubtitle"]">
+        <Actions>
+            <MudIconButton Icon="@Icons.Material.Filled.Tune"
+                           Color="Color.Primary"
+                           OnClick="@(() => _customizeOpen = true)"
+                           aria-label="@L["CustomizeDashboard"]" />
+        </Actions>
+    </PageHeader>
 
     <MudStack Spacing="4" Class="pt-4">
-        @if (_hasLoadError)
+        @if (_isLoading)
         {
-            <RetryAlert Message="@L["PartialLoadError"]" OnRetry="LoadDashboardAsync" />
+            <div class="pl-skeleton-stack" aria-busy="true" aria-label="@L["Loading"]">
+                <SkeletonBlock Height="68px" />
+                <SkeletonBlock Height="260px" />
+                <SkeletonBlock Height="132px" />
+            </div>
         }
-
-        <section class="@GetRecommendationClass()" aria-labelledby="daily-guidance-title">
-            <span class="pl-guidance__icon"><MudIcon Icon="@GetRecommendationIcon()" /></span>
-            <span>
-                <MudText Typo="Typo.subtitle2" HtmlTag="h2" id="daily-guidance-title">@GetRecommendationTitle()</MudText>
-                <MudText Typo="Typo.body2">@GetRecommendationDetail()</MudText>
-            </span>
-        </section>
-
-        <section class="pl-today-hero" aria-labelledby="today-training-title">
-            @if (NextSession is { } next)
-            {
-                <MudStack Spacing="3">
-                    <div class="pl-today-hero__heading">
-                        <span>
-                            <MudText Typo="Typo.overline" Color="Color.Primary">@GetNextLabel(next.Session)</MudText>
-                            <MudText Typo="Typo.h4" HtmlTag="h2" id="today-training-title">@next.Session.Name</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetSessionDate(next.Session)</MudText>
-                        </span>
-                        <span class="pl-today-hero__duration">
-                            <strong>@TrainingSessionPresentation.EstimateDurationMinutes(next.Session)</strong>
-                            <small>@L["MinutesShort"]</small>
-                        </span>
-                    </div>
-
-                    <TrainingSessionSummary Session="@next.Session" Compact="true" />
-
-                    <MudButton Href="@GetSessionHref(next)"
-                               Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               Size="Size.Large"
-                               FullWidth="true"
-                               StartIcon="@Icons.Material.Filled.PlayArrow">
-                        @L["StartTraining"]
-                    </MudButton>
-                </MudStack>
-            }
-            else
-            {
-                <MudStack Spacing="3" AlignItems="AlignItems.Center" Class="py-4">
-                    <span class="pl-today-hero__empty-icon"><MudIcon Icon="@Icons.Material.Filled.EventAvailable" Size="Size.Large" /></span>
-                    <MudText Typo="Typo.h5" HtmlTag="h2" id="today-training-title" Align="Align.Center">@L["NoTrainingTitle"]</MudText>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary" Align="Align.Center">@L["NoTrainingDetail"]</MudText>
-                    <MudButton Href="/Athletes/plan"
-                               Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               FullWidth="true"
-                               StartIcon="@Icons.Material.Filled.CalendarMonth">
-                        @L["OpenPlan"]
-                    </MudButton>
-                </MudStack>
-            }
-        </section>
-
-        <section class="pl-today-section" aria-labelledby="week-title">
-            <div class="pl-today-section__heading">
-                <span>
-                    <MudText Typo="Typo.h6" HtmlTag="h2" id="week-title">@L["ThisWeek"]</MudText>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary">@GetWeekProgressText()</MudText>
-                </span>
-                <a href="/Athletes/plan">@L["ViewPlan"]</a>
-            </div>
-            <div class="pl-today-week" aria-label="@GetWeekProgressText()">
-                @foreach (var day in CurrentWeekDays)
-                {
-                    var state = GetDayState(day);
-                    <a class="@GetWeekDayClass(day, state)" href="/Athletes/plan">
-                        <small>@day.ToString("ddd")</small>
-                        <strong>@day.Day</strong>
-                        <span aria-hidden="true"></span>
-                    </a>
-                }
-            </div>
-        </section>
-
-        <section class="pl-today-section" aria-labelledby="progress-title">
-            <div class="pl-today-section__heading">
-                <span>
-                    <MudText Typo="Typo.h6" HtmlTag="h2" id="progress-title">@L["Progress"]</MudText>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["ProgressSubtitle"]</MudText>
-                </span>
-                <a href="/Athletes/data-analyses">@L["ViewProgress"]</a>
-            </div>
-            <div class="pl-today-stats">
-                <div>
-                    <small>@L["Vdot"]</small>
-                    <strong>@GetVdot()</strong>
-                </div>
-                <div>
-                    <small>@L["SessionsCompleted"]</small>
-                    <strong>@_completions.Count</strong>
-                </div>
-                <div>
-                    <small>@L["FeedbackLast28Days"]</small>
-                    <strong>@_recentFeedbackCount</strong>
-                </div>
-            </div>
-        </section>
-
-        @if (NextNonTrainingItem is { } notice)
+        else
         {
-            <section class="pl-today-section" aria-labelledby="notice-title">
-                <div class="pl-today-section__heading">
-                    <span>
-                        <MudText Typo="Typo.h6" HtmlTag="h2" id="notice-title">@L["Notice"]</MudText>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NextCourseDate"]</MudText>
-                    </span>
-                </div>
-                <a class="pl-today-notice" href="/Athletes/plan">
-                    <span class="pl-today-notice__date">
-                        <strong>@notice.StartsAt.Day</strong>
-                        <small>@notice.StartsAt.ToString("MMM")</small>
-                    </span>
-                    <span>
-                        <strong>@notice.Title</strong>
-                        <small>@GetNoticeMeta(notice)</small>
-                    </span>
-                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
-                </a>
-            </section>
+            @if (_hasLoadError)
+            {
+                <RetryAlert Message="@L["PartialLoadError"]" OnRetry="LoadDashboardAsync" />
+            }
+
+            @foreach (var dashboardSection in VisibleSections)
+            {
+                @switch (dashboardSection.Key)
+                {
+                    case DashboardSectionKeys.Readiness:
+                        <section class="@GetRecommendationClass()" aria-labelledby="daily-guidance-title">
+                            <span class="pl-guidance__icon"><MudIcon Icon="@GetRecommendationIcon()" /></span>
+                            <span>
+                                <MudText Typo="Typo.subtitle2" HtmlTag="h2" id="daily-guidance-title">@GetRecommendationTitle()</MudText>
+                                <MudText Typo="Typo.body2">@GetRecommendationDetail()</MudText>
+                                <MudText Typo="Typo.caption" Class="pl-guidance__disclaimer">@L["ReadinessDisclaimer"]</MudText>
+                            </span>
+                        </section>
+                        break;
+
+                    case DashboardSectionKeys.NextSession:
+                        <section class="pl-today-hero" aria-labelledby="today-training-title">
+                            @if (NextSession is { } next)
+                            {
+                                <MudStack Spacing="3">
+                                    <div class="pl-today-hero__heading">
+                                        <span>
+                                            <MudText Typo="Typo.overline" Color="Color.Primary">@GetNextLabel(next.Session)</MudText>
+                                            <MudText Typo="Typo.h4" HtmlTag="h2" id="today-training-title">@next.Session.Name</MudText>
+                                            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetSessionDate(next.Session)</MudText>
+                                        </span>
+                                        <span class="pl-today-hero__duration">
+                                            <strong>@TrainingSessionPresentation.EstimateDurationMinutes(next.Session)</strong>
+                                            <small>@L["MinutesShort"]</small>
+                                        </span>
+                                    </div>
+
+                                    <TrainingSessionSummary Session="@next.Session" Compact="true" />
+
+                                    <MudButton Href="@GetSessionHref(next)"
+                                               Variant="Variant.Filled"
+                                               Color="Color.Primary"
+                                               Size="Size.Large"
+                                               FullWidth="true"
+                                               StartIcon="@Icons.Material.Filled.PlayArrow">
+                                        @L["StartTraining"]
+                                    </MudButton>
+                                </MudStack>
+                            }
+                            else
+                            {
+                                <MudStack Spacing="3" AlignItems="AlignItems.Center" Class="py-4">
+                                    <span class="pl-today-hero__empty-icon"><MudIcon Icon="@Icons.Material.Filled.EventAvailable" Size="Size.Large" /></span>
+                                    <MudText Typo="Typo.h5" HtmlTag="h2" id="today-training-title" Align="Align.Center">@L["NoTrainingTitle"]</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary" Align="Align.Center">@L["NoTrainingDetail"]</MudText>
+                                    <MudButton Href="/Athletes/plan" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" StartIcon="@Icons.Material.Filled.CalendarMonth">
+                                        @L["OpenPlan"]
+                                    </MudButton>
+                                </MudStack>
+                            }
+                        </section>
+                        break;
+
+                    case DashboardSectionKeys.Week:
+                        <section class="pl-today-section" aria-labelledby="week-title">
+                            <div class="pl-today-section__heading">
+                                <span>
+                                    <MudText Typo="Typo.h6" HtmlTag="h2" id="week-title">@L["WeeklySummary"]</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@GetWeekProgressText()</MudText>
+                                </span>
+                                <a href="/Athletes/plan">@L["ViewPlan"]</a>
+                            </div>
+                            <div class="pl-week-summary">
+                                <div><small>@L["WeeklyDistance"]</small><strong>@GetWeeklyDistance()</strong></div>
+                                <div><small>@L["WeeklyCompleted"]</small><strong>@GetWeeklyCompletionRatio()</strong></div>
+                                <div><small>@L["WeeklyIntensity"]</small><strong>@GetWeeklyIntensity()</strong></div>
+                            </div>
+                            <div class="pl-today-week" aria-label="@GetWeekProgressText()">
+                                @foreach (var day in CurrentWeekDays)
+                                {
+                                    var state = GetDayState(day);
+                                    <a class="@GetWeekDayClass(day, state)" href="/Athletes/plan">
+                                        <small>@day.ToString("ddd")</small><strong>@day.Day</strong><span aria-hidden="true"></span>
+                                    </a>
+                                }
+                            </div>
+                            <p class="pl-week-summary__recommendation"><MudIcon Icon="@Icons.Material.Filled.AutoAwesome" Size="Size.Small" /> @GetNextWeekRecommendation()</p>
+                        </section>
+                        break;
+
+                    case DashboardSectionKeys.Progress:
+                        <section class="pl-today-section pl-progress-story" aria-labelledby="progress-title">
+                            <div class="pl-today-section__heading">
+                                <span>
+                                    <MudText Typo="Typo.h6" HtmlTag="h2" id="progress-title">@L["ProgressStory"]</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@GetProgressStory()</MudText>
+                                </span>
+                                <a href="/Athletes/data-analyses">@L["ViewProgress"]</a>
+                            </div>
+                            <div class="pl-today-stats">
+                                <div><small>@L["Vdot"]</small><strong>@GetVdot()</strong></div>
+                                <div><small>@L["ThresholdPace"]</small><strong>@GetThresholdPace()</strong></div>
+                                <div><small>@L["SessionsCompleted"]</small><strong>@_completions.Count</strong></div>
+                            </div>
+                        </section>
+                        break;
+
+                    case DashboardSectionKeys.Context:
+                        @if (NextSession is { } contextSession && GetSessionStart(contextSession.Session).Date <= DateTime.Today.AddDays(1))
+                        {
+                            <TrainingContextCard Session="@contextSession.Session" />
+                        }
+                        break;
+
+                    case DashboardSectionKeys.Messages:
+                        <section class="pl-today-section" aria-label="@L["MessagesSection"]">
+                            <DashboardMessageFeed Messages="@_messages" />
+                        </section>
+                        break;
+
+                    case DashboardSectionKeys.Integrations:
+                        <section class="pl-today-section" aria-labelledby="integration-title">
+                            <div class="pl-today-section__heading">
+                                <span>
+                                    <MudText Typo="Typo.h6" HtmlTag="h2" id="integration-title">@L["IntegrationStatus"]</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@GetIntegrationSummary()</MudText>
+                                </span>
+                            </div>
+                            <div class="pl-integration-grid">
+                                @foreach (var integration in _integrations)
+                                {
+                                    <div class="@(integration.IsConnected ? "pl-integration pl-integration--connected" : "pl-integration")">
+                                        <span class="pl-integration__dot" aria-hidden="true"></span>
+                                        <span><strong>@GetProviderName(integration.Provider)</strong><small>@GetIntegrationDetail(integration)</small></span>
+                                        @if (integration.HasReadySession) { <MudIcon Icon="@Icons.Material.Filled.CloudDone" Size="Size.Small" /> }
+                                    </div>
+                                }
+                            </div>
+                        </section>
+                        break;
+                }
+            }
+
+            @if (NextNonTrainingItem is { } notice)
+            {
+                <section class="pl-today-section" aria-labelledby="notice-title">
+                    <div class="pl-today-section__heading">
+                        <span><MudText Typo="Typo.h6" HtmlTag="h2" id="notice-title">@L["Notice"]</MudText><MudText Typo="Typo.body2" Color="Color.Secondary">@L["NextCourseDate"]</MudText></span>
+                    </div>
+                    <a class="pl-today-notice" href="/Athletes/plan">
+                        <span class="pl-today-notice__date"><strong>@notice.StartsAt.Day</strong><small>@notice.StartsAt.ToString("MMM")</small></span>
+                        <span><strong>@notice.Title</strong><small>@GetNoticeMeta(notice)</small></span>
+                        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                    </a>
+                </section>
+            }
         }
     </MudStack>
 </MudContainer>
+
+<BottomSheet Open="@_customizeOpen" Title="@L["CustomizeDashboard"]" CloseLabel="@L["Close"]" OnClose="CloseCustomize">
+    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-3">@L["CustomizeHint"]</MudText>
+    <div class="pl-dashboard-editor">
+        @foreach (var section in OrderedSections)
+        {
+            <div class="pl-dashboard-editor__row">
+                <MudCheckBox T="bool" Value="@section.Visible" ValueChanged="@(value => SetSectionVisibility(section.Key, value))" Label="@GetSectionLabel(section.Key)" />
+                <span>
+                    <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowUp" Size="Size.Small" Disabled="@(section.Order == 0)" OnClick="@(() => MoveSection(section.Key, -1))" aria-label="@L["MoveUp"]" />
+                    <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" Disabled="@(section.Order == _sections.Count - 1)" OnClick="@(() => MoveSection(section.Key, 1))" aria-label="@L["MoveDown"]" />
+                </span>
+            </div>
+        }
+    </div>
+    <div class="pl-sheet-actions">
+        <MudButton Variant="Variant.Text" OnClick="ResetSections">@L["Reset"]</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveSectionsAsync">@L["Save"]</MudButton>
+    </div>
+</BottomSheet>
 
 @code {
     [SupplyParameterFromQuery(Name = "section")]
@@ -156,9 +231,31 @@
     private IReadOnlyList<TrainingPlan> _plans = Array.Empty<TrainingPlan>();
     private IReadOnlyList<TrainingCalendarItem> _calendarItems = Array.Empty<TrainingCalendarItem>();
     private IReadOnlyList<TrainingSessionCompletionDocument> _completions = Array.Empty<TrainingSessionCompletionDocument>();
+    private IReadOnlyList<TrainingFeedbackDocument> _feedback = Array.Empty<TrainingFeedbackDocument>();
+    private IReadOnlyList<AthleteMessage> _messages = Array.Empty<AthleteMessage>();
+    private IReadOnlyList<IntegrationStatus> _integrations = IntegrationProviders.All.Select(provider => new IntegrationStatus(provider)).ToList();
+    private List<DashboardSectionPreference> _sections = DashboardPreferencesService.CreateDefault().ToList();
     private TrainingRecommendation _recommendation = new(TrainingRecommendationKind.NoData, 0);
     private int _recentFeedbackCount;
     private bool _hasLoadError;
+    private bool _isLoading = true;
+    private bool _customizeOpen;
+
+    private IEnumerable<DashboardSectionPreference> OrderedSections => _sections.OrderBy(section => section.Order);
+    private IEnumerable<DashboardSectionPreference> VisibleSections => OrderedSections.Where(section => section.Visible);
+
+    private IReadOnlyList<PlannedSession> WeeklySessions
+    {
+        get
+        {
+            var days = CurrentWeekDays.ToList();
+            return _plans
+                .SelectMany(plan => plan.Sessions.Select(session => new PlannedSession(plan.Id, session)))
+                .Where(item => GetSessionStart(item.Session).Date >= days[0].Date && GetSessionStart(item.Session).Date <= days[^1].Date)
+                .OrderBy(item => GetSessionStart(item.Session))
+                .ToList();
+        }
+    }
 
     private PlannedSession? NextSession
     {
@@ -203,10 +300,21 @@
 
     protected override async Task OnInitializedAsync() => await LoadDashboardAsync();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        _sections = (await DashboardPreferences.GetAsync()).ToList();
+        _integrations = await IntegrationStatus.GetAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
     private async Task LoadDashboardAsync()
     {
         _hasLoadError = false;
-        await Loading.RunAsync(L["Loading"], async () =>
+        _isLoading = true;
+        try
         {
             var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var userId = state.User.FindFirst(claim =>
@@ -237,19 +345,33 @@
                 _plans = await plansTask;
                 _calendarItems = await calendarTask;
                 _completions = await completionsTask;
-                _recentFeedbackCount = (await feedbackTask).Count;
+                _feedback = await feedbackTask;
+                _recentFeedbackCount = _feedback.Count;
                 _recommendation = await FeedbackService.GetRecommendationAsync(userId, NextSession is not null);
+                _messages = MessageFeedService.Build(new AthleteMessageContext(
+                    _athlete?.AthleteId ?? _athlete?.Id ?? userId,
+                    _name,
+                    _athlete?.Vdot ?? 0,
+                    _athlete?.ActiveReferenceResult,
+                    _athlete?.SelectedTrainingPlanId,
+                    DateTime.Today));
             }
             catch
             {
                 _plans = Array.Empty<TrainingPlan>();
                 _calendarItems = Array.Empty<TrainingCalendarItem>();
                 _completions = Array.Empty<TrainingSessionCompletionDocument>();
+                _feedback = Array.Empty<TrainingFeedbackDocument>();
+                _messages = Array.Empty<AthleteMessage>();
                 _recommendation = new TrainingRecommendation(TrainingRecommendationKind.NoData, 0);
                 _recentFeedbackCount = 0;
                 _hasLoadError = true;
             }
-        });
+        }
+        finally
+        {
+            _isLoading = false;
+        }
     }
 
     private string GetGreeting()
@@ -311,13 +433,7 @@
 
     private string GetWeekProgressText()
     {
-        var days = CurrentWeekDays.ToList();
-        var start = days[0].Date;
-        var end = days[^1].Date;
-        var planned = _plans
-            .SelectMany(plan => plan.Sessions.Select(session => new PlannedSession(plan.Id, session)))
-            .Where(item => GetSessionStart(item.Session).Date >= start && GetSessionStart(item.Session).Date <= end)
-            .ToList();
+        var planned = WeeklySessions;
         var completedKeys = _completions.Select(item => CompletionKey(item.PlanId, item.SessionId))
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var completed = planned.Count(item => completedKeys.Contains(CompletionKey(item.PlanId, item.Session.Id)));
@@ -352,6 +468,138 @@
     }
 
     private string GetVdot() => _athlete?.Vdot > 0 ? _athlete.Vdot.ToString("0.0") : "–";
+
+    private string GetThresholdPace() => _athlete?.PaceModel.Threshold.TotalSeconds > 0
+        ? $"{_athlete.PaceModel.Threshold:mm\\:ss} /km"
+        : "-";
+
+    private string GetProgressStory()
+    {
+        var results = (_athlete?.RaceResults ?? [])
+            .Where(result => result.DistanceM > 0 && result.Time.TotalSeconds > 0)
+            .OrderByDescending(result => result.Date)
+            .ToList();
+        if (results.Count == 0)
+            return L["ProgressBaseline"];
+
+        var latest = results[0];
+        var previous = results.Skip(1).FirstOrDefault(result => result.DistanceM == latest.DistanceM);
+        if (previous is null)
+            return L["ProgressNewReference", latest.DistanceM / 1000d];
+
+        var previousPace = previous.Time.TotalSeconds / (previous.DistanceM / 1000d);
+        var latestPace = latest.Time.TotalSeconds / (latest.DistanceM / 1000d);
+        var seconds = (int)Math.Round(previousPace - latestPace);
+        var percent = previousPace <= 0 ? 0 : (previousPace - latestPace) / previousPace * 100;
+        var weeks = Math.Max(1, (int)Math.Round((latest.Date - previous.Date).TotalDays / 7d));
+        return seconds > 0
+            ? L["ProgressImproved", weeks, percent, seconds]
+            : L["ProgressStable", weeks];
+    }
+
+    private string GetWeeklyDistance()
+    {
+        var completedKeys = _completions.Select(item => CompletionKey(item.PlanId, item.SessionId))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var planned = WeeklySessions.Sum(item => item.Session.TotalRunDistance) / 1000d;
+        var completed = WeeklySessions
+            .Where(item => completedKeys.Contains(CompletionKey(item.PlanId, item.Session.Id)))
+            .Sum(item => item.Session.TotalRunDistance) / 1000d;
+        return L["DistanceRatio", completed, planned];
+    }
+
+    private string GetWeeklyCompletionRatio()
+    {
+        var completedKeys = _completions.Select(item => CompletionKey(item.PlanId, item.SessionId))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return $"{WeeklySessions.Count(item => completedKeys.Contains(CompletionKey(item.PlanId, item.Session.Id)))}/{WeeklySessions.Count}";
+    }
+
+    private string GetWeeklyIntensity()
+    {
+        var easy = WeeklySessions.Count(item => TrainingSessionPresentation.GetIntensity(item.Session) == TrainingIntensity.Easy);
+        var moderate = WeeklySessions.Count(item => TrainingSessionPresentation.GetIntensity(item.Session) == TrainingIntensity.Moderate);
+        var high = WeeklySessions.Count(item => TrainingSessionPresentation.GetIntensity(item.Session) == TrainingIntensity.High);
+        return L["IntensitySummary", easy, moderate, high];
+    }
+
+    private string GetNextWeekRecommendation()
+    {
+        if (WeeklySessions.Count == 0)
+            return L["RecommendationPlanWeek"];
+        if (_recommendation.Kind is TrainingRecommendationKind.PrioritizeRecovery or TrainingRecommendationKind.TakeItEasy)
+            return L["RecommendationRecovery"];
+
+        var completedKeys = _completions.Select(item => CompletionKey(item.PlanId, item.SessionId))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var completed = WeeklySessions.Count(item => completedKeys.Contains(CompletionKey(item.PlanId, item.Session.Id)));
+        return completed >= WeeklySessions.Count
+            ? L["RecommendationProgress"]
+            : L["RecommendationConsistency"];
+    }
+
+    private string GetIntegrationSummary()
+    {
+        var connected = _integrations.Count(item => item.IsConnected);
+        return connected == 0 ? L["NoIntegrations"] : L["ConnectedIntegrations", connected];
+    }
+
+    private string GetIntegrationDetail(IntegrationStatus integration)
+    {
+        if (!integration.IsConnected)
+            return L["NotConnected"];
+        if (!string.IsNullOrWhiteSpace(integration.Error))
+            return L["SyncError"];
+        return integration.LastSyncAt is { } lastSync
+            ? L["LastSync", lastSync.ToLocalTime()]
+            : L["Connected"];
+    }
+
+    private static string GetProviderName(string provider) => provider switch
+    {
+        IntegrationProviders.Garmin => "Garmin",
+        IntegrationProviders.Apple => "Apple Health",
+        IntegrationProviders.Coros => "COROS",
+        IntegrationProviders.Strava => "Strava",
+        _ => provider
+    };
+
+    private string GetSectionLabel(string key) => key switch
+    {
+        DashboardSectionKeys.Readiness => L["SectionReadiness"],
+        DashboardSectionKeys.NextSession => L["SectionNextSession"],
+        DashboardSectionKeys.Week => L["SectionWeek"],
+        DashboardSectionKeys.Progress => L["SectionProgress"],
+        DashboardSectionKeys.Context => L["SectionContext"],
+        DashboardSectionKeys.Messages => L["SectionMessages"],
+        DashboardSectionKeys.Integrations => L["SectionIntegrations"],
+        _ => key
+    };
+
+    private void SetSectionVisibility(string key, bool visible)
+    {
+        _sections = _sections.Select(item => item.Key == key ? item with { Visible = visible } : item).ToList();
+    }
+
+    private void MoveSection(string key, int direction)
+    {
+        var ordered = OrderedSections.ToList();
+        var current = ordered.FindIndex(item => item.Key == key);
+        var target = current + direction;
+        if (current < 0 || target < 0 || target >= ordered.Count)
+            return;
+        (ordered[current], ordered[target]) = (ordered[target], ordered[current]);
+        _sections = ordered.Select((item, index) => item with { Order = index }).ToList();
+    }
+
+    private void ResetSections() => _sections = DashboardPreferencesService.CreateDefault().ToList();
+    private Task CloseCustomize() { _customizeOpen = false; return Task.CompletedTask; }
+
+    private async Task SaveSectionsAsync()
+    {
+        await DashboardPreferences.SaveAsync(_sections);
+        _customizeOpen = false;
+    }
 
     private static string GetNoticeMeta(TrainingCalendarItem item)
     {

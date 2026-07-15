@@ -1,32 +1,229 @@
 @page "/Trainers"
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
-@inject IStringLocalizer<NavMenu> L
+@using PaceLetics.Web.Services.Trainer
+@using PaceLetics.Web.Services.TrainingFeedback
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject TrainerWorkspaceService Workspace
+@inject NavigationManager Navigation
+@inject IStringLocalizer<TrainerHub> L
 
-<PageTitle>@L["TrainerArea"]</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
-<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8" MaxWidth="MaxWidth.Small">
-    <PageHeader Title="@L["TrainerArea"]" Subtitle="@L["TrainerAreaSubtitle"]" />
-    <nav class="pl-more-list pt-3" aria-label="@L["TrainerArea"]">
-        @foreach (var item in Items)
-        {
-            <a class="pl-more-list__item" href="@item.Href">
-                <span><strong>@item.Label</strong></span>
-                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
-            </a>
-        }
-    </nav>
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8 pl-trainer-workspace" MaxWidth="MaxWidth.Large">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]">
+        <Actions>
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Search"
+                       OnClick="@(() => _commandOpen = true)">
+                @L["Search"]
+            </MudButton>
+        </Actions>
+    </PageHeader>
+
+    @if (_isLoading)
+    {
+        <div class="pl-skeleton-stack pt-4" aria-busy="true" aria-label="@L["Loading"]">
+            <SkeletonBlock Height="96px" />
+            <SkeletonBlock Height="180px" />
+            <SkeletonBlock Height="180px" />
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(_error))
+    {
+        <div class="pt-4"><RetryAlert Message="@_error" OnRetry="LoadAsync" /></div>
+    }
+    else
+    {
+        <MudStack Spacing="4" Class="pt-4">
+            <section class="pl-trainer-kpis" aria-label="@L["Overview"]">
+                <a href="#today"><small>@L["TodaySessions"]</small><strong>@_snapshot.Today.Count</strong></a>
+                <a href="#feedback"><small>@L["NewMessages"]</small><strong>@_snapshot.NewMessageCount</strong></a>
+                <a href="/Trainers/running-analyses"><small>@L["PendingAnalyses"]</small><strong>@_snapshot.PendingAnalysisCount</strong></a>
+                <a href="#deviations"><small>@L["PlanDeviations"]</small><strong>@_snapshot.Deviations.Count</strong></a>
+            </section>
+
+            <section class="pl-trainer-panel" id="today" aria-labelledby="trainer-today-title">
+                <div class="pl-trainer-panel__heading">
+                    <span><MudText Typo="Typo.h6" HtmlTag="h2" id="trainer-today-title">@L["Today"]</MudText><MudText Typo="Typo.body2" Color="Color.Secondary">@DateTime.Today.ToString("dddd, dd. MMMM")</MudText></span>
+                    <MudChip T="string" Size="Size.Small" Color="@(_snapshot.PendingMembershipCount > 0 ? Color.Warning : Color.Default)" Variant="Variant.Outlined">
+                        @L["OpenRequests", _snapshot.PendingMembershipCount]
+                    </MudChip>
+                </div>
+                @if (_snapshot.Today.Count == 0)
+                {
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoSessionsToday"]</MudText>
+                }
+                else
+                {
+                    <div class="pl-trainer-list">
+                        @foreach (var item in _snapshot.Today)
+                        {
+                            <a href="@item.Href">
+                                <time>@item.StartsAt.ToString("HH:mm")</time>
+                                <span><strong>@item.Title</strong><small>@GetMeta(item.CourseName, item.Location)</small></span>
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                            </a>
+                        }
+                    </div>
+                }
+            </section>
+
+            <div class="pl-trainer-columns">
+                <section class="pl-trainer-panel" id="deviations" aria-labelledby="deviation-title">
+                    <div class="pl-trainer-panel__heading">
+                        <span><MudText Typo="Typo.h6" HtmlTag="h2" id="deviation-title">@L["AthletesWithDeviations"]</MudText><MudText Typo="Typo.body2" Color="Color.Secondary">@L["DeviationWindow"]</MudText></span>
+                    </div>
+                    @if (_snapshot.Deviations.Count == 0)
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoDeviations"]</MudText>
+                    }
+                    else
+                    {
+                        <div class="pl-trainer-list">
+                            @foreach (var item in _snapshot.Deviations.Take(6))
+                            {
+                                <a href="@item.Href">
+                                    <span class="pl-trainer-avatar">@GetInitials(item.AthleteName)</span>
+                                    <span><strong>@item.AthleteName</strong><small>@L["MissedSessions", item.MissedSessions, item.PlannedSessions]</small></span>
+                                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                                </a>
+                            }
+                        </div>
+                    }
+                </section>
+
+                <section class="pl-trainer-panel" id="feedback" aria-labelledby="feedback-title">
+                    <div class="pl-trainer-panel__heading">
+                        <span><MudText Typo="Typo.h6" HtmlTag="h2" id="feedback-title">@L["RecentFeedback"]</MudText><MudText Typo="Typo.body2" Color="Color.Secondary">@L["FeedbackSubtitle"]</MudText></span>
+                    </div>
+                    @if (_snapshot.RecentFeedback.Count == 0)
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoFeedback"]</MudText>
+                    }
+                    else
+                    {
+                        <div class="pl-trainer-feedback">
+                            @foreach (var item in _snapshot.RecentFeedback.Take(6))
+                            {
+                                <a href="@item.Href">
+                                    <span><strong>@item.AthleteName</strong><small>@item.TrainingName · @item.CompletedAt.ToLocalTime().ToString("dd.MM., HH:mm")</small></span>
+                                    <span class="pl-trainer-feedback__score">@item.Effort/10</span>
+                                    @if (!string.IsNullOrWhiteSpace(item.Comment)) { <q>@item.Comment</q> }
+                                </a>
+                            }
+                        </div>
+                    }
+                </section>
+            </div>
+
+            <section class="pl-trainer-panel" aria-labelledby="workspace-links-title">
+                <div class="pl-trainer-panel__heading"><MudText Typo="Typo.h6" HtmlTag="h2" id="workspace-links-title">@L["Workspace"]</MudText></div>
+                <nav class="pl-trainer-tools" aria-label="@L["Workspace"]">
+                    @foreach (var item in Tools)
+                    {
+                        <a href="@item.Href"><MudIcon Icon="@item.Icon" /><span><strong>@item.Label</strong><small>@item.Detail</small></span></a>
+                    }
+                </nav>
+            </section>
+        </MudStack>
+    }
 </MudContainer>
 
+<BottomSheet Open="@_commandOpen" Title="@L["CommandTitle"]" CloseLabel="@L["Close"]" OnClose="CloseCommand">
+    <MudTextField T="string"
+                  @bind-Value="_query"
+                  Immediate="true"
+                  AutoFocus="true"
+                  Placeholder="@L["CommandPlaceholder"]"
+                  Variant="Variant.Outlined"
+                  Adornment="Adornment.Start"
+                  AdornmentIcon="@Icons.Material.Filled.Search" />
+    <div class="pl-command-results" role="listbox">
+        @foreach (var item in FilteredSearchItems)
+        {
+            <button type="button" @onclick="@(() => OpenSearchItem(item))">
+                <MudIcon Icon="@GetSearchIcon(item.Kind)" Size="Size.Small" />
+                <span><strong>@item.Title</strong><small>@GetSearchMeta(item)</small></span>
+                <MudIcon Icon="@Icons.Material.Filled.ArrowForward" Size="Size.Small" />
+            </button>
+        }
+        @if (!FilteredSearchItems.Any())
+        {
+            <MudText Typo="Typo.body2" Color="Color.Secondary" Class="py-4">@L["NoSearchResults"]</MudText>
+        }
+    </div>
+</BottomSheet>
+
 @code {
-    private IReadOnlyList<TrainerItem> Items =>
+    private TrainerWorkspaceSnapshot _snapshot = TrainerWorkspaceSnapshot.Empty;
+    private bool _isLoading = true;
+    private bool _commandOpen;
+    private string _query = string.Empty;
+    private string? _error;
+
+    private IReadOnlyList<TrainerTool> Tools =>
     [
-        new(L["Nav_TrainerCourses"], "/Trainers/courses"),
-        new(L["Nav_Groups"], "/Trainers/groups"),
-        new(L["Nav_TrainingPlan"], "/Trainers/training-plans"),
-        new(L["Nav_Achievements"], "/Trainers/achievements"),
-        new(L["Nav_TrainerRunningAnalyses"], "/Trainers/running-analyses"),
-        new(L["Nav_TrainerWorkoutCatalog"], "/Trainers/workout-catalog")
+        new(L["Courses"], L["CoursesDetail"], Icons.Material.Filled.Groups, "/Trainers/courses"),
+        new(L["Groups"], L["GroupsDetail"], Icons.Material.Filled.GroupWork, "/Trainers/groups"),
+        new(L["Plans"], L["PlansDetail"], Icons.Material.Filled.CalendarMonth, "/Trainers/training-plans"),
+        new(L["Analyses"], L["AnalysesDetail"], Icons.Material.Filled.QueryStats, "/Trainers/running-analyses"),
+        new(L["Catalog"], L["CatalogDetail"], Icons.Material.Filled.FitnessCenter, "/Trainers/workout-catalog")
     ];
 
-    private sealed record TrainerItem(string Label, string Href);
+    private IEnumerable<TrainerSearchItem> FilteredSearchItems
+    {
+        get
+        {
+            var query = _query.Trim();
+            return _snapshot.SearchItems
+                .Where(item => query.Length == 0
+                    || item.Title.Contains(query, StringComparison.CurrentCultureIgnoreCase)
+                    || item.Subtitle.Contains(query, StringComparison.CurrentCultureIgnoreCase)
+                    || item.Kind.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .Take(12);
+        }
+    }
+
+    protected override Task OnInitializedAsync() => LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        _isLoading = true;
+        _error = null;
+        try
+        {
+            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userId = state.User.FindFirst(claim => claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+            if (string.IsNullOrWhiteSpace(userId))
+                throw new InvalidOperationException(L["TrainerNotResolved"]);
+            _snapshot = await Workspace.LoadAsync(userId);
+        }
+        catch (Exception ex)
+        {
+            _snapshot = TrainerWorkspaceSnapshot.Empty;
+            _error = UiErrorMessages.From(ex);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private Task CloseCommand() { _commandOpen = false; return Task.CompletedTask; }
+    private void OpenSearchItem(TrainerSearchItem item) { _commandOpen = false; Navigation.NavigateTo(item.Href); }
+    private static string GetMeta(string course, string location) => string.IsNullOrWhiteSpace(location) ? course : $"{course} · {location}";
+    private string GetSearchMeta(TrainerSearchItem item) => string.IsNullOrWhiteSpace(item.Subtitle) ? L[$"Kind_{item.Kind}"] : $"{L[$"Kind_{item.Kind}"]} · {item.Subtitle}";
+    private static string GetInitials(string name) => string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(part => char.ToUpperInvariant(part[0])));
+    private static string GetSearchIcon(string kind) => kind switch
+    {
+        "athlete" => Icons.Material.Filled.Person,
+        "course" => Icons.Material.Filled.Groups,
+        "group" => Icons.Material.Filled.GroupWork,
+        "plan" => Icons.Material.Filled.CalendarMonth,
+        "analysis" => Icons.Material.Filled.QueryStats,
+        _ => Icons.Material.Filled.Search
+    };
+
+    private sealed record TrainerTool(string Label, string Detail, string Icon, string Href);
 }

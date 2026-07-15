@@ -113,3 +113,66 @@ window.paceleticsAcademy = (() => {
         enhanceTables
     };
 })();
+
+window.paceleticsStorage = {
+    get: key => {
+        try { return window.localStorage.getItem(key); } catch { return null; }
+    },
+    set: (key, value) => {
+        try { window.localStorage.setItem(key, value); } catch { }
+    }
+};
+
+window.paceleticsTrainingContext = (() => {
+    function getPosition() {
+        return new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(new Error("geolocation-unavailable"));
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: false,
+                timeout: 10000,
+                maximumAge: 30 * 60 * 1000
+            });
+        });
+    }
+
+    async function load(timestamp) {
+        const requested = new Date(timestamp);
+        const date = timestamp.slice(0, 10);
+        const days = Math.ceil((requested.getTime() - Date.now()) / 86400000);
+        if (!Number.isFinite(days) || days < -1 || days > 15) return null;
+
+        const position = await getPosition();
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const query = new URLSearchParams({
+            latitude: latitude.toString(),
+            longitude: longitude.toString(),
+            hourly: "temperature_2m,weather_code",
+            daily: "sunrise,sunset",
+            timezone: "auto",
+            start_date: date,
+            end_date: date
+        });
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?${query}`);
+        if (!response.ok) throw new Error("weather-unavailable");
+        const data = await response.json();
+        const targetHour = requested.getHours();
+        let hourlyIndex = (data.hourly?.time || []).findIndex(value => new Date(value).getHours() >= targetHour);
+        if (hourlyIndex < 0) hourlyIndex = 0;
+        const sunrise = data.daily?.sunrise?.[0] ?? null;
+        const sunset = data.daily?.sunset?.[0] ?? null;
+        const target = requested.getTime();
+        return {
+            temperatureC: data.hourly?.temperature_2m?.[hourlyIndex] ?? null,
+            weatherCode: data.hourly?.weather_code?.[hourlyIndex] ?? 0,
+            sunrise,
+            sunset,
+            isDaylight: sunrise && sunset ? target >= new Date(sunrise).getTime() && target <= new Date(sunset).getTime() : true
+        };
+    }
+
+    return { load };
+})();

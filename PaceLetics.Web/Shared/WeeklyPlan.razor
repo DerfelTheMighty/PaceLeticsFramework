@@ -23,9 +23,10 @@
 
     @if (_isLoading)
     {
-        <div class="pl-week-plan__loading" aria-live="polite">
-            <MudProgressCircular Indeterminate="true" Size="Size.Small" />
-            <MudText Typo="Typo.body2">@L["Loading"]</MudText>
+        <div class="pl-skeleton-stack" aria-busy="true" aria-label="@L["Loading"]">
+            <SkeletonBlock Height="92px" />
+            <SkeletonBlock Height="56px" />
+            <SkeletonBlock Height="56px" />
         </div>
     }
     else if (!string.IsNullOrWhiteSpace(_errorMessage))
@@ -52,6 +53,10 @@
                         }
                     </MudStack>
                     <TrainingSessionSummary Session="@featured.Session" Compact="true" />
+                    @if (!string.IsNullOrWhiteSpace(featured.Session.Appointment.ChangeReason))
+                    {
+                        <div class="pl-plan-change-reason"><MudIcon Icon="@Icons.Material.Filled.Update" Size="Size.Small" /><span>@L["ChangedBecause", featured.Session.Appointment.ChangeReason]</span></div>
+                    }
                     <MudButton Href="@GetSessionHref(featured.PlanId, featured.Session.Id)"
                                Variant="Variant.Filled"
                                Color="Color.Primary"
@@ -89,6 +94,10 @@
                                         <span class="pl-week-plan__item-copy">
                                             <strong>@item.Title</strong>
                                             <small>@GetSessionMeta(resolved.Session)</small>
+                                            @if (!string.IsNullOrWhiteSpace(resolved.Session.Appointment.ChangeReason))
+                                            {
+                                                <small class="pl-plan-change-reason__compact">@L["ChangedBecause", resolved.Session.Appointment.ChangeReason]</small>
+                                            }
                                         </span>
                                         @if (IsCompleted(resolved.PlanId, resolved.Session.Id))
                                         {

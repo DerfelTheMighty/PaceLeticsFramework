@@ -1,0 +1,30 @@
+@if (Open)
+{
+    <div class="pl-overlay pl-sheet-overlay" @onclick="CloseAsync" @onkeydown="HandleKeyDown">
+        <MudFocusTrap>
+            <section class="pl-bottom-sheet pl-unified-sheet"
+                     role="dialog"
+                     aria-modal="true"
+                     aria-labelledby="@_titleId"
+                     @onclick:stopPropagation="true">
+                <div class="pl-bottom-sheet-handle" aria-hidden="true"></div>
+                <header class="pl-unified-sheet__header">
+                    <MudText Typo="Typo.h6" HtmlTag="h2" id="@_titleId">@Title</MudText>
+                    <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseAsync" aria-label="@CloseLabel" />
+                </header>
+                <div class="pl-unified-sheet__content">@ChildContent</div>
+            </section>
+        </MudFocusTrap>
+    </div>
+}
+
+@code {
+    private readonly string _titleId = $"sheet-{Guid.NewGuid():N}";
+    [Parameter] public bool Open { get; set; }
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter] public string CloseLabel { get; set; } = "Close";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    private Task CloseAsync() => OnClose.InvokeAsync();
+    private Task HandleKeyDown(KeyboardEventArgs args) => args.Key == "Escape" ? CloseAsync() : Task.CompletedTask;
+}

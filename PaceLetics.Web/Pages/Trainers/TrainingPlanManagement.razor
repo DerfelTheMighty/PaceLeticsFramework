@@ -9,12 +9,14 @@
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services
 @using PaceLetics.Web.Services.Courses
+@using PaceLetics.Web.Services.Undo
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ITrainingPlanService TrainingPlanService
 @inject ICourseService CourseService
 @inject IGroupService GroupService
 @inject IWorkoutCatalog WorkoutCatalog
 @inject ISnackbar Snackbar
+@inject UndoService Undo
 @inject IStringLocalizer<TrainingPlanManagement> L
 
 <PageTitle>@L["PageTitle"]</PageTitle>
@@ -328,14 +330,43 @@
                                                     <MudStack Spacing="0" Style="min-width:0;">
                                                         <MudText Typo="Typo.body2">@session.Name</MudText>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatSession(session)</MudText>
+                                                        @if (!string.IsNullOrWhiteSpace(session.Appointment.ChangeReason))
+                                                        {
+                                                            <MudText Typo="Typo.caption" Color="Color.Primary">@L["ChangedBecause", session.Appointment.ChangeReason]</MudText>
+                                                        }
                                                     </MudStack>
-                                                    <MudTooltip Text="@L["RemoveSession"]">
-                                                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                                                                       Color="Color.Default"
-                                                                       OnClick="@(() => RemoveSessionAsync(session.Id))"
-                                                                       aria-label="@L["RemoveSession"]" />
-                                                    </MudTooltip>
+                                                    <MudStack Row="true" Spacing="0">
+                                                        <MudTooltip Text="@L["RescheduleSession"]">
+                                                            <MudIconButton Icon="@Icons.Material.Filled.EditCalendar"
+                                                                           Color="Color.Primary"
+                                                                           OnClick="@(() => BeginSessionChange(session))"
+                                                                           aria-label="@L["RescheduleSession"]" />
+                                                        </MudTooltip>
+                                                        <MudTooltip Text="@L["RemoveSession"]">
+                                                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                                           Color="Color.Default"
+                                                                           OnClick="@(() => RemoveSessionAsync(session.Id))"
+                                                                           aria-label="@L["RemoveSession"]" />
+                                                        </MudTooltip>
+                                                    </MudStack>
                                                 </MudStack>
+                                                @if (_editingSessionId == session.Id)
+                                                {
+                                                    <MudGrid Spacing="2" Class="pt-2">
+                                                        <MudItem xs="12" sm="4">
+                                                            <MudDatePicker Label="@L["NewDate"]" @bind-Date="_editingSessionDate" Variant="Variant.Outlined" />
+                                                        </MudItem>
+                                                        <MudItem xs="12" sm="8">
+                                                            <MudTextField Label="@L["ChangeReason"]" @bind-Value="_editingSessionReason" Immediate="true" Variant="Variant.Outlined" />
+                                                        </MudItem>
+                                                        <MudItem xs="12">
+                                                            <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="1">
+                                                                <MudButton Variant="Variant.Text" OnClick="CancelSessionChange">@L["Cancel"]</MudButton>
+                                                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!CanSaveSessionChange)" OnClick="SaveSessionChangeAsync">@L["SaveChange"]</MudButton>
+                                                            </MudStack>
+                                                        </MudItem>
+                                                    </MudGrid>
+                                                }
                                             </MudPaper>
                                         }
                                     </MudStack>
@@ -522,6 +553,9 @@
     private SessionDraft _sessionDraft = SessionDraft.CreateDefault();
     private BlockDraft _blockDraft = new();
     private HashSet<string> _selectedBlockSessionIds = new(StringComparer.OrdinalIgnoreCase);
+    private string? _editingSessionId;
+    private DateTime? _editingSessionDate;
+    private string _editingSessionReason = string.Empty;
 
     private TrainingPlan? SelectedPlan => _plans.FirstOrDefault(plan =>
         string.Equals(plan.Id, _selectedPlanId, StringComparison.OrdinalIgnoreCase));
@@ -551,6 +585,12 @@
         SelectedPlan is not null
         && !string.IsNullOrWhiteSpace(_blockDraft.Name)
         && _selectedBlockSessionIds.Count > 0;
+
+    private bool CanSaveSessionChange =>
+        SelectedPlan is not null
+        && !string.IsNullOrWhiteSpace(_editingSessionId)
+        && _editingSessionDate is not null
+        && !string.IsNullOrWhiteSpace(_editingSessionReason);
 
     protected override async Task OnInitializedAsync()
     {
@@ -724,10 +764,87 @@
 
         try
         {
-            TrainingPlanService.RemoveTrainingSession(SelectedPlan.Id, sessionId);
+            var planId = SelectedPlan.Id;
+            var removed = TrainingPlanService.LoadTrainingPlanDefinitions()
+                .FirstOrDefault(plan => string.Equals(plan.Id, planId, StringComparison.OrdinalIgnoreCase))?
+                .Sessions.FirstOrDefault(session => string.Equals(session.Id, sessionId, StringComparison.OrdinalIgnoreCase));
+            TrainingPlanService.RemoveTrainingSession(planId, sessionId);
             _selectedBlockSessionIds.Remove(sessionId);
             ReloadPlans();
-            Snackbar.Add(L["SessionRemoved"], Severity.Success);
+            if (removed is not null)
+            {
+                Undo.Offer(L["SessionRemoved"], L["Undo"], () =>
+                {
+                    TrainingPlanService.AddTrainingSession(planId, removed);
+                    ReloadPlans();
+                    return Task.CompletedTask;
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private void BeginSessionChange(TrainingSession session)
+    {
+        _editingSessionId = session.Id;
+        _editingSessionDate = (session.Appointment.StartsAt ?? session.Date).Date;
+        _editingSessionReason = session.Appointment.ChangeReason;
+    }
+
+    private void CancelSessionChange()
+    {
+        _editingSessionId = null;
+        _editingSessionDate = null;
+        _editingSessionReason = string.Empty;
+    }
+
+    private Task SaveSessionChangeAsync()
+    {
+        if (!CanSaveSessionChange || SelectedPlan is null)
+            return Task.CompletedTask;
+
+        try
+        {
+            var definition = TrainingPlanService.LoadTrainingPlanDefinitions()
+                .First(plan => string.Equals(plan.Id, SelectedPlan.Id, StringComparison.OrdinalIgnoreCase))
+                .Sessions.First(session => string.Equals(session.Id, _editingSessionId, StringComparison.OrdinalIgnoreCase));
+            var planId = SelectedPlan.Id;
+            var sessionId = _editingSessionId!;
+            var previousDate = definition.Date;
+            var previousAppointment = definition.Appointment;
+            var newDate = _editingSessionDate!.Value.Date;
+            definition.Date = newDate;
+
+            var appointment = definition.Appointment ?? TrainingSessionAppointment.Empty;
+            DateTime? startsAt = appointment.StartsAt is { } start ? newDate.Add(start.TimeOfDay) : null;
+            DateTime? endsAt = appointment.EndsAt is { } end
+                ? newDate.AddDays((end.Date - (appointment.StartsAt?.Date ?? previousDate.Date)).Days).Add(end.TimeOfDay)
+                : null;
+            definition.Appointment = appointment with
+            {
+                StartsAt = startsAt,
+                EndsAt = endsAt,
+                ChangeReason = _editingSessionReason
+            };
+            TrainingPlanService.UpdateTrainingSession(planId, sessionId, definition);
+            ReloadPlans();
+            Undo.Offer(L["SessionChanged"], L["Undo"], () =>
+            {
+                var current = TrainingPlanService.LoadTrainingPlanDefinitions()
+                    .First(plan => string.Equals(plan.Id, planId, StringComparison.OrdinalIgnoreCase))
+                    .Sessions.First(session => string.Equals(session.Id, sessionId, StringComparison.OrdinalIgnoreCase));
+                current.Date = previousDate;
+                current.Appointment = previousAppointment;
+                TrainingPlanService.UpdateTrainingSession(planId, sessionId, current);
+                ReloadPlans();
+                return Task.CompletedTask;
+            });
+            CancelSessionChange();
         }
         catch (Exception ex)
         {
@@ -929,7 +1046,7 @@
 
     private string FormatSession(TrainingSession session)
     {
-        var parts = new List<string> { session.Date.ToString("dd.MM.yyyy") };
+        var parts = new List<string> { (session.Appointment.StartsAt ?? session.Date).ToString("dd.MM.yyyy") };
 
         if (session.Runs.Count > 0)
             parts.Add($"{session.TotalRunDistance / 1000.0:0.0} km");
