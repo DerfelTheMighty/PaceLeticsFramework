@@ -7,7 +7,7 @@
   <data name="PageTitle" xml:space="preserve"><value>Kurse &amp; Plaene</value></data>
   <data name="Loading" xml:space="preserve"><value>Kurse werden geladen</value></data>
   <data name="Title" xml:space="preserve"><value>Kurse &amp; Plaene</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Kursbeitritte, Termine, Events und Trainingspläne</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Deine Kurse und Termine.</value></data>
   <data name="TabCourses" xml:space="preserve"><value>Kurse</value></data>
   <data name="TabTrainingPlans" xml:space="preserve"><value>Plaene</value></data>
   <data name="TabCombinedPlan" xml:space="preserve"><value>Mein Plan</value></data>
@@ -81,4 +81,11 @@
   <data name="SelectCourse" xml:space="preserve"><value>Kurs {0} auswählen</value></data>
   <data name="UnnamedTrainingPlan" xml:space="preserve"><value>Trainingsplan</value></data>
   <data name="CalendarDayLabel" xml:space="preserve"><value>{0}, {1} Einträge</value></data>
+  <data name="NoCoursesTitle" xml:space="preserve"><value>Keine Kurse verfügbar</value></data>
+  <data name="OpenAcademy" xml:space="preserve"><value>Academy öffnen</value></data>
+  <data name="MyJoinedCourses" xml:space="preserve"><value>Meine Kurse</value></data>
+  <data name="AllCourses" xml:space="preserve"><value>Alle Kurse</value></data>
+  <data name="NoJoinedCoursesTitle" xml:space="preserve"><value>Wähle deinen ersten Kurs</value></data>
+  <data name="NoAvailableCoursesTitle" xml:space="preserve"><value>Du bist auf dem neuesten Stand</value></data>
+  <data name="CourseActions" xml:space="preserve"><value>Kursaktionen</value></data>
 </root>

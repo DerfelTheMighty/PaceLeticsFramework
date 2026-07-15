@@ -21,29 +21,7 @@
     <MudStack Spacing="3">
         <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-        <nav class="pl-section-nav" aria-label="@L["Title"]">
-            <button type="button"
-                    class="@GetSectionButtonClass(RunningAnalysesSection.Recordings)"
-                    aria-pressed="@(_activeSection == RunningAnalysesSection.Recordings)"
-                    @onclick="@(() => SelectSection(RunningAnalysesSection.Recordings))">
-                <MudIcon Icon="@Icons.Material.Filled.Videocam" Size="Size.Small" />
-                <span>@L["Recordings"]</span>
-            </button>
-            <button type="button"
-                    class="@GetSectionButtonClass(RunningAnalysesSection.Analyses)"
-                    aria-pressed="@(_activeSection == RunningAnalysesSection.Analyses)"
-                    @onclick="@(() => SelectSection(RunningAnalysesSection.Analyses))">
-                <MudIcon Icon="@Icons.Material.Filled.RateReview" Size="Size.Small" />
-                <span>@L["Analyses"]</span>
-            </button>
-            <button type="button"
-                    class="@GetSectionButtonClass(RunningAnalysesSection.UploadQueue)"
-                    aria-pressed="@(_activeSection == RunningAnalysesSection.UploadQueue)"
-                    @onclick="@(() => SelectSection(RunningAnalysesSection.UploadQueue))">
-                <MudIcon Icon="@Icons.Material.Filled.CloudUpload" Size="Size.Small" />
-                <span>@L["UploadQueue"]</span>
-            </button>
-        </nav>
+        <SectionNav Items="@SectionItems" ActiveKey="@GetSectionKey(_activeSection)" OnSelect="SelectSectionByKey" AriaLabel="@L["Title"]" />
 
         @if (!HasDriveCredentials)
         {
@@ -65,19 +43,10 @@
         }
         else if (_analyses.Count == 0)
         {
-            <MudPaper Elevation="1" Class="pa-4">
-                <MudStack Spacing="2">
-                    <MudText Typo="Typo.subtitle1">@L["EmptyTitle"]</MudText>
-                    <MudText Typo="Typo.body2" Color="Color.Secondary">@L["EmptyText"]</MudText>
-                    <MudTooltip Text="@L["CreateEvent"]">
-                        <MudIconButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       Icon="@Icons.Material.Filled.Add"
-                                       OnClick="@(() => Navigation.NavigateTo("/Trainers/courses"))"
-                                       aria-label="@L["CreateEvent"]" />
-                    </MudTooltip>
-                </MudStack>
-            </MudPaper>
+            <ActionableEmptyState Title="@L["EmptyTitle"]"
+                                  Detail="@L["EmptyText"]"
+                                  ActionText="@L["CreateEvent"]"
+                                  Href="/Trainers/courses" />
         }
         else
         {
@@ -177,6 +146,12 @@
     private string? _errorMessage;
     private IReadOnlyList<RunningAnalysisCourseEvent> _analyses = Array.Empty<RunningAnalysisCourseEvent>();
     private RunningAnalysesSection _activeSection = RunningAnalysesSection.Recordings;
+    private IReadOnlyList<SectionNavEntry> SectionItems =>
+    [
+        new("recordings", L["Recordings"]),
+        new("analyses", L["Analyses"]),
+        new("uploads", L["UploadQueue"])
+    ];
 
     private bool HasDriveCredentials =>
         !string.IsNullOrWhiteSpace(DriveOptions.Value.ServiceAccountJsonPath)
@@ -277,12 +252,19 @@
         _activeSection = section;
     }
 
-    private string GetSectionButtonClass(RunningAnalysesSection section)
+    private static string GetSectionKey(RunningAnalysesSection section) => section switch
     {
-        return _activeSection == section
-            ? "pl-section-nav__item pl-section-nav__item--active"
-            : "pl-section-nav__item";
-    }
+        RunningAnalysesSection.Analyses => "analyses",
+        RunningAnalysesSection.UploadQueue => "uploads",
+        _ => "recordings"
+    };
+
+    private void SelectSectionByKey(string key) => SelectSection(key switch
+    {
+        "analyses" => RunningAnalysesSection.Analyses,
+        "uploads" => RunningAnalysesSection.UploadQueue,
+        _ => RunningAnalysesSection.Recordings
+    });
 
     private void OpenReview(RunningAnalysisCourseEvent analysis)
     {

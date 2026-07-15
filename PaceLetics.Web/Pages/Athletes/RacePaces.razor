@@ -30,22 +30,7 @@
         <PageHeader Title="@L["Title"]"
                     Subtitle="@L["Subtitle"]" />
 
-        <nav class="pl-section-nav" aria-label="@L["Title"]">
-            <button type="button"
-                    class="@GetSectionButtonClass(RacePacesSection.RaceData)"
-                    aria-pressed="@(_activeSection == RacePacesSection.RaceData)"
-                    @onclick="@(() => SelectSection(RacePacesSection.RaceData))">
-                <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" />
-                <span>@L["TabRaceData"]</span>
-            </button>
-            <button type="button"
-                    class="@GetSectionButtonClass(RacePacesSection.PaceZones)"
-                    aria-pressed="@(_activeSection == RacePacesSection.PaceZones)"
-                    @onclick="@(() => SelectSection(RacePacesSection.PaceZones))">
-                <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
-                <span>@L["TabPaceZones"]</span>
-            </button>
-        </nav>
+        <SectionNav Items="@SectionItems" ActiveKey="@(_activeSection == RacePacesSection.PaceZones ? "pacezones" : "racedata")" OnSelect="SelectSectionByKey" AriaLabel="@L["Title"]" />
 
         <MudDivider Class="my-4" />
     }
@@ -56,17 +41,10 @@
         {
             @if (_athlete?.ActiveReferenceResult is null)
             {
-                <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
-                    @L["NoRaceWarning"]
-                </MudAlert>
-
-                <MudTooltip Text="@L["AddRace"]">
-                    <MudIconButton Variant="Variant.Filled"
-                                   Color="Color.Warning"
-                                   Icon="@Icons.Material.Filled.AddCircle"
-                                   OnClick="AddAthlete"
-                                   aria-label="@L["AddRace"]" />
-                </MudTooltip>
+                <ActionableEmptyState Title="@L["NoRaceTitle"]"
+                                      Detail="@L["NoRaceWarning"]"
+                                      ActionText="@L["AddRace"]"
+                                      OnAction="AddAthlete" />
             }
             else
             {
@@ -148,18 +126,21 @@
     }
 
     private RacePacesSection _activeSection = RacePacesSection.RaceData;
+    private IReadOnlyList<SectionNavEntry> SectionItems =>
+    [
+        new("racedata", L["TabRaceData"]),
+        new("pacezones", L["TabPaceZones"])
+    ];
 
     private void SelectSection(RacePacesSection section)
     {
         _activeSection = section;
     }
 
-    private string GetSectionButtonClass(RacePacesSection section)
-    {
-        return _activeSection == section
-            ? "pl-section-nav__item pl-section-nav__item--active"
-            : "pl-section-nav__item";
-    }
+    private void SelectSectionByKey(string key) => SelectSection(
+        string.Equals(key, "pacezones", StringComparison.OrdinalIgnoreCase)
+            ? RacePacesSection.PaceZones
+            : RacePacesSection.RaceData);
 
     private string GetCriticalSpeedMethodText()
     {

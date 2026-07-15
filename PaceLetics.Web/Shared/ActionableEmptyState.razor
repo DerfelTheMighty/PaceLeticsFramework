@@ -1,0 +1,28 @@
+<section class="pl-empty-state" aria-labelledby="@_titleId">
+    <MudText Typo="Typo.h6" HtmlTag="h2" id="@_titleId">@Title</MudText>
+    @if (!string.IsNullOrWhiteSpace(Detail))
+    {
+        <MudText Typo="Typo.body2" Color="Color.Secondary">@Detail</MudText>
+    }
+    @if (!string.IsNullOrWhiteSpace(ActionText))
+    {
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Href="@Href"
+                   OnClick="OnAction"
+                   Disabled="@Disabled">
+            @ActionText
+        </MudButton>
+    }
+</section>
+
+@code {
+    private readonly string _titleId = $"empty-state-{Guid.NewGuid():N}";
+
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter] public string? Detail { get; set; }
+    [Parameter] public string? ActionText { get; set; }
+    [Parameter] public string? Href { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnAction { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+}

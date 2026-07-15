@@ -12,22 +12,7 @@
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Large">
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    <nav class="pl-section-nav" aria-label="@L["Title"]">
-        <button type="button"
-                class="@GetSectionButtonClass(AcademySection.Bib)"
-                aria-pressed="@(_activeSection == AcademySection.Bib)"
-                @onclick="@(() => SelectSection(AcademySection.Bib))">
-            <MudIcon Icon="@Icons.Material.Filled.AutoStories" Size="Size.Small" />
-            <span>@L["TabBib"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(AcademySection.Gym)"
-                aria-pressed="@(_activeSection == AcademySection.Gym)"
-                @onclick="@(() => SelectSection(AcademySection.Gym))">
-            <MudIcon Icon="@Icons.Material.Filled.FitnessCenter" Size="Size.Small" />
-            <span>@L["TabGym"]</span>
-        </button>
-    </nav>
+    <SectionNav Items="@SectionItems" ActiveKey="@(_activeSection == AcademySection.Gym ? "gym" : "bib")" OnSelect="SelectSectionByKey" AriaLabel="@L["Title"]" />
 
     <SwipeSection OnSwipeLeft="SelectNextSection" OnSwipeRight="SelectPreviousSection">
         @if (_activeSection == AcademySection.Bib)
@@ -118,6 +103,11 @@
     private string _selectedCategory = AllCategories;
     private AcademySection _activeSection = AcademySection.Bib;
     private string? _appliedSection;
+    private IReadOnlyList<SectionNavEntry> SectionItems =>
+    [
+        new("bib", L["TabBib"]),
+        new("gym", L["TabGym"])
+    ];
 
     [SupplyParameterFromQuery(Name = "section")]
     public string? Section { get; set; }
@@ -173,12 +163,7 @@
         return Sections[nextIndex];
     }
 
-    private string GetSectionButtonClass(AcademySection section)
-    {
-        return _activeSection == section
-            ? "pl-section-nav__item pl-section-nav__item--active"
-            : "pl-section-nav__item";
-    }
+    private void SelectSectionByKey(string key) => SelectSection(ParseSection(key));
 
     private static AcademySection ParseSection(string? value)
     {

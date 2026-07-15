@@ -26,4 +26,5 @@
   <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>Estimated from a single run.</value></data>
   <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>No Critical Speed estimate available yet.</value></data>
 
+  <data name="NoRaceTitle" xml:space="preserve"><value>Add a reference race</value></data>
 </root>

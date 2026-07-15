@@ -26,4 +26,5 @@
   <data name="CriticalSpeedCard_Method_Single" xml:space="preserve"><value>Geschätzt aus einem einzelnen Lauf.</value></data>
   <data name="CriticalSpeedCard_Method_None" xml:space="preserve"><value>Noch keine Critical-Speed-Schätzung verfügbar.</value></data>
 
+  <data name="NoRaceTitle" xml:space="preserve"><value>Füge einen Einstufungslauf hinzu</value></data>
 </root>

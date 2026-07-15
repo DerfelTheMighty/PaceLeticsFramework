@@ -1,0 +1,32 @@
+@page "/Trainers"
+@attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@inject IStringLocalizer<NavMenu> L
+
+<PageTitle>@L["TrainerArea"]</PageTitle>
+
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["TrainerArea"]" Subtitle="@L["TrainerAreaSubtitle"]" />
+    <nav class="pl-more-list pt-3" aria-label="@L["TrainerArea"]">
+        @foreach (var item in Items)
+        {
+            <a class="pl-more-list__item" href="@item.Href">
+                <span><strong>@item.Label</strong></span>
+                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+            </a>
+        }
+    </nav>
+</MudContainer>
+
+@code {
+    private IReadOnlyList<TrainerItem> Items =>
+    [
+        new(L["Nav_TrainerCourses"], "/Trainers/courses"),
+        new(L["Nav_Groups"], "/Trainers/groups"),
+        new(L["Nav_TrainingPlan"], "/Trainers/training-plans"),
+        new(L["Nav_Achievements"], "/Trainers/achievements"),
+        new(L["Nav_TrainerRunningAnalyses"], "/Trainers/running-analyses"),
+        new(L["Nav_TrainerWorkoutCatalog"], "/Trainers/workout-catalog")
+    ];
+
+    private sealed record TrainerItem(string Label, string Href);
+}

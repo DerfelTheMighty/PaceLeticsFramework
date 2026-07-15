@@ -59,4 +59,8 @@
   <data name="Nav_Train" xml:space="preserve"><value>Train</value></data>
   <data name="Nav_Progress" xml:space="preserve"><value>Progress</value></data>
   <data name="Nav_More" xml:space="preserve"><value>More</value></data>
+  <data name="Back" xml:space="preserve"><value>Back</value></data>
+  <data name="Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="TrainerArea" xml:space="preserve"><value>Trainer area</value></data>
+  <data name="TrainerAreaSubtitle" xml:space="preserve"><value>Courses, plans and analyses.</value></data>
 </root>

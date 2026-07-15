@@ -6,7 +6,7 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="PageTitle" xml:space="preserve"><value>Data &amp; Analyses</value></data>
   <data name="Title" xml:space="preserve"><value>Data &amp; Analyses</value></data>
-  <data name="Subtitle" xml:space="preserve"><value>Your running recordings, analyses, and background in one place</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Your training at a glance.</value></data>
   <data name="Loading" xml:space="preserve"><value>Loading data and analyses</value></data>
   <data name="AthleteNotResolved" xml:space="preserve"><value>The athlete could not be resolved.</value></data>
   <data name="TabRunningData" xml:space="preserve"><value>Running data</value></data>
@@ -18,7 +18,7 @@
   <data name="CompletedAnalysesTitle" xml:space="preserve"><value>Completed analyses</value></data>
   <data name="CompletedAnalysesSubtitle" xml:space="preserve"><value>Completed running analyses with ratings and result details</value></data>
   <data name="RunningAnalysesTitle" xml:space="preserve"><value>Running analyses</value></data>
-  <data name="RunningAnalysesSubtitle" xml:space="preserve"><value>Each running analysis keeps recording and evaluation together with a clear status</value></data>
+  <data name="RunningAnalysesSubtitle" xml:space="preserve"><value>Recordings, results and status.</value></data>
   <data name="NoRunningAnalyses" xml:space="preserve"><value>No running analyses available yet.</value></data>
   <data name="Recording" xml:space="preserve"><value>Recording</value></data>
   <data name="Evaluation" xml:space="preserve"><value>Evaluation</value></data>
@@ -49,4 +49,17 @@
   <data name="DeleteFolder" xml:space="preserve"><value>Delete folder</value></data>
   <data name="DeleteConfirm" xml:space="preserve"><value>Delete your PaceLetics Drive folder? This removes the folder from Google Drive.</value></data>
   <data name="DeleteSuccess" xml:space="preserve"><value>Drive folder deleted.</value></data>
+  <data name="TabDevelopment" xml:space="preserve"><value>Development</value></data>
+  <data name="TabLoad" xml:space="preserve"><value>Load</value></data>
+  <data name="TabRunningForm" xml:space="preserve"><value>Running form</value></data>
+  <data name="LoadTitle" xml:space="preserve"><value>Training load</value></data>
+  <data name="LoadSubtitle" xml:space="preserve"><value>Effort from your completed sessions.</value></data>
+  <data name="NoLoadTitle" xml:space="preserve"><value>No load data yet</value></data>
+  <data name="NoLoadDetail" xml:space="preserve"><value>Complete a session and add feedback to see your load.</value></data>
+  <data name="OpenPlan" xml:space="preserve"><value>Open plan</value></data>
+  <data name="Sessions7Days" xml:space="preserve"><value>Sessions · 7 days</value></data>
+  <data name="LoadPoints" xml:space="preserve"><value>Load points</value></data>
+  <data name="AverageEffort" xml:space="preserve"><value>Avg. effort</value></data>
+  <data name="LoadTrendNoComparison" xml:space="preserve"><value>Keep recording feedback to see a weekly comparison.</value></data>
+  <data name="LoadTrend" xml:space="preserve"><value>{0}% compared with the previous week.</value></data>
 </root>

@@ -6,6 +6,7 @@
 @using PaceLetics.RunningAnalysisModule.Components
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IRunningAnalysisService RunningAnalysisService
+@inject ITrainingFeedbackService FeedbackService
 @inject IJSRuntime JS
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
@@ -18,52 +19,67 @@
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    <nav class="pl-section-nav" aria-label="@L["Title"]">
-        <button type="button"
-                class="@GetSectionButtonClass(DataAnalysesSection.RunningData)"
-                aria-pressed="@(_activeSection == DataAnalysesSection.RunningData)"
-                @onclick="@(() => SelectSection(DataAnalysesSection.RunningData))">
-            <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Small" />
-            <span>@L["TabRunningData"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(DataAnalysesSection.PaceZones)"
-                aria-pressed="@(_activeSection == DataAnalysesSection.PaceZones)"
-                @onclick="@(() => SelectSection(DataAnalysesSection.PaceZones))">
-            <MudIcon Icon="@Icons.Material.Filled.QueryStats" Size="Size.Small" />
-            <span>@L["TabPaceZones"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(DataAnalysesSection.Analyses)"
-                aria-pressed="@(_activeSection == DataAnalysesSection.Analyses)"
-                @onclick="@(() => SelectSection(DataAnalysesSection.Analyses))">
-            <MudIcon Icon="@Icons.Material.Filled.Assessment" Size="Size.Small" />
-            <span>@L["TabAnalyses"]</span>
-        </button>
-    </nav>
+    <SectionNav Items="@SectionItems"
+                ActiveKey="@GetSectionKey(_activeSection)"
+                OnSelect="SelectSectionByKey"
+                AriaLabel="@L["Title"]" />
 
     <SwipeSection OnSwipeLeft="SelectNextSection" OnSwipeRight="SelectPreviousSection">
-        @if (_activeSection == DataAnalysesSection.RunningData)
+        @if (_activeSection == DataAnalysesSection.Development)
         {
             <MudDivider Class="my-4" />
             <RacePaces Embedded="true" EmbeddedSection="racedata" />
+        }
+        else if (_activeSection == DataAnalysesSection.Load)
+        {
+            <section class="pl-data-load mt-4" aria-labelledby="load-title">
+                <MudText Typo="Typo.h6" HtmlTag="h2" id="load-title">@L["LoadTitle"]</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["LoadSubtitle"]</MudText>
+
+                @if (!string.IsNullOrWhiteSpace(_feedbackErrorMessage))
+                {
+                    <RetryAlert Message="@_feedbackErrorMessage" OnRetry="LoadAsync" />
+                }
+                else if (_feedback.Count == 0)
+                {
+                    <ActionableEmptyState Title="@L["NoLoadTitle"]"
+                                          Detail="@L["NoLoadDetail"]"
+                                          ActionText="@L["OpenPlan"]"
+                                          Href="/Athletes/plan" />
+                }
+                else
+                {
+                    <div class="pl-data-load__summary">
+                        <div><small>@L["Sessions7Days"]</small><strong>@CurrentWeekFeedback.Count</strong></div>
+                        <div><small>@L["LoadPoints"]</small><strong>@CurrentWeekFeedback.Sum(item => item.Effort)</strong></div>
+                        <div><small>@L["AverageEffort"]</small><strong>@GetAverageEffort()</strong></div>
+                    </div>
+                    <MudText Typo="Typo.body2" Class="@GetLoadTrendClass()">@GetLoadTrendText()</MudText>
+                    <div class="pl-data-load__history">
+                        @foreach (var item in _feedback.Take(5))
+                        {
+                            <div class="pl-list-row">
+                                <span><strong>@item.TrainingName</strong><small>@item.CompletedAt.ToLocalTime().ToString("dd.MM. · HH:mm")</small></span>
+                                <span class="pl-effort-value">@item.Effort/10</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </section>
         }
         else if (_activeSection == DataAnalysesSection.PaceZones)
         {
             <MudDivider Class="my-4" />
             <RacePaces Embedded="true" EmbeddedSection="pacezones" />
         }
-        else if (_activeSection == DataAnalysesSection.Analyses)
+        else if (_activeSection == DataAnalysesSection.RunningForm)
         {
-            <MudPaper Elevation="0" Class="pa-4 pl-course-detail mt-4">
+            <section class="pt-4" aria-labelledby="running-form-title">
                 <MudStack Spacing="3">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Style="gap:12px;">
-                        <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Primary" />
-                        <div>
-                            <MudText Typo="Typo.subtitle2">@L["RunningAnalysesTitle"]</MudText>
+                    <div>
+                            <MudText Typo="Typo.h6" HtmlTag="h2" id="running-form-title">@L["RunningAnalysesTitle"]</MudText>
                             <MudText Typo="Typo.body2" Color="Color.Secondary">@L["RunningAnalysesSubtitle"]</MudText>
-                        </div>
-                    </MudStack>
+                    </div>
 
                     @if (!string.IsNullOrWhiteSpace(_errorMessage))
                     {
@@ -87,7 +103,7 @@
                                               OnDelete="RemoveAnalysisAsync" />
                     }
                 </MudStack>
-            </MudPaper>
+            </section>
         }
     </SwipeSection>
 </MudContainer>
@@ -95,22 +111,38 @@
 @code {
     private static readonly DataAnalysesSection[] Sections =
     [
-        DataAnalysesSection.RunningData,
+        DataAnalysesSection.Development,
+        DataAnalysesSection.Load,
         DataAnalysesSection.PaceZones,
-        DataAnalysesSection.Analyses
+        DataAnalysesSection.RunningForm
     ];
 
     private enum DataAnalysesSection
     {
-        RunningData,
+        Development,
+        Load,
         PaceZones,
-        Analyses
+        RunningForm
     }
 
     private string? _userId;
     private string? _errorMessage;
+    private string? _feedbackErrorMessage;
     private IReadOnlyList<RunningAnalysisLink> _analyses = Array.Empty<RunningAnalysisLink>();
-    private DataAnalysesSection _activeSection = DataAnalysesSection.RunningData;
+    private IReadOnlyList<TrainingFeedbackDocument> _feedback = Array.Empty<TrainingFeedbackDocument>();
+    private DataAnalysesSection _activeSection = DataAnalysesSection.Development;
+
+    private IReadOnlyList<SectionNavEntry> SectionItems =>
+    [
+        new("development", L["TabDevelopment"]),
+        new("load", L["TabLoad"]),
+        new("pacezones", L["TabPaceZones"]),
+        new("running-form", L["TabRunningForm"])
+    ];
+
+    private IReadOnlyList<TrainingFeedbackDocument> CurrentWeekFeedback => _feedback
+        .Where(item => item.CompletedAt >= DateTime.UtcNow.AddDays(-7))
+        .ToList();
 
     [Parameter]
     [SupplyParameterFromQuery(Name = "section")]
@@ -134,6 +166,7 @@
             try
             {
                 _errorMessage = null;
+                _feedbackErrorMessage = null;
                 _analyses = Array.Empty<RunningAnalysisLink>();
 
                 var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -144,11 +177,21 @@
                     throw new InvalidOperationException(L["AthleteNotResolved"]);
 
                 await LoadAnalysesAsync();
+                try
+                {
+                    _feedback = await FeedbackService.GetRecentAsync(_userId, 28);
+                }
+                catch (Exception ex)
+                {
+                    _feedback = Array.Empty<TrainingFeedbackDocument>();
+                    _feedbackErrorMessage = UiErrorMessages.From(ex);
+                }
             }
             catch (Exception ex)
             {
                 _errorMessage = UiErrorMessages.From(ex);
                 _analyses = Array.Empty<RunningAnalysisLink>();
+                _feedback = Array.Empty<TrainingFeedbackDocument>();
             }
         });
     }
@@ -189,7 +232,7 @@
 
     private static bool TryParseSection(string? value, out DataAnalysesSection section)
     {
-        section = DataAnalysesSection.RunningData;
+        section = DataAnalysesSection.Development;
 
         if (string.IsNullOrWhiteSpace(value))
             return false;
@@ -197,19 +240,26 @@
         var normalized = value.Trim().ToLowerInvariant();
         section = normalized switch
         {
-            "running-data" or "racedata" or "laufdaten" => DataAnalysesSection.RunningData,
+            "development" or "entwicklung" or "running-data" or "racedata" or "laufdaten" => DataAnalysesSection.Development,
+            "load" or "belastung" => DataAnalysesSection.Load,
             "pace-zones" or "pacezones" or "pacebereiche" => DataAnalysesSection.PaceZones,
-            "recordings" or "aufnahmen" => DataAnalysesSection.Analyses,
-            "analyses" or "analysis" or "analysen" => DataAnalysesSection.Analyses,
-            _ => DataAnalysesSection.RunningData
+            "running-form" or "lauftechnik" or "recordings" or "aufnahmen" => DataAnalysesSection.RunningForm,
+            "analyses" or "analysis" or "analysen" => DataAnalysesSection.RunningForm,
+            _ => DataAnalysesSection.Development
         };
 
-        return normalized is "running-data"
+        return normalized is "development"
+            or "entwicklung"
+            or "running-data"
             or "racedata"
             or "laufdaten"
+            or "load"
+            or "belastung"
             or "pace-zones"
             or "pacezones"
             or "pacebereiche"
+            or "running-form"
+            or "lauftechnik"
             or "recordings"
             or "aufnahmen"
             or "analyses"
@@ -221,17 +271,48 @@
     {
         return section switch
         {
+            DataAnalysesSection.Load => "/Athletes/data-analyses?section=load",
             DataAnalysesSection.PaceZones => "/Athletes/data-analyses?section=pacezones",
-            DataAnalysesSection.Analyses => "/Athletes/data-analyses?section=analyses",
+            DataAnalysesSection.RunningForm => "/Athletes/data-analyses?section=running-form",
             _ => "/Athletes/data-analyses"
         };
     }
 
-    private string GetSectionButtonClass(DataAnalysesSection section)
+    private static string GetSectionKey(DataAnalysesSection section) => section switch
     {
-        return _activeSection == section
-            ? "pl-section-nav__item pl-section-nav__item--active"
-            : "pl-section-nav__item";
+        DataAnalysesSection.Load => "load",
+        DataAnalysesSection.PaceZones => "pacezones",
+        DataAnalysesSection.RunningForm => "running-form",
+        _ => "development"
+    };
+
+    private void SelectSectionByKey(string key)
+    {
+        if (TryParseSection(key, out var section)) SelectSection(section);
+    }
+
+    private string GetAverageEffort() => CurrentWeekFeedback.Count == 0
+        ? "–"
+        : CurrentWeekFeedback.Average(item => item.Effort).ToString("0.0");
+
+    private int PreviousWeekLoad => _feedback
+        .Where(item => item.CompletedAt < DateTime.UtcNow.AddDays(-7) && item.CompletedAt >= DateTime.UtcNow.AddDays(-14))
+        .Sum(item => item.Effort);
+
+    private string GetLoadTrendText()
+    {
+        var current = CurrentWeekFeedback.Sum(item => item.Effort);
+        if (PreviousWeekLoad == 0) return L["LoadTrendNoComparison"];
+        var change = (current - PreviousWeekLoad) * 100 / PreviousWeekLoad;
+        return L["LoadTrend", change];
+    }
+
+    private string GetLoadTrendClass()
+    {
+        var current = CurrentWeekFeedback.Sum(item => item.Effort);
+        return PreviousWeekLoad > 0 && current > PreviousWeekLoad * 1.35
+            ? "pl-status-warning"
+            : "pl-status-positive";
     }
 
     private async Task RemoveAnalysisAsync(RunningAnalysisLink analysis)

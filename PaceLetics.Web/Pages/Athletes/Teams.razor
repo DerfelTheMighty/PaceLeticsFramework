@@ -9,29 +9,7 @@
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
     <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    <nav class="pl-section-nav" aria-label="@L["Title"]">
-        <button type="button"
-                class="@GetSectionButtonClass(TeamsSection.Groups)"
-                aria-pressed="@(_activeSection == TeamsSection.Groups)"
-                @onclick="@(() => SelectSection(TeamsSection.Groups))">
-            <MudIcon Icon="@Icons.Material.Filled.Groups" Size="Size.Small" />
-            <span>@L["Groups"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(TeamsSection.PaceMate)"
-                aria-pressed="@(_activeSection == TeamsSection.PaceMate)"
-                @onclick="@(() => SelectSection(TeamsSection.PaceMate))">
-            <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Small" />
-            <span>@L["PaceMate"]</span>
-        </button>
-        <button type="button"
-                class="@GetSectionButtonClass(TeamsSection.Profiles)"
-                aria-pressed="@(_activeSection == TeamsSection.Profiles)"
-                @onclick="@(() => SelectSection(TeamsSection.Profiles))">
-            <MudIcon Icon="@Icons.Material.Filled.AccountCircle" Size="Size.Small" />
-            <span>@L["Profiles"]</span>
-        </button>
-    </nav>
+    <SectionNav Items="@SectionItems" ActiveKey="@GetSectionKey(_activeSection)" OnSelect="SelectSectionByKey" AriaLabel="@L["Title"]" />
 
     <MudDivider Class="my-4" />
 
@@ -71,6 +49,12 @@
 
     private TeamsSection _activeSection = TeamsSection.Groups;
     private string? _appliedSection;
+    private IReadOnlyList<SectionNavEntry> SectionItems =>
+    [
+        new("groups", L["Groups"]),
+        new("pacemate", L["PaceMate"]),
+        new("profiles", L["Profiles"])
+    ];
 
     protected override void OnParametersSet()
     {
@@ -107,12 +91,14 @@
         return Sections[nextIndex];
     }
 
-    private string GetSectionButtonClass(TeamsSection section)
+    private static string GetSectionKey(TeamsSection section) => section switch
     {
-        return _activeSection == section
-            ? "pl-section-nav__item pl-section-nav__item--active"
-            : "pl-section-nav__item";
-    }
+        TeamsSection.PaceMate => "pacemate",
+        TeamsSection.Profiles => "profiles",
+        _ => "groups"
+    };
+
+    private void SelectSectionByKey(string key) => SelectSection(ParseSection(key));
 
     private static TeamsSection ParseSection(string? value)
     {

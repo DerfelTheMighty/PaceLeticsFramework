@@ -1,0 +1,29 @@
+<nav class="pl-section-nav" aria-label="@AriaLabel">
+    @foreach (var item in Items)
+    {
+        <button type="button"
+                class="@GetItemClass(item.Key)"
+                aria-pressed="@string.Equals(item.Key, ActiveKey, StringComparison.OrdinalIgnoreCase)"
+                @onclick="@(() => OnSelect.InvokeAsync(item.Key))">
+            <span>@item.Label</span>
+        </button>
+    }
+</nav>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<SectionNavEntry> Items { get; set; } = Array.Empty<SectionNavEntry>();
+
+    [Parameter, EditorRequired]
+    public string ActiveKey { get; set; } = string.Empty;
+
+    [Parameter]
+    public string AriaLabel { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public EventCallback<string> OnSelect { get; set; }
+
+    private string GetItemClass(string key) => string.Equals(key, ActiveKey, StringComparison.OrdinalIgnoreCase)
+        ? "pl-section-nav__item pl-section-nav__item--active"
+        : "pl-section-nav__item";
+}

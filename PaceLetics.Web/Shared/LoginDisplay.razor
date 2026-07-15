@@ -1,41 +1,28 @@
-@using System.Globalization
 @using MudBlazor
-@using PaceLetics.Web.Localization
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 @inject IStringLocalizer<LoginDisplay> L
 
-<AuthorizeView>
+<AuthorizeView Context="accountContext">
     <Authorized>
         <MudMenu Icon="@Icons.Material.Outlined.AccountBox"
                  Color="Color.Inherit"
                  aria-label="@L["AccountMenu"]"
                  AnchorOrigin="Origin.BottomRight"
                  TransformOrigin="Origin.TopRight">
-            <MudMenuItem Href="Identity/Account/Manage" Icon="@Icons.Material.Outlined.ManageAccounts">
+            <MudMenuItem Href="Identity/Account/Manage">
                 @L["ManageProfile"]
             </MudMenuItem>
-            <MudMenuItem Disabled="true">
-                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Style="min-width:180px;">
-                    <MudIcon Icon="@Icons.Material.Filled.Language" Size="Size.Small" />
-                    <MudText Typo="Typo.caption" Color="Color.Secondary">@L["Language"]</MudText>
-                </MudStack>
+            <MudMenuItem Href="/Athletes/settings">
+                @L["Settings"]
             </MudMenuItem>
-            @foreach (var culture in SupportedCultures.All)
-            {
-                <MudMenuItem OnClick="@(() => SetCulture(culture.Code))">
-                    <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Style="min-width:180px;">
-                        <MudText>@culture.NativeName</MudText>
-                        <MudSpacer />
-                        @if (IsCurrentCulture(culture.Code))
-                        {
-                            <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" />
-                        }
-                    </MudStack>
-                </MudMenuItem>
-            }
+            <AuthorizeView Roles="@ApplicationRoles.Trainer" Context="trainerContext">
+                <Authorized>
+                    <MudMenuItem Href="/Trainers">@L["TrainerArea"]</MudMenuItem>
+                </Authorized>
+            </AuthorizeView>
             <MudDivider />
-            <MudMenuItem OnClick="LogOutAsync" Icon="@Icons.Material.Outlined.Logout">
+            <MudMenuItem OnClick="LogOutAsync">
                 @L["LogOut"]
             </MudMenuItem>
         </MudMenu>
@@ -47,17 +34,6 @@
 </AuthorizeView>
 
 @code {
-    private bool IsCurrentCulture(string culture)
-        => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == culture;
-
-    private async Task SetCulture(string culture)
-    {
-        var cookieValue = $"c={culture}|uic={culture}";
-        await JS.InvokeVoidAsync("eval",
-            $"document.cookie='.AspNetCore.Culture={cookieValue};path=/;max-age=31536000;samesite=lax'");
-        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
-    }
-
     private async Task LogOutAsync()
     {
         await JS.InvokeVoidAsync("eval", """

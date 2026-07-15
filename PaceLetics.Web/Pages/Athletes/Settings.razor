@@ -1,0 +1,79 @@
+@page "/Athletes/settings"
+@attribute [Authorize]
+@using System.Globalization
+@using PaceLetics.Web.Localization
+@inject ThemePreferenceService ThemePreferences
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@inject IStringLocalizer<Settings> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8" MaxWidth="MaxWidth.Small">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    <MudStack Spacing="4" Class="pt-4">
+        <section class="pl-settings-section" aria-labelledby="settings-language">
+            <MudText Typo="Typo.h6" HtmlTag="h2" id="settings-language">@L["Language"]</MudText>
+            <MudSelect T="string"
+                       Label="@L["Language"]"
+                       Value="@CurrentCulture"
+                       ValueChanged="SetCulture"
+                       Variant="Variant.Outlined"
+                       Dense="true">
+                @foreach (var culture in SupportedCultures.All)
+                {
+                    <MudSelectItem T="string" Value="@culture.Code">@culture.NativeName</MudSelectItem>
+                }
+            </MudSelect>
+        </section>
+
+        <section class="pl-settings-section" aria-labelledby="settings-appearance">
+            <MudText Typo="Typo.h6" HtmlTag="h2" id="settings-appearance">@L["Appearance"]</MudText>
+            <div class="pl-settings-options" role="radiogroup" aria-label="@L["Theme"]">
+                @foreach (var theme in ThemePreferences.Themes)
+                {
+                    <button type="button"
+                            class="@GetThemeClass(theme.Name)"
+                            role="radio"
+                            aria-checked="@(ThemePreferences.ThemeName == theme.Name)"
+                            @onclick="@(() => ThemePreferences.SetThemeAsync(theme.Name))">
+                        <span>@GetThemeName(theme.Name)</span>
+                        @if (ThemePreferences.ThemeName == theme.Name)
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" Color="Color.Success" />
+                        }
+                    </button>
+                }
+            </div>
+        </section>
+
+        <section class="pl-settings-section" aria-labelledby="settings-account">
+            <MudText Typo="Typo.h6" HtmlTag="h2" id="settings-account">@L["AccountAndApp"]</MudText>
+            <div class="pl-settings-links">
+                <a href="Identity/Account/Manage"><span>@L["ManageProfile"]</span><MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" /></a>
+                <a href="/Athletes/drive"><span>@L["Files"]</span><MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" /></a>
+                <a href="/impressum"><span>@L["About"]</span><MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" /></a>
+            </div>
+        </section>
+    </MudStack>
+</MudContainer>
+
+@code {
+    private string CurrentCulture => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    private async Task SetCulture(string culture)
+    {
+        var cookieValue = $"c={culture}|uic={culture}";
+        await JS.InvokeVoidAsync("eval",
+            $"document.cookie='.AspNetCore.Culture={cookieValue};path=/;max-age=31536000;samesite=lax'");
+        Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    }
+
+    private static string GetThemeName(AppThemeName themeName) =>
+        AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
+
+    private string GetThemeClass(AppThemeName name) => ThemePreferences.ThemeName == name
+        ? "pl-settings-option pl-settings-option--selected"
+        : "pl-settings-option";
+}
