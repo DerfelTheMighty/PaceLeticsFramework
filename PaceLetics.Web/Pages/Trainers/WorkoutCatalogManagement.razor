@@ -647,7 +647,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -752,7 +752,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
         finally
         {

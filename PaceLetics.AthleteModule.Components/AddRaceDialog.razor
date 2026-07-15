@@ -1,5 +1,4 @@
 ﻿
-@using MudBlazor.Extensions.Core;
 @using System;
 @using System.Text.RegularExpressions;
 @using MudBlazor;
@@ -7,7 +6,6 @@
 
 @namespace PaceLetics.AthleteModule.Components
 
-@inject IDialogService dialogService
 @inject IStringLocalizer<AthleteResources> L
 
 <MudDialog>
@@ -15,8 +13,11 @@
         <MudText Typo="Typo.h6">@L["AddRaceDialog_Title"]</MudText>
     </TitleContent>
     <DialogContent>
-        <MudTextField T="string" @bind-Value="_id" Immediate="@true" Label="@L["AddRaceDialog_Name"]" />
-        <MudSelect Dense="true" T="string" Label="@L["AddRaceDialog_Distance"]" Variant="Variant.Text" ValueChanged="value=>OnRaceTypeChanged(value)" Value="@_type">
+        <MudTextField T="string" @bind-Value="_id" Immediate="true" Required="true"
+                      Label="@L["AddRaceDialog_Name"]" RequiredError="@L["AddRaceDialog_Required"]" />
+        <MudSelect Dense="true" T="string" Label="@L["AddRaceDialog_Distance"]" Required="true"
+                   RequiredError="@L["AddRaceDialog_Required"]" Variant="Variant.Text"
+                   ValueChanged="value => OnRaceTypeChanged(value)" Value="@_type">
             <MudSelectItem Value="@RaceKeys.D1k" />
             <MudSelectItem Value="@RaceKeys.D1200m" />
             <MudSelectItem Value="@RaceKeys.D3k" />
@@ -27,17 +28,18 @@
             <MudSelectItem Value="@RaceKeys.D21k" />
             <MudSelectItem Value="@RaceKeys.D42k" />
         </MudSelect>
-        <MudTextField @bind-Value="_time" Label="@L["AddRaceDialog_Time"]" HelperText="@L["AddRaceDialog_TimeHelper"]" Clearable/>
-        <MudDatePicker Label="@L["AddRaceDialog_Date"]" @bind-Date="_date" PickerVariant="PickerVariant.Dialog" ShowToolbar="false" />
+        <MudTextField @bind-Value="_time" Label="@L["AddRaceDialog_Time"]" Mask="@_timeMask"
+                      Immediate="true" Required="true" HelperText="@L["AddRaceDialog_TimeHelper"]"
+                      Error="@(!string.IsNullOrWhiteSpace(_time) && !IsValidTime)"
+                      ErrorText="@L["AddRaceDialog_Warning_Message"]" Clearable />
+        <MudDatePicker Label="@L["AddRaceDialog_Date"]" @bind-Date="_date" Required="true"
+                       RequiredError="@L["AddRaceDialog_Required"]" PickerVariant="PickerVariant.Dialog" ShowToolbar="false" />
     </DialogContent>
     <DialogActions>
-        <MudTooltip Text="@L["AddRaceDialog_Ok"]">
-            <MudIconButton Icon="@Icons.Material.Filled.Check"
-                           Color="Color.Primary"
-                           Disabled="@string.IsNullOrWhiteSpace(this._id)"
-                           OnClick="@this.OK"
-                           Size="@Size.Small"
-                           aria-label="@L["AddRaceDialog_Ok"]" />
-        </MudTooltip>
+        <MudButton OnClick="Cancel">@L["AddRaceDialog_Cancel"]</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Check"
+                   Disabled="@(!CanSubmit)" OnClick="OK">
+            @L["AddRaceDialog_Ok"]
+        </MudButton>
     </DialogActions>
 </MudDialog>

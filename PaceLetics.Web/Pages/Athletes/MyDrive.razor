@@ -6,6 +6,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IUserDriveFolderService UserDriveFolderService
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
 @inject IStringLocalizer<MyDrive> L
@@ -19,7 +20,7 @@
 
     @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" Class="mb-4" />
     }
 
     <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
@@ -112,7 +113,7 @@
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
                 _folder = null;
             }
         });
@@ -134,7 +135,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
         finally
         {
@@ -149,7 +150,7 @@
 
         try
         {
-            var confirmed = await JS.InvokeAsync<bool>("confirm", L["DeleteConfirm"].Value);
+            var confirmed = await UiConfirmation.AskAsync(DialogService, L["DeleteConfirm"].Value);
             if (!confirmed)
                 return;
 
@@ -160,7 +161,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
         finally
         {

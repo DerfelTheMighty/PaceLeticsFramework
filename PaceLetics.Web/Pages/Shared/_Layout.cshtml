@@ -1,8 +1,10 @@
 @using Microsoft.AspNetCore.Hosting
 @using Microsoft.AspNetCore.Mvc.ViewEngines
 @using System.Globalization
+@using PaceLetics.Web.Localization
 @inject IWebHostEnvironment Environment
 @inject ICompositeViewEngine Engine
+@inject Microsoft.Extensions.Localization.IStringLocalizer<PaceLetics.Web.App> AppL
 @{
     var textDirection = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
 }
@@ -13,7 +15,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PaceLetics</title>
     <base href="~/" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <environment include="Development">
         <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
@@ -29,10 +30,13 @@
     <link href="css/app-theme.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="favicon.png" />
 </head>
-<body class="pl-synthwave-layout">
-    <header class="mud-appbar mud-appbar-fixed-top mud-appbar-gutters mud-elevation-1" style="background-color:var(--mud-palette-appbar-background); color:var(--mud-palette-appbar-text);">
-        <div class="mud-toolbar mud-toolbar-gutters">
-            <span class="mud-typography mud-typography-h6">PaceLetics - Team Running</span>
+<body class="pl-synthwave-layout pl-identity-shell">
+    <header class="mud-appbar mud-appbar-fixed-top mud-appbar-gutters mud-elevation-1 pl-identity-appbar">
+        <div class="mud-toolbar mud-toolbar-gutters pl-identity-toolbar">
+            <a class="pl-identity-brand" asp-area="Identity" asp-page="/Account/Login" aria-label="PaceLetics">
+                <span class="pl-identity-brand__mark" aria-hidden="true">PL</span>
+                <span class="pl-identity-brand__name">PaceLetics</span>
+            </a>
             <span class="mud-spacer"></span>
             @{
                 var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
@@ -41,14 +45,31 @@
             {
                 await Html.RenderPartialAsync("_LoginPartial");
             }
+            <label class="pl-visually-hidden" for="identity-culture">@AppL["Public_Language"]</label>
+            <select id="identity-culture"
+                    class="pl-identity-culture"
+                    aria-label="@AppL["Public_Language"]"
+                    onchange="paceleticsSetCulture(this.value)">
+                @foreach (var culture in SupportedCultures.All)
+                {
+                    <option value="@culture.Code" selected="@(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == culture.Code)">
+                        @culture.NativeName
+                    </option>
+                }
+            </select>
         </div>
     </header>
 
-    <main class="mud-main-content" style="padding-top: 80px; min-height: 100vh;">
-        <div class="mud-container mud-container-maxwidth-sm pt-6 px-4 pb-8">
+    <main class="mud-main-content pl-identity-main">
+        <div class="mud-container mud-container-maxwidth-sm pl-identity-container">
             @RenderBody()
         </div>
     </main>
+
+    <footer class="pl-identity-footer">
+        <a asp-area="Identity" asp-page="/Account/Impressum">@AppL["Public_Imprint"]</a>
+        <a asp-area="Identity" asp-page="/Account/Privacy">@AppL["Public_Privacy"]</a>
+    </footer>
 
     <environment include="Development">
         <script src="~/Identity/lib/jquery/dist/jquery.js"></script>
@@ -70,6 +91,14 @@
     </environment>
 
     <script src="~/js/main.js" asp-append-version="true"></script>
+    <script>
+        function paceleticsSetCulture(culture) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('culture', culture);
+            url.searchParams.set('ui-culture', culture);
+            window.location.assign(url.toString());
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

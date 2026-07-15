@@ -5,7 +5,7 @@ using PaceLetics.TrainingModule.CodeBase.Workouts.Enums;
 
 namespace PaceLetics.TrainingModule.Components.Workouts
 {
-    public partial class WorkoutView
+    public partial class WorkoutView : IDisposable
     {
         [Parameter]
         public IWorkout Workout { get; set; } = default!;
@@ -113,6 +113,16 @@ namespace PaceLetics.TrainingModule.Components.Workouts
 
             _currentExercise = idx;
             StateHasChanged();
+        }
+
+        public void Dispose()
+        {
+            Workout.ElementFinishedEvent -= OnElementFinished;
+            Workout.WorkoutFinishedEvent -= OnWorkoutFinished;
+            Workout.ElementStartEvent -= OnElementStart;
+            Workout.WorkoutStartEvent -= OnWorkoutStart;
+            foreach (var element in Workout.Elements)
+                element.StateChangedEvent -= OnElementStateChanged;
         }
 
     }

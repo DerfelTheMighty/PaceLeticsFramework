@@ -6,6 +6,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IRunningAnalysisService RunningAnalysisService
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 @inject LoadingStateService Loading
 @inject IStringLocalizer<MyAnalyses> L
 
@@ -18,7 +19,7 @@
 
     @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
     }
     else
     {
@@ -54,7 +55,7 @@
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
                 _analyses = Array.Empty<RunningAnalysisLink>();
             }
         });
@@ -65,8 +66,8 @@
         if (string.IsNullOrWhiteSpace(_userId))
             return;
 
-        var confirmed = await JS.InvokeAsync<bool>(
-            "confirm",
+        var confirmed = await UiConfirmation.AskAsync(
+            DialogService,
             string.Format(L["RemoveAnalysisConfirm"], analysis.Title));
         if (!confirmed)
             return;
@@ -80,7 +81,7 @@
         }
         catch (Exception ex)
         {
-            _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
         }
     }
 }

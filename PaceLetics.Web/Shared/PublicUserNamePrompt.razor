@@ -157,7 +157,7 @@
         }
         catch (Exception ex)
         {
-            _validationMessage = ex.Message;
+            _validationMessage = UiErrorMessages.From(ex);
         }
         finally
         {

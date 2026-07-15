@@ -23,7 +23,7 @@
 
     @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
     }
     else if (_analysis is null)
     {
@@ -151,7 +151,7 @@
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
             }
         });
     }

@@ -39,7 +39,7 @@
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
         {
-            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+            <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
         }
         else if (_captureSession is null)
         {
@@ -321,7 +321,7 @@
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
                 _roster = Array.Empty<RunningAnalysisRosterItem>();
             }
         });
@@ -369,7 +369,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
             _sideAssessment = CreateDefaultAssessment(RunningAnalysisPerspective.Side);
             _rearAssessment = CreateDefaultAssessment(RunningAnalysisPerspective.Rear);
             _analysisSummary = string.Empty;
@@ -409,7 +409,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
         finally
         {

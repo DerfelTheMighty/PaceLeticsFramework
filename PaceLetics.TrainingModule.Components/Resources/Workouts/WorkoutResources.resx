@@ -41,4 +41,6 @@
   <data name="WorkoutView_NoWorkout" xml:space="preserve"><value>No workout loaded.</value></data>
   <data name="FinishedDialog_Confirm" xml:space="preserve"><value>Yes!</value></data>
   <data name="TrainingCard_Title" xml:space="preserve"><value>Training</value></data>
+  <data name="FinishedDialog_Title" xml:space="preserve"><value>Workout completed</value></data>
+  <data name="FinishedDialog_Summary" xml:space="preserve"><value>You completed “{0}” with {1} exercises. Great work!</value></data>
 </root>

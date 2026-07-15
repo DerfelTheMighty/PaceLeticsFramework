@@ -30,7 +30,7 @@
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
         {
-            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+            <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
         }
 
         <MudPaper Elevation="1" Class="pa-4">
@@ -269,7 +269,7 @@
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
                 _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
                 _recordingStorageStatus = null;
             }
@@ -291,7 +291,7 @@
         }
         catch (Exception ex)
         {
-            _queueScanErrorMessage = ex.Message;
+            _queueScanErrorMessage = UiErrorMessages.From(ex);
             if (_pendingRecordings.Count == 0)
                 _pendingRecordings = Array.Empty<RunningAnalysisRecordedVideo>();
 
@@ -321,7 +321,7 @@
                 IsSupported = false,
                 IsConfigured = false,
                 IsReady = false,
-                ErrorMessage = ex.Message
+                ErrorMessage = UiErrorMessages.From(ex)
             };
         }
     }
@@ -344,7 +344,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -372,7 +372,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -648,7 +648,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(string.Format(L["ExportRecordingFailed"], ex.Message), Severity.Error);
+            Snackbar.Add(string.Format(L["ExportRecordingFailed"], UiErrorMessages.From(ex)), Severity.Error);
         }
     }
 

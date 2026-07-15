@@ -4,6 +4,19 @@ function scrollToTop() {
     window.scrollTo(0, 0);
 }
 
+document.addEventListener("click", event => {
+    const toggle = event.target.closest("[data-password-toggle]");
+    if (!toggle) return;
+
+    const input = document.getElementById(toggle.dataset.passwordToggle);
+    if (!input) return;
+
+    const shouldShow = input.type === "password";
+    input.type = shouldShow ? "text" : "password";
+    toggle.setAttribute("aria-pressed", shouldShow ? "true" : "false");
+    input.focus({ preventScroll: true });
+});
+
 
 window.PlayDing_1 = () => {
     const el = document.getElementById("ding1");

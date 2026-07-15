@@ -12,7 +12,7 @@
   <data name="EmailHelp" xml:space="preserve"><value>Die E-Mail-Adresse ist optional. Sie wird benötigt, wenn du dein Passwort zurücksetzen möchtest.</value></data>
   <data name="Password" xml:space="preserve"><value>Passwort</value></data>
   <data name="ConfirmPassword" xml:space="preserve"><value>Bestätige Passwort</value></data>
-  <data name="Submit" xml:space="preserve"><value>Absenden</value></data>
+  <data name="Submit" xml:space="preserve"><value>Konto erstellen</value></data>
   <data name="WelcomeTitle" xml:space="preserve"><value>Werde Teil von PaceLetics</value></data>
   <data name="WelcomeText" xml:space="preserve"><value>Erstelle dein kostenloses Konto und trainiere smarter:</value></data>
   <data name="Feature1" xml:space="preserve"><value>Berechne individuelle Trainingspaces aus Wettkampfergebnissen</value></data>
@@ -20,4 +20,6 @@
   <data name="Feature3" xml:space="preserve"><value>Zugang zu geführten Workouts für Läufer</value></data>
   <data name="CreateAccountHint" xml:space="preserve"><value>Es dauert nur einen Moment, um loszulegen.</value></data>
   <data name="AlreadyHaveAccount" xml:space="preserve"><value>Bereits ein Konto? Einloggen</value></data>
+  <data name="ShowPassword" xml:space="preserve"><value>Passwort anzeigen</value></data>
+  <data name="PasswordHelp" xml:space="preserve"><value>Verwende mindestens 6 Zeichen sowie einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl.</value></data>
 </root>

@@ -4,6 +4,7 @@
 @using PaceLetics.CoreModule.Infrastructure.Constants
 @using PaceLetics.TrainingModule.CodeBase.Running.Definitions
 @using PaceLetics.TrainingModule.CodeBase.Running.Models
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
 @using PaceLetics.TrainingPlanModule.CodeBase.Definitions
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services
@@ -12,13 +13,14 @@
 @inject ITrainingPlanService TrainingPlanService
 @inject ICourseService CourseService
 @inject IGroupService GroupService
+@inject IWorkoutCatalog WorkoutCatalog
 @inject ISnackbar Snackbar
+@inject IStringLocalizer<TrainingPlanManagement> L
 
-<PageTitle>Trainingsplaene verwalten</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Large">
-    <PageHeader Title="Trainingsplaene"
-                Subtitle="Plaene erstellen, Einheiten pflegen und Trainingsbloecke strukturieren." />
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
     <MudDivider Class="my-4" />
 
@@ -27,32 +29,36 @@
             <MudPaper Elevation="1" Class="pa-4">
                 <MudStack Spacing="3">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                        <MudText Typo="Typo.h6">Planwerkstatt</MudText>
-                        <MudTooltip Text="Plan erstellen">
+                        <MudText Typo="Typo.h6">@L["Workshop"]</MudText>
+                        <MudTooltip Text="@L["CreatePlan"]">
                             <MudIconButton Icon="@Icons.Material.Filled.Add"
                                            Color="Color.Primary"
                                            Variant="Variant.Filled"
                                            Disabled="@string.IsNullOrWhiteSpace(_newPlanName)"
                                            OnClick="CreatePlanAsync"
-                                           aria-label="Plan erstellen" />
+                                           aria-label="@L["CreatePlan"]" />
                         </MudTooltip>
                     </MudStack>
 
-                    <MudTextField Label="Neuer Plan"
+                    <MudTextField Label="@L["NewPlan"]"
                                   @bind-Value="_newPlanName"
                                   Variant="Variant.Outlined"
                                   Immediate="true" />
 
+                    <MudTextField Label="@L["SearchPlans"]" @bind-Value="_planSearch" Immediate="true"
+                                  Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
+                                  Clearable="true" Variant="Variant.Outlined" />
+
                     @if (_plans.Count == 0)
                     {
                         <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                            Es gibt noch keine Trainingsplaene.
+                            @L["NoPlans"]
                         </MudAlert>
                     }
                     else
                     {
                         <MudStack Spacing="1">
-                            @foreach (var plan in _plans.OrderBy(plan => plan.Name))
+                            @foreach (var plan in FilteredPlans)
                             {
                                 var selected = SelectedPlan?.Id == plan.Id;
                                 <button type="button"
@@ -78,7 +84,7 @@
             @if (SelectedPlan is null)
             {
                 <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                    Waehle einen Plan aus oder erstelle einen neuen Plan.
+                    @L["SelectPlan"]
                 </MudAlert>
             }
             else
@@ -87,18 +93,18 @@
                     <MudPaper Elevation="1" Class="pa-4">
                         <MudStack Spacing="3">
                             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                <MudTextField Label="Planname"
+                                <MudTextField Label="@L["PlanName"]"
                                               @bind-Value="_planName"
                                               Variant="Variant.Outlined"
                                               Immediate="true"
                                               Style="flex:1;" />
-                                <MudTooltip Text="Planname speichern">
+                                <MudTooltip Text="@L["SavePlanName"]">
                                     <MudIconButton Icon="@Icons.Material.Filled.Save"
                                                    Color="Color.Primary"
                                                    Variant="Variant.Filled"
                                                    Disabled="@string.IsNullOrWhiteSpace(_planName)"
                                                    OnClick="SavePlanNameAsync"
-                                                   aria-label="Planname speichern" />
+                                                   aria-label="@L["SavePlanName"]" />
                                 </MudTooltip>
                             </MudStack>
 
@@ -107,23 +113,23 @@
                     </MudPaper>
 
                     <MudTabs Elevation="0" Rounded="false">
-                        <MudTabPanel Text="Sichtbarkeit">
+                        <MudTabPanel Text="@L["Visibility"]">
                             <MudStack Spacing="3" Class="pt-3">
                                 <MudPaper Elevation="0" Class="pa-3 pl-trainer-editor-panel">
                                     <MudStack Spacing="2">
-                                        <MudText Typo="Typo.subtitle2">Sichtbarkeit setzen</MudText>
+                                        <MudText Typo="Typo.subtitle2">@L["SetVisibility"]</MudText>
                                         <MudGrid Spacing="2">
                                             <MudItem xs="12" md="4">
-                                                <MudSelect T="string" Label="Sichtbarkeit" @bind-Value="_publicationTargetType" Variant="Variant.Outlined">
-                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Global">Alle</MudSelectItem>
-                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Group">Gruppe</MudSelectItem>
-                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Course">Kurs</MudSelectItem>
+                                                <MudSelect T="string" Label="@L["Visibility"]" @bind-Value="_publicationTargetType" Variant="Variant.Outlined">
+                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Global">@L["All"]</MudSelectItem>
+                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Group">@L["Group"]</MudSelectItem>
+                                                    <MudSelectItem T="string" Value="@FeedTargetTypes.Course">@L["Course"]</MudSelectItem>
                                                 </MudSelect>
                                             </MudItem>
                                             @if (_publicationTargetType == FeedTargetTypes.Group)
                                             {
                                                 <MudItem xs="12" md="8">
-                                                    <MudSelect T="string" Label="Gruppe" @bind-Value="_publicationTargetId" Variant="Variant.Outlined">
+                                                    <MudSelect T="string" Label="@L["Group"]" @bind-Value="_publicationTargetId" Variant="Variant.Outlined">
                                                         @foreach (var group in _groups)
                                                         {
                                                             <MudSelectItem T="string" Value="@group.Id">@group.Name</MudSelectItem>
@@ -134,7 +140,7 @@
                                             else if (_publicationTargetType == FeedTargetTypes.Course)
                                             {
                                                 <MudItem xs="12" md="8">
-                                                    <MudSelect T="string" Label="Kurs" @bind-Value="_publicationTargetId" Variant="Variant.Outlined">
+                                                    <MudSelect T="string" Label="@L["Course"]" @bind-Value="_publicationTargetId" Variant="Variant.Outlined">
                                                         @foreach (var course in _courses)
                                                         {
                                                             <MudSelectItem T="string" Value="@course.Id">@course.Name</MudSelectItem>
@@ -144,12 +150,12 @@
                                             }
                                         </MudGrid>
                                         <MudStack Row="true" Justify="Justify.FlexEnd">
-                                            <MudTooltip Text="Sichtbarkeit speichern">
+                                            <MudTooltip Text="@L["SaveVisibility"]">
                                                 <MudIconButton Icon="@Icons.Material.Filled.Visibility"
                                                                Color="Color.Primary"
                                                                Variant="Variant.Filled"
                                                                OnClick="SavePublicationAsync"
-                                                               aria-label="Sichtbarkeit speichern" />
+                                                               aria-label="@L["SaveVisibility"]" />
                                             </MudTooltip>
                                         </MudStack>
                                     </MudStack>
@@ -157,7 +163,7 @@
 
                                 @if (SelectedPlanPublications.Count == 0)
                                 {
-                                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">Dieser Plan ist noch nicht veröffentlicht.</MudAlert>
+                                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NotPublished"]</MudAlert>
                                 }
                                 else
                                 {
@@ -170,11 +176,11 @@
                                                         <MudText Typo="Typo.body2">@publication.Label</MudText>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">@publication.PublishedAt.ToString("dd.MM.yyyy")</MudText>
                                                     </MudStack>
-                                                    <MudTooltip Text="Sichtbarkeit entfernen">
+                                                    <MudTooltip Text="@L["RemoveVisibility"]">
                                                         <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                                                        Color="Color.Default"
                                                                        OnClick="@(() => RemovePublicationAsync(publication))"
-                                                                       aria-label="Sichtbarkeit entfernen" />
+                                                                       aria-label="@L["RemoveVisibility"]" />
                                                     </MudTooltip>
                                                 </MudStack>
                                             </MudPaper>
@@ -184,45 +190,45 @@
                             </MudStack>
                         </MudTabPanel>
 
-                        <MudTabPanel Text="Einheiten">
+                        <MudTabPanel Text="@L["Sessions"]">
                             <MudStack Spacing="3" Class="pt-3">
                                 <MudPaper Elevation="0" Class="pa-3 pl-trainer-editor-panel">
                                     <MudStack Spacing="2">
-                                        <MudText Typo="Typo.subtitle2">Einheit hinzufuegen</MudText>
+                                        <MudText Typo="Typo.subtitle2">@L["AddSession"]</MudText>
                                         <MudGrid Spacing="2">
                                             <MudItem xs="12" md="6">
-                                                <MudTextField Label="Name"
+                                                <MudTextField Label="@L["Name"]"
                                                               @bind-Value="_sessionDraft.Name"
                                                               Variant="Variant.Outlined"
                                                               Immediate="true" />
                                             </MudItem>
                                             <MudItem xs="12" md="6">
-                                                <MudDatePicker Label="Datum"
+                                                <MudDatePicker Label="@L["Date"]"
                                                                Date="_sessionDraft.Date"
                                                                DateChanged="@(date => _sessionDraft.Date = date)"
                                                                Variant="Variant.Outlined" />
                                             </MudItem>
                                             <MudItem xs="12" md="4">
                                                 <MudSelect T="SessionDraftKind"
-                                                           Label="Typ"
+                                                           Label="@L["Type"]"
                                                            @bind-Value="_sessionDraft.Kind"
                                                            Variant="Variant.Outlined">
-                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.PlannedRun">Dauerlauf</MudSelectItem>
-                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.IntervalRun">Intervall</MudSelectItem>
-                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.Workout">Workout</MudSelectItem>
+                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.PlannedRun">@L["ContinuousRun"]</MudSelectItem>
+                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.IntervalRun">@L["Interval"]</MudSelectItem>
+                                                    <MudSelectItem T="SessionDraftKind" Value="SessionDraftKind.Workout">@L["Workout"]</MudSelectItem>
                                                 </MudSelect>
                                             </MudItem>
 
                                             @if (_sessionDraft.Kind == SessionDraftKind.PlannedRun)
                                             {
                                                 <MudItem xs="6" md="4">
-                                                    <MudNumericField T="int" Label="Distanz (m)"
+                                                    <MudNumericField T="int" Label="@L["Distance"]"
                                                                      @bind-Value="_sessionDraft.Distance"
                                                                      Min="0"
                                                                      Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudSelect T="string" Label="Pace"
+                                                    <MudSelect T="string" Label="@L["Pace"]"
                                                                @bind-Value="_sessionDraft.PaceKey"
                                                                Variant="Variant.Outlined">
                                                         @foreach (var paceKey in PaceKeyOptions)
@@ -235,25 +241,25 @@
                                             else if (_sessionDraft.Kind == SessionDraftKind.IntervalRun)
                                             {
                                                 <MudItem xs="6" md="3">
-                                                    <MudNumericField T="int" Label="Warm-up (m)"
+                                                    <MudNumericField T="int" Label="@L["Warmup"]"
                                                                      @bind-Value="_sessionDraft.WarmupDistance"
                                                                      Min="0"
                                                                      Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="3">
-                                                    <MudNumericField T="int" Label="Intervall (m)"
+                                                    <MudNumericField T="int" Label="@L["IntervalDistance"]"
                                                                      @bind-Value="_sessionDraft.Distance"
                                                                      Min="1"
                                                                      Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="3">
-                                                    <MudNumericField T="int" Label="Wiederholungen"
+                                                    <MudNumericField T="int" Label="@L["Repetitions"]"
                                                                      @bind-Value="_sessionDraft.Repetitions"
                                                                      Min="1"
                                                                      Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="3">
-                                                    <MudNumericField T="int" Label="Trabpause (m)"
+                                                    <MudNumericField T="int" Label="@L["Recovery"]"
                                                                      @bind-Value="_sessionDraft.RecoveryDistance"
                                                                      Min="0"
                                                                      Variant="Variant.Outlined" />
@@ -262,19 +268,23 @@
                                             else
                                             {
                                                 <MudItem xs="12" md="6">
-                                                    <MudTextField Label="Workout-ID"
-                                                                  @bind-Value="_sessionDraft.WorkoutId"
-                                                                  Variant="Variant.Outlined"
-                                                                  Immediate="true" />
+                                                    <MudSelect T="string" Label="@L["Workout"]"
+                                                               @bind-Value="_sessionDraft.WorkoutId"
+                                                               Variant="Variant.Outlined">
+                                                        @foreach (var workoutId in _workoutIds)
+                                                        {
+                                                            <MudSelectItem T="string" Value="@workoutId">@GetWorkoutLabel(workoutId)</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
                                                 </MudItem>
                                                 <MudItem xs="6" md="3">
-                                                    <MudNumericField T="int" Label="Sets"
+                                                    <MudNumericField T="int" Label="@L["Sets"]"
                                                                      @bind-Value="_sessionDraft.Sets"
                                                                      Min="1"
                                                                      Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="3">
-                                                    <MudNumericField T="int" Label="Runden"
+                                                    <MudNumericField T="int" Label="@L["Rounds"]"
                                                                      @bind-Value="_sessionDraft.Rounds"
                                                                      Min="1"
                                                                      Variant="Variant.Outlined" />
@@ -283,13 +293,13 @@
                                         </MudGrid>
 
                                         <MudStack Row="true" Justify="Justify.FlexEnd">
-                                            <MudTooltip Text="Einheit hinzufuegen">
+                                            <MudTooltip Text="@L["AddSession"]">
                                                 <MudIconButton Icon="@Icons.Material.Filled.EventAvailable"
                                                                Color="Color.Primary"
                                                                Variant="Variant.Filled"
                                                                Disabled="@(!CanCreateSession)"
                                                                OnClick="CreateSessionAsync"
-                                                               aria-label="Einheit hinzufuegen" />
+                                                               aria-label="@L["AddSession"]" />
                                             </MudTooltip>
                                         </MudStack>
                                     </MudStack>
@@ -298,7 +308,7 @@
                                 @if (SelectedPlan.Sessions.Count == 0)
                                 {
                                     <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                                        Dieser Plan hat noch keine Einheiten.
+                                        @L["NoSessions"]
                                     </MudAlert>
                                 }
                                 else
@@ -312,11 +322,11 @@
                                                         <MudText Typo="Typo.body2">@session.Name</MudText>
                                                         <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatSession(session)</MudText>
                                                     </MudStack>
-                                                    <MudTooltip Text="Einheit entfernen">
+                                                    <MudTooltip Text="@L["RemoveSession"]">
                                                         <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                                                        Color="Color.Default"
                                                                        OnClick="@(() => RemoveSessionAsync(session.Id))"
-                                                                       aria-label="Einheit entfernen" />
+                                                                       aria-label="@L["RemoveSession"]" />
                                                     </MudTooltip>
                                                 </MudStack>
                                             </MudPaper>
@@ -326,26 +336,26 @@
                             </MudStack>
                         </MudTabPanel>
 
-                        <MudTabPanel Text="Bloecke">
+                        <MudTabPanel Text="@L["Blocks"]">
                             <MudStack Spacing="3" Class="pt-3">
                                 <MudPaper Elevation="0" Class="pa-3 pl-trainer-editor-panel">
                                     <MudStack Spacing="2">
-                                        <MudText Typo="Typo.subtitle2">Block hinzufuegen</MudText>
+                                        <MudText Typo="Typo.subtitle2">@L["AddBlock"]</MudText>
                                         <MudGrid Spacing="2">
                                             <MudItem xs="12" md="4">
-                                                <MudTextField Label="Name"
+                                                <MudTextField Label="@L["Name"]"
                                                               @bind-Value="_blockDraft.Name"
                                                               Variant="Variant.Outlined"
                                                               Immediate="true" />
                                             </MudItem>
                                             <MudItem xs="12" md="4">
-                                                <MudTextField Label="Fokus"
+                                                <MudTextField Label="@L["Focus"]"
                                                               @bind-Value="_blockDraft.Focus"
                                                               Variant="Variant.Outlined"
                                                               Immediate="true" />
                                             </MudItem>
                                             <MudItem xs="12" md="4">
-                                                <MudTextField Label="Struktur"
+                                                <MudTextField Label="@L["Structure"]"
                                                               @bind-Value="_blockDraft.Structure"
                                                               Variant="Variant.Outlined"
                                                               Immediate="true" />
@@ -354,7 +364,7 @@
 
                                         @if (SelectedPlan.UnblockedSessions.Count == 0)
                                         {
-                                            <MudText Typo="Typo.caption" Color="Color.Secondary">Keine freien Einheiten verfuegbar.</MudText>
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">@L["NoFreeSessions"]</MudText>
                                         }
                                         else
                                         {
@@ -370,13 +380,13 @@
                                         }
 
                                         <MudStack Row="true" Justify="Justify.FlexEnd">
-                                            <MudTooltip Text="Block hinzufuegen">
+                                            <MudTooltip Text="@L["AddBlock"]">
                                                 <MudIconButton Icon="@Icons.Material.Filled.Inventory2"
                                                                Color="Color.Primary"
                                                                Variant="Variant.Filled"
                                                                Disabled="@(!CanCreateBlock)"
                                                                OnClick="CreateBlockAsync"
-                                                               aria-label="Block hinzufuegen" />
+                                                               aria-label="@L["AddBlock"]" />
                                             </MudTooltip>
                                         </MudStack>
                                     </MudStack>
@@ -385,7 +395,7 @@
                                 @if (SelectedPlan.Blocks.Count == 0)
                                 {
                                     <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                                        Dieser Plan hat noch keine Bloecke.
+                                        @L["NoBlocks"]
                                     </MudAlert>
                                 }
                                 else
@@ -403,11 +413,11 @@
                                                             <MudText Typo="Typo.caption" Color="Color.Secondary">@block.Focus</MudText>
                                                         }
                                                     </MudStack>
-                                                    <MudTooltip Text="Block entfernen">
+                                                    <MudTooltip Text="@L["RemoveBlock"]">
                                                         <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                                                        Color="Color.Default"
                                                                        OnClick="@(() => RemoveBlockAsync(block.Id))"
-                                                                       aria-label="Block entfernen" />
+                                                                       aria-label="@L["RemoveBlock"]" />
                                                     </MudTooltip>
                                                 </MudStack>
 
@@ -415,12 +425,12 @@
                                                 {
                                                     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
                                                         <MudText Typo="Typo.caption">@($"{session.Date:dd.MM.yyyy} - {session.Name}")</MudText>
-                                                        <MudTooltip Text="Aus Block entfernen">
+                                                        <MudTooltip Text="@L["RemoveFromBlock"]">
                                                             <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline"
                                                                            Size="Size.Small"
                                                                            Color="Color.Default"
                                                                            OnClick="@(() => RemoveSessionFromBlockAsync(block, session.Id))"
-                                                                           aria-label="Aus Block entfernen" />
+                                                                           aria-label="@L["RemoveFromBlock"]" />
                                                         </MudTooltip>
                                                     </MudStack>
                                                 }
@@ -492,9 +502,11 @@
     private List<CourseDocument> _courses = new();
     private List<GroupDocument> _groups = new();
     private List<TrainingPlanPublicationDocument> _publications = new();
+    private List<string> _workoutIds = new();
     private string? _userId;
     private string? _selectedPlanId;
     private string _newPlanName = string.Empty;
+    private string _planSearch = string.Empty;
     private string _planName = string.Empty;
     private string _publicationTargetType = FeedTargetTypes.Global;
     private string? _publicationTargetId;
@@ -504,6 +516,11 @@
 
     private TrainingPlan? SelectedPlan => _plans.FirstOrDefault(plan =>
         string.Equals(plan.Id, _selectedPlanId, StringComparison.OrdinalIgnoreCase));
+
+    private IEnumerable<TrainingPlan> FilteredPlans => _plans
+        .Where(plan => string.IsNullOrWhiteSpace(_planSearch)
+            || plan.Name.Contains(_planSearch, StringComparison.CurrentCultureIgnoreCase))
+        .OrderBy(plan => plan.Name);
 
     private IReadOnlyList<PlanPublicationView> SelectedPlanPublications =>
         SelectedPlan is null
@@ -525,6 +542,9 @@
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+        _workoutIds = WorkoutCatalog.GetWorkoutIds()
+            .OrderBy(GetWorkoutLabel, StringComparer.CurrentCultureIgnoreCase)
+            .ToList();
         ReloadPlans();
         await ReloadPublicationContextAsync();
     }
@@ -557,6 +577,14 @@
         _blockDraft = new();
     }
 
+    private string GetWorkoutLabel(string workoutId)
+    {
+        var definition = WorkoutCatalog.GetDefinition(workoutId);
+        return string.IsNullOrWhiteSpace(definition.Name)
+            ? workoutId
+            : $"{definition.Name} · {definition.Level}";
+    }
+
     private async Task ReloadPublicationContextAsync()
     {
         if (string.IsNullOrWhiteSpace(_userId))
@@ -575,11 +603,11 @@
             _newPlanName = string.Empty;
             _selectedPlanId = plan.Id;
             ReloadPlans();
-            Snackbar.Add("Trainingsplan erstellt.", Severity.Success);
+            Snackbar.Add(L["PlanCreated"], Severity.Success);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -609,12 +637,12 @@
                     _userId ?? string.Empty);
             }
 
-            Snackbar.Add("Sichtbarkeit gespeichert.", Severity.Success);
+            Snackbar.Add(L["VisibilitySaved"], Severity.Success);
             await ReloadPublicationContextAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -627,12 +655,12 @@
             else
                 await GroupService.RemoveTrainingPlanPublicationAsync(publication.Id, _userId ?? string.Empty);
 
-            Snackbar.Add("Sichtbarkeit entfernt.", Severity.Success);
+            Snackbar.Add(L["VisibilityRemoved"], Severity.Success);
             await ReloadPublicationContextAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -645,11 +673,11 @@
         {
             TrainingPlanService.UpdateTrainingPlan(SelectedPlan.Id, _planName);
             ReloadPlans();
-            Snackbar.Add("Planname gespeichert.", Severity.Success);
+            Snackbar.Add(L["PlanNameSaved"], Severity.Success);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -665,11 +693,11 @@
             TrainingPlanService.AddTrainingSession(SelectedPlan.Id, _sessionDraft.ToDefinition());
             _sessionDraft = SessionDraft.CreateDefault();
             ReloadPlans();
-            Snackbar.Add("Einheit hinzugefuegt.", Severity.Success);
+            Snackbar.Add(L["SessionAdded"], Severity.Success);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -685,11 +713,11 @@
             TrainingPlanService.RemoveTrainingSession(SelectedPlan.Id, sessionId);
             _selectedBlockSessionIds.Remove(sessionId);
             ReloadPlans();
-            Snackbar.Add("Einheit entfernt.", Severity.Success);
+            Snackbar.Add(L["SessionRemoved"], Severity.Success);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -715,11 +743,11 @@
             _blockDraft = new();
             _selectedBlockSessionIds.Clear();
             ReloadPlans();
-            Snackbar.Add("Block hinzugefuegt.", Severity.Success);
+            Snackbar.Add(L["BlockAdded"], Severity.Success);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -734,11 +762,11 @@
         {
             TrainingPlanService.RemoveTrainingPlanBlock(SelectedPlan.Id, blockId);
             ReloadPlans();
-            Snackbar.Add("Block entfernt.", Severity.Success);
+            Snackbar.Add(L["BlockRemoved"], Severity.Success);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -770,11 +798,11 @@
                 TrainingPlanService.UpdateTrainingPlanBlock(SelectedPlan.Id, block.Id, updated);
 
             ReloadPlans();
-            Snackbar.Add("Einheit aus Block entfernt.", Severity.Success);
+            Snackbar.Add(L["RemovedFromBlock"], Severity.Success);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -800,13 +828,13 @@
             : "pl-training-plan-selector";
     }
 
-    private static string FormatPlanMeta(TrainingPlan plan)
+    private string FormatPlanMeta(TrainingPlan plan)
     {
         var range = plan.StartDate is null || plan.EndDate is null
-            ? "ohne Datum"
-            : $"{plan.StartDate:dd.MM.yyyy} - {plan.EndDate:dd.MM.yyyy}";
+            ? L["WithoutDate"].Value
+            : $"{plan.StartDate:d} – {plan.EndDate:d}";
 
-        return $"{plan.Sessions.Count} Einheiten - {plan.Blocks.Count} Bloecke - {range}";
+        return string.Format(L["PlanMeta"], plan.Sessions.Count, plan.Blocks.Count, range);
     }
 
     private FeedTarget CreatePublicationTarget()
@@ -815,7 +843,7 @@
             return FeedTarget.Global();
 
         if (string.IsNullOrWhiteSpace(_publicationTargetId))
-            throw new InvalidOperationException("Bitte wähle ein Ziel aus.");
+            throw new InvalidOperationException(L["SelectTarget"]);
 
         return _publicationTargetType switch
         {
@@ -853,7 +881,7 @@
                     publication.TrainingPlanId,
                     FeedTargetTypes.Course,
                     course.Id,
-                    $"Kurs: {course.Name}",
+                    string.Format(L["CourseTarget"], course.Name),
                     publication.PublishedAt,
                     true));
             }
@@ -868,24 +896,24 @@
     private string FormatPublicationTarget(FeedTarget target)
     {
         if (target.IsGlobal)
-            return "Alle";
+            return L["All"];
 
         if (string.Equals(target.TargetType, FeedTargetTypes.Group, StringComparison.OrdinalIgnoreCase))
         {
             var groupName = _groups.FirstOrDefault(group => group.Id == target.TargetId)?.Name ?? target.TargetId;
-            return $"Gruppe: {groupName}";
+            return string.Format(L["GroupTarget"], groupName);
         }
 
         if (string.Equals(target.TargetType, FeedTargetTypes.Course, StringComparison.OrdinalIgnoreCase))
         {
             var courseName = _courses.FirstOrDefault(course => course.Id == target.TargetId)?.Name ?? target.TargetId;
-            return $"Kurs: {courseName}";
+            return string.Format(L["CourseTarget"], courseName);
         }
 
         return $"{target.TargetType}: {target.TargetId}";
     }
 
-    private static string FormatSession(TrainingSession session)
+    private string FormatSession(TrainingSession session)
     {
         var parts = new List<string> { session.Date.ToString("dd.MM.yyyy") };
 
@@ -893,18 +921,18 @@
             parts.Add($"{session.TotalRunDistance / 1000.0:0.0} km");
 
         if (session.Workouts.Count > 0)
-            parts.Add($"{session.Workouts.Count} Workout(s)");
+            parts.Add(string.Format(L["WorkoutCount"], session.Workouts.Count));
 
         return string.Join(" - ", parts);
     }
 
-    private static string FormatBlock(TrainingPlan plan, TrainingPlanBlock block)
+    private string FormatBlock(TrainingPlan plan, TrainingPlanBlock block)
     {
         var sessions = plan.GetSessionsForBlock(block);
         var structure = string.IsNullOrWhiteSpace(block.Structure) ? null : block.Structure;
         return structure is null
-            ? $"{sessions.Count} Einheiten"
-            : $"{sessions.Count} Einheiten - {structure}";
+            ? string.Format(L["SessionCount"], sessions.Count)
+            : $"{string.Format(L["SessionCount"], sessions.Count)} – {structure}";
     }
 
     private enum SessionDraftKind

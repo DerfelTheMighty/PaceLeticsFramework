@@ -28,23 +28,27 @@
     @if (_isOpen)
     {
         <div class="pl-message-overlay-backdrop" @onclick="CloseFeed"></div>
-        <div class="pl-message-menu-panel" @onclick:stopPropagation="true">
-            <DashboardMessageFeed Messages="_messages"
-                                  Framed="false"
-                                  AllowDelete="true"
-                                  OnDelete="DeleteMessageAsync" />
-            <MudDivider />
-            <div class="pl-message-menu-footer">
-                <MudTooltip Text="@L["CollapseFeed"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowUp"
-                                   Size="Size.Small"
-                                   Color="Color.Primary"
-                                   Class="pl-message-menu-collapse"
-                                   OnClick="CloseFeed"
-                                   aria-label="@L["CollapseFeed"]" />
-                </MudTooltip>
+        <MudFocusTrap Disabled="@(!_isOpen)">
+            <div class="pl-message-menu-panel" role="dialog" aria-modal="true" aria-labelledby="message-feed-title"
+                 tabindex="-1" @onkeydown="HandleKeyDown" @onclick:stopPropagation="true">
+                <h2 id="message-feed-title" class="pl-visually-hidden">@L["FeedTitle"]</h2>
+                <DashboardMessageFeed Messages="_messages"
+                                      Framed="false"
+                                      AllowDelete="true"
+                                      OnDelete="DeleteMessageAsync" />
+                <MudDivider />
+                <div class="pl-message-menu-footer">
+                    <MudTooltip Text="@L["CollapseFeed"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowUp"
+                                       Size="Size.Small"
+                                       Color="Color.Primary"
+                                       Class="pl-message-menu-collapse"
+                                       OnClick="CloseFeed"
+                                       aria-label="@L["CollapseFeed"]" />
+                    </MudTooltip>
+                </div>
             </div>
-        </div>
+        </MudFocusTrap>
     }
 }
 
@@ -123,6 +127,12 @@
     private void CloseFeed()
     {
         _isOpen = false;
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Escape")
+            CloseFeed();
     }
 
     private async Task LoadMessageStateAsync()

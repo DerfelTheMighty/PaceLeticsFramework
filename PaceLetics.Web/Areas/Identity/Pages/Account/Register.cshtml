@@ -7,7 +7,7 @@
 }
 
 <div class="mud-paper mud-elevation-4 pa-6 rounded-lg">
-    <div class="mud-typography mud-typography-h5 mb-2">@Localizer["WelcomeTitle"]</div>
+    <h1 class="mud-typography mud-typography-h5 mb-2">@Localizer["WelcomeTitle"]</h1>
     <p class="mud-typography mud-typography-body2 mb-2" style="opacity:.7;">@Localizer["WelcomeText"]</p>
     <ul class="mud-typography mud-typography-body2 mb-4" style="opacity:.7; padding-left:1.2rem;">
         <li>@Localizer["Feature1"]</li>
@@ -23,7 +23,7 @@
     <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
         <div class="form-floating mb-3">
-            <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" placeholder="@Localizer["YourName"].Value" />
+            <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" required placeholder="@Localizer["YourName"].Value" />
             <label asp-for="Input.Name">@Localizer["Username"]</label>
             <span asp-validation-for="Input.Name" class="text-danger"></span>
         </div>
@@ -33,14 +33,21 @@
             <div class="form-text">@Localizer["EmailHelp"]</div>
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password"].Value" />
+        <div class="form-floating mb-3 pl-password-field">
+            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" required minlength="6" placeholder="@Localizer["Password"].Value" />
             <label asp-for="Input.Password">@Localizer["Password"]</label>
+            <button type="button" class="pl-password-toggle" data-password-toggle="Input_Password" aria-label="@Localizer["ShowPassword"]">
+                <span aria-hidden="true">&#128065;</span>
+            </button>
             <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <div class="form-text">@Localizer["PasswordHelp"]</div>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password"].Value" />
+        <div class="form-floating mb-3 pl-password-field">
+            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" required minlength="6" placeholder="@Localizer["Password"].Value" />
             <label asp-for="Input.ConfirmPassword">@Localizer["ConfirmPassword"]</label>
+            <button type="button" class="pl-password-toggle" data-password-toggle="Input_ConfirmPassword" aria-label="@Localizer["ShowPassword"]">
+                <span aria-hidden="true">&#128065;</span>
+            </button>
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
         <button id="registerSubmit" type="submit" class="mud-button-root mud-button mud-button-filled mud-button-filled-primary mud-button-filled-size-large mud-ripple-button w-100 mb-3">

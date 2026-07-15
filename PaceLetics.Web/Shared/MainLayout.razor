@@ -4,6 +4,7 @@
 @inject ThemePreferenceService ThemePreferences
 @inject IStringLocalizer<MainLayout> L
 @inject IStringLocalizer<NavMenu> NavL
+@inject NavigationManager Navigation
 
 <MudThemeProvider @ref="_themeProvider"
                   Theme="@ThemePreferences.CurrentTheme"
@@ -22,6 +23,7 @@
                        Color="Color.Inherit"
                        Edge="Edge.Start"
                        Class="pl-desktop-only"
+                       aria-label="@NavL["NavigationMenu"]"
                        OnClick="@((e) => DrawerToggle())" />
         <MudText Align="Align.Start" Class="pl-appbar-logo" aria-label="PaceLetics">
             PL
@@ -33,19 +35,20 @@
                 <MudMenu Icon="@Icons.Material.Filled.MoreVert"
                          Color="Color.Inherit"
                          Class="pl-mobile-more-menu"
+                         aria-label="@NavL["TrainerMenu"]"
                          AnchorOrigin="Origin.BottomRight"
                          TransformOrigin="Origin.TopRight">
                     <MudMenuItem Href="/Trainers/courses" Icon="@Icons.Material.Filled.School">
                         @NavL["Nav_TrainerCourses"]
                     </MudMenuItem>
                     <MudMenuItem Href="/Trainers/groups" Icon="@Icons.Material.Filled.Groups">
-                        Gruppen
+                        @NavL["Nav_Groups"]
                     </MudMenuItem>
                     <MudMenuItem Href="/Trainers/training-plans" Icon="@Icons.Material.Filled.EventNote">
                         @NavL["Nav_TrainingPlan"]
                     </MudMenuItem>
                     <MudMenuItem Href="/Trainers/achievements" Icon="@Icons.Material.Filled.EmojiEvents">
-                        Achievements
+                        @NavL["Nav_Achievements"]
                     </MudMenuItem>
                     <MudMenuItem Href="/Trainers/running-analyses" Icon="@Icons.Material.Filled.Analytics">
                         @NavL["Nav_TrainerRunningAnalyses"]
@@ -56,21 +59,22 @@
                 </MudMenu>
             </Authorized>
         </AuthorizeView>
-        <AuthorizeView>
-            <Authorized>
-                <MudTooltip Text="@NavL["Nav_MyDrive"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.FolderOpen"
-                                   Color="Color.Inherit"
-                                   Size="Size.Small"
-                                   Href="/Athletes/drive"
-                                   aria-label="@NavL["Nav_MyDrive"]" />
-                </MudTooltip>
-            </Authorized>
-        </AuthorizeView>
-        <MudMenu Icon="@GetThemeMenuIcon()"
+        <MudMenu Icon="@Icons.Material.Filled.Settings"
                  Color="Color.Inherit"
+                 aria-label="@L["Settings"]"
                  AnchorOrigin="Origin.BottomRight"
                  TransformOrigin="Origin.TopRight">
+            <AuthorizeView>
+                <Authorized>
+                    <MudMenuItem Href="/Athletes/drive" Icon="@Icons.Material.Filled.FolderOpen">
+                        @NavL["Nav_MyDrive"]
+                    </MudMenuItem>
+                </Authorized>
+            </AuthorizeView>
+            <MudMenuItem Href="/impressum" Icon="@Icons.Material.Filled.Info">
+                @NavL["Nav_About"]
+            </MudMenuItem>
+            <MudDivider />
             <MudMenuItem Disabled="true">
                 <MudText Typo="Typo.caption" Color="Color.Secondary">@L["Theme"]</MudText>
             </MudMenuItem>
@@ -90,13 +94,6 @@
             }
         </MudMenu>
         <LoginDisplay />
-        <MudTooltip Text="@NavL["Nav_About"]">
-            <MudIconButton Icon="@Icons.Material.Filled.Info"
-                           Color="Color.Inherit"
-                           Size="Size.Small"
-                           Href="/impressum"
-                           aria-label="@NavL["Nav_About"]" />
-        </MudTooltip>
 
     </MudAppBar>
 
@@ -127,6 +124,7 @@
     protected override void OnInitialized()
     {
         ThemePreferences.Changed += OnThemePreferenceChanged;
+        Navigation.LocationChanged += OnLocationChanged;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -144,11 +142,6 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    private string GetThemeMenuIcon()
-    {
-        return ThemePreferences.CurrentThemeDefinition.Icon;
-    }
-
     private string GetThemeName(AppThemeName themeName)
     {
         return AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
@@ -156,7 +149,7 @@
 
     private string GetLayoutClass()
     {
-        return ThemePreferences.ThemeName switch
+        var themeClass = ThemePreferences.ThemeName switch
         {
             AppThemeName.PaceLetics => "pl-synthwave-layout",
             AppThemeName.Ocean => "pl-ocean-layout",
@@ -168,7 +161,19 @@
             AppThemeName.Tropical => "pl-tropical-layout",
             _ => string.Empty
         };
+
+        return IsWorkoutRoute()
+            ? $"{themeClass} pl-workout-route".Trim()
+            : themeClass;
     }
+
+    private bool IsWorkoutRoute() => Navigation.ToBaseRelativePath(Navigation.Uri)
+        .Split('?', '#')[0]
+        .Trim('/')
+        .Equals("workouts/workoutroom", StringComparison.OrdinalIgnoreCase);
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs args) =>
+        _ = InvokeAsync(StateHasChanged);
 
     private string GetThemeStyle()
     {
@@ -231,5 +236,6 @@
     public void Dispose()
     {
         ThemePreferences.Changed -= OnThemePreferenceChanged;
+        Navigation.LocationChanged -= OnLocationChanged;
     }
 }

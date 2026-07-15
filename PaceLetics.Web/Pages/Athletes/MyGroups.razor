@@ -4,24 +4,31 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IGroupService GroupService
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 @inject ISnackbar Snackbar
+@inject IStringLocalizer<MyGroups> L
 
 @if (!Embedded)
 {
-    <PageTitle>Gruppen</PageTitle>
+    <PageTitle>@L["Title"]</PageTitle>
 }
 
 <MudContainer Class="@ContainerClass" MaxWidth="MaxWidth.Small">
     @if (!Embedded)
     {
-        <PageHeader Title="Gruppen" Subtitle="Tritt Gruppen bei und erhalte Zugriff auf passende Kurse und Trainingspläne." />
+        <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
         <MudDivider Class="my-4" />
     }
 
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" Class="mb-3" />
+    }
+
     @if (_groups.Count == 0)
     {
-        <MudText Typo="Typo.body2" Color="Color.Secondary">Aktuell sind keine Gruppen verfügbar.</MudText>
+        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoGroups"]</MudText>
     }
     else
     {
@@ -38,20 +45,20 @@
                                 {
                                     <MudChip T="string" Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined">
                                         <MudIcon Icon="@Icons.Material.Filled.Lock" Size="Size.Small" />
-                                        Bestätigung
+                                        @L["Approval"]
                                     </MudChip>
                                 }
                                 else
                                 {
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">Offen</MudChip>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">@L["Open"]</MudChip>
                                 }
                                 @if (overview.IsJoined)
                                 {
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Filled">Beigetreten</MudChip>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Filled">@L["Joined"]</MudChip>
                                 }
                                 else if (overview.IsPending)
                                 {
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Filled">Angefragt</MudChip>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Filled">@L["Requested"]</MudChip>
                                 }
                             </MudStack>
                             @if (!string.IsNullOrWhiteSpace(group.Description))
@@ -62,30 +69,30 @@
 
                         @if (overview.IsJoined)
                         {
-                            <MudTooltip Text="Austreten">
+                            <MudTooltip Text="@L["Leave"]">
                                 <MudIconButton Icon="@Icons.Material.Filled.Logout"
                                                Color="Color.Default"
                                                OnClick="@(() => LeaveGroupAsync(group))"
-                                               aria-label="Austreten" />
+                                               aria-label="@L["Leave"]" />
                             </MudTooltip>
                         }
                         else if (overview.IsPending)
                         {
-                            <MudTooltip Text="Anfrage zurückziehen">
+                            <MudTooltip Text="@L["Withdraw"]">
                                 <MudIconButton Icon="@Icons.Material.Filled.Close"
                                                Color="Color.Default"
                                                OnClick="@(() => LeaveGroupAsync(group))"
-                                               aria-label="Anfrage zurückziehen" />
+                                               aria-label="@L["Withdraw"]" />
                             </MudTooltip>
                         }
                         else
                         {
-                            <MudTooltip Text="Beitreten">
+                            <MudTooltip Text="@L["Join"]">
                                 <MudIconButton Icon="@(RequiresApproval(group) ? Icons.Material.Filled.LockOpen : Icons.Material.Filled.HowToReg)"
                                                Color="Color.Primary"
                                                Variant="Variant.Filled"
                                                OnClick="@(() => JoinGroupAsync(group))"
-                                               aria-label="Beitreten" />
+                                               aria-label="@L["Join"]" />
                             </MudTooltip>
                         }
                     </MudStack>
@@ -108,6 +115,7 @@
 
     private string? _userId;
     private IReadOnlyList<GroupOverview> _groups = Array.Empty<GroupOverview>();
+    private string? _errorMessage;
 
     private string ContainerClass => Embedded
         ? "pa-0"
@@ -122,7 +130,15 @@
 
     private async Task LoadAsync()
     {
-        _groups = await GroupService.GetGroupsForAthleteAsync(_userId ?? string.Empty);
+        _errorMessage = null;
+        try
+        {
+            _groups = await GroupService.GetGroupsForAthleteAsync(_userId ?? string.Empty);
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = UiErrorMessages.From(ex);
+        }
     }
 
     private async Task JoinGroupAsync(GroupDocument group)
@@ -130,30 +146,30 @@
         try
         {
             var membership = await GroupService.JoinGroupAsync(group.Id, _userId ?? string.Empty);
-            Snackbar.Add(IsPending(membership) ? "Beitritt angefragt." : "Du bist der Gruppe beigetreten.", Severity.Success);
+            Snackbar.Add(IsPending(membership) ? L["JoinRequested"] : L["JoinSuccess"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task LeaveGroupAsync(GroupDocument group)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Gruppe \"{group.Name}\" verlassen?");
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["LeaveConfirm"], group.Name), destructive: false);
         if (!confirmed)
             return;
 
         try
         {
             await GroupService.LeaveGroupAsync(group.Id, _userId ?? string.Empty);
-            Snackbar.Add("Gruppe verlassen.", Severity.Success);
+            Snackbar.Add(L["LeaveSuccess"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 

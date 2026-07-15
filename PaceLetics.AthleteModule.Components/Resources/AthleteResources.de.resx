@@ -102,6 +102,12 @@
   <data name="AddRaceDialog_Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="AddRaceDialog_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="AddRaceDialog_Required" xml:space="preserve">
+    <value>Dieses Feld ist erforderlich.</value>
+  </data>
   <data name="PaceComparison_Zone" xml:space="preserve">
     <value>Bereich</value>
   </data>

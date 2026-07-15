@@ -1,0 +1,28 @@
+@inject IStringLocalizer<App> L
+
+<MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="@Class">
+    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px; flex-wrap:wrap; width:100%;">
+        <MudText Typo="Typo.body2">@Message</MudText>
+        @if (OnRetry.HasDelegate)
+        {
+            <MudButton Size="Size.Small"
+                       Variant="Variant.Outlined"
+                       Color="Color.Error"
+                       StartIcon="@Icons.Material.Filled.Refresh"
+                       OnClick="OnRetry">
+                @L["Retry"]
+            </MudButton>
+        }
+    </MudStack>
+</MudAlert>
+
+@code {
+    [Parameter]
+    public string Message { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnRetry { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+}

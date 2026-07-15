@@ -19,4 +19,5 @@
   <data name="Feature2" xml:space="preserve"><value>Structured training plans for your goals</value></data>
   <data name="Feature3" xml:space="preserve"><value>Guided workouts for strength and mobility</value></data>
   <data name="Feature4" xml:space="preserve"><value>Track your progress over time</value></data>
+  <data name="ShowPassword" xml:space="preserve"><value>Show password</value></data>
 </root>

@@ -221,7 +221,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"{L["ShareError"]}: {ex.Message}", Severity.Error);
+            Snackbar.Add($"{L["ShareError"]}: {UiErrorMessages.From(ex)}", Severity.Error);
         }
         finally
         {
@@ -240,7 +240,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"{L["RemoveError"]}: {ex.Message}", Severity.Error);
+            Snackbar.Add($"{L["RemoveError"]}: {UiErrorMessages.From(ex)}", Severity.Error);
         }
         finally
         {

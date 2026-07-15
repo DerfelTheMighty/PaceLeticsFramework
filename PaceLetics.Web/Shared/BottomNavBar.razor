@@ -1,8 +1,10 @@
 @inject IStringLocalizer<NavMenu> L
+@inject NavigationManager Navigation
+@implements IDisposable
 
 <nav class="pl-bottom-nav" aria-label="Mobile navigation">
-    <NavLink href="/Athletes/dashboard"
-             class="pl-bottom-nav__item"
+    <NavLink href="/"
+             class="@GetItemClass(MobileSection.Dashboard)"
              ActiveClass="pl-bottom-nav__item--active"
              Match="NavLinkMatch.All"
              title="@L["Nav_Dashboard"]">
@@ -15,7 +17,7 @@
     </NavLink>
 
     <NavLink href="/Athletes/teams"
-             class="pl-bottom-nav__item"
+             class="@GetItemClass(MobileSection.Teams)"
              ActiveClass="pl-bottom-nav__item--active"
              Match="NavLinkMatch.Prefix"
              title="@L["Nav_Teams"]">
@@ -28,7 +30,7 @@
     </NavLink>
 
     <NavLink href="/Athletes/courses"
-             class="pl-bottom-nav__item"
+             class="@GetItemClass(MobileSection.Courses)"
              ActiveClass="pl-bottom-nav__item--active"
              Match="NavLinkMatch.Prefix"
              title="@L["Nav_Courses"]">
@@ -41,7 +43,7 @@
     </NavLink>
 
     <NavLink href="/Athletes/academy"
-             class="pl-bottom-nav__item"
+             class="@GetItemClass(MobileSection.Academy)"
              ActiveClass="pl-bottom-nav__item--active"
              Match="NavLinkMatch.Prefix"
              title="@L["Nav_Academy"]">
@@ -54,7 +56,7 @@
     </NavLink>
 
     <NavLink href="/Athletes/data-analyses"
-             class="pl-bottom-nav__item"
+             class="@GetItemClass(MobileSection.Data)"
              ActiveClass="pl-bottom-nav__item--active"
              Match="NavLinkMatch.Prefix"
              title="@L["Nav_DataAnalyses"]">
@@ -66,3 +68,63 @@
         </span>
     </NavLink>
 </nav>
+
+@code {
+    private enum MobileSection
+    {
+        Dashboard,
+        Teams,
+        Courses,
+        Academy,
+        Data
+    }
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+    }
+
+    private string GetItemClass(MobileSection section)
+        => IsSectionActive(section)
+            ? "pl-bottom-nav__item pl-bottom-nav__item--active"
+            : "pl-bottom-nav__item";
+
+    private bool IsSectionActive(MobileSection section)
+    {
+        var path = Navigation.ToBaseRelativePath(Navigation.Uri)
+            .Split('?', '#')[0]
+            .Trim('/')
+            .ToLowerInvariant();
+
+        return section switch
+        {
+            MobileSection.Dashboard => string.IsNullOrEmpty(path)
+                || path.StartsWith("athletes/dashboard")
+                || path.StartsWith("workouts/"),
+            MobileSection.Teams => path.StartsWith("athletes/teams")
+                || path.StartsWith("athletes/groups")
+                || path.StartsWith("athletes/mate")
+                || path.StartsWith("profiles"),
+            MobileSection.Courses => path.StartsWith("athletes/courses")
+                || path.StartsWith("athletes/trainingcalendar")
+                || path.StartsWith("athletes/trainingplanpage"),
+            MobileSection.Academy => path.StartsWith("athletes/academy")
+                || path.StartsWith("academy"),
+            MobileSection.Data => path.StartsWith("athletes/data-analyses")
+                || path.StartsWith("athletes/racepaces")
+                || path.StartsWith("athletes/pacezones")
+                || path.StartsWith("athletes/analyses"),
+            _ => false
+        };
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs args)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= OnLocationChanged;
+    }
+}

@@ -103,4 +103,7 @@
   <data name="WorkoutCount" xml:space="preserve"><value>{0} workout(s)</value></data>
   <data name="PlanNotFound" xml:space="preserve"><value>The training plan was not found.</value></data>
   <data name="BlockNameRequired" xml:space="preserve"><value>Please enter a block name.</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="ValidationNameRequired" xml:space="preserve"><value>Please enter a course name.</value></data>
+  <data name="ValidationCoursePeriod" xml:space="preserve"><value>The end date must not be before the start date.</value></data>
 </root>

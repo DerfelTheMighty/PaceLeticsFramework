@@ -19,6 +19,7 @@ public sealed class SelectDifficultyViewModel
     public IReadOnlyList<string> Variants => _variants;
     public string PreviewImage { get; private set; } = DefaultPreviewImage;
     public string PreviewDescription { get; private set; } = string.Empty;
+    public int PreviewExerciseCount { get; private set; }
     public int Sets { get; set; } = 1;
     public int Rounds { get; set; } = 1;
 
@@ -29,12 +30,14 @@ public sealed class SelectDifficultyViewModel
 
         PreviewImage = DefaultPreviewImage;
         PreviewDescription = string.Empty;
+        PreviewExerciseCount = 0;
 
         if (_variants.Count == 0)
             return;
 
         var preview = _workoutCatalog.GetWorkoutPreview(_variants.First());
         PreviewDescription = preview.Description;
+        PreviewExerciseCount = preview.Count;
 
         var imageFile = preview.Exercises.FirstOrDefault()?.Imagefile;
         if (!string.IsNullOrWhiteSpace(imageFile))

@@ -1,44 +1,54 @@
 @page "/Trainers/groups"
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using AthleteDataAccessLibrary.Contracts
+@using PaceLetics.AthleteModule.CodeBase.Models
 @using PaceLetics.Web.Services.Courses
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IGroupService GroupService
+@inject IAthleteData AthleteData
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 @inject ISnackbar Snackbar
+@inject IStringLocalizer<GroupManagement> L
 
-<PageTitle>Gruppen verwalten</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
-    <PageHeader Title="Gruppen" Subtitle="Gruppen erstellen, Beitritte steuern und Mitglieder verwalten." />
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
     <MudDivider Class="my-4" />
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" Class="mb-4" />
+    }
 
     <MudStack Spacing="4">
         <MudPaper Elevation="1" Class="pa-4">
             <MudStack Spacing="3">
-                <MudText Typo="Typo.h6">Neue Gruppe</MudText>
+                <MudText Typo="Typo.h6">@L["NewGroup"]</MudText>
                 <MudGrid Spacing="2">
                     <MudItem xs="12" md="6">
-                        <MudTextField Label="Name" @bind-Value="_newGroup.Name" Variant="Variant.Outlined" Immediate="true" />
+                        <MudTextField Label="@L["Name"]" @bind-Value="_newGroup.Name" Variant="Variant.Outlined" Immediate="true" />
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <MudSelect T="string" Label="Beitritt" @bind-Value="_newGroup.JoinMode" Variant="Variant.Outlined">
-                            <MudSelectItem T="string" Value="@GroupJoinModes.Open">Offen</MudSelectItem>
-                            <MudSelectItem T="string" Value="@GroupJoinModes.ApprovalRequired">Mit Bestätigung</MudSelectItem>
+                        <MudSelect T="string" Label="@L["Join"]" @bind-Value="_newGroup.JoinMode" Variant="Variant.Outlined">
+                            <MudSelectItem T="string" Value="@GroupJoinModes.Open">@L["Open"]</MudSelectItem>
+                            <MudSelectItem T="string" Value="@GroupJoinModes.ApprovalRequired">@L["ApprovalRequired"]</MudSelectItem>
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12">
-                        <MudTextField Label="Beschreibung" @bind-Value="_newGroup.Description" Variant="Variant.Outlined" Lines="3" />
+                        <MudTextField Label="@L["Description"]" @bind-Value="_newGroup.Description" Variant="Variant.Outlined" Lines="3" />
                     </MudItem>
                 </MudGrid>
                 <MudStack Row="true" Justify="Justify.FlexEnd">
-                    <MudTooltip Text="Gruppe erstellen">
+                    <MudTooltip Text="@L["CreateGroup"]">
                         <MudIconButton Icon="@Icons.Material.Filled.Add"
                                        Color="Color.Primary"
                                        Variant="Variant.Filled"
                                        Disabled="@string.IsNullOrWhiteSpace(_newGroup.Name)"
                                        OnClick="CreateGroupAsync"
-                                       aria-label="Gruppe erstellen" />
+                                       aria-label="@L["CreateGroup"]" />
                     </MudTooltip>
                 </MudStack>
             </MudStack>
@@ -46,14 +56,14 @@
 
         @if (_groups.Count == 0)
         {
-            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">Du hast noch keine Gruppen erstellt.</MudAlert>
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NoGroups"]</MudAlert>
         }
         else
         {
             <MudPaper Elevation="1" Class="pa-4">
                 <MudStack Spacing="3">
                     <MudSelect T="string"
-                               Label="Gruppe"
+                               Label="@L["Group"]"
                                Value="_selectedGroupId"
                                ValueChanged="OnSelectedGroupChanged"
                                Variant="Variant.Outlined">
@@ -75,42 +85,42 @@
                         <MudStack Spacing="3">
                             <MudGrid Spacing="2">
                                 <MudItem xs="12" md="6">
-                                    <MudTextField Label="Name" @bind-Value="_editGroup.Name" Variant="Variant.Outlined" Immediate="true" />
+                                    <MudTextField Label="@L["Name"]" @bind-Value="_editGroup.Name" Variant="Variant.Outlined" Immediate="true" />
                                 </MudItem>
                                 <MudItem xs="12" md="6">
-                                    <MudSelect T="string" Label="Beitritt" @bind-Value="_editGroup.JoinMode" Variant="Variant.Outlined">
-                                        <MudSelectItem T="string" Value="@GroupJoinModes.Open">Offen</MudSelectItem>
-                                        <MudSelectItem T="string" Value="@GroupJoinModes.ApprovalRequired">Mit Bestätigung</MudSelectItem>
+                                    <MudSelect T="string" Label="@L["Join"]" @bind-Value="_editGroup.JoinMode" Variant="Variant.Outlined">
+                                        <MudSelectItem T="string" Value="@GroupJoinModes.Open">@L["Open"]</MudSelectItem>
+                                        <MudSelectItem T="string" Value="@GroupJoinModes.ApprovalRequired">@L["ApprovalRequired"]</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
                                 <MudItem xs="12">
-                                    <MudTextField Label="Beschreibung" @bind-Value="_editGroup.Description" Variant="Variant.Outlined" Lines="3" />
+                                    <MudTextField Label="@L["Description"]" @bind-Value="_editGroup.Description" Variant="Variant.Outlined" Lines="3" />
                                 </MudItem>
                             </MudGrid>
 
                             <MudStack Row="true" Justify="Justify.FlexEnd" Style="gap:8px;">
-                                <MudTooltip Text="Gruppe löschen">
+                                <MudTooltip Text="@L["DeleteGroup"]">
                                     <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                                    Color="Color.Error"
                                                    OnClick="@(() => DeleteGroupAsync(group))"
-                                                   aria-label="Gruppe löschen" />
+                                                   aria-label="@L["DeleteGroup"]" />
                                 </MudTooltip>
-                                <MudTooltip Text="Änderungen speichern">
+                                <MudTooltip Text="@L["SaveChanges"]">
                                     <MudIconButton Icon="@Icons.Material.Filled.Save"
                                                    Color="Color.Primary"
                                                    Variant="Variant.Filled"
                                                    Disabled="@string.IsNullOrWhiteSpace(_editGroup.Name)"
                                                    OnClick="@(() => SaveGroupAsync(group))"
-                                                   aria-label="Änderungen speichern" />
+                                                   aria-label="@L["SaveChanges"]" />
                                 </MudTooltip>
                             </MudStack>
 
                             <MudDivider />
 
-                            <MudText Typo="Typo.subtitle2">Beitrittsanfragen</MudText>
+                            <MudText Typo="Typo.subtitle2">@L["JoinRequests"]</MudText>
                             @if (pending.Count == 0)
                             {
-                                <MudText Typo="Typo.body2" Color="Color.Secondary">Keine offenen Anfragen.</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoRequests"]</MudText>
                             }
                             else
                             {
@@ -118,13 +128,13 @@
                                     @foreach (var membership in pending)
                                     {
                                         <div class="pl-group-row">
-                                            <MudText Typo="Typo.body2">@membership.AthleteUserId</MudText>
+                                            <MudText Typo="Typo.body2">@GetAthleteDisplayName(membership.AthleteUserId)</MudText>
                                             <MudStack Row="true" Style="gap:4px;">
-                                                <MudTooltip Text="Bestätigen">
-                                                    <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Check" Color="Color.Success" OnClick="@(() => ApproveAsync(group, membership))" />
+                                                <MudTooltip Text="@L["Approve"]">
+                                                    <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Check" Color="Color.Success" OnClick="@(() => ApproveAsync(group, membership))" aria-label="@L["Approve"]" />
                                                 </MudTooltip>
-                                                <MudTooltip Text="Ablehnen">
-                                                    <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Close" Color="Color.Error" OnClick="@(() => RejectAsync(group, membership))" />
+                                                <MudTooltip Text="@L["Reject"]">
+                                                    <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Close" Color="Color.Error" OnClick="@(() => RejectAsync(group, membership))" aria-label="@L["Reject"]" />
                                                 </MudTooltip>
                                             </MudStack>
                                         </div>
@@ -132,10 +142,10 @@
                                 </MudStack>
                             }
 
-                            <MudText Typo="Typo.subtitle2">Mitglieder</MudText>
+                            <MudText Typo="Typo.subtitle2">@L["Members"]</MudText>
                             @if (active.Count == 0)
                             {
-                                <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine aktiven Mitglieder.</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoMembers"]</MudText>
                             }
                             else
                             {
@@ -143,7 +153,7 @@
                                     @foreach (var membership in active)
                                     {
                                         <div class="pl-group-row">
-                                            <MudText Typo="Typo.body2">@membership.AthleteUserId</MudText>
+                                            <MudText Typo="Typo.body2">@GetAthleteDisplayName(membership.AthleteUserId)</MudText>
                                             <MudText Typo="Typo.caption" Color="Color.Secondary">@membership.ApprovedAt?.ToString("dd.MM.yyyy")</MudText>
                                         </div>
                                     }
@@ -177,6 +187,8 @@
     private string? _selectedGroupId;
     private GroupCreateRequest _newGroup = new();
     private GroupCreateRequest _editGroup = new();
+    private Dictionary<string, string> _athleteDisplayNamesById = new(StringComparer.OrdinalIgnoreCase);
+    private string? _errorMessage;
 
     private GroupDocument? SelectedGroup => _groups.FirstOrDefault(group =>
         string.Equals(group.Id, _selectedGroupId, StringComparison.OrdinalIgnoreCase));
@@ -191,7 +203,21 @@
 
     private async Task LoadAsync()
     {
-        _groups = (await GroupService.GetGroupsForTrainerAsync(_userId ?? string.Empty)).ToList();
+        _errorMessage = null;
+        try
+        {
+            _groups = (await GroupService.GetGroupsForTrainerAsync(_userId ?? string.Empty)).ToList();
+            var athletes = await AthleteData.GetAthletes();
+            _athleteDisplayNamesById = athletes.ToDictionary(
+                athlete => athlete.Id,
+                athlete => GetDisplayName(athlete, athlete.Id),
+                StringComparer.OrdinalIgnoreCase);
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = UiErrorMessages.From(ex);
+            return;
+        }
 
         if (_groups.Count == 0)
         {
@@ -208,12 +234,31 @@
         }
 
         _membershipsByGroup = new Dictionary<string, IReadOnlyList<GroupMembershipDocument>>(StringComparer.OrdinalIgnoreCase);
-        foreach (var group in _groups)
+        try
         {
-            _membershipsByGroup[group.Id] = await GroupService.GetMembershipsForGroupAsync(group.Id, _userId ?? string.Empty);
+            foreach (var group in _groups)
+            {
+                _membershipsByGroup[group.Id] = await GroupService.GetMembershipsForGroupAsync(group.Id, _userId ?? string.Empty);
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = UiErrorMessages.From(ex);
         }
 
         ApplySelectedGroupToEditDraft();
+    }
+
+    private string GetAthleteDisplayName(string athleteUserId) =>
+        _athleteDisplayNamesById.TryGetValue(athleteUserId, out var displayName) ? displayName : athleteUserId;
+
+    private static string GetDisplayName(AthleteModel? athlete, string fallback)
+    {
+        if (!string.IsNullOrWhiteSpace(athlete?.PublicProfile?.PublicUserName) && athlete.PublicProfile.PublicUserName != "NA")
+            return athlete.PublicProfile.PublicUserName;
+        if (!string.IsNullOrWhiteSpace(athlete?.Name) && athlete.Name != "NA")
+            return athlete.Name;
+        return fallback;
     }
 
     private async Task CreateGroupAsync()
@@ -223,12 +268,12 @@
             var group = await GroupService.CreateGroupAsync(_newGroup, _userId ?? string.Empty, _displayName);
             _newGroup = new();
             _selectedGroupId = group.Id;
-            Snackbar.Add("Gruppe erstellt.", Severity.Success);
+            Snackbar.Add(L["Created"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -244,30 +289,30 @@
         try
         {
             await GroupService.UpdateGroupAsync(group.Id, _editGroup, _userId ?? string.Empty);
-            Snackbar.Add("Gruppe gespeichert.", Severity.Success);
+            Snackbar.Add(L["Saved"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task DeleteGroupAsync(GroupDocument group)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Gruppe \"{group.Name}\" löschen?");
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["DeleteConfirm"], group.Name));
         if (!confirmed)
             return;
 
         try
         {
             await GroupService.DeleteGroupAsync(group.Id, _userId ?? string.Empty);
-            Snackbar.Add("Gruppe gelöscht.", Severity.Success);
+            Snackbar.Add(L["Deleted"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -276,12 +321,12 @@
         try
         {
             await GroupService.ApproveMembershipAsync(group.Id, membership.AthleteUserId, _userId ?? string.Empty);
-            Snackbar.Add("Beitritt bestätigt.", Severity.Success);
+            Snackbar.Add(L["Approved"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -290,12 +335,12 @@
         try
         {
             await GroupService.RejectMembershipAsync(group.Id, membership.AthleteUserId, _userId ?? string.Empty);
-            Snackbar.Add("Anfrage abgelehnt.", Severity.Success);
+            Snackbar.Add(L["Rejected"], Severity.Success);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 

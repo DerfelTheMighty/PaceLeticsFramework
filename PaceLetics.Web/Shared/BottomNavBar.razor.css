@@ -71,7 +71,7 @@
     display: -webkit-box;
     max-width: 100%;
     overflow: hidden;
-    font-size: 0.64rem;
+    font-size: 0.68rem;
     font-weight: 600;
     line-height: 1.15;
     text-align: center;
@@ -87,7 +87,7 @@
     }
 
     .pl-bottom-nav__label {
-        font-size: 0.58rem;
+        font-size: 0.64rem;
     }
 }
 

@@ -12,7 +12,18 @@
         <NotFound>
             <PageTitle>@L["NotFoundTitle"]</PageTitle>
             <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert"></p>
+                <MudContainer MaxWidth="MaxWidth.Small" Class="pt-8 px-4">
+                    <MudPaper Elevation="0" Class="pa-6 pl-panel" role="alert">
+                        <MudStack Spacing="3" AlignItems="AlignItems.Start">
+                            <MudIcon Icon="@Icons.Material.Filled.SearchOff" Color="Color.Primary" Size="Size.Large" />
+                            <MudText Typo="Typo.h5" HtmlTag="h1">@L["NotFoundTitle"]</MudText>
+                            <MudText Typo="Typo.body1" Color="Color.Secondary">@L["NotFoundMessage"]</MudText>
+                            <MudButton Href="/" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Home">
+                                @L["GoToDashboard"]
+                            </MudButton>
+                        </MudStack>
+                    </MudPaper>
+                </MudContainer>
             </LayoutView>
         </NotFound>
     </Router>

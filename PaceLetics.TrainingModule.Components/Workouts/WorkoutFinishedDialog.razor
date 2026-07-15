@@ -6,22 +6,25 @@
 
 <MudDialog>
     <DialogContent>
-        <MudGrid Justify="Justify.Center" Style="align-items: center;">
-            <MudImage> </MudImage>
-        </MudGrid>
-        
+        <MudStack AlignItems="AlignItems.Center" Spacing="2" Class="py-4" role="status">
+            <MudIcon Icon="@Icons.Material.Filled.EmojiEvents" Color="Color.Warning" Size="Size.Large" />
+            <MudText Typo="Typo.h5" Align="Align.Center">@L["FinishedDialog_Title"]</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Center">
+                @string.Format(L["FinishedDialog_Summary"], WorkoutName, ExerciseCount)
+            </MudText>
+        </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudTooltip Text="@L["FinishedDialog_Confirm"]">
-            <MudIconButton Icon="@Icons.Material.Filled.Check"
-                           Color="Color.Primary"
-                           OnClick="Submit"
-                           aria-label="@L["FinishedDialog_Confirm"]" />
-        </MudTooltip>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true"
+                   StartIcon="@Icons.Material.Filled.Check" OnClick="Submit">
+            @L["FinishedDialog_Confirm"]
+        </MudButton>
     </DialogActions>
 </MudDialog>
 @code {
     [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public string WorkoutName { get; set; } = string.Empty;
+    [Parameter] public int ExerciseCount { get; set; }
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
 }

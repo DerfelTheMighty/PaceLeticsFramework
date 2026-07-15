@@ -13,6 +13,7 @@
 @inject ITrainingPlanService TrainingPlanService
 @inject IAthleteData AthleteData
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 @inject NavigationManager Navigation
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
@@ -21,24 +22,36 @@
 <PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Medium">
-    <PageHeader Title="@L["Title"]"
-                Subtitle="@L["Subtitle"]" />
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]">
+        <Actions>
+            @if (!_showCreateCourseForm)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add"
+                           OnClick="@(() => _showCreateCourseForm = true)">
+                    @L["CreateCourse"]
+                </MudButton>
+            }
+        </Actions>
+    </PageHeader>
 
     <MudDivider Class="my-4" />
 
     @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" Class="mb-4" />
     }
 
     <MudStack Spacing="4">
+        @if (_showCreateCourseForm)
+        {
             <MudPaper Elevation="1" Class="pa-4">
                 <MudStack Spacing="3">
                     <MudText Typo="Typo.h6">@L["CreateCourseTitle"]</MudText>
 
                     <MudGrid Spacing="2">
                         <MudItem xs="12" md="6">
-                            <MudTextField Label="@L["Name"]" @bind-Value="_courseName" Variant="Variant.Outlined" />
+                            <MudTextField Label="@L["Name"]" @bind-Value="_courseName" Immediate="true"
+                                          Required="true" RequiredError="@L["ValidationNameRequired"]" Variant="Variant.Outlined" />
                         </MudItem>
                         <MudItem xs="12" md="6">
                             <MudSelect T="CourseLevel"
@@ -94,17 +107,21 @@
                         }
                     </MudGrid>
 
-                    <MudStack Row="true" Justify="Justify.FlexEnd">
-                        <MudTooltip Text="@L["CreateCourse"]">
-                            <MudIconButton Color="Color.Primary"
-                                           Variant="Variant.Filled"
-                                           Icon="@Icons.Material.Filled.Add"
-                                           OnClick="CreateCourseAsync"
-                                           aria-label="@L["CreateCourse"]" />
-                        </MudTooltip>
+                    @if (_courseStartDate.HasValue && _courseEndDate.HasValue && _courseEndDate < _courseStartDate)
+                    {
+                        <MudAlert Severity="Severity.Error" Dense="true">@L["ValidationCoursePeriod"]</MudAlert>
+                    }
+
+                    <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="2">
+                        <MudButton OnClick="CancelCreateCourse">@L["Cancel"]</MudButton>
+                        <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add"
+                                   Disabled="@(!CanCreateCourse)" OnClick="CreateCourseAsync">
+                            @L["CreateCourse"]
+                        </MudButton>
                     </MudStack>
                 </MudStack>
             </MudPaper>
+        }
 
             @if (_courses.Count == 0)
             {
@@ -295,10 +312,14 @@
                                                     <MudDatePicker Label="@L["Date"]" Date="_dateStartDate" DateChanged="@(date => _dateStartDate = date)" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="@L["StartTime"]" @bind-Value="_dateStartTime" Variant="Variant.Outlined" />
+                                                    <MudTimePicker Label="@L["StartTime"]" Time="@ParseTime(_dateStartTime)"
+                                                                   TimeChanged="@(value => _dateStartTime = FormatTime(value))"
+                                                                   TimeFormat="HH:mm" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="@L["EndTime"]" @bind-Value="_dateEndTime" Variant="Variant.Outlined" />
+                                                    <MudTimePicker Label="@L["EndTime"]" Time="@ParseTime(_dateEndTime)"
+                                                                   TimeChanged="@(value => _dateEndTime = FormatTime(value))"
+                                                                   TimeFormat="HH:mm" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12">
                                                     <MudTextField Label="@L["Notes"]" @bind-Value="_dateNotes" Variant="Variant.Outlined" Lines="2" />
@@ -420,10 +441,14 @@
                                                     <MudDatePicker Label="@L["Date"]" Date="_eventStartDate" DateChanged="@(date => _eventStartDate = date)" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="@L["StartTime"]" @bind-Value="_eventStartTime" Variant="Variant.Outlined" />
+                                                    <MudTimePicker Label="@L["StartTime"]" Time="@ParseTime(_eventStartTime)"
+                                                                   TimeChanged="@(value => _eventStartTime = FormatTime(value))"
+                                                                   TimeFormat="HH:mm" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="6" md="4">
-                                                    <MudTextField Label="@L["EndTime"]" @bind-Value="_eventEndTime" Variant="Variant.Outlined" />
+                                                    <MudTimePicker Label="@L["EndTime"]" Time="@ParseTime(_eventEndTime)"
+                                                                   TimeChanged="@(value => _eventEndTime = FormatTime(value))"
+                                                                   TimeFormat="HH:mm" Variant="Variant.Outlined" />
                                                 </MudItem>
                                                 <MudItem xs="12" md="6">
                                                     <MudNumericField T="int?" Label="@L["Capacity"]" @bind-Value="_eventCapacity" Variant="Variant.Outlined" Min="1" />
@@ -709,6 +734,9 @@
 </MudContainer>
 
 @code {
+    [SupplyParameterFromQuery(Name = "course")]
+    public string? CourseQuery { get; set; }
+
     private const string VisibilityModeGlobal = "global";
     private const string VisibilityModeGroup = "group";
 
@@ -737,6 +765,12 @@
     private DateTime? _courseEndDate = DateTime.Today.AddMonths(3);
     private string _courseVisibilityMode = VisibilityModeGlobal;
     private string? _courseVisibilityGroupId;
+    private bool _showCreateCourseForm;
+    private bool CanCreateCourse => !string.IsNullOrWhiteSpace(_courseName)
+        && _courseStartDate.HasValue
+        && _courseEndDate.HasValue
+        && _courseEndDate >= _courseStartDate
+        && (_courseVisibilityMode != VisibilityModeGroup || !string.IsNullOrWhiteSpace(_courseVisibilityGroupId));
 
     private string _dateTitle = string.Empty;
     private string _dateLocation = string.Empty;
@@ -840,7 +874,7 @@
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
                 _courses = new();
                 _selectedCourseEvents = new();
             }
@@ -855,7 +889,12 @@
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(_selectedCourseId)
+        if (!string.IsNullOrWhiteSpace(CourseQuery)
+            && _courses.Any(course => course.Id == CourseQuery))
+        {
+            _selectedCourseId = CourseQuery;
+        }
+        else if (string.IsNullOrWhiteSpace(_selectedCourseId)
             || _courses.All(course => course.Id != _selectedCourseId))
         {
             _selectedCourseId = _courses.First().Id;
@@ -865,6 +904,7 @@
     private Task OnSelectedCourseChanged(string courseId)
     {
         _selectedCourseId = courseId;
+        Navigation.NavigateTo($"/Trainers/courses?course={Uri.EscapeDataString(courseId)}", replace: true);
         _selectedTrainerToAddId = null;
         _selectedTrainingPlanId = null;
         ResetChallengeForm();
@@ -934,7 +974,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -950,6 +990,9 @@
 
     private async Task CreateCourseAsync()
     {
+        if (!CanCreateCourse)
+            return;
+
         try
         {
             var course = await CourseService.CreateCourseAsync(
@@ -968,18 +1011,20 @@
 
             Snackbar.Add(L["CreateCourseSuccess"], Severity.Success);
             ResetCreateForm();
+            _showCreateCourseForm = false;
             _selectedCourseId = course.Id;
+            Navigation.NavigateTo($"/Trainers/courses?course={Uri.EscapeDataString(course.Id)}", replace: true);
             await LoadAsync();
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task DeleteCourseAsync(CourseDocument course)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["DeleteCourseConfirm"], course.Name));
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["DeleteCourseConfirm"], course.Name));
         if (!confirmed)
             return;
 
@@ -992,7 +1037,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -1016,13 +1061,13 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task RemoveTrainerAsync(CourseDocument course, CourseTrainerDocument trainer)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemoveTrainerConfirm"], trainer.DisplayName));
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["RemoveTrainerConfirm"], trainer.DisplayName));
         if (!confirmed)
             return;
 
@@ -1034,13 +1079,13 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task LeaveTrainerAsync(CourseDocument course)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["LeaveTrainerConfirm"], course.Name));
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["LeaveTrainerConfirm"], course.Name), destructive: false);
         if (!confirmed)
             return;
 
@@ -1053,7 +1098,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -1079,13 +1124,13 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task RemoveCourseDateAsync(CourseDocument course, CourseDateDocument date)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemoveDateConfirm"], date.Title));
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["RemoveDateConfirm"], date.Title));
         if (!confirmed)
             return;
 
@@ -1097,7 +1142,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -1126,13 +1171,13 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task DeleteEventAsync(CourseDocument course, CourseEventDocument courseEvent)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["DeleteEventConfirm"], courseEvent.Title));
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["DeleteEventConfirm"], courseEvent.Title));
         if (!confirmed)
             return;
 
@@ -1144,7 +1189,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -1165,7 +1210,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -1187,8 +1232,14 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
+    }
+
+    private void CancelCreateCourse()
+    {
+        ResetCreateForm();
+        _showCreateCourseForm = false;
     }
 
     private Task CreateTrainingPlanBlockAsync(string planId)
@@ -1221,7 +1272,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -1242,7 +1293,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -1273,7 +1324,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
 
         return Task.CompletedTask;
@@ -1281,7 +1332,7 @@
 
     private async Task RemoveTrainingPlanAsync(CourseDocument course, string trainingPlanId)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemovePlanConfirm"], GetTrainingPlanName(trainingPlanId)));
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["RemovePlanConfirm"], GetTrainingPlanName(trainingPlanId)));
         if (!confirmed)
             return;
 
@@ -1293,7 +1344,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -1322,13 +1373,13 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
     private async Task RemoveChallengeAsync(CourseDocument course, CourseChallengeDocument challenge)
     {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["RemoveChallengeConfirm"], challenge.Title));
+        var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["RemoveChallengeConfirm"], challenge.Title));
         if (!confirmed)
             return;
 
@@ -1340,7 +1391,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -1674,6 +1725,12 @@
 
         return date.Value.Date.Add(parsedTime);
     }
+
+    private static TimeSpan? ParseTime(string value) =>
+        TimeSpan.TryParse(value, out var result) ? result : null;
+
+    private static string FormatTime(TimeSpan? value) =>
+        value?.ToString(@"hh\:mm") ?? string.Empty;
 
     private static string GetDisplayName(AthleteModel? athlete, string fallback)
     {

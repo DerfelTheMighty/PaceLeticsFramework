@@ -1,5 +1,4 @@
 ﻿@page "/"
-@page "/Athletes/dashboard"
 @using AthleteDataAccessLibrary;
 @using AthleteDataAccessLibrary.Contracts;
 
@@ -34,31 +33,36 @@
                 aria-pressed="@(_activeSection == DashboardSection.Overview)"
                 @onclick="@(() => SelectSection(DashboardSection.Overview))">
             <MudIcon Icon="@Icons.Material.Filled.Dashboard" Size="Size.Small" />
-            <span>Uebersicht</span>
+            <span>@L["Section_Overview"]</span>
         </button>
         <button type="button"
                 class="@GetSectionButtonClass(DashboardSection.Achievements)"
                 aria-pressed="@(_activeSection == DashboardSection.Achievements)"
                 @onclick="@(() => SelectSection(DashboardSection.Achievements))">
             <MudIcon Icon="@Icons.Material.Filled.EmojiEvents" Size="Size.Small" />
-            <span>Achievements</span>
+            <span>@L["Section_Achievements"]</span>
         </button>
     </nav>
 
     <MudDivider Class="my-4" />
+
+    @if (_hasLoadError)
+    {
+        <RetryAlert Message="@L["PartialLoadError"]" OnRetry="LoadDashboardAsync" Class="mb-4" />
+    }
 
     @if (_activeSection == DashboardSection.Overview)
     {
         <MudStack Spacing="4">
 
             <MudGrid Spacing="3" Class="pl-dashboard-metrics">
-                <MudItem xs="12">
+                <MudItem xs="12" md="6">
                     <DashboardMetricTile Label="@L["Metric_TrainingCalendar"]"
                                          Value="@GetCalendarValue()"
                                          Detail="@GetCalendarDetail()"
                                          Icon="@Icons.Material.Filled.CalendarMonth"
                                          Accent="blue"
-                                         Href="/Athletes/trainingcalendar"
+                                         Href="/Athletes/courses?section=calendar"
                                          Tooltip="@L["Tooltip_TrainingCalendar"]">
                         <div class="pl-dashboard-calendar-days">
                             @foreach (var day in CalendarPreviewDays)
@@ -79,7 +83,7 @@
                     </DashboardMetricTile>
                 </MudItem>
 
-                <MudItem xs="12">
+                <MudItem xs="12" md="6">
                     <DashboardMetricTile Label="@L["Metric_NextSession"]"
                                          Value="@GetNextSessionValue()"
                                          Detail="@GetNextSessionDetail()"
@@ -103,17 +107,17 @@
                     </DashboardMetricTile>
                 </MudItem>
 
-                <MudItem xs="12">
-                    <DashboardMetricTile Label="Achievements"
+                <MudItem xs="12" sm="6" md="3">
+                    <DashboardMetricTile Label="@L["Section_Achievements"]"
                                          Value="@GetAchievementValue()"
-                                         Detail="Freigeschaltete Auszeichnungen"
+                                         Detail="@L["Metric_AchievementsDetail"]"
                                          Icon="@Icons.Material.Filled.EmojiEvents"
                                          Accent="orange"
-                                         Href="/Athletes/dashboard?section=achievements"
-                                         Tooltip="Deine Achievements ansehen" />
+                                         Href="/?section=achievements"
+                                         Tooltip="@L["Tooltip_Achievements"]" />
                 </MudItem>
 
-                <MudItem xs="12">
+                <MudItem xs="12" sm="6" md="3">
                     <DashboardMetricTile Label="@L["Metric_Academy"]"
                                          Value="@L["Metric_AcademyValue"]"
                                          Detail="@L["Metric_AcademyDetail"]"
@@ -123,7 +127,7 @@
                                          Tooltip="@L["Tooltip_Academy"]" />
                 </MudItem>
 
-                <MudItem xs="12">
+                <MudItem xs="12" sm="6" md="3">
                     <DashboardMetricTile Label="@L["Metric_WorkoutArea"]"
                                          Value="@L["Metric_WorkoutAreaValue"]"
                                          Detail="@L["Metric_WorkoutAreaDetail"]"
@@ -133,13 +137,13 @@
                                          Tooltip="@L["Tooltip_WorkoutArea"]" />
                 </MudItem>
 
-                <MudItem xs="12">
+                <MudItem xs="12" sm="6" md="3">
                     <DashboardMetricTile Label="@L["Metric_VdotCs"]"
                                          Value="@GetVdotCsValue()"
                                          Detail="@GetReferenceDetail()"
                                          Icon="@Icons.Material.Filled.Speed"
                                          Accent="blue"
-                                         Href="/Athletes/pacezones"
+                                         Href="/Athletes/data-analyses?section=pacezones"
                                          Tooltip="@L["Tooltip_VdotCs"]" />
                 </MudItem>
             </MudGrid>
@@ -177,6 +181,7 @@
     CriticalSpeedModel _criticalSpeed = new();
     private DashboardSection _activeSection = DashboardSection.Overview;
     private string? _appliedSectionQuery;
+    private bool _hasLoadError;
 
     protected override void OnParametersSet()
     {
@@ -189,14 +194,29 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadDashboardAsync();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task LoadDashboardAsync()
+    {
+        _hasLoadError = false;
         await Loading.RunAsync(L["Loading"], async () =>
         {
             var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
             var user = authstate.User;
             var id = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-            Athlete = string.IsNullOrWhiteSpace(id)
-                ? null
-                : await AthleteData.GetAthlete(id);
+            try
+            {
+                Athlete = string.IsNullOrWhiteSpace(id)
+                    ? null
+                    : await AthleteData.GetAthlete(id);
+            }
+            catch
+            {
+                Athlete = null;
+                _hasLoadError = true;
+            }
             _name = string.IsNullOrWhiteSpace(Athlete?.Name)
                 ? user.Identity?.Name ?? string.Empty
                 : Athlete.Name;
@@ -207,6 +227,7 @@
             catch
             {
                 _trainingPlans = Array.Empty<TrainingPlan>();
+                _hasLoadError = true;
             }
             try
             {
@@ -217,6 +238,7 @@
             catch
             {
                 _calendarItems = Array.Empty<TrainingCalendarItem>();
+                _hasLoadError = true;
             }
             try
             {
@@ -227,14 +249,13 @@
             catch
             {
                 _achievementCount = 0;
+                _hasLoadError = true;
             }
             _activePlan = ResolveActivePlan(_trainingPlans, Athlete);
             _nextSession = ResolveNextSession(_activePlan, _trainingPlans);
             _referenceResult = Athlete?.ActiveReferenceResult;
             _criticalSpeed = CriticalSpeedService.Estimate(GetCriticalSpeedResults(Athlete));
         });
-
-        await base.OnInitializedAsync();
     }
 
     private void SelectSection(DashboardSection section)
@@ -253,14 +274,14 @@
     private string GetDocumentTitle()
     {
         return _activeSection == DashboardSection.Achievements
-            ? "Achievements"
+            ? L["Section_Achievements"]
             : L["PageTitle"].Value;
     }
 
     private string GetHeaderTitle()
     {
         return _activeSection == DashboardSection.Achievements
-            ? "Achievements"
+            ? L["Section_Achievements"]
             : L["Title"].Value;
     }
 
@@ -284,8 +305,8 @@
     {
         return section switch
         {
-            DashboardSection.Achievements => "/Athletes/dashboard?section=achievements",
-            _ => "/Athletes/dashboard"
+            DashboardSection.Achievements => "/?section=achievements",
+            _ => "/"
         };
     }
 

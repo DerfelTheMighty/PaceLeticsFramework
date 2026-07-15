@@ -1,6 +1,7 @@
 @implements IDisposable
 @inject NavigationManager Navigation
 @inject AcademyInfoService AcademyInfo
+@inject IStringLocalizer<AcademyInfoHost> L
 
 @if (AcademyInfo.IsVisible && AcademyInfo.CurrentTip is not null)
 {
@@ -12,7 +13,7 @@
             </div>
 
             <div class="pl-academy-info__body">
-                <div class="pl-academy-info__eyebrow">PaceLetics Academy</div>
+                <div class="pl-academy-info__eyebrow">@L["Title"]</div>
                 <p class="pl-academy-info__tip">@AcademyInfo.CurrentTip.Text</p>
                 <div class="pl-academy-info__actions">
                     <a class="pl-academy-info__source" href="@AcademyInfo.CurrentTip.ArticleHref">
@@ -21,7 +22,7 @@
                     <button type="button"
                             class="pl-academy-info__disable"
                             @onclick="AcademyInfo.DisableAsync">
-                        Dauerhaft deaktivieren
+                        @L["Disable"]
                     </button>
                 </div>
             </div>
@@ -31,7 +32,7 @@
                            Color="Color.Inherit"
                            Class="pl-academy-info__close"
                            OnClick="@AcademyInfo.Hide"
-                           aria-label="Academy-Hinweis ausblenden" />
+                           aria-label="@L["Close"]" />
         </div>
     </aside>
 }

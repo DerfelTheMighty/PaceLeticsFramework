@@ -18,3 +18,232 @@
     --mud-palette-divider: #E7D4F7;
     --mud-palette-lines-default: #E7D4F7;
 }
+
+.pl-identity-shell,
+.pl-identity-shell :where(button, input, select, textarea) {
+    font-family: Inter, Roboto, "Segoe UI", Arial, sans-serif;
+}
+
+.pl-identity-shell {
+    color: var(--mud-palette-text-primary);
+}
+
+.pl-identity-appbar {
+    color: var(--mud-palette-appbar-text);
+    background-color: color-mix(in srgb, var(--mud-palette-appbar-background) 92%, transparent) !important;
+    backdrop-filter: blur(12px);
+}
+
+.pl-identity-toolbar {
+    min-height: 64px;
+    gap: .35rem;
+}
+
+.pl-identity-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    min-height: 44px;
+    color: inherit;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.pl-identity-brand:hover,
+.pl-identity-brand:focus-visible {
+    color: inherit;
+}
+
+.pl-identity-brand__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, white 14%, transparent);
+}
+
+.pl-identity-account-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .1rem;
+    margin: 0;
+}
+
+.pl-identity-account-nav .nav-link,
+.pl-identity-account-nav .btn-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: .55rem .65rem;
+    color: inherit !important;
+    font-size: .875rem;
+    text-decoration: none;
+    border-radius: 999px;
+}
+
+.pl-identity-account-nav .nav-link:hover,
+.pl-identity-account-nav .nav-link:focus-visible,
+.pl-identity-account-nav .btn-link:hover,
+.pl-identity-account-nav .btn-link:focus-visible {
+    color: inherit !important;
+    background: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.pl-identity-culture {
+    min-width: 84px;
+    min-height: 40px;
+    padding: .35rem 1.75rem .35rem .55rem;
+    color: inherit;
+    background: color-mix(in srgb, white 12%, transparent);
+    border: 1px solid color-mix(in srgb, currentColor 36%, transparent);
+    border-radius: 999px;
+}
+
+.pl-identity-culture option {
+    color: var(--mud-palette-text-primary);
+    background: var(--mud-palette-surface);
+}
+
+.pl-identity-main {
+    min-height: 100vh;
+    padding-top: 88px;
+    padding-bottom: 72px;
+}
+
+.pl-identity-container {
+    padding: 1rem;
+}
+
+.pl-identity-container > .mud-paper {
+    border: 1px solid color-mix(in srgb, var(--mud-palette-primary) 18%, var(--mud-palette-lines-default));
+    background: color-mix(in srgb, var(--mud-palette-surface) 96%, transparent);
+}
+
+.pl-identity-container :where(h1, h2, h3, .mud-typography-h4, .mud-typography-h5, .mud-typography-h6) {
+    color: var(--mud-palette-text-primary);
+}
+
+.pl-identity-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    min-height: 52px;
+    padding: .75rem 1rem;
+    background: color-mix(in srgb, var(--mud-palette-appbar-background) 88%, transparent);
+    backdrop-filter: blur(10px);
+}
+
+.pl-identity-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--mud-palette-appbar-text);
+}
+
+.pl-password-field .form-control {
+    padding-right: 3.25rem;
+}
+
+.pl-password-toggle {
+    position: absolute;
+    top: .55rem;
+    right: .45rem;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    color: var(--mud-palette-text-secondary);
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+}
+
+.pl-password-toggle:hover,
+.pl-password-toggle:focus-visible {
+    color: var(--mud-palette-primary);
+    background: var(--mud-palette-primary-hover);
+}
+
+.pl-identity-status {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 8px;
+    background: var(--mud-palette-surface);
+}
+
+.pl-identity-status__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+
+.pl-visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+@media (max-width: 599.98px) {
+    .pl-identity-toolbar {
+        min-height: 56px;
+        padding-right: .75rem;
+        padding-left: .75rem;
+    }
+
+    .pl-identity-brand__name {
+        display: none;
+    }
+
+    .pl-identity-brand {
+        gap: 0;
+    }
+
+    .pl-identity-account-nav .nav-link,
+    .pl-identity-account-nav .btn-link {
+        padding-right: .45rem;
+        padding-left: .45rem;
+        font-size: .78rem;
+    }
+
+    .pl-identity-culture {
+        width: 76px;
+        min-width: 76px;
+        padding: .3rem 1.25rem .3rem .45rem;
+        font-size: .72rem;
+    }
+
+    .pl-identity-culture option {
+        color: var(--mud-palette-text-primary);
+    }
+
+    .pl-identity-main {
+        padding-top: 72px;
+    }
+
+    .pl-identity-container {
+        padding: .75rem 1rem 1.5rem;
+    }
+
+    .pl-identity-container > .mud-paper {
+        padding: 1.25rem !important;
+    }
+}

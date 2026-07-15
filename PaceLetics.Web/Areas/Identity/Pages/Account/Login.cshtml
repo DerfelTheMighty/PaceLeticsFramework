@@ -8,7 +8,7 @@
 }
 
 <div class="mud-paper mud-elevation-4 pa-6 rounded-lg">
-    <div class="mud-typography mud-typography-h5 mb-2">@Localizer["WelcomeTitle"]</div>
+    <h1 class="mud-typography mud-typography-h5 mb-2">@Localizer["WelcomeTitle"]</h1>
     <p class="mud-typography mud-typography-body2 mb-4" style="opacity:.7;">@Localizer["WelcomeText"]</p>
 
     <div class="mud-divider my-4"></div>
@@ -19,13 +19,16 @@
     <form id="account" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
         <div class="form-floating mb-3">
-            <input asp-for="Input.UserNameOrEmail" class="form-control" autocomplete="username" aria-required="true" placeholder="@Localizer["UserNameOrEmail"]" />
+            <input asp-for="Input.UserNameOrEmail" class="form-control" autocomplete="username" aria-required="true" required placeholder="@Localizer["UserNameOrEmail"]" />
             <label asp-for="Input.UserNameOrEmail" class="form-label">@Localizer["UserNameOrEmail"]</label>
             <span asp-validation-for="Input.UserNameOrEmail" class="text-danger"></span>
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="@Localizer["Password"]" />
+        <div class="form-floating mb-3 pl-password-field">
+            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" required placeholder="@Localizer["Password"]" />
             <label asp-for="Input.Password" class="form-label">@Localizer["Password"]</label>
+            <button type="button" class="pl-password-toggle" data-password-toggle="Input_Password" aria-label="@Localizer["ShowPassword"]">
+                <span aria-hidden="true">&#128065;</span>
+            </button>
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
         <div class="form-check mb-4">

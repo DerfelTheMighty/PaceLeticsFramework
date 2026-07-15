@@ -12,6 +12,21 @@ main {
     padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
 }
 
+.pl-workout-route ::deep .mud-appbar,
+.pl-workout-route ::deep .pl-desktop-drawer,
+.pl-workout-route ::deep .pl-bottom-nav {
+    display: none !important;
+}
+
+.pl-workout-route ::deep .mud-main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.pl-workout-route .pl-main-content {
+    padding-bottom: 0;
+}
+
 ::deep .pl-mobile-more-menu {
     display: none;
 }

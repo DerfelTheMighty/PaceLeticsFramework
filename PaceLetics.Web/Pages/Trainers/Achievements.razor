@@ -1,12 +1,19 @@
 @page "/Trainers/achievements"
 @attribute [Authorize(Roles = ApplicationRoles.Trainer)]
+@using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
+@using PaceLetics.TrainingPlanModule.CodeBase.Models
+@using PaceLetics.Web.Services.Courses
 
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAchievementService AchievementService
+@inject ITrainingPlanService TrainingPlanService
+@inject IWorkoutCatalog WorkoutCatalog
+@inject ICourseService CourseService
 @inject ISnackbar Snackbar
+@inject IStringLocalizer<Achievements> L
 
 <MudContainer Class="pt-6 px-6 pb-8" MaxWidth="MaxWidth.Large">
-    <PageHeader Title="Achievements" Subtitle="Auszeichnungen gestalten und mit generischen Regeln freischalten." />
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
     <MudDivider Class="my-4" />
 
@@ -15,9 +22,9 @@
             <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
                 <MudStack Spacing="2">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                        <MudText Typo="Typo.subtitle1">Definitionen</MudText>
-                        <MudTooltip Text="Neu">
-                            <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="ResetEditor" />
+                        <MudText Typo="Typo.subtitle1">@L["Definitions"]</MudText>
+                        <MudTooltip Text="@L["New"]">
+                            <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="ResetEditor" aria-label="@L["NewAchievement"]" />
                         </MudTooltip>
                     </MudStack>
 
@@ -27,7 +34,7 @@
                     }
                     else if (_definitions.Count == 0)
                     {
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">Noch keine Achievements angelegt.</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@L["NoAchievements"]</MudText>
                     }
                     else
                     {
@@ -44,13 +51,13 @@
                                                      Size="Size.Small"
                                                      Color="@(definition.IsPublished ? Color.Success : Color.Default)"
                                                      Variant="Variant.Outlined">
-                                                @(definition.IsPublished ? "Veröffentlicht" : "Entwurf")
+                                                @(definition.IsPublished ? L["Published"] : L["Draft"])
                                             </MudChip>
                                             <MudText Typo="Typo.caption" Color="Color.Secondary">@($"v{definition.Version}")</MudText>
                                         </MudStack>
                                     </MudStack>
-                                    <MudTooltip Text="Bearbeiten">
-                                        <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="@(() => Edit(definition))" />
+                                    <MudTooltip Text="@L["Edit"]">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="@(() => Edit(definition))" aria-label="@string.Format(L["EditNamed"], definition.Title)" />
                                     </MudTooltip>
                                 </MudStack>
                             </MudPaper>
@@ -64,89 +71,118 @@
             <MudPaper Elevation="0" Class="pa-4 pl-course-detail">
                 <MudStack Spacing="3">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                        <MudText Typo="Typo.subtitle1">@(_editingDefinitionId is null ? "Neues Achievement" : "Achievement bearbeiten")</MudText>
+                        <MudText Typo="Typo.subtitle1">@(_editingDefinitionId is null ? L["NewAchievement"] : L["EditAchievement"])</MudText>
                         <AchievementIcon Icon="@BuildIcon()" Size="Size.Large" Title="@_title" />
                     </MudStack>
 
-                    <MudTextField @bind-Value="_title" Label="Titel" Variant="Variant.Outlined" />
-                    <MudTextField @bind-Value="_description" Label="Beschreibung" Variant="Variant.Outlined" Lines="3" />
-                    <MudSwitch T="bool" @bind-Value="_isPublished" Color="Color.Success" Label="Veröffentlicht" />
+                    <MudTextField @bind-Value="_title" Label="@L["AchievementTitle"]" Variant="Variant.Outlined" Immediate="true" Required="true" />
+                    <MudTextField @bind-Value="_description" Label="@L["Description"]" Variant="Variant.Outlined" Lines="3" />
+                    <MudSwitch T="bool" @bind-Value="_isPublished" Color="Color.Success" Label="@L["Published"]" />
 
                     <MudDivider />
 
-                    <MudText Typo="Typo.subtitle2">Icon</MudText>
+                    <MudText Typo="Typo.subtitle2">@L["Icon"]</MudText>
                     <MudGrid Spacing="2">
                         <MudItem xs="12" sm="6">
-                            <MudSelect T="string" @bind-Value="_iconName" Label="Symbol" Variant="Variant.Outlined">
+                            <MudSelect T="string" @bind-Value="_iconName" Label="@L["Symbol"]" Variant="Variant.Outlined">
                                 @foreach (var option in IconOptions)
                                 {
-                                    <MudSelectItem T="string" Value="@option.Value">@option.Label</MudSelectItem>
+                                    <MudSelectItem T="string" Value="@option.Value">@L[$"Icon_{option.Value}"]</MudSelectItem>
                                 }
                             </MudSelect>
                         </MudItem>
                         <MudItem xs="12" sm="6">
-                            <MudSelect T="string" @bind-Value="_iconShape" Label="Form" Variant="Variant.Outlined">
-                                <MudSelectItem T="string" Value="@("circle")">Rund</MudSelectItem>
-                                <MudSelectItem T="string" Value="@("square")">Eckig</MudSelectItem>
+                            <MudSelect T="string" @bind-Value="_iconShape" Label="@L["Shape"]" Variant="Variant.Outlined">
+                                <MudSelectItem T="string" Value="@("circle")">@L["Round"]</MudSelectItem>
+                                <MudSelectItem T="string" Value="@("square")">@L["Square"]</MudSelectItem>
                             </MudSelect>
                         </MudItem>
                         <MudItem xs="12" sm="4">
-                            <ColorTextField Label="Hintergrund" @bind-Value="_backgroundColor" />
+                            <ColorTextField Label="@L["Background"]" @bind-Value="_backgroundColor" />
                         </MudItem>
                         <MudItem xs="12" sm="4">
-                            <ColorTextField Label="Symbolfarbe" @bind-Value="_foregroundColor" />
+                            <ColorTextField Label="@L["Foreground"]" @bind-Value="_foregroundColor" />
                         </MudItem>
                         <MudItem xs="12" sm="4">
-                            <ColorTextField Label="Akzent" @bind-Value="_accentColor" />
+                            <ColorTextField Label="@L["Accent"]" @bind-Value="_accentColor" />
                         </MudItem>
                     </MudGrid>
 
                     <MudDivider />
 
-                    <MudText Typo="Typo.subtitle2">Regel</MudText>
-                    <MudSelect T="string" @bind-Value="_ruleType" Label="Regeltyp" Variant="Variant.Outlined">
-                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingSessionCompleted">Bestimmte Trainingseinheit(en) abgehakt</MudSelectItem>
-                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingSessionCount">Anzahl Trainingseinheiten abgehakt</MudSelectItem>
-                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingPlanCompleted">Trainingsplan vollständig abgehakt</MudSelectItem>
-                        <MudSelectItem T="string" Value="@AchievementRuleTypes.WorkoutCompleted">Workout abgeschlossen</MudSelectItem>
-                        <MudSelectItem T="string" Value="@AchievementRuleTypes.WorkoutCount">Anzahl Workouts abgeschlossen</MudSelectItem>
-                        <MudSelectItem T="string" Value="@AchievementRuleTypes.CourseEventCompleted">Kurstermin erfolgreich absolviert</MudSelectItem>
-                        <MudSelectItem T="string" Value="@AchievementRuleTypes.CourseCompleted">Kurs erfolgreich absolviert</MudSelectItem>
+                    <MudText Typo="Typo.subtitle2">@L["Rule"]</MudText>
+                    <MudSelect T="string" @bind-Value="_ruleType" Label="@L["RuleType"]" Variant="Variant.Outlined">
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingSessionCompleted">@L["RuleSpecificSession"]</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingSessionCount">@L["RuleSessionCount"]</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.TrainingPlanCompleted">@L["RulePlan"]</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.WorkoutCompleted">@L["RuleWorkout"]</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.WorkoutCount">@L["RuleWorkoutCount"]</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.CourseEventCompleted">@L["RuleCourseEvent"]</MudSelectItem>
+                        <MudSelectItem T="string" Value="@AchievementRuleTypes.CourseCompleted">@L["RuleCourse"]</MudSelectItem>
                     </MudSelect>
 
                     @if (UsesPlanId)
                     {
-                        <MudTextField @bind-Value="_planId" Label="Plan-ID" Variant="Variant.Outlined" />
+                        <MudSelect T="string" Value="@_planId" ValueChanged="OnRulePlanChanged"
+                                   Label="@L["TrainingPlan"]" Variant="Variant.Outlined" Clearable="true">
+                            @foreach (var plan in _trainingPlans.OrderBy(plan => plan.Name))
+                            {
+                                <MudSelectItem T="string" Value="@plan.Id">@plan.Name</MudSelectItem>
+                            }
+                        </MudSelect>
                     }
                     @if (UsesSessionIds)
                     {
-                        <MudTextField @bind-Value="_sessionIdsText" Label="Session-IDs, getrennt mit Komma" Variant="Variant.Outlined" />
+                        <MudSelect T="string" MultiSelection="true" @bind-SelectedValues="_selectedSessionIds"
+                                   Label="@L["TrainingSessions"]" Variant="Variant.Outlined" Disabled="@(SelectedRulePlan is null)">
+                            @foreach (var session in SelectedRulePlan?.Sessions ?? Array.Empty<TrainingSession>())
+                            {
+                                <MudSelectItem T="string" Value="@session.Id">@($"{session.Date:d} · {session.Name}")</MudSelectItem>
+                            }
+                        </MudSelect>
                     }
                     @if (UsesWorkoutId)
                     {
-                        <MudTextField @bind-Value="_workoutId" Label="Workout-ID optional" Variant="Variant.Outlined" />
+                        <MudSelect T="string" @bind-Value="_workoutId" Label="@L["WorkoutOptional"]" Variant="Variant.Outlined" Clearable="true">
+                            @foreach (var workoutId in _workoutIds)
+                            {
+                                <MudSelectItem T="string" Value="@workoutId">@GetWorkoutLabel(workoutId)</MudSelectItem>
+                            }
+                        </MudSelect>
                     }
                     @if (UsesCourseId)
                     {
-                        <MudTextField @bind-Value="_courseId" Label="Kurs-ID optional" Variant="Variant.Outlined" />
+                        <MudSelect T="string" Value="@_courseId" ValueChanged="OnRuleCourseChangedAsync"
+                                   Label="@L["CourseOptional"]" Variant="Variant.Outlined" Clearable="true">
+                            @foreach (var course in _courses.OrderBy(course => course.Name))
+                            {
+                                <MudSelectItem T="string" Value="@course.Id">@course.Name</MudSelectItem>
+                            }
+                        </MudSelect>
                     }
                     @if (UsesCourseEventId)
                     {
-                        <MudTextField @bind-Value="_courseEventId" Label="Kurstermin-ID optional" Variant="Variant.Outlined" />
+                        <MudSelect T="string" @bind-Value="_courseEventId" Label="@L["CourseEventOptional"]"
+                                   Variant="Variant.Outlined" Clearable="true" Disabled="@(_courseEvents.Count == 0)">
+                            @foreach (var courseEvent in _courseEvents.OrderBy(item => item.StartsAt))
+                            {
+                                <MudSelectItem T="string" Value="@courseEvent.Id">@($"{courseEvent.StartsAt:g} · {courseEvent.Title}")</MudSelectItem>
+                            }
+                        </MudSelect>
                     }
                     @if (UsesTargetCount)
                     {
-                        <MudNumericField T="int" @bind-Value="_targetCount" Min="1" Label="Zielanzahl" Variant="Variant.Outlined" />
+                        <MudNumericField T="int" @bind-Value="_targetCount" Min="1" Label="@L["TargetCount"]" Variant="Variant.Outlined" />
                     }
 
                     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Spacing="2">
-                        <MudButton Variant="Variant.Outlined" OnClick="ResetEditor">Zurücksetzen</MudButton>
+                        <MudButton Variant="Variant.Outlined" OnClick="ResetEditor">@L["Reset"]</MudButton>
                         <MudButton Variant="Variant.Filled"
                                    Color="Color.Primary"
                                    StartIcon="@Icons.Material.Filled.Save"
-                                   Disabled="@_isSaving"
+                                   Disabled="@(_isSaving || string.IsNullOrWhiteSpace(_title))"
                                    OnClick="SaveAsync">
-                            Speichern
+                            @L["Save"]
                         </MudButton>
                     </MudStack>
                 </MudStack>
@@ -175,6 +211,10 @@
     private bool _isSaving;
     private string? _userId;
     private List<AchievementDefinitionDocument> _definitions = new();
+    private List<TrainingPlan> _trainingPlans = new();
+    private List<CourseDocument> _courses = new();
+    private List<CourseEventDocument> _courseEvents = new();
+    private List<string> _workoutIds = new();
 
     private string? _editingDefinitionId;
     private string _title = string.Empty;
@@ -187,7 +227,7 @@
     private string _accentColor = "#FDE68A";
     private string _ruleType = AchievementRuleTypes.TrainingSessionCount;
     private string _planId = string.Empty;
-    private string _sessionIdsText = string.Empty;
+    private IReadOnlyCollection<string> _selectedSessionIds = new HashSet<string>();
     private string _workoutId = string.Empty;
     private string _courseId = string.Empty;
     private string _courseEventId = string.Empty;
@@ -214,6 +254,10 @@
     {
         var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         _userId = authState.User.FindFirst(claim => claim.Type.Contains("nameidentifier"))?.Value;
+        _trainingPlans = TrainingPlanService.LoadTrainingPlans().ToList();
+        _workoutIds = WorkoutCatalog.GetWorkoutIds().OrderBy(GetWorkoutLabel).ToList();
+        if (!string.IsNullOrWhiteSpace(_userId))
+            _courses = (await CourseService.GetCoursesForTrainerAsync(_userId)).ToList();
         await LoadDefinitionsAsync();
     }
 
@@ -249,13 +293,13 @@
             };
 
             var saved = await AchievementService.SaveDefinitionAsync(request, _userId);
-            Snackbar.Add($"Achievement gespeichert: {saved.Title}", Severity.Success);
+            Snackbar.Add(string.Format(L["SavedNamed"], saved.Title), Severity.Success);
             await LoadDefinitionsAsync();
             Edit(saved);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
         finally
         {
@@ -280,11 +324,12 @@
         rule.Normalize();
         _ruleType = rule.RuleType;
         _planId = rule.PlanId;
-        _sessionIdsText = string.Join(", ", rule.SessionIds);
+        _selectedSessionIds = rule.SessionIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
         _workoutId = rule.WorkoutId;
         _courseId = rule.CourseId;
         _courseEventId = rule.CourseEventId;
         _targetCount = rule.TargetCount;
+        _ = LoadCourseEventsAsync();
     }
 
     private void ResetEditor()
@@ -300,7 +345,7 @@
         _accentColor = "#FDE68A";
         _ruleType = AchievementRuleTypes.TrainingSessionCount;
         _planId = string.Empty;
-        _sessionIdsText = string.Empty;
+        _selectedSessionIds = new HashSet<string>();
         _workoutId = string.Empty;
         _courseId = string.Empty;
         _courseEventId = string.Empty;
@@ -331,36 +376,64 @@
             CourseId = _courseId,
             CourseEventId = _courseEventId,
             TargetCount = _targetCount,
-            SessionIds = _sessionIdsText
-                .Split(new[] { ',', ';', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .ToList()
+            SessionIds = _selectedSessionIds.ToList()
         };
         rule.Normalize();
         return rule;
     }
 
-    private static string DescribeRules(AchievementDefinitionDocument definition)
+    private TrainingPlan? SelectedRulePlan => _trainingPlans.FirstOrDefault(plan => plan.Id == _planId);
+
+    private void OnRulePlanChanged(string value)
+    {
+        _planId = value ?? string.Empty;
+        _selectedSessionIds = new HashSet<string>();
+    }
+
+    private async Task OnRuleCourseChangedAsync(string value)
+    {
+        _courseId = value ?? string.Empty;
+        _courseEventId = string.Empty;
+        await LoadCourseEventsAsync();
+    }
+
+    private async Task LoadCourseEventsAsync()
+    {
+        _courseEvents = string.IsNullOrWhiteSpace(_courseId)
+            ? new List<CourseEventDocument>()
+            : (await CourseService.GetEventsAsync(_courseId)).ToList();
+    }
+
+    private string GetWorkoutLabel(string workoutId)
+    {
+        var definition = WorkoutCatalog.GetDefinition(workoutId);
+        return string.IsNullOrWhiteSpace(definition.Name)
+            ? workoutId
+            : $"{definition.Name} · {definition.Level}";
+    }
+
+    private string DescribeRules(AchievementDefinitionDocument definition)
     {
         if (definition.Rules.Count == 0)
-            return "Keine Regel";
+            return L["NoRule"];
 
         return string.Join(" + ", definition.Rules.Select(DescribeRule));
     }
 
-    private static string DescribeRule(AchievementRuleDocument rule)
+    private string DescribeRule(AchievementRuleDocument rule)
     {
         return rule.RuleType switch
         {
             AchievementRuleTypes.TrainingSessionCompleted when rule.SessionIds.Count > 0 =>
-                $"{rule.SessionIds.Count} bestimmte Einheit(en)",
-            AchievementRuleTypes.TrainingSessionCompleted => "Eine Einheit abhaken",
-            AchievementRuleTypes.TrainingSessionCount => $"{rule.TargetCount} Einheit(en) abhaken",
-            AchievementRuleTypes.TrainingPlanCompleted => "Plan vollständig abhaken",
-            AchievementRuleTypes.WorkoutCompleted => "Workout abschließen",
-            AchievementRuleTypes.WorkoutCount => $"{rule.TargetCount} Workout(s)",
-            AchievementRuleTypes.CourseEventCompleted => "Kurstermin absolviert",
-            AchievementRuleTypes.CourseCompleted => "Kurs absolviert",
-            _ => "Regel"
+                string.Format(L["DescribeSpecificSessions"], rule.SessionIds.Count),
+            AchievementRuleTypes.TrainingSessionCompleted => L["DescribeSession"],
+            AchievementRuleTypes.TrainingSessionCount => string.Format(L["DescribeSessionCount"], rule.TargetCount),
+            AchievementRuleTypes.TrainingPlanCompleted => L["DescribePlan"],
+            AchievementRuleTypes.WorkoutCompleted => L["DescribeWorkout"],
+            AchievementRuleTypes.WorkoutCount => string.Format(L["DescribeWorkoutCount"], rule.TargetCount),
+            AchievementRuleTypes.CourseEventCompleted => L["DescribeCourseEvent"],
+            AchievementRuleTypes.CourseCompleted => L["DescribeCourse"],
+            _ => L["Rule"]
         };
     }
 

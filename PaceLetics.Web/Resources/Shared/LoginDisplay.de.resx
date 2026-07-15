@@ -9,4 +9,5 @@
   <data name="LogOut" xml:space="preserve"><value>Abmelden</value></data>
   <data name="Register" xml:space="preserve"><value>Registrieren</value></data>
   <data name="LogIn" xml:space="preserve"><value>Anmelden</value></data>
+  <data name="AccountMenu" xml:space="preserve"><value>Kontomenü öffnen</value></data>
 </root>

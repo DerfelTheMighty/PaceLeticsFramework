@@ -38,8 +38,8 @@
   <data name="Nav_Mate" xml:space="preserve"><value>Pace Mate</value></data>
   <data name="Nav_RaceData" xml:space="preserve"><value>Laufdaten</value></data>
   <data name="Nav_PaceZones" xml:space="preserve"><value>Pacebereiche</value></data>
-  <data name="Nav_Courses" xml:space="preserve"><value>Kurse &amp; Plaene</value></data>
-  <data name="Nav_DataAnalyses" xml:space="preserve"><value>Daten &amp; Analysen</value></data>
+  <data name="Nav_Courses" xml:space="preserve"><value>Kurse</value></data>
+  <data name="Nav_DataAnalyses" xml:space="preserve"><value>Analysen</value></data>
   <data name="Nav_Analyses" xml:space="preserve"><value>Meine Analysen</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>Drive-Ordner</value></data>
   <data name="Nav_TrainerCourses" xml:space="preserve"><value>Kurse verwalten</value></data>
@@ -47,6 +47,10 @@
   <data name="Nav_TrainingPlan" xml:space="preserve"><value>Trainingsplanung</value></data>
   <data name="Nav_Workouts" xml:space="preserve"><value>Workouts</value></data>
   <data name="Nav_Profiles" xml:space="preserve"><value>Profile</value></data>
-  <data name="Nav_About" xml:space="preserve"><value>About</value></data>
+  <data name="Nav_About" xml:space="preserve"><value>Über PaceLetics</value></data>
   <data name="Nav_TrainerWorkoutCatalog" xml:space="preserve"><value>Workout-Katalog</value></data>
+  <data name="NavigationMenu" xml:space="preserve"><value>Navigation öffnen</value></data>
+  <data name="TrainerMenu" xml:space="preserve"><value>Trainer-Menü öffnen</value></data>
+  <data name="Nav_Groups" xml:space="preserve"><value>Gruppen</value></data>
+  <data name="Nav_Achievements" xml:space="preserve"><value>Auszeichnungen</value></data>
 </root>

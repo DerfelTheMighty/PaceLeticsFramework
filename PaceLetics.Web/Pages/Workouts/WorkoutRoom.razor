@@ -1,4 +1,5 @@
 @page "/Workouts/workoutroom"
+@implements IDisposable
 @using PaceLetics.TrainingModule.CodeBase.Workouts.Enums
 @using PaceLetics.TrainingModule.Components.Workouts
 
@@ -10,14 +11,24 @@
 @inject IAchievementService AchievementService
 @inject ISnackbar Snackbar
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.Small">
+<PageTitle>@(ViewModel.Workout?.Name ?? L["WorkoutTitle"])</PageTitle>
+
+<MudContainer Class="pl-workout-room px-4" MaxWidth="MaxWidth.Medium">
+
+    <MudStack Row="true" Justify="Justify.FlexEnd" Class="pt-3">
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" StartIcon="@Icons.Material.Filled.Close" OnClick="ExitWorkoutAsync">
+            @L["ExitWorkout"]
+        </MudButton>
+    </MudStack>
 
     @if (ViewModel.Workout is null)
     {
-        <MudText>@L["NoWorkout"]</MudText>
+        <MudText Typo="Typo.h5" HtmlTag="h1">@L["NoWorkout"]</MudText>
+        <MudButton Href="/Workouts/workoutarea" StartIcon="@Icons.Material.Filled.ArrowBack">@L["BackToWorkouts"]</MudButton>
     }
     else
     {
+        <h1 class="pl-visually-hidden">@ViewModel.Workout.Name</h1>
         <MudStack Spacing="3">
             <WorkoutView Workout="@ViewModel.Workout" />
         </MudStack>
@@ -26,12 +37,15 @@
 </MudContainer>
 
 @code {
+    private IDisposable? _navigationRegistration;
+    private bool _allowNavigation;
+
     protected override void OnInitialized()
     {
         ViewModel.Initialize();
         if (ViewModel.Workout is not null)
             ViewModel.Workout.WorkoutFinishedEvent += OnWorkoutFinished;
-        navManager.RegisterLocationChangingHandler(LocationChangingHandler);
+        _navigationRegistration = navManager.RegisterLocationChangingHandler(LocationChangingHandler);
         base.OnInitialized();
     }
 
@@ -40,10 +54,19 @@
         await InvokeAsync(async () =>
         {
             await RecordWorkoutAchievementAsync();
-            var options = new DialogOptions { CloseOnEscapeKey = true };
-            await dialogService.ShowAsync<WorkoutFinishedDialog>(
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+            var parameters = new DialogParameters<WorkoutFinishedDialog>
+            {
+                { dialog => dialog.WorkoutName, ViewModel.Workout?.Name ?? string.Empty },
+                { dialog => dialog.ExerciseCount, ViewModel.Workout?.Exercises.Count ?? 0 }
+            };
+            var dialog = await dialogService.ShowAsync<WorkoutFinishedDialog>(
                 L["WorkoutCompleted"],
+                parameters,
                 options);
+            await dialog.Result;
+            _allowNavigation = true;
+            navManager.NavigateTo("/Workouts/workoutarea");
         });
     }
 
@@ -73,9 +96,44 @@
         }
     }
 
-    private ValueTask LocationChangingHandler(LocationChangingContext arg)
+    private async Task ExitWorkoutAsync()
     {
+        if (!await ConfirmLeaveAsync())
+            return;
+
+        _allowNavigation = true;
         ViewModel.StopAndReset();
-        return ValueTask.CompletedTask;
+        navManager.NavigateTo("/Workouts/workoutarea");
+    }
+
+    private async ValueTask LocationChangingHandler(LocationChangingContext context)
+    {
+        if (_allowNavigation || !HasWorkoutInProgress())
+        {
+            ViewModel.StopAndReset();
+            return;
+        }
+
+        context.PreventNavigation();
+        if (!await ConfirmLeaveAsync())
+            return;
+
+        _allowNavigation = true;
+        ViewModel.StopAndReset();
+        navManager.NavigateTo(context.TargetLocation);
+    }
+
+    private bool HasWorkoutInProgress() =>
+        ViewModel.Workout?.State is WorkoutState.Running or WorkoutState.Pause;
+
+    private Task<bool> ConfirmLeaveAsync() => HasWorkoutInProgress()
+        ? UiConfirmation.AskAsync(dialogService, L["LeaveWorkoutConfirm"], destructive: false)
+        : Task.FromResult(true);
+
+    public void Dispose()
+    {
+        _navigationRegistration?.Dispose();
+        if (ViewModel.Workout is not null)
+            ViewModel.Workout.WorkoutFinishedEvent -= OnWorkoutFinished;
     }
 }

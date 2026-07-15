@@ -2,9 +2,6 @@ using Microsoft.AspNetCore.Components;
 using System.Text.RegularExpressions;
 using MudBlazor;
 using PaceLetics.CoreModule.Infrastructure.Constants;
-using MudBlazor.Extensions.Core;
-using MudBlazor.Extensions.Components;
-using MudBlazor.Extensions;
 using PaceLetics.CoreModule.Infrastructure.Models;
 
 
@@ -17,31 +14,33 @@ namespace PaceLetics.AthleteModule.Components
         private string _type = string.Empty;
         private long _distanceM = 0;
         private string _time = string.Empty;
-        private IMask _timeMask = new PatternMask("00:00:00");
-        private Regex _timePattern = new Regex(@"^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$");
+        private readonly IMask _timeMask = new PatternMask("00:00:00");
+        private static readonly Regex TimePattern = new(@"^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$");
+        private bool IsValidTime => TimePattern.IsMatch(_time);
+        private bool CanSubmit => !string.IsNullOrWhiteSpace(_id)
+            && !string.IsNullOrWhiteSpace(_type)
+            && _date.HasValue
+            && IsValidTime;
         [Parameter]
         public RaceResultModel Model { get; set; } = new();
 
         [CascadingParameter]
         private IMudDialogInstance MudDialog { get; set; } = default !;
-        private async Task OK()
+        private void OK()
         {
-            bool isValidTime = _timePattern.IsMatch(_time);
-            if (isValidTime)
-            {
-                Model.Id = _id;
-                Model.Date = _date ?? DateTime.Now;
-                TimeSpan.TryParse(_time, out var res);
-                Model.Time = res;
-                Model.Type = _type;
-                Model.DistanceM = _distanceM;
-                this.MudDialog.Close(DialogResult.Ok(this.Model));
-            }
-            else
-            {
-                await ShowTimeFormatError();
-            }
+            if (!CanSubmit)
+                return;
+
+            Model.Id = _id.Trim();
+            Model.Date = _date!.Value;
+            TimeSpan.TryParse(_time, out var res);
+            Model.Time = res;
+            Model.Type = _type;
+            Model.DistanceM = _distanceM;
+            MudDialog.Close(DialogResult.Ok(Model));
         }
+
+        private void Cancel() => MudDialog.Cancel();
 
         private void OnRaceTypeChanged(string value)
         {
@@ -57,8 +56,8 @@ namespace PaceLetics.AthleteModule.Components
                 Model = new RaceResultModel();
             }
 
-            _id = Model.Id;
-            _type = Model.Type;
+            _id = Model.Id ?? string.Empty;
+            _type = Model.Type ?? string.Empty;
             _date = Model.Date;
             _time = Model.Time.ToString();
             _distanceM = Model.DistanceM;
@@ -66,21 +65,5 @@ namespace PaceLetics.AthleteModule.Components
             base.OnInitialized();
         }
 
-        private async Task ShowTimeFormatError()
-        {
-            int seconds = 3;
-            IMudExDialogReference<MudExMessageDialog>? dlg = await dialogService.ShowInformationAsync(L["AddRaceDialog_Warning_Title"], L["AddRaceDialog_Warning_Message"], Icons.Material.Filled.Error, false, true);
-            for (int i = 0; i < seconds; i++)
-            {
-                await Task.Delay(1000);
-                dlg.ExecuteOnDialogComponent(dialog =>
-                {
-                    dialog.ProgressValue = (i + 1) * 100 / seconds;
-                    dialog.Message = L["AddRaceDialog_Warning_Message"];
-                });
-            }
-
-            dlg.Close();
-        }
     }
 }

@@ -61,7 +61,7 @@
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
         {
-            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+            <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
         }
         else if (_analyses.Count == 0)
         {
@@ -232,7 +232,7 @@
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                _errorMessage = UiErrorMessages.From(ex);
                 _analyses = Array.Empty<RunningAnalysisCourseEvent>();
             }
         });

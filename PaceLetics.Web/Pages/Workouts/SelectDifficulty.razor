@@ -12,7 +12,7 @@
     <MudPaper Class="p-6" Elevation="2">
         <MudStack Spacing="3">
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                <MudText Typo="Typo.h4">@L["Title"]</MudText>
+                <MudText Typo="Typo.h4" HtmlTag="h1">@L["Title"]</MudText>
                 <MudTooltip Text="@L["Back"]">
                     <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
                                    OnClick="@Back"
@@ -38,10 +38,18 @@
                         <MudText Typo="Typo.h6">@Name</MudText>
                         <MudText Typo="Typo.body2" Style="opacity:.8">@ViewModel.PreviewDescription</MudText>
 
-                        <MudStack Row="true" Spacing="2" Class="mt-4">
-                            <MudNumericField Label="@L["SetsPerExercise"]" @bind-Value="ViewModel.Sets" Min="1" Max="20" Style="width:150px" />
-                            <MudNumericField Label="@L["Rounds"]" @bind-Value="ViewModel.Rounds" Min="1" Max="20" Style="width:150px" />
-                        </MudStack>
+                        <MudGrid Class="mt-4">
+                            <MudItem xs="12" sm="6">
+                                <MudNumericField Label="@L["SetsPerExercise"]" @bind-Value="ViewModel.Sets" Min="1" Max="20" FullWidth="true" />
+                            </MudItem>
+                            <MudItem xs="12" sm="6">
+                                <MudNumericField Label="@L["Rounds"]" @bind-Value="ViewModel.Rounds" Min="1" Max="20" FullWidth="true" />
+                            </MudItem>
+                        </MudGrid>
+
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true" Class="mt-3">
+                            @string.Format(L["WorkloadSummary"], ViewModel.PreviewExerciseCount, ViewModel.Sets, ViewModel.Rounds)
+                        </MudAlert>
 
                         <MudText Typo="Typo.subtitle1" Class="mt-4">@L["AvailableLevels"]</MudText>
                         <MudStack Spacing="2" Class="mt-2">

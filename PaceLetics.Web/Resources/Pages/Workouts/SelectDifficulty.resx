@@ -15,4 +15,5 @@
   <data name="Level_Moderate" xml:space="preserve"><value>Moderate</value></data>
   <data name="Level_Advanced" xml:space="preserve"><value>Advanced</value></data>
   <data name="Level_Epic" xml:space="preserve"><value>Epic</value></data>
+  <data name="WorkloadSummary" xml:space="preserve"><value>{0} exercises · {1} reps each · {2} rounds</value></data>
 </root>

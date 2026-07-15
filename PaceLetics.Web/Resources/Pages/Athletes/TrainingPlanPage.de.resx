@@ -37,4 +37,6 @@
   <data name="PlanSessionCount" xml:space="preserve"><value>{0} Einheit(en)</value></data>
   <data name="PlanNoDates" xml:space="preserve"><value>Keine Termine</value></data>
   <data name="PlanRange" xml:space="preserve"><value>{0:dd.MM.yyyy} bis {1:dd.MM.yyyy}</value></data>
+  <data name="Close" xml:space="preserve"><value>Schließen</value></data>
+  <data name="SelectPlanNamed" xml:space="preserve"><value>Trainingsplan {0} auswählen</value></data>
 </root>

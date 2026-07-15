@@ -15,4 +15,5 @@
   <data name="Level_Moderate" xml:space="preserve"><value>Fortgeschritten</value></data>
   <data name="Level_Advanced" xml:space="preserve"><value>Schwer</value></data>
   <data name="Level_Epic" xml:space="preserve"><value>Episch</value></data>
+  <data name="WorkloadSummary" xml:space="preserve"><value>{0} Übungen · je {1} Wiederholungen · {2} Runden</value></data>
 </root>

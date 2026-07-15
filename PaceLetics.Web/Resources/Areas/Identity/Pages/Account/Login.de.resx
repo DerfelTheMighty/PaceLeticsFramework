@@ -9,7 +9,7 @@
   <data name="UserNameOrEmail" xml:space="preserve"><value>Benutzername oder E-Mail</value></data>
   <data name="Email" xml:space="preserve"><value>E-Mail</value></data>
   <data name="Password" xml:space="preserve"><value>Passwort</value></data>
-  <data name="LoginButton" xml:space="preserve"><value>Login</value></data>
+  <data name="LoginButton" xml:space="preserve"><value>Einloggen</value></data>
   <data name="ForgotPassword" xml:space="preserve"><value>Passwort vergessen?</value></data>
   <data name="RegisterNewUser" xml:space="preserve"><value>Registriere dich als neuer Benutzer</value></data>
   <data name="ResendEmail" xml:space="preserve"><value>E-Mail erneut senden</value></data>
@@ -19,4 +19,5 @@
   <data name="Feature2" xml:space="preserve"><value>Strukturierte Trainingspläne für deine Ziele</value></data>
   <data name="Feature3" xml:space="preserve"><value>Geführte Workouts für Kraft und Mobilität</value></data>
   <data name="Feature4" xml:space="preserve"><value>Verfolge deinen Fortschritt über die Zeit</value></data>
+  <data name="ShowPassword" xml:space="preserve"><value>Passwort anzeigen</value></data>
 </root>

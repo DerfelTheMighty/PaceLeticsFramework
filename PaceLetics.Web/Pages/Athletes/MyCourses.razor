@@ -4,10 +4,13 @@
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces
 @using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Models
 @using PaceLetics.Web.Services.Courses
+@using PaceLetics.Web.Services
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ICourseService CourseService
 @inject IRunningAnalysisService RunningAnalysisService
+@inject ITrainingPlanService TrainingPlanService
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 @inject NavigationManager Navigation
 @inject ISnackbar Snackbar
 @inject LoadingStateService Loading
@@ -49,7 +52,7 @@
 
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
         {
-            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="mb-4">@_errorMessage</MudAlert>
+            <RetryAlert Message="@_errorMessage" OnRetry="LoadCoursesAsync" Class="mb-4" />
         }
 
         @if (_courses.Count == 0)
@@ -72,6 +75,11 @@
 
                         <MudPaper Elevation="@(isSelected ? 4 : 1)"
                                   Class="@GetCourseCardClass(isSelected)"
+                                  role="button"
+                                  tabindex="0"
+                                  aria-pressed="@isSelected"
+                                  aria-label="@string.Format(L["SelectCourse"], course.Name)"
+                                  @onkeydown="@(args => HandleCourseCardKeyDown(args, course.Id))"
                                   @onclick="@(() => SelectCourse(course.Id))">
                             <MudStack Spacing="2" Style="height:100%;">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%; gap:8px;">
@@ -107,6 +115,9 @@
 
                     <MudPaper Elevation="1"
                               Class="pa-3 pl-course-card pl-course-card-add"
+                              role="button"
+                              tabindex="0"
+                              @onkeydown="HandleAddCourseCardKeyDown"
                               @onclick="OpenCoursePicker">
                         <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Style="height:100%; gap:8px;">
                             <MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" Size="Size.Large" />
@@ -122,12 +133,18 @@
 
                 @if (_isCoursePickerOpen)
                 {
-                    <div class="pl-overlay pl-modal-overlay" @onclick="CloseCoursePicker">
-                        <MudPaper Elevation="8" Class="pa-4 pl-modal-panel" @onclick:stopPropagation="true">
+                    <div class="pl-overlay pl-modal-overlay" @onclick="CloseCoursePicker" @onkeydown="HandleCoursePickerKeyDown">
+                        <MudFocusTrap>
+                        <MudPaper Elevation="8"
+                                  Class="pa-4 pl-modal-panel"
+                                  role="dialog"
+                                  aria-modal="true"
+                                  aria-labelledby="course-picker-title"
+                                  @onclick:stopPropagation="true">
                             <MudStack Spacing="3">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;">
-                                    <MudText Typo="Typo.h6">@L["AddCourse"]</MudText>
-                                    <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseCoursePicker" />
+                                    <MudText Typo="Typo.h6" HtmlTag="h2" id="course-picker-title">@L["AddCourse"]</MudText>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseCoursePicker" aria-label="@L["Close"]" />
                                 </MudStack>
 
                                 @if (availableCourses.Count == 0)
@@ -168,6 +185,7 @@
                                 }
                             </MudStack>
                         </MudPaper>
+                        </MudFocusTrap>
                     </div>
                 }
 
@@ -383,7 +401,7 @@
                                         @foreach (var publication in GetVisibleTrainingPlans(trainingPlanPublications))
                                         {
                                             <div class="pl-list-row">
-                                                <MudText Typo="Typo.body2">@publication.TrainingPlanId</MudText>
+                                                <MudText Typo="Typo.body2">@GetTrainingPlanName(publication.TrainingPlanId)</MudText>
                                             </div>
                                         }
                                     </MudStack>
@@ -426,8 +444,29 @@
         Calendar
     }
 
+    private void HandleCourseCardKeyDown(KeyboardEventArgs args, string courseId)
+    {
+        if (args.Key is "Enter" or " ")
+            SelectCourse(courseId);
+    }
+
+    private void HandleAddCourseCardKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key is "Enter" or " ")
+            OpenCoursePicker();
+    }
+
+    private void HandleCoursePickerKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Escape")
+            CloseCoursePicker();
+    }
+
     [SupplyParameterFromQuery(Name = "section")]
     public string? SectionQuery { get; set; }
+
+    [SupplyParameterFromQuery(Name = "course")]
+    public string? CourseQuery { get; set; }
 
     private string? _userId;
     private string? _errorMessage;
@@ -436,6 +475,7 @@
     private Dictionary<string, IReadOnlyList<CourseEventDocument>> _eventsByCourse = new();
     private Dictionary<string, CourseEventRegistrationDocument> _registeredEvents = new(StringComparer.OrdinalIgnoreCase);
     private Dictionary<string, RunningAnalysisLink> _analysisLinksByExternalEventId = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, string> _trainingPlanNames = new(StringComparer.OrdinalIgnoreCase);
     private bool _isCoursePickerOpen;
     private bool _showAllDates;
     private bool _showAllEvents;
@@ -456,11 +496,14 @@
 
     protected override void OnParametersSet()
     {
-        if (string.Equals(_appliedSectionQuery, SectionQuery, StringComparison.OrdinalIgnoreCase))
-            return;
+        if (!string.Equals(_appliedSectionQuery, SectionQuery, StringComparison.OrdinalIgnoreCase))
+        {
+            _appliedSectionQuery = SectionQuery;
+            _activeSection = ParseSectionQuery(SectionQuery);
+        }
 
-        _appliedSectionQuery = SectionQuery;
-        _activeSection = ParseSectionQuery(SectionQuery);
+        if (!string.IsNullOrWhiteSpace(CourseQuery))
+            _selectedCourseId = CourseQuery;
     }
 
     protected override async Task OnInitializedAsync()
@@ -478,6 +521,9 @@
             {
                 _errorMessage = null;
                 _courses = await CourseService.GetCoursesForAthleteAsync(_userId ?? string.Empty);
+                _trainingPlanNames = (await TrainingPlanService.LoadTrainingPlansForUserAsync(_userId))
+                    .GroupBy(plan => plan.Id, StringComparer.OrdinalIgnoreCase)
+                    .ToDictionary(group => group.Key, group => group.First().Name, StringComparer.OrdinalIgnoreCase);
                 _eventsByCourse = new Dictionary<string, IReadOnlyList<CourseEventDocument>>();
                 _registeredEvents = new Dictionary<string, CourseEventRegistrationDocument>(StringComparer.OrdinalIgnoreCase);
                 _analysisLinksByExternalEventId = (await RunningAnalysisService.GetAnalysesForAthleteAsync(_userId ?? string.Empty))
@@ -531,6 +577,7 @@
 
         _selectedCourseId = courseId;
         ResetDetailExpansion();
+        Navigation.NavigateTo(GetSectionUri(_activeSection), replace: true);
     }
 
     private void SelectSection(CoursesSection section)
@@ -538,6 +585,11 @@
         _activeSection = section;
         Navigation.NavigateTo(GetSectionUri(section), replace: true);
     }
+
+    private string GetTrainingPlanName(string trainingPlanId)
+        => _trainingPlanNames.TryGetValue(trainingPlanId, out var name) && !string.IsNullOrWhiteSpace(name)
+            ? name
+            : L["UnnamedTrainingPlan"];
 
     private void SelectNextSection()
     {
@@ -576,14 +628,18 @@
         };
     }
 
-    private static string GetSectionUri(CoursesSection section)
+    private string GetSectionUri(CoursesSection section)
     {
-        return section switch
+        var uri = section switch
         {
             CoursesSection.TrainingPlans => "/Athletes/courses?section=plans",
             CoursesSection.Calendar => "/Athletes/courses?section=calendar",
-            _ => "/Athletes/courses"
+            _ => "/Athletes/courses?section=courses"
         };
+
+        return string.IsNullOrWhiteSpace(_selectedCourseId)
+            ? uri
+            : $"{uri}&course={Uri.EscapeDataString(_selectedCourseId)}";
     }
 
     private void OpenCoursePicker()
@@ -609,7 +665,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -617,7 +673,7 @@
     {
         try
         {
-            var confirmed = await JS.InvokeAsync<bool>("confirm", string.Format(L["LeaveConfirm"], courseName));
+            var confirmed = await UiConfirmation.AskAsync(DialogService, string.Format(L["LeaveConfirm"], courseName), destructive: false);
             if (!confirmed)
                 return;
 
@@ -629,7 +685,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -643,7 +699,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -657,7 +713,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 

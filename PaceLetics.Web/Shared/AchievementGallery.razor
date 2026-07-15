@@ -1,5 +1,6 @@
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAchievementService AchievementService
+@inject IStringLocalizer<AchievementGallery> L
 
 @if (_isLoading)
 {
@@ -7,21 +8,25 @@
 }
 else if (string.IsNullOrWhiteSpace(_userId))
 {
-    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">Bitte melde dich an, um deine Achievements zu sehen.</MudAlert>
+    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["SignInRequired"]</MudAlert>
 }
 else
 {
     <MudStack Spacing="4">
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
+        }
         <MudStack Spacing="2">
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                <MudText Typo="Typo.subtitle1">Freigeschaltet</MudText>
+                <MudText Typo="Typo.subtitle1">@L["Unlocked"]</MudText>
                 <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">@_awards.Count</MudChip>
             </MudStack>
 
             @if (_awards.Count == 0)
             {
                 <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                    Noch keine Achievements freigeschaltet. Hake Trainingseinheiten ab oder schliesse Workouts ab.
+                    @L["NoneUnlocked"]
                 </MudAlert>
             }
             else
@@ -35,7 +40,7 @@ else
                                 <MudStack Spacing="0" Style="min-width:0;">
                                     <MudText Typo="Typo.subtitle2">@award.TitleSnapshot</MudText>
                                     <MudText Typo="Typo.caption" Color="Color.Secondary">@award.DescriptionSnapshot</MudText>
-                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@($"Freigeschaltet am {award.AwardedAt:dd.MM.yyyy}")</MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@string.Format(L["UnlockedOn"], award.AwardedAt.ToString("d"))</MudText>
                                 </MudStack>
                             </MudStack>
                         </MudPaper>
@@ -47,7 +52,7 @@ else
         @if (_openDefinitions.Count > 0)
         {
             <MudStack Spacing="2">
-                <MudText Typo="Typo.subtitle1">Noch offen</MudText>
+                <MudText Typo="Typo.subtitle1">@L["StillOpen"]</MudText>
                 <div class="pl-achievement-grid">
                     @foreach (var definition in _openDefinitions)
                     {
@@ -73,9 +78,17 @@ else
     private bool _isLoading = true;
     private List<AthleteAchievementDocument> _awards = new();
     private List<AchievementDefinitionDocument> _openDefinitions = new();
+    private string? _errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _isLoading = true;
+        _errorMessage = null;
         try
         {
             var authState = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
@@ -93,34 +106,38 @@ else
                     .ToList();
             }
         }
+        catch (Exception ex)
+        {
+            _errorMessage = UiErrorMessages.From(ex);
+        }
         finally
         {
             _isLoading = false;
         }
     }
 
-    private static string DescribeRules(AchievementDefinitionDocument definition)
+    private string DescribeRules(AchievementDefinitionDocument definition)
     {
         if (definition.Rules.Count == 0)
-            return "Keine Regel hinterlegt";
+            return L["NoRule"];
 
         return string.Join(" + ", definition.Rules.Select(DescribeRule));
     }
 
-    private static string DescribeRule(AchievementRuleDocument rule)
+    private string DescribeRule(AchievementRuleDocument rule)
     {
         return rule.RuleType switch
         {
             AchievementRuleTypes.TrainingSessionCompleted when rule.SessionIds.Count > 0 =>
-                $"{rule.SessionIds.Count} bestimmte Einheit(en) abhaken",
-            AchievementRuleTypes.TrainingSessionCompleted => "Eine Trainingseinheit abhaken",
-            AchievementRuleTypes.TrainingSessionCount => $"{rule.TargetCount} Trainingseinheit(en) abhaken",
-            AchievementRuleTypes.TrainingPlanCompleted => "Einen Trainingsplan vollstaendig abhaken",
-            AchievementRuleTypes.WorkoutCompleted => "Ein Workout abschliessen",
-            AchievementRuleTypes.WorkoutCount => $"{rule.TargetCount} Workout(s) abschliessen",
-            AchievementRuleTypes.CourseEventCompleted => "An einem Kurstermin erfolgreich teilnehmen",
-            AchievementRuleTypes.CourseCompleted => "Einen Kurs erfolgreich abschliessen",
-            _ => "Regel erfuellen"
+                string.Format(L["RuleSpecificSessions"], rule.SessionIds.Count),
+            AchievementRuleTypes.TrainingSessionCompleted => L["RuleSession"],
+            AchievementRuleTypes.TrainingSessionCount => string.Format(L["RuleSessionCount"], rule.TargetCount),
+            AchievementRuleTypes.TrainingPlanCompleted => L["RulePlan"],
+            AchievementRuleTypes.WorkoutCompleted => L["RuleWorkout"],
+            AchievementRuleTypes.WorkoutCount => string.Format(L["RuleWorkoutCount"], rule.TargetCount),
+            AchievementRuleTypes.CourseEventCompleted => L["RuleCourseEvent"],
+            AchievementRuleTypes.CourseCompleted => L["RuleCourse"],
+            _ => L["RuleDefault"]
         };
     }
 }

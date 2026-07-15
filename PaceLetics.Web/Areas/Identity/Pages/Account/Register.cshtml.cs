@@ -114,6 +114,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "ConfirmPassword")]
+            [Required(ErrorMessage = "ValidationRequired")]
             [Compare("Password", ErrorMessage = "ValidationPasswordMatch")]
             public string ConfirmPassword { get; set; }
         }

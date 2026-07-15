@@ -20,4 +20,6 @@
   <data name="Feature3" xml:space="preserve"><value>Access guided workouts for runners</value></data>
   <data name="CreateAccountHint" xml:space="preserve"><value>It only takes a moment to get started.</value></data>
   <data name="AlreadyHaveAccount" xml:space="preserve"><value>Already have an account? Log in</value></data>
+  <data name="ShowPassword" xml:space="preserve"><value>Show password</value></data>
+  <data name="PasswordHelp" xml:space="preserve"><value>Use at least 6 characters, including an uppercase letter, a lowercase letter, and a number.</value></data>
 </root>

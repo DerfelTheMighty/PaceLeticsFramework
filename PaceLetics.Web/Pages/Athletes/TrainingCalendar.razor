@@ -15,7 +15,7 @@
 
     @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">@_errorMessage</MudAlert>
+        <RetryAlert Message="@_errorMessage" OnRetry="LoadAsync" />
     }
 
     <MudPaper Elevation="0" Class="pa-3 pl-calendar-toolbar">
@@ -71,6 +71,8 @@
                     var dayItems = GetDayItems(day).Take(3).ToList();
                     <button type="button"
                             class="@GetDayClass(day, isSelected, isToday)"
+                            aria-label="@GetDayAriaLabel(day, dayItems.Count)"
+                            aria-pressed="@isSelected"
                             @onclick="@(() => SelectDate(day))">
                         <span class="pl-calendar-day-number">@day.Day</span>
                         @if (dayItems.Count > 0)
@@ -125,19 +127,25 @@
     <div class="pl-overlay" @onclick="CloseDetails"></div>
 }
 
-<div style="position:fixed; left:0; right:0; bottom:0; z-index:1301; transform: translateY(@(_detailsOpen ? "0" : "105%")); transition: transform 180ms ease; pointer-events:@(_detailsOpen ? "auto" : "none");">
+<div style="position:fixed; left:0; right:0; bottom:0; z-index:1301; transform: translateY(@(_detailsOpen ? "0" : "105%")); transition: transform 180ms ease; pointer-events:@(_detailsOpen ? "auto" : "none");"
+     role="dialog"
+     aria-modal="true"
+     aria-hidden="@(!_detailsOpen)"
+     aria-labelledby="calendar-details-title"
+     @onkeydown="HandleDetailsKeyDown">
+    <MudFocusTrap Disabled="@(!_detailsOpen)">
     <MudPaper Elevation="12" Class="pl-bottom-sheet">
         <div style="padding:12px 16px;">
             <div class="pl-bottom-sheet-handle"></div>
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%; gap:12px;">
                 <MudStack Spacing="0" Style="min-width:0;">
-                    <MudText Typo="Typo.h6">@(_selectedItem?.Title ?? L["CalendarTitle"])</MudText>
+                    <MudText Typo="Typo.h6" HtmlTag="h2" id="calendar-details-title">@(_selectedItem?.Title ?? L["CalendarTitle"])</MudText>
                     @if (_selectedItem is not null)
                     {
                         <MudText Typo="Typo.caption" Color="Color.Secondary">@GetKindLabel(_selectedItem)</MudText>
                     }
                 </MudStack>
-                <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseDetails" />
+                <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseDetails" aria-label="@L["Close"]" />
             </MudStack>
         </div>
         <MudDivider />
@@ -204,6 +212,7 @@
             }
         </div>
     </MudPaper>
+    </MudFocusTrap>
 </div>
 
 @code {
@@ -219,6 +228,19 @@
     private bool _showTraining = true;
     private bool _showCourseDates = true;
     private bool _showEvents = true;
+
+    private string GetDayAriaLabel(DateTime day, int itemCount)
+        => string.Format(
+            CultureInfo.CurrentCulture,
+            L["CalendarDayLabel"],
+            day.ToString("D", CultureInfo.CurrentCulture),
+            itemCount);
+
+    private void HandleDetailsKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Escape")
+            CloseDetails();
+    }
     private string? _errorMessage;
     private string? _loadedSubscriptionUserId;
     private HashSet<string> _selectedPlanIds = new(StringComparer.OrdinalIgnoreCase);
@@ -401,7 +423,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 
@@ -418,7 +440,7 @@
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add(UiErrorMessages.From(ex), Severity.Error);
         }
     }
 

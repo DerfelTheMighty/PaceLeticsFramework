@@ -76,4 +76,8 @@
   <data name="CalendarSubscribedPlans" xml:space="preserve"><value>Subscribed plans</value></data>
   <data name="CalendarNoSubscribedPlans" xml:space="preserve"><value>No plan is selected for the calendar.</value></data>
   <data name="CalendarSubscriptionSaveError" xml:space="preserve"><value>The plan selection could not be saved in this browser.</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="SelectCourse" xml:space="preserve"><value>Select course {0}</value></data>
+  <data name="UnnamedTrainingPlan" xml:space="preserve"><value>Training plan</value></data>
+  <data name="CalendarDayLabel" xml:space="preserve"><value>{0}, {1} entries</value></data>
 </root>

@@ -64,6 +64,11 @@ else
 
                 <MudPaper Elevation="@(isSelected ? 4 : 1)"
                           Class="@GetPlanCardClass(isSelected)"
+                          role="button"
+                          tabindex="0"
+                          aria-pressed="@isSelected"
+                          aria-label="@string.Format(L["SelectPlanNamed"], plan.Name)"
+                          @onkeydown="@(args => HandlePlanCardKeyDown(args, plan.Id))"
                           @onclick="@(() => SelectPlanAsync(plan.Id))">
                     <MudStack Spacing="2" Style="height:100%;">
                         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:8px;">
@@ -159,7 +164,13 @@ else
      transform: translateY(@(_detailsOpen ? "0" : "105%"));
      transition: transform 180ms ease;
      pointer-events:@(_detailsOpen ? "auto" : "none");
-">
+"
+     role="dialog"
+     aria-modal="true"
+     aria-hidden="@(!_detailsOpen)"
+     aria-labelledby="training-session-details-title"
+     @onkeydown="HandleDetailsKeyDown">
+    <MudFocusTrap Disabled="@(!_detailsOpen)">
     <MudPaper Elevation="12"
               Class="pl-bottom-sheet">
 
@@ -167,8 +178,8 @@ else
             <div class="pl-bottom-sheet-handle"></div>
 
             <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width:100%;">
-                <MudText Typo="Typo.h6">@(_selectedTrainingSession?.Name ?? _resolved?.Name ?? L["Session"])</MudText>
-                <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseDetails" />
+                <MudText Typo="Typo.h6" HtmlTag="h2" id="training-session-details-title">@(_selectedTrainingSession?.Name ?? _resolved?.Name ?? L["Session"])</MudText>
+                <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="CloseDetails" aria-label="@L["Close"]" />
             </MudStack>
 
             @if (_selectedTrainingSession is not null)
@@ -315,6 +326,7 @@ else
             }
         </div>
     </MudPaper>
+    </MudFocusTrap>
 </div>
 
 </MudContainer>
@@ -332,6 +344,18 @@ else
     private string? _userId;
 
     private bool _detailsOpen;
+
+    private async Task HandlePlanCardKeyDown(KeyboardEventArgs args, string planId)
+    {
+        if (args.Key is "Enter" or " ")
+            await SelectPlanAsync(planId);
+    }
+
+    private void HandleDetailsKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Escape")
+            CloseDetails();
+    }
     private ResolvedRunningSession? _resolved;
     private TrainingSession? _selectedTrainingSession;
 
