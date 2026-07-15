@@ -57,18 +57,34 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         Directory.CreateDirectory(_directoryPath);
 
         var filePath = ResolvePlanFilePath(definition);
-        using var stream = File.Create(filePath);
-        using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+        File.WriteAllText(filePath, Serialize(definition));
+    }
 
-        WriteTrainingPlan(writer, definition);
+    public static string Serialize(TrainingPlanDefinition definition)
+    {
+        ArgumentNullException.ThrowIfNull(definition);
+        using var stream = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true }))
+            WriteTrainingPlan(writer, definition);
+        return System.Text.Encoding.UTF8.GetString(stream.ToArray());
+    }
+
+    public static TrainingPlanDefinition Deserialize(string json, string fallbackId)
+    {
+        using var document = JsonDocument.Parse(json);
+        return ParsePlan(document.RootElement, json, fallbackId);
     }
 
     private TrainingPlanDefinition LoadPlan(string filePath)
     {
         var json = File.ReadAllText(filePath);
         using var document = JsonDocument.Parse(json);
-        var root = document.RootElement;
         var fallbackId = Path.GetFileNameWithoutExtension(filePath) ?? Guid.NewGuid().ToString();
+        return ParsePlan(document.RootElement, json, fallbackId);
+    }
+
+    private static TrainingPlanDefinition ParsePlan(JsonElement root, string json, string fallbackId)
+    {
 
         if (root.ValueKind == JsonValueKind.Array)
             return LoadLegacyPlan(fallbackId, root);
@@ -109,7 +125,7 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         throw new InvalidDataException("Unsupported training plan JSON format.");
     }
 
-    private TrainingPlanDefinition LoadLegacyPlan(string fallbackId, JsonElement root)
+    private static TrainingPlanDefinition LoadLegacyPlan(string fallbackId, JsonElement root)
     {
         var sessions = root
             .EnumerateArray()
@@ -125,7 +141,7 @@ public sealed class JsonTrainingPlanRepository : ITrainingPlanRepository
         };
     }
 
-    private TrainingSessionDefinition ParseTrainingSession(JsonElement sessionElement)
+    private static TrainingSessionDefinition ParseTrainingSession(JsonElement sessionElement)
     {
         var dto = sessionElement.Deserialize<TrainingSessionDocument>(Options)
             ?? throw new InvalidDataException("Could not deserialize training session.");

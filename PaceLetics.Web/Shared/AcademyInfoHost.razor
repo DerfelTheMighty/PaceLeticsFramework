@@ -52,7 +52,7 @@
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs args)
     {
-        _ = AcademyInfo.TrackNavigationAsync(args.Location);
+        _ = InvokeAsync(() => AcademyInfo.TrackNavigationAsync(args.Location));
     }
 
     private void OnAcademyInfoChanged()

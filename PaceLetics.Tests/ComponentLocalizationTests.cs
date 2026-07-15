@@ -114,6 +114,36 @@ public sealed class ComponentLocalizationTests
         Assert.Equal("Gérer les cours", value.Value);
     }
 
+    [Theory]
+    [InlineData("de", "VisibilityGroup", "Gruppe")]
+    [InlineData("de", "VisibilityGlobal", "Alle")]
+    public void CourseManagementResources_ResolveVisibilityLabels(string culture, string key, string expectedValue)
+    {
+        var value = GetLocalizedString<CourseManagement>(culture, key);
+
+        Assert.False(value.ResourceNotFound);
+        Assert.Equal(expectedValue, value.Value);
+    }
+
+    [Theory]
+    [InlineData("de", "Recordings", "Aufnahmen")]
+    [InlineData("de", "Analyses", "Analysen")]
+    [InlineData("de", "UploadQueue", "Upload-Warteschlange")]
+    public void RunningAnalysesResources_ResolveTabLabels(string culture, string key, string expectedValue)
+    {
+        var value = GetLocalizedString<RunningAnalyses>(culture, key);
+
+        Assert.False(value.ResourceNotFound);
+        Assert.Equal(expectedValue, value.Value);
+    }
+
+    [Fact]
+    public void TeamsResources_ResolveGermanLabels()
+    {
+        Assert.Equal("Teams", GetLocalizedString<Teams>("de", "Title").Value);
+        Assert.Equal("Gruppen", GetLocalizedString<Teams>("de", "Groups").Value);
+    }
+
     [Fact]
     public void WorkoutCatalogManagementResources_ResolveGermanTitle()
     {

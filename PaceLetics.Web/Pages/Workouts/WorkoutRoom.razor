@@ -49,25 +49,27 @@
         base.OnInitialized();
     }
 
-    private async void OnWorkoutFinished()
+    private void OnWorkoutFinished()
     {
-        await InvokeAsync(async () =>
+        _ = InvokeAsync(HandleWorkoutFinishedAsync);
+    }
+
+    private async Task HandleWorkoutFinishedAsync()
+    {
+        await RecordWorkoutAchievementAsync();
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        var parameters = new DialogParameters<WorkoutFinishedDialog>
         {
-            await RecordWorkoutAchievementAsync();
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
-            var parameters = new DialogParameters<WorkoutFinishedDialog>
-            {
-                { dialog => dialog.WorkoutName, ViewModel.Workout?.Name ?? string.Empty },
-                { dialog => dialog.ExerciseCount, ViewModel.Workout?.Exercises.Count ?? 0 }
-            };
-            var dialog = await dialogService.ShowAsync<WorkoutFinishedDialog>(
-                L["WorkoutCompleted"],
-                parameters,
-                options);
-            await dialog.Result;
-            _allowNavigation = true;
-            navManager.NavigateTo("/Workouts/workoutarea");
-        });
+            { dialog => dialog.WorkoutName, ViewModel.Workout?.Name ?? string.Empty },
+            { dialog => dialog.ExerciseCount, ViewModel.Workout?.Exercises.Count ?? 0 }
+        };
+        var dialog = await dialogService.ShowAsync<WorkoutFinishedDialog>(
+            L["WorkoutCompleted"],
+            parameters,
+            options);
+        await dialog.Result;
+        _allowNavigation = true;
+        navManager.NavigateTo("/Workouts/workoutarea");
     }
 
     private async Task RecordWorkoutAchievementAsync()
@@ -92,7 +94,7 @@
         }
         catch
         {
-            Snackbar.Add("Das Workout wurde abgeschlossen, aber Achievements konnten nicht aktualisiert werden.", Severity.Warning);
+            Snackbar.Add(L["AchievementUpdateFailed"], Severity.Warning);
         }
     }
 

@@ -170,9 +170,9 @@
         _subscribedWorkout = null;
     }
 
-    private async void OnProgressChanged(int remaining)
+    private void OnProgressChanged(int remaining)
     {
-        await InvokeAsync(() =>
+        _ = InvokeAsync(() =>
         {
             _timeRemaining = remaining;
 
@@ -183,23 +183,23 @@
         });
     }
 
-    private async void OnElementStart(IWorkoutElement el)
+    private void OnElementStart(IWorkoutElement el)
     {
         _elementType = el.Type;
 
         el.ProgressChangedEvent += OnProgressChanged;
         el.StateChangedEvent += OnElementStateChanged;
 
-        await InvokeAsync(() =>
+        _ = InvokeAsync(() =>
         {
             _instruction = GetInstruction(_elementType, _exerciseState, Workout?.State ?? WorkoutState.Stop);
             StateHasChanged();
         });
     }
 
-    private async void OnElementStateChanged(ExerciseState state)
+    private void OnElementStateChanged(ExerciseState state)
     {
-        await InvokeAsync(() =>
+        _ = InvokeAsync(() =>
         {
             _lastState = _exerciseState;
             _exerciseState = state;
@@ -213,17 +213,17 @@
         });
     }
 
-    private async void OnElementFinished(IWorkoutElement el)
+    private void OnElementFinished(IWorkoutElement el)
     {
         el.ProgressChangedEvent -= OnProgressChanged;
         el.StateChangedEvent -= OnElementStateChanged;
 
-        await JSRuntime.InvokeVoidAsync("PlayDing_1");
+        _ = InvokeAsync(() => JSRuntime.InvokeVoidAsync("PlayDing_1").AsTask());
     }
 
     private void OnWorkoutFinished()
     {
-        InvokeAsync(() =>
+        _ = InvokeAsync(() =>
         {
             _isToggled = false;
             Workout?.Reset();

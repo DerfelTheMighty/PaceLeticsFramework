@@ -78,6 +78,9 @@ public interface ICourseService
         string eventId,
         string athleteUserId);
 
+    Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsForAthleteAsync(string athleteUserId)
+        => Task.FromResult<IReadOnlyList<CourseEventRegistrationDocument>>(Array.Empty<CourseEventRegistrationDocument>());
+
     Task<CourseEventRegistrationDocument> RegisterForEventAsync(string courseId, string eventId, string athleteUserId);
 
     Task<CourseEventRegistrationDocument> CancelEventRegistrationAsync(string courseId, string eventId, string athleteUserId);

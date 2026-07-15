@@ -295,7 +295,7 @@
             var saved = await AchievementService.SaveDefinitionAsync(request, _userId);
             Snackbar.Add(string.Format(L["SavedNamed"], saved.Title), Severity.Success);
             await LoadDefinitionsAsync();
-            Edit(saved);
+            await Edit(saved);
         }
         catch (Exception ex)
         {
@@ -307,7 +307,7 @@
         }
     }
 
-    private void Edit(AchievementDefinitionDocument definition)
+    private async Task Edit(AchievementDefinitionDocument definition)
     {
         definition.Normalize();
         _editingDefinitionId = definition.Id;
@@ -329,7 +329,7 @@
         _courseId = rule.CourseId;
         _courseEventId = rule.CourseEventId;
         _targetCount = rule.TargetCount;
-        _ = LoadCourseEventsAsync();
+        await LoadCourseEventsAsync();
     }
 
     private void ResetEditor()

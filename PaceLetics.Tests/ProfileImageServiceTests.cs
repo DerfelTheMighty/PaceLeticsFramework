@@ -18,15 +18,16 @@ public sealed class ProfileImageServiceTests
 
         try
         {
-            var service = new ProfileImageService(new TestWebHostEnvironment(root, webRoot));
+            var store = new InMemoryProfileImageStore();
+            var service = new ProfileImageService(new TestWebHostEnvironment(root, webRoot), store);
             var upload = await CreateUploadAsync(1000, 600);
 
             var result = await service.SaveAsync(upload, "user-1", previousImageUrl: null);
 
-            var savedPath = Path.Combine(webRoot, result.Url.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
-            Assert.True(File.Exists(savedPath));
-
-            using var saved = await Image.LoadAsync(savedPath);
+            var imageId = Uri.UnescapeDataString(result.Url["/profile-images/".Length..]);
+            var document = await store.GetAsync(imageId);
+            Assert.NotNull(document);
+            using var saved = Image.Load(document.Content);
             Assert.Equal(ProfileImageService.AvatarMaxSize, saved.Width);
             Assert.Equal(ProfileImageService.AvatarMaxSize, saved.Height);
         }
@@ -48,7 +49,7 @@ public sealed class ProfileImageServiceTests
 
         try
         {
-            var service = new ProfileImageService(new TestWebHostEnvironment(root, webRoot));
+            var service = new ProfileImageService(new TestWebHostEnvironment(root, webRoot), new InMemoryProfileImageStore());
             var upload = await CreateUploadAsync(128, 128);
 
             await service.SaveAsync(upload, "user-1", "/uploads/profile-images/old.webp");
@@ -103,5 +104,28 @@ public sealed class ProfileImageServiceTests
         public IFileProvider WebRootFileProvider { get; set; }
 
         public string WebRootPath { get; set; }
+    }
+
+    private sealed class InMemoryProfileImageStore : IProfileImageStore
+    {
+        private readonly Dictionary<string, ProfileImageDocument> _documents = new(StringComparer.Ordinal);
+
+        public Task SaveAsync(ProfileImageDocument image, CancellationToken cancellationToken = default)
+        {
+            _documents[image.Id] = image;
+            return Task.CompletedTask;
+        }
+
+        public Task<ProfileImageDocument?> GetAsync(string id, CancellationToken cancellationToken = default)
+        {
+            _documents.TryGetValue(id, out var image);
+            return Task.FromResult(image);
+        }
+
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+        {
+            _documents.Remove(id);
+            return Task.CompletedTask;
+        }
     }
 }

@@ -27,21 +27,21 @@
                     aria-pressed="@(_activeSection == RunningAnalysesSection.Recordings)"
                     @onclick="@(() => SelectSection(RunningAnalysesSection.Recordings))">
                 <MudIcon Icon="@Icons.Material.Filled.Videocam" Size="Size.Small" />
-                <span>Aufnahmen</span>
+                <span>@L["Recordings"]</span>
             </button>
             <button type="button"
                     class="@GetSectionButtonClass(RunningAnalysesSection.Analyses)"
                     aria-pressed="@(_activeSection == RunningAnalysesSection.Analyses)"
                     @onclick="@(() => SelectSection(RunningAnalysesSection.Analyses))">
                 <MudIcon Icon="@Icons.Material.Filled.RateReview" Size="Size.Small" />
-                <span>Analysen</span>
+                <span>@L["Analyses"]</span>
             </button>
             <button type="button"
                     class="@GetSectionButtonClass(RunningAnalysesSection.UploadQueue)"
                     aria-pressed="@(_activeSection == RunningAnalysesSection.UploadQueue)"
                     @onclick="@(() => SelectSection(RunningAnalysesSection.UploadQueue))">
                 <MudIcon Icon="@Icons.Material.Filled.CloudUpload" Size="Size.Small" />
-                <span>Uploadqueue</span>
+                <span>@L["UploadQueue"]</span>
             </button>
         </nav>
 

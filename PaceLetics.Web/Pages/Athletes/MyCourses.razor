@@ -530,21 +530,23 @@
                     .GroupBy(analysis => analysis.ExternalEventId, StringComparer.OrdinalIgnoreCase)
                     .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
 
-                foreach (var course in _courses.Where(course => course.IsJoined).Select(course => course.Course))
+                var registrations = await CourseService.GetEventRegistrationsForAthleteAsync(_userId ?? string.Empty);
+                _registeredEvents = registrations
+                    .Where(registration => registration.Status == CourseEventRegistrationStatus.Registered)
+                    .GroupBy(registration => registration.EventId, StringComparer.OrdinalIgnoreCase)
+                    .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
+
+                var joinedCourseList = _courses.Where(course => course.IsJoined).Select(course => course.Course).ToList();
+                var eventTasks = joinedCourseList.ToDictionary(
+                    course => course.Id,
+                    course => CourseService.GetEventsAsync(course.Id),
+                    StringComparer.OrdinalIgnoreCase);
+                await Task.WhenAll(eventTasks.Values);
+
+                foreach (var course in joinedCourseList)
                 {
-                    var courseEvents = await CourseService.GetEventsAsync(course.Id);
+                    var courseEvents = await eventTasks[course.Id];
                     _eventsByCourse[course.Id] = courseEvents;
-
-                    foreach (var courseEvent in courseEvents)
-                    {
-                        var registration = await CourseService.GetEventRegistrationForAthleteAsync(
-                            course.Id,
-                            courseEvent.Id,
-                            _userId ?? string.Empty);
-
-                        if (registration?.Status == CourseEventRegistrationStatus.Registered)
-                            _registeredEvents[courseEvent.Id] = registration;
-                    }
                 }
 
                 var joinedCourses = JoinedCourses.ToList();
@@ -693,8 +695,8 @@
     {
         try
         {
-            await CourseService.RegisterForEventAsync(courseId, eventId, _userId ?? string.Empty);
-            await LoadCoursesAsync();
+            var registration = await CourseService.RegisterForEventAsync(courseId, eventId, _userId ?? string.Empty);
+            _registeredEvents[eventId] = registration;
             Snackbar.Add(L["RegisterSuccess"], Severity.Success);
         }
         catch (Exception ex)
@@ -708,7 +710,7 @@
         try
         {
             await CourseService.CancelEventRegistrationAsync(courseId, eventId, _userId ?? string.Empty);
-            await LoadCoursesAsync();
+            _registeredEvents.Remove(eventId);
             Snackbar.Add(L["CancelRegistrationSuccess"], Severity.Success);
         }
         catch (Exception ex)

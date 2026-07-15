@@ -57,8 +57,9 @@
                     }
                     else
                     {
+                        var filteredPlans = FilteredPlans.ToList();
                         <MudStack Spacing="1">
-                            @foreach (var plan in FilteredPlans)
+                            @foreach (var plan in filteredPlans.Take(_visiblePlanCount))
                             {
                                 var selected = SelectedPlan?.Id == plan.Id;
                                 <button type="button"
@@ -73,6 +74,12 @@
                                         <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" />
                                     }
                                 </button>
+                            }
+                            @if (filteredPlans.Count > _visiblePlanCount)
+                            {
+                                <MudButton Variant="Variant.Outlined" FullWidth="true" OnClick="ShowMorePlans">
+                                    @string.Format(L["ShowMorePlans"], Math.Min(PlanPageSize, filteredPlans.Count - _visiblePlanCount))
+                                </MudButton>
                             }
                         </MudStack>
                     }
@@ -508,6 +515,8 @@
     private string _newPlanName = string.Empty;
     private string _planSearch = string.Empty;
     private string _planName = string.Empty;
+    private const int PlanPageSize = 30;
+    private int _visiblePlanCount = PlanPageSize;
     private string _publicationTargetType = FeedTargetTypes.Global;
     private string? _publicationTargetId;
     private SessionDraft _sessionDraft = SessionDraft.CreateDefault();
@@ -521,6 +530,11 @@
         .Where(plan => string.IsNullOrWhiteSpace(_planSearch)
             || plan.Name.Contains(_planSearch, StringComparison.CurrentCultureIgnoreCase))
         .OrderBy(plan => plan.Name);
+
+    private void ShowMorePlans()
+    {
+        _visiblePlanCount += PlanPageSize;
+    }
 
     private IReadOnlyList<PlanPublicationView> SelectedPlanPublications =>
         SelectedPlan is null

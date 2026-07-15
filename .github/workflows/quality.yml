@@ -27,4 +27,22 @@ jobs:
         run: dotnet build PaceLeticsFramework.sln --no-restore
 
       - name: Test
-        run: dotnet test PaceLeticsFramework.sln --no-build --verbosity normal
+        run: dotnet test PaceLeticsFramework.sln --no-build --verbosity normal --collect:"XPlat Code Coverage"
+
+      - name: Enforce coverage floor
+        shell: pwsh
+        run: |
+          $coverageFile = Get-ChildItem -Recurse -Filter coverage.cobertura.xml | Select-Object -First 1
+          if (-not $coverageFile) { throw "No Cobertura coverage report was produced." }
+          [xml]$coverage = Get-Content -LiteralPath $coverageFile.FullName
+          $lineRate = [double]$coverage.coverage.'line-rate'
+          if ($lineRate -lt 0.20) {
+            throw "Line coverage $([math]::Round($lineRate * 100, 2))% is below the 20% quality floor."
+          }
+          Write-Host "Line coverage: $([math]::Round($lineRate * 100, 2))%"
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-coverage
+          path: '**/TestResults/**/coverage.cobertura.xml'

@@ -106,4 +106,6 @@
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="ValidationNameRequired" xml:space="preserve"><value>Please enter a course name.</value></data>
   <data name="ValidationCoursePeriod" xml:space="preserve"><value>The end date must not be before the start date.</value></data>
+  <data name="VisibilityGlobal" xml:space="preserve"><value>Everyone</value></data>
+  <data name="VisibilityGroup" xml:space="preserve"><value>Group</value></data>
 </root>

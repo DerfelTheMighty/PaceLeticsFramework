@@ -181,14 +181,7 @@
     private async Task<bool> PublicUserNameExistsAsync(string publicUserName, string exceptUserId)
     {
         var normalizedPublicUserName = NormalizePublicUserName(publicUserName);
-        var athletes = await AthleteData.GetAthletes();
-        return athletes.Any(athlete =>
-            athlete.Id != exceptUserId
-            && athlete.PublicProfile is not null
-            && string.Equals(
-                athlete.PublicProfile.NormalizedPublicUserName,
-                normalizedPublicUserName,
-                StringComparison.Ordinal));
+        return await AthleteData.PublicUserNameExists(normalizedPublicUserName, exceptUserId);
     }
 
     private static bool IsMissingPublicUserName(PublicProfileModel? publicProfile, string userName, string email)

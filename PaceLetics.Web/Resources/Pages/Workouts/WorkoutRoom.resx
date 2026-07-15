@@ -10,4 +10,5 @@
   <data name="LeaveWorkoutConfirm" xml:space="preserve"><value>Your current progress will be reset. Do you want to exit the workout?</value></data>
   <data name="WorkoutTitle" xml:space="preserve"><value>Workout</value></data>
   <data name="BackToWorkouts" xml:space="preserve"><value>Back to workouts</value></data>
+  <data name="AchievementUpdateFailed" xml:space="preserve"><value>The workout was completed, but achievements could not be updated.</value></data>
 </root>

@@ -67,4 +67,5 @@
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="Save" xml:space="preserve"><value>Save</value></data>
   <data name="SaveSuccess" xml:space="preserve"><value>Workout catalog saved.</value></data>
+  <data name="ShowMore" xml:space="preserve"><value>Show {0} more</value></data>
 </root>

@@ -13,18 +13,25 @@ public sealed class CosmosRunningAnalysisRepository :
 {
     private readonly IDataAccess _db;
     private readonly AthleteDataOptions _options;
+    private readonly TimeProvider _timeProvider;
 
-    public CosmosRunningAnalysisRepository(IDataAccess db, AthleteDataOptions options)
+    public CosmosRunningAnalysisRepository(IDataAccess db, AthleteDataOptions options, TimeProvider? timeProvider = null)
     {
         _db = db;
         _options = options;
+        _timeProvider = timeProvider ?? TimeProvider.System;
         _options.Validate();
     }
 
     public async Task<RunningAnalysisCaptureSession?> GetCaptureSessionAsync(string captureSessionId, CancellationToken cancellationToken = default)
     {
-        var captureSessions = await LoadAllAsync<RunningAnalysisCaptureSession>(RunningAnalysisDocumentTypes.CaptureSession);
-        var captureSession = captureSessions.FirstOrDefault(captureSession => captureSession.Id == captureSessionId);
+        var captureSession = (await QueryAsync<RunningAnalysisCaptureSession>(
+            "SELECT TOP 1 * FROM c WHERE c.documentType = @documentType AND c.id = @id",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.CaptureSession,
+                ["@id"] = captureSessionId
+            }, cancellationToken)).FirstOrDefault();
         if (captureSession is not null)
             return captureSession;
 
@@ -34,8 +41,13 @@ public sealed class CosmosRunningAnalysisRepository :
 
     public async Task<RunningAnalysisCaptureSession?> GetCaptureSessionByExternalEventIdAsync(string externalEventId, CancellationToken cancellationToken = default)
     {
-        var captureSessions = await LoadAllAsync<RunningAnalysisCaptureSession>(RunningAnalysisDocumentTypes.CaptureSession);
-        var captureSession = captureSessions.FirstOrDefault(captureSession => captureSession.ExternalEventId == externalEventId);
+        var captureSession = (await QueryAsync<RunningAnalysisCaptureSession>(
+            "SELECT TOP 1 * FROM c WHERE c.documentType = @documentType AND c.externalEventId = @externalEventId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.CaptureSession,
+                ["@externalEventId"] = externalEventId
+            }, cancellationToken)).FirstOrDefault();
         if (captureSession is not null)
             return captureSession;
 
@@ -83,7 +95,13 @@ public sealed class CosmosRunningAnalysisRepository :
 
     public async Task<IReadOnlyList<RunningAnalysisParticipant>> GetParticipantsAsync(string analysisEventId, CancellationToken cancellationToken = default)
     {
-        var participants = await LoadAllAsync<RunningAnalysisParticipant>(RunningAnalysisDocumentTypes.Participant);
+        var participants = await QueryAsync<RunningAnalysisParticipant>(
+            "SELECT * FROM c WHERE c.documentType = @documentType AND (c.captureSessionId = @sessionId OR c.analysisEventId = @sessionId)",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.Participant,
+                ["@sessionId"] = analysisEventId
+            }, cancellationToken);
         return participants
             .Where(participant => GetParticipantCaptureSessionId(participant) == analysisEventId)
             .OrderBy(participant => participant.SortOrder)
@@ -93,10 +111,13 @@ public sealed class CosmosRunningAnalysisRepository :
 
     public async Task<IReadOnlyList<RunningAnalysisParticipant>> GetParticipantsForAthleteAsync(string athleteUserId, CancellationToken cancellationToken = default)
     {
-        var participants = await LoadAllAsync<RunningAnalysisParticipant>(RunningAnalysisDocumentTypes.Participant);
-        return participants
-            .Where(participant => participant.AthleteUserId == athleteUserId)
-            .ToList();
+        return await QueryAsync<RunningAnalysisParticipant>(
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.athleteUserId = @athleteUserId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.Participant,
+                ["@athleteUserId"] = athleteUserId
+            }, cancellationToken);
     }
 
     public async Task<RunningAnalysisParticipant?> GetParticipantAsync(string analysisEventId, string athleteUserId, CancellationToken cancellationToken = default)
@@ -107,8 +128,13 @@ public sealed class CosmosRunningAnalysisRepository :
 
     public async Task<RunningAnalysisParticipant?> GetParticipantByIdAsync(string participantId, CancellationToken cancellationToken = default)
     {
-        var participants = await LoadAllAsync<RunningAnalysisParticipant>(RunningAnalysisDocumentTypes.Participant);
-        return participants.FirstOrDefault(participant => participant.Id == participantId);
+        return (await QueryAsync<RunningAnalysisParticipant>(
+            "SELECT TOP 1 * FROM c WHERE c.documentType = @documentType AND c.id = @id",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.Participant,
+                ["@id"] = participantId
+            }, cancellationToken)).FirstOrDefault();
     }
 
     public Task UpsertParticipantAsync(RunningAnalysisParticipant participant, CancellationToken cancellationToken = default)
@@ -122,7 +148,13 @@ public sealed class CosmosRunningAnalysisRepository :
 
     public async Task<IReadOnlyList<RunningAnalysisRecording>> GetRecordingsForParticipantAsync(string participantId, CancellationToken cancellationToken = default)
     {
-        var recordings = await LoadAllAsync<RunningAnalysisRecording>(RunningAnalysisDocumentTypes.Recording);
+        var recordings = await QueryAsync<RunningAnalysisRecording>(
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.participantId = @participantId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.Recording,
+                ["@participantId"] = participantId
+            }, cancellationToken);
         return recordings
             .Where(recording => recording.ParticipantId == participantId)
             .OrderBy(recording => recording.AttemptNumber)
@@ -152,7 +184,14 @@ public sealed class CosmosRunningAnalysisRepository :
         string participantId,
         CancellationToken cancellationToken = default)
     {
-        var results = await LoadAllAsync<RunningAnalysisResult>(RunningAnalysisDocumentTypes.Result);
+        var results = await QueryAsync<RunningAnalysisResult>(
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.captureSessionId = @captureSessionId AND c.participantId = @participantId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.Result,
+                ["@captureSessionId"] = captureSessionId,
+                ["@participantId"] = participantId
+            }, cancellationToken);
         return results
             .OrderByDescending(result => result.UpdatedAt)
             .FirstOrDefault(result =>
@@ -164,7 +203,13 @@ public sealed class CosmosRunningAnalysisRepository :
         string athleteUserId,
         CancellationToken cancellationToken = default)
     {
-        var results = await LoadAllAsync<RunningAnalysisResult>(RunningAnalysisDocumentTypes.Result);
+        var results = await QueryAsync<RunningAnalysisResult>(
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.athleteUserId = @athleteUserId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = RunningAnalysisDocumentTypes.Result,
+                ["@athleteUserId"] = athleteUserId
+            }, cancellationToken);
         return results
             .Where(result => result.AthleteUserId == athleteUserId)
             .OrderByDescending(result => result.AnalyzedAt ?? result.UpdatedAt)
@@ -219,7 +264,7 @@ public sealed class CosmosRunningAnalysisRepository :
             Email = request.Email,
             FolderId = request.FolderId,
             FolderUrl = request.FolderUrl,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = _timeProvider.GetUtcNow().UtcDateTime
         };
 
         return _db.UpsertItem(
@@ -258,7 +303,7 @@ public sealed class CosmosRunningAnalysisRepository :
             Email = request.Email,
             FolderId = request.FolderId,
             FolderUrl = request.FolderUrl,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = _timeProvider.GetUtcNow().UtcDateTime
         };
 
         return _db.UpsertItem(
@@ -282,6 +327,19 @@ public sealed class CosmosRunningAnalysisRepository :
     private Task<List<T>> LoadAllAsync<T>(string documentType)
     {
         return _db.LoadData<T>(_options.DatabaseName, _options.CourseContainerName, documentType);
+    }
+
+    private Task<List<T>> QueryAsync<T>(
+        string queryText,
+        IReadOnlyDictionary<string, object?> parameters,
+        CancellationToken cancellationToken)
+    {
+        return _db.QueryData<T>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            queryText,
+            parameters,
+            cancellationToken: cancellationToken);
     }
 
     private static T WithDocumentType<T>(T item, string documentType)

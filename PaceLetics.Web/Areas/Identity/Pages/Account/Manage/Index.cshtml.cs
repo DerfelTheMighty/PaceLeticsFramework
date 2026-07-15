@@ -300,12 +300,7 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account.Manage
         private async Task<bool> PublicUserNameExistsAsync(string publicUserName, string exceptUserId)
         {
             var normalizedPublicUserName = NormalizePublicUserName(publicUserName);
-            var athletes = await _athleteData.GetAthletes();
-
-            return athletes.Any(athlete =>
-                athlete.Id != exceptUserId
-                && athlete.PublicProfile is not null
-                && athlete.PublicProfile.NormalizedPublicUserName == normalizedPublicUserName);
+            return await _athleteData.PublicUserNameExists(normalizedPublicUserName, exceptUserId);
         }
 
         private static PublicProfileModel CreateDefaultPublicProfile(string userName, IList<string> roles)

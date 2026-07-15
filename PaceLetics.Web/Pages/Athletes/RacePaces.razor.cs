@@ -1,11 +1,11 @@
 
 using MudBlazor;
-using MudBlazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using PaceLetics.AthleteModule.CodeBase.Models;
 using PaceLetics.AthleteModule.Components;
 using PaceLetics.CoreModule.Infrastructure.Interfaces;
 using PaceLetics.CoreModule.Infrastructure.Models;
+using PaceLetics.Web.Services;
 
 namespace PaceLetics.Web.Pages.Athletes
 {

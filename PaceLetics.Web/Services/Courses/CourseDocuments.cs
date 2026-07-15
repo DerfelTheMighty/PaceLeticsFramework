@@ -88,9 +88,10 @@ public static class CourseLevelFormatting
     }
 }
 
-public sealed class CourseDocument : IQueryItem
+public sealed class CourseDocument : IVersionedQueryItem
 {
     public string Id { get; set; } = string.Empty;
+    public string? ETag { get; set; }
     public string CourseId { get; set; } = string.Empty;
     public string DocumentType { get; set; } = CourseDocumentTypes.Course;
     public string Slug { get; set; } = string.Empty;
@@ -219,9 +220,10 @@ public sealed class CourseEnrollmentDocument : IQueryItem
     public DateTime? CancelledAt { get; set; }
 }
 
-public sealed class CourseEventDocument : IQueryItem
+public sealed class CourseEventDocument : IVersionedQueryItem
 {
     public string Id { get; set; } = string.Empty;
+    public string? ETag { get; set; }
     public string CourseId { get; set; } = string.Empty;
     public string DocumentType { get; set; } = CourseDocumentTypes.Event;
     public string EventType { get; set; } = CourseEventTypes.General;
@@ -275,9 +277,10 @@ public static class GroupMembershipStatus
     public const string Rejected = "rejected";
 }
 
-public sealed class GroupDocument : IQueryItem
+public sealed class GroupDocument : IVersionedQueryItem
 {
     public string Id { get; set; } = string.Empty;
+    public string? ETag { get; set; }
     public string GroupId { get; set; } = string.Empty;
     public string DocumentType { get; set; } = CourseDocumentTypes.Group;
     public string Slug { get; set; } = string.Empty;

@@ -10,4 +10,5 @@
   <data name="LeaveWorkoutConfirm" xml:space="preserve"><value>Dein aktueller Fortschritt wird zurückgesetzt. Möchtest du das Workout verlassen?</value></data>
   <data name="WorkoutTitle" xml:space="preserve"><value>Workout</value></data>
   <data name="BackToWorkouts" xml:space="preserve"><value>Zurück zu den Workouts</value></data>
+  <data name="AchievementUpdateFailed" xml:space="preserve"><value>Das Workout wurde abgeschlossen, aber Achievements konnten nicht aktualisiert werden.</value></data>
 </root>

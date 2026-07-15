@@ -9,17 +9,20 @@ public sealed class CourseService : ICourseService
     private readonly IGroupService _groupService;
     private readonly IStringLocalizer<CourseService>? _localizer;
     private readonly ICourseRunningAnalysisRegistrationAdapter? _runningAnalysisRegistrationAdapter;
+    private readonly TimeProvider _timeProvider;
 
     public CourseService(
         ICourseRepository repository,
         IGroupService? groupService = null,
         IStringLocalizer<CourseService>? localizer = null,
-        ICourseRunningAnalysisRegistrationAdapter? runningAnalysisRegistrationAdapter = null)
+        ICourseRunningAnalysisRegistrationAdapter? runningAnalysisRegistrationAdapter = null,
+        TimeProvider? timeProvider = null)
     {
         _repository = repository;
         _groupService = groupService ?? NullGroupService.Instance;
         _localizer = localizer;
         _runningAnalysisRegistrationAdapter = runningAnalysisRegistrationAdapter;
+        _timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public async Task<IReadOnlyList<CourseOverview>> GetCoursesForAthleteAsync(string athleteUserId)
@@ -70,7 +73,7 @@ public sealed class CourseService : ICourseService
 
     public async Task<IReadOnlyList<string>> GetPublishedTrainingPlanIdsForAthleteAsync(string athleteUserId)
     {
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var joinedCourses = await GetJoinedCoursesAsync(athleteUserId);
         var planIds = await _groupService.GetVisibleTrainingPlanIdsForAthleteAsync(athleteUserId, joinedCourses);
         var legacyPlanIds = joinedCourses
@@ -110,7 +113,7 @@ public sealed class CourseService : ICourseService
             throw new InvalidOperationException(Text("CreateCourseEndBeforeStart", "The course end date cannot be before the start date."));
 
         var courseId = CreateCourseId(request.Name);
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var course = new CourseDocument
         {
             Id = courseId,
@@ -143,6 +146,11 @@ public sealed class CourseService : ICourseService
 
         await _repository.UpsertCourseAsync(course);
         return course;
+    }
+
+    public Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsForAthleteAsync(string athleteUserId)
+    {
+        return _repository.GetEventRegistrationsForAthleteAsync(athleteUserId);
     }
 
     public async Task UpdateCourseVisibilityAsync(string courseId, FeedTarget visibilityTarget, string requestingTrainerUserId)
@@ -180,14 +188,14 @@ public sealed class CourseService : ICourseService
         {
             CourseId = course.Id,
             AthleteUserId = athleteUserId,
-            RegisteredAt = DateTime.UtcNow
+            RegisteredAt = _timeProvider.GetUtcNow().UtcDateTime
         };
 
         enrollment.Status = CourseEnrollmentStatus.Active;
         enrollment.CancelledAt = null;
 
         if (enrollment.RegisteredAt == default)
-            enrollment.RegisteredAt = DateTime.UtcNow;
+            enrollment.RegisteredAt = _timeProvider.GetUtcNow().UtcDateTime;
 
         await _repository.UpsertEnrollmentAsync(enrollment);
         return enrollment;
@@ -204,7 +212,7 @@ public sealed class CourseService : ICourseService
         var enrollment = await _repository.GetEnrollmentAsync(course.Id, athleteUserId)
             ?? throw new InvalidOperationException(Text("LeaveCourseNotJoined", "You have not joined this course."));
 
-        var cancelledAt = DateTime.UtcNow;
+        var cancelledAt = _timeProvider.GetUtcNow().UtcDateTime;
         enrollment.Status = CourseEnrollmentStatus.Cancelled;
         enrollment.CancelledAt = cancelledAt;
 
@@ -361,7 +369,7 @@ public sealed class CourseService : ICourseService
             course.TrainingPlanPublications.Add(new CourseTrainingPlanPublicationDocument
             {
                 TrainingPlanId = trainingPlanId,
-                PublishedAt = DateTime.UtcNow,
+                PublishedAt = _timeProvider.GetUtcNow().UtcDateTime,
                 PublishedByUserId = publishedByUserId,
                 VisibleFrom = visibleFrom,
                 Target = courseTarget
@@ -427,7 +435,7 @@ public sealed class CourseService : ICourseService
             TargetValue = request.TargetValue,
             Unit = request.Unit?.Trim() ?? string.Empty,
             CreatedByUserId = requestingTrainerUserId,
-            CreatedAt = DateTime.UtcNow,
+            CreatedAt = _timeProvider.GetUtcNow().UtcDateTime,
             IsPublished = request.IsPublished
         };
 
@@ -458,7 +466,7 @@ public sealed class CourseService : ICourseService
 
     public async Task<IReadOnlyList<CourseChallengeDocument>> GetChallengesForAthleteAsync(string athleteUserId)
     {
-        var today = DateTime.UtcNow.Date;
+        var today = _timeProvider.GetUtcNow().UtcDateTime.Date;
         var joinedCourses = await GetJoinedCoursesAsync(athleteUserId);
 
         return joinedCourses
@@ -509,7 +517,7 @@ public sealed class CourseService : ICourseService
             Capacity = capacity,
             RegistrationDeadline = registrationDeadline,
             CreatedByUserId = createdByUserId,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = _timeProvider.GetUtcNow().UtcDateTime
         };
 
         await _repository.UpsertEventAsync(courseEvent);
@@ -574,7 +582,7 @@ public sealed class CourseService : ICourseService
         var courseEvent = await _repository.GetEventAsync(courseId, eventId)
             ?? throw new InvalidOperationException(Text("EventNotFound", "The event was not found."));
 
-        if (courseEvent.RegistrationDeadline is not null && courseEvent.RegistrationDeadline < DateTime.UtcNow)
+        if (courseEvent.RegistrationDeadline is not null && courseEvent.RegistrationDeadline < _timeProvider.GetUtcNow().UtcDateTime)
             throw new InvalidOperationException(Text("RegisterEventDeadlinePassed", "The registration deadline for this event has passed."));
 
         var registrations = await _repository.GetEventRegistrationsAsync(courseId, eventId);
@@ -594,14 +602,14 @@ public sealed class CourseService : ICourseService
                 CourseId = courseId,
                 EventId = eventId,
                 AthleteUserId = athleteUserId,
-                RegisteredAt = DateTime.UtcNow
+                RegisteredAt = _timeProvider.GetUtcNow().UtcDateTime
             };
 
         registration.Status = CourseEventRegistrationStatus.Registered;
         registration.CancelledAt = null;
 
         if (registration.RegisteredAt == default)
-            registration.RegisteredAt = DateTime.UtcNow;
+            registration.RegisteredAt = _timeProvider.GetUtcNow().UtcDateTime;
 
         await _repository.UpsertEventRegistrationAsync(registration);
         await NotifyRunningAnalysisRegistrationAsync(courseEvent, registration);
@@ -623,7 +631,7 @@ public sealed class CourseService : ICourseService
             throw new InvalidOperationException(Text("CancelEventNotRegistered", "You are not registered for this event."));
 
         registration.Status = CourseEventRegistrationStatus.Cancelled;
-        registration.CancelledAt = DateTime.UtcNow;
+        registration.CancelledAt = _timeProvider.GetUtcNow().UtcDateTime;
 
         await _repository.UpsertEventRegistrationAsync(registration);
         return registration;

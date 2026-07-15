@@ -12,11 +12,19 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <typeparam name="T"></typeparam>
         /// <param name="sql"></param>
         /// <returns></returns>
-        Task<List<T>> LoadData<T>(string cosmosDb, string container);
+        Task<List<T>> LoadData<T>(string cosmosDb, string container, CancellationToken cancellationToken = default);
 
-        Task<List<T>> LoadData<T>(string cosmosDb, string container, string documentType);
+        Task<List<T>> LoadData<T>(string cosmosDb, string container, string documentType, CancellationToken cancellationToken = default);
 
-        Task<List<T>> LoadPartitionData<T>(string cosmosDb, string container, string partitionKeyValue, string documentType);
+        Task<List<T>> LoadPartitionData<T>(string cosmosDb, string container, string partitionKeyValue, string documentType, CancellationToken cancellationToken = default);
+
+        Task<List<T>> QueryData<T>(
+            string cosmosDb,
+            string container,
+            string queryText,
+            IReadOnlyDictionary<string, object?> parameters,
+            string? partitionKeyValue = null,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 
@@ -27,9 +35,9 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="container"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task<T?> LoadItem<T>(string cosmosDb, string container, string id) where T : IQueryItem;
+        Task<T?> LoadItem<T>(string cosmosDb, string container, string id, CancellationToken cancellationToken = default) where T : IQueryItem;
 
-        Task<T?> LoadItem<T>(string cosmosDb, string container, string id, string partitionKeyValue) where T : IQueryItem;
+        Task<T?> LoadItem<T>(string cosmosDb, string container, string id, string partitionKeyValue, CancellationToken cancellationToken = default) where T : IQueryItem;
 
 
         /// <summary>
@@ -39,9 +47,16 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="container"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task DeleteItem<T>(string cosmosDb, string container, string id);
+        Task DeleteItem<T>(string cosmosDb, string container, string id, CancellationToken cancellationToken = default);
 
-        Task DeleteItem<T>(string cosmosDb, string container, string id, string partitionKeyValue);
+        Task DeleteItem<T>(string cosmosDb, string container, string id, string partitionKeyValue, CancellationToken cancellationToken = default);
+
+        Task DeleteItems(
+            string cosmosDb,
+            string container,
+            IReadOnlyCollection<string> ids,
+            string partitionKeyValue,
+            CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -52,9 +67,9 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="containerId"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task UpsertItem<T>(string cosmosDb, string containerId, T parameter);
+        Task UpsertItem<T>(string cosmosDb, string containerId, T parameter, CancellationToken cancellationToken = default);
 
-        Task UpsertItem<T>(string cosmosDb, string containerId, T parameter, string partitionKeyValue);
+        Task UpsertItem<T>(string cosmosDb, string containerId, T parameter, string partitionKeyValue, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -65,6 +80,6 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <param name="containerId"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task SaveData<T>(string cosmosDb, string containerId, T parameter);
+        Task SaveData<T>(string cosmosDb, string containerId, T parameter, CancellationToken cancellationToken = default);
     }
 }

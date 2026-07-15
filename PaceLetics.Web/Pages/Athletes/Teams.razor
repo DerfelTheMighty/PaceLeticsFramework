@@ -2,33 +2,34 @@
 @attribute [Authorize]
 @using PaceLetics.Web.Pages
 @inject NavigationManager Navigation
+@inject IStringLocalizer<Teams> L
 
-<PageTitle>Teams</PageTitle>
+<PageTitle>@L["Title"]</PageTitle>
 
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Small">
-    <PageHeader Title="Teams" Subtitle="Gruppen, Trainingspartner und Profile" />
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
 
-    <nav class="pl-section-nav" aria-label="Teams">
+    <nav class="pl-section-nav" aria-label="@L["Title"]">
         <button type="button"
                 class="@GetSectionButtonClass(TeamsSection.Groups)"
                 aria-pressed="@(_activeSection == TeamsSection.Groups)"
                 @onclick="@(() => SelectSection(TeamsSection.Groups))">
             <MudIcon Icon="@Icons.Material.Filled.Groups" Size="Size.Small" />
-            <span>Gruppen</span>
+            <span>@L["Groups"]</span>
         </button>
         <button type="button"
                 class="@GetSectionButtonClass(TeamsSection.PaceMate)"
                 aria-pressed="@(_activeSection == TeamsSection.PaceMate)"
                 @onclick="@(() => SelectSection(TeamsSection.PaceMate))">
             <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Small" />
-            <span>PaceMate</span>
+            <span>@L["PaceMate"]</span>
         </button>
         <button type="button"
                 class="@GetSectionButtonClass(TeamsSection.Profiles)"
                 aria-pressed="@(_activeSection == TeamsSection.Profiles)"
                 @onclick="@(() => SelectSection(TeamsSection.Profiles))">
             <MudIcon Icon="@Icons.Material.Filled.AccountCircle" Size="Size.Small" />
-            <span>Profile</span>
+            <span>@L["Profiles"]</span>
         </button>
     </nav>
 

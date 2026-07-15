@@ -6,8 +6,22 @@
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            <LoggingErrorBoundary @key="routeData.PageType">
+                <ChildContent>
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                    <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                </ChildContent>
+                <ErrorContent Context="exception">
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <MudContainer MaxWidth="MaxWidth.Small" Class="pt-8 px-4">
+                            <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">
+                                @L["GenericError"]
+                                <a href="" class="ml-2">@L["Reload"]</a>
+                            </MudAlert>
+                        </MudContainer>
+                    </LayoutView>
+                </ErrorContent>
+            </LoggingErrorBoundary>
         </Found>
         <NotFound>
             <PageTitle>@L["NotFoundTitle"]</PageTitle>

@@ -13,9 +13,11 @@
 
     <!-- Bild gross -->
     <div style="height:260px; max-width:520px; margin:16px auto; display:flex; align-items:center; justify-content:center;">
-        <MudImage Src="@GetImagePath(Exercise?.ImageFilename)"
-                  Alt="@Exercise?.Name"
-                  Style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block;" />
+        <img src="@GetImagePath(Exercise?.ImageFilename)"
+             alt="@Exercise?.Name"
+             loading="lazy"
+             decoding="async"
+             style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block;" />
     </div>
 
     <!-- Description -->
@@ -38,8 +40,10 @@
     [Parameter] public IExerciseInfo? Exercise { get; set; }
     [Parameter] public EventCallback OnOpenDetails { get; set; }
     
-    private string GetImagePath(string imagefile)
+    private static string GetImagePath(string? imagefile)
     {
-        return "images/exercises/" + imagefile;
+        return string.IsNullOrWhiteSpace(imagefile)
+            ? "images/exercises/plank_base.png"
+            : "images/exercises/" + imagefile;
     }
 }

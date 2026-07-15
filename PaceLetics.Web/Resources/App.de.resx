@@ -12,4 +12,5 @@
   <data name="Public_Privacy" xml:space="preserve"><value>Datenschutz</value></data>
   <data name="Retry" xml:space="preserve"><value>Erneut versuchen</value></data>
   <data name="GenericError" xml:space="preserve"><value>Etwas ist schiefgelaufen. Bitte versuche es erneut.</value></data>
+  <data name="Reload" xml:space="preserve"><value>Neu laden</value></data>
 </root>

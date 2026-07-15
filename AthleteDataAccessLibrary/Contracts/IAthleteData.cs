@@ -12,6 +12,23 @@ namespace AthleteDataAccessLibrary.Contracts
         /// <returns></returns>
         Task<List<AthleteModel>> GetAthletes();
 
+        async Task<List<AthleteModel>> GetPublicAthletes()
+        {
+            return (await GetAthletes())
+                .Where(athlete => athlete.PublicProfile?.IsProfileVisible == true)
+                .ToList();
+        }
+
+        async Task<bool> PublicUserNameExists(string normalizedPublicUserName, string? exceptUserId = null)
+        {
+            return (await GetAthletes()).Any(athlete =>
+                !string.Equals(athlete.Id, exceptUserId, StringComparison.Ordinal)
+                && string.Equals(
+                    athlete.PublicProfile?.NormalizedPublicUserName,
+                    normalizedPublicUserName,
+                    StringComparison.Ordinal));
+        }
+
         /// <summary>
         /// Inserts a new athlete model to the database
         /// </summary>

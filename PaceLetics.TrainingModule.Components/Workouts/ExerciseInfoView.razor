@@ -2,9 +2,6 @@
 @using MudBlazor
 @using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
 @using PaceLetics.TrainingModule.CodeBase.Workouts.Enums
-@using MudBlazor.Extensions.Components.ObjectEdit.Options
-@using MudBlazor.Extensions;
-
 @namespace PaceLetics.TrainingModule.Components.Workouts
 
 @inject IStringLocalizer<WorkoutResources> L
@@ -74,7 +71,11 @@
                 <MudStack AlignItems="AlignItems.Center">
                     <MudText Typo="Typo.body1">@Exercise.Description</MudText>
                     <div class="d-flex" style="height:100%">
-                        <MudImage Fluid="true" Src="@GetImagePath(Exercise.ImageFilename)" Alt="@Exercise.Id" Class="rounded-lg" />
+                        <img src="@GetImagePath(Exercise.ImageFilename)"
+                             alt="@Exercise.Name"
+                             loading="lazy"
+                             decoding="async"
+                             class="exercise-image rounded-lg" />
                     </div>
                     <MudStack Spacing="1">
                         <MudText><b>@L["ExerciseInfo_Duration"]</b> @Exercise.Duration Sekunden</MudText>
@@ -108,5 +109,11 @@ else
     .exercise-card {
         padding: 20px;
         margin: 20px;
+    }
+
+    .exercise-image {
+        display: block;
+        width: 100%;
+        height: auto;
     }
 </style>

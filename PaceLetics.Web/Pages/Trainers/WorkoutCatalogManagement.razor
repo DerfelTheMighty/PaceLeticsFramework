@@ -214,7 +214,7 @@
                         }
                         else
                         {
-                            @foreach (var exercise in exercises)
+                            @foreach (var exercise in exercises.Take(_visibleItemCount))
                             {
                                 var issues = GetIssueKeys(exercise);
                                 <MudPaper Elevation="1"
@@ -253,6 +253,12 @@
                                     </MudStack>
                                 </MudPaper>
                             }
+                            @if (exercises.Count > _visibleItemCount)
+                            {
+                                <MudButton Variant="Variant.Outlined" FullWidth="true" OnClick="ShowMoreItems">
+                                    @string.Format(L["ShowMore"], Math.Min(PageSize, exercises.Count - _visibleItemCount))
+                                </MudButton>
+                            }
                         }
                     }
                     else
@@ -264,7 +270,7 @@
                         }
                         else
                         {
-                            @foreach (var workout in workouts)
+                            @foreach (var workout in workouts.Take(_visibleItemCount))
                             {
                                 var issues = GetIssueKeys(workout);
                                 <MudPaper Elevation="1"
@@ -302,6 +308,12 @@
                                         }
                                     </MudStack>
                                 </MudPaper>
+                            }
+                            @if (workouts.Count > _visibleItemCount)
+                            {
+                                <MudButton Variant="Variant.Outlined" FullWidth="true" OnClick="ShowMoreItems">
+                                    @string.Format(L["ShowMore"], Math.Min(PageSize, workouts.Count - _visibleItemCount))
+                                </MudButton>
                             }
                         }
                     }
@@ -502,6 +514,8 @@
     private CatalogEditorModel? _editor;
     private string? _trainerUserId;
     private bool _isSaving;
+    private const int PageSize = 30;
+    private int _visibleItemCount = PageSize;
 
     private WorkoutCatalogDocument Catalog => CatalogService.Catalog;
 
@@ -658,6 +672,7 @@
     private Task OnSearchChanged(string search)
     {
         _search = search ?? string.Empty;
+        _visibleItemCount = PageSize;
         EnsureSelection();
         return Task.CompletedTask;
     }
@@ -665,12 +680,19 @@
     private void SelectSection(CatalogSection section)
     {
         _section = section;
+        _visibleItemCount = PageSize;
         EnsureSelection();
+    }
+
+    private void ShowMoreItems()
+    {
+        _visibleItemCount += PageSize;
     }
 
     private void ToggleMissingFilter()
     {
         _missingOnly = !_missingOnly;
+        _visibleItemCount = PageSize;
         EnsureSelection();
     }
 

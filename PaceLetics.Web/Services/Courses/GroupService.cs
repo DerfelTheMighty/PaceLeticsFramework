@@ -7,11 +7,13 @@ public sealed class GroupService : IGroupService
 {
     private readonly IGroupRepository _repository;
     private readonly IStringLocalizer<GroupService>? _localizer;
+    private readonly TimeProvider _timeProvider;
 
-    public GroupService(IGroupRepository repository, IStringLocalizer<GroupService>? localizer = null)
+    public GroupService(IGroupRepository repository, IStringLocalizer<GroupService>? localizer = null, TimeProvider? timeProvider = null)
     {
         _repository = repository;
         _localizer = localizer;
+        _timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public async Task<IReadOnlyList<GroupOverview>> GetGroupsForAthleteAsync(string athleteUserId)
@@ -92,7 +94,7 @@ public sealed class GroupService : IGroupService
             Description = request.Description?.Trim() ?? string.Empty,
             CreatedByTrainerUserId = trainerUserId,
             CreatedByDisplayName = NormalizeDisplayName(trainerDisplayName, trainerUserId),
-            CreatedAt = DateTime.UtcNow,
+            CreatedAt = _timeProvider.GetUtcNow().UtcDateTime,
             IsPublished = request.IsPublished,
             JoinMode = NormalizeJoinMode(request.JoinMode)
         };
@@ -136,7 +138,7 @@ public sealed class GroupService : IGroupService
         if (!group.IsPublished)
             throw new InvalidOperationException(Text("GroupNotAvailable", "This group is not available."));
 
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var membership = await _repository.GetMembershipAsync(group.Id, athleteUserId)
             ?? new GroupMembershipDocument
             {
@@ -179,7 +181,7 @@ public sealed class GroupService : IGroupService
             ?? throw new InvalidOperationException(Text("GroupMembershipNotFound", "You are not a member of this group."));
 
         membership.Status = GroupMembershipStatus.Cancelled;
-        membership.CancelledAt = DateTime.UtcNow;
+        membership.CancelledAt = _timeProvider.GetUtcNow().UtcDateTime;
 
         await _repository.UpsertMembershipAsync(membership);
         return membership;
@@ -192,7 +194,7 @@ public sealed class GroupService : IGroupService
             ?? throw new InvalidOperationException(Text("GroupMembershipNotFound", "The membership request was not found."));
 
         membership.Status = GroupMembershipStatus.Active;
-        membership.ApprovedAt = DateTime.UtcNow;
+        membership.ApprovedAt = _timeProvider.GetUtcNow().UtcDateTime;
         membership.ApprovedByTrainerUserId = requestingTrainerUserId;
         membership.CancelledAt = null;
         membership.RejectedAt = null;
@@ -209,7 +211,7 @@ public sealed class GroupService : IGroupService
             ?? throw new InvalidOperationException(Text("GroupMembershipNotFound", "The membership request was not found."));
 
         membership.Status = GroupMembershipStatus.Rejected;
-        membership.RejectedAt = DateTime.UtcNow;
+        membership.RejectedAt = _timeProvider.GetUtcNow().UtcDateTime;
         membership.RejectedByTrainerUserId = requestingTrainerUserId;
         membership.ApprovedAt = null;
         membership.ApprovedByTrainerUserId = string.Empty;
@@ -248,7 +250,7 @@ public sealed class GroupService : IGroupService
         {
             TrainingPlanId = trainingPlanId.Trim(),
             Target = normalizedTarget,
-            PublishedAt = DateTime.UtcNow,
+            PublishedAt = _timeProvider.GetUtcNow().UtcDateTime,
             PublishedByUserId = publishedByUserId,
             VisibleFrom = visibleFrom,
             VisibleUntil = visibleUntil
@@ -280,7 +282,7 @@ public sealed class GroupService : IGroupService
         string athleteUserId,
         IReadOnlyList<CourseDocument> joinedCourses)
     {
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var activeGroupIds = (await GetActiveGroupIdsForAthleteAsync(athleteUserId))
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var joinedCourseIds = joinedCourses

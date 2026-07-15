@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PaceLetics.Web.Areas.Identity;
 using PaceLetics.Web.Data;
-using MudBlazor.Extensions;
 using MudBlazor;
+using MudBlazor.Services;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Services;
 using PaceLetics.TrainingModule.CodeBase.Running.Interfaces;
@@ -46,6 +46,11 @@ using PaceLetics.Web.Localization;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Interfaces;
 using PaceLetics.RunningAnalysisModule.CodeBase.RunningAnalysis.Services;
 using PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using PaceLetics.Web.Services.Health;
+using PaceLetics.Web.Services.TrainingPlans;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,10 +70,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(
 	options => 
 	{
-		options.SignIn.RequireConfirmedAccount = false;
-		options.SignIn.RequireConfirmedEmail = false;
+		options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue("IdentitySecurity:RequireConfirmedEmail", false);
+		options.SignIn.RequireConfirmedEmail = options.SignIn.RequireConfirmedAccount;
 		options.Password.RequireNonAlphanumeric = false;
-		options.User.RequireUniqueEmail = false;
+		options.User.RequireUniqueEmail = true;
 		options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     } )
     .AddRoles<IdentityRole>()
@@ -82,6 +87,32 @@ builder.Services.AddRazorPages()
             factory.Create(modelType.DeclaringType ?? modelType);
     });
 builder.Services.AddServerSideBlazor();
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        ["application/octet-stream", "image/svg+xml"]);
+});
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+    {
+        if (!context.Request.Path.StartsWithSegments("/Identity/Account", StringComparison.OrdinalIgnoreCase))
+            return RateLimitPartition.GetNoLimiter("non-identity");
+
+        var clientKey = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        return RateLimitPartition.GetFixedWindowLimiter(
+            clientKey,
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 30,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0,
+                AutoReplenishment = true
+            });
+    });
+});
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
 var webRootPath = !string.IsNullOrWhiteSpace(builder.Environment.WebRootPath)
     ? builder.Environment.WebRootPath
@@ -106,7 +137,10 @@ builder.Services.AddSingleton<ITrainingPlanDefinitionValidator>(x =>
 builder.Services.AddSingleton<ITrainingPlanFactory>(x => new TrainingPlanFactory(
     x.GetRequiredService<IRunningSessionFactory>(),
     validator: x.GetRequiredService<ITrainingPlanDefinitionValidator>()));
-builder.Services.AddScoped<ITrainingPlanRepository>(_ => new JsonTrainingPlanRepository(trainingPlansPath));
+builder.Services.AddSingleton(_ => new JsonTrainingPlanRepository(trainingPlansPath));
+builder.Services.AddSingleton<CosmosTrainingPlanRepository>();
+builder.Services.AddSingleton<ITrainingPlanRepository>(x => x.GetRequiredService<CosmosTrainingPlanRepository>());
+builder.Services.AddHostedService<CosmosTrainingPlanRepository>(x => x.GetRequiredService<CosmosTrainingPlanRepository>());
 builder.Services.AddScoped<IRunningSessionRepository>(_ => new JsonRunningSessionRepository(legacyRunningSessionsPath));
 builder.Services.AddScoped<WorkoutAreaViewModel>();
 builder.Services.AddScoped<SelectDifficultyViewModel>();
@@ -116,7 +150,12 @@ builder.Services.AddSingleton<WorkoutCatalogManagementService>();
 builder.Services.AddHostedService<WorkoutCatalogStartupLoader>();
 builder.Services.AddSingleton<AthleteModelFactory>();
 builder.Services.AddSingleton(builder.Configuration.GetAthleteDataOptions());
-builder.Services.AddTransient<IDataAccess>(x => new DataAccess(nonSqlConnectionString));
+builder.Services.AddSingleton(_ => DataAccess.CreateClient(nonSqlConnectionString));
+builder.Services.AddSingleton<IDataAccess, DataAccess>();
+builder.Services.AddSingleton(new SqlDatabaseHealthCheck(sqlConnectionString));
+builder.Services.AddHealthChecks()
+    .AddCheck<SqlDatabaseHealthCheck>("sql", tags: ["ready"])
+    .AddCheck<CosmosDatabaseHealthCheck>("cosmos", tags: ["ready"]);
 builder.Services.AddTransient<IAthleteData, AthleteData>();
 builder.Services.AddScoped<IAthleteService, AthleteService>();
 builder.Services.AddSingleton<ICriticalSpeedService, CriticalSpeedService>();
@@ -131,7 +170,21 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 builder.Services.AddHttpContextAccessor();
-builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection(SmtpOptions.SectionName));
+builder.Services.AddOptions<SmtpOptions>()
+    .Bind(builder.Configuration.GetSection(SmtpOptions.SectionName))
+    .Validate(options =>
+    {
+        try
+        {
+            options.Validate();
+            return true;
+        }
+        catch (InvalidOperationException)
+        {
+            return false;
+        }
+    }, "SMTP host, port and sender must be configured.")
+    .ValidateOnStart();
 builder.Services.Configure<TrainerVerificationOptions>(options =>
 {
     builder.Configuration.GetSection(TrainerVerificationOptions.SectionName).Bind(options);
@@ -146,23 +199,27 @@ builder.Services.AddScoped<ICourseRepository>(x => x.GetRequiredService<CosmosCo
 builder.Services.AddScoped<IGroupRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.AddScoped<IMateRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.AddHostedService<CourseSeedStartupLoader>();
-builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
-{
-    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
-    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.FlatSectionName).Bind(options);
-    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName).Bind(options);
-});
+builder.Services.AddOptions<GoogleDriveRunningAnalysisOptions>()
+    .Configure(options =>
+    {
+        builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
+        builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.FlatSectionName).Bind(options);
+        builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName).Bind(options);
+    })
+    .Validate(options => options.HasValidCredentialShape(),
+        "Google Drive OAuth credentials must either all be configured or all be empty.")
+    .ValidateOnStart();
 builder.Services.AddScoped<CosmosRunningAnalysisRepository>();
 builder.Services.AddScoped<IRunningAnalysisRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddScoped<IUserDriveFolderRegistry>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddScoped<IUserDriveFolderRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddSingleton<IRunningAnalysisClock, SystemRunningAnalysisClock>();
-builder.Services.AddScoped<IRunningAnalysisStorageProvider>(x =>
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddScoped<GoogleDriveRunningAnalysisStorageProvider>(x =>
     new GoogleDriveRunningAnalysisStorageProvider(
         x.GetRequiredService<IOptions<GoogleDriveRunningAnalysisOptions>>().Value));
-builder.Services.AddScoped<IUserDriveFolderStorageProvider>(x =>
-    new GoogleDriveRunningAnalysisStorageProvider(
-        x.GetRequiredService<IOptions<GoogleDriveRunningAnalysisOptions>>().Value));
+builder.Services.AddScoped<IRunningAnalysisStorageProvider>(x => x.GetRequiredService<GoogleDriveRunningAnalysisStorageProvider>());
+builder.Services.AddScoped<IUserDriveFolderStorageProvider>(x => x.GetRequiredService<GoogleDriveRunningAnalysisStorageProvider>());
 builder.Services.AddScoped<IRunningAnalysisService, RunningAnalysisService>();
 builder.Services.AddScoped<IUserDriveFolderService, UserDriveFolderService>();
 builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunningAnalysisRegistrationAdapter>();
@@ -180,6 +237,7 @@ builder.Services.AddScoped<IArticleRepository>(x => new MarkdownArticleRepositor
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IMateService, MateService>();
 builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
+builder.Services.AddScoped<IProfileImageStore, CosmosProfileImageStore>();
 builder.Services.AddScoped<ThemePreferenceService>();
 builder.Services.AddScoped<LoadingStateService>();
 builder.Services.AddScoped<AcademyInfoService>();
@@ -192,15 +250,7 @@ builder.Services.AddScoped<IAthleteMessageFeedService, AthleteMessageFeedService
 builder.Services.AddScoped<IAthleteMessageFeedStateStore, CosmosAthleteMessageFeedStateStore>();
 
 
-//builder.Services.AddMudServices();
-//builder.Services.AddMudExtensions();
-builder.Services.AddMudServicesWithExtensions(c =>
-{
-    c.WithDefaultDialogOptions(ex =>
-    {
-        ex.Position = DialogPosition.BottomRight;
-    });
-});
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 
@@ -220,9 +270,19 @@ else
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+app.UseResponseCompression();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = context =>
+    {
+        var extension = Path.GetExtension(context.File.Name);
+        if (extension is ".css" or ".js" or ".png" or ".jpg" or ".jpeg" or ".gif" or ".svg" or ".webp" or ".woff" or ".woff2" or ".wav")
+            context.Context.Response.Headers.CacheControl = "public,max-age=604800";
+    }
+});
 
 app.UseRouting();
+app.UseRateLimiter();
 
 var requestLocalizationOptions = new RequestLocalizationOptions()
     .SetDefaultCulture("de")
@@ -239,6 +299,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCookiePolicy();
 app.MapRazorPages();
+app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => false });
+app.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });
+app.MapGet("/profile-images/{id}", async (
+    string id,
+    IProfileImageStore store,
+    HttpContext context,
+    CancellationToken cancellationToken) =>
+{
+    var image = await store.GetAsync(id, cancellationToken);
+    if (image is null)
+        return Results.NotFound();
+
+    context.Response.Headers.CacheControl = "private,max-age=31536000,immutable";
+    return Results.File(image.Content, image.ContentType);
+}).RequireAuthorization();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
@@ -249,7 +324,6 @@ static async Task SeedIdentityRolesAsync(IServiceProvider services)
     using var scope = services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("IdentityRoleSeed");
 
     try
@@ -265,15 +339,6 @@ static async Task SeedIdentityRolesAsync(IServiceProvider services)
             if (!await roleManager.RoleExistsAsync(roleName))
             {
                 await roleManager.CreateAsync(new IdentityRole(roleName));
-            }
-        }
-
-        var users = await userManager.Users.ToListAsync();
-        foreach (var user in users)
-        {
-            if (!await userManager.IsInRoleAsync(user, ApplicationRoles.Athlete))
-            {
-                await userManager.AddToRoleAsync(user, ApplicationRoles.Athlete);
             }
         }
     }

@@ -7,6 +7,8 @@ namespace PaceLetics.Web.Services.Courses;
 
 public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository, IMateRepository
 {
+    private static readonly SemaphoreSlim SeedGate = new(1, 1);
+    private static volatile bool _defaultsEnsured;
     private readonly IDataAccess _db;
     private readonly AthleteDataOptions _options;
 
@@ -34,7 +36,6 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
 
     public async Task<CourseDocument?> GetCourseAsync(string courseId)
     {
-        await EnsureDefaultCoursesAsync();
         return await _db.LoadItem<CourseDocument>(
             _options.DatabaseName,
             _options.CourseContainerName,
@@ -65,38 +66,16 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
             courseId,
             CourseDocumentTypes.Enrollment);
 
-        foreach (var availability in mateAvailabilities)
-            await _db.DeleteItem<MateAvailabilityDocument>(
-                _options.DatabaseName,
-                _options.CourseContainerName,
-                availability.Id,
-                courseId);
-
-        foreach (var registration in registrations)
-            await _db.DeleteItem<CourseEventRegistrationDocument>(
-                _options.DatabaseName,
-                _options.CourseContainerName,
-                registration.Id,
-                courseId);
-
-        foreach (var courseEvent in events)
-            await _db.DeleteItem<CourseEventDocument>(
-                _options.DatabaseName,
-                _options.CourseContainerName,
-                courseEvent.Id,
-                courseId);
-
-        foreach (var enrollment in enrollments)
-            await _db.DeleteItem<CourseEnrollmentDocument>(
-                _options.DatabaseName,
-                _options.CourseContainerName,
-                enrollment.Id,
-                courseId);
-
-        await _db.DeleteItem<CourseDocument>(
+        var ids = mateAvailabilities.Select(item => item.Id)
+            .Concat(registrations.Select(item => item.Id))
+            .Concat(events.Select(item => item.Id))
+            .Concat(enrollments.Select(item => item.Id))
+            .Append(courseId)
+            .ToList();
+        await _db.DeleteItems(
             _options.DatabaseName,
             _options.CourseContainerName,
-            courseId,
+            ids,
             courseId);
     }
 
@@ -105,14 +84,17 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
         if (string.IsNullOrWhiteSpace(athleteUserId))
             return Array.Empty<CourseEnrollmentDocument>();
 
-        var enrollments = await _db.LoadData<CourseEnrollmentDocument>(
+        var enrollments = await _db.QueryData<CourseEnrollmentDocument>(
             _options.DatabaseName,
             _options.CourseContainerName,
-            CourseDocumentTypes.Enrollment);
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.athleteUserId = @athleteUserId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = CourseDocumentTypes.Enrollment,
+                ["@athleteUserId"] = athleteUserId
+            });
 
-        return enrollments
-            .Where(enrollment => enrollment.AthleteUserId == athleteUserId)
-            .ToList();
+        return enrollments;
     }
 
     public async Task<IReadOnlyList<CourseEnrollmentDocument>> GetEnrollmentsForCourseAsync(string courseId)
@@ -183,19 +165,10 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
     {
         var registrations = await GetEventRegistrationsAsync(courseId, eventId);
 
-        foreach (var registration in registrations)
-        {
-            await _db.DeleteItem<CourseEventRegistrationDocument>(
-                _options.DatabaseName,
-                _options.CourseContainerName,
-                registration.Id,
-                courseId);
-        }
-
-        await _db.DeleteItem<CourseEventDocument>(
+        await _db.DeleteItems(
             _options.DatabaseName,
             _options.CourseContainerName,
-            eventId,
+            registrations.Select(item => item.Id).Append(eventId).ToList(),
             courseId);
     }
 
@@ -241,14 +214,17 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
         if (string.IsNullOrWhiteSpace(athleteUserId))
             return Array.Empty<MateAvailabilityDocument>();
 
-        var availabilities = await _db.LoadData<MateAvailabilityDocument>(
+        var availabilities = await _db.QueryData<MateAvailabilityDocument>(
             _options.DatabaseName,
             _options.CourseContainerName,
-            CourseDocumentTypes.MateAvailability);
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.athleteUserId = @athleteUserId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = CourseDocumentTypes.MateAvailability,
+                ["@athleteUserId"] = athleteUserId
+            });
 
-        return availabilities
-            .Where(availability => availability.AthleteUserId == athleteUserId)
-            .ToList();
+        return availabilities;
     }
 
     public Task<MateAvailabilityDocument?> GetMateAvailabilityAsync(string courseId, string availabilityId)
@@ -288,6 +264,22 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
             courseId);
     }
 
+    public async Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsForAthleteAsync(string athleteUserId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteUserId))
+            return Array.Empty<CourseEventRegistrationDocument>();
+
+        return await _db.QueryData<CourseEventRegistrationDocument>(
+            _options.DatabaseName,
+            _options.CourseContainerName,
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.athleteUserId = @athleteUserId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = CourseDocumentTypes.EventRegistration,
+                ["@athleteUserId"] = athleteUserId
+            });
+    }
+
     public async Task<IReadOnlyList<GroupDocument>> GetGroupsAsync()
     {
         var groups = await _db.LoadData<GroupDocument>(
@@ -323,19 +315,10 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
     public async Task DeleteGroupAsync(string groupId)
     {
         var memberships = await GetMembershipsForGroupAsync(groupId);
-        foreach (var membership in memberships)
-        {
-            await _db.DeleteItem<GroupMembershipDocument>(
-                _options.DatabaseName,
-                _options.CourseContainerName,
-                membership.Id,
-                groupId);
-        }
-
-        await _db.DeleteItem<GroupDocument>(
+        await _db.DeleteItems(
             _options.DatabaseName,
             _options.CourseContainerName,
-            groupId,
+            memberships.Select(item => item.Id).Append(groupId).ToList(),
             groupId);
     }
 
@@ -344,14 +327,17 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
         if (string.IsNullOrWhiteSpace(athleteUserId))
             return Array.Empty<GroupMembershipDocument>();
 
-        var memberships = await _db.LoadData<GroupMembershipDocument>(
+        var memberships = await _db.QueryData<GroupMembershipDocument>(
             _options.DatabaseName,
             _options.CourseContainerName,
-            CourseDocumentTypes.GroupMembership);
+            "SELECT * FROM c WHERE c.documentType = @documentType AND c.athleteUserId = @athleteUserId",
+            new Dictionary<string, object?>
+            {
+                ["@documentType"] = CourseDocumentTypes.GroupMembership,
+                ["@athleteUserId"] = athleteUserId
+            });
 
-        return memberships
-            .Where(membership => string.Equals(membership.AthleteUserId, athleteUserId, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        return memberships;
     }
 
     public Task<IReadOnlyList<GroupMembershipDocument>> GetMembershipsForGroupAsync(string groupId)
@@ -408,6 +394,15 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
 
     private async Task EnsureDefaultCoursesAsync()
     {
+        if (_defaultsEnsured)
+            return;
+
+        await SeedGate.WaitAsync();
+        try
+        {
+            if (_defaultsEnsured)
+                return;
+
         var existingCourses = await _db.LoadData<CourseDocument>(
             _options.DatabaseName,
             _options.CourseContainerName,
@@ -430,6 +425,13 @@ public sealed class CosmosCourseRepository : ICourseRepository, IGroupRepository
 
             if (ApplySeedCourseUpdates(existingCourse, seedCourse))
                 await UpsertCourseAsync(existingCourse);
+        }
+
+            _defaultsEnsured = true;
+        }
+        finally
+        {
+            SeedGate.Release();
         }
     }
 

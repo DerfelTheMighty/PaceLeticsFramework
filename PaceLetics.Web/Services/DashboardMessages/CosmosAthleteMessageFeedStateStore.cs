@@ -7,11 +7,13 @@ public sealed class CosmosAthleteMessageFeedStateStore : IAthleteMessageFeedStat
 {
     private readonly IDataAccess _db;
     private readonly AthleteDataOptions _options;
+    private readonly TimeProvider _timeProvider;
 
-    public CosmosAthleteMessageFeedStateStore(IDataAccess db, AthleteDataOptions options)
+    public CosmosAthleteMessageFeedStateStore(IDataAccess db, AthleteDataOptions options, TimeProvider? timeProvider = null)
     {
         _db = db;
         _options = options;
+        _timeProvider = timeProvider ?? TimeProvider.System;
         _options.Validate();
     }
 
@@ -37,7 +39,7 @@ public sealed class CosmosAthleteMessageFeedStateStore : IAthleteMessageFeedStat
     {
         ArgumentNullException.ThrowIfNull(state);
         state.Normalize();
-        state.UpdatedAt = DateTime.UtcNow;
+        state.UpdatedAt = _timeProvider.GetUtcNow().UtcDateTime;
 
         return _db.UpsertItem(
             _options.DatabaseName,

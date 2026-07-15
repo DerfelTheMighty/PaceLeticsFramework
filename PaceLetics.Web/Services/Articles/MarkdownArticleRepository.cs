@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Collections.Concurrent;
 using Markdig;
 using PaceLetics.TrainingModule.CodeBase.Workouts.Models;
 using PaceLetics.Web.Services.Localization;
@@ -7,6 +8,7 @@ namespace PaceLetics.Web.Services.Articles;
 
 public sealed class MarkdownArticleRepository : IArticleRepository
 {
+    private static readonly ConcurrentDictionary<string, IReadOnlyList<Article>> Cache = new(StringComparer.Ordinal);
     private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
         .UseAdvancedExtensions()
         .Build();
@@ -22,7 +24,14 @@ public sealed class MarkdownArticleRepository : IArticleRepository
 
     public IReadOnlyList<Article> GetArticles()
     {
-        var cultureNames = GetCultureFallbacks(_appCulture?.CurrentCulture ?? CultureInfo.CurrentUICulture).ToList();
+        var culture = _appCulture?.CurrentCulture ?? CultureInfo.CurrentUICulture;
+        var cacheKey = $"{_academyContentRoot}|{culture.Name}";
+        return Cache.GetOrAdd(cacheKey, _ => LoadArticles(culture));
+    }
+
+    private IReadOnlyList<Article> LoadArticles(CultureInfo culture)
+    {
+        var cultureNames = GetCultureFallbacks(culture).ToList();
         var articleIds = cultureNames
             .Select(cultureName => Path.Combine(_academyContentRoot, cultureName))
             .Where(Directory.Exists)

@@ -1,6 +1,6 @@
 namespace PaceLetics.Web.Services.Workouts;
 
-public sealed class WorkoutCatalogStartupLoader : IHostedService
+public sealed class WorkoutCatalogStartupLoader : BackgroundService
 {
     private readonly WorkoutCatalogManagementService _catalogService;
     private readonly ILogger<WorkoutCatalogStartupLoader> _logger;
@@ -13,13 +13,7 @@ public sealed class WorkoutCatalogStartupLoader : IHostedService
         _logger = logger;
     }
 
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        _ = LoadCatalogAsync();
-        return Task.CompletedTask;
-    }
-
-    private async Task LoadCatalogAsync()
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
@@ -33,8 +27,4 @@ public sealed class WorkoutCatalogStartupLoader : IHostedService
         }
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
-    }
 }

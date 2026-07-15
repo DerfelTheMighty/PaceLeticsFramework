@@ -7,13 +7,16 @@ public sealed class AchievementService : IAchievementService
 {
     private readonly IAchievementRepository _repository;
     private readonly ITrainingPlanService? _trainingPlanService;
+    private readonly TimeProvider _timeProvider;
 
     public AchievementService(
         IAchievementRepository repository,
-        ITrainingPlanService? trainingPlanService = null)
+        ITrainingPlanService? trainingPlanService = null,
+        TimeProvider? timeProvider = null)
     {
         _repository = repository;
         _trainingPlanService = trainingPlanService;
+        _timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public async Task<IReadOnlyList<AchievementDefinitionDocument>> GetDefinitionsAsync(bool includeUnpublished = false)
@@ -50,7 +53,7 @@ public sealed class AchievementService : IAchievementService
         if (request.Rules.Count == 0)
             throw new InvalidOperationException("Ein Achievement braucht mindestens eine Regel.");
 
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var existing = string.IsNullOrWhiteSpace(request.Id)
             ? null
             : await _repository.GetDefinitionAsync(request.Id);
@@ -133,7 +136,7 @@ public sealed class AchievementService : IAchievementService
             return new AchievementEvaluationResult(Array.Empty<AthleteAchievementDocument>());
         }
 
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var completion = existing ?? new TrainingSessionCompletionDocument
         {
             AthleteUserId = athleteUserId,
@@ -173,7 +176,7 @@ public sealed class AchievementService : IAchievementService
         {
             AthleteUserId = athleteUserId,
             EventType = AchievementEventTypes.WorkoutCompleted,
-            OccurredAt = DateTime.UtcNow,
+            OccurredAt = _timeProvider.GetUtcNow().UtcDateTime,
             WorkoutId = workoutId,
             WorkoutName = workoutName
         };
@@ -221,7 +224,7 @@ public sealed class AchievementService : IAchievementService
                 AthleteUserId = athleteUserId,
                 AchievementDefinitionId = definition.Id,
                 DefinitionVersion = definition.Version,
-                AwardedAt = DateTime.UtcNow,
+                AwardedAt = _timeProvider.GetUtcNow().UtcDateTime,
                 TitleSnapshot = definition.Title,
                 DescriptionSnapshot = definition.Description,
                 IconSnapshot = definition.Icon.Snapshot(),

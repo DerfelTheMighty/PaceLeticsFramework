@@ -20,6 +20,35 @@ namespace AthleteDataAccessLibrary
 			return _db.LoadData<AthleteModel>(_options.DatabaseName, _options.AthleteContainerName);
 		}
 
+		public Task<List<AthleteModel>> GetPublicAthletes()
+		{
+			return _db.QueryData<AthleteModel>(
+				_options.DatabaseName,
+				_options.AthleteContainerName,
+				"SELECT * FROM c WHERE c.publicProfile.isProfileVisible = true",
+				new Dictionary<string, object?>());
+		}
+
+		public async Task<bool> PublicUserNameExists(string normalizedPublicUserName, string? exceptUserId = null)
+		{
+			var query = string.IsNullOrWhiteSpace(exceptUserId)
+				? "SELECT TOP 1 VALUE c.id FROM c WHERE c.publicProfile.normalizedPublicUserName = @name"
+				: "SELECT TOP 1 VALUE c.id FROM c WHERE c.publicProfile.normalizedPublicUserName = @name AND c.id != @exceptUserId";
+			var parameters = new Dictionary<string, object?>
+			{
+				["@name"] = normalizedPublicUserName
+			};
+			if (!string.IsNullOrWhiteSpace(exceptUserId))
+				parameters["@exceptUserId"] = exceptUserId;
+
+			var matches = await _db.QueryData<string>(
+				_options.DatabaseName,
+				_options.AthleteContainerName,
+				query,
+				parameters);
+			return matches.Count > 0;
+		}
+
 		
 		public Task InsertAthlete(AthleteModel model)
 		{

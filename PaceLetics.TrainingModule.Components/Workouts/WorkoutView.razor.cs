@@ -46,10 +46,10 @@ namespace PaceLetics.TrainingModule.Components.Workouts
             el.StateChangedEvent -= OnElementStateChanged;
         }
 
-		private async void OnElementStart(IWorkoutElement el)
+		private void OnElementStart(IWorkoutElement el)
         {
             el.StateChangedEvent += OnElementStateChanged;
-            await InvokeAsync(() =>
+            _ = InvokeAsync(() =>
             {
 				_currentExercise = Workout.CurrentExercise;
 				_elementType = el.Type;		
@@ -57,9 +57,9 @@ namespace PaceLetics.TrainingModule.Components.Workouts
 			});
 		}
 
-        private async void OnElementStateChanged(ExerciseState state) 
+        private void OnElementStateChanged(ExerciseState state)
         {
-			await InvokeAsync(() =>
+			_ = InvokeAsync(() =>
 			{
                 _exerciseState = state;
                 if (_exerciseState == ExerciseState.Pause || _exerciseState == ExerciseState.Stop)
@@ -74,17 +74,17 @@ namespace PaceLetics.TrainingModule.Components.Workouts
 			});
 		}
 
-        private async void OnWorkoutFinished() 
+        private void OnWorkoutFinished()
         {
-            await InvokeAsync(() =>
+            _ = InvokeAsync(() =>
             {
                 _allowSlide = true;
             });
         }
 
-        private async void OnWorkoutStart() 
+        private void OnWorkoutStart()
         {
-            await InvokeAsync(() =>
+            _ = InvokeAsync(() =>
             {
                 _allowSlide = false;
             });

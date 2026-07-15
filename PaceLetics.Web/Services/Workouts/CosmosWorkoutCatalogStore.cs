@@ -10,11 +10,13 @@ public sealed class CosmosWorkoutCatalogStore : IWorkoutCatalogStore
 
     private readonly IDataAccess _db;
     private readonly AthleteDataOptions _options;
+    private readonly TimeProvider _timeProvider;
 
-    public CosmosWorkoutCatalogStore(IDataAccess db, AthleteDataOptions options)
+    public CosmosWorkoutCatalogStore(IDataAccess db, AthleteDataOptions options, TimeProvider? timeProvider = null)
     {
         _db = db;
         _options = options;
+        _timeProvider = timeProvider ?? TimeProvider.System;
         _options.Validate();
     }
 
@@ -29,7 +31,7 @@ public sealed class CosmosWorkoutCatalogStore : IWorkoutCatalogStore
             return document.Catalog;
         }
 
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         document = WorkoutCatalogStoreDocument.Create(Locale, seedCatalog, now);
         await SaveDocumentAsync(document);
         return document.Catalog;
@@ -39,7 +41,7 @@ public sealed class CosmosWorkoutCatalogStore : IWorkoutCatalogStore
     {
         ArgumentNullException.ThrowIfNull(catalog);
 
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var existing = await LoadDocumentAsync();
         var document = WorkoutCatalogStoreDocument.Create(Locale, catalog, now);
         document.CreatedAt = existing?.CreatedAt ?? now;

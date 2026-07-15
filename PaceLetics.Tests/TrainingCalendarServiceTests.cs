@@ -245,6 +245,12 @@ public sealed class TrainingCalendarServiceTests
                 && registration.AthleteUserId == athleteUserId));
         }
 
+        public Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsForAthleteAsync(string athleteUserId)
+        {
+            return Task.FromResult<IReadOnlyList<CourseEventRegistrationDocument>>(
+                Registrations.Where(registration => registration.AthleteUserId == athleteUserId).ToList());
+        }
+
         public Task<IReadOnlyList<CourseOverview>> GetCoursesForAthleteAsync(string athleteUserId) => throw new NotSupportedException();
         public Task<IReadOnlyList<CourseDocument>> GetCoursesForTrainerAsync(string trainerUserId) => throw new NotSupportedException();
         public Task<IReadOnlyList<string>> GetPublishedTrainingPlanIdsForAthleteAsync(string athleteUserId) => throw new NotSupportedException();

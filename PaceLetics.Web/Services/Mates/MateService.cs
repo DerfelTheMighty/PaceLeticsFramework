@@ -24,17 +24,20 @@ public sealed class MateService : IMateService
     private readonly IMateRepository _mateRepository;
     private readonly ITrainingPlanService _trainingPlanService;
     private readonly IAthleteData _athleteData;
+    private readonly TimeProvider _timeProvider;
 
     public MateService(
         ICourseService courseService,
         IMateRepository mateRepository,
         ITrainingPlanService trainingPlanService,
-        IAthleteData athleteData)
+        IAthleteData athleteData,
+        TimeProvider? timeProvider = null)
     {
         _courseService = courseService;
         _mateRepository = mateRepository;
         _trainingPlanService = trainingPlanService;
         _athleteData = athleteData;
+        _timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public async Task<MateOverview> GetOverviewAsync(string? athleteUserId)
@@ -92,7 +95,7 @@ public sealed class MateService : IMateService
         var athlete = await _athleteData.GetAthlete(userId);
         var availabilityId = MateDocumentIds.Availability(course.Id, userId, plan.Id, session.Id);
         var existing = await _mateRepository.GetMateAvailabilityAsync(course.Id, availabilityId);
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var availability = CreateAvailability(
             course,
             plan,
@@ -162,7 +165,7 @@ public sealed class MateService : IMateService
             .ToList();
     }
 
-    private static IReadOnlyList<MateShareableSession> BuildShareableSessions(
+    private IReadOnlyList<MateShareableSession> BuildShareableSessions(
         IReadOnlyList<CourseDocument> joinedCourses,
         IReadOnlyList<TrainingPlan> visiblePlans,
         IReadOnlyList<MateAvailabilityDocument> ownAvailabilities)
@@ -180,7 +183,7 @@ public sealed class MateService : IMateService
                 if (!plansById.TryGetValue(planId, out var plan))
                     continue;
 
-                foreach (var session in plan.Sessions.Where(session => session.PrimaryRun is not null && session.Date.Date >= DateTime.Today))
+                foreach (var session in plan.Sessions.Where(session => session.PrimaryRun is not null && session.Date.Date >= LocalToday))
                 {
                     var snapshot = BuildRunSnapshot(session.PrimaryRun!, null);
                     var key = ShareKey(course.Id, plan.Id, session.Id);
@@ -293,7 +296,7 @@ public sealed class MateService : IMateService
         };
     }
 
-    private static bool IsCandidate(string athleteUserId, MateAvailabilityDocument own, MateAvailabilityDocument candidate)
+    private bool IsCandidate(string athleteUserId, MateAvailabilityDocument own, MateAvailabilityDocument candidate)
     {
         return IsActiveAndCurrent(candidate)
             && !string.Equals(candidate.AthleteUserId, athleteUserId, StringComparison.OrdinalIgnoreCase)
@@ -362,9 +365,9 @@ public sealed class MateService : IMateService
                 || paceModel.Repetition > TimeSpan.Zero);
     }
 
-    private static IReadOnlySet<string> GetVisiblePlanIds(CourseDocument course)
+    private IReadOnlySet<string> GetVisiblePlanIds(CourseDocument course)
     {
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         return course.TrainingPlanPublications
             .Where(publication => publication.IsVisibleInCourse(course.Id, now))
             .Select(publication => publication.TrainingPlanId)
@@ -372,10 +375,12 @@ public sealed class MateService : IMateService
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
     }
 
-    private static bool IsActiveAndCurrent(MateAvailabilityDocument availability)
+    private bool IsActiveAndCurrent(MateAvailabilityDocument availability)
     {
-        return availability.IsActive && GetEffectiveStart(availability).Date >= DateTime.Today;
+        return availability.IsActive && GetEffectiveStart(availability).Date >= LocalToday;
     }
+
+    private DateTime LocalToday => _timeProvider.GetLocalNow().Date;
 
     private static DateTime GetEffectiveStart(MateAvailabilityDocument availability)
     {

@@ -19,10 +19,20 @@ public sealed class ProfileImageService : IProfileImageService
     };
 
     private readonly IWebHostEnvironment _environment;
+    private readonly IProfileImageStore _store;
+    private readonly TimeProvider _timeProvider;
+    private readonly ILogger<ProfileImageService>? _logger;
 
-    public ProfileImageService(IWebHostEnvironment environment)
+    public ProfileImageService(
+        IWebHostEnvironment environment,
+        IProfileImageStore store,
+        TimeProvider? timeProvider = null,
+        ILogger<ProfileImageService>? logger = null)
     {
         _environment = environment;
+        _store = store;
+        _timeProvider = timeProvider ?? TimeProvider.System;
+        _logger = logger;
     }
 
     public async Task<ProfileImageSaveResult> SaveAsync(
@@ -33,11 +43,8 @@ public sealed class ProfileImageService : IProfileImageService
     {
         ValidateUpload(file);
 
-        var uploadRoot = GetUploadRoot();
-        Directory.CreateDirectory(uploadRoot);
-
-        var fileName = $"{SanitizeUserId(userId)}-{Guid.NewGuid():N}.webp";
-        var destinationPath = Path.Combine(uploadRoot, fileName);
+        var imageId = $"profile-image:{SanitizeUserId(userId)}:{Guid.NewGuid():N}";
+        byte[] content;
 
         try
         {
@@ -61,25 +68,37 @@ public sealed class ProfileImageService : IProfileImageService
                 .Crop(cropRectangle)
                 .Resize(outputSize, outputSize));
 
-            await image.SaveAsWebpAsync(
-                destinationPath,
-                new WebpEncoder { Quality = 82 },
-                cancellationToken);
+            await using var output = new MemoryStream();
+            await image.SaveAsWebpAsync(output, new WebpEncoder { Quality = 82 }, cancellationToken);
+            content = output.ToArray();
         }
         catch (ProfileImageException)
         {
-            DeleteFileIfExists(destinationPath);
             throw;
         }
         catch (Exception)
         {
-            DeleteFileIfExists(destinationPath);
             throw new ProfileImageException(ProfileImageError.InvalidImage);
         }
 
-        DeletePreviousLocalImage(previousImageUrl);
+        await _store.SaveAsync(new ProfileImageDocument
+        {
+            Id = imageId,
+            UserId = userId,
+            Content = content,
+            CreatedAt = _timeProvider.GetUtcNow().UtcDateTime
+        }, cancellationToken);
 
-        return new ProfileImageSaveResult($"/uploads/profile-images/{fileName}");
+        try
+        {
+            await DeletePreviousImageAsync(previousImageUrl, cancellationToken);
+        }
+        catch (Exception exception) when (!cancellationToken.IsCancellationRequested)
+        {
+            _logger?.LogWarning(exception, "The previous profile image could not be deleted after saving {ImageId}.", imageId);
+        }
+
+        return new ProfileImageSaveResult($"/profile-images/{Uri.EscapeDataString(imageId)}");
     }
 
     private static void ValidateUpload(IFormFile file)
@@ -131,6 +150,20 @@ public sealed class ProfileImageService : IProfileImageService
         }
 
         DeleteFileIfExists(path);
+    }
+
+    private async Task DeletePreviousImageAsync(string? previousImageUrl, CancellationToken cancellationToken)
+    {
+        if (!string.IsNullOrWhiteSpace(previousImageUrl)
+            && previousImageUrl.StartsWith("/profile-images/", StringComparison.OrdinalIgnoreCase))
+        {
+            var id = Uri.UnescapeDataString(previousImageUrl["/profile-images/".Length..]);
+            if (!string.IsNullOrWhiteSpace(id))
+                await _store.DeleteAsync(id, cancellationToken);
+            return;
+        }
+
+        DeletePreviousLocalImage(previousImageUrl);
     }
 
     private static void DeleteFileIfExists(string path)

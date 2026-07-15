@@ -7,13 +7,16 @@ public sealed class TrainingCalendarService : ITrainingCalendarService
 {
     private readonly ICourseService _courseService;
     private readonly ITrainingPlanService _trainingPlanService;
+    private readonly TimeProvider _timeProvider;
 
     public TrainingCalendarService(
         ICourseService courseService,
-        ITrainingPlanService trainingPlanService)
+        ITrainingPlanService trainingPlanService,
+        TimeProvider? timeProvider = null)
     {
         _courseService = courseService;
         _trainingPlanService = trainingPlanService;
+        _timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public async Task<IReadOnlyList<TrainingCalendarItem>> GetCalendarItemsForAthleteAsync(string athleteUserId)
@@ -21,9 +24,13 @@ public sealed class TrainingCalendarService : ITrainingCalendarService
         if (string.IsNullOrWhiteSpace(athleteUserId))
             return Array.Empty<TrainingCalendarItem>();
 
-        var now = DateTime.UtcNow;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
         var joinedCourses = await _courseService.GetJoinedCoursesAsync(athleteUserId);
         var plans = await _trainingPlanService.LoadTrainingPlansForUserAsync(athleteUserId);
+        var registrations = await _courseService.GetEventRegistrationsForAthleteAsync(athleteUserId);
+        var registrationByEventId = registrations
+            .GroupBy(registration => registration.EventId, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
         var courseNamesByPlanId = BuildCourseNamesByPlanId(joinedCourses, now);
         var items = new List<TrainingCalendarItem>();
 
@@ -74,10 +81,7 @@ public sealed class TrainingCalendarService : ITrainingCalendarService
             var courseEvents = await _courseService.GetEventsAsync(course.Id);
             foreach (var courseEvent in courseEvents)
             {
-                var registration = await _courseService.GetEventRegistrationForAthleteAsync(
-                    course.Id,
-                    courseEvent.Id,
-                    athleteUserId);
+                registrationByEventId.TryGetValue(courseEvent.Id, out var registration);
 
                 items.Add(new TrainingCalendarItem
                 {

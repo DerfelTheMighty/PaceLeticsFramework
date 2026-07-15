@@ -155,7 +155,6 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
                     
                     var userId = await _userManager.GetUserIdAsync(user);
-                    await _userManager.AddToRoleAsync(user, ApplicationRoles.Athlete);
                     var athlete = new AthleteModel
                     {
                         Id = userId,
@@ -173,7 +172,25 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                             PublicRole = ApplicationRoles.Athlete
                         }
                     };
-                    await _athleteData.InsertAthlete(athlete);
+
+                    try
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(user, ApplicationRoles.Athlete);
+                        if (!roleResult.Succeeded)
+                        {
+                            throw new InvalidOperationException(string.Join(", ", roleResult.Errors.Select(error => error.Description)));
+                        }
+
+                        await _athleteData.InsertAthlete(athlete);
+                    }
+                    catch (Exception ex)
+                    {
+                        await RollBackProvisioningAsync(user, userId);
+                        _logger.LogError(ex, "Account provisioning failed for user {UserId}; the partial account was rolled back.", userId);
+                        ModelState.AddModelError(string.Empty, _localizer["ProvisioningFailed"]);
+                        return Page();
+                    }
+
                     if (!string.IsNullOrWhiteSpace(email))
                     {
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -184,10 +201,24 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(
-                            email,
-                            _localizer["ConfirmEmailSubject"],
-                            string.Format(_localizer["ConfirmEmailBody"], HtmlEncoder.Default.Encode(callbackUrl)));
+                        try
+                        {
+                            await _emailSender.SendEmailAsync(
+                                email,
+                                _localizer["ConfirmEmailSubject"],
+                                string.Format(_localizer["ConfirmEmailBody"], HtmlEncoder.Default.Encode(callbackUrl)));
+                        }
+                        catch (Exception ex) when (!_userManager.Options.SignIn.RequireConfirmedAccount)
+                        {
+                            _logger.LogWarning(ex, "The account was created, but its confirmation email could not be sent for user {UserId}.", userId);
+                        }
+                        catch (Exception ex)
+                        {
+                            await RollBackProvisioningAsync(user, userId);
+                            _logger.LogError(ex, "Confirmation email delivery failed for user {UserId}; the account was rolled back.", userId);
+                            ModelState.AddModelError(string.Empty, _localizer["ConfirmationDeliveryFailed"]);
+                            return Page();
+                        }
                     }
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount && !string.IsNullOrWhiteSpace(email))
@@ -208,6 +239,27 @@ namespace PaceLetics.Web.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private async Task RollBackProvisioningAsync(ApplicationUser user, string userId)
+        {
+            try
+            {
+                await _athleteData.DeleteAthlete(userId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Could not remove the partial athlete document for user {UserId}.", userId);
+            }
+
+            var deleteResult = await _userManager.DeleteAsync(user);
+            if (!deleteResult.Succeeded)
+            {
+                _logger.LogError(
+                    "Could not remove the partial identity account for user {UserId}: {Errors}",
+                    userId,
+                    string.Join(", ", deleteResult.Errors.Select(error => error.Description)));
+            }
         }
 
         private ApplicationUser CreateUser()

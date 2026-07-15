@@ -48,4 +48,10 @@
   <data name="ValidationPasswordMatch" xml:space="preserve">
     <value>Passwort und Passwortbestätigung stimmen nicht überein.</value>
   </data>
+  <data name="ProvisioningFailed" xml:space="preserve">
+    <value>The account could not be created completely. Please try again.</value>
+  </data>
+  <data name="ConfirmationDeliveryFailed" xml:space="preserve">
+    <value>The confirmation email could not be sent. No account was created; please try again.</value>
+  </data>
 </root>

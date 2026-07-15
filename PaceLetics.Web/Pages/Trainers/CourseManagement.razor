@@ -87,8 +87,8 @@
                                        Label="Sichtbarkeit"
                                        @bind-Value="_courseVisibilityMode"
                                        Variant="Variant.Outlined">
-                                <MudSelectItem T="string" Value="@VisibilityModeGlobal">Alle</MudSelectItem>
-                                <MudSelectItem T="string" Value="@VisibilityModeGroup">Gruppe</MudSelectItem>
+                                <MudSelectItem T="string" Value="@VisibilityModeGlobal">@L["VisibilityGlobal"]</MudSelectItem>
+                                <MudSelectItem T="string" Value="@VisibilityModeGroup">@L["VisibilityGroup"]</MudSelectItem>
                             </MudSelect>
                         </MudItem>
                         @if (_courseVisibilityMode == VisibilityModeGroup)
@@ -191,8 +191,8 @@
                                                    ValueChanged="@((string value) => SetCourseVisibilityDraft(course.Id, value, null))"
                                                    Variant="Variant.Outlined"
                                                    Style="min-width:180px;">
-                                            <MudSelectItem T="string" Value="@VisibilityModeGlobal">Alle</MudSelectItem>
-                                            <MudSelectItem T="string" Value="@VisibilityModeGroup">Gruppe</MudSelectItem>
+                                            <MudSelectItem T="string" Value="@VisibilityModeGlobal">@L["VisibilityGlobal"]</MudSelectItem>
+                                            <MudSelectItem T="string" Value="@VisibilityModeGroup">@L["VisibilityGroup"]</MudSelectItem>
                                         </MudSelect>
                                         @if (GetCourseVisibilityDraftMode(course) == VisibilityModeGroup)
                                         {
@@ -925,6 +925,16 @@
         return Task.CompletedTask;
     }
 
+    private async Task ReloadCoursesAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        _courses = (await CourseService.GetCoursesForTrainerAsync(_userId)).ToList();
+        EnsureSelection();
+        await LoadSelectedCourseEventsAsync();
+    }
+
     private void SetCourseVisibilityDraft(string courseId, string mode, string? groupId)
     {
         var draft = GetCourseVisibilityDraft(courseId);
@@ -970,7 +980,7 @@
                 _userId ?? string.Empty);
 
             Snackbar.Add("Sichtbarkeit gespeichert.", Severity.Success);
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1014,7 +1024,7 @@
             _showCreateCourseForm = false;
             _selectedCourseId = course.Id;
             Navigation.NavigateTo($"/Trainers/courses?course={Uri.EscapeDataString(course.Id)}", replace: true);
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1033,7 +1043,7 @@
             await CourseService.DeleteCourseAsync(course.Id, _userId ?? string.Empty);
             Snackbar.Add(L["DeleteCourseSuccess"], Severity.Success);
             _selectedCourseId = null;
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1057,7 +1067,7 @@
 
             Snackbar.Add(L["AddTrainerSuccess"], Severity.Success);
             _selectedTrainerToAddId = null;
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1075,7 +1085,7 @@
         {
             await CourseService.RemoveTrainerAsync(course.Id, trainer.TrainerUserId, _userId ?? string.Empty);
             Snackbar.Add(L["RemoveTrainerSuccess"], Severity.Success);
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1094,7 +1104,7 @@
             await CourseService.RemoveTrainerAsync(course.Id, _userId ?? string.Empty, _userId ?? string.Empty);
             Snackbar.Add(L["LeaveTrainerSuccess"], Severity.Success);
             _selectedCourseId = null;
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1120,7 +1130,7 @@
 
             Snackbar.Add(L["AddDateSuccess"], Severity.Success);
             ResetDateForm();
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1138,7 +1148,7 @@
         {
             await CourseService.RemoveCourseDateAsync(course.Id, date.Id, _userId ?? string.Empty);
             Snackbar.Add(L["RemoveDateSuccess"], Severity.Success);
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1167,7 +1177,7 @@
 
             Snackbar.Add(L["AddEventSuccess"], Severity.Success);
             ResetEventForm();
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1185,7 +1195,7 @@
         {
             await CourseService.DeleteEventAsync(course.Id, courseEvent.Id, _userId ?? string.Empty);
             Snackbar.Add(L["DeleteEventSuccess"], Severity.Success);
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1228,7 +1238,7 @@
 
             Snackbar.Add(L["PublishPlanSuccess"], Severity.Success);
             _selectedTrainingPlanId = null;
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1340,7 +1350,7 @@
         {
             await CourseService.RemoveTrainingPlanPublicationAsync(course.Id, trainingPlanId, _userId ?? string.Empty);
             Snackbar.Add(L["RemovePlanSuccess"], Severity.Success);
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1369,7 +1379,7 @@
 
             Snackbar.Add(L["AddChallengeSuccess"], Severity.Success);
             ResetChallengeForm();
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {
@@ -1387,7 +1397,7 @@
         {
             await CourseService.RemoveChallengeAsync(course.Id, challenge.Id, _userId ?? string.Empty);
             Snackbar.Add(L["RemoveChallengeSuccess"], Severity.Success);
-            await LoadAsync();
+            await ReloadCoursesAsync();
         }
         catch (Exception ex)
         {

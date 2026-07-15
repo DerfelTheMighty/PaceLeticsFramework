@@ -26,4 +26,6 @@
   <data name="Loading" xml:space="preserve"><value>Loading running recordings</value></data>
   <data name="TrainerNotResolved" xml:space="preserve"><value>The coach could not be resolved.</value></data>
   <data name="EventDate" xml:space="preserve"><value>{0:MM/dd/yyyy HH:mm} to {1:HH:mm}</value></data>
+  <data name="Analyses" xml:space="preserve"><value>Analyses</value></data>
+  <data name="UploadQueue" xml:space="preserve"><value>Upload queue</value></data>
 </root>

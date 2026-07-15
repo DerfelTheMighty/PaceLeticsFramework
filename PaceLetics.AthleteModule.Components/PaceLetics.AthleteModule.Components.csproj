@@ -8,7 +8,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
     <PackageReference Include="Microsoft.Extensions.Localization" />
     <PackageReference Include="MudBlazor" />
-    <PackageReference Include="MudBlazor.Extensions" />
   </ItemGroup>
 
   <ItemGroup>

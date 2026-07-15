@@ -64,8 +64,8 @@
 
 @code {
 
-    [Parameter]
-    public WorkoutPreview Workout { get; set; }
+    [Parameter, EditorRequired]
+    public WorkoutPreview Workout { get; set; } = default!;
 
     private TimeSpan _cycleTime = new TimeSpan(0, 0, 5);
 

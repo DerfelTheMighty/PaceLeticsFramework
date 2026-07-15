@@ -31,7 +31,11 @@
                 <MudGrid>
                     <MudItem xs="12" md="4">
                         <MudPaper Class="pa-2" Style="display:flex;align-items:center;justify-content:center;">
-                            <MudImage Src="@ViewModel.PreviewImage" Alt="@Name" Style="width:100%;height:180px;object-fit:cover;border-radius:4px;" />
+                            <img src="@ViewModel.PreviewImage"
+                                 alt="@Name"
+                                 loading="lazy"
+                                 decoding="async"
+                                 style="width:100%;height:180px;object-fit:cover;border-radius:4px;" />
                         </MudPaper>
                     </MudItem>
                     <MudItem xs="12" md="8">

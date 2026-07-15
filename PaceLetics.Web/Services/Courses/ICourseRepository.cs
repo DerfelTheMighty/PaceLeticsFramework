@@ -28,6 +28,9 @@ public interface ICourseRepository
 
     Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsAsync(string courseId, string eventId);
 
+    Task<IReadOnlyList<CourseEventRegistrationDocument>> GetEventRegistrationsForAthleteAsync(string athleteUserId)
+        => Task.FromResult<IReadOnlyList<CourseEventRegistrationDocument>>(Array.Empty<CourseEventRegistrationDocument>());
+
     Task<CourseEventRegistrationDocument?> GetEventRegistrationAsync(string courseId, string eventId, string athleteUserId);
 
     Task UpsertEventRegistrationAsync(CourseEventRegistrationDocument registration);

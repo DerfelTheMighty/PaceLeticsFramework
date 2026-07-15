@@ -157,7 +157,7 @@
             _profileNotFound = false;
             _selectedProfile = null;
 
-            _profiles = (await AthleteData.GetAthletes())
+            _profiles = (await AthleteData.GetPublicAthletes())
                 .Select(athlete => athlete.PublicProfile)
                 .Where(profile => profile is not null
                     && profile.IsProfileVisible

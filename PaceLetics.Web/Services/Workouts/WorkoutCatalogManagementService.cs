@@ -11,16 +11,19 @@ public sealed class WorkoutCatalogManagementService
     private readonly IWorkoutCatalogValidator _validator;
     private readonly WorkoutCatalogDocument _catalog;
     private readonly SemaphoreSlim _gate = new(1, 1);
+    private readonly TimeProvider _timeProvider;
     private bool _isLoaded;
 
     public WorkoutCatalogManagementService(
         IWorkoutCatalogStore store,
         IWorkoutCatalogValidator validator,
-        WorkoutCatalogDocument catalog)
+        WorkoutCatalogDocument catalog,
+        TimeProvider? timeProvider = null)
     {
         _store = store;
         _validator = validator;
         _catalog = catalog;
+        _timeProvider = timeProvider ?? TimeProvider.System;
     }
 
     public WorkoutCatalogDocument Catalog => _catalog;
@@ -53,7 +56,7 @@ public sealed class WorkoutCatalogManagementService
         try
         {
             var candidate = CloneCatalog(_catalog);
-            var now = DateTime.UtcNow;
+            var now = _timeProvider.GetUtcNow().UtcDateTime;
             var ownerUserId = NormalizeOwner(trainerUserId);
             var normalized = CloneExercise(exercise);
             normalized.Id = NormalizeId(normalized.Id, normalized.Name);
@@ -97,7 +100,7 @@ public sealed class WorkoutCatalogManagementService
         try
         {
             var candidate = CloneCatalog(_catalog);
-            var now = DateTime.UtcNow;
+            var now = _timeProvider.GetUtcNow().UtcDateTime;
             var ownerUserId = NormalizeOwner(trainerUserId);
             var normalized = CloneWorkout(workout);
             normalized.Id = NormalizeId(normalized.Id, normalized.Name);
