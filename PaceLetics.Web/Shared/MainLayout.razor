@@ -35,6 +35,18 @@
         }
         <MudText Align="Align.Start" Class="pl-appbar-title">@GetAppBarTitle()</MudText>
         <MudSpacer />
+        <AuthorizeView>
+            <Authorized>
+                <MudTooltip Text="@NavL["Nav_MyDrive"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.FolderOpen"
+                                   Color="Color.Inherit"
+                                   Size="Size.Small"
+                                   Class="pl-topbar-quick-action"
+                                   Href="/Athletes/drive"
+                                   aria-label="@NavL["Nav_MyDrive"]" />
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
         <AthleteMessageFeedButton />
         <MudMenu Icon="@ThemePreferences.CurrentThemeDefinition.Icon"
                  Color="Color.Inherit"
