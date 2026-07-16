@@ -25,6 +25,20 @@ The remaining runtime settings live in `PaceLetics.Web/appsettings.json`:
 - `Smtp`: host, port, user, sender, and optional password fallback.
 - `AthleteData`: Cosmos database and athlete container names.
 
+### Strava
+
+Create an API application in the Strava developer settings and configure its authorization callback domain for the PaceLetics host. The OAuth callback route is `/integrations/strava/callback`.
+
+Keep the client secret out of committed configuration. For local development, either copy `PaceLetics.Web/appsettings.Local.example.json` to `appsettings.Local.json` or use user secrets:
+
+```powershell
+dotnet user-secrets set "Integrations:Strava:ClientId" "12345" --project PaceLetics.Web
+dotnet user-secrets set "Integrations:Strava:ClientSecret" "your-client-secret" --project PaceLetics.Web
+dotnet user-secrets set "Integrations:Strava:CallbackUrl" "https://localhost:5001/integrations/strava/callback" --project PaceLetics.Web
+```
+
+`CallbackUrl` can be omitted to derive it from the current request host. Set it explicitly behind a reverse proxy unless forwarded headers are configured. The first synchronization imports the previous 90 days by default; later synchronizations are incremental with a one-day overlap. Only running activity summaries are stored, without GPS tracks or route geometry.
+
 ## Local Quality Gate
 
 Run the same checks used by the quality workflow:

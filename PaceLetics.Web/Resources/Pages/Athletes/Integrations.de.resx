@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Integrationen</value></data>
+  <data name="Title" xml:space="preserve"><value>Integrationen</value></data>
+  <data name="Subtitle" xml:space="preserve"><value>Verbinde deine Trainingsdienste und halte Aktivitäten aktuell.</value></data>
+  <data name="Loading" xml:space="preserve"><value>Integrationen werden geladen</value></data>
+  <data name="NotConfigured" xml:space="preserve"><value>Strava ist für diese PaceLetics-Installation noch nicht konfiguriert.</value></data>
+  <data name="ConnectedAs" xml:space="preserve"><value>Verbunden als {0}</value></data>
+  <data name="YourAccount" xml:space="preserve"><value>dein Konto</value></data>
+  <data name="ConnectDescription" xml:space="preserve"><value>Importiere deine Laufaktivitäten in PaceLetics.</value></data>
+  <data name="ImportExplanation" xml:space="preserve"><value>PaceLetics fordert Lesezugriff auf deine Aktivitäten an. Routen und GPS-Tracks werden nicht gespeichert.</value></data>
+  <data name="StoredActivities" xml:space="preserve"><value>{0} Laufaktivitäten gespeichert</value></data>
+  <data name="SyncNow" xml:space="preserve"><value>Jetzt synchronisieren</value></data>
+  <data name="Disconnect" xml:space="preserve"><value>Trennen</value></data>
+  <data name="DisconnectConfirm" xml:space="preserve"><value>Strava trennen und alle importierten Strava-Aktivitäten aus PaceLetics löschen?</value></data>
+  <data name="DisconnectSuccess" xml:space="preserve"><value>Strava wurde getrennt und die importierten Daten wurden gelöscht.</value></data>
+  <data name="RecentActivities" xml:space="preserve"><value>Letzte Laufaktivitäten</value></data>
+  <data name="NoActivities" xml:space="preserve"><value>Noch keine Laufaktivitäten importiert.</value></data>
+  <data name="Distance" xml:space="preserve"><value>Distanz</value></data>
+  <data name="MovingTime" xml:space="preserve"><value>Bewegungszeit</value></data>
+  <data name="AveragePace" xml:space="preserve"><value>Durchschnittspace</value></data>
+  <data name="HeartRate" xml:space="preserve"><value>Herzfrequenz</value></data>
+  <data name="LastSync" xml:space="preserve"><value>Letzte Synchronisierung: {0:g}</value></data>
+  <data name="NotSyncedYet" xml:space="preserve"><value>Noch nicht synchronisiert</value></data>
+  <data name="SyncSuccess" xml:space="preserve"><value>Synchronisierung abgeschlossen: {0} Laufaktivitäten aktualisiert.</value></data>
+  <data name="RateLimitError" xml:space="preserve"><value>Das Strava-Anfragelimit ist erreicht. Bitte versuche es später erneut.</value></data>
+  <data name="AuthorizationError" xml:space="preserve"><value>Die Strava-Autorisierung ist abgelaufen. Bitte trenne und verbinde Strava erneut.</value></data>
+  <data name="SyncError" xml:space="preserve"><value>Die letzte Strava-Synchronisierung ist fehlgeschlagen.</value></data>
+  <data name="CallbackConnected" xml:space="preserve"><value>Strava wurde verbunden und deine Laufaktivitäten wurden synchronisiert.</value></data>
+  <data name="CallbackSyncFailed" xml:space="preserve"><value>Strava wurde verbunden, aber die erste Synchronisierung ist fehlgeschlagen. Du kannst sie hier erneut starten.</value></data>
+  <data name="CallbackDenied" xml:space="preserve"><value>Die Strava-Verbindung wurde abgebrochen. Es wurden keine Daten importiert.</value></data>
+  <data name="CallbackScope" xml:space="preserve"><value>Der Aktivitätszugriff wurde nicht freigegeben. Ohne diese Berechtigung kann PaceLetics keine Läufe synchronisieren.</value></data>
+  <data name="CallbackInvalidState" xml:space="preserve"><value>Die Strava-Verbindung konnte nicht verifiziert werden. Bitte starte sie erneut.</value></data>
+  <data name="CallbackError" xml:space="preserve"><value>Strava konnte nicht verbunden werden. Bitte versuche es erneut.</value></data>
+  <data name="UserNotResolved" xml:space="preserve"><value>Der angemeldete Benutzer konnte nicht ermittelt werden.</value></data>
+</root>

@@ -9,6 +9,7 @@
   <data name="Teams" xml:space="preserve"><value>Teams</value></data><data name="TeamsDetail" xml:space="preserve"><value>Groups, contacts and Pace Mate</value></data>
   <data name="Academy" xml:space="preserve"><value>Academy</value></data><data name="AcademyDetail" xml:space="preserve"><value>Knowledge for sustainable training</value></data>
   <data name="Achievements" xml:space="preserve"><value>Achievements</value></data><data name="AchievementsDetail" xml:space="preserve"><value>Your unlocked milestones</value></data>
+  <data name="Integrations" xml:space="preserve"><value>Integrations</value></data><data name="IntegrationsDetail" xml:space="preserve"><value>Connect and synchronize training services</value></data>
   <data name="Drive" xml:space="preserve"><value>My Drive</value></data><data name="DriveDetail" xml:space="preserve"><value>Training and analysis files</value></data>
   <data name="About" xml:space="preserve"><value>About PaceLetics</value></data><data name="AboutDetail" xml:space="preserve"><value>Information and legal notice</value></data>
   <data name="Settings" xml:space="preserve"><value>Settings</value></data><data name="SettingsDetail" xml:space="preserve"><value>Language, appearance and account</value></data>

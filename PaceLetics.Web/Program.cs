@@ -54,8 +54,12 @@ using PaceLetics.Web.Services.TrainingPlans;
 using PaceLetics.Web.Services.TrainingFeedback;
 using PaceLetics.Web.Services.DashboardPreferences;
 using PaceLetics.Web.Services.Integrations;
+using PaceLetics.Web.Services.Integrations.Strava;
 using PaceLetics.Web.Services.Undo;
 using PaceLetics.Web.Services.Trainer;
+using Microsoft.AspNetCore.DataProtection;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,6 +96,8 @@ builder.Services.AddRazorPages()
             factory.Create(modelType.DeclaringType ?? modelType);
     });
 builder.Services.AddServerSideBlazor();
+builder.Services.AddDataProtection()
+    .SetApplicationName("PaceLetics");
 builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
@@ -103,15 +109,18 @@ builder.Services.AddRateLimiter(options =>
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
-        if (!context.Request.Path.StartsWithSegments("/Identity/Account", StringComparison.OrdinalIgnoreCase))
+        var isIdentityRequest = context.Request.Path.StartsWithSegments("/Identity/Account", StringComparison.OrdinalIgnoreCase);
+        var isStravaOAuthRequest = context.Request.Path.StartsWithSegments("/integrations/strava", StringComparison.OrdinalIgnoreCase);
+        if (!isIdentityRequest && !isStravaOAuthRequest)
             return RateLimitPartition.GetNoLimiter("non-identity");
 
-        var clientKey = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        var requestKind = isStravaOAuthRequest ? "strava" : "identity";
+        var clientKey = $"{requestKind}:{context.Connection.RemoteIpAddress?.ToString() ?? "unknown"}";
         return RateLimitPartition.GetFixedWindowLimiter(
             clientKey,
             _ => new FixedWindowRateLimiterOptions
             {
-                PermitLimit = 30,
+                PermitLimit = isStravaOAuthRequest ? 20 : 30,
                 Window = TimeSpan.FromMinutes(1),
                 QueueLimit = 0,
                 AutoReplenishment = true
@@ -251,6 +260,21 @@ builder.Services.AddScoped<LoadingStateService>();
 builder.Services.AddScoped<ClientPreferenceStore>();
 builder.Services.AddScoped<DashboardPreferencesService>();
 builder.Services.AddScoped<IntegrationStatusService>();
+builder.Services.AddOptions<StravaOptions>()
+    .Bind(builder.Configuration.GetSection(StravaOptions.SectionName))
+    .Validate(options => options.HasValidCredentialShape(),
+        "Strava credentials must either both be configured or both be empty; callback and sync limits must be valid.")
+    .ValidateOnStart();
+builder.Services.AddHttpClient<IStravaApiClient, StravaApiClient>(client =>
+{
+    client.BaseAddress = new Uri("https://www.strava.com/");
+    client.Timeout = TimeSpan.FromSeconds(30);
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("PaceLetics/1.0");
+});
+builder.Services.AddSingleton<StravaTokenProtector>();
+builder.Services.AddSingleton<StravaOAuthStateService>();
+builder.Services.AddScoped<IStravaIntegrationRepository, CosmosStravaIntegrationRepository>();
+builder.Services.AddScoped<IStravaIntegrationService, StravaIntegrationService>();
 builder.Services.AddScoped<UndoService>();
 builder.Services.AddScoped<TrainerWorkspaceService>();
 builder.Services.AddScoped<AcademyInfoService>();
@@ -327,6 +351,84 @@ app.MapGet("/profile-images/{id}", async (
     context.Response.Headers.CacheControl = "private,max-age=31536000,immutable";
     return Results.File(image.Content, image.ContentType);
 }).RequireAuthorization();
+app.MapGet("/integrations/strava/connect", (
+    HttpContext context,
+    IStravaIntegrationService strava,
+    StravaOAuthStateService stateService,
+    IOptions<StravaOptions> options,
+    string? returnUrl) =>
+{
+    var athleteUserId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    if (string.IsNullOrWhiteSpace(athleteUserId))
+        return Results.Unauthorized();
+    if (!strava.IsConfigured)
+        return Results.Redirect(AppendQuery(StravaOAuthStateService.NormalizeReturnUrl(returnUrl), "strava", "not-configured"));
+
+    var redirectUri = ResolveStravaCallbackUri(context.Request, options.Value);
+    var state = stateService.Create(athleteUserId, returnUrl);
+    return Results.Redirect(strava.CreateAuthorizationUrl(athleteUserId, redirectUri, state));
+}).RequireAuthorization();
+app.MapGet("/integrations/strava/callback", async (
+    HttpContext context,
+    IStravaIntegrationService strava,
+    StravaOAuthStateService stateService,
+    ILoggerFactory loggerFactory,
+    string? code,
+    string? scope,
+    string? state,
+    string? error,
+    CancellationToken cancellationToken) =>
+{
+    var logger = loggerFactory.CreateLogger("StravaOAuth");
+    var athleteUserId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    if (string.IsNullOrWhiteSpace(athleteUserId))
+        return Results.Unauthorized();
+
+    StravaOAuthState oauthState;
+    try
+    {
+        if (string.IsNullOrWhiteSpace(state))
+            throw new CryptographicException("OAuth state is missing.");
+        oauthState = stateService.Read(state);
+        if (!string.Equals(oauthState.AthleteUserId, athleteUserId, StringComparison.Ordinal))
+            throw new CryptographicException("OAuth state belongs to a different user.");
+    }
+    catch (Exception exception) when (exception is CryptographicException or InvalidOperationException)
+    {
+        logger.LogWarning(exception, "Rejected an invalid Strava OAuth callback state.");
+        return Results.Redirect("/Athletes/integrations?strava=invalid-state");
+    }
+
+    if (!string.IsNullOrWhiteSpace(error))
+        return Results.Redirect(AppendQuery(oauthState.ReturnUrl, "strava", "denied"));
+    if (string.IsNullOrWhiteSpace(code))
+        return Results.Redirect(AppendQuery(oauthState.ReturnUrl, "strava", "error"));
+
+    try
+    {
+        await strava.CompleteAuthorizationAsync(athleteUserId, code, scope ?? string.Empty, cancellationToken);
+        try
+        {
+            await strava.SyncAsync(athleteUserId, cancellationToken);
+            return Results.Redirect(AppendQuery(oauthState.ReturnUrl, "strava", "connected"));
+        }
+        catch (Exception exception) when (exception is not OperationCanceledException)
+        {
+            logger.LogWarning(exception, "Strava was connected for {AthleteUserId}, but the initial sync failed.", athleteUserId);
+            return Results.Redirect(AppendQuery(oauthState.ReturnUrl, "strava", "connected-sync-failed"));
+        }
+    }
+    catch (InvalidOperationException exception) when (exception.Message.Contains("access", StringComparison.OrdinalIgnoreCase))
+    {
+        logger.LogInformation(exception, "Strava authorization did not include activity access for {AthleteUserId}.", athleteUserId);
+        return Results.Redirect(AppendQuery(oauthState.ReturnUrl, "strava", "scope"));
+    }
+    catch (Exception exception) when (exception is not OperationCanceledException)
+    {
+        logger.LogError(exception, "Strava authorization failed for {AthleteUserId}.", athleteUserId);
+        return Results.Redirect(AppendQuery(oauthState.ReturnUrl, "strava", "error"));
+    }
+}).RequireAuthorization();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
@@ -359,4 +461,18 @@ static async Task SeedIdentityRolesAsync(IServiceProvider services)
     {
         logger.LogWarning(ex, "Skipping identity role seed because the identity database is not available.");
     }
+}
+
+static string ResolveStravaCallbackUri(HttpRequest request, StravaOptions options)
+{
+    if (!string.IsNullOrWhiteSpace(options.CallbackUrl))
+        return options.CallbackUrl;
+
+    return $"{request.Scheme}://{request.Host}{request.PathBase}/integrations/strava/callback";
+}
+
+static string AppendQuery(string localUrl, string name, string value)
+{
+    var separator = localUrl.Contains('?', StringComparison.Ordinal) ? '&' : '?';
+    return $"{localUrl}{separator}{Uri.EscapeDataString(name)}={Uri.EscapeDataString(value)}";
 }

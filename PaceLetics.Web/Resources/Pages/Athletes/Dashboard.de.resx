@@ -172,4 +172,5 @@
   <data name="SectionIntegrations" xml:space="preserve"><value>Plattformen und Wearables</value></data>
   <data name="NotAvailable" xml:space="preserve"><value>Noch nicht verfügbar</value></data>
   <data name="IntegrationsComingSoon" xml:space="preserve"><value>Garmin, Strava, Apple Health und COROS sind geplant, aber noch nicht angebunden.</value></data>
+  <data name="ManageIntegrations" xml:space="preserve"><value>Verwalten</value></data>
 </root>

@@ -1,0 +1,258 @@
+@page "/Athletes/integrations"
+@attribute [Authorize]
+@using System.Globalization
+@using System.Net
+@using System.Security.Claims
+@using PaceLetics.Web.Services.Integrations.Strava
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStravaIntegrationService Strava
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Integrations> L
+
+<PageTitle>@L["PageTitle"]</PageTitle>
+
+<MudContainer Class="pl-section-page px-4 px-sm-6 pb-8" MaxWidth="MaxWidth.Medium">
+    <PageHeader Title="@L["Title"]" Subtitle="@L["Subtitle"]" />
+
+    @if (GetCallbackMessage() is { } callback)
+    {
+        <MudAlert Severity="@callback.Severity" Variant="Variant.Outlined" Class="mb-4">@callback.Text</MudAlert>
+    }
+
+    @if (_isLoading)
+    {
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary" aria-label="@L["Loading"]" />
+    }
+    else if (!string.IsNullOrWhiteSpace(_loadError))
+    {
+        <RetryAlert Message="@_loadError" OnRetry="LoadAsync" />
+    }
+    else if (!_status.IsConfigured)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NotConfigured"]</MudAlert>
+    }
+    else
+    {
+        <MudPaper Elevation="0" Class="pa-4 pa-sm-6 pl-strava-card">
+            <MudStack Spacing="3">
+                <div class="pl-strava-heading">
+                    <MudIcon Icon="@Icons.Material.Filled.DirectionsRun" Class="pl-strava-service-icon" aria-hidden="true" />
+                    <div>
+                        <MudText Typo="Typo.h6" HtmlTag="h2">Strava</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">
+                            @(_status.IsConnected ? L["ConnectedAs", DisplayAthleteName] : L["ConnectDescription"])
+                        </MudText>
+                    </div>
+                </div>
+
+                @if (!_status.IsConnected)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["ImportExplanation"]</MudAlert>
+                    <button type="button" class="pl-strava-connect-button" @onclick="Connect" aria-label="Connect with Strava">
+                        <img src="/images/integrations/connect-with-strava.svg" alt="" width="237" height="48" />
+                    </button>
+                }
+                else
+                {
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="gap:12px;flex-wrap:wrap;">
+                        <div>
+                            <MudText Typo="Typo.body2">@GetLastSyncText()</MudText>
+                            <MudText Typo="Typo.caption" Color="Color.Secondary">@L["StoredActivities", _activities.Count]</MudText>
+                        </div>
+                        <MudStack Row="true" Style="gap:8px;">
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="_isBusy" OnClick="SyncAsync" StartIcon="@Icons.Material.Filled.Sync">
+                                @L["SyncNow"]
+                            </MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Error" Disabled="_isBusy" OnClick="DisconnectAsync" StartIcon="@Icons.Material.Filled.LinkOff">
+                                @L["Disconnect"]
+                            </MudButton>
+                        </MudStack>
+                    </MudStack>
+                    @if (!string.IsNullOrWhiteSpace(_status.Error))
+                    {
+                        <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">@GetSyncErrorText(_status.Error)</MudAlert>
+                    }
+                }
+            </MudStack>
+        </MudPaper>
+
+        @if (_status.IsConnected)
+        {
+            <section class="mt-6" aria-labelledby="strava-activities-title">
+                <MudText Typo="Typo.h6" HtmlTag="h2" id="strava-activities-title" Class="mb-3">@L["RecentActivities"]</MudText>
+                @if (_activities.Count == 0)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@L["NoActivities"]</MudAlert>
+                }
+                else
+                {
+                    <div class="pl-strava-activities">
+                        @foreach (var activity in _activities.Take(50))
+                        {
+                            <article class="pl-strava-activity">
+                                <div>
+                                    <MudText Typo="Typo.subtitle2">@activity.Name</MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">@FormatActivityDate(activity)</MudText>
+                                </div>
+                                <div class="pl-strava-metrics">
+                                    <span><small>@L["Distance"]</small><strong>@FormatDistance(activity.DistanceMeters)</strong></span>
+                                    <span><small>@L["MovingTime"]</small><strong>@FormatDuration(activity.MovingTimeSeconds)</strong></span>
+                                    <span><small>@L["AveragePace"]</small><strong>@FormatPace(activity.AverageSpeedMetersPerSecond)</strong></span>
+                                    @if (activity.AverageHeartRate is { } heartRate)
+                                    {
+                                        <span><small>@L["HeartRate"]</small><strong>@Math.Round(heartRate) bpm</strong></span>
+                                    }
+                                </div>
+                                <a href="@activity.StravaUrl" target="_blank" rel="noopener noreferrer" class="pl-strava-view-link">View on Strava</a>
+                            </article>
+                        }
+                    </div>
+                }
+            </section>
+        }
+    }
+</MudContainer>
+
+@code {
+    [SupplyParameterFromQuery(Name = "strava")]
+    public string? CallbackResult { get; set; }
+
+    private string? _userId;
+    private string? _loadError;
+    private bool _isLoading = true;
+    private bool _isBusy;
+    private StravaConnectionStatus _status = new(false, false);
+    private IReadOnlyList<StravaActivityDocument> _activities = [];
+
+    private string DisplayAthleteName => string.IsNullOrWhiteSpace(_status.AthleteName) ? L["YourAccount"] : _status.AthleteName;
+
+    protected override Task OnInitializedAsync() => LoadAsync();
+
+    private void Connect() =>
+        Navigation.NavigateTo("/integrations/strava/connect?returnUrl=%2FAthletes%2Fintegrations", forceLoad: true);
+
+    private async Task LoadAsync()
+    {
+        _isLoading = true;
+        _loadError = null;
+        try
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            _userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrWhiteSpace(_userId))
+                throw new InvalidOperationException(L["UserNotResolved"]);
+
+            _status = await Strava.GetStatusAsync(_userId);
+            _activities = _status.IsConnected
+                ? await Strava.GetActivitiesAsync(_userId)
+                : [];
+        }
+        catch (Exception exception)
+        {
+            _loadError = UiErrorMessages.From(exception);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task SyncAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        try
+        {
+            _isBusy = true;
+            var result = await Strava.SyncAsync(_userId);
+            Snackbar.Add(L["SyncSuccess", result.ImportedActivities], Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception exception)
+        {
+            Snackbar.Add(GetExceptionText(exception), Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private async Task DisconnectAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            return;
+
+        var confirmed = await UiConfirmation.AskAsync(DialogService, L["DisconnectConfirm"].Value);
+        if (!confirmed)
+            return;
+
+        try
+        {
+            _isBusy = true;
+            await Strava.DisconnectAsync(_userId);
+            CallbackResult = null;
+            Snackbar.Add(L["DisconnectSuccess"], Severity.Success);
+            await LoadAsync();
+        }
+        catch (Exception exception)
+        {
+            Snackbar.Add(GetExceptionText(exception), Severity.Error);
+            await LoadAsync();
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private (Severity Severity, string Text)? GetCallbackMessage() => CallbackResult switch
+    {
+        "connected" => (Severity.Success, L["CallbackConnected"]),
+        "connected-sync-failed" => (Severity.Warning, L["CallbackSyncFailed"]),
+        "denied" => (Severity.Info, L["CallbackDenied"]),
+        "scope" => (Severity.Warning, L["CallbackScope"]),
+        "invalid-state" => (Severity.Error, L["CallbackInvalidState"]),
+        "not-configured" => (Severity.Info, L["NotConfigured"]),
+        "error" => (Severity.Error, L["CallbackError"]),
+        _ => null
+    };
+
+    private string GetLastSyncText() => _status.LastSyncAt is { } value
+        ? L["LastSync", value.ToLocalTime()]
+        : L["NotSyncedYet"];
+
+    private string GetSyncErrorText(string error) => error switch
+    {
+        "rate-limit" => L["RateLimitError"],
+        "authorization" => L["AuthorizationError"],
+        _ => L["SyncError"]
+    };
+
+    private string GetExceptionText(Exception exception) => exception switch
+    {
+        StravaApiException { StatusCode: HttpStatusCode.TooManyRequests } => L["RateLimitError"],
+        StravaApiException { StatusCode: HttpStatusCode.Unauthorized } => L["AuthorizationError"],
+        _ => UiErrorMessages.From(exception)
+    };
+
+    private static string FormatActivityDate(StravaActivityDocument activity) =>
+        activity.StartDateLocal.ToString("g", CultureInfo.CurrentCulture);
+
+    private static string FormatDistance(double meters) =>
+        $"{meters / 1000d:0.00} km";
+
+    private static string FormatDuration(int seconds) =>
+        TimeSpan.FromSeconds(seconds).ToString(seconds >= 3600 ? @"h\:mm\:ss" : @"mm\:ss", CultureInfo.InvariantCulture);
+
+    private static string FormatPace(double metersPerSecond)
+    {
+        if (metersPerSecond <= 0)
+            return "–";
+        var pace = TimeSpan.FromSeconds(1000d / metersPerSecond);
+        return $"{(int)pace.TotalMinutes}:{pace.Seconds:00} min/km";
+    }
+}

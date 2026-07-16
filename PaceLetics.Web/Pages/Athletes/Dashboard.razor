@@ -169,6 +169,7 @@
                                     <MudText Typo="Typo.h6" HtmlTag="h2" id="integration-title">@L["IntegrationStatus"]</MudText>
                                     <MudText Typo="Typo.body2" Color="Color.Secondary">@GetIntegrationSummary()</MudText>
                                 </span>
+                                <a href="/Athletes/integrations">@L["ManageIntegrations"]</a>
                             </div>
                             <div class="pl-integration-grid">
                                 @foreach (var integration in _integrations)
@@ -235,6 +236,7 @@
 
     private AthleteModel? _athlete;
     private string _name = string.Empty;
+    private string? _userId;
     private IReadOnlyList<TrainingPlan> _plans = Array.Empty<TrainingPlan>();
     private IReadOnlyList<TrainingCalendarItem> _calendarItems = Array.Empty<TrainingCalendarItem>();
     private IReadOnlyList<TrainingSessionCompletionDocument> _completions = Array.Empty<TrainingSessionCompletionDocument>();
@@ -313,7 +315,7 @@
             return;
 
         _sections = (await DashboardPreferences.GetAsync()).ToList();
-        _integrations = await IntegrationStatus.GetAsync();
+        _integrations = await IntegrationStatus.GetAsync(_userId);
         await InvokeAsync(StateHasChanged);
     }
 
@@ -326,6 +328,7 @@
             var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var userId = state.User.FindFirst(claim =>
                 claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
+            _userId = userId;
             _name = state.User.Identity?.Name ?? string.Empty;
             if (string.IsNullOrWhiteSpace(userId))
                 return;

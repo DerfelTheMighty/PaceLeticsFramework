@@ -1,0 +1,64 @@
+.pl-strava-card {
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 18px;
+}
+
+.pl-strava-heading {
+    align-items: center;
+    display: flex;
+    gap: 14px;
+}
+
+.pl-strava-service-icon {
+    color: #fc5200;
+    font-size: 2.5rem !important;
+}
+
+.pl-strava-connect-button {
+    align-self: flex-start;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    line-height: 0;
+    padding: 0;
+}
+
+.pl-strava-connect-button:focus-visible {
+    border-radius: 6px;
+    outline: 3px solid var(--mud-palette-primary);
+    outline-offset: 3px;
+}
+
+.pl-strava-activities {
+    display: grid;
+    gap: 12px;
+}
+
+.pl-strava-activity {
+    background: var(--mud-palette-surface);
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 14px;
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+}
+
+.pl-strava-metrics {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.pl-strava-metrics span {
+    display: grid;
+    gap: 2px;
+}
+
+.pl-strava-metrics small {
+    color: var(--mud-palette-text-secondary);
+}
+
+.pl-strava-view-link {
+    color: #fc5200 !important;
+    justify-self: start;
+}
