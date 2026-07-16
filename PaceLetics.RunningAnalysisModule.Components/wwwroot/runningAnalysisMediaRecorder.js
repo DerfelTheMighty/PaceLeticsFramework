@@ -1239,7 +1239,37 @@ async function shareRecordingFiles(files, packageFile) {
     return;
   }
 
-  throw new Error("This browser cannot open a confirmed device save dialog for the recording package or files.");
+  if (packageFile && downloadRecordingPackage(packageFile)) {
+    return;
+  }
+
+  throw new Error("This browser cannot share or download the recording package.");
+}
+
+function downloadRecordingPackage(packageFile) {
+  if (typeof document === "undefined"
+    || typeof URL === "undefined"
+    || typeof URL.createObjectURL !== "function") {
+    return false;
+  }
+
+  const container = document.body || document.documentElement;
+  if (!container) {
+    return false;
+  }
+
+  const downloadBlob = new Blob([packageFile], { type: "application/octet-stream" });
+  const objectUrl = URL.createObjectURL(downloadBlob);
+  const link = document.createElement("a");
+  link.href = objectUrl;
+  link.download = packageFile.name;
+  link.rel = "noopener";
+  link.style.display = "none";
+  container.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+  return true;
 }
 
 async function createRecordingPackageFile(recording, files) {

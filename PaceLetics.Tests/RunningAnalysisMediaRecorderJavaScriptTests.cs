@@ -12,6 +12,17 @@ public sealed class RunningAnalysisMediaRecorderJavaScriptTests
         Assert.Contains("const zipEndOfCentralDirectorySignature = 0x06054b50;", source);
     }
 
+    [Fact]
+    public void ManualExportHasDownloadFallbackWhenSharingIsUnsupported()
+    {
+        var source = File.ReadAllText(GetRecorderScriptPath());
+
+        Assert.Contains("downloadRecordingPackage(packageFile)", source);
+        Assert.Contains("link.download = packageFile.name;", source);
+        Assert.Contains("new Blob([packageFile], { type: \"application/octet-stream\" })", source);
+        Assert.Contains("URL.createObjectURL(downloadBlob)", source);
+    }
+
     private static string GetRecorderScriptPath()
     {
         var repositoryRoot = FindRepositoryRoot(new DirectoryInfo(Directory.GetCurrentDirectory()))
