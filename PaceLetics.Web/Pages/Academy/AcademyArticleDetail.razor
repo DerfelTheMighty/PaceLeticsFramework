@@ -7,17 +7,31 @@
 @inject IArticleService ArticleService
 @inject IStringLocalizer<Academy> L
 @inject IJSRuntime JS
+@inject ISnackbar Snackbar
 
 <PageTitle>@PageTitleText</PageTitle>
 
 <MudContainer Class="pl-section-page px-6 pb-8" MaxWidth="MaxWidth.Medium">
-    <MudButton Href="/Athletes/academy"
-               Variant="Variant.Text"
-               Color="Color.Primary"
-               StartIcon="@Icons.Material.Filled.ArrowBack"
-               Class="mb-3">
-        @L["BackToOverview"]
-    </MudButton>
+    <div class="pl-academy-article__actions mb-3">
+        <MudButton Href="/Athletes/academy"
+                   Variant="Variant.Text"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.ArrowBack">
+            @L["BackToOverview"]
+        </MudButton>
+
+        @if (_article is not null)
+        {
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.PictureAsPdf"
+                       Disabled="@_isExporting"
+                       OnClick="ExportPdfAsync"
+                       aria-label="@L["ExportPdf"]">
+                @L["ExportPdf"]
+            </MudButton>
+        }
+    </div>
 
     @if (_article is null)
     {
@@ -28,7 +42,8 @@
     }
     else
     {
-        <PageHeader Title="@_article.Title" Subtitle="@_article.Summary" />
+        <section id="@ExportRootId" class="pl-academy-article__export" aria-label="@_article.Title">
+            <PageHeader Title="@_article.Title" Subtitle="@_article.Summary" />
 
         <MudStack Spacing="3" Class="mt-4">
             <MudPaper Elevation="0" Class="@GetArticleMetaClass(_article)">
@@ -64,14 +79,17 @@
                 @RenderFallbackArticle(_article)
             }
         </MudStack>
+        </section>
     }
 </MudContainer>
 
 @code {
+    private const string ExportRootId = "academy-article-export";
     [Parameter]
     public string? ArticleId { get; set; }
 
     private Article? _article;
+    private bool _isExporting;
 
     private string PageTitleText => _article?.Title ?? L["PageTitle"];
 
@@ -85,6 +103,30 @@
         if (_article is not null)
         {
             await JS.InvokeVoidAsync("paceleticsAcademy.enhanceTables", ".pl-academy-article__markdown");
+        }
+    }
+
+    private async Task ExportPdfAsync()
+    {
+        if (_article is null || _isExporting)
+            return;
+
+        _isExporting = true;
+
+        try
+        {
+            await JS.InvokeVoidAsync(
+                "paceleticsAcademy.exportPdf",
+                $"#{ExportRootId}",
+                $"{_article.Title} - PaceLetics Academy");
+        }
+        catch (JSException)
+        {
+            Snackbar.Add(L["ExportPdfError"], Severity.Error);
+        }
+        finally
+        {
+            _isExporting = false;
         }
     }
 

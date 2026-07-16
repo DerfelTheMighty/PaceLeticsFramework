@@ -14,6 +14,8 @@
   <data name="CategoryFundamentals" xml:space="preserve"><value>Foundations</value></data>
   <data name="CategoryRunningAnalysis" xml:space="preserve"><value>Form</value></data>
   <data name="BackToOverview" xml:space="preserve"><value>Academy</value></data>
+  <data name="ExportPdf" xml:space="preserve"><value>Export as PDF</value></data>
+  <data name="ExportPdfError" xml:space="preserve"><value>The PDF export could not be started. Please make sure all article images are available and try again.</value></data>
   <data name="NotFoundTitle" xml:space="preserve"><value>Article not found</value></data>
   <data name="NotFoundSubtitle" xml:space="preserve"><value>This Academy article is not available.</value></data>
   <data name="NotFoundBody" xml:space="preserve"><value>Return to the Academy overview to choose another article.</value></data>

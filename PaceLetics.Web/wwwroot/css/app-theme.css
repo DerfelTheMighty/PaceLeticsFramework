@@ -2169,6 +2169,14 @@
     background: color-mix(in srgb, var(--pl-academy-accent) 6%, var(--mud-palette-surface));
 }
 
+.pl-academy-article__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
 .pl-academy-article__topline,
 .pl-academy-article__tags {
     display: flex;
@@ -2356,6 +2364,82 @@
 .pl-academy-article__markdown a:hover,
 .pl-academy-article__markdown a:focus-visible {
     text-decoration: underline;
+}
+
+@media print {
+    @page {
+        size: A4;
+        margin: 14mm 15mm 16mm;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+    }
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    #academy-article-export,
+    #academy-article-export * {
+        visibility: visible !important;
+    }
+
+    #academy-article-export {
+        --mud-palette-primary: #00695c;
+        --mud-palette-surface: #fff;
+        --mud-palette-text-primary: #17201f;
+        --mud-palette-text-secondary: #44514f;
+        --mud-palette-lines-default: #ccd5d3;
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 100%;
+        color: #17201f;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    #academy-article-export .pl-academy-article {
+        border-color: #ccd5d3;
+        background: #fff;
+        box-shadow: none !important;
+    }
+
+    #academy-article-export .pl-academy-article__topline {
+        break-inside: avoid;
+    }
+
+    #academy-article-export h1,
+    #academy-article-export h2,
+    #academy-article-export h3 {
+        break-after: avoid;
+    }
+
+    #academy-article-export p,
+    #academy-article-export li {
+        orphans: 3;
+        widows: 3;
+    }
+
+    #academy-article-export img {
+        max-width: 100%;
+        max-height: 225mm;
+        object-fit: contain;
+        break-inside: avoid;
+    }
+
+    #academy-article-export table,
+    #academy-article-export blockquote,
+    #academy-article-export pre {
+        break-inside: avoid;
+    }
+
+    #academy-article-export a {
+        color: #00695c !important;
+        text-decoration: underline;
+    }
 }
 
 .pl-academy-article__sources {

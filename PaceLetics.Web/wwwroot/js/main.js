@@ -109,8 +109,57 @@ window.paceleticsAcademy = (() => {
         });
     }
 
+    async function waitForImage(image) {
+        image.loading = "eager";
+
+        if (!image.complete) {
+            await new Promise((resolve, reject) => {
+                image.addEventListener("load", resolve, { once: true });
+                image.addEventListener("error", () => reject(new Error(`Image could not be loaded: ${image.currentSrc || image.src}`)), { once: true });
+            });
+        }
+
+        if (image.naturalWidth === 0) {
+            throw new Error(`Image could not be loaded: ${image.currentSrc || image.src}`);
+        }
+
+        if (typeof image.decode === "function") {
+            try {
+                await image.decode();
+            } catch {
+                // A loaded image can still be printed when decode() is not supported for its format.
+            }
+        }
+    }
+
+    async function exportPdf(selector, title) {
+        const root = document.querySelector(selector);
+        if (!root) {
+            throw new Error("Academy article export area was not found.");
+        }
+
+        const images = Array.from(root.querySelectorAll("img"));
+        await Promise.all(images.map(waitForImage));
+
+        if (document.fonts?.ready) {
+            await document.fonts.ready;
+        }
+
+        const previousTitle = document.title;
+        document.title = title || previousTitle;
+        root.classList.add("pl-academy-article__export--printing");
+
+        try {
+            window.print();
+        } finally {
+            root.classList.remove("pl-academy-article__export--printing");
+            document.title = previousTitle;
+        }
+    }
+
     return {
-        enhanceTables
+        enhanceTables,
+        exportPdf
     };
 })();
 
