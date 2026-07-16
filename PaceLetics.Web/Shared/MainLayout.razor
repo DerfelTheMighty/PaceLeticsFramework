@@ -35,6 +35,7 @@
         }
         <MudText Align="Align.Start" Class="pl-appbar-title">@GetAppBarTitle()</MudText>
         <MudSpacer />
+        <AthleteMessageFeedButton />
         <AuthorizeView>
             <Authorized>
                 <MudTooltip Text="@NavL["Nav_MyDrive"]">
@@ -47,7 +48,6 @@
                 </MudTooltip>
             </Authorized>
         </AuthorizeView>
-        <AthleteMessageFeedButton />
         <MudMenu Icon="@ThemePreferences.CurrentThemeDefinition.Icon"
                  Color="Color.Inherit"
                  Class="pl-topbar-quick-action"
