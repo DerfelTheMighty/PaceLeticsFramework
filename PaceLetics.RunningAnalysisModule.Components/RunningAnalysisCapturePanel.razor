@@ -44,7 +44,7 @@
                         Ordnerzugriff wird geprüft.
                     </MudAlert>
                 }
-                else if (!SupportsDeviceFolderStorage || _folderChoiceAttempted)
+                else if (!IsStorageReady && (!SupportsDeviceFolderStorage || _folderChoiceAttempted))
                 {
                     <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
                         Oh, das klappt leider nicht. Wir speichern jedes Video einzeln nach der Aufnahme.
@@ -639,7 +639,7 @@
     {
         _recorderModule ??= await JS.InvokeAsync<IJSObjectReference>(
             "import",
-            "./_content/PaceLetics.RunningAnalysisModule.Components/runningAnalysisMediaRecorder.js");
+            "./_content/PaceLetics.RunningAnalysisModule.Components/runningAnalysisMediaRecorder.js?v=20260716.1");
 
         return _recorderModule;
     }
