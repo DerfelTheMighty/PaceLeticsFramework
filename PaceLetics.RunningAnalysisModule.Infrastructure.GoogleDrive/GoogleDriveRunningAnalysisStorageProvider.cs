@@ -17,22 +17,15 @@ namespace PaceLetics.RunningAnalysisModule.Infrastructure.GoogleDrive;
 
 public sealed class GoogleDriveRunningAnalysisStorageProvider :
     IRunningAnalysisStorageProvider,
-    IUserDriveFolderStorageProvider,
-    IDisposable
+    IUserDriveFolderStorageProvider
 {
     private const string FolderMimeType = "application/vnd.google-apps.folder";
     private const string ServiceAccountQuotaFailureMessage = "Google Drive upload failed because the service account has no storage quota. Configure PaceLeticsUserData:GoogleDrive:DelegatedUserEmail for domain-wide delegation or use a shared-drive RootFolderId.";
     private readonly GoogleDriveRunningAnalysisOptions _options;
-    private readonly Lazy<DriveService> _uploadDrive;
-    private readonly Lazy<DriveService> _folderManagementDrive;
 
     public GoogleDriveRunningAnalysisStorageProvider(GoogleDriveRunningAnalysisOptions options)
     {
         _options = options;
-        _uploadDrive = new Lazy<DriveService>(CreateDriveService, LazyThreadSafetyMode.ExecutionAndPublication);
-        _folderManagementDrive = new Lazy<DriveService>(
-            CreateFolderManagementDriveServiceCore,
-            LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public async Task<DriveFolderReference> EnsureEventFolderAsync(
@@ -47,7 +40,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             drive,
             folderName,
             rootFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: ShouldGrantPublicReadLinks(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -64,7 +57,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             drive,
             folderName,
             eventFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: ShouldGrantPublicReadLinks(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -95,7 +88,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             drive,
             folderName,
             rootFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: ShouldGrantPublicReadLinks(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -103,27 +96,11 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         DriveFolderReference userFolder,
         CancellationToken cancellationToken = default)
     {
-        if (!ShouldGrantPublicReadLinks())
+        if (!CanManageDrivePermissions())
             return;
 
         var drive = CreateFolderManagementDriveService();
         await EnsureAnyoneWithLinkCanReadAsync(drive, userFolder.FolderId, cancellationToken);
-    }
-
-    public async Task GrantUserReadAccessAsync(
-        DriveFolderReference userFolder,
-        string email,
-        CancellationToken cancellationToken = default)
-    {
-        if (!CanManageDrivePermissions() || string.IsNullOrWhiteSpace(email))
-            return;
-
-        await GrantAccessAsync(
-            CreateFolderManagementDriveService(),
-            userFolder,
-            email,
-            role: "reader",
-            cancellationToken);
     }
 
     public async Task<DriveFolderReference> EnsureChildFolderAsync(
@@ -142,7 +119,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
             drive,
             SanitizeName(folderName),
             parentFolder.FolderId,
-            grantAnyoneWithLinkReadAccess: ShouldGrantPublicReadLinks(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -391,31 +368,15 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
 
     private DriveService CreateUploadDriveService()
     {
-        return _uploadDrive.Value;
+        return CreateDriveService();
     }
 
     private DriveService CreateFolderManagementDriveService()
-    {
-        return _folderManagementDrive.Value;
-    }
-
-    private DriveService CreateFolderManagementDriveServiceCore()
     {
         if (!HasServiceAccountCredentials())
             return CreateDriveService();
 
         return CreateDriveService(CreateServiceAccountCredential());
-    }
-
-    public void Dispose()
-    {
-        if (_uploadDrive.IsValueCreated)
-            _uploadDrive.Value.Dispose();
-        if (_folderManagementDrive.IsValueCreated
-            && (!_uploadDrive.IsValueCreated || !ReferenceEquals(_folderManagementDrive.Value, _uploadDrive.Value)))
-        {
-            _folderManagementDrive.Value.Dispose();
-        }
     }
 
     private DriveService CreateDriveService(IConfigurableHttpClientInitializer credential)
@@ -614,7 +575,7 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
                 ? "PaceLetics Laufanalysen"
                 : _options.RootFolderName,
             parentFolderId: null,
-            grantAnyoneWithLinkReadAccess: ShouldGrantPublicReadLinks(),
+            grantAnyoneWithLinkReadAccess: CanManageDrivePermissions(),
             cancellationToken);
     }
 
@@ -794,11 +755,6 @@ public sealed class GoogleDriveRunningAnalysisStorageProvider :
         var message = exception?.Message ?? string.Empty;
         return message.Contains("Service Accounts do not have storage quota", StringComparison.OrdinalIgnoreCase)
             || message.Contains("service account has no storage quota", StringComparison.OrdinalIgnoreCase);
-    }
-
-    private bool ShouldGrantPublicReadLinks()
-    {
-        return _options.EnablePublicReadLinks && CanManageDrivePermissions();
     }
 
 }

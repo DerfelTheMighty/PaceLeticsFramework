@@ -213,27 +213,24 @@ builder.Services.AddScoped<ICourseRepository>(x => x.GetRequiredService<CosmosCo
 builder.Services.AddScoped<IGroupRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.AddScoped<IMateRepository>(x => x.GetRequiredService<CosmosCourseRepository>());
 builder.Services.AddHostedService<CourseSeedStartupLoader>();
-builder.Services.AddOptions<GoogleDriveRunningAnalysisOptions>()
-    .Configure(options =>
-    {
-        builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
-        builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.FlatSectionName).Bind(options);
-        builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName).Bind(options);
-    })
-    .Validate(options => options.HasValidCredentialShape(),
-        "Google Drive OAuth credentials must either all be configured or all be empty.")
-    .ValidateOnStart();
+builder.Services.Configure<GoogleDriveRunningAnalysisOptions>(options =>
+{
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.LegacySectionName).Bind(options);
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.FlatSectionName).Bind(options);
+    builder.Configuration.GetSection(GoogleDriveRunningAnalysisOptions.SectionName).Bind(options);
+});
 builder.Services.AddScoped<CosmosRunningAnalysisRepository>();
 builder.Services.AddScoped<IRunningAnalysisRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddScoped<IUserDriveFolderRegistry>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddScoped<IUserDriveFolderRepository>(x => x.GetRequiredService<CosmosRunningAnalysisRepository>());
 builder.Services.AddSingleton<IRunningAnalysisClock, SystemRunningAnalysisClock>();
 builder.Services.AddSingleton(TimeProvider.System);
-builder.Services.AddScoped<GoogleDriveRunningAnalysisStorageProvider>(x =>
+builder.Services.AddScoped<IRunningAnalysisStorageProvider>(x =>
     new GoogleDriveRunningAnalysisStorageProvider(
         x.GetRequiredService<IOptions<GoogleDriveRunningAnalysisOptions>>().Value));
-builder.Services.AddScoped<IRunningAnalysisStorageProvider>(x => x.GetRequiredService<GoogleDriveRunningAnalysisStorageProvider>());
-builder.Services.AddScoped<IUserDriveFolderStorageProvider>(x => x.GetRequiredService<GoogleDriveRunningAnalysisStorageProvider>());
+builder.Services.AddScoped<IUserDriveFolderStorageProvider>(x =>
+    new GoogleDriveRunningAnalysisStorageProvider(
+        x.GetRequiredService<IOptions<GoogleDriveRunningAnalysisOptions>>().Value));
 builder.Services.AddScoped<IRunningAnalysisService, RunningAnalysisService>();
 builder.Services.AddScoped<IUserDriveFolderService, UserDriveFolderService>();
 builder.Services.AddScoped<ICourseRunningAnalysisRegistrationAdapter, CourseRunningAnalysisRegistrationAdapter>();

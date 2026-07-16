@@ -16,12 +16,4 @@ public sealed class GoogleDriveRunningAnalysisOptions
     public string OAuthClientSecret { get; set; } = string.Empty;
     public string OAuthRefreshToken { get; set; } = string.Empty;
     public string OAuthUserEmail { get; set; } = string.Empty;
-    public bool EnablePublicReadLinks { get; set; }
-
-    public bool HasValidCredentialShape()
-    {
-        var oauthValues = new[] { OAuthClientId, OAuthClientSecret, OAuthRefreshToken };
-        var configuredOauthValues = oauthValues.Count(value => !string.IsNullOrWhiteSpace(value));
-        return configuredOauthValues is 0 or 3;
-    }
 }

@@ -12,12 +12,6 @@ public interface IUserDriveFolderStorageProvider
         DriveFolderReference userFolder,
         CancellationToken cancellationToken = default);
 
-    Task GrantUserReadAccessAsync(
-        DriveFolderReference userFolder,
-        string email,
-        CancellationToken cancellationToken = default)
-        => Task.CompletedTask;
-
     Task<DriveFolderReference> EnsureChildFolderAsync(
         DriveFolderReference parentFolder,
         string folderName,

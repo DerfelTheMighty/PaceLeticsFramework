@@ -22,7 +22,7 @@ public sealed class UserDriveFolderServiceTests
 
         Assert.Equal("existing-folder", folder.FolderId);
         Assert.Empty(storage.CreatedFolders);
-        Assert.Equal("athlete@example.com", Assert.Single(storage.UserReadGrants).Email);
+        Assert.Single(storage.PublicReadLinkFolders);
         Assert.Empty(repository.SavedFolders);
     }
 
@@ -39,7 +39,7 @@ public sealed class UserDriveFolderServiceTests
 
         Assert.Equal("user-folder-athlete-1", folder.FolderId);
         Assert.Single(storage.CreatedFolders);
-        Assert.Equal("athlete@example.com", Assert.Single(storage.UserReadGrants).Email);
+        Assert.Single(storage.PublicReadLinkFolders);
         Assert.Single(repository.SavedFolders);
         Assert.Equal("athlete@example.com", repository.SavedFolders[0].Email);
     }
@@ -126,7 +126,6 @@ public sealed class UserDriveFolderServiceTests
     {
         public List<UserDriveFolderRequest> CreatedFolders { get; } = new();
         public List<DriveFolderReference> PublicReadLinkFolders { get; } = new();
-        public List<(DriveFolderReference Folder, string Email)> UserReadGrants { get; } = new();
         public List<(DriveFolderReference Parent, string FolderName)> CreatedChildFolders { get; } = new();
         public List<(DriveFolderReference Folder, string FileName, string ContentType)> UploadedFiles { get; } = new();
         public List<DriveFolderReference> DeletedFolders { get; } = new();
@@ -146,15 +145,6 @@ public sealed class UserDriveFolderServiceTests
             CancellationToken cancellationToken = default)
         {
             PublicReadLinkFolders.Add(userFolder);
-            return Task.CompletedTask;
-        }
-
-        public Task GrantUserReadAccessAsync(
-            DriveFolderReference userFolder,
-            string email,
-            CancellationToken cancellationToken = default)
-        {
-            UserReadGrants.Add((userFolder, email));
             return Task.CompletedTask;
         }
 
