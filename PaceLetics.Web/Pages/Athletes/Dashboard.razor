@@ -50,14 +50,17 @@
                 @switch (dashboardSection.Key)
                 {
                     case DashboardSectionKeys.Readiness:
-                        <section class="@GetRecommendationClass()" aria-labelledby="daily-guidance-title">
-                            <span class="pl-guidance__icon"><MudIcon Icon="@GetRecommendationIcon()" /></span>
-                            <span>
-                                <MudText Typo="Typo.subtitle2" HtmlTag="h2" id="daily-guidance-title">@GetRecommendationTitle()</MudText>
-                                <MudText Typo="Typo.body2">@GetRecommendationDetail()</MudText>
-                                <MudText Typo="Typo.caption" Class="pl-guidance__disclaimer">@L["ReadinessDisclaimer"]</MudText>
-                            </span>
-                        </section>
+                        @if (_recommendation.Kind != TrainingRecommendationKind.NoData)
+                        {
+                            <section class="@GetRecommendationClass()" aria-labelledby="daily-guidance-title">
+                                <span class="pl-guidance__icon"><MudIcon Icon="@GetRecommendationIcon()" /></span>
+                                <span>
+                                    <MudText Typo="Typo.subtitle2" HtmlTag="h2" id="daily-guidance-title">@GetRecommendationTitle()</MudText>
+                                    <MudText Typo="Typo.body2">@GetRecommendationDetail()</MudText>
+                                    <MudText Typo="Typo.caption" Class="pl-guidance__disclaimer">@L["ReadinessDisclaimer"]</MudText>
+                                </span>
+                            </section>
+                        }
                         break;
 
                     case DashboardSectionKeys.NextSession:
@@ -370,7 +373,7 @@
         TrainingRecommendationKind.TakeItEasy => L["EasyTitle"],
         TrainingRecommendationKind.OnTrack => L["OnTrackTitle"],
         TrainingRecommendationKind.Upcoming => L["UpcomingTitle"],
-        _ => L["NoDataTitle"]
+        _ => string.Empty
     };
 
     private string GetRecommendationDetail() => _recommendation.Kind switch
@@ -379,7 +382,7 @@
         TrainingRecommendationKind.TakeItEasy => L["EasyDetail"],
         TrainingRecommendationKind.OnTrack => L["OnTrackDetail"],
         TrainingRecommendationKind.Upcoming => L["UpcomingDetail"],
-        _ => L["NoDataDetail"]
+        _ => string.Empty
     };
 
     private string GetNextLabel(TrainingSession session) => GetSessionStart(session).Date == DateTime.Today

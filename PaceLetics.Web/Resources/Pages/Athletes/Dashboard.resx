@@ -110,8 +110,6 @@
   <data name="OnTrackDetail" xml:space="preserve"><value>Your feedback fits the current load. Continue with the next scheduled session.</value></data>
   <data name="UpcomingTitle" xml:space="preserve"><value>Your next session is ready</value></data>
   <data name="UpcomingDetail" xml:space="preserve"><value>Open the briefing before you start. Your feedback afterward personalizes the next recommendation.</value></data>
-  <data name="NoDataTitle" xml:space="preserve"><value>Start with how you feel</value></data>
-  <data name="NoDataDetail" xml:space="preserve"><value>After your next session, add a short rating so PaceLetics can guide your load.</value></data>
   <data name="TodayTraining" xml:space="preserve"><value>Today's training</value></data>
   <data name="NextTraining" xml:space="preserve"><value>Next training</value></data>
   <data name="MinutesShort" xml:space="preserve"><value>min</value></data>

@@ -110,8 +110,6 @@
   <data name="OnTrackDetail" xml:space="preserve"><value>Dein Feedback passt zur aktuellen Belastung. Fahre mit der nächsten geplanten Einheit fort.</value></data>
   <data name="UpcomingTitle" xml:space="preserve"><value>Deine nächste Einheit ist bereit</value></data>
   <data name="UpcomingDetail" xml:space="preserve"><value>Öffne vor dem Start das Briefing. Dein Feedback danach personalisiert die nächste Empfehlung.</value></data>
-  <data name="NoDataTitle" xml:space="preserve"><value>Starte mit deinem Gefühl</value></data>
-  <data name="NoDataDetail" xml:space="preserve"><value>Bewerte nach der nächsten Einheit kurz dein Training, damit PaceLetics deine Belastung einordnen kann.</value></data>
   <data name="TodayTraining" xml:space="preserve"><value>Dein Training heute</value></data>
   <data name="NextTraining" xml:space="preserve"><value>Dein nächstes Training</value></data>
   <data name="MinutesShort" xml:space="preserve"><value>Min.</value></data>
