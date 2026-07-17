@@ -135,17 +135,12 @@ window.paceleticsAcademy = (() => {
     function waitForPrintDialog() {
         return new Promise((resolve, reject) => {
             let settled = false;
-            let printMediaEntered = false;
-            const printMedia = typeof window.matchMedia === "function"
-                ? window.matchMedia("print")
-                : null;
 
             const finish = error => {
                 if (settled) return;
 
                 settled = true;
                 window.removeEventListener("afterprint", handleAfterPrint);
-                printMedia?.removeEventListener?.("change", handlePrintMediaChange);
 
                 if (error) {
                     reject(error);
@@ -155,16 +150,8 @@ window.paceleticsAcademy = (() => {
             };
 
             const handleAfterPrint = () => finish();
-            const handlePrintMediaChange = event => {
-                if (event.matches) {
-                    printMediaEntered = true;
-                } else if (printMediaEntered) {
-                    finish();
-                }
-            };
 
             window.addEventListener("afterprint", handleAfterPrint, { once: true });
-            printMedia?.addEventListener?.("change", handlePrintMediaChange);
 
             try {
                 window.print();
@@ -174,34 +161,22 @@ window.paceleticsAcademy = (() => {
         });
     }
 
+    function waitForNextPaint() {
+        return new Promise(resolve => {
+            window.requestAnimationFrame(() => window.requestAnimationFrame(resolve));
+        });
+    }
+
     async function exportPdf(selector, title) {
         const root = document.querySelector(selector);
         if (!root) {
             throw new Error("Academy article export area was not found.");
         }
 
-        const printDocument = document.createElement("main");
-        const printBrand = document.createElement("header");
-        const printBrandName = document.createElement("span");
-        const printBrandLink = document.createElement("a");
-        const printableArticle = root.cloneNode(true);
         const previousTitle = document.title;
 
-        printDocument.className = "pl-academy-print-document";
-        printDocument.lang = document.documentElement.lang;
-        printDocument.dir = document.documentElement.dir;
-        printDocument.setAttribute("aria-hidden", "true");
-        printBrand.className = "pl-academy-print-brand";
-        printBrandName.textContent = "PaceLetics Academy";
-        printBrandLink.href = "https://paceletics.app/";
-        printBrandLink.textContent = "paceletics.app";
-        printBrand.append(printBrandName, printBrandLink);
-        printableArticle.removeAttribute("id");
-        printDocument.append(printBrand, printableArticle);
-        document.body.append(printDocument);
-
         try {
-            const images = Array.from(printDocument.querySelectorAll("img"));
+            const images = Array.from(root.querySelectorAll("img"));
             await Promise.all(images.map(waitForImage));
 
             if (document.fonts?.ready) {
@@ -209,9 +184,11 @@ window.paceleticsAcademy = (() => {
             }
 
             document.title = title || previousTitle;
+            document.body.classList.add("pl-academy-printing");
+            await waitForNextPaint();
             await waitForPrintDialog();
         } finally {
-            printDocument.remove();
+            document.body.classList.remove("pl-academy-printing");
             document.title = previousTitle;
         }
     }

@@ -2380,7 +2380,7 @@
     text-decoration: underline;
 }
 
-.pl-academy-print-document {
+.pl-academy-print-brand {
     display: none;
 }
 
@@ -2395,17 +2395,45 @@
         background: #fff !important;
     }
 
-    body > *:not(.pl-academy-print-document) {
+    body.pl-academy-printing > * {
         display: none !important;
     }
 
-    body > .pl-academy-print-document {
+    body.pl-academy-printing > .mud-layout {
+        display: block !important;
+        min-height: 0 !important;
+    }
+
+    body.pl-academy-printing > .mud-layout > * {
+        display: none !important;
+    }
+
+    body.pl-academy-printing > .mud-layout > .mud-main-content {
+        display: block !important;
+        position: static !important;
+        z-index: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body.pl-academy-printing .pl-main-content,
+    body.pl-academy-printing .pl-section-page {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body.pl-academy-printing .pl-academy-article__actions {
+        display: none !important;
+    }
+
+    body.pl-academy-printing .pl-academy-article__export {
         --mud-palette-primary: #00695c;
         --mud-palette-surface: #fff;
         --mud-palette-text-primary: #17201f;
         --mud-palette-text-secondary: #44514f;
         --mud-palette-lines-default: #ccd5d3;
-        display: block !important;
         position: relative;
         isolation: isolate;
         width: 100%;
@@ -2415,7 +2443,7 @@
         -webkit-print-color-adjust: exact;
     }
 
-    .pl-academy-print-document::before {
+    body.pl-academy-printing .pl-academy-article__export::before {
         position: fixed;
         top: 46%;
         left: 50%;
@@ -2432,12 +2460,12 @@
         white-space: nowrap;
     }
 
-    .pl-academy-print-document > * {
+    body.pl-academy-printing .pl-academy-article__export > * {
         position: relative;
         z-index: 1;
     }
 
-    .pl-academy-print-brand {
+    body.pl-academy-printing .pl-academy-print-brand {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -2451,47 +2479,47 @@
         break-after: avoid;
     }
 
-    .pl-academy-print-brand a {
+    body.pl-academy-printing .pl-academy-print-brand a {
         color: #00695c !important;
         text-decoration: none;
     }
 
-    .pl-academy-print-document .pl-academy-article {
+    body.pl-academy-printing .pl-academy-article {
         border-color: #ccd5d3;
         background: #fff;
         box-shadow: none !important;
     }
 
-    .pl-academy-print-document .pl-academy-article__topline {
+    body.pl-academy-printing .pl-academy-article__topline {
         break-inside: avoid;
     }
 
-    .pl-academy-print-document h1,
-    .pl-academy-print-document h2,
-    .pl-academy-print-document h3 {
+    body.pl-academy-printing .pl-academy-article__export h1,
+    body.pl-academy-printing .pl-academy-article__export h2,
+    body.pl-academy-printing .pl-academy-article__export h3 {
         break-after: avoid;
     }
 
-    .pl-academy-print-document p,
-    .pl-academy-print-document li {
+    body.pl-academy-printing .pl-academy-article__export p,
+    body.pl-academy-printing .pl-academy-article__export li {
         orphans: 3;
         widows: 3;
     }
 
-    .pl-academy-print-document img {
+    body.pl-academy-printing .pl-academy-article__export img {
         max-width: 100%;
         max-height: 225mm;
         object-fit: contain;
         break-inside: avoid;
     }
 
-    .pl-academy-print-document table,
-    .pl-academy-print-document blockquote,
-    .pl-academy-print-document pre {
+    body.pl-academy-printing .pl-academy-article__export table,
+    body.pl-academy-printing .pl-academy-article__export blockquote,
+    body.pl-academy-printing .pl-academy-article__export pre {
         break-inside: avoid;
     }
 
-    .pl-academy-print-document a {
+    body.pl-academy-printing .pl-academy-article__export a {
         color: #00695c !important;
         text-decoration: underline;
     }
