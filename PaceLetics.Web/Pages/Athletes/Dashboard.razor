@@ -6,7 +6,6 @@
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
 @using PaceLetics.Web.Services.Calendar
 @using PaceLetics.Web.Services.DashboardPreferences
-@using PaceLetics.Web.Services.Integrations
 @inject IAthleteData AthleteData
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ITrainingPlanService TrainingPlanService
@@ -15,11 +14,10 @@
 @inject ITrainingFeedbackService FeedbackService
 @inject IAthleteMessageFeedService MessageFeedService
 @inject DashboardPreferencesService DashboardPreferences
-@inject IntegrationStatusService IntegrationStatus
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Dashboard> L
 
-<PageTitle>@L["TodayPageTitle"]</PageTitle>
+<PageTitle>@L["PageTitle"]</PageTitle>
 
 <MudContainer Class="pl-section-page px-4 px-sm-6 pb-8 pl-today-page" MaxWidth="MaxWidth.Medium">
     <PageHeader Title="@GetGreeting()" Subtitle="@L["TodaySubtitle"]">
@@ -81,6 +79,11 @@
 
                                     <TrainingSessionSummary Session="@next.Session" Compact="true" />
 
+                                    @if (GetSessionStart(next.Session).Date <= DateTime.Today.AddDays(1))
+                                    {
+                                        <TrainingContextCard Session="@next.Session" />
+                                    }
+
                                     <MudButton Href="@GetSessionHref(next)"
                                                Variant="Variant.Filled"
                                                Color="Color.Primary"
@@ -129,6 +132,14 @@
                                 }
                             </div>
                             <p class="pl-week-summary__recommendation"><MudIcon Icon="@Icons.Material.Filled.AutoAwesome" Size="Size.Small" /> @GetNextWeekRecommendation()</p>
+                            @if (NextNonTrainingItem is { } notice)
+                            {
+                                <a class="pl-today-notice" href="/Athletes/plan">
+                                    <span class="pl-today-notice__date"><strong>@notice.StartsAt.Day</strong><small>@notice.StartsAt.ToString("MMM")</small></span>
+                                    <span><strong>@notice.Title</strong><small>@GetNoticeMeta(notice)</small></span>
+                                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                                </a>
+                            }
                         </section>
                         break;
 
@@ -149,62 +160,15 @@
                         </section>
                         break;
 
-                    case DashboardSectionKeys.Context:
-                        @if (NextSession is { } contextSession && GetSessionStart(contextSession.Session).Date <= DateTime.Today.AddDays(1))
+                    case DashboardSectionKeys.Messages:
+                        @if (_messages.Count > 0)
                         {
-                            <TrainingContextCard Session="@contextSession.Session" />
+                            <section class="pl-today-section" aria-label="@L["MessagesSection"]">
+                                <DashboardMessageFeed Messages="@_messages" />
+                            </section>
                         }
                         break;
-
-                    case DashboardSectionKeys.Messages:
-                        <section class="pl-today-section" aria-label="@L["MessagesSection"]">
-                            <DashboardMessageFeed Messages="@_messages" />
-                        </section>
-                        break;
-
-                    case DashboardSectionKeys.Integrations:
-                        <section class="pl-today-section" aria-labelledby="integration-title">
-                            <div class="pl-today-section__heading">
-                                <span>
-                                    <MudText Typo="Typo.h6" HtmlTag="h2" id="integration-title">@L["IntegrationStatus"]</MudText>
-                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@GetIntegrationSummary()</MudText>
-                                </span>
-                                <a href="/Athletes/integrations">@L["ManageIntegrations"]</a>
-                            </div>
-                            <div class="pl-integration-grid">
-                                @foreach (var integration in _integrations)
-                                {
-                                    <div class="@GetIntegrationClass(integration)">
-                                        <span class="pl-integration__dot" aria-hidden="true"></span>
-                                        <span><strong>@GetProviderName(integration.Provider)</strong><small>@GetIntegrationDetail(integration)</small></span>
-                                        @if (!integration.IsAvailable)
-                                        {
-                                            <MudIcon Icon="@Icons.Material.Filled.LockClock" Size="Size.Small" aria-label="@L["NotAvailable"]" />
-                                        }
-                                        else if (integration.HasReadySession)
-                                        {
-                                            <MudIcon Icon="@Icons.Material.Filled.CloudDone" Size="Size.Small" />
-                                        }
-                                    </div>
-                                }
-                            </div>
-                        </section>
-                        break;
                 }
-            }
-
-            @if (NextNonTrainingItem is { } notice)
-            {
-                <section class="pl-today-section" aria-labelledby="notice-title">
-                    <div class="pl-today-section__heading">
-                        <span><MudText Typo="Typo.h6" HtmlTag="h2" id="notice-title">@L["Notice"]</MudText><MudText Typo="Typo.body2" Color="Color.Secondary">@L["NextCourseDate"]</MudText></span>
-                    </div>
-                    <a class="pl-today-notice" href="/Athletes/plan">
-                        <span class="pl-today-notice__date"><strong>@notice.StartsAt.Day</strong><small>@notice.StartsAt.ToString("MMM")</small></span>
-                        <span><strong>@notice.Title</strong><small>@GetNoticeMeta(notice)</small></span>
-                        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
-                    </a>
-                </section>
             }
         }
     </MudStack>
@@ -236,16 +200,12 @@
 
     private AthleteModel? _athlete;
     private string _name = string.Empty;
-    private string? _userId;
     private IReadOnlyList<TrainingPlan> _plans = Array.Empty<TrainingPlan>();
     private IReadOnlyList<TrainingCalendarItem> _calendarItems = Array.Empty<TrainingCalendarItem>();
     private IReadOnlyList<TrainingSessionCompletionDocument> _completions = Array.Empty<TrainingSessionCompletionDocument>();
-    private IReadOnlyList<TrainingFeedbackDocument> _feedback = Array.Empty<TrainingFeedbackDocument>();
     private IReadOnlyList<AthleteMessage> _messages = Array.Empty<AthleteMessage>();
-    private IReadOnlyList<IntegrationStatus> _integrations = IntegrationProviders.All.Select(provider => new IntegrationStatus(provider)).ToList();
     private List<DashboardSectionPreference> _sections = DashboardPreferencesService.CreateDefault().ToList();
     private TrainingRecommendation _recommendation = new(TrainingRecommendationKind.NoData, 0);
-    private int _recentFeedbackCount;
     private bool _hasLoadError;
     private bool _isLoading = true;
     private bool _customizeOpen;
@@ -315,7 +275,6 @@
             return;
 
         _sections = (await DashboardPreferences.GetAsync()).ToList();
-        _integrations = await IntegrationStatus.GetAsync(_userId);
         await InvokeAsync(StateHasChanged);
     }
 
@@ -328,7 +287,6 @@
             var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var userId = state.User.FindFirst(claim =>
                 claim.Type.Contains("nameidentifier", StringComparison.OrdinalIgnoreCase))?.Value;
-            _userId = userId;
             _name = state.User.Identity?.Name ?? string.Empty;
             if (string.IsNullOrWhiteSpace(userId))
                 return;
@@ -350,13 +308,10 @@
                 var plansTask = TrainingPlanService.LoadTrainingPlansForUserAsync(userId);
                 var calendarTask = CalendarService.GetCalendarItemsForAthleteAsync(userId);
                 var completionsTask = AchievementService.GetTrainingSessionCompletionsForAthleteAsync(userId);
-                var feedbackTask = FeedbackService.GetRecentAsync(userId, 28);
-                await Task.WhenAll(plansTask, calendarTask, completionsTask, feedbackTask);
+                await Task.WhenAll(plansTask, calendarTask, completionsTask);
                 _plans = await plansTask;
                 _calendarItems = await calendarTask;
                 _completions = await completionsTask;
-                _feedback = await feedbackTask;
-                _recentFeedbackCount = _feedback.Count;
                 _recommendation = await FeedbackService.GetRecommendationAsync(userId, NextSession is not null);
                 _messages = MessageFeedService.Build(new AthleteMessageContext(
                     _athlete?.AthleteId ?? _athlete?.Id ?? userId,
@@ -371,10 +326,8 @@
                 _plans = Array.Empty<TrainingPlan>();
                 _calendarItems = Array.Empty<TrainingCalendarItem>();
                 _completions = Array.Empty<TrainingSessionCompletionDocument>();
-                _feedback = Array.Empty<TrainingFeedbackDocument>();
                 _messages = Array.Empty<AthleteMessage>();
                 _recommendation = new TrainingRecommendation(TrainingRecommendationKind.NoData, 0);
-                _recentFeedbackCount = 0;
                 _hasLoadError = true;
             }
         }
@@ -548,54 +501,13 @@
             : L["RecommendationConsistency"];
     }
 
-    private string GetIntegrationSummary()
-    {
-        if (_integrations.All(item => !item.IsAvailable))
-            return L["IntegrationsComingSoon"];
-        var connected = _integrations.Count(item => item.IsConnected);
-        return connected == 0 ? L["NoIntegrations"] : L["ConnectedIntegrations", connected];
-    }
-
-    private string GetIntegrationDetail(IntegrationStatus integration)
-    {
-        if (!integration.IsAvailable)
-            return L["NotAvailable"];
-        if (!integration.IsConnected)
-            return L["NotConnected"];
-        if (!string.IsNullOrWhiteSpace(integration.Error))
-            return L["SyncError"];
-        return integration.LastSyncAt is { } lastSync
-            ? L["LastSync", lastSync.ToLocalTime()]
-            : L["Connected"];
-    }
-
-    private static string GetIntegrationClass(IntegrationStatus integration)
-    {
-        if (!integration.IsAvailable)
-            return "pl-integration pl-integration--unavailable";
-        return integration.IsConnected
-            ? "pl-integration pl-integration--connected"
-            : "pl-integration";
-    }
-
-    private static string GetProviderName(string provider) => provider switch
-    {
-        IntegrationProviders.Garmin => "Garmin",
-        IntegrationProviders.Apple => "Apple Health",
-        IntegrationProviders.Coros => "COROS",
-        IntegrationProviders.Strava => "Strava",
-        _ => provider
-    };
-
     private string GetSectionLabel(string key) => key switch
     {
         DashboardSectionKeys.Readiness => L["SectionReadiness"],
         DashboardSectionKeys.NextSession => L["SectionNextSession"],
         DashboardSectionKeys.Week => L["SectionWeek"],
         DashboardSectionKeys.Progress => L["SectionProgress"],
-        DashboardSectionKeys.Context => L["SectionContext"],
         DashboardSectionKeys.Messages => L["SectionMessages"],
-        DashboardSectionKeys.Integrations => L["SectionIntegrations"],
         _ => key
     };
 

@@ -4,15 +4,15 @@
 
 <nav class="pl-bottom-nav" aria-label="@L["MobileNavigation"]">
     <NavLink href="/"
-             class="@GetItemClass(MobileSection.Today)"
+             class="@GetItemClass(MobileSection.Dashboard)"
              ActiveClass="pl-bottom-nav__item--active"
              Match="NavLinkMatch.All"
-             title="@L["Nav_Today"]">
+             title="@L["Nav_Dashboard"]">
         <span class="pl-bottom-nav__content">
             <span class="pl-bottom-nav__icon" aria-hidden="true">
-                <MudIcon Icon="@Icons.Material.Filled.Today" Size="Size.Medium" />
+                <MudIcon Icon="@Icons.Material.Filled.Dashboard" Size="Size.Medium" />
             </span>
-            <span class="pl-bottom-nav__label">@L["Nav_Today"]</span>
+            <span class="pl-bottom-nav__label">@L["Nav_Dashboard"]</span>
         </span>
     </NavLink>
 
@@ -72,7 +72,7 @@
 @code {
     private enum MobileSection
     {
-        Today,
+        Dashboard,
         Plan,
         Train,
         Progress,
@@ -107,7 +107,7 @@
 
         return section switch
         {
-            MobileSection.Today => string.IsNullOrEmpty(path) || path.StartsWith("athletes/dashboard"),
+            MobileSection.Dashboard => string.IsNullOrEmpty(path) || path.StartsWith("athletes/dashboard"),
             MobileSection.Plan => path.StartsWith("athletes/plan")
                 || path.StartsWith("athletes/session")
                 || path.StartsWith("athletes/trainingcalendar")

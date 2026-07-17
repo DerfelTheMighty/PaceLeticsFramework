@@ -131,8 +131,8 @@
   <data name="FeedbackLast28Days" xml:space="preserve"><value>Feedbacks · 28 Tage</value></data>
   <data name="Notice" xml:space="preserve"><value>Demnächst</value></data>
   <data name="NextCourseDate" xml:space="preserve"><value>Dein nächster Kurstermin oder dein nächstes Event.</value></data>
-  <data name="CustomizeDashboard" xml:space="preserve"><value>Startseite anpassen</value></data>
-  <data name="CustomizeHint" xml:space="preserve"><value>Wähle aus, was unter Heute erscheint, und sortiere die Bereiche passend zu deinem Alltag.</value></data>
+  <data name="CustomizeDashboard" xml:space="preserve"><value>Dashboard anpassen</value></data>
+  <data name="CustomizeHint" xml:space="preserve"><value>Wähle aus, was auf dem Dashboard erscheint, und sortiere die Bereiche passend zu deinem Alltag.</value></data>
   <data name="Close" xml:space="preserve"><value>Schließen</value></data>
   <data name="MoveUp" xml:space="preserve"><value>Nach oben</value></data>
   <data name="MoveDown" xml:space="preserve"><value>Nach unten</value></data>

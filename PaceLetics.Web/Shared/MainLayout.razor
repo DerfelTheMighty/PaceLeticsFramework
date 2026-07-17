@@ -158,7 +158,7 @@
     private string GetAppBarTitle()
     {
         var path = CurrentPath;
-        if (string.IsNullOrEmpty(path)) return NavL["Nav_Today"];
+        if (string.IsNullOrEmpty(path)) return NavL["Nav_Dashboard"];
         if (path.StartsWith("athletes/plan", StringComparison.OrdinalIgnoreCase)
             || path.StartsWith("athletes/session", StringComparison.OrdinalIgnoreCase)) return NavL["Nav_Plan"];
         if (path.StartsWith("workouts", StringComparison.OrdinalIgnoreCase)) return NavL["Nav_Train"];

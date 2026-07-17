@@ -6,19 +6,20 @@ public static class DashboardSectionKeys
     public const string NextSession = "next-session";
     public const string Week = "week";
     public const string Progress = "progress";
-    public const string Context = "context";
     public const string Messages = "messages";
-    public const string Integrations = "integrations";
 
     public static IReadOnlyList<string> Defaults { get; } =
-    [Readiness, NextSession, Week, Progress, Context, Messages, Integrations];
+    [Readiness, NextSession, Week, Progress, Messages];
+
+    public static bool IsVisibleByDefault(string key) =>
+        !string.Equals(key, Messages, StringComparison.OrdinalIgnoreCase);
 }
 
 public sealed record DashboardSectionPreference(string Key, bool Visible, int Order);
 
 public sealed class DashboardPreferencesService
 {
-    private const string StorageKey = "paceletics.dashboard.sections.v1";
+    private const string StorageKey = "paceletics.dashboard.sections.v2";
     private readonly ClientPreferenceStore _store;
 
     public DashboardPreferencesService(ClientPreferenceStore store)
@@ -37,7 +38,10 @@ public sealed class DashboardPreferencesService
 
     public static IReadOnlyList<DashboardSectionPreference> CreateDefault() =>
         DashboardSectionKeys.Defaults
-            .Select((key, index) => new DashboardSectionPreference(key, true, index))
+            .Select((key, index) => new DashboardSectionPreference(
+                key,
+                DashboardSectionKeys.IsVisibleByDefault(key),
+                index))
             .ToList();
 
     public static IReadOnlyList<DashboardSectionPreference> Normalize(IEnumerable<DashboardSectionPreference>? saved)
@@ -51,7 +55,10 @@ public sealed class DashboardPreferencesService
         foreach (var item in byKey.Values.OrderBy(item => item.Order))
             result.Add(item with { Order = result.Count });
         foreach (var key in DashboardSectionKeys.Defaults.Where(key => !byKey.ContainsKey(key)))
-            result.Add(new DashboardSectionPreference(key, true, result.Count));
+            result.Add(new DashboardSectionPreference(
+                key,
+                DashboardSectionKeys.IsVisibleByDefault(key),
+                result.Count));
         return result;
     }
 }
