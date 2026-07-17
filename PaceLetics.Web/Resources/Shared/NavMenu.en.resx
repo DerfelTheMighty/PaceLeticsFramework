@@ -48,10 +48,4 @@
   <data name="Nav_Profiles" xml:space="preserve"><value>Profiles</value></data>
   <data name="Nav_About" xml:space="preserve"><value>About</value></data>
   <data name="Nav_TrainerWorkoutCatalog" xml:space="preserve"><value>Workout Catalog</value></data>
-  <data name="MobileNavigation" xml:space="preserve"><value>Main navigation</value></data>
-  <data name="Nav_Today" xml:space="preserve"><value>Today</value></data>
-  <data name="Nav_Plan" xml:space="preserve"><value>Plan</value></data>
-  <data name="Nav_Train" xml:space="preserve"><value>Train</value></data>
-  <data name="Nav_Progress" xml:space="preserve"><value>Progress</value></data>
-  <data name="Nav_More" xml:space="preserve"><value>More</value></data>
 </root>

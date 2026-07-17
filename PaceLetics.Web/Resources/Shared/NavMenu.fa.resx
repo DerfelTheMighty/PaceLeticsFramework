@@ -20,10 +20,4 @@
   <data name="Nav_Analyses" xml:space="preserve"><value>تحلیل‌های من</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
   <data name="Nav_TrainerRunningAnalyses" xml:space="preserve"><value>تحلیل‌های دویدن</value></data>
-  <data name="MobileNavigation" xml:space="preserve"><value>ناوبری اصلی</value></data>
-  <data name="Nav_Today" xml:space="preserve"><value>امروز</value></data>
-  <data name="Nav_Plan" xml:space="preserve"><value>برنامه</value></data>
-  <data name="Nav_Train" xml:space="preserve"><value>تمرین</value></data>
-  <data name="Nav_Progress" xml:space="preserve"><value>پیشرفت</value></data>
-  <data name="Nav_More" xml:space="preserve"><value>بیشتر</value></data>
 </root>

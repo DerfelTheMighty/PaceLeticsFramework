@@ -9,7 +9,4 @@
   <data name="LogOut" xml:space="preserve"><value>Log out</value></data>
   <data name="Register" xml:space="preserve"><value>Register</value></data>
   <data name="LogIn" xml:space="preserve"><value>Log in</value></data>
-  <data name="AccountMenu" xml:space="preserve"><value>Open account menu</value></data>
-  <data name="Settings" xml:space="preserve"><value>Settings</value></data>
-  <data name="TrainerArea" xml:space="preserve"><value>Trainer area</value></data>
 </root>

@@ -4,7 +4,6 @@
 @inject ThemePreferenceService ThemePreferences
 @inject IStringLocalizer<MainLayout> L
 @inject IStringLocalizer<NavMenu> NavL
-@inject NavigationManager Navigation
 
 <MudThemeProvider @ref="_themeProvider"
                   Theme="@ThemePreferences.CurrentTheme"
@@ -23,35 +22,53 @@
                        Color="Color.Inherit"
                        Edge="Edge.Start"
                        Class="pl-desktop-only"
-                       aria-label="@NavL["NavigationMenu"]"
                        OnClick="@((e) => DrawerToggle())" />
-        @if (GetBackHref() is { } backHref)
-        {
-            <MudIconButton Icon="@Icons.Material.Filled.ArrowBack"
-                           Color="Color.Inherit"
-                           Class="pl-mobile-back"
-                           aria-label="@NavL["Back"]"
-                           OnClick="@(() => Navigation.NavigateTo(backHref))" />
-        }
-        <MudText Align="Align.Start" Class="pl-appbar-title">@GetAppBarTitle()</MudText>
+        <MudText Align="Align.Start" Class="pl-appbar-logo" aria-label="PaceLetics">
+            PL
+        </MudText>
         <MudSpacer />
         <AthleteMessageFeedButton />
+        <AuthorizeView Roles="@ApplicationRoles.Trainer">
+            <Authorized>
+                <MudMenu Icon="@Icons.Material.Filled.MoreVert"
+                         Color="Color.Inherit"
+                         Class="pl-mobile-more-menu"
+                         AnchorOrigin="Origin.BottomRight"
+                         TransformOrigin="Origin.TopRight">
+                    <MudMenuItem Href="/Trainers/courses" Icon="@Icons.Material.Filled.School">
+                        @NavL["Nav_TrainerCourses"]
+                    </MudMenuItem>
+                    <MudMenuItem Href="/Trainers/groups" Icon="@Icons.Material.Filled.Groups">
+                        Gruppen
+                    </MudMenuItem>
+                    <MudMenuItem Href="/Trainers/training-plans" Icon="@Icons.Material.Filled.EventNote">
+                        @NavL["Nav_TrainingPlan"]
+                    </MudMenuItem>
+                    <MudMenuItem Href="/Trainers/achievements" Icon="@Icons.Material.Filled.EmojiEvents">
+                        Achievements
+                    </MudMenuItem>
+                    <MudMenuItem Href="/Trainers/running-analyses" Icon="@Icons.Material.Filled.Analytics">
+                        @NavL["Nav_TrainerRunningAnalyses"]
+                    </MudMenuItem>
+                    <MudMenuItem Href="/Trainers/workout-catalog" Icon="@Icons.Material.Filled.FitnessCenter">
+                        @NavL["Nav_TrainerWorkoutCatalog"]
+                    </MudMenuItem>
+                </MudMenu>
+            </Authorized>
+        </AuthorizeView>
         <AuthorizeView>
             <Authorized>
                 <MudTooltip Text="@NavL["Nav_MyDrive"]">
                     <MudIconButton Icon="@Icons.Material.Filled.FolderOpen"
                                    Color="Color.Inherit"
                                    Size="Size.Small"
-                                   Class="pl-topbar-quick-action"
                                    Href="/Athletes/drive"
                                    aria-label="@NavL["Nav_MyDrive"]" />
                 </MudTooltip>
             </Authorized>
         </AuthorizeView>
-        <MudMenu Icon="@ThemePreferences.CurrentThemeDefinition.Icon"
+        <MudMenu Icon="@GetThemeMenuIcon()"
                  Color="Color.Inherit"
-                 Class="pl-topbar-quick-action"
-                 aria-label="@L["ThemeSelector", GetThemeName(ThemePreferences.ThemeName)]"
                  AnchorOrigin="Origin.BottomRight"
                  TransformOrigin="Origin.TopRight">
             <MudMenuItem Disabled="true">
@@ -72,8 +89,14 @@
                 </MudMenuItem>
             }
         </MudMenu>
-        <CultureSelector Class="pl-topbar-quick-action" />
         <LoginDisplay />
+        <MudTooltip Text="@NavL["Nav_About"]">
+            <MudIconButton Icon="@Icons.Material.Filled.Info"
+                           Color="Color.Inherit"
+                           Size="Size.Small"
+                           Href="/impressum"
+                           aria-label="@NavL["Nav_About"]" />
+        </MudTooltip>
 
     </MudAppBar>
 
@@ -92,7 +115,6 @@
     </MudMainContent>
 
     <BottomNavBar />
-    <UndoHost />
     <LoadingHost />
     <AcademyInfoHost />
     <PublicUserNamePrompt />
@@ -105,7 +127,6 @@
     protected override void OnInitialized()
     {
         ThemePreferences.Changed += OnThemePreferenceChanged;
-        Navigation.LocationChanged += OnLocationChanged;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -123,12 +144,19 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    private static string GetThemeName(AppThemeName themeName) =>
-        AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
+    private string GetThemeMenuIcon()
+    {
+        return ThemePreferences.CurrentThemeDefinition.Icon;
+    }
+
+    private string GetThemeName(AppThemeName themeName)
+    {
+        return AppThemeCatalog.GetThemeDefinition(themeName).DisplayName;
+    }
 
     private string GetLayoutClass()
     {
-        var themeClass = ThemePreferences.ThemeName switch
+        return ThemePreferences.ThemeName switch
         {
             AppThemeName.PaceLetics => "pl-synthwave-layout",
             AppThemeName.Ocean => "pl-ocean-layout",
@@ -140,47 +168,7 @@
             AppThemeName.Tropical => "pl-tropical-layout",
             _ => string.Empty
         };
-
-        return IsWorkoutRoute()
-            ? $"{themeClass} pl-workout-route".Trim()
-            : themeClass;
     }
-
-    private bool IsWorkoutRoute() => Navigation.ToBaseRelativePath(Navigation.Uri)
-        .Split('?', '#')[0]
-        .Trim('/')
-        .Equals("workouts/workoutroom", StringComparison.OrdinalIgnoreCase);
-
-    private string CurrentPath => Navigation.ToBaseRelativePath(Navigation.Uri)
-        .Split('?', '#')[0]
-        .Trim('/');
-
-    private string GetAppBarTitle()
-    {
-        var path = CurrentPath;
-        if (string.IsNullOrEmpty(path)) return NavL["Nav_Dashboard"];
-        if (path.StartsWith("athletes/plan", StringComparison.OrdinalIgnoreCase)
-            || path.StartsWith("athletes/session", StringComparison.OrdinalIgnoreCase)) return NavL["Nav_Plan"];
-        if (path.StartsWith("workouts", StringComparison.OrdinalIgnoreCase)) return NavL["Nav_Train"];
-        if (path.StartsWith("athletes/data", StringComparison.OrdinalIgnoreCase)
-            || path.StartsWith("athletes/race", StringComparison.OrdinalIgnoreCase)
-            || path.StartsWith("athletes/pace", StringComparison.OrdinalIgnoreCase)
-            || path.StartsWith("athletes/analyses", StringComparison.OrdinalIgnoreCase)) return NavL["Nav_Progress"];
-        if (path.StartsWith("trainers", StringComparison.OrdinalIgnoreCase)) return NavL["TrainerArea"];
-        if (path.StartsWith("athletes/settings", StringComparison.OrdinalIgnoreCase)) return NavL["Settings"];
-        return NavL["Nav_More"];
-    }
-
-    private string? GetBackHref()
-    {
-        var path = CurrentPath;
-        if (path.StartsWith("athletes/session/", StringComparison.OrdinalIgnoreCase)) return "/Athletes/plan";
-        if (path.StartsWith("athletes/analyses/", StringComparison.OrdinalIgnoreCase)) return "/Athletes/data-analyses?section=running-form";
-        return null;
-    }
-
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs args) =>
-        _ = InvokeAsync(StateHasChanged);
 
     private string GetThemeStyle()
     {
@@ -243,6 +231,5 @@
     public void Dispose()
     {
         ThemePreferences.Changed -= OnThemePreferenceChanged;
-        Navigation.LocationChanged -= OnLocationChanged;
     }
 }

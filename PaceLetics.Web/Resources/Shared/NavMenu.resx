@@ -38,8 +38,8 @@
   <data name="Nav_Mate" xml:space="preserve"><value>Pace Mate</value></data>
   <data name="Nav_RaceData" xml:space="preserve"><value>Race Data</value></data>
   <data name="Nav_PaceZones" xml:space="preserve"><value>Pace Zones</value></data>
-  <data name="Nav_Courses" xml:space="preserve"><value>Courses</value></data>
-  <data name="Nav_DataAnalyses" xml:space="preserve"><value>Analysis</value></data>
+  <data name="Nav_Courses" xml:space="preserve"><value>Courses &amp; Plans</value></data>
+  <data name="Nav_DataAnalyses" xml:space="preserve"><value>Data &amp; Analyses</value></data>
   <data name="Nav_Analyses" xml:space="preserve"><value>My Analyses</value></data>
   <data name="Nav_MyDrive" xml:space="preserve"><value>My Drive</value></data>
   <data name="Nav_TrainerCourses" xml:space="preserve"><value>Manage Courses</value></data>
@@ -49,18 +49,4 @@
   <data name="Nav_Profiles" xml:space="preserve"><value>Profiles</value></data>
   <data name="Nav_About" xml:space="preserve"><value>About</value></data>
   <data name="Nav_TrainerWorkoutCatalog" xml:space="preserve"><value>Workout Catalog</value></data>
-  <data name="NavigationMenu" xml:space="preserve"><value>Open navigation</value></data>
-  <data name="TrainerMenu" xml:space="preserve"><value>Open trainer menu</value></data>
-  <data name="Nav_Groups" xml:space="preserve"><value>Groups</value></data>
-  <data name="Nav_Achievements" xml:space="preserve"><value>Achievements</value></data>
-  <data name="MobileNavigation" xml:space="preserve"><value>Main navigation</value></data>
-  <data name="Nav_Today" xml:space="preserve"><value>Today</value></data>
-  <data name="Nav_Plan" xml:space="preserve"><value>Plan</value></data>
-  <data name="Nav_Train" xml:space="preserve"><value>Train</value></data>
-  <data name="Nav_Progress" xml:space="preserve"><value>Progress</value></data>
-  <data name="Nav_More" xml:space="preserve"><value>More</value></data>
-  <data name="Back" xml:space="preserve"><value>Back</value></data>
-  <data name="Settings" xml:space="preserve"><value>Settings</value></data>
-  <data name="TrainerArea" xml:space="preserve"><value>Trainer area</value></data>
-  <data name="TrainerAreaSubtitle" xml:space="preserve"><value>Courses, plans and analyses.</value></data>
 </root>
