@@ -138,21 +138,38 @@ window.paceleticsAcademy = (() => {
             throw new Error("Academy article export area was not found.");
         }
 
-        const images = Array.from(root.querySelectorAll("img"));
-        await Promise.all(images.map(waitForImage));
-
-        if (document.fonts?.ready) {
-            await document.fonts.ready;
-        }
-
+        const printDocument = document.createElement("main");
+        const printBrand = document.createElement("header");
+        const printBrandName = document.createElement("span");
+        const printBrandLink = document.createElement("a");
+        const printableArticle = root.cloneNode(true);
         const previousTitle = document.title;
-        document.title = title || previousTitle;
-        root.classList.add("pl-academy-article__export--printing");
+
+        printDocument.className = "pl-academy-print-document";
+        printDocument.lang = document.documentElement.lang;
+        printDocument.dir = document.documentElement.dir;
+        printDocument.setAttribute("aria-hidden", "true");
+        printBrand.className = "pl-academy-print-brand";
+        printBrandName.textContent = "PaceLetics Academy";
+        printBrandLink.href = "https://paceletics.app/";
+        printBrandLink.textContent = "paceletics.app";
+        printBrand.append(printBrandName, printBrandLink);
+        printableArticle.removeAttribute("id");
+        printDocument.append(printBrand, printableArticle);
+        document.body.append(printDocument);
 
         try {
+            const images = Array.from(printDocument.querySelectorAll("img"));
+            await Promise.all(images.map(waitForImage));
+
+            if (document.fonts?.ready) {
+                await document.fonts.ready;
+            }
+
+            document.title = title || previousTitle;
             window.print();
         } finally {
-            root.classList.remove("pl-academy-article__export--printing");
+            printDocument.remove();
             document.title = previousTitle;
         }
     }
