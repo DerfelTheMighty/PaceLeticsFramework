@@ -132,6 +132,48 @@ window.paceleticsAcademy = (() => {
         }
     }
 
+    function waitForPrintDialog() {
+        return new Promise((resolve, reject) => {
+            let settled = false;
+            let printMediaEntered = false;
+            const printMedia = typeof window.matchMedia === "function"
+                ? window.matchMedia("print")
+                : null;
+
+            const finish = error => {
+                if (settled) return;
+
+                settled = true;
+                window.removeEventListener("afterprint", handleAfterPrint);
+                printMedia?.removeEventListener?.("change", handlePrintMediaChange);
+
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            };
+
+            const handleAfterPrint = () => finish();
+            const handlePrintMediaChange = event => {
+                if (event.matches) {
+                    printMediaEntered = true;
+                } else if (printMediaEntered) {
+                    finish();
+                }
+            };
+
+            window.addEventListener("afterprint", handleAfterPrint, { once: true });
+            printMedia?.addEventListener?.("change", handlePrintMediaChange);
+
+            try {
+                window.print();
+            } catch (error) {
+                finish(error);
+            }
+        });
+    }
+
     async function exportPdf(selector, title) {
         const root = document.querySelector(selector);
         if (!root) {
@@ -167,7 +209,7 @@ window.paceleticsAcademy = (() => {
             }
 
             document.title = title || previousTitle;
-            window.print();
+            await waitForPrintDialog();
         } finally {
             printDocument.remove();
             document.title = previousTitle;
