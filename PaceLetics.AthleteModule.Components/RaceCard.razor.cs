@@ -10,19 +10,21 @@ namespace PaceLetics.AthleteModule.Components
         public RaceResultModel? Model { get; set; }
 
         [Parameter]
-        public EventCallback OnEditRaceCard { get; set; }
+        public EventCallback<RaceResultModel> OnEditRaceCard { get; set; }
 
         [Parameter]
-        public EventCallback OnDeleteRaceCard { get; set; }
+        public EventCallback<RaceResultModel> OnDeleteRaceCard { get; set; }
 
         private async Task HandleEditCard()
         {
-            await OnEditRaceCard.InvokeAsync();
+            if (Model is not null)
+                await OnEditRaceCard.InvokeAsync(Model);
         }
 
         private async Task HandleDeleteCard()
         {
-            await OnDeleteRaceCard.InvokeAsync();
+            if (Model is not null)
+                await OnDeleteRaceCard.InvokeAsync(Model);
         }
 
         private static string GetRaceDistanceCode(string? type)

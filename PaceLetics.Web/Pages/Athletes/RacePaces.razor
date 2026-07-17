@@ -39,18 +39,22 @@
 
         @if (_activeSection == RacePacesSection.RaceData)
         {
-            @if (_athlete?.ActiveReferenceResult is null)
+            @if (ReferenceRuns.Count == 0)
             {
                 <ActionableEmptyState Title="@L["NoRaceTitle"]"
                                       Detail="@L["NoRaceWarning"]"
                                       ActionText="@L["AddRace"]"
-                                      OnAction="AddAthlete" />
+                                      OnAction="AddReferenceRun" />
             }
             else
             {
-                <RaceCard OnEditRaceCard="@AddAthlete"
-                          OnDeleteRaceCard="@DeleteActiveReferenceRun"
-                          Model="@_athlete.ActiveReferenceResult" />
+                @foreach (var raceResult in ReferenceRuns)
+                {
+                    <RaceCard @key="raceResult"
+                              OnEditRaceCard="EditReferenceRun"
+                              OnDeleteRaceCard="DeleteReferenceRun"
+                              Model="raceResult" />
+                }
 
                 <MudTooltip Text="@L["AddRace"]">
                     <MudIconButton Variant="Variant.Outlined"
@@ -60,7 +64,8 @@
                                    aria-label="@L["AddRace"]" />
                 </MudTooltip>
 
-                @if ((DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
+                @if (_athlete.ActiveReferenceResult is not null
+                    && (DateTime.Now - _athlete.ActiveReferenceResult.Date).TotalDays > 180)
                 {
                     <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
                         @L["RaceOldWarning"]

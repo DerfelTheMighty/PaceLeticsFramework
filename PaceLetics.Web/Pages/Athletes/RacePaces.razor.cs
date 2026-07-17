@@ -18,6 +18,10 @@ namespace PaceLetics.Web.Pages.Athletes
         private IReadOnlyList<CriticalSpeedIntervalRecommendation> _criticalSpeedIntervals = [];
         private bool _hasDanielsPaceModel;
         private double[] _vdotData { get; set; } = {0, 0};
+        private IReadOnlyList<RaceResultModel> ReferenceRuns => GetReferenceRuns()
+            .OrderByDescending(result => result.Date)
+            .ThenBy(result => result.Id, StringComparer.CurrentCultureIgnoreCase)
+            .ToList();
 
         [Parameter]
         [SupplyParameterFromQuery(Name = "section")]
@@ -84,32 +88,37 @@ namespace PaceLetics.Web.Pages.Athletes
             });
         }
 
-        private async Task AddAthlete()
+        private async Task EditReferenceRun(RaceResultModel raceResult)
         {
-            await OpenRaceDialog(_athlete.ActiveReferenceResult);
+            await OpenRaceDialog(raceResult);
         }
 
         private async Task AddReferenceRun()
         {
-            await OpenRaceDialog(new RaceResultModel { Date = DateTime.Now });
+            await OpenRaceDialog(null);
         }
 
-        private async Task DeleteActiveReferenceRun()
+        private async Task DeleteReferenceRun(RaceResultModel raceResult)
         {
-            var activeReferenceResult = _athlete.ActiveReferenceResult;
-            if (activeReferenceResult is null)
-                return;
-
             var confirmed = await JS.InvokeAsync<bool>("confirm", new object?[] { L["DeleteRaceConfirm"].Value });
             if (!confirmed)
                 return;
 
-            RemoveRaceResult(activeReferenceResult);
-            _athlete.ActiveReferenceResult = null;
-            _athlete.Vdot = 0;
-            _athlete.PaceModel = new PaceModel();
-            _vdotData[0] = 0;
-            _vdotData[1] = 0;
+            var removedActiveReference = IsActiveReferenceRun(raceResult);
+            RemoveRaceResult(raceResult);
+
+            if (removedActiveReference)
+            {
+                _athlete.ActiveReferenceResult = _athlete.RaceResults
+                    .OrderByDescending(result => result.Date)
+                    .FirstOrDefault();
+
+                if (_athlete.ActiveReferenceResult is not null)
+                    UpdateDanielsModel(_athlete.ActiveReferenceResult);
+                else
+                    ResetDanielsModel();
+            }
+
             UpdatePaceModels();
 
             await Loading.RunAsync(L["Loading"], () => AthleteData.UpdateAthlete(_athlete));
@@ -118,8 +127,10 @@ namespace PaceLetics.Web.Pages.Athletes
         private async Task OpenRaceDialog(RaceResultModel? raceResult)
         {
             var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
-
-            var parameters = new DialogParameters<AddRaceDialog> { { x => x.Model, raceResult ?? new RaceResultModel() } };
+            var dialogModel = raceResult is null
+                ? new RaceResultModel { Date = DateTime.Now }
+                : CloneRaceResult(raceResult);
+            var parameters = new DialogParameters<AddRaceDialog> { { x => x.Model, dialogModel } };
 
             var dialogRef = await dialogService.ShowAsync<AddRaceDialog>(string.Empty, parameters, options);
             var result = await dialogRef.Result;
@@ -131,9 +142,19 @@ namespace PaceLetics.Web.Pages.Athletes
             if (rrm is null)
                 return;
 
-            _athlete.ActiveReferenceResult = rrm;
-            SaveRaceResult(rrm);
-            UpdateDanielsModel(rrm);
+            var updatesActiveReference = raceResult is null || IsActiveReferenceRun(raceResult);
+
+            if (raceResult is null)
+                AddRaceResult(rrm);
+            else
+                ReplaceRaceResult(raceResult, rrm);
+
+            if (updatesActiveReference)
+            {
+                _athlete.ActiveReferenceResult = rrm;
+                UpdateDanielsModel(rrm);
+            }
+
             UpdatePaceModels();
 
             await Loading.RunAsync(L["Loading"], () => AthleteData.UpdateAthlete(_athlete));
@@ -142,6 +163,7 @@ namespace PaceLetics.Web.Pages.Athletes
         private void ApplyAthleteData(AthleteModel athlete)
         {
             _athlete = athlete;
+            _athlete.RaceResults ??= [];
             _vdotData[0] = _athlete.Vdot;
             _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
 
@@ -196,47 +218,84 @@ namespace PaceLetics.Web.Pages.Athletes
             }
         }
 
-        private void SaveRaceResult(RaceResultModel result)
+        private void ResetDanielsModel()
         {
-            _athlete.RaceResults ??= new List<RaceResultModel>();
+            _athlete.Vdot = 0;
+            _athlete.PaceModel = new PaceModel();
+            _vdotData[0] = 0;
+            _vdotData[1] = 0;
+        }
 
-            var existingIndex = _athlete.RaceResults.FindIndex(existing =>
-                !string.IsNullOrWhiteSpace(result.Id)
-                && string.Equals(existing.Id, result.Id, StringComparison.OrdinalIgnoreCase));
-
-            if (existingIndex >= 0)
-            {
-                _athlete.RaceResults[existingIndex] = result;
-                return;
-            }
-
+        private void AddRaceResult(RaceResultModel result)
+        {
+            _athlete.RaceResults ??= [];
             _athlete.RaceResults.Add(result);
+        }
+
+        private void ReplaceRaceResult(RaceResultModel original, RaceResultModel replacement)
+        {
+            _athlete.RaceResults ??= [];
+
+            var index = _athlete.RaceResults.FindIndex(existing => ReferenceEquals(existing, original));
+            if (index < 0)
+                index = _athlete.RaceResults.FindIndex(existing => IsSameRaceResult(existing, original));
+
+            if (index >= 0)
+                _athlete.RaceResults[index] = replacement;
+            else
+                _athlete.RaceResults.Add(replacement);
         }
 
         private void RemoveRaceResult(RaceResultModel result)
         {
-            _athlete.RaceResults ??= new List<RaceResultModel>();
+            _athlete.RaceResults ??= [];
 
-            _athlete.RaceResults.RemoveAll(existing =>
-                IsSameRaceResult(existing, result)
-                || (!string.IsNullOrWhiteSpace(result.Id)
-                    && string.Equals(existing.Id, result.Id, StringComparison.OrdinalIgnoreCase)));
+            var index = _athlete.RaceResults.FindIndex(existing => ReferenceEquals(existing, result));
+            if (index < 0)
+                index = _athlete.RaceResults.FindIndex(existing => IsSameRaceResult(existing, result));
+
+            if (index >= 0)
+                _athlete.RaceResults.RemoveAt(index);
         }
 
         private IEnumerable<RaceResultModel> GetCriticalSpeedResults()
         {
-            if (_athlete.ActiveReferenceResult is null)
-                return [];
+            return GetReferenceRuns();
+        }
 
+        private List<RaceResultModel> GetReferenceRuns()
+        {
             var results = new List<RaceResultModel>();
 
             if (_athlete.RaceResults is not null)
                 results.AddRange(_athlete.RaceResults);
 
-            if (_athlete.ActiveReferenceResult is not null && !results.Any(result => IsSameRaceResult(result, _athlete.ActiveReferenceResult)))
+            if (_athlete.ActiveReferenceResult is not null
+                && !results.Any(result => IsSameRaceResult(result, _athlete.ActiveReferenceResult)))
+            {
                 results.Add(_athlete.ActiveReferenceResult);
+            }
 
             return results;
+        }
+
+        private bool IsActiveReferenceRun(RaceResultModel result)
+        {
+            return _athlete.ActiveReferenceResult is not null
+                && (ReferenceEquals(_athlete.ActiveReferenceResult, result)
+                    || IsSameRaceResult(_athlete.ActiveReferenceResult, result));
+        }
+
+        private static RaceResultModel CloneRaceResult(RaceResultModel result)
+        {
+            return new RaceResultModel
+            {
+                Id = result.Id,
+                Type = result.Type,
+                DistanceM = result.DistanceM,
+                Date = result.Date,
+                Time = result.Time
+            };
         }
 
         private static bool IsSameRaceResult(RaceResultModel left, RaceResultModel right)
