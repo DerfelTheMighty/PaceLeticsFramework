@@ -98,7 +98,7 @@
   <data name="Metric_AchievementsDetail" xml:space="preserve"><value>Freigeschaltete Auszeichnungen</value></data>
   <data name="Tooltip_Achievements" xml:space="preserve"><value>Deine Auszeichnungen ansehen</value></data>
   <data name="TodayPageTitle" xml:space="preserve"><value>Heute</value></data>
-  <data name="TodaySubtitle" xml:space="preserve"><value>Dein nächster sinnvoller Schritt – ohne Ablenkung.</value></data>
+  <data name="TodaySubtitle" xml:space="preserve"><value>Hier findest du alles auf einen Blick.</value></data>
   <data name="GoodMorning" xml:space="preserve"><value>Guten Morgen</value></data>
   <data name="GoodDay" xml:space="preserve"><value>Hallo</value></data>
   <data name="GoodEvening" xml:space="preserve"><value>Guten Abend</value></data>
