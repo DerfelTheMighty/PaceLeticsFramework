@@ -79,6 +79,10 @@
                             <MudText Typo="Typo.body2" Color="Color.Secondary">@GetCriticalSpeedMethodText()</MudText>
                         </MudStack>
                     </MudPaper>
+
+                    <CriticalSpeedPaceChart Results="@ReferenceRuns"
+                                            Contributors="@_criticalSpeedContributors"
+                                            Model="@_criticalSpeed" />
                 }
             }
         }

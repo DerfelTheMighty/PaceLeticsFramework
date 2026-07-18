@@ -18,12 +18,7 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
 
         public CriticalSpeedModel Estimate(IEnumerable<RaceResultModel> results)
         {
-            var validResults = results
-                .Where(IsValid)
-                .GroupBy(result => result.DistanceM)
-                .Select(group => group.OrderByDescending(result => result.Date).First())
-                .OrderBy(result => result.DistanceM)
-                .ToList();
+            var validResults = GetLatestValidResults(results);
 
             if (validResults.Count == 0)
                 return new CriticalSpeedModel();
@@ -39,6 +34,17 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
                 return EstimateFromRegression(validResults);
 
             return EstimateFromSinglePerformance(validResults[0]);
+        }
+
+        public IReadOnlyList<RaceResultModel> GetContributingResults(IEnumerable<RaceResultModel> results)
+        {
+            var validResults = GetLatestValidResults(results);
+            var result1200 = validResults.FirstOrDefault(result => result.DistanceM == RaceDistances.D1200Meters);
+            var result3600 = validResults.FirstOrDefault(result => result.DistanceM == RaceDistances.D3600Meters);
+
+            return result1200 is not null && result3600 is not null
+                ? [result1200, result3600]
+                : validResults;
         }
 
         public PaceModel BuildPaceModel(CriticalSpeedModel model)
@@ -202,6 +208,18 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
         private static bool IsValid(RaceResultModel result)
         {
             return result.DistanceM > 0 && result.Time.TotalSeconds > 0;
+        }
+
+        private static List<RaceResultModel> GetLatestValidResults(IEnumerable<RaceResultModel> results)
+        {
+            ArgumentNullException.ThrowIfNull(results);
+
+            return results
+                .Where(IsValid)
+                .GroupBy(result => result.DistanceM)
+                .Select(group => group.OrderByDescending(result => result.Date).First())
+                .OrderBy(result => result.DistanceM)
+                .ToList();
         }
 
         private static double Speed(RaceResultModel result)

@@ -333,4 +333,31 @@
   <data name="CriticalSpeedBudget_Walk_Description" xml:space="preserve">
     <value>Walking without a prescribed pace.</value>
   </data>
+  <data name="CriticalSpeedChart_Title" xml:space="preserve">
+    <value>Distance vs. pace</value>
+  </data>
+  <data name="CriticalSpeedChart_Subtitle" xml:space="preserve">
+    <value>Reference runs used for Critical Speed are highlighted in red.</value>
+  </data>
+  <data name="CriticalSpeedChart_DistanceAxis" xml:space="preserve">
+    <value>Distance (km)</value>
+  </data>
+  <data name="CriticalSpeedChart_PaceAxis" xml:space="preserve">
+    <value>Pace (min/km)</value>
+  </data>
+  <data name="CriticalSpeedChart_CriticalPace" xml:space="preserve">
+    <value>Critical Pace</value>
+  </data>
+  <data name="CriticalSpeedChart_ContributorLegend" xml:space="preserve">
+    <value>Used for CS</value>
+  </data>
+  <data name="CriticalSpeedChart_OtherLegend" xml:space="preserve">
+    <value>Not used for CS</value>
+  </data>
+  <data name="CriticalSpeedChart_ContributionStatus" xml:space="preserve">
+    <value>used for Critical Speed</value>
+  </data>
+  <data name="CriticalSpeedChart_OtherStatus" xml:space="preserve">
+    <value>not used for Critical Speed</value>
+  </data>
 </root>

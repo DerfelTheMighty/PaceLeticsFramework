@@ -1,0 +1,103 @@
+.pl-cs-pace-chart {
+    --pl-metric-accent: var(--mud-palette-primary);
+}
+
+.pl-cs-chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    color: var(--mud-palette-text-secondary);
+    font-size: 0.75rem;
+}
+
+.pl-cs-chart-legend > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.pl-cs-chart-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}
+
+.pl-cs-chart-dot-contributor {
+    border-radius: 50%;
+    background: var(--mud-palette-error);
+}
+
+.pl-cs-chart-dot-other {
+    background: var(--mud-palette-text-secondary);
+    transform: rotate(45deg);
+}
+
+.pl-cs-chart-line {
+    display: inline-block;
+    width: 22px;
+    border-top: 2px dashed var(--mud-palette-primary);
+}
+
+.pl-cs-chart-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.pl-cs-chart-grid {
+    stroke: var(--mud-palette-lines-default);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+.pl-cs-chart-axis {
+    stroke: var(--mud-palette-text-secondary);
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+}
+
+.pl-cs-chart-tick,
+.pl-cs-chart-axis-title,
+.pl-cs-chart-critical-label {
+    fill: var(--mud-palette-text-secondary);
+    font-family: var(--mud-typography-default-family);
+    font-size: 14px;
+}
+
+.pl-cs-chart-axis-title,
+.pl-cs-chart-critical-label {
+    fill: var(--mud-palette-text-primary);
+    font-weight: 500;
+}
+
+.pl-cs-chart-critical-line {
+    stroke: var(--mud-palette-primary);
+    stroke-width: 2;
+    stroke-dasharray: 7 5;
+    vector-effect: non-scaling-stroke;
+}
+
+.pl-cs-chart-point-contributor {
+    fill: var(--mud-palette-error);
+    stroke: var(--mud-palette-surface);
+    stroke-width: 2;
+}
+
+.pl-cs-chart-point-other {
+    fill: var(--mud-palette-text-secondary);
+    stroke: var(--mud-palette-surface);
+    stroke-width: 2;
+}
+
+@media (max-width: 480px) {
+    .pl-cs-chart-legend {
+        gap: 6px 12px;
+    }
+
+    .pl-cs-chart-tick,
+    .pl-cs-chart-axis-title,
+    .pl-cs-chart-critical-label {
+        font-size: 17px;
+    }
+}

@@ -14,6 +14,7 @@ namespace PaceLetics.Web.Pages.Athletes
         private AthleteModel _athlete = new AthleteModel();
         private CriticalSpeedModel _criticalSpeed = new();
         private IReadOnlyList<CriticalSpeedIntervalRecommendation> _criticalSpeedIntervals = [];
+        private IReadOnlyList<RaceResultModel> _criticalSpeedContributors = [];
         private IReadOnlyList<RaceResultModel> ReferenceRuns => GetReferenceRuns()
             .OrderByDescending(result => result.Date)
             .ThenBy(result => result.Id, StringComparer.CurrentCultureIgnoreCase)
@@ -158,10 +159,13 @@ namespace PaceLetics.Web.Pages.Athletes
 
         private void UpdatePaceModels()
         {
-            _criticalSpeed = criticalSpeedService.Estimate(GetCriticalSpeedResults());
+            var results = GetCriticalSpeedResults().ToList();
+            _criticalSpeed = criticalSpeedService.Estimate(results);
+            _criticalSpeedContributors = criticalSpeedService.GetContributingResults(results);
             if (!_criticalSpeed.IsValid)
             {
                 _athlete.PaceModel = new PaceModel();
+                _criticalSpeedContributors = [];
                 _criticalSpeedIntervals = [];
                 return;
             }

@@ -55,6 +55,31 @@ public class CriticalSpeedServiceTests
     }
 
     [Fact]
+    public void GetContributingResults_UsesOnly1200And3600WhenBothAreAvailable()
+    {
+        var result1200 = CreateResult(RaceKeys.D1200m, RaceDistances.D1200Meters, TimeSpan.FromMinutes(5));
+        var result3000 = CreateResult(RaceKeys.D3k, RaceDistances.D3000Meters, TimeSpan.FromMinutes(11));
+        var result3600 = CreateResult(RaceKeys.D3600m, RaceDistances.D3600Meters, TimeSpan.FromMinutes(16));
+
+        var contributors = _service.GetContributingResults([result1200, result3000, result3600]);
+
+        Assert.Equal([result1200, result3600], contributors);
+    }
+
+    [Fact]
+    public void GetContributingResults_UsesAllLatestDistancesForRegression()
+    {
+        var old3000 = CreateResult("old-3k", RaceDistances.D3000Meters, TimeSpan.FromMinutes(12));
+        old3000.Date = DateTime.Today.AddDays(-7);
+        var latest3000 = CreateResult("latest-3k", RaceDistances.D3000Meters, TimeSpan.FromMinutes(11));
+        var result5000 = CreateResult(RaceKeys.D5k, 5000, TimeSpan.FromMinutes(19));
+
+        var contributors = _service.GetContributingResults([old3000, latest3000, result5000]);
+
+        Assert.Equal([latest3000, result5000], contributors);
+    }
+
+    [Fact]
     public void BuildPaceModel_MapsCriticalSpeedToExpectedTrainingPaces()
     {
         var model = new CriticalSpeedModel

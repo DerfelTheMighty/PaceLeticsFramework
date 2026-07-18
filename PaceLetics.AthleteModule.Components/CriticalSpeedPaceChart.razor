@@ -1,0 +1,219 @@
+@namespace PaceLetics.AthleteModule.Components
+@using System.Globalization
+@using MudBlazor
+@using PaceLetics.CoreModule.Infrastructure.Models
+@inject IStringLocalizer<AthleteResources> L
+
+@if (Points.Count > 0 && Model.IsValid)
+{
+    <MudPaper Class="pa-4 pl-training-panel pl-cs-pace-chart" Elevation="0">
+        <MudStack Spacing="2">
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedChart_Title"]</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Secondary">@L["CriticalSpeedChart_Subtitle"]</MudText>
+            </MudStack>
+
+            <div class="pl-cs-chart-legend" aria-hidden="true">
+                <span><i class="pl-cs-chart-dot pl-cs-chart-dot-contributor"></i>@L["CriticalSpeedChart_ContributorLegend"]</span>
+                <span><i class="pl-cs-chart-dot pl-cs-chart-dot-other"></i>@L["CriticalSpeedChart_OtherLegend"]</span>
+                <span><i class="pl-cs-chart-line"></i>@L["CriticalSpeedChart_CriticalPace"]</span>
+            </div>
+
+            <svg class="pl-cs-chart-svg"
+                 viewBox="0 0 720 400"
+                 role="img"
+                 aria-labelledby="cs-chart-title cs-chart-description"
+                 preserveAspectRatio="xMidYMid meet">
+                <title id="cs-chart-title">@L["CriticalSpeedChart_Title"]</title>
+                <desc id="cs-chart-description">@AccessibleSummary</desc>
+
+                @foreach (var tick in PaceTicks)
+                {
+                    var y = ScalePace(tick);
+                    <line class="pl-cs-chart-grid" x1="@F(PlotLeft)" x2="@F(PlotRight)" y1="@F(y)" y2="@F(y)" />
+                    <g>
+                        <text class="pl-cs-chart-tick" x="@F(PlotLeft - 12)" y="@F(y + 5)" text-anchor="end">@FormatPace(tick)</text>
+                    </g>
+                }
+
+                @foreach (var tick in DistanceTicks)
+                {
+                    var x = ScaleDistance(tick);
+                    <line class="pl-cs-chart-grid" x1="@F(x)" x2="@F(x)" y1="@F(PlotTop)" y2="@F(PlotBottom)" />
+                    <g>
+                        <text class="pl-cs-chart-tick" x="@F(x)" y="@F(PlotBottom + 28)" text-anchor="middle">@FormatDistance(tick)</text>
+                    </g>
+                }
+
+                <line class="pl-cs-chart-axis" x1="@F(PlotLeft)" x2="@F(PlotRight)" y1="@F(PlotBottom)" y2="@F(PlotBottom)" />
+                <line class="pl-cs-chart-axis" x1="@F(PlotLeft)" x2="@F(PlotLeft)" y1="@F(PlotTop)" y2="@F(PlotBottom)" />
+
+                <line class="pl-cs-chart-critical-line"
+                      x1="@F(PlotLeft)"
+                      x2="@F(PlotRight)"
+                      y1="@F(CriticalPaceY)"
+                      y2="@F(CriticalPaceY)" />
+                <text class="pl-cs-chart-critical-label"
+                      x="@F(PlotRight - 8)"
+                      y="@F(Math.Max(PlotTop + 18, CriticalPaceY - 8))"
+                      text-anchor="end">
+                    @($"CS {FormatPace(CriticalPaceSeconds)} min/km")
+                </text>
+
+                @foreach (var point in Points)
+                {
+                    var x = ScaleDistance(point.Result.DistanceM);
+                    var y = ScalePace(point.PaceSeconds);
+
+                    <g class="@(point.Contributes ? "pl-cs-chart-point-contributor" : "pl-cs-chart-point-other")">
+                        <title>@GetPointTitle(point)</title>
+                        @if (point.Contributes)
+                        {
+                            <circle cx="@F(x)" cy="@F(y)" r="9" />
+                        }
+                        else
+                        {
+                            <polygon points="@DiamondPoints(x, y, 9)" />
+                        }
+                    </g>
+                }
+
+                <text class="pl-cs-chart-axis-title"
+                      x="@F((PlotLeft + PlotRight) / 2)"
+                      y="390"
+                      text-anchor="middle">@L["CriticalSpeedChart_DistanceAxis"]</text>
+                <text class="pl-cs-chart-axis-title"
+                      transform="rotate(-90 20 190)"
+                      x="20"
+                      y="190"
+                      text-anchor="middle">@L["CriticalSpeedChart_PaceAxis"]</text>
+            </svg>
+        </MudStack>
+    </MudPaper>
+}
+
+@code {
+    private const double PlotLeft = 78;
+    private const double PlotRight = 696;
+    private const double PlotTop = 28;
+    private const double PlotBottom = 330;
+
+    private sealed record ChartPoint(RaceResultModel Result, double PaceSeconds, bool Contributes);
+
+    [Parameter] public IReadOnlyList<RaceResultModel> Results { get; set; } = [];
+
+    [Parameter] public IReadOnlyList<RaceResultModel> Contributors { get; set; } = [];
+
+    [Parameter] public CriticalSpeedModel Model { get; set; } = new();
+
+    private List<ChartPoint> Points { get; set; } = [];
+
+    private List<double> DistanceTicks { get; set; } = [];
+
+    private List<double> PaceTicks { get; set; } = [];
+
+    private double DistanceMaximum { get; set; } = 1;
+
+    private double PaceMinimum { get; set; }
+
+    private double PaceMaximum { get; set; } = 1;
+
+    private double CriticalPaceSeconds => Model.CriticalSpeedMps > 0
+        ? 1000 / Model.CriticalSpeedMps
+        : 0;
+
+    private double CriticalPaceY => ScalePace(CriticalPaceSeconds);
+
+    private string AccessibleSummary => string.Join("; ", Points.Select(GetPointTitle));
+
+    protected override void OnParametersSet()
+    {
+        var contributorSet = new HashSet<RaceResultModel>(Contributors, ReferenceEqualityComparer.Instance);
+        Points = Results
+            .Where(result => result.DistanceM > 0 && result.Time.TotalSeconds > 0)
+            .OrderBy(result => result.DistanceM)
+            .ThenBy(result => result.Date)
+            .Select(result => new ChartPoint(
+                result,
+                result.Time.TotalSeconds * 1000 / result.DistanceM,
+                contributorSet.Contains(result)))
+            .ToList();
+
+        if (Points.Count == 0 || !Model.IsValid)
+            return;
+
+        BuildDistanceScale();
+        BuildPaceScale();
+    }
+
+    private void BuildDistanceScale()
+    {
+        var rawMaximum = Points.Max(point => (double)point.Result.DistanceM) * 1.08;
+        var step = NiceStep(rawMaximum / 5, [100, 200, 500, 1000, 2000, 5000, 10000, 20000]);
+        DistanceMaximum = Math.Max(step, Math.Ceiling(rawMaximum / step) * step);
+        DistanceTicks = Enumerable.Range(0, (int)Math.Round(DistanceMaximum / step) + 1)
+            .Select(index => index * step)
+            .ToList();
+    }
+
+    private void BuildPaceScale()
+    {
+        var values = Points.Select(point => point.PaceSeconds).Append(CriticalPaceSeconds).ToList();
+        var spread = values.Max() - values.Min();
+        var padding = Math.Max(15, spread * 0.12);
+        var rawMinimum = Math.Max(0, values.Min() - padding);
+        var rawMaximum = values.Max() + padding;
+        var step = NiceStep((rawMaximum - rawMinimum) / 4, [5, 10, 15, 30, 60, 120, 300]);
+
+        PaceMinimum = Math.Floor(rawMinimum / step) * step;
+        PaceMaximum = Math.Ceiling(rawMaximum / step) * step;
+        if (PaceMaximum <= PaceMinimum)
+            PaceMaximum = PaceMinimum + step;
+
+        PaceTicks = Enumerable.Range(0, (int)Math.Round((PaceMaximum - PaceMinimum) / step) + 1)
+            .Select(index => PaceMinimum + index * step)
+            .ToList();
+    }
+
+    private static double NiceStep(double requested, IReadOnlyList<double> candidates)
+    {
+        return candidates.FirstOrDefault(candidate => candidate >= requested, candidates[^1]);
+    }
+
+    private double ScaleDistance(double distanceMeters)
+    {
+        return PlotLeft + distanceMeters / DistanceMaximum * (PlotRight - PlotLeft);
+    }
+
+    private double ScalePace(double paceSeconds)
+    {
+        return PlotTop + (paceSeconds - PaceMinimum) / (PaceMaximum - PaceMinimum) * (PlotBottom - PlotTop);
+    }
+
+    private string GetPointTitle(ChartPoint point)
+    {
+        var label = string.IsNullOrWhiteSpace(point.Result.Id) ? point.Result.Type : point.Result.Id;
+        var status = point.Contributes
+            ? L["CriticalSpeedChart_ContributionStatus"].Value
+            : L["CriticalSpeedChart_OtherStatus"].Value;
+        return $"{label}: {FormatDistance(point.Result.DistanceM)}, {FormatPace(point.PaceSeconds)} min/km, {status}";
+    }
+
+    private static string FormatPace(double totalSeconds)
+    {
+        var rounded = Math.Max(0, (int)Math.Round(totalSeconds));
+        return $"{rounded / 60}:{rounded % 60:00}";
+    }
+
+    private static string FormatDistance(double distanceMeters)
+    {
+        return $"{distanceMeters / 1000:0.#} km";
+    }
+
+    private static string DiamondPoints(double x, double y, double radius)
+    {
+        return $"{F(x)},{F(y - radius)} {F(x + radius)},{F(y)} {F(x)},{F(y + radius)} {F(x - radius)},{F(y)}";
+    }
+
+    private static string F(double value) => value.ToString("0.##", CultureInfo.InvariantCulture);
+}
