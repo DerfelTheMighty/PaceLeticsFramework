@@ -328,7 +328,7 @@
     <value>Distance vs. pace</value>
   </data>
   <data name="CriticalSpeedChart_Subtitle" xml:space="preserve">
-    <value>Red runs determine CS; the dashed projection uses the entered races and is not a target pace.</value>
+    <value>The model approaches CS over 5–10 km and reaches 85% at marathon distance; the shaded prediction range grows to 75–95% CS.</value>
   </data>
   <data name="CriticalSpeedChart_DistanceAxis" xml:space="preserve">
     <value>Distance (km)</value>
@@ -343,10 +343,10 @@
     <value>CS/D' model (test range)</value>
   </data>
   <data name="CriticalSpeedChart_EnduranceProjection" xml:space="preserve">
-    <value>Individual endurance projection</value>
+    <value>CS endurance model (85% at marathon)</value>
   </data>
-  <data name="CriticalSpeedChart_EnduranceProjectionSingle" xml:space="preserve">
-    <value>Endurance projection (estimated)</value>
+  <data name="CriticalSpeedChart_UncertaintyBand" xml:space="preserve">
+    <value>Prediction range (75–95% CS at marathon distance)</value>
   </data>
   <data name="CriticalSpeedChart_ContributorLegend" xml:space="preserve">
     <value>Used for CS</value>

@@ -10,7 +10,6 @@ namespace PaceLetics.CoreModule.Infrastructure.Interfaces
 
         EnduranceProjectionModel BuildEnduranceProjection(
             CriticalSpeedModel model,
-            IEnumerable<RaceResultModel> results,
             double anchorDistanceMeters);
 
         PaceModel BuildPaceModel(CriticalSpeedModel model);

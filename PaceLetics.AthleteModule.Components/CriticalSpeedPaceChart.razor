@@ -27,6 +27,10 @@
                 {
                     <span><i class="pl-cs-chart-projection-line"></i>@EnduranceProjectionLabel</span>
                 }
+                @if (!string.IsNullOrWhiteSpace(UncertaintyBandPath))
+                {
+                    <span><i class="pl-cs-chart-uncertainty-swatch"></i>@L["CriticalSpeedChart_UncertaintyBand"]</span>
+                }
                 <span><i class="pl-cs-chart-line"></i>@L["CriticalSpeedChart_CriticalPace"]</span>
             </div>
 
@@ -66,6 +70,15 @@
 
                 <line class="pl-cs-chart-axis" x1="@F(PlotLeft)" x2="@F(PlotRight)" y1="@F(PlotBottom)" y2="@F(PlotBottom)" />
                 <line class="pl-cs-chart-axis" x1="@F(PlotLeft)" x2="@F(PlotLeft)" y1="@F(PlotTop)" y2="@F(PlotBottom)" />
+
+                @if (!string.IsNullOrWhiteSpace(UncertaintyBandPath))
+                {
+                    <path class="pl-cs-chart-uncertainty-band"
+                          d="@UncertaintyBandPath"
+                          clip-path="@($"url(#{_clipPathId})")">
+                        <title>@L["CriticalSpeedChart_UncertaintyBand"]</title>
+                    </path>
+                }
 
                 @if (!string.IsNullOrWhiteSpace(ModelCurvePath))
                 {
@@ -162,6 +175,8 @@
 
     private string EnduranceProjectionPath { get; set; } = string.Empty;
 
+    private string UncertaintyBandPath { get; set; } = string.Empty;
+
     private EnduranceProjectionModel EnduranceProjection { get; set; } = new();
 
     private double CriticalPaceSeconds => Model.CriticalSpeedMps > 0
@@ -170,17 +185,17 @@
 
     private double CriticalPaceY => ScalePace(CriticalPaceSeconds);
 
-    private string EnduranceProjectionLabel => EnduranceProjection.UsesDefaultExponent
-        ? L["CriticalSpeedChart_EnduranceProjectionSingle"].Value
-        : L["CriticalSpeedChart_EnduranceProjection"].Value;
+    private string EnduranceProjectionLabel =>
+        L["CriticalSpeedChart_EnduranceProjection"].Value;
 
     private string AccessibleSummary =>
-        $"{L["CriticalSpeedChart_ModelCurve"]}; {EnduranceProjectionLabel}; {L["CriticalSpeedChart_CriticalPace"]}: {FormatPace(CriticalPaceSeconds)} min/km; {string.Join("; ", Points.Select(GetPointTitle))}";
+        $"{L["CriticalSpeedChart_ModelCurve"]}; {EnduranceProjectionLabel}; {L["CriticalSpeedChart_UncertaintyBand"]}; {L["CriticalSpeedChart_CriticalPace"]}: {FormatPace(CriticalPaceSeconds)} min/km; {string.Join("; ", Points.Select(GetPointTitle))}";
 
     protected override void OnParametersSet()
     {
         ModelCurvePath = string.Empty;
         EnduranceProjectionPath = string.Empty;
+        UncertaintyBandPath = string.Empty;
         EnduranceProjection = new EnduranceProjectionModel();
         var contributorSet = new HashSet<RaceResultModel>(Contributors, ReferenceEqualityComparer.Instance);
         Points = Results
@@ -204,11 +219,11 @@
             .Max();
         EnduranceProjection = CriticalSpeedService.BuildEnduranceProjection(
             Model,
-            Results,
             projectionAnchorDistance);
         BuildPaceScale();
         ModelCurvePath = BuildModelCurvePath();
         EnduranceProjectionPath = BuildEnduranceProjectionPath();
+        UncertaintyBandPath = BuildUncertaintyBandPath();
     }
 
     private void BuildDistanceScale()
@@ -231,9 +246,18 @@
     private void BuildPaceScale()
     {
         var values = Points.Select(point => point.PaceSeconds).Append(CriticalPaceSeconds).ToList();
-        var projectedEndPace = EnduranceProjection.PredictPaceSecondsPerKilometer(DistanceMaximum);
+        var projectionEndDistance = Math.Min(
+            DistanceMaximum,
+            EnduranceProjection.MarathonDistanceMeters);
+        var projectedEndPace = EnduranceProjection.PredictPaceSecondsPerKilometer(projectionEndDistance);
         if (projectedEndPace is > 0)
             values.Add(projectedEndPace.Value);
+        var projectedEndRange = EnduranceProjection.PredictPaceRange(projectionEndDistance);
+        if (projectedEndRange is not null)
+        {
+            values.Add(projectedEndRange.Value.FasterPaceSecondsPerKilometer);
+            values.Add(projectedEndRange.Value.SlowerPaceSecondsPerKilometer);
+        }
 
         var spread = values.Max() - values.Min();
         var padding = Math.Max(15, spread * 0.12);
@@ -300,13 +324,16 @@
 
     private string BuildEnduranceProjectionPath()
     {
+        var projectionEndDistance = Math.Min(
+            DistanceMaximum,
+            EnduranceProjection.MarathonDistanceMeters);
         if (!EnduranceProjection.IsValid
-            || DistanceMaximum <= EnduranceProjection.AnchorDistanceMeters)
+            || projectionEndDistance <= EnduranceProjection.AnchorDistanceMeters)
         {
             return string.Empty;
         }
 
-        var distanceRange = DistanceMaximum - EnduranceProjection.AnchorDistanceMeters;
+        var distanceRange = projectionEndDistance - EnduranceProjection.AnchorDistanceMeters;
         var path = new System.Text.StringBuilder();
 
         for (var index = 0; index <= ModelCurveSampleCount; index++)
@@ -324,6 +351,56 @@
         }
 
         return path.ToString();
+    }
+
+    private string BuildUncertaintyBandPath()
+    {
+        var projectionEndDistance = Math.Min(
+            DistanceMaximum,
+            EnduranceProjection.MarathonDistanceMeters);
+        if (!EnduranceProjection.IsValid
+            || projectionEndDistance <= EnduranceProjection.AnchorDistanceMeters)
+        {
+            return string.Empty;
+        }
+
+        var distanceRange = projectionEndDistance - EnduranceProjection.AnchorDistanceMeters;
+        var fasterBoundary = new List<(double X, double Y)>();
+        var slowerBoundary = new List<(double X, double Y)>();
+
+        for (var index = 0; index <= ModelCurveSampleCount; index++)
+        {
+            var distance = EnduranceProjection.AnchorDistanceMeters
+                + distanceRange * index / ModelCurveSampleCount;
+            var range = EnduranceProjection.PredictPaceRange(distance);
+            if (range is null)
+                continue;
+
+            var x = ScaleDistance(distance);
+            fasterBoundary.Add((x, ScalePace(range.Value.FasterPaceSecondsPerKilometer)));
+            slowerBoundary.Add((x, ScalePace(range.Value.SlowerPaceSecondsPerKilometer)));
+        }
+
+        if (fasterBoundary.Count == 0)
+            return string.Empty;
+
+        var path = new System.Text.StringBuilder();
+        AppendPathPoints(path, fasterBoundary);
+        AppendPathPoints(path, slowerBoundary.AsEnumerable().Reverse());
+        return path.Append(" Z").ToString();
+    }
+
+    private static void AppendPathPoints(
+        System.Text.StringBuilder path,
+        IEnumerable<(double X, double Y)> points)
+    {
+        foreach (var point in points)
+        {
+            path.Append(path.Length == 0 ? "M " : " L ")
+                .Append(F(point.X))
+                .Append(' ')
+                .Append(F(point.Y));
+        }
     }
 
     private string GetPointTitle(ChartPoint point)

@@ -50,6 +50,14 @@
     border-top: 3px dashed var(--mud-palette-primary);
 }
 
+.pl-cs-chart-uncertainty-swatch {
+    display: inline-block;
+    width: 22px;
+    height: 10px;
+    background: var(--mud-palette-primary);
+    opacity: 0.18;
+}
+
 .pl-cs-chart-svg {
     display: block;
     width: 100%;
@@ -107,6 +115,13 @@
     transition: d 220ms ease;
 }
 
+.pl-cs-chart-uncertainty-band {
+    fill: var(--mud-palette-primary);
+    fill-opacity: 0.14;
+    stroke: none;
+    transition: d 220ms ease;
+}
+
 .pl-cs-chart-point-contributor {
     fill: var(--mud-palette-error);
     stroke: var(--mud-palette-surface);
@@ -133,7 +148,8 @@
 
 @media (prefers-reduced-motion: reduce) {
     .pl-cs-chart-model-curve,
-    .pl-cs-chart-endurance-projection {
+    .pl-cs-chart-endurance-projection,
+    .pl-cs-chart-uncertainty-band {
         transition: none;
     }
 }
