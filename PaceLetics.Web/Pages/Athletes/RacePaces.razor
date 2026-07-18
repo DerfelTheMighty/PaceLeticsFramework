@@ -47,6 +47,21 @@
             }
             else
             {
+                @if (_criticalSpeed.IsValid)
+                {
+                    <MudPaper Class="pa-4 pl-critical-speed-card" Elevation="0">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedCard_Title"]</MudText>
+                            <MudText Typo="Typo.h5">@PaceFormatting.FormatFromSpeed(_criticalSpeed.CriticalSpeedMps)</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetCriticalSpeedMethodText()</MudText>
+                        </MudStack>
+                    </MudPaper>
+
+                    <CriticalSpeedPaceChart Results="@ReferenceRuns"
+                                            Contributors="@_criticalSpeedContributors"
+                                            Model="@_criticalSpeed" />
+                }
+
                 @foreach (var raceResult in ReferenceRuns)
                 {
                     <RaceCard @key="raceResult"
@@ -69,21 +84,6 @@
                     <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
                         @L["RaceOldWarning"]
                     </MudAlert>
-                }
-
-                @if (_criticalSpeed.IsValid)
-                {
-                    <MudPaper Class="pa-4 pl-critical-speed-card" Elevation="0">
-                        <MudStack Spacing="1">
-                            <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedCard_Title"]</MudText>
-                            <MudText Typo="Typo.h5">@PaceFormatting.FormatFromSpeed(_criticalSpeed.CriticalSpeedMps)</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.Secondary">@GetCriticalSpeedMethodText()</MudText>
-                        </MudStack>
-                    </MudPaper>
-
-                    <CriticalSpeedPaceChart Results="@ReferenceRuns"
-                                            Contributors="@_criticalSpeedContributors"
-                                            Model="@_criticalSpeed" />
                 }
             }
         }

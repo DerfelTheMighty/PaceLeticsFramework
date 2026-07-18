@@ -1,6 +1,7 @@
 @namespace PaceLetics.AthleteModule.Components
 @using System.Globalization
 @using MudBlazor
+@using PaceLetics.CoreModule.Infrastructure.Constants
 @using PaceLetics.CoreModule.Infrastructure.Models
 @inject IStringLocalizer<AthleteResources> L
 
@@ -175,6 +176,13 @@
     private void BuildDistanceScale()
     {
         var rawMaximum = Points.Max(point => (double)point.Result.DistanceM) * 1.08;
+        if (rawMaximum <= RaceDistances.DMarathonMeters)
+        {
+            DistanceMaximum = RaceDistances.DMarathonMeters;
+            DistanceTicks = [0, 10000, 20000, 30000, RaceDistances.DMarathonMeters];
+            return;
+        }
+
         var step = NiceStep(rawMaximum / 5, [100, 200, 500, 1000, 2000, 5000, 10000, 20000]);
         DistanceMaximum = Math.Max(step, Math.Ceiling(rawMaximum / step) * step);
         DistanceTicks = Enumerable.Range(0, (int)Math.Round(DistanceMaximum / step) + 1)
