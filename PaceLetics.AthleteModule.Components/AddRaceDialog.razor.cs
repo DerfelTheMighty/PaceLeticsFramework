@@ -16,6 +16,18 @@ namespace PaceLetics.AthleteModule.Components
         private string _time = string.Empty;
         private readonly IMask _timeMask = new PatternMask("00:00:00");
         private static readonly Regex TimePattern = new(@"^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$");
+        private static readonly string[] RaceTypes =
+        [
+            RaceKeys.D1k,
+            RaceKeys.D1200m,
+            RaceKeys.D3k,
+            RaceKeys.D3600m,
+            RaceKeys.D5k,
+            RaceKeys.D10k,
+            RaceKeys.D15k,
+            RaceKeys.D21k,
+            RaceKeys.D42k
+        ];
         private bool IsValidTime => TimePattern.IsMatch(_time);
         private bool CanSubmit => !string.IsNullOrWhiteSpace(_id)
             && !string.IsNullOrWhiteSpace(_type)
@@ -42,11 +54,10 @@ namespace PaceLetics.AthleteModule.Components
 
         private void Cancel() => MudDialog.Cancel();
 
-        private void OnRaceTypeChanged(string value)
+        private void OnRaceTypeChanged(string? value)
         {
-            _type = value;
-            _distanceM = RaceDistances.Dict[value];
-            StateHasChanged();
+            _type = value ?? string.Empty;
+            _distanceM = RaceDistances.Dict.TryGetValue(_type, out var distance) ? distance : 0;
         }
 
         protected override void OnInitialized()
@@ -59,9 +70,8 @@ namespace PaceLetics.AthleteModule.Components
             _id = Model.Id ?? string.Empty;
             _type = Model.Type ?? string.Empty;
             _date = Model.Date;
-            _time = Model.Time.ToString();
+            _time = Model.Time == TimeSpan.Zero ? string.Empty : Model.Time.ToString(@"hh\:mm\:ss");
             _distanceM = Model.DistanceM;
-            StateHasChanged();
             base.OnInitialized();
         }
 

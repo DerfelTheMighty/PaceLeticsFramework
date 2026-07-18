@@ -1,0 +1,27 @@
+.race-dialog-fields {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 0.25rem;
+}
+
+.race-time-input ::deep input {
+    text-align: center;
+    font-size: 1.75rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+}
+
+.race-distance-selection {
+    display: grid;
+    gap: 0.625rem;
+}
+
+.race-distance-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.race-distance-chips ::deep .mud-chip {
+    margin: 0;
+}
