@@ -5,6 +5,7 @@
 @using AthleteDataAccessLibrary.Contracts;
 @using MudBlazor;
 @using PaceLetics.AthleteModule.CodeBase.Interfaces
+@using PaceLetics.CoreModule.Infrastructure.Converter
 @using PaceLetics.CoreModule.Infrastructure.Interfaces
 @using PaceLetics.AthleteModule.Components
 
@@ -75,7 +76,7 @@
                     <MudPaper Class="pa-4 pl-critical-speed-card" Elevation="0">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedCard_Title"]</MudText>
-                            <MudText Typo="Typo.h5">@($"{_criticalSpeed.CriticalSpeedMps:0.00} m/s")</MudText>
+                            <MudText Typo="Typo.h5">@PaceFormatting.FormatFromSpeed(_criticalSpeed.CriticalSpeedMps)</MudText>
                             <MudText Typo="Typo.body2" Color="Color.Secondary">@GetCriticalSpeedMethodText()</MudText>
                         </MudStack>
                     </MudPaper>

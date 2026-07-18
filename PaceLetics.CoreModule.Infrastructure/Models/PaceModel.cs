@@ -1,5 +1,6 @@
 ﻿using PaceLetics.CoreModule.Infrastructure.Constants;
 
+using PaceLetics.CoreModule.Infrastructure.Converter;
 using PaceLetics.CoreModule.Infrastructure.Enums;
 
 namespace PaceLetics.CoreModule.Infrastructure.Models
@@ -49,7 +50,7 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 		/// <returns></returns>
 		public override string ToString()
 		{
-			string result = "Critical Speed: " + CriticalSpeedMps.ToString("0.00") + " m/s| " +
+			string result = "Critical Speed: " + PaceFormatting.FormatFromSpeed(CriticalSpeedMps) + "| " +
 							"Recovery: " + Recovery.ToString(@"mm\:ss") + "| " +
 							"Easy: " + Easy.ToString(@"mm\:ss") + "| " +
 							"Threshold: " + Threshold.ToString(@"mm\:ss") + "| " +

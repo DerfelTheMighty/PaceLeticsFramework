@@ -16,6 +16,7 @@
             <div class="pl-cs-chart-legend" aria-hidden="true">
                 <span><i class="pl-cs-chart-dot pl-cs-chart-dot-contributor"></i>@L["CriticalSpeedChart_ContributorLegend"]</span>
                 <span><i class="pl-cs-chart-dot pl-cs-chart-dot-other"></i>@L["CriticalSpeedChart_OtherLegend"]</span>
+                <span><i class="pl-cs-chart-model-line"></i>@L["CriticalSpeedChart_ModelCurve"]</span>
                 <span><i class="pl-cs-chart-line"></i>@L["CriticalSpeedChart_CriticalPace"]</span>
             </div>
 
@@ -26,6 +27,14 @@
                  preserveAspectRatio="xMidYMid meet">
                 <title id="cs-chart-title">@L["CriticalSpeedChart_Title"]</title>
                 <desc id="cs-chart-description">@AccessibleSummary</desc>
+                <defs>
+                    <clipPath id="@_clipPathId">
+                        <rect x="@F(PlotLeft)"
+                              y="@F(PlotTop)"
+                              width="@F(PlotRight - PlotLeft)"
+                              height="@F(PlotBottom - PlotTop)" />
+                    </clipPath>
+                </defs>
 
                 @foreach (var tick in PaceTicks)
                 {
@@ -47,6 +56,15 @@
 
                 <line class="pl-cs-chart-axis" x1="@F(PlotLeft)" x2="@F(PlotRight)" y1="@F(PlotBottom)" y2="@F(PlotBottom)" />
                 <line class="pl-cs-chart-axis" x1="@F(PlotLeft)" x2="@F(PlotLeft)" y1="@F(PlotTop)" y2="@F(PlotBottom)" />
+
+                @if (!string.IsNullOrWhiteSpace(ModelCurvePath))
+                {
+                    <path class="pl-cs-chart-model-curve"
+                          d="@ModelCurvePath"
+                          clip-path="@($"url(#{_clipPathId})")">
+                        <title>@L["CriticalSpeedChart_ModelCurve"]</title>
+                    </path>
+                }
 
                 <line class="pl-cs-chart-critical-line"
                       x1="@F(PlotLeft)"
@@ -97,8 +115,11 @@
     private const double PlotRight = 696;
     private const double PlotTop = 28;
     private const double PlotBottom = 330;
+    private const int ModelCurveSampleCount = 120;
 
     private sealed record ChartPoint(RaceResultModel Result, double PaceSeconds, bool Contributes);
+
+    private readonly string _clipPathId = $"cs-chart-clip-{Guid.NewGuid():N}";
 
     [Parameter] public IReadOnlyList<RaceResultModel> Results { get; set; } = [];
 
@@ -118,16 +139,20 @@
 
     private double PaceMaximum { get; set; } = 1;
 
+    private string ModelCurvePath { get; set; } = string.Empty;
+
     private double CriticalPaceSeconds => Model.CriticalSpeedMps > 0
         ? 1000 / Model.CriticalSpeedMps
         : 0;
 
     private double CriticalPaceY => ScalePace(CriticalPaceSeconds);
 
-    private string AccessibleSummary => string.Join("; ", Points.Select(GetPointTitle));
+    private string AccessibleSummary =>
+        $"{L["CriticalSpeedChart_ModelCurve"]}; {L["CriticalSpeedChart_CriticalPace"]}: {FormatPace(CriticalPaceSeconds)} min/km; {string.Join("; ", Points.Select(GetPointTitle))}";
 
     protected override void OnParametersSet()
     {
+        ModelCurvePath = string.Empty;
         var contributorSet = new HashSet<RaceResultModel>(Contributors, ReferenceEqualityComparer.Instance);
         Points = Results
             .Where(result => result.DistanceM > 0 && result.Time.TotalSeconds > 0)
@@ -144,6 +169,7 @@
 
         BuildDistanceScale();
         BuildPaceScale();
+        ModelCurvePath = BuildModelCurvePath();
     }
 
     private void BuildDistanceScale()
@@ -188,6 +214,32 @@
     private double ScalePace(double paceSeconds)
     {
         return PlotTop + (paceSeconds - PaceMinimum) / (PaceMaximum - PaceMinimum) * (PlotBottom - PlotTop);
+    }
+
+    private string BuildModelCurvePath()
+    {
+        var dPrimeMeters = Math.Max(0, Model.DPrimeMeters ?? 0);
+        if (dPrimeMeters <= 0 || DistanceMaximum <= dPrimeMeters)
+            return string.Empty;
+
+        var minimumDistance = dPrimeMeters + Math.Max(1, DistanceMaximum / ModelCurveSampleCount);
+        var distanceRange = DistanceMaximum - minimumDistance;
+        var path = new System.Text.StringBuilder();
+
+        for (var index = 0; index <= ModelCurveSampleCount; index++)
+        {
+            var distance = minimumDistance + distanceRange * index / ModelCurveSampleCount;
+            var paceSeconds = Model.PredictPaceSecondsPerKilometer(distance);
+            if (paceSeconds is null)
+                continue;
+
+            path.Append(path.Length == 0 ? "M " : " L ")
+                .Append(F(ScaleDistance(distance)))
+                .Append(' ')
+                .Append(F(ScalePace(paceSeconds.Value)));
+        }
+
+        return path.ToString();
     }
 
     private string GetPointTitle(ChartPoint point)

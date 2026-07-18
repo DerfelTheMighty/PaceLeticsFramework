@@ -52,6 +52,8 @@ public class CriticalSpeedServiceTests
         Assert.Equal(3.636, model.CriticalSpeedMps, precision: 3);
         Assert.Equal(109.091, model.DPrimeMeters!.Value, precision: 3);
         Assert.Equal(4.0, model.RepetitionSpeedMps!.Value, precision: 3);
+        Assert.Equal(250, model.PredictPaceSecondsPerKilometer(1200)!.Value, precision: 3);
+        Assert.Equal(266.667, model.PredictPaceSecondsPerKilometer(3600)!.Value, precision: 3);
     }
 
     [Fact]

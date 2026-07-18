@@ -337,7 +337,7 @@
     <value>Distance vs. pace</value>
   </data>
   <data name="CriticalSpeedChart_Subtitle" xml:space="preserve">
-    <value>Reference runs used for Critical Speed are highlighted in red.</value>
+    <value>The curve shows the CS/D' model; reference runs used for it are highlighted in red.</value>
   </data>
   <data name="CriticalSpeedChart_DistanceAxis" xml:space="preserve">
     <value>Distance (km)</value>
@@ -347,6 +347,9 @@
   </data>
   <data name="CriticalSpeedChart_CriticalPace" xml:space="preserve">
     <value>Critical Pace</value>
+  </data>
+  <data name="CriticalSpeedChart_ModelCurve" xml:space="preserve">
+    <value>CS/D' model curve</value>
   </data>
   <data name="CriticalSpeedChart_ContributorLegend" xml:space="preserve">
     <value>Used for CS</value>

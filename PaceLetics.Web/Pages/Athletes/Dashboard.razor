@@ -5,6 +5,7 @@
 
 @using MudBlazor;
 @using PaceLetics.AthleteModule.CodeBase.Models;
+@using PaceLetics.CoreModule.Infrastructure.Converter
 @using PaceLetics.CoreModule.Infrastructure.Interfaces
 @using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.CoreModule.Infrastructure.Services
@@ -325,7 +326,7 @@
     private string GetCriticalSpeedValue()
     {
         return _criticalSpeed.IsValid
-            ? $"{_criticalSpeed.CriticalSpeedMps:0.00} m/s"
+            ? PaceFormatting.FormatFromSpeed(_criticalSpeed.CriticalSpeedMps)
             : L["Metric_NotAvailable"].Value;
     }
 

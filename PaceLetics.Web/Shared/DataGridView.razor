@@ -1,4 +1,5 @@
 @using PaceLetics.AthleteModule.CodeBase.Models;
+@using PaceLetics.CoreModule.Infrastructure.Converter
 @using PaceLetics.CoreModule.Infrastructure.Interfaces
 @using PaceLetics.CoreModule.Infrastructure.Models
 @inject IStringLocalizer<DataGridView> L
@@ -45,7 +46,7 @@ else
         }
 
         var model = CriticalSpeedService.Estimate(results);
-        return model.IsValid ? $"{model.CriticalSpeedMps:0.00} m/s" : "-";
+        return model.IsValid ? PaceFormatting.FormatFromSpeed(model.CriticalSpeedMps) : "-";
     }
 
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using PaceLetics.CoreModule.Infrastructure.Converter;
 using PaceLetics.CoreModule.Infrastructure.Models;
 
 namespace PaceLetics.AthleteModule.Components
@@ -97,7 +98,7 @@ namespace PaceLetics.AthleteModule.Components
 
         private static string FormatPaceRange(double fastSpeedMps, double slowSpeedMps)
         {
-            return $"{FormatPace(PaceFromSpeed(fastSpeedMps))} - {FormatPace(PaceFromSpeed(slowSpeedMps))}";
+            return $"{FormatPace(PaceFormatting.FromSpeed(fastSpeedMps))} - {FormatPace(PaceFormatting.FromSpeed(slowSpeedMps))}";
         }
 
         private static string FormatPace(TimeSpan pace)
@@ -126,11 +127,5 @@ namespace PaceLetics.AthleteModule.Components
             return $"D' {item.DPrimeUseMeters:0} m ({item.DPrimeUsePercent:P0})";
         }
 
-        private static TimeSpan PaceFromSpeed(double metersPerSecond)
-        {
-            return metersPerSecond <= 0
-                ? default
-                : TimeSpan.FromSeconds(Math.Round(1000 / metersPerSecond));
-        }
     }
 }

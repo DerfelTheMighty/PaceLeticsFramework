@@ -1,5 +1,6 @@
 @namespace PaceLetics.AthleteModule.Components
 @using MudBlazor
+@using PaceLetics.CoreModule.Infrastructure.Converter
 @using PaceLetics.CoreModule.Infrastructure.Models
 @inject IStringLocalizer<AthleteResources> L
 
@@ -18,7 +19,7 @@
             <div class="pl-cs-budget-metrics">
                 <div>
                     <MudText Typo="Typo.caption" Class="pl-pace-comparison-label">@L["CriticalSpeedBudget_CriticalSpeed"]</MudText>
-                    <MudText Typo="Typo.body2" Class="fw-bold">@($"{Model.CriticalSpeedMps:0.00} m/s")</MudText>
+                    <MudText Typo="Typo.body2" Class="fw-bold">@PaceFormatting.FormatFromSpeed(Model.CriticalSpeedMps)</MudText>
                 </div>
 
                 <div>
