@@ -41,29 +41,11 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 
             var anchorSpeedFraction = CriticalPaceSecondsPerKilometer
                 / AnchorPaceSecondsPerKilometer;
-
-            if (distanceMeters < CriticalDistanceMeters
-                && CriticalDistanceMeters > AnchorDistanceMeters)
-            {
-                var position = (distanceMeters - AnchorDistanceMeters)
-                    / (CriticalDistanceMeters - AnchorDistanceMeters);
-                var speedFraction = Interpolate(anchorSpeedFraction, 1, SmoothStep(position));
-                return CriticalPaceSecondsPerKilometer / speedFraction;
-            }
-
-            var enduranceStartDistance = Math.Max(AnchorDistanceMeters, CriticalDistanceMeters);
-            var enduranceStartFraction = AnchorDistanceMeters >= CriticalDistanceMeters
-                ? anchorSpeedFraction
-                : 1;
-            var logarithmicRange = Math.Log(MarathonDistanceMeters / enduranceStartDistance);
-            var logarithmicPosition = logarithmicRange <= double.Epsilon
-                ? 1
-                : Math.Log(distanceMeters / enduranceStartDistance) / logarithmicRange;
-            var marathonProgress = SmoothStep(Math.Clamp(logarithmicPosition, 0, 1));
-            var projectedSpeedFraction = Interpolate(
-                enduranceStartFraction,
-                MarathonSpeedFraction,
-                marathonProgress);
+            var projectedSpeedFraction = InterpolateShapePreserving(
+                distanceMeters,
+                anchorSpeedFraction,
+                1,
+                MarathonSpeedFraction);
 
             return CriticalPaceSecondsPerKilometer / projectedSpeedFraction;
         }
@@ -73,25 +55,11 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
             if (!IsValid || distanceMeters < AnchorDistanceMeters)
                 return null;
 
-            if (distanceMeters < CriticalDistanceMeters
-                && CriticalDistanceMeters > AnchorDistanceMeters)
-            {
-                var position = (distanceMeters - AnchorDistanceMeters)
-                    / (CriticalDistanceMeters - AnchorDistanceMeters);
-                return Interpolate(
-                    ShortDistanceSpeedErrorFraction,
-                    CriticalDistanceSpeedErrorFraction,
-                    SmoothStep(position));
-            }
-
-            var logarithmicRange = Math.Log(MarathonDistanceMeters / CriticalDistanceMeters);
-            var logarithmicPosition = logarithmicRange <= double.Epsilon
-                ? 1
-                : Math.Log(distanceMeters / CriticalDistanceMeters) / logarithmicRange;
-            return Interpolate(
+            return InterpolateShapePreserving(
+                distanceMeters,
+                ShortDistanceSpeedErrorFraction,
                 CriticalDistanceSpeedErrorFraction,
-                MarathonSpeedErrorFraction,
-                SmoothStep(Math.Clamp(logarithmicPosition, 0, 1)));
+                MarathonSpeedErrorFraction);
         }
 
         public EnduranceProjectionPaceRange? PredictPaceRange(double distanceMeters)
@@ -110,10 +78,132 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
                 CriticalPaceSecondsPerKilometer / slowerSpeedFraction);
         }
 
-        private static double Interpolate(double start, double end, double position) =>
-            start + (end - start) * position;
+        private double InterpolateShapePreserving(
+            double distanceMeters,
+            double anchorValue,
+            double criticalValue,
+            double marathonValue)
+        {
+            var clampedDistance = Math.Clamp(
+                distanceMeters,
+                AnchorDistanceMeters,
+                MarathonDistanceMeters);
+            var anchorX = Math.Log(AnchorDistanceMeters);
+            var marathonX = Math.Log(MarathonDistanceMeters);
+            var x = Math.Log(clampedDistance);
 
-        private static double SmoothStep(double position) =>
-            position * position * (3 - 2 * position);
+            if (CriticalDistanceMeters <= AnchorDistanceMeters + double.Epsilon)
+            {
+                var position = (x - anchorX) / (marathonX - anchorX);
+                return Lerp(anchorValue, marathonValue, position);
+            }
+
+            var criticalX = Math.Log(CriticalDistanceMeters);
+            var anchorInterval = criticalX - anchorX;
+            var marathonInterval = marathonX - criticalX;
+            var anchorSecant = (criticalValue - anchorValue) / anchorInterval;
+            var marathonSecant = (marathonValue - criticalValue) / marathonInterval;
+            var anchorSlope = CalculateEndpointSlope(
+                anchorInterval,
+                marathonInterval,
+                anchorSecant,
+                marathonSecant);
+            var criticalSlope = CalculateInteriorSlope(
+                anchorInterval,
+                marathonInterval,
+                anchorSecant,
+                marathonSecant);
+            var marathonSlope = CalculateEndpointSlope(
+                marathonInterval,
+                anchorInterval,
+                marathonSecant,
+                anchorSecant);
+
+            return x <= criticalX
+                ? InterpolateHermite(
+                    x,
+                    anchorX,
+                    criticalX,
+                    anchorValue,
+                    criticalValue,
+                    anchorSlope,
+                    criticalSlope)
+                : InterpolateHermite(
+                    x,
+                    criticalX,
+                    marathonX,
+                    criticalValue,
+                    marathonValue,
+                    criticalSlope,
+                    marathonSlope);
+        }
+
+        private static double CalculateInteriorSlope(
+            double leftInterval,
+            double rightInterval,
+            double leftSecant,
+            double rightSecant)
+        {
+            if (leftSecant == 0
+                || rightSecant == 0
+                || Math.Sign(leftSecant) != Math.Sign(rightSecant))
+            {
+                return 0;
+            }
+
+            var leftWeight = 2 * rightInterval + leftInterval;
+            var rightWeight = rightInterval + 2 * leftInterval;
+            return (leftWeight + rightWeight)
+                / (leftWeight / leftSecant + rightWeight / rightSecant);
+        }
+
+        private static double CalculateEndpointSlope(
+            double edgeInterval,
+            double neighborInterval,
+            double edgeSecant,
+            double neighborSecant)
+        {
+            var slope = ((2 * edgeInterval + neighborInterval) * edgeSecant
+                - edgeInterval * neighborSecant)
+                / (edgeInterval + neighborInterval);
+
+            if (Math.Sign(slope) != Math.Sign(edgeSecant))
+                return 0;
+
+            if (Math.Sign(edgeSecant) != Math.Sign(neighborSecant)
+                && Math.Abs(slope) > Math.Abs(3 * edgeSecant))
+            {
+                return 3 * edgeSecant;
+            }
+
+            return slope;
+        }
+
+        private static double InterpolateHermite(
+            double x,
+            double startX,
+            double endX,
+            double startValue,
+            double endValue,
+            double startSlope,
+            double endSlope)
+        {
+            var interval = endX - startX;
+            var position = Math.Clamp((x - startX) / interval, 0, 1);
+            var positionSquared = position * position;
+            var positionCubed = positionSquared * position;
+            var startBasis = 2 * positionCubed - 3 * positionSquared + 1;
+            var startSlopeBasis = positionCubed - 2 * positionSquared + position;
+            var endBasis = -2 * positionCubed + 3 * positionSquared;
+            var endSlopeBasis = positionCubed - positionSquared;
+
+            return startBasis * startValue
+                + startSlopeBasis * interval * startSlope
+                + endBasis * endValue
+                + endSlopeBasis * interval * endSlope;
+        }
+
+        private static double Lerp(double start, double end, double position) =>
+            start + (end - start) * Math.Clamp(position, 0, 1);
     }
 }

@@ -133,6 +133,39 @@ public class CriticalSpeedServiceTests
     }
 
     [Fact]
+    public void BuildEnduranceProjection_IsMonotoneWithoutOvershoot()
+    {
+        var criticalSpeed = new CriticalSpeedModel
+        {
+            CriticalSpeedMps = 1000.0 / 225,
+            DPrimeMeters = 150
+        };
+        var projection = _service.BuildEnduranceProjection(
+            criticalSpeed,
+            RaceDistances.D3600Meters);
+        var distances = Enumerable.Range(0, 201)
+            .Select(index => projection.AnchorDistanceMeters
+                * Math.Pow(
+                    projection.MarathonDistanceMeters / projection.AnchorDistanceMeters,
+                    index / 200.0))
+            .ToList();
+        var paces = distances
+            .Select(distance => projection.PredictPaceSecondsPerKilometer(distance)!.Value)
+            .ToList();
+        var errors = distances
+            .Select(distance => projection.PredictSpeedFractionError(distance)!.Value)
+            .ToList();
+
+        Assert.Equal(
+            criticalSpeed.PredictPaceSecondsPerKilometer(RaceDistances.D3600Meters)!.Value,
+            paces[0],
+            precision: 6);
+        Assert.All(paces.Zip(paces.Skip(1)), pair => Assert.True(pair.Second >= pair.First));
+        Assert.All(errors.Zip(errors.Skip(1)), pair => Assert.True(pair.Second >= pair.First));
+        Assert.Equal(225 / 0.85, paces[^1], precision: 6);
+    }
+
+    [Fact]
     public void BuildPaceModel_MapsCriticalSpeedToExpectedTrainingPaces()
     {
         var model = new CriticalSpeedModel

@@ -360,4 +360,31 @@
   <data name="CriticalSpeedChart_OtherStatus" xml:space="preserve">
     <value>not used for Critical Speed</value>
   </data>
+  <data name="CriticalSpeedPrediction_Title" xml:space="preserve">
+    <value>Race predictions</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Race" xml:space="preserve">
+    <value>Race</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Pace" xml:space="preserve">
+    <value>Pace</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Time" xml:space="preserve">
+    <value>Finish time</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Range" xml:space="preserve">
+    <value>Prediction range</value>
+  </data>
+  <data name="CriticalSpeedPrediction_5K" xml:space="preserve">
+    <value>5K</value>
+  </data>
+  <data name="CriticalSpeedPrediction_10K" xml:space="preserve">
+    <value>10K</value>
+  </data>
+  <data name="CriticalSpeedPrediction_HalfMarathon" xml:space="preserve">
+    <value>Half marathon</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Marathon" xml:space="preserve">
+    <value>Marathon</value>
+  </data>
 </root>

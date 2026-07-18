@@ -138,6 +138,33 @@
                       y="190"
                       text-anchor="middle">@L["CriticalSpeedChart_PaceAxis"]</text>
             </svg>
+
+            @if (RacePredictions.Count > 0)
+            {
+                <MudDivider />
+                <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedPrediction_Title"]</MudText>
+                <table class="pl-cs-prediction-table" aria-label="@L["CriticalSpeedPrediction_Title"]">
+                    <thead>
+                        <tr>
+                            <th scope="col">@L["CriticalSpeedPrediction_Race"]</th>
+                            <th scope="col">@L["CriticalSpeedPrediction_Pace"]</th>
+                            <th scope="col">@L["CriticalSpeedPrediction_Time"]</th>
+                            <th scope="col">@L["CriticalSpeedPrediction_Range"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var prediction in RacePredictions)
+                        {
+                            <tr>
+                                <th scope="row">@L[prediction.LabelKey]</th>
+                                <td data-label="@L["CriticalSpeedPrediction_Pace"]">@($"{FormatPace(prediction.PaceSeconds)} min/km")</td>
+                                <td data-label="@L["CriticalSpeedPrediction_Time"]">@FormatRaceTime(prediction.PaceSeconds, prediction.DistanceMeters)</td>
+                                <td data-label="@L["CriticalSpeedPrediction_Range"]">@FormatRaceTimeRange(prediction)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </MudStack>
     </MudPaper>
 }
@@ -150,6 +177,22 @@
     private const int ModelCurveSampleCount = 120;
 
     private sealed record ChartPoint(RaceResultModel Result, double PaceSeconds, bool Contributes);
+
+    private sealed record PredictionTarget(string LabelKey, double DistanceMeters);
+
+    private sealed record RacePrediction(
+        string LabelKey,
+        double DistanceMeters,
+        double PaceSeconds,
+        EnduranceProjectionPaceRange? PaceRange);
+
+    private static readonly IReadOnlyList<PredictionTarget> PredictionTargets =
+    [
+        new("CriticalSpeedPrediction_5K", RaceDistances.D5000Meters),
+        new("CriticalSpeedPrediction_10K", RaceDistances.D10000Meters),
+        new("CriticalSpeedPrediction_HalfMarathon", RaceDistances.DHalfMarathonMeters),
+        new("CriticalSpeedPrediction_Marathon", RaceDistances.DMarathonMeters)
+    ];
 
     private readonly string _clipPathId = $"cs-chart-clip-{Guid.NewGuid():N}";
 
@@ -164,6 +207,8 @@
     private List<double> DistanceTicks { get; set; } = [];
 
     private List<double> PaceTicks { get; set; } = [];
+
+    private List<RacePrediction> RacePredictions { get; set; } = [];
 
     private double DistanceMaximum { get; set; } = 1;
 
@@ -197,6 +242,7 @@
         EnduranceProjectionPath = string.Empty;
         UncertaintyBandPath = string.Empty;
         EnduranceProjection = new EnduranceProjectionModel();
+        RacePredictions = [];
         var contributorSet = new HashSet<RaceResultModel>(Contributors, ReferenceEqualityComparer.Instance);
         Points = Results
             .Where(result => result.DistanceM > 0 && result.Time.TotalSeconds > 0)
@@ -224,6 +270,7 @@
         ModelCurvePath = BuildModelCurvePath();
         EnduranceProjectionPath = BuildEnduranceProjectionPath();
         UncertaintyBandPath = BuildUncertaintyBandPath();
+        RacePredictions = BuildRacePredictions();
     }
 
     private void BuildDistanceScale()
@@ -401,6 +448,45 @@
                 .Append(' ')
                 .Append(F(point.Y));
         }
+    }
+
+    private List<RacePrediction> BuildRacePredictions()
+    {
+        if (!EnduranceProjection.IsValid)
+            return [];
+
+        return PredictionTargets
+            .Select(target =>
+            {
+                var pace = EnduranceProjection.PredictPaceSecondsPerKilometer(target.DistanceMeters)
+                    ?? Model.PredictPaceSecondsPerKilometer(target.DistanceMeters);
+                return pace is > 0
+                    ? new RacePrediction(
+                        target.LabelKey,
+                        target.DistanceMeters,
+                        pace.Value,
+                        EnduranceProjection.PredictPaceRange(target.DistanceMeters))
+                    : null;
+            })
+            .Where(prediction => prediction is not null)
+            .Cast<RacePrediction>()
+            .ToList();
+    }
+
+    private static string FormatRaceTimeRange(RacePrediction prediction)
+    {
+        return prediction.PaceRange is null
+            ? "–"
+            : $"{FormatRaceTime(prediction.PaceRange.Value.FasterPaceSecondsPerKilometer, prediction.DistanceMeters)}–{FormatRaceTime(prediction.PaceRange.Value.SlowerPaceSecondsPerKilometer, prediction.DistanceMeters)}";
+    }
+
+    private static string FormatRaceTime(double paceSecondsPerKilometer, double distanceMeters)
+    {
+        var totalSeconds = Math.Max(0, (int)Math.Round(paceSecondsPerKilometer * distanceMeters / 1000));
+        var duration = TimeSpan.FromSeconds(totalSeconds);
+        return duration.TotalHours >= 1
+            ? $"{(int)duration.TotalHours}:{duration.Minutes:00}:{duration.Seconds:00}"
+            : $"{(int)duration.TotalMinutes}:{duration.Seconds:00}";
     }
 
     private string GetPointTitle(ChartPoint point)

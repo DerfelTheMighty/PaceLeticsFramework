@@ -369,4 +369,31 @@
   <data name="CriticalSpeedChart_OtherStatus" xml:space="preserve">
     <value>nicht f&#xFC;r Critical Speed verwendet</value>
   </data>
+  <data name="CriticalSpeedPrediction_Title" xml:space="preserve">
+    <value>Wettkampfprognosen</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Race" xml:space="preserve">
+    <value>Wettkampf</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Pace" xml:space="preserve">
+    <value>Pace</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Time" xml:space="preserve">
+    <value>Zielzeit</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Range" xml:space="preserve">
+    <value>Prognosebereich</value>
+  </data>
+  <data name="CriticalSpeedPrediction_5K" xml:space="preserve">
+    <value>5 km</value>
+  </data>
+  <data name="CriticalSpeedPrediction_10K" xml:space="preserve">
+    <value>10 km</value>
+  </data>
+  <data name="CriticalSpeedPrediction_HalfMarathon" xml:space="preserve">
+    <value>Halbmarathon</value>
+  </data>
+  <data name="CriticalSpeedPrediction_Marathon" xml:space="preserve">
+    <value>Marathon</value>
+  </data>
 </root>
