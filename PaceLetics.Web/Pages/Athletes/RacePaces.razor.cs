@@ -12,12 +12,8 @@ namespace PaceLetics.Web.Pages.Athletes
     public partial class RacePaces
     {
         private AthleteModel _athlete = new AthleteModel();
-        private PaceModel _upperPace = new();
-        private PaceModel _lowerPace = new();
         private CriticalSpeedModel _criticalSpeed = new();
         private IReadOnlyList<CriticalSpeedIntervalRecommendation> _criticalSpeedIntervals = [];
-        private bool _hasDanielsPaceModel;
-        private double[] _vdotData { get; set; } = {0, 0};
         private IReadOnlyList<RaceResultModel> ReferenceRuns => GetReferenceRuns()
             .OrderByDescending(result => result.Date)
             .ThenBy(result => result.Id, StringComparer.CurrentCultureIgnoreCase)
@@ -113,10 +109,6 @@ namespace PaceLetics.Web.Pages.Athletes
                     .OrderByDescending(result => result.Date)
                     .FirstOrDefault();
 
-                if (_athlete.ActiveReferenceResult is not null)
-                    UpdateDanielsModel(_athlete.ActiveReferenceResult);
-                else
-                    ResetDanielsModel();
             }
 
             UpdatePaceModels();
@@ -150,10 +142,7 @@ namespace PaceLetics.Web.Pages.Athletes
                 ReplaceRaceResult(raceResult, rrm);
 
             if (updatesActiveReference)
-            {
                 _athlete.ActiveReferenceResult = rrm;
-                UpdateDanielsModel(rrm);
-            }
 
             UpdatePaceModels();
 
@@ -164,66 +153,21 @@ namespace PaceLetics.Web.Pages.Athletes
         {
             _athlete = athlete;
             _athlete.RaceResults ??= [];
-            _vdotData[0] = _athlete.Vdot;
-            _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
-
-            if (_athlete.PaceModel is null && _athlete.Vdot > 0)
-            {
-                _athlete.PaceModel = pmProvider[_athlete.Vdot];
-            }
-
             UpdatePaceModels();
         }
 
         private void UpdatePaceModels()
         {
-            if (_athlete.Vdot < 1 || _athlete.PaceModel is null || _athlete.PaceModel.Easy == default)
-            {
-                _upperPace = new PaceModel();
-                _lowerPace = new PaceModel();
-                _hasDanielsPaceModel = false;
-            }
-            else
-            {
-                _upperPace = _athlete.PaceModel;
-                _lowerPace = _athlete.PaceModel.Reduce(0.975);
-                _hasDanielsPaceModel = true;
-            }
-
             _criticalSpeed = criticalSpeedService.Estimate(GetCriticalSpeedResults());
             if (!_criticalSpeed.IsValid)
             {
+                _athlete.PaceModel = new PaceModel();
                 _criticalSpeedIntervals = [];
                 return;
             }
 
+            _athlete.PaceModel = criticalSpeedService.BuildPaceModel(_criticalSpeed);
             _criticalSpeedIntervals = criticalSpeedService.BuildIntervalRecommendations(_criticalSpeed);
-        }
-
-        private void UpdateDanielsModel(RaceResultModel result)
-        {
-            try
-            {
-                _athlete.Vdot = vdotService.GetVdot(result);
-                _vdotData[0] = _athlete.Vdot;
-                _vdotData[1] = 85 - _athlete.Vdot; // TODO: Magic number
-                _athlete.PaceModel = pmProvider[_athlete.Vdot];
-            }
-            catch
-            {
-                _athlete.Vdot = 0;
-                _vdotData[0] = 0;
-                _vdotData[1] = 0;
-                _athlete.PaceModel = new PaceModel();
-            }
-        }
-
-        private void ResetDanielsModel()
-        {
-            _athlete.Vdot = 0;
-            _athlete.PaceModel = new PaceModel();
-            _vdotData[0] = 0;
-            _vdotData[1] = 0;
         }
 
         private void AddRaceResult(RaceResultModel result)

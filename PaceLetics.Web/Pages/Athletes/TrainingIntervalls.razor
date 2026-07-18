@@ -3,6 +3,8 @@
 @using AthleteDataAccessLibrary.Contracts
 @using MudBlazor
 @using PaceLetics.AthleteModule.CodeBase.Models
+@using PaceLetics.CoreModule.Infrastructure.Constants
+@using PaceLetics.CoreModule.Infrastructure.Interfaces
 @using PaceLetics.CoreModule.Infrastructure.Models
 @using PaceLetics.TrainingModule.CodeBase.Running.Models
 @using PaceLetics.Web.Services
@@ -13,6 +15,7 @@
 @inject LoadingStateService Loading
 @inject IStringLocalizer<TrainingIntervalls> L
 @inject ITrainingPlanService TrainingPlanService
+@inject ICriticalSpeedService CriticalSpeedService
 
 <PageTitle>@L["PageTitle"]</PageTitle>
 
@@ -25,7 +28,7 @@
 
     <MudStack Spacing="3">
 
-        @if (_athlete?.Vdot < 1 || _athlete?.PaceModel is null)
+        @if (!_hasCriticalSpeed)
         {
             <MudAlert Severity="Severity.Warning">
                 @L["NoRaceWarning"]
@@ -105,6 +108,7 @@
 @code {
     private AthleteModel? _athlete;
     private IntervallSession? _currentTraining;
+    private bool _hasCriticalSpeed;
 
     private record TableRow(bool IsPause, int Index);
 
@@ -136,7 +140,7 @@
     {
         return row.IsPause
             ? "Pause"
-            : _currentTraining!.PaceKeys[row.Index];
+            : PaceKeys.Normalize(_currentTraining!.PaceKeys[row.Index]) ?? PaceKeys.Free;
     }
 
     protected override async Task OnInitializedAsync()
@@ -157,8 +161,23 @@
 
             _athlete = await AthleteData.GetAthlete(userID);
 
-            if (_athlete?.PaceModel is null)
+            if (_athlete is null)
                 return;
+
+            var results = _athlete.RaceResults?.ToList() ?? [];
+            if (_athlete.ActiveReferenceResult is not null
+                && !results.Any(result => result.DistanceM == _athlete.ActiveReferenceResult.DistanceM
+                    && result.Time == _athlete.ActiveReferenceResult.Time
+                    && result.Date.Date == _athlete.ActiveReferenceResult.Date.Date))
+            {
+                results.Add(_athlete.ActiveReferenceResult);
+            }
+
+            var criticalSpeed = CriticalSpeedService.Estimate(results);
+            _hasCriticalSpeed = criticalSpeed.IsValid;
+            _athlete.PaceModel = criticalSpeed.IsValid
+                ? CriticalSpeedService.BuildPaceModel(criticalSpeed)
+                : new PaceModel();
 
             var sessions = TrainingPlanService.LoadLegacySessions()
                 .OfType<IntervallSession>()

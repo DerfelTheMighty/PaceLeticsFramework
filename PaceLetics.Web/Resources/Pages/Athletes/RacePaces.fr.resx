@@ -14,7 +14,7 @@
   <data name="LoadError_Title" xml:space="preserve"><value>Erreur de chargement</value></data>
   <data name="LoadError_Message" xml:space="preserve"><value>Vos données n’ont pas pu être chargées :</value></data>
   <data name="PaceZonesTitle" xml:space="preserve"><value>Vos zones d’allure</value></data>
-  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Vous trouverez ici vos zones d’allure optimales basées sur votre VDOT.</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>Vos zones d’allure sont calculées exclusivement à partir de Critical Speed.</value></data>
 
   <data name="TabInfo" xml:space="preserve"><value>Infos</value></data>
   <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>

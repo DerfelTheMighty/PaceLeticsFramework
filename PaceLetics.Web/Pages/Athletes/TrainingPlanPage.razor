@@ -579,30 +579,30 @@ else
 
     private static string GetPaceZoneClass(string? paceKey)
     {
-        return paceKey switch
+        return PaceKeys.Normalize(paceKey) switch
         {
-            PaceKeys.Free => "pl-pace-zone-free",
+            PaceKeys.Walk => "pl-pace-zone-walk",
             PaceKeys.Recovery => "pl-pace-zone-recovery",
             PaceKeys.Easy => "pl-pace-zone-easy",
-            PaceKeys.Marathon => "pl-pace-zone-marathon",
             PaceKeys.Threshold => "pl-pace-zone-threshold",
             PaceKeys.Intervall => "pl-pace-zone-intervall",
-            PaceKeys.Repetition => "pl-pace-zone-repetition",
+            PaceKeys.FastIntervall => "pl-pace-zone-fast-intervall",
+            PaceKeys.Free => "pl-pace-zone-free",
             _ => string.Empty
         };
     }
 
     private static string GetPaceZoneCode(string? paceKey)
     {
-        return paceKey switch
+        return PaceKeys.Normalize(paceKey) switch
         {
-            PaceKeys.Free => "Free",
+            PaceKeys.Walk => "Walk",
             PaceKeys.Recovery => "Rec",
-            PaceKeys.Easy => "E",
-            PaceKeys.Marathon => "M",
-            PaceKeys.Threshold => "T",
-            PaceKeys.Intervall => "I",
-            PaceKeys.Repetition => "R",
+            PaceKeys.Easy => "Easy",
+            PaceKeys.Threshold => "Thr",
+            PaceKeys.Intervall => "Int",
+            PaceKeys.FastIntervall => "Fast",
+            PaceKeys.Free => "Free",
             _ => string.Empty
         };
     }

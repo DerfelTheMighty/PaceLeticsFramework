@@ -11,9 +11,9 @@ public class PaceModelTests
     {
         var model = CreatePaceModel();
 
-        var pace = model.GetPace(Pace.Marathon);
+        var pace = model.GetPace(Pace.FastIntervall);
 
-        Assert.Equal(TimeSpan.FromMinutes(5), pace);
+        Assert.Equal(TimeSpan.FromMinutes(2), pace);
     }
 
     [Fact]
@@ -36,14 +36,36 @@ public class PaceModelTests
     }
 
     [Fact]
-    public void TryGetPace_RecoveryPaceIsThirtySecondsSlowerThanEasyPace()
+    public void TryGetPace_ReturnsFalseForWalk()
+    {
+        var model = CreatePaceModel();
+
+        var resolved = model.TryGetPace(PaceKeys.Walk, out var pace);
+
+        Assert.False(resolved);
+        Assert.Equal(default, pace);
+    }
+
+    [Theory]
+    [InlineData("E Pace", PaceKeys.Easy)]
+    [InlineData("M Pace", PaceKeys.Easy)]
+    [InlineData("T Pace", PaceKeys.Threshold)]
+    [InlineData("I Pace", PaceKeys.Intervall)]
+    [InlineData("R Pace", PaceKeys.FastIntervall)]
+    public void Normalize_MapsLegacyDanielsKeysToCurrentZones(string legacyKey, string expected)
+    {
+        Assert.Equal(expected, PaceKeys.Normalize(legacyKey));
+    }
+
+    [Fact]
+    public void TryGetPace_UsesCriticalSpeedRecoveryPace()
     {
         var model = CreatePaceModel();
 
         var resolved = model.TryGetPace(PaceKeys.Recovery, out var pace);
 
         Assert.True(resolved);
-        Assert.Equal(TimeSpan.FromMinutes(6).Add(TimeSpan.FromSeconds(30)), pace);
+        Assert.Equal(TimeSpan.FromMinutes(7), pace);
     }
 
     internal static PaceModel CreatePaceModel()
@@ -51,10 +73,10 @@ public class PaceModelTests
         return new PaceModel
         {
             Easy = TimeSpan.FromMinutes(6),
-            Marathon = TimeSpan.FromMinutes(5),
+            Recovery = TimeSpan.FromMinutes(7),
             Threshold = TimeSpan.FromMinutes(4),
             Intervall = TimeSpan.FromMinutes(3),
-            Repetition = TimeSpan.FromMinutes(2)
+            FastIntervall = TimeSpan.FromMinutes(2)
         };
     }
 }

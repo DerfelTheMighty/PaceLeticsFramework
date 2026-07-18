@@ -88,6 +88,8 @@ namespace PaceLetics.TrainingModule.CodeBase.Running.Models
                 ? Enumerable.Repeat(paceKeys[0], distances.Count).ToList()
                 : paceKeys.ToList();
 
+            pk = pk.Select(key => PaceKeyConstants.Normalize(key) ?? PaceKeyConstants.Free).ToList();
+
             if (pk.Count != distances.Count)
                 throw new ArgumentException("PaceKeys.Count must match Distances.Count (or be 1).", nameof(paceKeys));
 
@@ -110,7 +112,7 @@ namespace PaceLetics.TrainingModule.CodeBase.Running.Models
             var segments = new List<RunningSegment>();
 
             if (WarmupDistance is int wu && wu > 0)
-                segments.Add(new(SegmentType.Warmup, wu, "E Pace"));
+                segments.Add(new(SegmentType.Warmup, wu, PaceKeyConstants.Easy));
 
             for (int s = 0; s < Sets; s++)
             {
@@ -127,7 +129,7 @@ namespace PaceLetics.TrainingModule.CodeBase.Running.Models
             }
 
             if (CooldownDistance is int cd && cd > 0)
-                segments.Add(new(SegmentType.Cooldown, cd, "E Pace"));
+                segments.Add(new(SegmentType.Cooldown, cd, PaceKeyConstants.Easy));
 
             return segments;
         }

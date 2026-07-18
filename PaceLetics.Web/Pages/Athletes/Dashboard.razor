@@ -135,7 +135,7 @@
 
                 <MudItem xs="12">
                     <DashboardMetricTile Label="@L["Metric_VdotCs"]"
-                                         Value="@GetVdotCsValue()"
+                                         Value="@GetCriticalSpeedValue()"
                                          Detail="@GetReferenceDetail()"
                                          Icon="@Icons.Material.Filled.Speed"
                                          Accent="blue"
@@ -322,17 +322,11 @@
             .FirstOrDefault();
     }
 
-    private string GetVdotCsValue()
+    private string GetCriticalSpeedValue()
     {
-        var vdot = Athlete?.Vdot > 0
-            ? Athlete.Vdot.ToString("0.0")
-            : L["Metric_NotAvailable"].Value;
-
-        var criticalSpeed = _criticalSpeed.IsValid
+        return _criticalSpeed.IsValid
             ? $"{_criticalSpeed.CriticalSpeedMps:0.00} m/s"
             : L["Metric_NotAvailable"].Value;
-
-        return $"{vdot} / {criticalSpeed}";
     }
 
     private static IEnumerable<RaceResultModel> GetCriticalSpeedResults(AthleteModel? athlete)

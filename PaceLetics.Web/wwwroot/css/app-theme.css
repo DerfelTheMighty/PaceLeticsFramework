@@ -391,6 +391,7 @@
 .pl-tropical-layout .pl-metric-tile,
 .pl-tropical-layout .pl-feed-tile,
 .pl-tropical-layout .pl-vdot-card,
+.pl-tropical-layout .pl-critical-speed-card,
 .pl-tropical-layout .pl-race-card,
 .pl-tropical-layout .pl-pace-card,
 .pl-tropical-layout .pl-training-panel {
@@ -411,6 +412,7 @@
 }
 
 .pl-tropical-layout .pl-vdot-card,
+.pl-tropical-layout .pl-critical-speed-card,
 .pl-tropical-layout .pl-race-card,
 .pl-tropical-layout .pl-pace-card,
 .pl-tropical-layout .pl-training-panel {
@@ -901,6 +903,7 @@
 .pl-surface-card,
 .pl-course-detail,
 .pl-vdot-card,
+.pl-critical-speed-card,
 .pl-race-card,
 .pl-pace-card,
 .pl-training-panel {
@@ -1696,6 +1699,7 @@
 }
 
 .pl-vdot-card,
+.pl-critical-speed-card,
 .pl-race-card,
 .pl-pace-card,
 .pl-training-panel {
@@ -1704,7 +1708,8 @@
     background: color-mix(in srgb, var(--pl-metric-accent, var(--mud-palette-primary)) var(--pl-card-accent, 8%), var(--mud-palette-surface));
 }
 
-.pl-vdot-card {
+.pl-vdot-card,
+.pl-critical-speed-card {
     --pl-metric-accent: var(--mud-palette-primary);
     text-align: center;
 }
@@ -1732,16 +1737,16 @@
     --pl-metric-accent: var(--pl-pace-free, var(--mud-palette-text-secondary));
 }
 
+.pl-pace-zone-walk {
+    --pl-metric-accent: var(--mud-palette-text-secondary);
+}
+
 .pl-pace-zone-recovery {
     --pl-metric-accent: var(--pl-pace-recovery, var(--mud-palette-info));
 }
 
 .pl-pace-zone-easy {
     --pl-metric-accent: var(--pl-pace-easy, var(--mud-palette-success));
-}
-
-.pl-pace-zone-marathon {
-    --pl-metric-accent: var(--pl-pace-marathon, var(--mud-palette-primary));
 }
 
 .pl-pace-zone-threshold {
@@ -1752,7 +1757,7 @@
     --pl-metric-accent: var(--pl-pace-intervall, var(--mud-palette-error));
 }
 
-.pl-pace-zone-repetition {
+.pl-pace-zone-fast-intervall {
     --pl-metric-accent: var(--pl-pace-repetition, var(--mud-palette-tertiary));
 }
 

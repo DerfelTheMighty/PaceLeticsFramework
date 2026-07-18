@@ -14,7 +14,7 @@
   <data name="LoadError_Title" xml:space="preserve"><value>خطای بارگذاری</value></data>
   <data name="LoadError_Message" xml:space="preserve"><value>داده‌های شما بارگذاری نشد:</value></data>
   <data name="PaceZonesTitle" xml:space="preserve"><value>محدوده‌های پیس شما</value></data>
-  <data name="PaceZonesSubtitle" xml:space="preserve"><value>اینجا می‌توانید محدوده‌های پیس تمرینی بهینه بر اساس مقدار VDOT خود را ببینید.</value></data>
+  <data name="PaceZonesSubtitle" xml:space="preserve"><value>محدوده‌های پیس تمرینی فقط از Critical Speed محاسبه می‌شوند.</value></data>
 
   <data name="TabInfo" xml:space="preserve"><value>&#x627;&#x637;&#x644;&#x627;&#x639;&#x627;&#x62A;</value></data>
   <data name="CriticalSpeedCard_Title" xml:space="preserve"><value>Critical Speed</value></data>

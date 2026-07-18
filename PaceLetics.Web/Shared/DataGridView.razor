@@ -1,5 +1,8 @@
 @using PaceLetics.AthleteModule.CodeBase.Models;
+@using PaceLetics.CoreModule.Infrastructure.Interfaces
+@using PaceLetics.CoreModule.Infrastructure.Models
 @inject IStringLocalizer<DataGridView> L
+@inject ICriticalSpeedService CriticalSpeedService
 
 @if (Athletes == null)
 {
@@ -11,7 +14,7 @@ else
         <thead>
             <tr>
                 <th>@L["Name"]</th>
-                <th>@L["Vdot"]</th>
+                <th>Critical Speed</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +22,7 @@ else
             {
                 <tr>
                     <td>@athlete.Name</td>
-                    <td>@athlete.Vdot</td>
+                    <td>@GetCriticalSpeed(athlete)</td>
                 </tr>
             }
         </tbody>
@@ -29,5 +32,20 @@ else
 @code {
     [Parameter]
     public IList<AthleteModel> Athletes{ get; set; } = new List<AthleteModel>();
+
+    private string GetCriticalSpeed(AthleteModel athlete)
+    {
+        var results = athlete.RaceResults?.ToList() ?? [];
+        if (athlete.ActiveReferenceResult is not null
+            && !results.Any(result => result.DistanceM == athlete.ActiveReferenceResult.DistanceM
+                && result.Time == athlete.ActiveReferenceResult.Time
+                && result.Date.Date == athlete.ActiveReferenceResult.Date.Date))
+        {
+            results.Add(athlete.ActiveReferenceResult);
+        }
+
+        var model = CriticalSpeedService.Estimate(results);
+        return model.IsValid ? $"{model.CriticalSpeedMps:0.00} m/s" : "-";
+    }
 
 }

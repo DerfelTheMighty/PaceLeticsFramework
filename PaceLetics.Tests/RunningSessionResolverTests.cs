@@ -36,7 +36,7 @@ public class RunningSessionResolverTests
     }
 
     [Fact]
-    public void Resolve_ComputesRecoveryPaceFromEasyPacePlusThirtySeconds()
+    public void Resolve_UsesCriticalSpeedRecoveryPace()
     {
         var session = new TestRunningSession([
             new RunningSegment(SegmentType.Recovery, 200, PaceKeys.Recovery)
@@ -45,8 +45,8 @@ public class RunningSessionResolverTests
         var resolved = RunningSessionResolver.Resolve(session, PaceModelTests.CreatePaceModel());
 
         var segment = Assert.Single(resolved.Segments);
-        Assert.Equal(TimeSpan.FromMinutes(6).Add(TimeSpan.FromSeconds(30)), segment.Pace);
-        Assert.Equal(TimeSpan.FromSeconds(78), segment.SegmentTime);
+        Assert.Equal(TimeSpan.FromMinutes(7), segment.Pace);
+        Assert.Equal(TimeSpan.FromSeconds(84), segment.SegmentTime);
         Assert.Null(segment.LapTime);
     }
 
@@ -59,14 +59,14 @@ public class RunningSessionResolverTests
             new DateTime(2026, 1, 1),
             [200],
             [],
-            [PaceKeys.Repetition],
+            [PaceKeys.FastIntervall],
             sets: 2,
             setRecovery: 200);
 
-        Assert.Equal(PaceKeys.Repetition, session.Sequence[0].PaceKey);
+        Assert.Equal(PaceKeys.FastIntervall, session.Sequence[0].PaceKey);
         Assert.Equal(PaceKeys.Recovery, session.Sequence[1].PaceKey);
         Assert.Equal(SegmentType.SetRecovery, session.Sequence[1].Type);
-        Assert.Equal(PaceKeys.Repetition, session.Sequence[2].PaceKey);
+        Assert.Equal(PaceKeys.FastIntervall, session.Sequence[2].PaceKey);
     }
 
     [Fact]

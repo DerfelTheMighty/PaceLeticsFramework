@@ -2,10 +2,12 @@
 {
     public enum Pace
     {
+        Walk,
+        Recovery,
         Easy,
-        Marathon,
         Threshold,
         Intervall,
-        Repetition,
+        FastIntervall,
+        Free
     }
 }

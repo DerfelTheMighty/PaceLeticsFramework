@@ -1,6 +1,7 @@
 @page "/Athletes/session/{PlanId}/{SessionId}"
 @attribute [Authorize]
 @implements IDisposable
+@using PaceLetics.CoreModule.Infrastructure.Constants
 @using PaceLetics.TrainingModule.CodeBase.Running.Models
 @using PaceLetics.TrainingModule.CodeBase.Workouts.Interfaces
 @using PaceLetics.TrainingPlanModule.CodeBase.Models
@@ -296,8 +297,9 @@
                 var detail = segment.Duration is not null
                     ? L["Minutes", Math.Round(segment.Duration.Value.TotalMinutes)]
                     : segment.Distance > 0 ? $"{segment.Distance} m" : string.Empty;
-                if (!string.IsNullOrWhiteSpace(segment.PaceKey))
-                    detail = string.IsNullOrWhiteSpace(detail) ? segment.PaceKey : $"{detail} · {segment.PaceKey}";
+                var paceKey = PaceKeys.Normalize(segment.PaceKey);
+                if (!string.IsNullOrWhiteSpace(paceKey))
+                    detail = string.IsNullOrWhiteSpace(detail) ? paceKey : $"{detail} · {paceKey}";
                 steps.Add(new(0, GetSegmentTitle(segment.Type), detail));
             }
         }

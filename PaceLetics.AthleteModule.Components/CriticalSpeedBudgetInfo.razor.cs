@@ -44,6 +44,13 @@ namespace PaceLetics.AthleteModule.Components
         {
             return
             [
+                new(L["CriticalSpeedBudget_Walk_Title"],
+                    ZoneKey: "walk",
+                    Code: "Walk",
+                    PaceText: L["PaceInfo_Free_Value"],
+                    BudgetText: L["CriticalSpeedBudget_NoDPrime"],
+                    Description: L["CriticalSpeedBudget_Walk_Description"]),
+
                 new(L["CriticalSpeedBudget_Recovery_Title"],
                     ZoneKey: "recovery",
                     Code: "Rec",
@@ -53,14 +60,14 @@ namespace PaceLetics.AthleteModule.Components
 
                 new(L["CriticalSpeedBudget_Easy_Title"],
                     ZoneKey: "easy",
-                    Code: "E",
+                    Code: "Easy",
                     PaceText: FormatPaceRange(Model.CriticalSpeedMps * 0.92, Model.CriticalSpeedMps * 0.82),
                     BudgetText: L["CriticalSpeedBudget_NoDPrime"],
                     Description: L["CriticalSpeedBudget_Easy_Description"]),
 
                 new(L["CriticalSpeedBudget_Threshold_Title"],
                     ZoneKey: "threshold",
-                    Code: "T",
+                    Code: "Thr",
                     PaceText: FormatPaceRange(Model.CriticalSpeedMps, Model.CriticalSpeedMps * 0.96),
                     BudgetText: L["CriticalSpeedBudget_NoDPrime"],
                     Description: L["CriticalSpeedBudget_Threshold_Description"]),
@@ -73,11 +80,18 @@ namespace PaceLetics.AthleteModule.Components
                     Description: L["CriticalSpeedBudget_LongZone_Description"]),
 
                 new(L["CriticalSpeedBudget_FastZone_Title"],
-                    ZoneKey: "repetition",
+                    ZoneKey: "fast-intervall",
                     Code: "Fast",
                     PaceText: L["CriticalSpeedBudget_TableReference"],
                     BudgetText: L["CriticalSpeedBudget_FastZone_Budget"],
-                    Description: L["CriticalSpeedBudget_FastZone_Description"])
+                    Description: L["CriticalSpeedBudget_FastZone_Description"]),
+
+                new(L["PaceInfo_Free_Title"],
+                    ZoneKey: "free",
+                    Code: "Free",
+                    PaceText: L["PaceInfo_Free_Value"],
+                    BudgetText: L["CriticalSpeedBudget_NoDPrime"],
+                    Description: L["PaceInfo_Free_Description"])
             ];
         }
 

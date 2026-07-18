@@ -36,7 +36,7 @@ public class CriticalSpeedServiceTests
         Assert.Equal(4.286, model.CriticalSpeedMps, precision: 3);
         Assert.Equal(4.69, model.IntervalSpeedMps!.Value, precision: 3);
         Assert.Equal(TimeSpan.FromSeconds(213), paceModel.Intervall);
-        Assert.Equal(TimeSpan.FromSeconds(199), paceModel.Repetition);
+        Assert.Equal(TimeSpan.FromSeconds(199), paceModel.FastIntervall);
     }
 
     [Fact]
@@ -67,11 +67,12 @@ public class CriticalSpeedServiceTests
 
         var paceModel = _service.BuildPaceModel(model);
 
+        Assert.Equal(4.0, paceModel.CriticalSpeedMps);
+        Assert.Equal(TimeSpan.FromSeconds(329), paceModel.Recovery);
         Assert.Equal(TimeSpan.FromSeconds(287), paceModel.Easy);
-        Assert.Equal(TimeSpan.FromSeconds(266), paceModel.Marathon);
-        Assert.Equal(TimeSpan.FromSeconds(245), paceModel.Threshold);
+        Assert.Equal(TimeSpan.FromSeconds(255), paceModel.Threshold);
         Assert.Equal(TimeSpan.FromSeconds(213), paceModel.Intervall);
-        Assert.Equal(TimeSpan.FromSeconds(198), paceModel.Repetition);
+        Assert.Equal(TimeSpan.FromSeconds(198), paceModel.FastIntervall);
     }
 
     [Fact]

@@ -84,10 +84,11 @@ public sealed class TrainingGuardEvaluator
 
     private static bool IsQualitySegment(RunningSegment segment)
     {
+        var paceKey = PaceKeys.Normalize(segment.PaceKey);
         return segment.Type == SegmentType.Intervall
-            || string.Equals(segment.PaceKey, PaceKeys.Threshold, StringComparison.OrdinalIgnoreCase)
-            || string.Equals(segment.PaceKey, PaceKeys.Intervall, StringComparison.OrdinalIgnoreCase)
-            || string.Equals(segment.PaceKey, PaceKeys.Repetition, StringComparison.OrdinalIgnoreCase);
+            || string.Equals(paceKey, PaceKeys.Threshold, StringComparison.OrdinalIgnoreCase)
+            || string.Equals(paceKey, PaceKeys.Intervall, StringComparison.OrdinalIgnoreCase)
+            || string.Equals(paceKey, PaceKeys.FastIntervall, StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool HasWarmup(TrainingSession session)

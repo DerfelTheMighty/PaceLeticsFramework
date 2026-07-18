@@ -358,11 +358,11 @@ public sealed class MateService : IMateService
     private static bool HasUsablePaceModel(PaceModel? paceModel)
     {
         return paceModel is not null
-            && (paceModel.Easy > TimeSpan.Zero
-                || paceModel.Marathon > TimeSpan.Zero
+            && (paceModel.Recovery > TimeSpan.Zero
+                || paceModel.Easy > TimeSpan.Zero
                 || paceModel.Threshold > TimeSpan.Zero
                 || paceModel.Intervall > TimeSpan.Zero
-                || paceModel.Repetition > TimeSpan.Zero);
+                || paceModel.FastIntervall > TimeSpan.Zero);
     }
 
     private IReadOnlySet<string> GetVisiblePlanIds(CourseDocument course)

@@ -12,7 +12,7 @@
   <data name="IntroText" xml:space="preserve"><value>Burada en güncel kurs haberlerini, yaklaşan antrenman bilgilerini ve antrenman önerilerini bulabilirsin.</value></data>
   <data name="Breadcrumb_Personal" xml:space="preserve"><value>Kişisel</value></data>
   <data name="WelcomeText" xml:space="preserve"><value>Merhaba {0}, işte güncel antrenman durumun.</value></data>
-  <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
+  <data name="Metric_VdotCs" xml:space="preserve"><value>Critical Speed</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
   <data name="Metric_TrainingSystem" xml:space="preserve"><value>Antrenman sistemi</value></data>
   <data name="Metric_TrainingSystemValue" xml:space="preserve"><value>Bilgi al</value></data>

@@ -6,7 +6,15 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 {
 	public class PaceModel
 	{
+		public double CriticalSpeedMps { get; set; }
+
+		/// <summary>
+		/// Retained only so existing athlete documents can be read during migration.
+		/// New pace models are based exclusively on Critical Speed.
+		/// </summary>
 		public double Vdot { get; set; }
+
+		public TimeSpan Recovery { get; set; }
 
 		/// <summary>
 		/// Per km timespan for easy running
@@ -23,15 +31,17 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 		/// </summary>
 		public TimeSpan Intervall { get; set; }
 
-		/// <summary>
-		/// Per km timespan for repetition pace running
-		/// </summary>
-		public TimeSpan Repetition { get; set; }
+		public TimeSpan FastIntervall { get; set; }
 
 		/// <summary>
-		/// Per km timespan for marathon pace running
+		/// Retained only for deserializing old Daniels pace models.
 		/// </summary>
 		public TimeSpan Marathon { get; set; }
+
+		/// <summary>
+		/// Retained only for deserializing old Daniels pace models.
+		/// </summary>
+		public TimeSpan Repetition { get; set; }
 
 		/// <summary>
 		/// overrides to string method and returns a formatted string
@@ -39,12 +49,12 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 		/// <returns></returns>
 		public override string ToString()
 		{
-			string result = "Vdot: " + Vdot.ToString("0.#") + "| " +
+			string result = "Critical Speed: " + CriticalSpeedMps.ToString("0.00") + " m/s| " +
+							"Recovery: " + Recovery.ToString(@"mm\:ss") + "| " +
 							"Easy: " + Easy.ToString(@"mm\:ss") + "| " +
-							"Marahon: " + Marathon.ToString(@"mm\:ss") + "| " +
 							"Threshold: " + Threshold.ToString(@"mm\:ss") + "| " +
 							"Intervall: " + Intervall.ToString(@"mm\:ss") + "| " +
-							"Repetition: " + Repetition.ToString(@"mm\:ss");
+							"Fast Intervall: " + FastIntervall.ToString(@"mm\:ss");
 
 			return result;
 		}
@@ -53,11 +63,11 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 		{
 			return pace switch
 			{
+				Pace.Recovery => ResolveRecovery(),
 				Pace.Easy => Easy,
-				Pace.Marathon => Marathon,
 				Pace.Threshold => Threshold,
 				Pace.Intervall => Intervall,
-				Pace.Repetition => Repetition,
+				Pace.FastIntervall => ResolveFastIntervall(),
 				_ => throw new ArgumentOutOfRangeException(nameof(pace), pace, null)
 			};
 		}
@@ -71,22 +81,21 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 
 		public bool TryGetPace(string? paceKey, out TimeSpan pace)
 		{
-			pace = paceKey switch
+			var normalizedPaceKey = PaceKeys.Normalize(paceKey);
+			pace = normalizedPaceKey switch
 			{
 				PaceKeys.Easy => Easy,
-				PaceKeys.Marathon => Marathon,
 				PaceKeys.Threshold => Threshold,
 				PaceKeys.Intervall => Intervall,
-				PaceKeys.Repetition => Repetition,
-				PaceKeys.Recovery => Easy.Add(TimeSpan.FromSeconds(30)),
+				PaceKeys.FastIntervall => ResolveFastIntervall(),
+				PaceKeys.Recovery => ResolveRecovery(),
 				_ => default
 			};
 
-			return paceKey is PaceKeys.Easy
-				or PaceKeys.Marathon
+			return normalizedPaceKey is PaceKeys.Easy
 				or PaceKeys.Threshold
 				or PaceKeys.Intervall
-				or PaceKeys.Repetition
+				or PaceKeys.FastIntervall
 				or PaceKeys.Recovery;
 		}
 
@@ -98,13 +107,22 @@ namespace PaceLetics.CoreModule.Infrastructure.Models
 		public PaceModel Reduce(double factor) 
 		{
 			PaceModel pm = new PaceModel();
+			pm.CriticalSpeedMps = CriticalSpeedMps * factor;
+			pm.Recovery = new TimeSpan(0, 0, (int)(ResolveRecovery().TotalSeconds / factor));
 			pm.Easy = new TimeSpan(0, 0, (int)(this.Easy.TotalSeconds/(factor*factor)));
-            pm.Marathon = new TimeSpan(0, 0, (int)(this.Marathon.TotalSeconds / (factor) ));
             pm.Threshold = new TimeSpan(0, 0, (int)(this.Threshold.TotalSeconds / factor));
             pm.Intervall = new TimeSpan(0, 0, (int)(this.Intervall.TotalSeconds / factor));
-            pm.Repetition = new TimeSpan(0, 0, (int)(this.Repetition.TotalSeconds / factor));
+			pm.FastIntervall = new TimeSpan(0, 0, (int)(ResolveFastIntervall().TotalSeconds / factor));
 			return pm;
         }
+
+		private TimeSpan ResolveRecovery() => Recovery != default
+			? Recovery
+			: Easy == default ? default : Easy.Add(TimeSpan.FromSeconds(30));
+
+		private TimeSpan ResolveFastIntervall() => FastIntervall != default
+			? FastIntervall
+			: Repetition;
 
 	}
 }

@@ -173,8 +173,6 @@ builder.Services.AddHealthChecks()
 builder.Services.AddTransient<IAthleteData, AthleteData>();
 builder.Services.AddScoped<IAthleteService, AthleteService>();
 builder.Services.AddSingleton<ICriticalSpeedService, CriticalSpeedService>();
-builder.Services.AddSingleton<IVdotService>(x => (new VdotTableReaderWriter()).FromJson("wwwroot/data/vdot_table.json"));
-builder.Services.AddSingleton<IPaceModelProvider>(x => (new PaceModelReaderWriter()).ReadPaceModelFromJson("wwwroot/data/pacemodel.json"));
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     // This lambda determines whether user consent for non-essential 

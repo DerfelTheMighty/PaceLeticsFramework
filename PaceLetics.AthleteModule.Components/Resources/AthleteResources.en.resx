@@ -318,4 +318,10 @@
   <data name="PaceModelInfo_TrainingScenariosDiagramAlt" xml:space="preserve">
     <value>Didactic 12-week model with three training scenarios, load peaks, adaptation, and wear-off.</value>
   </data>
+  <data name="CriticalSpeedBudget_Walk_Title" xml:space="preserve">
+    <value>Walk</value>
+  </data>
+  <data name="CriticalSpeedBudget_Walk_Description" xml:space="preserve">
+    <value>Walking without a prescribed pace.</value>
+  </data>
 </root>

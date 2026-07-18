@@ -11,9 +11,7 @@
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAthleteData AthleteData
 @inject IDialogService dialogService
-@inject IVdotService vdotService
 @inject ICriticalSpeedService criticalSpeedService
-@inject IPaceModelProvider pmProvider
 @inject LoadingStateService Loading
 @inject IStringLocalizer<RacePaces> L
 @inject IJSRuntime JS
@@ -72,11 +70,9 @@
                     </MudAlert>
                 }
 
-                <VdotCard Data="@_vdotData" />
-
                 @if (_criticalSpeed.IsValid)
                 {
-                    <MudPaper Class="pa-4 pl-vdot-card" Elevation="0">
+                    <MudPaper Class="pa-4 pl-critical-speed-card" Elevation="0">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.subtitle1" Class="fw-bold">@L["CriticalSpeedCard_Title"]</MudText>
                             <MudText Typo="Typo.h5">@($"{_criticalSpeed.CriticalSpeedMps:0.00} m/s")</MudText>
@@ -93,27 +89,14 @@
                 <MudText Typo="Typo.body2" Color="Color.Secondary">@L["PaceZonesSubtitle"]</MudText>
             </MudStack>
 
-            @if (_hasDanielsPaceModel)
-            {
-                <PaceInfo EPaceHigh="@_upperPace.Easy"
-                          EPaceLow="@_lowerPace.Easy"
-                          MPaceHigh="@_upperPace.Marathon"
-                          MPaceLow="@_lowerPace.Marathon"
-                          TPaceHigh="@_upperPace.Threshold"
-                          TPaceLow="@_lowerPace.Threshold"
-                          IPaceHigh="@_upperPace.Intervall"
-                          IPaceLow="@_lowerPace.Intervall"
-                          RPaceHigh="@_upperPace.Repetition"
-                          RPaceLow="@_lowerPace.Repetition" />
-            }
-            else
+            @if (!_criticalSpeed.IsValid)
             {
                 <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined">
                     @L["NoRaceWarning"]
                 </MudAlert>
             }
 
-            @if (_criticalSpeed.IsValid)
+            else
             {
                 <CriticalSpeedBudgetInfo Model="@_criticalSpeed"
                                          Recommendations="@_criticalSpeedIntervals" />

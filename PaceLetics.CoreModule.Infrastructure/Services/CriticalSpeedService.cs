@@ -47,16 +47,16 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
                 return new PaceModel();
 
             var intervalSpeed = EstimateIntervalSpeed(model);
-            var repetitionSpeed = EstimateRepetitionSpeed(model, intervalSpeed);
+            var fastIntervalSpeed = EstimateFastIntervalSpeed(model, intervalSpeed);
 
             return new PaceModel
             {
-                Vdot = model.CriticalSpeedMps,
+                CriticalSpeedMps = model.CriticalSpeedMps,
+                Recovery = PaceFromSpeed(model.CriticalSpeedMps * 0.76),
                 Easy = PaceFromSpeed(model.CriticalSpeedMps * 0.87),
-                Marathon = PaceFromSpeed(model.CriticalSpeedMps * 0.94),
-                Threshold = PaceFromSpeed(model.CriticalSpeedMps * 1.02),
+                Threshold = PaceFromSpeed(model.CriticalSpeedMps * 0.98),
                 Intervall = PaceFromSpeed(intervalSpeed),
-                Repetition = PaceFromSpeed(repetitionSpeed)
+                FastIntervall = PaceFromSpeed(fastIntervalSpeed)
             };
         }
 
@@ -74,8 +74,8 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
 
             return
             [
-                BuildRecommendation("fast-200", "repetition", "Fast", 200, 0.08, true, fastIntervalSpeedCap, 3, model),
-                BuildRecommendation("fast-400", "repetition", "Fast", 400, 0.12, true, fastIntervalSpeedCap, 3, model),
+                BuildRecommendation("fast-200", "fast-intervall", "Fast", 200, 0.08, true, fastIntervalSpeedCap, 3, model),
+                BuildRecommendation("fast-400", "fast-intervall", "Fast", 400, 0.12, true, fastIntervalSpeedCap, 3, model),
                 BuildRecommendation("interval-800", "intervall", "Int", 800, 0.22, false, longIntervalSpeedCap, 0.5, model),
                 BuildRecommendation("interval-1000", "intervall", "Int", 1000, 0.27, false, longIntervalSpeedCap, 0.5, model),
                 BuildRecommendation("interval-1200", "intervall", "Int", 1200, 0.32, false, longIntervalSpeedCap, 0.5, model),
@@ -173,7 +173,7 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
             return model.CriticalSpeedMps * IntervalFallbackFactor;
         }
 
-        private static double EstimateRepetitionSpeed(CriticalSpeedModel model, double intervalSpeed)
+        private static double EstimateFastIntervalSpeed(CriticalSpeedModel model, double intervalSpeed)
         {
             if (model.RepetitionSpeedMps is > 0)
                 return model.RepetitionSpeedMps.Value;

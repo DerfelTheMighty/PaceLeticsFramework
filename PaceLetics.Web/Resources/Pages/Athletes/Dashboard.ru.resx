@@ -12,7 +12,7 @@
   <data name="IntroText" xml:space="preserve"><value>Здесь вы найдете новости курсов, информацию о предстоящих тренировках и рекомендации.</value></data>
   <data name="Breadcrumb_Personal" xml:space="preserve"><value>Личное</value></data>
   <data name="WelcomeText" xml:space="preserve"><value>Здравствуйте, {0}, вот ваш текущий статус тренировок.</value></data>
-  <data name="Metric_VdotCs" xml:space="preserve"><value>VDOT / CS</value></data>
+  <data name="Metric_VdotCs" xml:space="preserve"><value>Critical Speed</value></data>
   <data name="Metric_Vdot" xml:space="preserve"><value>VDOT</value></data>
   <data name="Metric_TrainingSystem" xml:space="preserve"><value>Система тренировок</value></data>
   <data name="Metric_TrainingSystemValue" xml:space="preserve"><value>Узнать больше</value></data>

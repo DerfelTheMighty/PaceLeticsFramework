@@ -327,4 +327,10 @@
   <data name="PaceModelInfo_TrainingScenariosDiagramAlt" xml:space="preserve">
     <value>Didaktisches 12-Wochen-Modell mit drei Trainingsszenarien, Belastungsspitzen, Anpassung und Wear-off.</value>
   </data>
+  <data name="CriticalSpeedBudget_Walk_Title" xml:space="preserve">
+    <value>Walk</value>
+  </data>
+  <data name="CriticalSpeedBudget_Walk_Description" xml:space="preserve">
+    <value>Gehen ohne Pacevorgabe.</value>
+  </data>
 </root>

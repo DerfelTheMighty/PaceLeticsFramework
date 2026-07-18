@@ -1,6 +1,7 @@
 using PaceLetics.TrainingModule.CodeBase.Running.Definitions;
 using PaceLetics.TrainingModule.CodeBase.Running.Interfaces;
 using PaceLetics.TrainingModule.CodeBase.Running.Models;
+using PaceLetics.CoreModule.Infrastructure.Constants;
 
 namespace PaceLetics.TrainingModule.CodeBase.Running.Services;
 
@@ -49,7 +50,7 @@ public sealed class RunningSessionFactory : IRunningSessionFactory
             definition.Name,
             definition.Date,
             definition.Sequence
-                .Select(s => new RunningSegment(s.Type, s.Distance, s.PaceKey, s.Duration))
+                .Select(s => new RunningSegment(s.Type, s.Distance, PaceKeys.Normalize(s.PaceKey), s.Duration))
                 .ToList());
     }
 }
