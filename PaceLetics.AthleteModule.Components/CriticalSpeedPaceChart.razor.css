@@ -35,13 +35,19 @@
 .pl-cs-chart-line {
     display: inline-block;
     width: 22px;
-    border-top: 2px dashed var(--mud-palette-primary);
+    border-top: 2px dotted var(--mud-palette-text-secondary);
 }
 
 .pl-cs-chart-model-line {
     display: inline-block;
     width: 22px;
     border-top: 3px solid var(--mud-palette-primary);
+}
+
+.pl-cs-chart-projection-line {
+    display: inline-block;
+    width: 22px;
+    border-top: 3px dashed var(--mud-palette-primary);
 }
 
 .pl-cs-chart-svg {
@@ -78,9 +84,9 @@
 }
 
 .pl-cs-chart-critical-line {
-    stroke: var(--mud-palette-primary);
+    stroke: var(--mud-palette-text-secondary);
     stroke-width: 2;
-    stroke-dasharray: 7 5;
+    stroke-dasharray: 3 5;
     vector-effect: non-scaling-stroke;
 }
 
@@ -88,6 +94,15 @@
     fill: none;
     stroke: var(--mud-palette-primary);
     stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+    transition: d 220ms ease;
+}
+
+.pl-cs-chart-endurance-projection {
+    fill: none;
+    stroke: var(--mud-palette-primary);
+    stroke-width: 3;
+    stroke-dasharray: 9 6;
     vector-effect: non-scaling-stroke;
     transition: d 220ms ease;
 }
@@ -117,7 +132,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .pl-cs-chart-model-curve {
+    .pl-cs-chart-model-curve,
+    .pl-cs-chart-endurance-projection {
         transition: none;
     }
 }

@@ -82,6 +82,43 @@ public class CriticalSpeedServiceTests
     }
 
     [Fact]
+    public void BuildEnduranceProjection_UsesIndividualExponentForMultipleRuns()
+    {
+        var result1200 = CreateResult(RaceKeys.D1200m, RaceDistances.D1200Meters, TimeSpan.FromMinutes(5));
+        var result3600 = CreateResult(RaceKeys.D3600m, RaceDistances.D3600Meters, TimeSpan.FromMinutes(16));
+        var criticalSpeed = _service.Estimate([result1200, result3600]);
+
+        var projection = _service.BuildEnduranceProjection(
+            criticalSpeed,
+            [result1200, result3600],
+            RaceDistances.D3600Meters);
+        var marathonPace = projection.PredictPaceSecondsPerKilometer(RaceDistances.DMarathonMeters);
+
+        Assert.True(projection.IsValid);
+        Assert.False(projection.UsesDefaultExponent);
+        Assert.Equal(1.059, projection.FatigueExponent, precision: 3);
+        Assert.NotNull(marathonPace);
+        Assert.Equal(308.152, marathonPace!.Value, precision: 3);
+        Assert.True(marathonPace > 1000 / criticalSpeed.CriticalSpeedMps);
+    }
+
+    [Fact]
+    public void BuildEnduranceProjection_UsesConservativeDefaultForSingleRun()
+    {
+        var result = CreateResult(RaceKeys.D1200m, RaceDistances.D1200Meters, TimeSpan.FromMinutes(5));
+        var criticalSpeed = _service.Estimate([result]);
+
+        var projection = _service.BuildEnduranceProjection(
+            criticalSpeed,
+            [result],
+            RaceDistances.D1200Meters);
+
+        Assert.True(projection.IsValid);
+        Assert.True(projection.UsesDefaultExponent);
+        Assert.Equal(1.08, projection.FatigueExponent, precision: 3);
+    }
+
+    [Fact]
     public void BuildPaceModel_MapsCriticalSpeedToExpectedTrainingPaces()
     {
         var model = new CriticalSpeedModel

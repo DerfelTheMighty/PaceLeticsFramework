@@ -2,8 +2,10 @@
 @using System.Globalization
 @using MudBlazor
 @using PaceLetics.CoreModule.Infrastructure.Constants
+@using PaceLetics.CoreModule.Infrastructure.Interfaces
 @using PaceLetics.CoreModule.Infrastructure.Models
 @inject IStringLocalizer<AthleteResources> L
+@inject ICriticalSpeedService CriticalSpeedService
 
 @if (Points.Count > 0 && Model.IsValid)
 {
@@ -17,7 +19,14 @@
             <div class="pl-cs-chart-legend" aria-hidden="true">
                 <span><i class="pl-cs-chart-dot pl-cs-chart-dot-contributor"></i>@L["CriticalSpeedChart_ContributorLegend"]</span>
                 <span><i class="pl-cs-chart-dot pl-cs-chart-dot-other"></i>@L["CriticalSpeedChart_OtherLegend"]</span>
-                <span><i class="pl-cs-chart-model-line"></i>@L["CriticalSpeedChart_ModelCurve"]</span>
+                @if (!string.IsNullOrWhiteSpace(ModelCurvePath))
+                {
+                    <span><i class="pl-cs-chart-model-line"></i>@L["CriticalSpeedChart_ModelCurve"]</span>
+                }
+                @if (!string.IsNullOrWhiteSpace(EnduranceProjectionPath))
+                {
+                    <span><i class="pl-cs-chart-projection-line"></i>@EnduranceProjectionLabel</span>
+                }
                 <span><i class="pl-cs-chart-line"></i>@L["CriticalSpeedChart_CriticalPace"]</span>
             </div>
 
@@ -64,6 +73,15 @@
                           d="@ModelCurvePath"
                           clip-path="@($"url(#{_clipPathId})")">
                         <title>@L["CriticalSpeedChart_ModelCurve"]</title>
+                    </path>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(EnduranceProjectionPath))
+                {
+                    <path class="pl-cs-chart-endurance-projection"
+                          d="@EnduranceProjectionPath"
+                          clip-path="@($"url(#{_clipPathId})")">
+                        <title>@EnduranceProjectionLabel</title>
                     </path>
                 }
 
@@ -142,18 +160,28 @@
 
     private string ModelCurvePath { get; set; } = string.Empty;
 
+    private string EnduranceProjectionPath { get; set; } = string.Empty;
+
+    private EnduranceProjectionModel EnduranceProjection { get; set; } = new();
+
     private double CriticalPaceSeconds => Model.CriticalSpeedMps > 0
         ? 1000 / Model.CriticalSpeedMps
         : 0;
 
     private double CriticalPaceY => ScalePace(CriticalPaceSeconds);
 
+    private string EnduranceProjectionLabel => EnduranceProjection.UsesDefaultExponent
+        ? L["CriticalSpeedChart_EnduranceProjectionSingle"].Value
+        : L["CriticalSpeedChart_EnduranceProjection"].Value;
+
     private string AccessibleSummary =>
-        $"{L["CriticalSpeedChart_ModelCurve"]}; {L["CriticalSpeedChart_CriticalPace"]}: {FormatPace(CriticalPaceSeconds)} min/km; {string.Join("; ", Points.Select(GetPointTitle))}";
+        $"{L["CriticalSpeedChart_ModelCurve"]}; {EnduranceProjectionLabel}; {L["CriticalSpeedChart_CriticalPace"]}: {FormatPace(CriticalPaceSeconds)} min/km; {string.Join("; ", Points.Select(GetPointTitle))}";
 
     protected override void OnParametersSet()
     {
         ModelCurvePath = string.Empty;
+        EnduranceProjectionPath = string.Empty;
+        EnduranceProjection = new EnduranceProjectionModel();
         var contributorSet = new HashSet<RaceResultModel>(Contributors, ReferenceEqualityComparer.Instance);
         Points = Results
             .Where(result => result.DistanceM > 0 && result.Time.TotalSeconds > 0)
@@ -169,8 +197,18 @@
             return;
 
         BuildDistanceScale();
+        var projectionAnchorDistance = Points
+            .Where(point => point.Contributes)
+            .Select(point => (double)point.Result.DistanceM)
+            .DefaultIfEmpty(0)
+            .Max();
+        EnduranceProjection = CriticalSpeedService.BuildEnduranceProjection(
+            Model,
+            Results,
+            projectionAnchorDistance);
         BuildPaceScale();
         ModelCurvePath = BuildModelCurvePath();
+        EnduranceProjectionPath = BuildEnduranceProjectionPath();
     }
 
     private void BuildDistanceScale()
@@ -193,6 +231,10 @@
     private void BuildPaceScale()
     {
         var values = Points.Select(point => point.PaceSeconds).Append(CriticalPaceSeconds).ToList();
+        var projectedEndPace = EnduranceProjection.PredictPaceSecondsPerKilometer(DistanceMaximum);
+        if (projectedEndPace is > 0)
+            values.Add(projectedEndPace.Value);
+
         var spread = values.Max() - values.Min();
         var padding = Math.Max(15, spread * 0.12);
         var rawMinimum = Math.Max(0, values.Min() - padding);
@@ -226,18 +268,52 @@
 
     private string BuildModelCurvePath()
     {
-        var dPrimeMeters = Math.Max(0, Model.DPrimeMeters ?? 0);
-        if (dPrimeMeters <= 0 || DistanceMaximum <= dPrimeMeters)
+        var contributorDistances = Points
+            .Where(point => point.Contributes)
+            .Select(point => (double)point.Result.DistanceM)
+            .Distinct()
+            .OrderBy(distance => distance)
+            .ToList();
+        if (contributorDistances.Count < 2)
             return string.Empty;
 
-        var minimumDistance = dPrimeMeters + Math.Max(1, DistanceMaximum / ModelCurveSampleCount);
-        var distanceRange = DistanceMaximum - minimumDistance;
+        var minimumDistance = contributorDistances[0];
+        var maximumDistance = contributorDistances[^1];
+        var distanceRange = maximumDistance - minimumDistance;
         var path = new System.Text.StringBuilder();
 
         for (var index = 0; index <= ModelCurveSampleCount; index++)
         {
             var distance = minimumDistance + distanceRange * index / ModelCurveSampleCount;
             var paceSeconds = Model.PredictPaceSecondsPerKilometer(distance);
+            if (paceSeconds is null)
+                continue;
+
+            path.Append(path.Length == 0 ? "M " : " L ")
+                .Append(F(ScaleDistance(distance)))
+                .Append(' ')
+                .Append(F(ScalePace(paceSeconds.Value)));
+        }
+
+        return path.ToString();
+    }
+
+    private string BuildEnduranceProjectionPath()
+    {
+        if (!EnduranceProjection.IsValid
+            || DistanceMaximum <= EnduranceProjection.AnchorDistanceMeters)
+        {
+            return string.Empty;
+        }
+
+        var distanceRange = DistanceMaximum - EnduranceProjection.AnchorDistanceMeters;
+        var path = new System.Text.StringBuilder();
+
+        for (var index = 0; index <= ModelCurveSampleCount; index++)
+        {
+            var distance = EnduranceProjection.AnchorDistanceMeters
+                + distanceRange * index / ModelCurveSampleCount;
+            var paceSeconds = EnduranceProjection.PredictPaceSecondsPerKilometer(distance);
             if (paceSeconds is null)
                 continue;
 

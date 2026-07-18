@@ -15,6 +15,9 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
         private const double IntervalFrom1200AnchorFactor = 1 / RepetitionFallbackFactorOverInterval;
         private const double LongIntervalFallbackSpeedFactor = 1.10;
         private const double FastIntervalFallbackSpeedFactor = 1.18;
+        private const double DefaultEnduranceFatigueExponent = 1.08;
+        private const double MinimumEnduranceFatigueExponent = 1.03;
+        private const double MaximumEnduranceFatigueExponent = 1.20;
 
         public CriticalSpeedModel Estimate(IEnumerable<RaceResultModel> results)
         {
@@ -45,6 +48,35 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
             return result1200 is not null && result3600 is not null
                 ? [result1200, result3600]
                 : validResults;
+        }
+
+        public EnduranceProjectionModel BuildEnduranceProjection(
+            CriticalSpeedModel model,
+            IEnumerable<RaceResultModel> results,
+            double anchorDistanceMeters)
+        {
+            ArgumentNullException.ThrowIfNull(model);
+
+            var validResults = GetLatestValidResults(results);
+            if (!model.IsValid || validResults.Count == 0 || anchorDistanceMeters <= 0)
+                return new EnduranceProjectionModel();
+
+            var anchorPace = model.PredictPaceSecondsPerKilometer(anchorDistanceMeters);
+            if (anchorPace is null)
+                return new EnduranceProjectionModel();
+
+            var usesDefaultExponent = validResults.Count < 2;
+            var fatigueExponent = usesDefaultExponent
+                ? DefaultEnduranceFatigueExponent
+                : EstimateEnduranceFatigueExponent(validResults);
+
+            return new EnduranceProjectionModel
+            {
+                AnchorDistanceMeters = anchorDistanceMeters,
+                AnchorPaceSecondsPerKilometer = anchorPace.Value,
+                FatigueExponent = fatigueExponent,
+                UsesDefaultExponent = usesDefaultExponent
+            };
         }
 
         public PaceModel BuildPaceModel(CriticalSpeedModel model)
@@ -225,6 +257,30 @@ namespace PaceLetics.CoreModule.Infrastructure.Services
         private static double Speed(RaceResultModel result)
         {
             return result.DistanceM / result.Time.TotalSeconds;
+        }
+
+        private static double EstimateEnduranceFatigueExponent(IReadOnlyCollection<RaceResultModel> results)
+        {
+            var logarithmicResults = results
+                .Select(result => new
+                {
+                    Distance = Math.Log(result.DistanceM),
+                    Time = Math.Log(result.Time.TotalSeconds)
+                })
+                .ToList();
+            var meanDistance = logarithmicResults.Average(result => result.Distance);
+            var meanTime = logarithmicResults.Average(result => result.Time);
+            var denominator = logarithmicResults.Sum(result => Math.Pow(result.Distance - meanDistance, 2));
+
+            if (denominator <= double.Epsilon)
+                return DefaultEnduranceFatigueExponent;
+
+            var exponent = logarithmicResults.Sum(result =>
+                (result.Distance - meanDistance) * (result.Time - meanTime)) / denominator;
+            return Math.Clamp(
+                exponent,
+                MinimumEnduranceFatigueExponent,
+                MaximumEnduranceFatigueExponent);
         }
 
         private static TimeSpan PaceFromSpeed(double metersPerSecond)

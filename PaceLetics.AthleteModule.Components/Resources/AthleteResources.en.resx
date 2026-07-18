@@ -328,7 +328,7 @@
     <value>Distance vs. pace</value>
   </data>
   <data name="CriticalSpeedChart_Subtitle" xml:space="preserve">
-    <value>The curve shows the CS/D' model; reference runs used for it are highlighted in red.</value>
+    <value>Red runs determine CS; the dashed projection uses the entered races and is not a target pace.</value>
   </data>
   <data name="CriticalSpeedChart_DistanceAxis" xml:space="preserve">
     <value>Distance (km)</value>
@@ -340,7 +340,13 @@
     <value>Critical Pace</value>
   </data>
   <data name="CriticalSpeedChart_ModelCurve" xml:space="preserve">
-    <value>CS/D' model curve</value>
+    <value>CS/D' model (test range)</value>
+  </data>
+  <data name="CriticalSpeedChart_EnduranceProjection" xml:space="preserve">
+    <value>Individual endurance projection</value>
+  </data>
+  <data name="CriticalSpeedChart_EnduranceProjectionSingle" xml:space="preserve">
+    <value>Endurance projection (estimated)</value>
   </data>
   <data name="CriticalSpeedChart_ContributorLegend" xml:space="preserve">
     <value>Used for CS</value>

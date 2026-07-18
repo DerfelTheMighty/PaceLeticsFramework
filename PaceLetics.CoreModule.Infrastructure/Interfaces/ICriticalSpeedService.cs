@@ -8,6 +8,11 @@ namespace PaceLetics.CoreModule.Infrastructure.Interfaces
 
         IReadOnlyList<RaceResultModel> GetContributingResults(IEnumerable<RaceResultModel> results);
 
+        EnduranceProjectionModel BuildEnduranceProjection(
+            CriticalSpeedModel model,
+            IEnumerable<RaceResultModel> results,
+            double anchorDistanceMeters);
+
         PaceModel BuildPaceModel(CriticalSpeedModel model);
 
         IReadOnlyList<CriticalSpeedIntervalRecommendation> BuildIntervalRecommendations(CriticalSpeedModel model);

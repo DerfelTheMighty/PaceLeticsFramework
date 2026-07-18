@@ -337,7 +337,7 @@
     <value>Distanz vs. Pace</value>
   </data>
   <data name="CriticalSpeedChart_Subtitle" xml:space="preserve">
-    <value>Die Kurve zeigt das CS/D'-Modell; daf&#xFC;r verwendete Referenzl&#xE4;ufe sind rot hervorgehoben.</value>
+    <value>Rote L&#xE4;ufe bestimmen die CS; die gestrichelte Prognose nutzt die eingetragenen L&#xE4;ufe und ist keine Zielpace.</value>
   </data>
   <data name="CriticalSpeedChart_DistanceAxis" xml:space="preserve">
     <value>Distanz (km)</value>
@@ -349,7 +349,13 @@
     <value>Critical Pace</value>
   </data>
   <data name="CriticalSpeedChart_ModelCurve" xml:space="preserve">
-    <value>CS/D'-Modellkurve</value>
+    <value>CS/D'-Modell (Testbereich)</value>
+  </data>
+  <data name="CriticalSpeedChart_EnduranceProjection" xml:space="preserve">
+    <value>Individuelle Ausdauerprognose</value>
+  </data>
+  <data name="CriticalSpeedChart_EnduranceProjectionSingle" xml:space="preserve">
+    <value>Ausdauerprognose (gesch&#xE4;tzt)</value>
   </data>
   <data name="CriticalSpeedChart_ContributorLegend" xml:space="preserve">
     <value>F&#xFC;r CS verwendet</value>
